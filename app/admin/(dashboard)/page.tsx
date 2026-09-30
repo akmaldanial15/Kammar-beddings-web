@@ -41,7 +41,7 @@ export default async function AdminDashboardOverview() {
   }
 
   return (
-    <div className="space-y-8 animate-fade-in">
+    <div className="space-y-8">
       {/* Page Title */}
       <div className="animate-fade-in-up">
         <span className="text-xs uppercase tracking-[0.2em] font-bold text-gold-dark block mb-1">

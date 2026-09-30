@@ -33,7 +33,7 @@ export function OrdersClient({ initialOrders }: OrdersClientProps) {
   return (
     <div className="space-y-6">
       {/* Search and Filters */}
-      <div className="bg-warmwhite p-4 rounded-2xl border border-borderLight flex flex-col md:flex-row gap-4 items-center justify-between shadow-sm">
+      <div className="bg-warmwhite p-4 rounded-2xl border border-borderLight flex flex-col md:flex-row gap-4 items-center justify-between shadow-sm animate-fade-in-up">
         <div className="relative w-full md:w-80">
           <Search className="w-4 h-4 text-secondary absolute left-3.5 top-1/2 -translate-y-1/2" />
           <input

@@ -90,7 +90,7 @@ export function ShowroomsClient({
       )}
 
       {/* Tabs */}
-      <div className="flex space-x-2 border-b border-borderLight pb-2">
+      <div className="flex space-x-2 border-b border-borderLight pb-2 animate-fade-in-up">
         <button
           onClick={() => setActiveTab('showrooms')}
           className={`px-4 py-2 text-xs font-bold rounded-xl transition-colors flex items-center space-x-2 ${
@@ -117,13 +117,13 @@ export function ShowroomsClient({
       </div>
 
       {activeTab === 'showrooms' ? (
-        <div className="space-y-4">
+        <div className="space-y-4 animate-fade-in-up delay-100">
           <div className="flex justify-end">
             <button
               onClick={() => {
                 setEditingShowroom({
                   id: `shw-${Date.now()}`,
-                  name: 'LENA Sleep Atelier',
+                  name: 'KAMAAR Sleep Atelier',
                   slug: `studio-${Date.now()}`,
                   state: 'Kuala Lumpur',
                   address: 'Level 2, Premium Lifestyle Mall, Jalan Bukit Bintang',

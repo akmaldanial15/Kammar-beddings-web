@@ -63,7 +63,7 @@ export function SettingsClient({ initialSettings }: SettingsClientProps) {
         </div>
       )}
 
-      <form onSubmit={handleSubmit} className="space-y-6">
+      <form onSubmit={handleSubmit} className="space-y-6 animate-fade-in-up">
         {/* Brand & Store Identity */}
         <div className="bg-warmwhite p-6 rounded-2xl border border-borderLight shadow-sm space-y-4">
           <div className="flex items-center space-x-2 border-b border-borderLight pb-3">

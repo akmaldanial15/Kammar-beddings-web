@@ -59,27 +59,42 @@ h1, h2, h3, h4, .font-serif {
   outline-offset: 2px;
 }
 
-/* Stagger Animation Delays */
+/* GPU Hardware Acceleration & Pre-Animation Hold for Silky Smooth Entrances */
+.animate-fade-in,
+.animate-fade-in-up,
+.animate-fade-in-down,
+.animate-scale-in,
+.animate-slide-in-right,
+.animate-slide-in-left {
+  animation-fill-mode: both !important;
+  will-change: transform, opacity;
+  transform: translateZ(0);
+  -webkit-transform: translateZ(0);
+  backface-visibility: hidden;
+  -webkit-backface-visibility: hidden;
+}
+
+/* Stagger Animation Delays with Guaranteed Pre-Animation State */
 .delay-50 {
-  animation-delay: 50ms;
+  animation-delay: 60ms !important;
 }
 .delay-100 {
-  animation-delay: 100ms;
+  animation-delay: 120ms !important;
 }
 .delay-150 {
-  animation-delay: 150ms;
+  animation-delay: 180ms !important;
 }
 .delay-200 {
-  animation-delay: 200ms;
+  animation-delay: 240ms !important;
 }
 .delay-250 {
-  animation-delay: 250ms;
+  animation-delay: 300ms !important;
 }
 .delay-300 {
-  animation-delay: 300ms;
+  animation-delay: 360ms !important;
 }
 .delay-400 {
-  animation-delay: 400ms;
+  animation-delay: 450ms !important;
 }
 
 /* Button & Card Micro-Interactions */
@@ -105,12 +120,12 @@ h1, h2, h3, h4, .font-serif {
 }
 
 .luxury-card-hover {
-  transition: transform 0.3s cubic-bezier(0.16, 1, 0.3, 1), box-shadow 0.3s cubic-bezier(0.16, 1, 0.3, 1), border-color 0.25s ease;
+  transition: transform 0.35s cubic-bezier(0.16, 1, 0.3, 1), box-shadow 0.35s cubic-bezier(0.16, 1, 0.3, 1), border-color 0.25s ease;
 }
 
 .luxury-card-hover:hover {
   transform: translateY(-3px);
-  box-shadow: 0 14px 30px rgba(10, 26, 51, 0.08);
+  box-shadow: 0 14px 32px rgba(10, 26, 51, 0.08);
 }
 
 /* Hotspot Pulse */
