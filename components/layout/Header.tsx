@@ -227,11 +227,11 @@ export function Header() {
 
           {/* TIER 2: DEDICATED CATEGORY NAVIGATION ROW (100% UNCLUTTERED) */}
           <div className="bg-warmwhite/95 backdrop-blur-md border-b border-borderLight shadow-xs">
-            <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
+            <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 relative">
               <nav className="flex items-center justify-center space-x-8 xl:space-x-12 py-2.5 text-[13.5px] xl:text-[14px] font-medium text-charcoal">
                 {/* 1. Mattresses (with Mega Menu & Zero-Gap Hover Bridge) */}
                 <div
-                  className="relative py-1"
+                  className="py-1"
                   onMouseEnter={handleOpenMega}
                   onMouseLeave={handleCloseMega}
                 >
@@ -251,7 +251,7 @@ export function Header() {
                     />
                   </Link>
 
-                  {/* Mega Menu Dropdown with Hover Bridge Container */}
+                  {/* Mega Menu Dropdown Centered in Category Nav Row */}
                   {isMattressMegaOpen && (
                     <div
                       className="absolute top-full left-1/2 -translate-x-1/2 pt-2 z-50 pointer-events-auto"
