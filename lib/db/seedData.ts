@@ -638,7 +638,7 @@ export const initialProducts: Product[] = [
     variants: [
       { id: 'var-pc-std', productId: 'prod-pillow-contour', sku: 'KAMAAR-PIL-CTR', sizeName: 'Standard', dimensions: '60cm x 40cm x 10/12cm', priceSen: 26900, compareAtPriceSen: 32900, stockQuantity: 40, leadTimeDays: 1, isActive: true },
     ],
-    images: [{ id: 'img-pc-1', productId: 'prod-pillow-contour', imageUrl: 'https://images.unsplash.com/photo-1584100936595-c0654b55a2e2?auto=format&fit=crop&w=1000&q=80', altText: 'Kamaar Ergonomic Contour Latex Pillow', displayOrder: 1, isPrimary: true }],
+    images: [{ id: 'img-pc-1', productId: 'prod-pillow-contour', imageUrl: '/images/products/pillow-contour-latex.jpg', altText: 'Kamaar Ergonomic Contour Latex Pillow', displayOrder: 1, isPrimary: true }],
     createdAt: '2026-09-13T00:00:00Z',
     updatedAt: '2026-09-30T00:00:00Z',
   },
@@ -667,7 +667,7 @@ export const initialProducts: Product[] = [
     variants: [
       { id: 'var-pcl-std', productId: 'prod-pillow-classic', sku: 'KAMAAR-PIL-CLS', sizeName: 'Standard', dimensions: '65cm x 40cm x 13cm', priceSen: 24900, compareAtPriceSen: 29900, stockQuantity: 35, leadTimeDays: 1, isActive: true },
     ],
-    images: [{ id: 'img-pcl-1', productId: 'prod-pillow-classic', imageUrl: 'https://images.unsplash.com/photo-1584100936595-c0654b55a2e2?auto=format&fit=crop&w=1000&q=80', altText: 'Kamaar Classic Plush Pillow', displayOrder: 1, isPrimary: true }],
+    images: [{ id: 'img-pcl-1', productId: 'prod-pillow-classic', imageUrl: '/images/products/pillow-classic-latex.jpg', altText: 'Kamaar Classic Plush Pillow', displayOrder: 1, isPrimary: true }],
     createdAt: '2026-09-14T00:00:00Z',
     updatedAt: '2026-09-30T00:00:00Z',
   },
@@ -696,8 +696,37 @@ export const initialProducts: Product[] = [
     variants: [
       { id: 'var-psk-std', productId: 'prod-pillow-silk', sku: 'KAMAAR-PIL-SLK', sizeName: 'Standard', dimensions: '70cm x 48cm', priceSen: 29900, compareAtPriceSen: 36900, stockQuantity: 25, leadTimeDays: 1, isActive: true },
     ],
-    images: [{ id: 'img-psk-1', productId: 'prod-pillow-silk', imageUrl: 'https://images.unsplash.com/photo-1584100936595-c0654b55a2e2?auto=format&fit=crop&w=1000&q=80', altText: 'Silk and Down Pillow', displayOrder: 1, isPrimary: true }],
+    images: [{ id: 'img-psk-1', productId: 'prod-pillow-silk', imageUrl: '/images/products/pillow-mulberry-silk.jpg', altText: 'Silk and Down Pillow', displayOrder: 1, isPrimary: true }],
     createdAt: '2026-09-15T00:00:00Z',
+    updatedAt: '2026-09-30T00:00:00Z',
+  },
+
+  // 15B. CoolSilk Ice-Fiber Cooling Latex Pillow
+  {
+    id: 'prod-pillow-ice-silk',
+    name: 'Kamaar CoolSilk Ice-Fiber Cooling Latex Pillow',
+    slug: 'kamaar-coolsilk-ice-fiber-cooling-latex-pillow',
+    subtitle: 'Instant Cool-Touch Japanese Ice-Silk with Natural Aerated Latex Core',
+    description: 'Engineered for deep restorative sleep in warm climates. Combines instant chill Japanese Ice-Silk fabric with a buoyant, pinpoint-ventilated natural organic latex core for relentless cool comfort.',
+    shortDescription: 'Active cooling pillow with Ice-Silk thermal dissipation and buoyant latex core.',
+    categoryId: 'cat-pillows',
+    productType: 'pillow',
+    material: 'Cool Night Hybrid',
+    firmness: 'Balanced Medium',
+    thicknessCm: 13,
+    warrantyYears: 3,
+    trialNights: 30,
+    features: ['Q-Max > 0.45 Japanese Ice-Silk cooling fabric', '100% Organic aerated latex core', 'Relieves cervical neck tension & promotes airflow', 'Machine-washable cooling zippered case'],
+    layers: [],
+    specifications: { 'Dimensions': '65cm x 40cm x 13cm', 'Cover': 'Japanese Cool-Touch Ice-Silk Fabric', 'Core': '100% Aerated Malaysian Natural Latex' },
+    faq: [],
+    status: 'published',
+    isFeatured: true,
+    variants: [
+      { id: 'var-pice-std', productId: 'prod-pillow-ice-silk', sku: 'KAMAAR-PIL-ICE', sizeName: 'Standard', dimensions: '65cm x 40cm x 13cm', priceSen: 28900, compareAtPriceSen: 34900, stockQuantity: 30, leadTimeDays: 1, isActive: true },
+    ],
+    images: [{ id: 'img-pice-1', productId: 'prod-pillow-ice-silk', imageUrl: '/images/products/pillow-cooling-ice.jpg', altText: 'Kamaar CoolSilk Ice-Fiber Cooling Latex Pillow', displayOrder: 1, isPrimary: true }],
+    createdAt: '2026-09-25T00:00:00Z',
     updatedAt: '2026-09-30T00:00:00Z',
   },
 
