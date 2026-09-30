@@ -1,0 +1,2231 @@
+{
+  "categories": [
+    {
+      "id": "cat-mattresses",
+      "name": "Mattresses",
+      "slug": "mattress",
+      "description": "100% natural organic latex and premium hybrid pocket spring mattresses crafted for tropical Malaysian sleep.",
+      "imageUrl": "https://images.unsplash.com/photo-1631049307264-da0ec9d70304?auto=format&fit=crop&w=800&q=80",
+      "displayOrder": 1
+    },
+    {
+      "id": "cat-pillows",
+      "name": "Pillows",
+      "slug": "pillows",
+      "description": "Ergonomic natural latex pillows contoured for cervical spinal alignment and cool comfort.",
+      "imageUrl": "https://images.unsplash.com/photo-1584100936595-c0654b55a2e2?auto=format&fit=crop&w=800&q=80",
+      "displayOrder": 2
+    },
+    {
+      "id": "cat-toppers",
+      "name": "Toppers & Protectors",
+      "slug": "toppers-protectors",
+      "description": "Transform any bed with pure natural latex toppers and breathable waterproof bamboo protectors.",
+      "imageUrl": "https://images.unsplash.com/photo-1540518614846-7ede433c4ef4?auto=format&fit=crop&w=800&q=80",
+      "displayOrder": 3
+    },
+    {
+      "id": "cat-bedframes",
+      "name": "Bedframes",
+      "slug": "bedframes",
+      "description": "Solid Malaysian hardwood and handcrafted tufted headboards engineered for optimal mattress support.",
+      "imageUrl": "https://images.unsplash.com/photo-1505693416388-ac5ce068fe85?auto=format&fit=crop&w=800&q=80",
+      "displayOrder": 4
+    },
+    {
+      "id": "cat-bedding",
+      "name": "Bed Linen",
+      "slug": "bedding",
+      "description": "1,000 thread-count organic bamboo cotton duvet covers, fitted sheets, and silk pillowcases.",
+      "imageUrl": "https://images.unsplash.com/photo-1522771739844-6a9f6d5f14af?auto=format&fit=crop&w=800&q=80",
+      "displayOrder": 5
+    }
+  ],
+  "collections": [
+    {
+      "id": "col-latex",
+      "name": "100% Pure Natural Latex",
+      "slug": "natural-latex",
+      "description": "Harvested from certified sustainable Malaysian rubber plantations. Zero synthetic fillers, zero off-gassing.",
+      "bannerUrl": "https://images.unsplash.com/photo-1582582621959-48d27397dc69?auto=format&fit=crop&w=1400&q=80",
+      "displayOrder": 1,
+      "isFeatured": true
+    },
+    {
+      "id": "col-hybrid",
+      "name": "Cool Night Hybrid Series",
+      "slug": "cool-night-hybrid",
+      "description": "Combines resilient natural latex with Japanese Ice-Silk fabric and 7-zone pocket springs for heat dissipation.",
+      "bannerUrl": "https://images.unsplash.com/photo-1616046229478-9901c5536a45?auto=format&fit=crop&w=1400&q=80",
+      "displayOrder": 2,
+      "isFeatured": true
+    },
+    {
+      "id": "col-ortho",
+      "name": "Spinal Orthopaedic Collection",
+      "slug": "orthopaedic-support",
+      "description": "Engineered in consultation with Malaysian physiotherapists for maximum lumbar support and posture relief.",
+      "bannerUrl": "https://images.unsplash.com/photo-1598928506311-c55ded91a20c?auto=format&fit=crop&w=1400&q=80",
+      "displayOrder": 3,
+      "isFeatured": true
+    },
+    {
+      "id": "col-hotel",
+      "name": "Sovereign Hotel Collection",
+      "slug": "hotel-collection",
+      "description": "Bespoke 34cm multi-tiered plush comfort experienced in 5-star presidential suites.",
+      "bannerUrl": "https://images.unsplash.com/photo-1578683010236-d716f9a3f461?auto=format&fit=crop&w=1400&q=80",
+      "displayOrder": 4,
+      "isFeatured": true
+    }
+  ],
+  "products": [
+    {
+      "id": "prod-royal-heritage",
+      "name": "Kamaar Royal Heritage 100% Natural Latex Mattress",
+      "slug": "lena-royal-heritage-latex-mattress",
+      "subtitle": "100% Pure Organic Dunlop Latex with Belgian Tencel Cover",
+      "description": "The epitome of handcrafted Malaysian sleep luxury. Made from 100% sustainably harvested organic latex with no toxic polyurethane foam, chemical adhesives, or metal coils. Featuring dual-density micro-zones that contour effortlessly to your spine while providing buoyant, zero-pressure support.",
+      "shortDescription": "Signature 100% organic natural latex mattress with dual-density ergonomic zoning and natural cooling.",
+      "categoryId": "cat-mattresses",
+      "productType": "mattress",
+      "material": "100% Natural Latex",
+      "firmness": "Medium Firm",
+      "firmnessScale": 6,
+      "thicknessCm": 30,
+      "warrantyYears": 12,
+      "trialNights": 100,
+      "features": [
+        "100% Organic Malaysian Natural Latex",
+        "Zero synthetic foam, zero VOC emissions & hypoallergenic",
+        "Naturally dust-mite, fungal & antibacterial resistant",
+        "Belgian Organic Tencel zip-off washable cover",
+        "7-Zone ergonomic spinal weight distribution",
+        "Made in Malaysia with 12-Year Core Warranty"
+      ],
+      "layers": [
+        {
+          "number": 1,
+          "name": "Belgian Organic Tencel Cover",
+          "description": "Silky smooth, moisture-wicking natural fabric quilted with pure organic wool."
+        },
+        {
+          "number": 2,
+          "name": "Ultra-Comfort Talalay Latex Pillow Top (5cm)",
+          "description": "Plush pressure-relieving layer that cushions shoulders and hips."
+        },
+        {
+          "number": 3,
+          "name": "7-Zone High-Density Dunlop Latex Core (20cm)",
+          "description": "Targeted ergonomic density zones supporting natural spinal curve."
+        },
+        {
+          "number": 4,
+          "name": "Reinforced Breathable Base (5cm)",
+          "description": "Ventilated pin-hole latex base allowing 360-degree ambient airflow."
+        }
+      ],
+      "specifications": {
+        "Core Material": "100% Pure Malaysian Natural Latex",
+        "Fabric": "Belgian Organic Tencel with Anti-Dustmite Sanitized Treatment",
+        "Height / Thickness": "30 cm (approx. 12 inches)",
+        "Firmness Level": "Medium Firm (6 / 10)",
+        "Motion Isolation": "Superior Zero Partner Disturbance",
+        "Country of Origin": "Malaysia"
+      },
+      "faq": [
+        {
+          "question": "Does natural latex smell or off-gas?",
+          "answer": "No. Unlike memory foam made from petrochemicals, our 100% natural latex has a mild, soothing natural rubber scent that dissipates in 24 hours, with zero toxic off-gassing."
+        },
+        {
+          "question": "How does the 100-night trial work?",
+          "answer": "We deliver your mattress directly to your bedroom. Sleep on it for at least 30 nights to let your body adjust. If you are not completely satisfied within 100 nights, contact us for a hassle-free return and refund."
+        }
+      ],
+      "status": "published",
+      "isFeatured": true,
+      "variants": [
+        {
+          "id": "var-rh-single",
+          "productId": "prod-royal-heritage",
+          "sku": "KAMAAR-RH-SGL",
+          "sizeName": "Single",
+          "dimensions": "91cm x 190cm x 30cm",
+          "priceSen": 289900,
+          "compareAtPriceSen": 349900,
+          "stockQuantity": 8,
+          "leadTimeDays": 3,
+          "isActive": true
+        },
+        {
+          "id": "var-rh-supersingle",
+          "productId": "prod-royal-heritage",
+          "sku": "KAMAAR-RH-SSG",
+          "sizeName": "Super Single",
+          "dimensions": "107cm x 190cm x 30cm",
+          "priceSen": 339900,
+          "compareAtPriceSen": 399900,
+          "stockQuantity": 6,
+          "leadTimeDays": 3,
+          "isActive": true
+        },
+        {
+          "id": "var-rh-queen",
+          "productId": "prod-royal-heritage",
+          "sku": "KAMAAR-RH-QEN",
+          "sizeName": "Queen",
+          "dimensions": "152cm x 190cm x 30cm",
+          "priceSen": 449900,
+          "compareAtPriceSen": 529900,
+          "stockQuantity": 12,
+          "leadTimeDays": 3,
+          "isActive": true
+        },
+        {
+          "id": "var-rh-king",
+          "productId": "prod-royal-heritage",
+          "sku": "KAMAAR-RH-KNG",
+          "sizeName": "King",
+          "dimensions": "183cm x 190cm x 30cm",
+          "priceSen": 539900,
+          "compareAtPriceSen": 629900,
+          "stockQuantity": 9,
+          "leadTimeDays": 3,
+          "isActive": true
+        }
+      ],
+      "images": [
+        {
+          "id": "img-rh-1",
+          "productId": "prod-royal-heritage",
+          "imageUrl": "https://images.unsplash.com/photo-1631049307264-da0ec9d70304?auto=format&fit=crop&w=1000&q=80",
+          "altText": "Kamaar Royal Heritage 100% Natural Latex Mattress in luxury master bedroom",
+          "displayOrder": 1,
+          "isPrimary": true
+        },
+        {
+          "id": "img-rh-2",
+          "productId": "prod-royal-heritage",
+          "imageUrl": "https://images.unsplash.com/photo-1540518614846-7ede433c4ef4?auto=format&fit=crop&w=1000&q=80",
+          "altText": "Close up of organic tencel fabric quilting and embroidery",
+          "displayOrder": 2,
+          "isPrimary": false
+        },
+        {
+          "id": "img-rh-3",
+          "productId": "prod-royal-heritage",
+          "imageUrl": "https://images.unsplash.com/photo-1582582621959-48d27397dc69?auto=format&fit=crop&w=1000&q=80",
+          "altText": "Natural latex pinhole cross section ventilation demonstration",
+          "displayOrder": 3,
+          "isPrimary": false
+        }
+      ],
+      "createdAt": "2026-09-01T00:00:00Z",
+      "updatedAt": "2026-09-30T00:00:00Z"
+    },
+    {
+      "id": "prod-cool-night",
+      "name": "Kamaar Cool Night Ice-Silk Hybrid Mattress",
+      "slug": "lena-cool-night-hybrid-mattress",
+      "subtitle": "Japanese Ice-Cool Fabric + Natural Latex + 7-Zone Independent Pocket Springs",
+      "description": "Designed specifically for hot, humid tropical nights. The Cool Night Hybrid weaves Japanese high-density cooling filaments into the quilt, providing an instant 2°C temperature drop upon contact. Paired with aerated organic latex and thousands of barrel pocket coils that disperse body heat continuously.",
+      "shortDescription": "Active cooling hybrid with ice-fiber surface, buoyant natural latex, and zero motion transfer pocket coils.",
+      "categoryId": "cat-mattresses",
+      "productType": "mattress",
+      "material": "Hybrid Pocket Spring",
+      "firmness": "Medium",
+      "firmnessScale": 5,
+      "thicknessCm": 28,
+      "warrantyYears": 10,
+      "trialNights": 100,
+      "features": [
+        "Sub-Zero Japanese Ice-Silk fabric (Instant cooling effect)",
+        "100% Natural Latex responsive comfort layer",
+        "Individually encased 7-Zone pocket coils for zero motion disturbance",
+        "High-density foam encasement for reinforced edge seating",
+        "Antimicrobial & Dust Mite barrier"
+      ],
+      "layers": [
+        {
+          "number": 1,
+          "name": "Cool-Touch Ice-Silk Fabric",
+          "description": "Thermally conductive yarn dissipates heat 3x faster than cotton."
+        },
+        {
+          "number": 2,
+          "name": "Aerated Natural Latex Cushion (4cm)",
+          "description": "Breathable pinhole latex offering buoyant lumbar support."
+        },
+        {
+          "number": 3,
+          "name": "Transition High-Resilience Foam (3cm)",
+          "description": "Dampens vibrations and provides progressive firmness transition."
+        },
+        {
+          "number": 4,
+          "name": "7-Zone Independent Pocket Springs (19cm)",
+          "description": "Individually wrapped steel coils respond precisely to body contours."
+        },
+        {
+          "number": 5,
+          "name": "Anti-Slip Foundation Base (2cm)",
+          "description": "Ensures absolute grip on any bedframe or divan base."
+        }
+      ],
+      "specifications": {
+        "Core Structure": "Independent Barrel Pocket Springs with Latex Top",
+        "Fabric": "High Q-Max Japanese Ice-Silk Cooling Jacquard",
+        "Height / Thickness": "28 cm (approx. 11 inches)",
+        "Firmness Level": "Medium (5 / 10)",
+        "Spring Gauge": "1.8mm / 2.0mm Multi-Zone Coils",
+        "Country of Origin": "Malaysia"
+      },
+      "faq": [
+        {
+          "question": "Will the cooling effect wear out after washing?",
+          "answer": "No. The cooling properties are permanently embedded into the cross-section structure of the ice fibers, lasting the entire lifespan of the mattress."
+        }
+      ],
+      "status": "published",
+      "isFeatured": true,
+      "variants": [
+        {
+          "id": "var-cn-single",
+          "productId": "prod-cool-night",
+          "sku": "KAMAAR-CN-SGL",
+          "sizeName": "Single",
+          "dimensions": "91cm x 190cm x 28cm",
+          "priceSen": 189900,
+          "compareAtPriceSen": 229900,
+          "stockQuantity": 10,
+          "leadTimeDays": 2,
+          "isActive": true
+        },
+        {
+          "id": "var-cn-supersingle",
+          "productId": "prod-cool-night",
+          "sku": "KAMAAR-CN-SSG",
+          "sizeName": "Super Single",
+          "dimensions": "107cm x 190cm x 28cm",
+          "priceSen": 229900,
+          "compareAtPriceSen": 269900,
+          "stockQuantity": 7,
+          "leadTimeDays": 2,
+          "isActive": true
+        },
+        {
+          "id": "var-cn-queen",
+          "productId": "prod-cool-night",
+          "sku": "KAMAAR-CN-QEN",
+          "sizeName": "Queen",
+          "dimensions": "152cm x 190cm x 28cm",
+          "priceSen": 299900,
+          "compareAtPriceSen": 369900,
+          "stockQuantity": 15,
+          "leadTimeDays": 2,
+          "isActive": true
+        },
+        {
+          "id": "var-cn-king",
+          "productId": "prod-cool-night",
+          "sku": "KAMAAR-CN-KNG",
+          "sizeName": "King",
+          "dimensions": "183cm x 190cm x 28cm",
+          "priceSen": 359900,
+          "compareAtPriceSen": 439900,
+          "stockQuantity": 12,
+          "leadTimeDays": 2,
+          "isActive": true
+        }
+      ],
+      "images": [
+        {
+          "id": "img-cn-1",
+          "productId": "prod-cool-night",
+          "imageUrl": "https://images.unsplash.com/photo-1616046229478-9901c5536a45?auto=format&fit=crop&w=1000&q=80",
+          "altText": "Kamaar Cool Night Hybrid Mattress in airy bedroom with blue linen",
+          "displayOrder": 1,
+          "isPrimary": true
+        },
+        {
+          "id": "img-cn-2",
+          "productId": "prod-cool-night",
+          "imageUrl": "https://images.unsplash.com/photo-1505693416388-ac5ce068fe85?auto=format&fit=crop&w=1000&q=80",
+          "altText": "Cooling fabric pattern close up with subtle icy woven details",
+          "displayOrder": 2,
+          "isPrimary": false
+        }
+      ],
+      "createdAt": "2026-09-02T00:00:00Z",
+      "updatedAt": "2026-09-30T00:00:00Z"
+    },
+    {
+      "id": "prod-ortho-rest",
+      "name": "Kamaar Ortho Rest Spinal Firm Mattress",
+      "slug": "lena-ortho-rest-spinal-firm-mattress",
+      "subtitle": "Physiotherapist-Approved Spinal Alignment & High-Density Posture Core",
+      "description": "Designed specifically for those suffering from chronic back stiffness or seniors needing solid edge-to-edge pushback. Combines firm vulcanized natural latex with a high-density posture foam core, preventing hip sagging and promoting natural lordotic spinal curvature throughout the night.",
+      "shortDescription": "Firm orthopaedic mattress engineered for back support, lumbar protection, and zero spinal sag.",
+      "categoryId": "cat-mattresses",
+      "productType": "mattress",
+      "material": "Orthopaedic Support",
+      "firmness": "Firm",
+      "firmnessScale": 8,
+      "thicknessCm": 25,
+      "warrantyYears": 10,
+      "trialNights": 100,
+      "features": [
+        "Ergonomic Posture Foundation recommended for lower back relief",
+        "Vulcanized firm natural latex layer for resilient cushioning",
+        "Reinforced perimeter edge system for effortless getting in and out of bed",
+        "Antibacterial Bamboo knitted fabric cover"
+      ],
+      "layers": [
+        {
+          "number": 1,
+          "name": "Bamboo Charcoal Knitted Cover",
+          "description": "Deodorizing, moisture-wicking and naturally hypoallergenic."
+        },
+        {
+          "number": 2,
+          "name": "Firm Natural Latex Layer (4cm)",
+          "description": "Elastic pressure cushion that avoids sinking or feeling stuck."
+        },
+        {
+          "number": 3,
+          "name": "High-Density Ortho Posture Core (18cm)",
+          "description": "Engineered high-load foam core tested to withstand 250kg weight."
+        },
+        {
+          "number": 4,
+          "name": "Non-Slip Heavy Duty Base (3cm)",
+          "description": "Solid steady grip for slatted and solid divan bed bases."
+        }
+      ],
+      "specifications": {
+        "Core Structure": "High-Density Orthopaedic Foam Core with Natural Latex",
+        "Fabric": "Antimicrobial Bamboo Knitted Jacquard",
+        "Height / Thickness": "25 cm (approx. 10 inches)",
+        "Firmness Level": "Firm (8 / 10)",
+        "Recommended For": "Back and stomach sleepers, elderly, chronic back pain sufferers",
+        "Country of Origin": "Malaysia"
+      },
+      "faq": [
+        {
+          "question": "Is this mattress too hard?",
+          "answer": "It is firm (8/10) with an initial 4cm natural latex cushion so you feel comfortable without pain in your shoulder and hip joints."
+        }
+      ],
+      "status": "published",
+      "isFeatured": true,
+      "variants": [
+        {
+          "id": "var-or-single",
+          "productId": "prod-ortho-rest",
+          "sku": "KAMAAR-OR-SGL",
+          "sizeName": "Single",
+          "dimensions": "91cm x 190cm x 25cm",
+          "priceSen": 159900,
+          "compareAtPriceSen": 199900,
+          "stockQuantity": 9,
+          "leadTimeDays": 2,
+          "isActive": true
+        },
+        {
+          "id": "var-or-supersingle",
+          "productId": "prod-ortho-rest",
+          "sku": "KAMAAR-OR-SSG",
+          "sizeName": "Super Single",
+          "dimensions": "107cm x 190cm x 25cm",
+          "priceSen": 189900,
+          "compareAtPriceSen": 229900,
+          "stockQuantity": 5,
+          "leadTimeDays": 2,
+          "isActive": true
+        },
+        {
+          "id": "var-or-queen",
+          "productId": "prod-ortho-rest",
+          "sku": "KAMAAR-OR-QEN",
+          "sizeName": "Queen",
+          "dimensions": "152cm x 190cm x 25cm",
+          "priceSen": 249900,
+          "compareAtPriceSen": 299900,
+          "stockQuantity": 14,
+          "leadTimeDays": 2,
+          "isActive": true
+        },
+        {
+          "id": "var-or-king",
+          "productId": "prod-ortho-rest",
+          "sku": "KAMAAR-OR-KNG",
+          "sizeName": "King",
+          "dimensions": "183cm x 190cm x 25cm",
+          "priceSen": 299900,
+          "compareAtPriceSen": 359900,
+          "stockQuantity": 8,
+          "leadTimeDays": 2,
+          "isActive": true
+        }
+      ],
+      "images": [
+        {
+          "id": "img-or-1",
+          "productId": "prod-ortho-rest",
+          "imageUrl": "https://images.unsplash.com/photo-1598928506311-c55ded91a20c?auto=format&fit=crop&w=1000&q=80",
+          "altText": "Kamaar Ortho Rest Spinal Firm Mattress on solid wood frame",
+          "displayOrder": 1,
+          "isPrimary": true
+        }
+      ],
+      "createdAt": "2026-09-03T00:00:00Z",
+      "updatedAt": "2026-09-30T00:00:00Z"
+    },
+    {
+      "id": "prod-everyday-comfort",
+      "name": "Kamaar Everyday Comfort Natural Latex Mattress",
+      "slug": "lena-everyday-comfort-natural-latex-mattress",
+      "subtitle": "Accessible Luxury with 100% Pure Natural Latex Core",
+      "description": "Our most popular essential natural latex mattress. Engineered with a pure 20cm single-block natural latex core, providing natural bouncy support, effortless turning, and peaceful motion isolation for modern urban bedrooms.",
+      "shortDescription": "20cm solid natural latex mattress delivering unbeatable value, clean ergonomics, and 100% chemical-free sleep.",
+      "categoryId": "cat-mattresses",
+      "productType": "mattress",
+      "material": "100% Natural Latex",
+      "firmness": "Medium Firm",
+      "firmnessScale": 6,
+      "thicknessCm": 20,
+      "warrantyYears": 10,
+      "trialNights": 100,
+      "features": [
+        "100% Pure Malaysian Natural Latex Core (20cm)",
+        "Washable soft organic cotton zipper cover",
+        "No metal springs, no creaking, no electromagnetic interference",
+        "Lightweight and easy to rotate"
+      ],
+      "layers": [
+        {
+          "number": 1,
+          "name": "Soft Organic Knitted Cotton Cover",
+          "description": "Removable and machine washable zipper outer sleeve."
+        },
+        {
+          "number": 2,
+          "name": "Pure Dunlop Natural Latex Monoblock (20cm)",
+          "description": "Evenly balanced medium-firm density for all sleep styles."
+        }
+      ],
+      "specifications": {
+        "Core Structure": "Monoblock 100% Natural Latex",
+        "Fabric": "100% Organic Knitted Cotton",
+        "Height / Thickness": "20 cm (approx. 8 inches)",
+        "Firmness Level": "Medium Firm (6 / 10)",
+        "Country of Origin": "Malaysia"
+      },
+      "faq": [
+        {
+          "question": "Can I flip this mattress?",
+          "answer": "Yes! It is double-sided and can be rotated or flipped every 6 months for even wear."
+        }
+      ],
+      "status": "published",
+      "isFeatured": true,
+      "variants": [
+        {
+          "id": "var-ec-single",
+          "productId": "prod-everyday-comfort",
+          "sku": "KAMAAR-EC-SGL",
+          "sizeName": "Single",
+          "dimensions": "91cm x 190cm x 20cm",
+          "priceSen": 129900,
+          "compareAtPriceSen": 159900,
+          "stockQuantity": 11,
+          "leadTimeDays": 2,
+          "isActive": true
+        },
+        {
+          "id": "var-ec-supersingle",
+          "productId": "prod-everyday-comfort",
+          "sku": "KAMAAR-EC-SSG",
+          "sizeName": "Super Single",
+          "dimensions": "107cm x 190cm x 20cm",
+          "priceSen": 159900,
+          "compareAtPriceSen": 189900,
+          "stockQuantity": 8,
+          "leadTimeDays": 2,
+          "isActive": true
+        },
+        {
+          "id": "var-ec-queen",
+          "productId": "prod-everyday-comfort",
+          "sku": "KAMAAR-EC-QEN",
+          "sizeName": "Queen",
+          "dimensions": "152cm x 190cm x 20cm",
+          "priceSen": 219900,
+          "compareAtPriceSen": 259900,
+          "stockQuantity": 16,
+          "leadTimeDays": 2,
+          "isActive": true
+        },
+        {
+          "id": "var-ec-king",
+          "productId": "prod-everyday-comfort",
+          "sku": "KAMAAR-EC-KNG",
+          "sizeName": "King",
+          "dimensions": "183cm x 190cm x 20cm",
+          "priceSen": 269900,
+          "compareAtPriceSen": 319900,
+          "stockQuantity": 9,
+          "leadTimeDays": 2,
+          "isActive": true
+        }
+      ],
+      "images": [
+        {
+          "id": "img-ec-1",
+          "productId": "prod-everyday-comfort",
+          "imageUrl": "https://images.unsplash.com/photo-1540518614846-7ede433c4ef4?auto=format&fit=crop&w=1000&q=80",
+          "altText": "Kamaar Everyday Comfort Natural Latex Mattress in clean Scandinavian bedroom",
+          "displayOrder": 1,
+          "isPrimary": true
+        }
+      ],
+      "createdAt": "2026-09-04T00:00:00Z",
+      "updatedAt": "2026-09-30T00:00:00Z"
+    },
+    {
+      "id": "prod-sovereign-luxe",
+      "name": "Kamaar Sovereign Luxe Grand Presidential Mattress",
+      "slug": "lena-sovereign-luxe-mattress",
+      "subtitle": "Bespoke 34cm Dual-Spring & Natural Latex Masterpiece",
+      "description": "Created for the most discerning bedroom connoisseur. The Sovereign Luxe pairs a floating micro-pocket spring cushion with an underlying 7-zone barrel spring core, wrapped in 8cm of certified organic Talalay latex and Belgian Damascus silk quilt.",
+      "shortDescription": "Ultimate 34cm hotel presidential luxury with dual pocket spring coils and thick Talalay latex pillowtop.",
+      "categoryId": "cat-mattresses",
+      "productType": "mattress",
+      "material": "Hybrid Pocket Spring",
+      "firmness": "Medium Soft",
+      "firmnessScale": 4,
+      "thicknessCm": 34,
+      "warrantyYears": 15,
+      "trialNights": 100,
+      "features": [
+        "Dual Spring Architecture: 1,800 micro-coils + 7-zone base springs",
+        "8cm Ultra-Plush Talalay Latex Pillowtop",
+        "Hand-tufted Belgian Silk & Cashmere blend upholstery",
+        "Reinforced steel rod perimeter for rock-solid stability",
+        "15-Year Master Artisan Warranty"
+      ],
+      "layers": [
+        {
+          "number": 1,
+          "name": "Belgian Silk & Cashmere Damask",
+          "description": "Sumptuous, temperature-regulating natural woven fabric."
+        },
+        {
+          "number": 2,
+          "name": "Pure Organic Talalay Latex Pillowtop (8cm)",
+          "description": "Cloud-like enveloping softness with buoyant instantaneous response."
+        },
+        {
+          "number": 3,
+          "name": "Micro-Pocket Coil Layer (6cm)",
+          "description": "Contouring micro-springs that isolate fine micro-movements."
+        },
+        {
+          "number": 4,
+          "name": "7-Zone Heavy Gauge Barrel Springs (18cm)",
+          "description": "Individually heat-tempered coils engineered for decades of support."
+        },
+        {
+          "number": 5,
+          "name": "High-Density Wool Insulation Pad (2cm)",
+          "description": "Prevents friction and dampens structural sound."
+        }
+      ],
+      "specifications": {
+        "Core Structure": "Dual-Spring Micro-Coil + Barrel Pocket Spring with Talalay Latex",
+        "Fabric": "Hand-Tufted Belgian Silk & Cashmere Damask",
+        "Height / Thickness": "34 cm (approx. 13.5 inches)",
+        "Firmness Level": "Plush Luxury / Medium Soft (4 / 10)",
+        "Total Coil Count": "Up to 2,400 coils (King size)",
+        "Country of Origin": "Malaysia"
+      },
+      "faq": [
+        {
+          "question": "Will my existing bedsheet fit a 34cm mattress?",
+          "answer": "We recommend deep-pocket bedsheets (38cm to 45cm drop depth). Our KAMAAR 1000TC Bamboo Sheets are crafted with a generous 40cm pocket to fit seamlessly."
+        }
+      ],
+      "status": "published",
+      "isFeatured": true,
+      "variants": [
+        {
+          "id": "var-sl-queen",
+          "productId": "prod-sovereign-luxe",
+          "sku": "KAMAAR-SL-QEN",
+          "sizeName": "Queen",
+          "dimensions": "152cm x 190cm x 34cm",
+          "priceSen": 599900,
+          "compareAtPriceSen": 699900,
+          "stockQuantity": 5,
+          "leadTimeDays": 5,
+          "isActive": true
+        },
+        {
+          "id": "var-sl-king",
+          "productId": "prod-sovereign-luxe",
+          "sku": "KAMAAR-SL-KNG",
+          "sizeName": "King",
+          "dimensions": "183cm x 190cm x 34cm",
+          "priceSen": 699900,
+          "compareAtPriceSen": 819900,
+          "stockQuantity": 4,
+          "leadTimeDays": 5,
+          "isActive": true
+        }
+      ],
+      "images": [
+        {
+          "id": "img-sl-1",
+          "productId": "prod-sovereign-luxe",
+          "imageUrl": "https://images.unsplash.com/photo-1578683010236-d716f9a3f461?auto=format&fit=crop&w=1000&q=80",
+          "altText": "Kamaar Sovereign Luxe Grand Presidential Mattress in 5-star hotel suite",
+          "displayOrder": 1,
+          "isPrimary": true
+        }
+      ],
+      "createdAt": "2026-09-05T00:00:00Z",
+      "updatedAt": "2026-09-30T00:00:00Z"
+    },
+    {
+      "id": "prod-cloud-serenity",
+      "name": "Kamaar Cloud Serenity Memory & Latex Mattress",
+      "slug": "lena-cloud-serenity-mattress",
+      "subtitle": "Zero-Gravity Gel Memory Foam with Natural Latex Support Core",
+      "description": "For those who love the gentle contour of memory foam combined with the bouncy pushback of organic natural latex. Features open-cell cooling gel memory foam that cradles your pressure points without trapping body heat.",
+      "shortDescription": "Gel memory foam and organic latex fusion delivering weightless zero-gravity contouring.",
+      "categoryId": "cat-mattresses",
+      "productType": "mattress",
+      "material": "Memory Foam",
+      "firmness": "Medium Soft",
+      "firmnessScale": 4,
+      "thicknessCm": 26,
+      "warrantyYears": 10,
+      "trialNights": 100,
+      "features": [
+        "Zero-Gravity open cell cooling gel memory foam",
+        "Responsive organic latex core preventing body impressions",
+        "Breathable jacquard cover with honeycomb ventilation border"
+      ],
+      "layers": [
+        {
+          "number": 1,
+          "name": "Cooling Knitted Cover",
+          "description": "Soft-touch breathable knit with anti-static treatment."
+        },
+        {
+          "number": 2,
+          "name": "Cooling Gel Memory Foam (5cm)",
+          "description": "Dissolves pressure at shoulders, hips, and lower back."
+        },
+        {
+          "number": 3,
+          "name": "Natural Latex Transition Layer (5cm)",
+          "description": "Adds uplifting bounce so you never feel sunken."
+        },
+        {
+          "number": 4,
+          "name": "High-Density Supportive Base Foam (16cm)",
+          "description": "Durable foundation ensuring lifetime shape retention."
+        }
+      ],
+      "specifications": {
+        "Core Structure": "Gel Memory Foam + Natural Latex + Base Foam",
+        "Height / Thickness": "26 cm (approx. 10.5 inches)",
+        "Firmness Level": "Medium Soft (4 / 10)",
+        "Country of Origin": "Malaysia"
+      },
+      "faq": [
+        {
+          "question": "Does it sleep warm?",
+          "answer": "Our gel memory foam uses open-cell structure combined with a natural latex transition layer to ensure airflow."
+        }
+      ],
+      "status": "published",
+      "isFeatured": false,
+      "variants": [
+        {
+          "id": "var-cs-single",
+          "productId": "prod-cloud-serenity",
+          "sku": "KAMAAR-CS-SGL",
+          "sizeName": "Single",
+          "dimensions": "91cm x 190cm x 26cm",
+          "priceSen": 149900,
+          "compareAtPriceSen": 179900,
+          "stockQuantity": 7,
+          "leadTimeDays": 2,
+          "isActive": true
+        },
+        {
+          "id": "var-cs-queen",
+          "productId": "prod-cloud-serenity",
+          "sku": "KAMAAR-CS-QEN",
+          "sizeName": "Queen",
+          "dimensions": "152cm x 190cm x 26cm",
+          "priceSen": 239900,
+          "compareAtPriceSen": 279900,
+          "stockQuantity": 11,
+          "leadTimeDays": 2,
+          "isActive": true
+        },
+        {
+          "id": "var-cs-king",
+          "productId": "prod-cloud-serenity",
+          "sku": "KAMAAR-CS-KNG",
+          "sizeName": "King",
+          "dimensions": "183cm x 190cm x 26cm",
+          "priceSen": 289900,
+          "compareAtPriceSen": 339900,
+          "stockQuantity": 6,
+          "leadTimeDays": 2,
+          "isActive": true
+        }
+      ],
+      "images": [
+        {
+          "id": "img-cs-1",
+          "productId": "prod-cloud-serenity",
+          "imageUrl": "https://images.unsplash.com/photo-1584100936595-c0654b55a2e2?auto=format&fit=crop&w=1000&q=80",
+          "altText": "Kamaar Cloud Serenity Mattress in light modern bedroom",
+          "displayOrder": 1,
+          "isPrimary": true
+        }
+      ],
+      "createdAt": "2026-09-06T00:00:00Z",
+      "updatedAt": "2026-09-30T00:00:00Z"
+    },
+    {
+      "id": "prod-nature-first",
+      "name": "Kamaar Nature First Pure 100% Latex Mattress",
+      "slug": "lena-nature-first-latex-mattress",
+      "subtitle": "GOLS-Certified Organic Latex with Raw Unbleached Cotton",
+      "description": "Strictly zero petroleum products, zero chemical fire retardants, and zero metal components. Raw, unbleached GOTS-certified organic cotton encasing 100% natural tree-tapped latex.",
+      "shortDescription": "Pure eco-conscious certified organic latex mattress with unbleached organic cotton cover.",
+      "categoryId": "cat-mattresses",
+      "productType": "mattress",
+      "material": "100% Natural Latex",
+      "firmness": "Medium",
+      "firmnessScale": 5,
+      "thicknessCm": 23,
+      "warrantyYears": 10,
+      "trialNights": 100,
+      "features": [
+        "GOLS Certified 100% Organic Latex",
+        "GOTS Certified Organic Unbleached Cotton",
+        "100% Biodegradable & Eco-Conscious"
+      ],
+      "layers": [
+        {
+          "number": 1,
+          "name": "GOTS Organic Unbleached Cotton Quilt",
+          "description": "Pure natural cotton unbleached and chemical-free."
+        },
+        {
+          "number": 2,
+          "name": "Medium Natural Latex Core (23cm)",
+          "description": "Naturally temperature neutral with self-ventilating pinhole design."
+        }
+      ],
+      "specifications": {
+        "Core Material": "100% Organic Natural Latex",
+        "Thickness": "23cm",
+        "Firmness": "Medium (5/10)"
+      },
+      "faq": [
+        {
+          "question": "Is this suitable for babies and allergy sufferers?",
+          "answer": "Yes! It is completely hypoallergenic, free of toxic off-gassing and ideal for sensitive skin."
+        }
+      ],
+      "status": "published",
+      "isFeatured": false,
+      "variants": [
+        {
+          "id": "var-nf-queen",
+          "productId": "prod-nature-first",
+          "sku": "KAMAAR-NF-QEN",
+          "sizeName": "Queen",
+          "dimensions": "152cm x 190cm x 23cm",
+          "priceSen": 369900,
+          "compareAtPriceSen": 429900,
+          "stockQuantity": 8,
+          "leadTimeDays": 3,
+          "isActive": true
+        },
+        {
+          "id": "var-nf-king",
+          "productId": "prod-nature-first",
+          "sku": "KAMAAR-NF-KNG",
+          "sizeName": "King",
+          "dimensions": "183cm x 190cm x 23cm",
+          "priceSen": 439900,
+          "compareAtPriceSen": 509900,
+          "stockQuantity": 5,
+          "leadTimeDays": 3,
+          "isActive": true
+        }
+      ],
+      "images": [
+        {
+          "id": "img-nf-1",
+          "productId": "prod-nature-first",
+          "imageUrl": "https://images.unsplash.com/photo-1582582621959-48d27397dc69?auto=format&fit=crop&w=1000&q=80",
+          "altText": "Nature First Eco Latex Mattress",
+          "displayOrder": 1,
+          "isPrimary": true
+        }
+      ],
+      "createdAt": "2026-09-07T00:00:00Z",
+      "updatedAt": "2026-09-30T00:00:00Z"
+    },
+    {
+      "id": "prod-lumbar-care",
+      "name": "Kamaar Lumbar Care Spinal Pro Mattress",
+      "slug": "lena-lumbar-care-spinal-pro",
+      "subtitle": "Extra Firm Spinal Correction with Dynamic Sacral Pad",
+      "description": "Engineered for sleepers requiring maximum spinal firmness and rigid sacral stability. Features a triple-zoned high tensile steel coil unit topped with vulcanized firm latex.",
+      "shortDescription": "Extra firm orthopaedic mattress specifically targeted for chronic lower back and spinal recovery.",
+      "categoryId": "cat-mattresses",
+      "productType": "mattress",
+      "material": "Orthopaedic Support",
+      "firmness": "Firm",
+      "firmnessScale": 9,
+      "thicknessCm": 26,
+      "warrantyYears": 10,
+      "trialNights": 100,
+      "features": [
+        "High-tensile orthopaedic coil core",
+        "Firm latex sacral alignment zone",
+        "Reinforced perimeter edge support"
+      ],
+      "layers": [
+        {
+          "number": 1,
+          "name": "Anti-Static Silver Woven Fabric",
+          "description": "Discharges body static electricity for relaxed muscular tension."
+        },
+        {
+          "number": 2,
+          "name": "Extra-Firm Vulcanized Latex (5cm)",
+          "description": "Firm pushback preventing lower spine sagging."
+        },
+        {
+          "number": 3,
+          "name": "Heavy Gauge Spinal Spring System (21cm)",
+          "description": "Reinforced 2.4mm steel coils for non-sag support."
+        }
+      ],
+      "specifications": {
+        "Structure": "Reinforced Coil + Firm Latex",
+        "Thickness": "26cm",
+        "Firmness": "Firm (9/10)"
+      },
+      "faq": [
+        {
+          "question": "Will this cure back pain?",
+          "answer": "While not a medical device, its proper spinal alignment helps relieve muscular strain caused by sagging mattresses."
+        }
+      ],
+      "status": "published",
+      "isFeatured": false,
+      "variants": [
+        {
+          "id": "var-lc-queen",
+          "productId": "prod-lumbar-care",
+          "sku": "KAMAAR-LC-QEN",
+          "sizeName": "Queen",
+          "dimensions": "152cm x 190cm x 26cm",
+          "priceSen": 279900,
+          "compareAtPriceSen": 329900,
+          "stockQuantity": 9,
+          "leadTimeDays": 2,
+          "isActive": true
+        },
+        {
+          "id": "var-lc-king",
+          "productId": "prod-lumbar-care",
+          "sku": "KAMAAR-LC-KNG",
+          "sizeName": "King",
+          "dimensions": "183cm x 190cm x 26cm",
+          "priceSen": 339900,
+          "compareAtPriceSen": 399900,
+          "stockQuantity": 4,
+          "leadTimeDays": 2,
+          "isActive": true
+        }
+      ],
+      "images": [
+        {
+          "id": "img-lc-1",
+          "productId": "prod-lumbar-care",
+          "imageUrl": "https://images.unsplash.com/photo-1598928506311-c55ded91a20c?auto=format&fit=crop&w=1000&q=80",
+          "altText": "Kamaar Lumbar Care Mattress",
+          "displayOrder": 1,
+          "isPrimary": true
+        }
+      ],
+      "createdAt": "2026-09-08T00:00:00Z",
+      "updatedAt": "2026-09-30T00:00:00Z"
+    },
+    {
+      "id": "prod-celestial-plush",
+      "name": "Kamaar Celestial Plush Euro-Top Mattress",
+      "slug": "lena-celestial-plush-euro-top",
+      "subtitle": "Ultra-Comfort Cloud-Cushioned Euro-Top with 7-Zone Support",
+      "description": "Envelop yourself in pure luxury. Designed for side sleepers who need gentle cradling at the shoulders and hips while maintaining core stability.",
+      "shortDescription": "Plush cloud euro-top mattress offering luxurious surface softness with firm underlying spring foundation.",
+      "categoryId": "cat-mattresses",
+      "productType": "mattress",
+      "material": "Hybrid Pocket Spring",
+      "firmness": "Soft",
+      "firmnessScale": 3,
+      "thicknessCm": 32,
+      "warrantyYears": 10,
+      "trialNights": 100,
+      "features": [
+        "Thick Euro-Top cushioned pillow layer",
+        "7-Zone individual pocket spring foundation",
+        "Breathable organic bamboo knit"
+      ],
+      "layers": [
+        {
+          "number": 1,
+          "name": "Quilted Cloud Euro-Top (8cm)",
+          "description": "Super-soft aerated foam and plush latex batting."
+        },
+        {
+          "number": 2,
+          "name": "7-Zone Pocket Coils (24cm)",
+          "description": "Independent contouring for zero partner disturbance."
+        }
+      ],
+      "specifications": {
+        "Structure": "Euro-top + Pocket Springs",
+        "Thickness": "32cm",
+        "Firmness": "Soft (3/10)"
+      },
+      "faq": [
+        {
+          "question": "Is it good for side sleepers?",
+          "answer": "Yes! The plush euro-top cushions your hips and shoulders, eliminating pressure numbness."
+        }
+      ],
+      "status": "published",
+      "isFeatured": false,
+      "variants": [
+        {
+          "id": "var-cp-queen",
+          "productId": "prod-celestial-plush",
+          "sku": "KAMAAR-CP-QEN",
+          "sizeName": "Queen",
+          "dimensions": "152cm x 190cm x 32cm",
+          "priceSen": 389900,
+          "compareAtPriceSen": 459900,
+          "stockQuantity": 6,
+          "leadTimeDays": 3,
+          "isActive": true
+        },
+        {
+          "id": "var-cp-king",
+          "productId": "prod-celestial-plush",
+          "sku": "KAMAAR-CP-KNG",
+          "sizeName": "King",
+          "dimensions": "183cm x 190cm x 32cm",
+          "priceSen": 459900,
+          "compareAtPriceSen": 539900,
+          "stockQuantity": 5,
+          "leadTimeDays": 3,
+          "isActive": true
+        }
+      ],
+      "images": [
+        {
+          "id": "img-cp-1",
+          "productId": "prod-celestial-plush",
+          "imageUrl": "https://images.unsplash.com/photo-1631049307264-da0ec9d70304?auto=format&fit=crop&w=1000&q=80",
+          "altText": "Celestial Plush Euro-Top",
+          "displayOrder": 1,
+          "isPrimary": true
+        }
+      ],
+      "createdAt": "2026-09-09T00:00:00Z",
+      "updatedAt": "2026-09-30T00:00:00Z"
+    },
+    {
+      "id": "prod-miracle-sleep",
+      "name": "Kamaar Miracle Sleep Multi-Zone Latex Mattress",
+      "slug": "lena-miracle-sleep-multi-zone",
+      "subtitle": "Precision Multi-Density Latex Matrix for Active Pressure Relief",
+      "description": "Inspired by world-class latex engineering, the Miracle Sleep mattress features 5 differential density pin-hole zones that adapt dynamically whether you sleep on your back, side, or stomach.",
+      "shortDescription": "Advanced 5-zone natural latex mattress engineered for ergonomic spinal alignment.",
+      "categoryId": "cat-mattresses",
+      "productType": "mattress",
+      "material": "100% Natural Latex",
+      "firmness": "Medium",
+      "firmnessScale": 5,
+      "thicknessCm": 25,
+      "warrantyYears": 10,
+      "trialNights": 100,
+      "features": [
+        "5-Zone variable density natural latex",
+        "Zero synthetic additives",
+        "Tencel moisture-wicking cover"
+      ],
+      "layers": [
+        {
+          "number": 1,
+          "name": "Belgian Tencel Cover",
+          "description": "Naturally breathable cooling knit."
+        },
+        {
+          "number": 2,
+          "name": "5-Zone Latex Monoblock (25cm)",
+          "description": "Dynamic body weight distribution."
+        }
+      ],
+      "specifications": {
+        "Material": "100% Natural Latex",
+        "Thickness": "25cm",
+        "Firmness": "Medium (5/10)"
+      },
+      "faq": [
+        {
+          "question": "How long will this latex mattress last?",
+          "answer": "High-density natural latex retains its elasticity for 15+ years without permanent sagging."
+        }
+      ],
+      "status": "published",
+      "isFeatured": false,
+      "variants": [
+        {
+          "id": "var-ms-queen",
+          "productId": "prod-miracle-sleep",
+          "sku": "KAMAAR-MS-QEN",
+          "sizeName": "Queen",
+          "dimensions": "152cm x 190cm x 25cm",
+          "priceSen": 329900,
+          "compareAtPriceSen": 389900,
+          "stockQuantity": 10,
+          "leadTimeDays": 2,
+          "isActive": true
+        },
+        {
+          "id": "var-ms-king",
+          "productId": "prod-miracle-sleep",
+          "sku": "KAMAAR-MS-KNG",
+          "sizeName": "King",
+          "dimensions": "183cm x 190cm x 25cm",
+          "priceSen": 389900,
+          "compareAtPriceSen": 459900,
+          "stockQuantity": 7,
+          "leadTimeDays": 2,
+          "isActive": true
+        }
+      ],
+      "images": [
+        {
+          "id": "img-ms-1",
+          "productId": "prod-miracle-sleep",
+          "imageUrl": "https://images.unsplash.com/photo-1540518614846-7ede433c4ef4?auto=format&fit=crop&w=1000&q=80",
+          "altText": "Miracle Sleep Latex Mattress",
+          "displayOrder": 1,
+          "isPrimary": true
+        }
+      ],
+      "createdAt": "2026-09-10T00:00:00Z",
+      "updatedAt": "2026-09-30T00:00:00Z"
+    },
+    {
+      "id": "prod-dream-sanctuary",
+      "name": "Kamaar Dream Sanctuary Pocket Spring Mattress",
+      "slug": "lena-dream-sanctuary-pocket-spring",
+      "subtitle": "Classic Independent Pocket Coils with Natural Latex Padding",
+      "description": "An enduring classic that pairs individual pocket springs with dual layers of breathable Malaysian natural latex for balanced bounce and zero partner disruption.",
+      "shortDescription": "Classic balanced hybrid with pocket springs and natural latex comfort layers.",
+      "categoryId": "cat-mattresses",
+      "productType": "mattress",
+      "material": "Hybrid Pocket Spring",
+      "firmness": "Medium Firm",
+      "firmnessScale": 6,
+      "thicknessCm": 27,
+      "warrantyYears": 10,
+      "trialNights": 100,
+      "features": [
+        "Independent pocket coils",
+        "Dual natural latex comfort padding",
+        "Breathable damask outer"
+      ],
+      "layers": [
+        {
+          "number": 1,
+          "name": "Soft Jacquard Quilt",
+          "description": "Plush surface cushioning."
+        },
+        {
+          "number": 2,
+          "name": "Natural Latex Pad (3cm)",
+          "description": "Resilient comfort response."
+        },
+        {
+          "number": 3,
+          "name": "Pocket Spring Core (22cm)",
+          "description": "Silent, isolated spring support."
+        },
+        {
+          "number": 4,
+          "name": "Base Stabilizing Pad (2cm)",
+          "description": "Provides foundation support."
+        }
+      ],
+      "specifications": {
+        "Structure": "Pocket Coils + Latex",
+        "Thickness": "27cm",
+        "Firmness": "Medium Firm (6/10)"
+      },
+      "faq": [
+        {
+          "question": "Does it squeak?",
+          "answer": "No. Every spring is individually wrapped in non-woven fabric sleeves, eliminating all metal-on-metal friction and squeaking."
+        }
+      ],
+      "status": "published",
+      "isFeatured": false,
+      "variants": [
+        {
+          "id": "var-ds-single",
+          "productId": "prod-dream-sanctuary",
+          "sku": "KAMAAR-DS-SGL",
+          "sizeName": "Single",
+          "dimensions": "91cm x 190cm x 27cm",
+          "priceSen": 139900,
+          "compareAtPriceSen": 169900,
+          "stockQuantity": 9,
+          "leadTimeDays": 2,
+          "isActive": true
+        },
+        {
+          "id": "var-ds-queen",
+          "productId": "prod-dream-sanctuary",
+          "sku": "KAMAAR-DS-QEN",
+          "sizeName": "Queen",
+          "dimensions": "152cm x 190cm x 27cm",
+          "priceSen": 229900,
+          "compareAtPriceSen": 269900,
+          "stockQuantity": 12,
+          "leadTimeDays": 2,
+          "isActive": true
+        },
+        {
+          "id": "var-ds-king",
+          "productId": "prod-dream-sanctuary",
+          "sku": "KAMAAR-DS-KNG",
+          "sizeName": "King",
+          "dimensions": "183cm x 190cm x 27cm",
+          "priceSen": 279900,
+          "compareAtPriceSen": 329900,
+          "stockQuantity": 8,
+          "leadTimeDays": 2,
+          "isActive": true
+        }
+      ],
+      "images": [
+        {
+          "id": "img-ds-1",
+          "productId": "prod-dream-sanctuary",
+          "imageUrl": "https://images.unsplash.com/photo-1616046229478-9901c5536a45?auto=format&fit=crop&w=1000&q=80",
+          "altText": "Dream Sanctuary Mattress",
+          "displayOrder": 1,
+          "isPrimary": true
+        }
+      ],
+      "createdAt": "2026-09-11T00:00:00Z",
+      "updatedAt": "2026-09-30T00:00:00Z"
+    },
+    {
+      "id": "prod-compact-foldaway",
+      "name": "Kamaar Foldaway Pure Latex Guest Mattress (10cm)",
+      "slug": "lena-foldaway-pure-latex-guest-mattress",
+      "subtitle": "Tri-Fold High-Resilience Natural Latex for Guests & Multi-Purpose Living",
+      "description": "Never compromise on guest comfort. Made with 10cm of high-density pure natural latex that easily folds into three compact segments with an integrated carry handle and washable travel cover.",
+      "shortDescription": "10cm portable tri-fold natural latex mattress with washable cover and carry bag.",
+      "categoryId": "cat-mattresses",
+      "productType": "mattress",
+      "material": "100% Natural Latex",
+      "firmness": "Medium Firm",
+      "firmnessScale": 6,
+      "thicknessCm": 10,
+      "warrantyYears": 5,
+      "trialNights": 30,
+      "features": [
+        "Tri-fold space saving design",
+        "100% Natural latex block",
+        "Washable outer cover with handle"
+      ],
+      "layers": [
+        {
+          "number": 1,
+          "name": "Tri-Fold Latex Core (10cm)",
+          "description": "Portable comfort without feeling the floor beneath."
+        }
+      ],
+      "specifications": {
+        "Material": "100% Natural Latex",
+        "Thickness": "10cm",
+        "Portability": "Tri-Foldable"
+      },
+      "faq": [
+        {
+          "question": "Can this be used on the floor?",
+          "answer": "Yes! The 10cm pure natural latex provides sufficient density so your body never touches the hard floor."
+        }
+      ],
+      "status": "published",
+      "isFeatured": false,
+      "variants": [
+        {
+          "id": "var-cf-single",
+          "productId": "prod-compact-foldaway",
+          "sku": "KAMAAR-CF-SGL",
+          "sizeName": "Single",
+          "dimensions": "91cm x 190cm x 10cm",
+          "priceSen": 79900,
+          "compareAtPriceSen": 99900,
+          "stockQuantity": 15,
+          "leadTimeDays": 1,
+          "isActive": true
+        },
+        {
+          "id": "var-cf-supersingle",
+          "productId": "prod-compact-foldaway",
+          "sku": "KAMAAR-CF-SSG",
+          "sizeName": "Super Single",
+          "dimensions": "107cm x 190cm x 10cm",
+          "priceSen": 99900,
+          "compareAtPriceSen": 119900,
+          "stockQuantity": 10,
+          "leadTimeDays": 1,
+          "isActive": true
+        }
+      ],
+      "images": [
+        {
+          "id": "img-cf-1",
+          "productId": "prod-compact-foldaway",
+          "imageUrl": "https://images.unsplash.com/photo-1540518614846-7ede433c4ef4?auto=format&fit=crop&w=1000&q=80",
+          "altText": "Kamaar Foldaway Guest Mattress",
+          "displayOrder": 1,
+          "isPrimary": true
+        }
+      ],
+      "createdAt": "2026-09-12T00:00:00Z",
+      "updatedAt": "2026-09-30T00:00:00Z"
+    },
+    {
+      "id": "prod-pillow-contour",
+      "name": "Kamaar Ergonomic Cervical Contour Natural Latex Pillow",
+      "slug": "lena-ergonomic-contour-natural-latex-pillow",
+      "subtitle": "Dual-Wave Cervical Support for Neck Pain & Snore Reduction",
+      "description": "Specially curved to cradle the head and support the natural cervical lordosis of the neck. Made from 100% pure natural latex with pinhole ventilation that prevents trapped heat and eliminates neck stiffness.",
+      "shortDescription": "Dual-wave contoured 100% natural latex pillow engineered for neck and shoulder pain relief.",
+      "categoryId": "cat-pillows",
+      "productType": "pillow",
+      "material": "100% Natural Latex",
+      "firmness": "Medium",
+      "thicknessCm": 11,
+      "warrantyYears": 3,
+      "trialNights": 30,
+      "features": [
+        "100% Natural Organic Latex",
+        "Dual-height contour (10cm / 12cm)",
+        "Anti-dustmite & hypoallergenic"
+      ],
+      "layers": [],
+      "specifications": {
+        "Dimensions": "60cm x 40cm x 10/12cm",
+        "Material": "100% Natural Latex"
+      },
+      "faq": [
+        {
+          "question": "How do I clean this pillow?",
+          "answer": "The organic tencel cover is removable and machine washable. Spot-clean the latex core with a damp cloth if needed."
+        }
+      ],
+      "status": "published",
+      "isFeatured": true,
+      "variants": [
+        {
+          "id": "var-pc-std",
+          "productId": "prod-pillow-contour",
+          "sku": "KAMAAR-PIL-CTR",
+          "sizeName": "Standard",
+          "dimensions": "60cm x 40cm x 10/12cm",
+          "priceSen": 26900,
+          "compareAtPriceSen": 32900,
+          "stockQuantity": 40,
+          "leadTimeDays": 1,
+          "isActive": true
+        }
+      ],
+      "images": [
+        {
+          "id": "img-pc-1",
+          "productId": "prod-pillow-contour",
+          "imageUrl": "https://images.unsplash.com/photo-1584100936595-c0654b55a2e2?auto=format&fit=crop&w=1000&q=80",
+          "altText": "Kamaar Ergonomic Contour Latex Pillow",
+          "displayOrder": 1,
+          "isPrimary": true
+        }
+      ],
+      "createdAt": "2026-09-13T00:00:00Z",
+      "updatedAt": "2026-09-30T00:00:00Z"
+    },
+    {
+      "id": "prod-pillow-classic",
+      "name": "Kamaar Classic Plush Natural Latex Pillow",
+      "slug": "lena-classic-plush-natural-latex-pillow",
+      "subtitle": "Traditional Rounded Shape with Buoyant Latex Rebound",
+      "description": "The familiarity of a traditional pillow with the superior buoyant, non-flattening resilience of pure Malaysian natural latex. Never needs fluffing and stays cool all night.",
+      "shortDescription": "Traditional shape pillow crafted from 100% aerated natural latex.",
+      "categoryId": "cat-pillows",
+      "productType": "pillow",
+      "material": "100% Natural Latex",
+      "firmness": "Medium Soft",
+      "thicknessCm": 13,
+      "warrantyYears": 3,
+      "trialNights": 30,
+      "features": [
+        "Non-flattening resilience",
+        "Continuous airflow micro-holes",
+        "Tencel zip cover"
+      ],
+      "layers": [],
+      "specifications": {
+        "Dimensions": "65cm x 40cm x 13cm",
+        "Material": "100% Natural Latex"
+      },
+      "faq": [],
+      "status": "published",
+      "isFeatured": false,
+      "variants": [
+        {
+          "id": "var-pcl-std",
+          "productId": "prod-pillow-classic",
+          "sku": "KAMAAR-PIL-CLS",
+          "sizeName": "Standard",
+          "dimensions": "65cm x 40cm x 13cm",
+          "priceSen": 24900,
+          "compareAtPriceSen": 29900,
+          "stockQuantity": 35,
+          "leadTimeDays": 1,
+          "isActive": true
+        }
+      ],
+      "images": [
+        {
+          "id": "img-pcl-1",
+          "productId": "prod-pillow-classic",
+          "imageUrl": "https://images.unsplash.com/photo-1584100936595-c0654b55a2e2?auto=format&fit=crop&w=1000&q=80",
+          "altText": "Kamaar Classic Plush Pillow",
+          "displayOrder": 1,
+          "isPrimary": true
+        }
+      ],
+      "createdAt": "2026-09-14T00:00:00Z",
+      "updatedAt": "2026-09-30T00:00:00Z"
+    },
+    {
+      "id": "prod-pillow-silk",
+      "name": "Kamaar Mulberry Silk & Micro-Down Hotel Pillow",
+      "slug": "lena-mulberry-silk-down-pillow",
+      "subtitle": "5-Star Hotel Indulgence with 100% Grade 6A Mulberry Silk",
+      "description": "Plump micro-down alternative encased in pure Grade 6A Mulberry Silk. Fluffy, cloud-like luxury for sleepers who love to sink gently into their pillow.",
+      "shortDescription": "Ultra-plush hotel pillow with Grade 6A Mulberry silk and hypoallergenic micro-down.",
+      "categoryId": "cat-pillows",
+      "productType": "pillow",
+      "material": "Memory Foam",
+      "firmness": "Soft",
+      "thicknessCm": 15,
+      "warrantyYears": 2,
+      "trialNights": 30,
+      "features": [
+        "Grade 6A Mulberry Silk shell",
+        "Hypoallergenic micro-down filling",
+        "Machine washable outer"
+      ],
+      "layers": [],
+      "specifications": {
+        "Dimensions": "70cm x 48cm",
+        "Shell": "Mulberry Silk"
+      },
+      "faq": [],
+      "status": "published",
+      "isFeatured": false,
+      "variants": [
+        {
+          "id": "var-psk-std",
+          "productId": "prod-pillow-silk",
+          "sku": "KAMAAR-PIL-SLK",
+          "sizeName": "Standard",
+          "dimensions": "70cm x 48cm",
+          "priceSen": 29900,
+          "compareAtPriceSen": 36900,
+          "stockQuantity": 25,
+          "leadTimeDays": 1,
+          "isActive": true
+        }
+      ],
+      "images": [
+        {
+          "id": "img-psk-1",
+          "productId": "prod-pillow-silk",
+          "imageUrl": "https://images.unsplash.com/photo-1584100936595-c0654b55a2e2?auto=format&fit=crop&w=1000&q=80",
+          "altText": "Silk and Down Pillow",
+          "displayOrder": 1,
+          "isPrimary": true
+        }
+      ],
+      "createdAt": "2026-09-15T00:00:00Z",
+      "updatedAt": "2026-09-30T00:00:00Z"
+    },
+    {
+      "id": "prod-topper-5cm",
+      "name": "Kamaar 100% Natural Latex Mattress Topper (5cm)",
+      "slug": "lena-natural-latex-mattress-topper-5cm",
+      "subtitle": "Instantly Rejuvenate Any Existing Mattress with 5cm of Pure Latex",
+      "description": "Transform an overly firm or aging mattress. Made with a 5cm solid slab of pure Malaysian natural latex with elastic corner straps that secure snugly to your mattress.",
+      "shortDescription": "5cm pure natural latex topper with organic tencel cover and secure anchor bands.",
+      "categoryId": "cat-toppers",
+      "productType": "topper",
+      "material": "100% Natural Latex",
+      "firmness": "Medium",
+      "thicknessCm": 5,
+      "warrantyYears": 5,
+      "trialNights": 30,
+      "features": [
+        "5cm Solid 100% Natural Latex slab",
+        "Elastic anchor corner bands",
+        "Removable organic bamboo cover"
+      ],
+      "layers": [],
+      "specifications": {
+        "Core": "100% Natural Latex",
+        "Thickness": "5 cm"
+      },
+      "faq": [],
+      "status": "published",
+      "isFeatured": true,
+      "variants": [
+        {
+          "id": "var-top5-single",
+          "productId": "prod-topper-5cm",
+          "sku": "KAMAAR-TOP5-SGL",
+          "sizeName": "Single",
+          "dimensions": "91cm x 190cm x 5cm",
+          "priceSen": 59900,
+          "compareAtPriceSen": 74900,
+          "stockQuantity": 18,
+          "leadTimeDays": 1,
+          "isActive": true
+        },
+        {
+          "id": "var-top5-queen",
+          "productId": "prod-topper-5cm",
+          "sku": "KAMAAR-TOP5-QEN",
+          "sizeName": "Queen",
+          "dimensions": "152cm x 190cm x 5cm",
+          "priceSen": 89900,
+          "compareAtPriceSen": 109900,
+          "stockQuantity": 20,
+          "leadTimeDays": 1,
+          "isActive": true
+        },
+        {
+          "id": "var-top5-king",
+          "productId": "prod-topper-5cm",
+          "sku": "KAMAAR-TOP5-KNG",
+          "sizeName": "King",
+          "dimensions": "183cm x 190cm x 5cm",
+          "priceSen": 109900,
+          "compareAtPriceSen": 129900,
+          "stockQuantity": 15,
+          "leadTimeDays": 1,
+          "isActive": true
+        }
+      ],
+      "images": [
+        {
+          "id": "img-top5-1",
+          "productId": "prod-topper-5cm",
+          "imageUrl": "https://images.unsplash.com/photo-1540518614846-7ede433c4ef4?auto=format&fit=crop&w=1000&q=80",
+          "altText": "5cm Natural Latex Topper",
+          "displayOrder": 1,
+          "isPrimary": true
+        }
+      ],
+      "createdAt": "2026-09-16T00:00:00Z",
+      "updatedAt": "2026-09-30T00:00:00Z"
+    },
+    {
+      "id": "prod-topper-75cm",
+      "name": "Kamaar Deep Cushion Natural Latex Topper (7.5cm)",
+      "slug": "lena-natural-latex-mattress-topper-7-5cm",
+      "subtitle": "Extra-Thick 7.5cm Luxury Latex Cushioning",
+      "description": "For those seeking significant pressure relief and plush comfort. The 7.5cm depth completely absorbs body weight and eliminates partner movement.",
+      "shortDescription": "Extra-thick 7.5cm organic natural latex topper for deep pressure relief.",
+      "categoryId": "cat-toppers",
+      "productType": "topper",
+      "material": "100% Natural Latex",
+      "firmness": "Medium Soft",
+      "thicknessCm": 7.5,
+      "warrantyYears": 5,
+      "trialNights": 30,
+      "features": [
+        "7.5cm Thick Natural Latex",
+        "Heavy duty corner anchor straps",
+        "Zero synthetic foam"
+      ],
+      "layers": [],
+      "specifications": {
+        "Thickness": "7.5 cm",
+        "Material": "100% Natural Latex"
+      },
+      "faq": [],
+      "status": "published",
+      "isFeatured": false,
+      "variants": [
+        {
+          "id": "var-top75-queen",
+          "productId": "prod-topper-75cm",
+          "sku": "KAMAAR-TOP7-QEN",
+          "sizeName": "Queen",
+          "dimensions": "152cm x 190cm x 7.5cm",
+          "priceSen": 119900,
+          "compareAtPriceSen": 144900,
+          "stockQuantity": 12,
+          "leadTimeDays": 1,
+          "isActive": true
+        },
+        {
+          "id": "var-top75-king",
+          "productId": "prod-topper-75cm",
+          "sku": "KAMAAR-TOP7-KNG",
+          "sizeName": "King",
+          "dimensions": "183cm x 190cm x 7.5cm",
+          "priceSen": 144900,
+          "compareAtPriceSen": 174900,
+          "stockQuantity": 9,
+          "leadTimeDays": 1,
+          "isActive": true
+        }
+      ],
+      "images": [
+        {
+          "id": "img-top75-1",
+          "productId": "prod-topper-75cm",
+          "imageUrl": "https://images.unsplash.com/photo-1540518614846-7ede433c4ef4?auto=format&fit=crop&w=1000&q=80",
+          "altText": "7.5cm Latex Topper",
+          "displayOrder": 1,
+          "isPrimary": true
+        }
+      ],
+      "createdAt": "2026-09-17T00:00:00Z",
+      "updatedAt": "2026-09-30T00:00:00Z"
+    },
+    {
+      "id": "prod-protector-bamboo",
+      "name": "Kamaar Breathable Waterproof Bamboo Mattress Protector",
+      "slug": "lena-waterproof-bamboo-mattress-protector",
+      "subtitle": "100% Waterproof Membrane with Silky Bamboo Terry Surface",
+      "description": "Protect your mattress warranty from spills, perspiration, and dust mites. Features a noiseless polyurethane membrane that blocks liquids completely while allowing air to breathe.",
+      "shortDescription": "Silky noiseless waterproof mattress protector with deep 40cm fitted skirt.",
+      "categoryId": "cat-toppers",
+      "productType": "topper",
+      "material": "Orthopaedic Support",
+      "warrantyYears": 2,
+      "trialNights": 30,
+      "features": [
+        "100% Waterproof barrier",
+        "Silky, noiseless bamboo terry",
+        "Deep 40cm fitted skirt with full elastic"
+      ],
+      "layers": [],
+      "specifications": {
+        "Fabric": "70% Bamboo, 30% Cotton Terry with TPU Backing",
+        "Pocket Depth": "40 cm"
+      },
+      "faq": [],
+      "status": "published",
+      "isFeatured": true,
+      "variants": [
+        {
+          "id": "var-prot-single",
+          "productId": "prod-protector-bamboo",
+          "sku": "KAMAAR-PROT-SGL",
+          "sizeName": "Single",
+          "dimensions": "91cm x 190cm x 40cm",
+          "priceSen": 14900,
+          "compareAtPriceSen": 19900,
+          "stockQuantity": 50,
+          "leadTimeDays": 1,
+          "isActive": true
+        },
+        {
+          "id": "var-prot-queen",
+          "productId": "prod-protector-bamboo",
+          "sku": "KAMAAR-PROT-QEN",
+          "sizeName": "Queen",
+          "dimensions": "152cm x 190cm x 40cm",
+          "priceSen": 18900,
+          "compareAtPriceSen": 24900,
+          "stockQuantity": 60,
+          "leadTimeDays": 1,
+          "isActive": true
+        },
+        {
+          "id": "var-prot-king",
+          "productId": "prod-protector-bamboo",
+          "sku": "KAMAAR-PROT-KNG",
+          "sizeName": "King",
+          "dimensions": "183cm x 190cm x 40cm",
+          "priceSen": 21900,
+          "compareAtPriceSen": 28900,
+          "stockQuantity": 45,
+          "leadTimeDays": 1,
+          "isActive": true
+        }
+      ],
+      "images": [
+        {
+          "id": "img-prot-1",
+          "productId": "prod-protector-bamboo",
+          "imageUrl": "https://images.unsplash.com/photo-1522771739844-6a9f6d5f14af?auto=format&fit=crop&w=1000&q=80",
+          "altText": "Waterproof Bamboo Mattress Protector",
+          "displayOrder": 1,
+          "isPrimary": true
+        }
+      ],
+      "createdAt": "2026-09-18T00:00:00Z",
+      "updatedAt": "2026-09-30T00:00:00Z"
+    },
+    {
+      "id": "prod-bedframe-grand",
+      "name": "Kamaar Grand Tufted Upholstered Bedframe",
+      "slug": "lena-grand-tufted-upholstered-bedframe",
+      "subtitle": "Kiln-Dried Malaysian Hardwood with Belgian Linen Upholstery",
+      "description": "Built with solid kiln-dried Malaysian tropical hardwood for zero creaking and reinforced load capacity. Featuring a handcrafted deep-tufted headboard upholstered in water-repellent Belgian linen fabric.",
+      "shortDescription": "Solid Malaysian hardwood upholstered bedframe with luxury tufted wingback headboard.",
+      "categoryId": "cat-bedframes",
+      "productType": "bedframe",
+      "material": "Orthopaedic Support",
+      "warrantyYears": 10,
+      "trialNights": 30,
+      "features": [
+        "Solid Kiln-Dried Tropical Hardwood frame",
+        "Water & stain-resistant Belgian linen",
+        "Solid plywood flat divan support (ideal for latex mattresses)"
+      ],
+      "layers": [],
+      "specifications": {
+        "Frame Material": "Kiln-Dried Solid Hardwood",
+        "Upholstery": "Belgian Linen Fabric",
+        "Warranty": "10 Years on Frame"
+      },
+      "faq": [
+        {
+          "question": "Is this bedframe suitable for heavy latex mattresses?",
+          "answer": "Yes. It features reinforced center support legs and a solid flat divan base designed specifically for heavy latex mattresses."
+        }
+      ],
+      "status": "published",
+      "isFeatured": true,
+      "variants": [
+        {
+          "id": "var-bf-queen",
+          "productId": "prod-bedframe-grand",
+          "sku": "KAMAAR-BF-QEN",
+          "sizeName": "Queen",
+          "dimensions": "162cm x 215cm x 125cm",
+          "priceSen": 269900,
+          "compareAtPriceSen": 329900,
+          "stockQuantity": 7,
+          "leadTimeDays": 7,
+          "isActive": true
+        },
+        {
+          "id": "var-bf-king",
+          "productId": "prod-bedframe-grand",
+          "sku": "KAMAAR-BF-KNG",
+          "sizeName": "King",
+          "dimensions": "193cm x 215cm x 125cm",
+          "priceSen": 319900,
+          "compareAtPriceSen": 389900,
+          "stockQuantity": 5,
+          "leadTimeDays": 7,
+          "isActive": true
+        }
+      ],
+      "images": [
+        {
+          "id": "img-bf-1",
+          "productId": "prod-bedframe-grand",
+          "imageUrl": "https://images.unsplash.com/photo-1505693416388-ac5ce068fe85?auto=format&fit=crop&w=1000&q=80",
+          "altText": "Kamaar Grand Tufted Upholstered Bedframe",
+          "displayOrder": 1,
+          "isPrimary": true
+        }
+      ],
+      "createdAt": "2026-09-19T00:00:00Z",
+      "updatedAt": "2026-09-30T00:00:00Z"
+    },
+    {
+      "id": "prod-linen-1000tc",
+      "name": "Kamaar 1000TC Organic Bamboo Cotton Sheet Set",
+      "slug": "lena-1000tc-organic-bamboo-sheet-set",
+      "subtitle": "Silky Sateen Weave with Fitted Sheet, Duvet Cover & 2 Pillowcases",
+      "description": "Experience silky softness cooler than Egyptian cotton. Spun from organic bamboo viscose and long-staple cotton with a 1,000 thread count sateen weave.",
+      "shortDescription": "1,000 thread count organic bamboo cotton bedding set with 40cm extra-deep fitted pocket.",
+      "categoryId": "cat-bedding",
+      "productType": "bedding",
+      "material": "100% Natural Latex",
+      "warrantyYears": 1,
+      "trialNights": 30,
+      "features": [
+        "1,000 Thread Count Organic Bamboo Viscose & Cotton",
+        "Naturally thermal regulating & hypoallergenic",
+        "40cm extra deep mattress pocket"
+      ],
+      "layers": [],
+      "specifications": {
+        "Thread Count": "1,000 TC",
+        "Composition": "60% Bamboo Viscose, 40% Long-Staple Cotton",
+        "Includes": "1 Fitted Sheet, 1 Duvet Cover, 2 Pillowcases"
+      },
+      "faq": [],
+      "status": "published",
+      "isFeatured": true,
+      "variants": [
+        {
+          "id": "var-lin-queen",
+          "productId": "prod-linen-1000tc",
+          "sku": "KAMAAR-LIN-QEN",
+          "sizeName": "Queen",
+          "dimensions": "152cm x 190cm x 40cm",
+          "priceSen": 38900,
+          "compareAtPriceSen": 48900,
+          "stockQuantity": 25,
+          "leadTimeDays": 1,
+          "isActive": true
+        },
+        {
+          "id": "var-lin-king",
+          "productId": "prod-linen-1000tc",
+          "sku": "KAMAAR-LIN-KNG",
+          "sizeName": "King",
+          "dimensions": "183cm x 190cm x 40cm",
+          "priceSen": 42900,
+          "compareAtPriceSen": 52900,
+          "stockQuantity": 20,
+          "leadTimeDays": 1,
+          "isActive": true
+        }
+      ],
+      "images": [
+        {
+          "id": "img-lin-1",
+          "productId": "prod-linen-1000tc",
+          "imageUrl": "https://images.unsplash.com/photo-1522771739844-6a9f6d5f14af?auto=format&fit=crop&w=1000&q=80",
+          "altText": "1000TC Organic Bamboo Cotton Sheet Set",
+          "displayOrder": 1,
+          "isPrimary": true
+        }
+      ],
+      "createdAt": "2026-09-20T00:00:00Z",
+      "updatedAt": "2026-09-30T00:00:00Z"
+    }
+  ],
+  "coupons": [
+    {
+      "id": "coup-kamaarwelcome",
+      "code": "KAMAARWELCOME",
+      "description": "10% Welcome Discount for new customers on orders over RM1,000",
+      "discountType": "percentage",
+      "discountValue": 10,
+      "minSpendSen": 100000,
+      "maxDiscountSen": 50000,
+      "usageLimit": 500,
+      "usageCount": 14,
+      "perCustomerLimit": 1,
+      "startsAt": "2026-01-01T00:00:00Z",
+      "endsAt": "2026-12-31T23:59:59Z",
+      "isActive": true
+    },
+    {
+      "id": "coup-kamaar100",
+      "code": "KAMAAR100",
+      "description": "RM100 Grand Atelier Launch Privileges on mattress orders above RM1,000",
+      "discountType": "fixed_amount",
+      "discountValue": 10000,
+      "minSpendSen": 100000,
+      "usageLimit": 1000,
+      "usageCount": 5,
+      "perCustomerLimit": 1,
+      "startsAt": "2026-01-01T00:00:00Z",
+      "endsAt": "2026-12-31T23:59:59Z",
+      "isActive": true
+    },
+    {
+      "id": "coup-welcome",
+      "code": "LENAWELCOME",
+      "description": "10% Welcome Discount for new customers on orders over RM1,000",
+      "discountType": "percentage",
+      "discountValue": 10,
+      "minSpendSen": 100000,
+      "maxDiscountSen": 50000,
+      "usageLimit": 500,
+      "usageCount": 15,
+      "perCustomerLimit": 1,
+      "startsAt": "2026-01-01T00:00:00Z",
+      "endsAt": "2026-12-31T23:59:59Z",
+      "isActive": true
+    },
+    {
+      "id": "coup-tier100",
+      "code": "TIER100",
+      "description": "RM100 Instant Cash Voucher on mattress purchases above RM1,500",
+      "discountType": "fixed_amount",
+      "discountValue": 10000,
+      "minSpendSen": 150000,
+      "usageLimit": 300,
+      "usageCount": 22,
+      "perCustomerLimit": 1,
+      "startsAt": "2026-01-01T00:00:00Z",
+      "endsAt": "2026-12-31T23:59:59Z",
+      "isActive": true
+    },
+    {
+      "id": "coup-freeship",
+      "code": "FREESHIP",
+      "description": "Complimentary Shipping Voucher on any order across Malaysia",
+      "discountType": "free_shipping",
+      "discountValue": 0,
+      "minSpendSen": 0,
+      "usageLimit": 1000,
+      "usageCount": 37,
+      "perCustomerLimit": 2,
+      "startsAt": "2026-01-01T00:00:00Z",
+      "endsAt": "2026-12-31T23:59:59Z",
+      "isActive": true
+    },
+    {
+      "id": "coup-vip15",
+      "code": "SLEEPVIP",
+      "description": "15% Privilege Discount for premium mattress purchases above RM3,000",
+      "discountType": "percentage",
+      "discountValue": 15,
+      "minSpendSen": 300000,
+      "maxDiscountSen": 80000,
+      "usageLimit": 100,
+      "usageCount": 8,
+      "perCustomerLimit": 1,
+      "startsAt": "2026-01-01T00:00:00Z",
+      "endsAt": "2026-12-31T23:59:59Z",
+      "isActive": true
+    }
+  ],
+  "orders": [
+    {
+      "customerEmail": "danial@example.com.my",
+      "customerName": "Ahmad Danial",
+      "customerPhone": "+60123456789",
+      "shippingAddress": {
+        "fullName": "Ahmad Danial",
+        "phone": "+60123456789",
+        "addressLine1": "No. 18, Jalan Telawi 3, Bangsar",
+        "city": "Kuala Lumpur",
+        "state": "WP Kuala Lumpur",
+        "postcode": "59100",
+        "country": "Malaysia"
+      },
+      "billingAddress": {
+        "fullName": "Ahmad Danial",
+        "phone": "+60123456789",
+        "addressLine1": "No. 18, Jalan Telawi 3, Bangsar",
+        "city": "Kuala Lumpur",
+        "state": "WP Kuala Lumpur",
+        "postcode": "59100",
+        "country": "Malaysia"
+      },
+      "hasLiftAccess": true,
+      "floorLevel": "Ground Floor",
+      "subtotalSen": 539900,
+      "discountSen": 50000,
+      "shippingSen": 0,
+      "taxSen": 0,
+      "totalSen": 489900,
+      "appliedCoupon": "LENAWELCOME",
+      "paymentStatus": "paid",
+      "fulfillmentStatus": "processing",
+      "paymentProvider": "stripe",
+      "items": [
+        {
+          "variantId": "var-rh-king",
+          "productName": "Kamaar Royal Heritage 100% Natural Latex Mattress",
+          "sizeName": "King",
+          "sku": "KAMAAR-RH-KNG",
+          "dimensions": "183cm x 190cm x 30cm",
+          "unitPriceSen": 539900,
+          "quantity": 1,
+          "lineTotalSen": 539900,
+          "imageUrl": "https://images.unsplash.com/photo-1631049307264-da0ec9d70304?auto=format&fit=crop&w=1000&q=80",
+          "id": "item-1790765872396-0",
+          "orderId": ""
+        }
+      ],
+      "id": "ord-1790765872396-zbu5x",
+      "orderNumber": "KAMAAR-2026-1001",
+      "createdAt": "2026-09-30T10:57:52.396Z",
+      "updatedAt": "2026-09-30T10:58:09.094Z",
+      "paymentId": "pi_sim_1790765889082"
+    }
+  ],
+  "reviews": [
+    {
+      "id": "rev-1",
+      "productId": "prod-royal-heritage",
+      "customerName": "Dato’ Farhan & Datin Azira",
+      "rating": 5,
+      "title": "The Best Sleep Investment in 20 Years",
+      "content": "We replaced our imported Italian mattress with the Kamaar Royal Heritage Queen. The difference in temperature regulation in our KL apartment is astonishing. No more waking up with back stiffness.",
+      "isVerifiedPurchase": true,
+      "status": "approved",
+      "createdAt": "2026-09-10T14:30:00Z"
+    },
+    {
+      "id": "rev-2",
+      "productId": "prod-royal-heritage",
+      "customerName": "Dr. Jason Lee (Orthopaedic Surgeon)",
+      "rating": 5,
+      "title": "Unrivalled Spinal Alignment",
+      "content": "As someone who stands 8 hours daily in surgery, lumbar decompression during sleep is critical. The dual-density latex core provides immediate pushback without feeling hard.",
+      "isVerifiedPurchase": true,
+      "status": "approved",
+      "createdAt": "2026-09-14T09:15:00Z"
+    },
+    {
+      "id": "rev-3",
+      "productId": "prod-cool-night",
+      "customerName": "Sarah Chew, Petaling Jaya",
+      "rating": 5,
+      "title": "Genuinely cool to the touch!",
+      "content": "My husband is a very hot sleeper. We normally have to blast the air conditioning at 20°C. With this Ice-Silk hybrid, 24°C is comfortably cool. Zero motion transfer when he moves.",
+      "isVerifiedPurchase": true,
+      "status": "approved",
+      "createdAt": "2026-09-18T16:45:00Z"
+    },
+    {
+      "id": "rev-4",
+      "productId": "prod-ortho-rest",
+      "customerName": "Hj. Zulkifli bin Ismail, Shah Alam",
+      "rating": 5,
+      "title": "Sangat selesa untuk tulang belakang",
+      "content": "Tilam ini sangat kukuh dan tidak mendap. Selepas 2 minggu tidur, rasa sakit di bahagian pinggang waktu bangun pagi hilang sama sekali. Servis penghantaran sangat memuaskan.",
+      "isVerifiedPurchase": true,
+      "status": "approved",
+      "createdAt": "2026-09-22T11:20:00Z"
+    }
+  ],
+  "showrooms": [
+    {
+      "id": "sr-bangsar",
+      "name": "Bangsar Flagship Sleep Gallery",
+      "address": "No. 88, Jalan Maarof, Bangsar",
+      "city": "Kuala Lumpur",
+      "state": "WP Kuala Lumpur",
+      "postcode": "59100",
+      "phone": "+603 2284 8899",
+      "openingHours": "Mon - Sun: 10:00 AM - 8:00 PM",
+      "mapUrl": "https://maps.google.com/?q=Jalan+Maarof+Bangsar+Kuala+Lumpur",
+      "imageUrl": "https://images.unsplash.com/photo-1618221195710-dd6b41faaea6?auto=format&fit=crop&w=800&q=80",
+      "displayOrder": 1,
+      "isActive": true
+    },
+    {
+      "id": "sr-damansara",
+      "name": "Damansara Sleep Studio & Sanctuary",
+      "address": "Lot G-22, The Curve, Mutiara Damansara",
+      "city": "Petaling Jaya",
+      "state": "Selangor",
+      "postcode": "47800",
+      "phone": "+603 7722 3344",
+      "openingHours": "Mon - Sun: 10:00 AM - 10:00 PM",
+      "mapUrl": "https://maps.google.com/?q=The+Curve+Mutiara+Damansara",
+      "imageUrl": "https://images.unsplash.com/photo-1616486338812-3dadae4b4ace?auto=format&fit=crop&w=800&q=80",
+      "displayOrder": 2,
+      "isActive": true
+    },
+    {
+      "id": "sr-penang",
+      "name": "Gurney Walk Experience Boutique",
+      "address": "Gurney Walk, 18A Gurney Drive",
+      "city": "George Town",
+      "state": "Pulau Pinang",
+      "postcode": "10250",
+      "phone": "+604 228 1122",
+      "openingHours": "Mon - Sun: 10:30 AM - 8:30 PM",
+      "mapUrl": "https://maps.google.com/?q=Gurney+Drive+Penang",
+      "imageUrl": "https://images.unsplash.com/photo-1540518614846-7ede433c4ef4?auto=format&fit=crop&w=800&q=80",
+      "displayOrder": 3,
+      "isActive": true
+    },
+    {
+      "id": "sr-jb",
+      "name": "Southkey Megamall Boutique",
+      "address": "Level 2, Mid Valley Southkey, Persiaran Southkey 1",
+      "city": "Johor Bahru",
+      "state": "Johor",
+      "postcode": "80150",
+      "phone": "+607 338 9988",
+      "openingHours": "Mon - Sun: 10:00 AM - 10:00 PM",
+      "mapUrl": "https://maps.google.com/?q=Mid+Valley+Southkey+Johor+Bahru",
+      "imageUrl": "https://images.unsplash.com/photo-1505693416388-ac5ce068fe85?auto=format&fit=crop&w=800&q=80",
+      "displayOrder": 4,
+      "isActive": true
+    }
+  ],
+  "blogPosts": [
+    {
+      "id": "blog-1",
+      "slug": "natural-latex-vs-memory-foam-malaysia-climate",
+      "title": "100% Natural Latex vs. Memory Foam: Why Natural Latex Thrives in Malaysia",
+      "excerpt": "Understanding thermal conductivity, open-cell airflow, and chemical off-gassing when choosing the ideal mattress for humid tropical climates.",
+      "content": "Malaysia’s tropical warmth presents a unique challenge for restorative sleep: ambient humidity and elevated nocturnal temperatures frequently disrupt deep delta-wave sleep. Traditional memory foam consists of petroleum-derived polyurethane with closed cell structures that inherently trap radiant body heat, creating uncomfortable 'sweat pockets'.\n\nIn contrast, 100% pure organic latex harvested from Malaysian Hevea brasiliensis trees features millions of microscopic interconnected pinholes. This cellular matrix breathes continuously, allowing convection currents to draw excess heat away from your skin. Furthermore, pure natural latex requires zero toxic chemical foaming agents, ensuring that your bedroom sanctuary remains completely free of volatile organic compounds (VOCs).",
+      "author": "Dr. Aaron Lim (Sleep Ergonomics Consultant)",
+      "imageUrl": "https://images.unsplash.com/photo-1582582621959-48d27397dc69?auto=format&fit=crop&w=1000&q=80",
+      "tags": [
+        "Sleep Science",
+        "Natural Latex",
+        "Health"
+      ],
+      "publishedAt": "2026-09-15T09:00:00Z",
+      "isPublished": true
+    },
+    {
+      "id": "blog-2",
+      "slug": "the-orthopaedic-guide-to-cervical-and-lumbar-support",
+      "title": "The Orthopaedic Guide: How Mattress Firmness Influences Spinal Curvature",
+      "excerpt": "A clinical examination of lordotic and kyphotic spine angles during lateral and supine sleeping postures.",
+      "content": "A common misconception among mattress shoppers is that 'firmer is always better for back pain'. In reality, an excessively rigid surface forces the shoulders and hips to push the thoracic and lumbar spine into unnatural lateral deviation.\n\nOptimal spinal health requires progressive resistance: a responsive upper comfort cushion that gently accommodates the natural curvature of the hips, paired with an immovable dense core that prevents lumbar collapse. KAMAAR SLEEP mattresses achieve this harmony through multi-density zonal latex cores tested to maintain the neutral S-curve of your spine whether you sleep on your back, side, or stomach.",
+      "author": "Clara Wong (Physiotherapist & Ergonomist)",
+      "imageUrl": "https://images.unsplash.com/photo-1598928506311-c55ded91a20c?auto=format&fit=crop&w=1000&q=80",
+      "tags": [
+        "Back Health",
+        "Ergonomics"
+      ],
+      "publishedAt": "2026-09-20T10:00:00Z",
+      "isPublished": true
+    },
+    {
+      "id": "blog-3",
+      "slug": "maintaining-your-natural-latex-mattress-12-year-guide",
+      "title": "The 12-Year Guide: Caring for Your Natural Latex Mattress",
+      "excerpt": "Simple maintenance rituals, rotation schedules, and bedframe foundation guidelines to maximize your mattress longevity.",
+      "content": "Pure organic natural latex is naturally resilient against dust-mites, mildew, and structural deformation. With sensible care, a genuine natural latex mattress can comfortably last 15 to 20 years.\n\nKey maintenance principles:\n1. Foundation: Use a solid flat divan base or slatted bedframe with slat spacing no wider than 7.5cm.\n2. Rotation: Rotate your mattress 180 degrees head-to-toe every 3 to 6 months for the first year to ensure symmetrical settling.\n3. Sunlight: Never expose raw latex cores to direct outdoor UV radiation, which oxidizes natural rubber. Clean with gentle spot damp-wiping only.\n4. Protection: Always use a breathable waterproof bamboo protector to shield against moisture ingress.",
+      "author": "KAMAAR Sleep Atelier Master Craftsman",
+      "imageUrl": "https://images.unsplash.com/photo-1631049307264-da0ec9d70304?auto=format&fit=crop&w=1000&q=80",
+      "tags": [
+        "Care Guide",
+        "Longevity"
+      ],
+      "publishedAt": "2026-09-25T11:00:00Z",
+      "isPublished": true
+    }
+  ],
+  "warranties": [],
+  "contactEnquiries": [],
+  "businessEnquiries": [],
+  "appointments": [],
+  "siteSettings": {
+    "brandName": "KAMAAR Beddings",
+    "logoText": "KAMAAR Beddings",
+    "tagline": "Luxury Handcrafted Organic Latex & Hybrid Beddings Atelier",
+    "currency": "MYR",
+    "contactEmail": "care@kamaarbeddings.com.my",
+    "contactPhone": "+603 7722 1199",
+    "whatsappNumber": "+60123456789",
+    "announcementText": "Complimentary White-Glove Mattress Delivery & Room Setup Across Peninsular Malaysia",
+    "announcementUrl": "/collections/mattress",
+    "isAnnouncementActive": true,
+    "freeShippingThresholdSen": 50000,
+    "peninsularShippingSen": 3500,
+    "eastMalaysiaShippingSen": 28000,
+    "warrantyDefaultYears": 10,
+    "trialDefaultNights": 100
+  },
+  "staffMembers": [
+    {
+      "id": "staff-1",
+      "email": "owner@lenasleep.com.my",
+      "name": "Syed Danial (Store Owner)",
+      "role": "owner",
+      "isActive": true,
+      "createdAt": "2026-09-01T00:00:00Z"
+    },
+    {
+      "id": "staff-2",
+      "email": "catalog@lenasleep.com.my",
+      "name": "Nurul Huda (Catalog Manager)",
+      "role": "catalog_manager",
+      "isActive": true,
+      "createdAt": "2026-09-01T00:00:00Z"
+    },
+    {
+      "id": "staff-3",
+      "email": "orders@lenasleep.com.my",
+      "name": "Kenji Tan (Order & Logistics)",
+      "role": "order_manager",
+      "isActive": true,
+      "createdAt": "2026-09-01T00:00:00Z"
+    },
+    {
+      "id": "staff-4",
+      "email": "editor@lenasleep.com.my",
+      "name": "Melissa Kaur (Content Editor)",
+      "role": "content_editor",
+      "isActive": true,
+      "createdAt": "2026-09-01T00:00:00Z"
+    }
+  ],
+  "auditLogs": [
+    {
+      "id": "aud-1790766059597-kn0q",
+      "actorEmail": "owner@lenasleep.com.my",
+      "action": "staff_logged_in",
+      "entityType": "staff",
+      "entityId": "staff-1",
+      "createdAt": "2026-09-30T11:00:59.598Z"
+    },
+    {
+      "id": "aud-1790765889096-uyjg",
+      "actorEmail": "stripe_webhook",
+      "action": "order_status_updated",
+      "entityType": "order",
+      "entityId": "ord-1790765872396-zbu5x",
+      "details": {
+        "paymentStatus": "paid",
+        "fulfillmentStatus": "processing",
+        "paymentId": "pi_sim_1790765889082"
+      },
+      "createdAt": "2026-09-30T10:58:09.096Z"
+    }
+  ]
+}
