@@ -4,12 +4,8 @@ import { LanguageProvider } from '@/lib/i18n/LanguageContext'
 import { CartProvider } from '@/lib/context/CartContext'
 import { WishlistProvider } from '@/lib/context/WishlistContext'
 import { CompareProvider } from '@/lib/context/CompareContext'
-import { AnnouncementBar } from '@/components/layout/AnnouncementBar'
-import { Header } from '@/components/layout/Header'
-import { CartDrawer } from '@/components/cart/CartDrawer'
-import { Footer } from '@/components/layout/Footer'
-import { WhatsAppButton } from '@/components/common/WhatsAppButton'
 import { AffiliateTracker } from '@/components/common/AffiliateTracker'
+import { StorefrontShell } from '@/components/layout/StorefrontShell'
 
 export const metadata: Metadata = {
   title: 'KAMAAR Beddings | 100% Pure Natural Latex & Luxury Hybrid Mattresses Malaysia',
@@ -55,12 +51,7 @@ export default function RootLayout({
             <WishlistProvider>
               <CompareProvider>
                 <AffiliateTracker />
-                <AnnouncementBar />
-                <Header />
-                <CartDrawer />
-                <main className="flex-1">{children}</main>
-                <WhatsAppButton phoneNumber="+60123456789" />
-                <Footer />
+                <StorefrontShell>{children}</StorefrontShell>
               </CompareProvider>
             </WishlistProvider>
           </CartProvider>
