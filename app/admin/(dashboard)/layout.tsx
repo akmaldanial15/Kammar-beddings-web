@@ -106,7 +106,7 @@ export default async function AdminDashboardLayout({ children }: { children: Rea
       </aside>
 
       {/* Main Administrative Content Area */}
-      <main className="flex-1 p-6 sm:p-10 overflow-y-auto max-w-7xl mx-auto w-full">
+      <main className="flex-1 p-6 sm:p-10 overflow-y-auto max-w-7xl mx-auto w-full animate-fade-in">
         {children}
       </main>
     </div>

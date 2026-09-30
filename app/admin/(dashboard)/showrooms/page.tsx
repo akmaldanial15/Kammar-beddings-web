@@ -9,7 +9,7 @@ export default async function AdminShowroomsPage() {
   const appointments = await getAppointments()
 
   return (
-    <div className="p-6 md:p-10 space-y-8">
+    <div className="p-6 md:p-10 space-y-8 animate-fade-in">
       <div>
         <h1 className="font-serif text-3xl font-bold text-forest-dark">Showroom Studios & Appointments</h1>
         <p className="text-sm text-secondary mt-1">

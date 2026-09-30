@@ -117,7 +117,7 @@ export function ProductsClient({ initialProducts, categories }: ProductsClientPr
       )}
 
       {/* Filter and Search Bar */}
-      <div className="bg-warmwhite p-4 rounded-2xl border border-borderLight flex flex-col md:flex-row gap-4 items-center justify-between shadow-sm">
+      <div className="bg-warmwhite p-4 rounded-2xl border border-borderLight flex flex-col md:flex-row gap-4 items-center justify-between shadow-sm animate-fade-in">
         <div className="relative w-full md:w-80">
           <Search className="w-4 h-4 text-secondary absolute left-3.5 top-1/2 -translate-y-1/2" />
           <input
@@ -193,7 +193,7 @@ export function ProductsClient({ initialProducts, categories }: ProductsClientPr
                   {
                     id: `var-${Date.now()}-1`,
                     productId: newId,
-                    sku: `LENA-NEW-QN`,
+                    sku: `KAMAAR-NEW-QN`,
                     sizeName: 'Queen',
                     dimensions: '152 x 190 x 28 cm',
                     priceSen: 189900,
@@ -204,7 +204,7 @@ export function ProductsClient({ initialProducts, categories }: ProductsClientPr
               }
               setEditingProduct(newProd)
             }}
-            className="flex items-center space-x-2 bg-forest text-warmwhite px-4 py-2 rounded-xl text-xs font-bold hover:bg-forest-dark transition-colors shadow-sm"
+            className="flex items-center space-x-2 bg-forest text-warmwhite px-4 py-2 rounded-xl text-xs font-bold hover:bg-forest-dark transition-colors shadow-sm luxury-btn"
           >
             <Plus className="w-3.5 h-3.5 text-gold" />
             <span>Add Product</span>
@@ -213,7 +213,7 @@ export function ProductsClient({ initialProducts, categories }: ProductsClientPr
       </div>
 
       {/* Products Table */}
-      <div className="bg-warmwhite rounded-2xl border border-borderLight shadow-sm overflow-hidden">
+      <div className="bg-warmwhite rounded-2xl border border-borderLight shadow-sm overflow-hidden animate-fade-in-up delay-100">
         <div className="overflow-x-auto">
           <table className="w-full text-left text-xs">
             <thead className="bg-cream/60 border-b border-borderLight text-secondary uppercase font-semibold text-[10px] tracking-wider">

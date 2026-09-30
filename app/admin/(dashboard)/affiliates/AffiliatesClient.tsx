@@ -168,12 +168,12 @@ export function AffiliatesClient({ initialAffiliates }: Props) {
     <div className="space-y-8">
       {/* 4 KPI Metrics */}
       <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-4 gap-4">
-        <div className="bg-warmwhite p-6 rounded-2xl border border-borderLight shadow-sm">
+        <div className="bg-warmwhite p-6 rounded-2xl border border-borderLight shadow-sm animate-fade-in-up delay-50 luxury-card-hover">
           <div className="flex items-center justify-between">
             <span className="text-xs font-bold text-secondary uppercase tracking-wider">
               Ejen Berdaftar
             </span>
-            <div className="w-8 h-8 rounded-full bg-forest/10 flex items-center justify-center text-forest">
+            <div className="w-8 h-8 rounded-full bg-forest/10 flex items-center justify-center text-forest transition-transform group-hover:scale-110">
               <Users className="w-4 h-4" />
             </div>
           </div>
@@ -185,12 +185,12 @@ export function AffiliatesClient({ initialAffiliates }: Props) {
           </span>
         </div>
 
-        <div className="bg-warmwhite p-6 rounded-2xl border border-borderLight shadow-sm">
+        <div className="bg-warmwhite p-6 rounded-2xl border border-borderLight shadow-sm animate-fade-in-up delay-100 luxury-card-hover">
           <div className="flex items-center justify-between">
             <span className="text-xs font-bold text-secondary uppercase tracking-wider">
               Jumlah Jualan (Order)
             </span>
-            <div className="w-8 h-8 rounded-full bg-gold/20 flex items-center justify-center text-gold-dark">
+            <div className="w-8 h-8 rounded-full bg-gold/20 flex items-center justify-center text-gold-dark transition-transform group-hover:scale-110">
               <TrendingUp className="w-4 h-4" />
             </div>
           </div>
@@ -202,12 +202,12 @@ export function AffiliatesClient({ initialAffiliates }: Props) {
           </span>
         </div>
 
-        <div className="bg-warmwhite p-6 rounded-2xl border border-borderLight shadow-sm">
+        <div className="bg-warmwhite p-6 rounded-2xl border border-borderLight shadow-sm animate-fade-in-up delay-150 luxury-card-hover">
           <div className="flex items-center justify-between">
             <span className="text-xs font-bold text-secondary uppercase tracking-wider">
               Hasil Jualan Rujukan
             </span>
-            <div className="w-8 h-8 rounded-full bg-forest/10 flex items-center justify-center text-forest">
+            <div className="w-8 h-8 rounded-full bg-forest/10 flex items-center justify-center text-forest transition-transform group-hover:scale-110">
               <DollarSign className="w-4 h-4" />
             </div>
           </div>
@@ -219,12 +219,12 @@ export function AffiliatesClient({ initialAffiliates }: Props) {
           </span>
         </div>
 
-        <div className="bg-warmwhite p-6 rounded-2xl border border-borderLight shadow-sm">
+        <div className="bg-warmwhite p-6 rounded-2xl border border-borderLight shadow-sm animate-fade-in-up delay-200 luxury-card-hover">
           <div className="flex items-center justify-between">
             <span className="text-xs font-bold text-secondary uppercase tracking-wider">
               Komisen Ejen (Payable)
             </span>
-            <div className="w-8 h-8 rounded-full bg-sale/10 flex items-center justify-center text-sale">
+            <div className="w-8 h-8 rounded-full bg-sale/10 flex items-center justify-center text-sale transition-transform group-hover:scale-110">
               <DollarSign className="w-4 h-4" />
             </div>
           </div>
@@ -238,7 +238,7 @@ export function AffiliatesClient({ initialAffiliates }: Props) {
       </div>
 
       {/* Controls: Search + Add Button */}
-      <div className="flex flex-col sm:flex-row items-center justify-between gap-4">
+      <div className="flex flex-col sm:flex-row items-center justify-between gap-4 animate-fade-in-up delay-250">
         <div className="relative w-full sm:w-80">
           <Search className="w-4 h-4 absolute left-3.5 top-1/2 -translate-y-1/2 text-secondary" />
           <input
@@ -252,7 +252,7 @@ export function AffiliatesClient({ initialAffiliates }: Props) {
 
         <button
           onClick={() => setIsModalOpen(true)}
-          className="w-full sm:w-auto flex items-center justify-center space-x-2 px-5 py-2.5 bg-forest text-warmwhite text-xs font-bold rounded-xl hover:bg-forest-dark transition-colors shadow-sm"
+          className="w-full sm:w-auto flex items-center justify-center space-x-2 px-5 py-2.5 bg-forest text-warmwhite text-xs font-bold rounded-xl hover:bg-forest-dark transition-all duration-200 hover:scale-[1.02] shadow-sm"
         >
           <Plus className="w-4 h-4" />
           <span>Daftar Ejen Affiliate Baru</span>
@@ -260,7 +260,7 @@ export function AffiliatesClient({ initialAffiliates }: Props) {
       </div>
 
       {/* Affiliates Table */}
-      <div className="bg-warmwhite rounded-2xl border border-borderLight shadow-sm overflow-hidden">
+      <div className="bg-warmwhite rounded-2xl border border-borderLight shadow-sm overflow-hidden animate-fade-in-up delay-300">
         {filteredAffiliates.length === 0 ? (
           <div className="p-12 text-center">
             <Users className="w-12 h-12 text-secondary/40 mx-auto mb-3" />

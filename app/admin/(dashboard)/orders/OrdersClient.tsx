@@ -77,7 +77,7 @@ export function OrdersClient({ initialOrders }: OrdersClientProps) {
       </div>
 
       {/* Orders Table */}
-      <div className="bg-warmwhite rounded-2xl border border-borderLight shadow-sm overflow-hidden">
+      <div className="bg-warmwhite rounded-2xl border border-borderLight shadow-sm overflow-hidden animate-fade-in-up delay-150">
         {filtered.length === 0 ? (
           <div className="p-12 text-center">
             <ShoppingBag className="w-12 h-12 text-secondary/40 mx-auto mb-3" />

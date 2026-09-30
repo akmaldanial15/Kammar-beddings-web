@@ -100,26 +100,34 @@ export function HeroCarousel() {
           <div className="relative z-20 max-w-7xl mx-auto h-full px-4 sm:px-6 lg:px-8 flex flex-col justify-center">
             <div className="max-w-2xl space-y-4 sm:space-y-6">
               {/* Badge */}
-              <div className="inline-flex items-center space-x-2 bg-warmwhite/10 backdrop-blur-md px-3.5 py-1 rounded-full border border-gold/40 text-gold text-xs font-semibold tracking-wider uppercase">
+              <div className={`inline-flex items-center space-x-2 bg-warmwhite/10 backdrop-blur-md px-3.5 py-1 rounded-full border border-gold/40 text-gold text-xs font-semibold tracking-wider uppercase ${
+                index === currentSlide ? 'animate-fade-in-down' : ''
+              }`}>
                 <Sparkles className="w-3.5 h-3.5" />
                 <span>{slide.badge}</span>
               </div>
 
               {/* Headline */}
-              <h1 className="font-serif text-3xl sm:text-5xl lg:text-6xl font-bold text-warmwhite leading-[1.15] tracking-tight">
+              <h1 className={`font-serif text-3xl sm:text-5xl lg:text-6xl font-bold text-warmwhite leading-[1.15] tracking-tight ${
+                index === currentSlide ? 'animate-fade-in-up delay-100' : ''
+              }`}>
                 {slide.title}
               </h1>
 
               {/* Subhead */}
-              <p className="text-sm sm:text-base lg:text-lg text-warmwhite/80 leading-relaxed font-light">
+              <p className={`text-sm sm:text-base lg:text-lg text-warmwhite/80 leading-relaxed font-light ${
+                index === currentSlide ? 'animate-fade-in-up delay-200' : ''
+              }`}>
                 {slide.subtitle}
               </p>
 
               {/* CTA Buttons */}
-              <div className="pt-2 flex flex-col sm:flex-row items-stretch sm:items-center space-y-3 sm:space-y-0 sm:space-x-4">
+              <div className={`pt-2 flex flex-col sm:flex-row items-stretch sm:items-center space-y-3 sm:space-y-0 sm:space-x-4 ${
+                index === currentSlide ? 'animate-fade-in-up delay-300' : ''
+              }`}>
                 <Link
                   href={slide.ctaLink}
-                  className="px-7 py-3.5 bg-forest hover:bg-forest/90 text-warmwhite text-sm font-bold tracking-wider uppercase rounded-lg shadow-card border border-gold/40 flex items-center justify-center space-x-2 transition-all hover:scale-[1.02]"
+                  className="px-7 py-3.5 bg-forest hover:bg-forest/90 text-warmwhite text-sm font-bold tracking-wider uppercase rounded-lg shadow-card border border-gold/40 flex items-center justify-center space-x-2 transition-all hover:scale-[1.02] luxury-btn"
                 >
                   <span>{slide.ctaText}</span>
                   <ArrowRight className="w-4 h-4 text-gold" />
@@ -127,7 +135,7 @@ export function HeroCarousel() {
 
                 <Link
                   href={slide.secondaryCtaLink}
-                  className="px-7 py-3.5 bg-warmwhite/15 hover:bg-warmwhite/25 text-warmwhite text-sm font-semibold tracking-wide rounded-lg backdrop-blur-md border border-warmwhite/20 flex items-center justify-center transition-all"
+                  className="px-7 py-3.5 bg-warmwhite/15 hover:bg-warmwhite/25 text-warmwhite text-sm font-semibold tracking-wide rounded-lg backdrop-blur-md border border-warmwhite/20 flex items-center justify-center transition-all hover:scale-[1.02]"
                 >
                   <span>{slide.secondaryCtaText}</span>
                 </Link>

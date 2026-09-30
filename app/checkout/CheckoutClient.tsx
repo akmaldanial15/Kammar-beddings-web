@@ -227,9 +227,9 @@ export function CheckoutClient() {
           </div>
         )}
 
-        <form onSubmit={handleSubmit} className="grid grid-cols-1 lg:grid-cols-12 gap-8 lg:gap-12 items-start">
+        <form onSubmit={handleSubmit} className="grid grid-cols-1 lg:grid-cols-12 gap-8 lg:gap-12 items-start animate-fade-in">
           {/* Left Column: Delivery & Customer Forms */}
-          <div className="lg:col-span-7 space-y-6">
+          <div className="lg:col-span-7 space-y-6 animate-fade-in-up">
             {/* 1. Contact Information */}
             <div className="bg-warmwhite p-6 sm:p-8 rounded-2xl border border-borderLight shadow-subtle space-y-4">
               <h2 className="font-serif text-xl font-bold text-forest pb-2 border-b border-borderLight">
@@ -470,14 +470,14 @@ export function CheckoutClient() {
                   className="mt-0.5 rounded text-forest focus:ring-forest"
                 />
                 <span>
-                  I have read and agree to LENA SLEEP&apos;s Terms of Service and 100-Night Mattress Sleep Trial Policy.
+                  I have read and agree to KAMAAR Beddings&apos; Terms of Service and 100-Night Mattress Sleep Trial Policy.
                 </span>
               </label>
             </div>
           </div>
 
           {/* Right Column: Sticky Order Summary */}
-          <div className="lg:col-span-5 sticky top-28 space-y-6">
+          <div className="lg:col-span-5 sticky top-28 space-y-6 animate-fade-in-up delay-100">
             <div className="bg-warmwhite p-6 sm:p-8 rounded-2xl border border-borderLight shadow-card space-y-5">
               <h2 className="font-serif text-xl font-bold text-forest pb-3 border-b border-borderLight">
                 {t.orderSummary} ({items.length} items)

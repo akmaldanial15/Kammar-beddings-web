@@ -9,7 +9,7 @@ export default async function AdminAuditsPage() {
   const logs = await getAuditLogs()
 
   return (
-    <div className="p-6 md:p-10 space-y-8">
+    <div className="p-6 md:p-10 space-y-8 animate-fade-in">
       <div>
         <h1 className="font-serif text-3xl font-bold text-forest-dark">Administrative Audit Trail</h1>
         <p className="text-sm text-secondary mt-1">
@@ -17,7 +17,7 @@ export default async function AdminAuditsPage() {
         </p>
       </div>
 
-      <div className="bg-warmwhite rounded-2xl border border-borderLight shadow-sm overflow-hidden">
+      <div className="bg-warmwhite rounded-2xl border border-borderLight shadow-sm overflow-hidden animate-fade-in-up delay-100">
         {logs.length === 0 ? (
           <div className="p-8 text-center text-xs text-secondary">
             No administrative events recorded yet.

@@ -114,7 +114,7 @@ export function PromotionsClient({ initialCoupons }: PromotionsClientProps) {
       )}
 
       {/* Action Header */}
-      <div className="flex justify-between items-center bg-warmwhite p-4 rounded-2xl border border-borderLight shadow-sm">
+      <div className="flex justify-between items-center bg-warmwhite p-4 rounded-2xl border border-borderLight shadow-sm animate-fade-in">
         <div className="flex items-center space-x-2 text-xs text-secondary">
           <Tag className="w-4 h-4 text-gold" />
           <span>{coupons.length} Active & Scheduled Campaigns</span>
@@ -122,7 +122,7 @@ export function PromotionsClient({ initialCoupons }: PromotionsClientProps) {
 
         <button
           onClick={handleOpenNew}
-          className="flex items-center space-x-2 px-4 py-2 bg-forest text-warmwhite text-xs font-bold rounded-xl hover:bg-forest-dark transition-colors shadow-sm"
+          className="flex items-center space-x-2 px-4 py-2 bg-forest text-warmwhite text-xs font-bold rounded-xl hover:bg-forest-dark transition-colors shadow-sm luxury-btn"
         >
           <Plus className="w-3.5 h-3.5 text-gold" />
           <span>Create Coupon Code</span>
@@ -130,7 +130,7 @@ export function PromotionsClient({ initialCoupons }: PromotionsClientProps) {
       </div>
 
       {/* Coupons Table */}
-      <div className="bg-warmwhite rounded-2xl border border-borderLight shadow-sm overflow-hidden">
+      <div className="bg-warmwhite rounded-2xl border border-borderLight shadow-sm overflow-hidden animate-fade-in-up delay-100">
         <div className="overflow-x-auto">
           <table className="w-full text-left text-xs">
             <thead className="bg-cream/60 border-b border-borderLight text-secondary uppercase font-semibold text-[10px] tracking-wider">

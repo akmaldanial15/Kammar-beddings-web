@@ -125,9 +125,9 @@ export function InventoryClient({ initialItems }: InventoryClientProps) {
 
       {/* Summary KPI Badges */}
       <div className="grid grid-cols-1 sm:grid-cols-3 gap-4">
-        <div className="bg-warmwhite p-4 rounded-2xl border border-borderLight shadow-sm">
+        <div className="bg-warmwhite p-4 rounded-2xl border border-borderLight shadow-sm animate-fade-in-up delay-50 luxury-card-hover">
           <div className="flex items-center space-x-3">
-            <div className="w-10 h-10 rounded-xl bg-forest/10 text-forest flex items-center justify-center">
+            <div className="w-10 h-10 rounded-xl bg-forest/10 text-forest flex items-center justify-center transition-transform group-hover:scale-110">
               <Package className="w-5 h-5" />
             </div>
             <div>
@@ -137,9 +137,9 @@ export function InventoryClient({ initialItems }: InventoryClientProps) {
           </div>
         </div>
 
-        <div className="bg-warmwhite p-4 rounded-2xl border border-borderLight shadow-sm">
+        <div className="bg-warmwhite p-4 rounded-2xl border border-borderLight shadow-sm animate-fade-in-up delay-100 luxury-card-hover">
           <div className="flex items-center space-x-3">
-            <div className="w-10 h-10 rounded-xl bg-gold/20 text-forest flex items-center justify-center">
+            <div className="w-10 h-10 rounded-xl bg-gold/20 text-forest flex items-center justify-center transition-transform group-hover:scale-110">
               <AlertTriangle className="w-5 h-5 text-gold" />
             </div>
             <div>
@@ -149,9 +149,9 @@ export function InventoryClient({ initialItems }: InventoryClientProps) {
           </div>
         </div>
 
-        <div className="bg-warmwhite p-4 rounded-2xl border border-borderLight shadow-sm">
+        <div className="bg-warmwhite p-4 rounded-2xl border border-borderLight shadow-sm animate-fade-in-up delay-150 luxury-card-hover">
           <div className="flex items-center space-x-3">
-            <div className="w-10 h-10 rounded-xl bg-sale/10 text-sale flex items-center justify-center">
+            <div className="w-10 h-10 rounded-xl bg-sale/10 text-sale flex items-center justify-center transition-transform group-hover:scale-110">
               <AlertCircle className="w-5 h-5" />
             </div>
             <div>
@@ -163,7 +163,7 @@ export function InventoryClient({ initialItems }: InventoryClientProps) {
       </div>
 
       {/* Filter and Search Bar */}
-      <div className="bg-warmwhite p-4 rounded-2xl border border-borderLight flex flex-col md:flex-row gap-4 items-center justify-between shadow-sm">
+      <div className="bg-warmwhite p-4 rounded-2xl border border-borderLight flex flex-col md:flex-row gap-4 items-center justify-between shadow-sm animate-fade-in-up delay-200">
         <div className="relative w-full md:w-80">
           <Search className="w-4 h-4 text-secondary absolute left-3.5 top-1/2 -translate-y-1/2" />
           <input
@@ -210,7 +210,7 @@ export function InventoryClient({ initialItems }: InventoryClientProps) {
       </div>
 
       {/* Inventory Table */}
-      <div className="bg-warmwhite rounded-2xl border border-borderLight shadow-sm overflow-hidden">
+      <div className="bg-warmwhite rounded-2xl border border-borderLight shadow-sm overflow-hidden animate-fade-in-up delay-250">
         <div className="overflow-x-auto">
           <table className="w-full text-left text-xs">
             <thead className="bg-cream/60 border-b border-borderLight text-secondary uppercase font-semibold text-[10px] tracking-wider">

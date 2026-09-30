@@ -146,7 +146,7 @@ export function ProductDetailClient({
     : 0
 
   const whatsappMessage = encodeURIComponent(
-    `Hello LENA SLEEP! I am interested in the ${product.name} (${selectedVariant.sizeName}, ${formatMYR(selectedVariant.priceSen)}). Is this available for delivery in Peninsular Malaysia?`
+    `Hello KAMAAR BEDDINGS! I am interested in the ${product.name} (${selectedVariant.sizeName}, ${formatMYR(selectedVariant.priceSen)}). Is this available for delivery in Peninsular Malaysia?`
   )
 
   return (
@@ -164,7 +164,7 @@ export function ProductDetailClient({
         {/* 2-Column Main Section: Gallery & Purchase Info */}
         <div className="grid grid-cols-1 lg:grid-cols-12 gap-8 lg:gap-12 items-start mb-16">
           {/* Left Column: Gallery */}
-          <div className="lg:col-span-7 space-y-4">
+          <div className="lg:col-span-7 space-y-4 animate-fade-in">
             {/* Primary Image Box */}
             <div className="relative aspect-[4/3] rounded-2xl overflow-hidden bg-cream border border-borderLight shadow-card group">
               <Image
@@ -218,7 +218,7 @@ export function ProductDetailClient({
           </div>
 
           {/* Right Column: Purchasing Info */}
-          <div className="lg:col-span-5 space-y-6">
+          <div className="lg:col-span-5 space-y-6 animate-fade-in-up delay-100">
             <div>
               <span className="text-xs font-bold uppercase tracking-[0.2em] text-gold-dark block">
                 {product.material} &bull; {product.warrantyYears}-Year Warranty

@@ -175,7 +175,7 @@ export function FinderClient({ products }: FinderClientProps) {
     <div className="bg-cream-light min-h-[85vh] py-12 sm:py-16">
       <div className="max-w-4xl mx-auto px-4 sm:px-6 lg:px-8">
         {!showResults ? (
-          <div className="bg-warmwhite rounded-3xl p-6 sm:p-10 border border-borderLight shadow-2xl">
+          <div className="bg-warmwhite rounded-3xl p-6 sm:p-10 border border-borderLight shadow-2xl animate-fade-in-up">
             {/* Quiz Progress Header */}
             <div className="flex items-center justify-between pb-6 border-b border-borderLight">
               <div>
@@ -292,7 +292,9 @@ export function FinderClient({ products }: FinderClientProps) {
                 return (
                   <div
                     key={product.id}
-                    className="bg-warmwhite rounded-2xl border border-borderLight shadow-card p-6 sm:p-8 flex flex-col md:flex-row gap-6 items-center"
+                    className={`bg-warmwhite rounded-2xl border border-borderLight shadow-card p-6 sm:p-8 flex flex-col md:flex-row gap-6 items-center luxury-card-hover animate-fade-in-up ${
+                      index === 0 ? 'delay-50' : index === 1 ? 'delay-100' : 'delay-150'
+                    }`}
                   >
                     {/* Thumbnail */}
                     <div className="relative w-full md:w-56 aspect-[4/3] rounded-xl overflow-hidden bg-cream flex-shrink-0 border border-borderLight">

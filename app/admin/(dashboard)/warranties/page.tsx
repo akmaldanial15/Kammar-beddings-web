@@ -8,7 +8,7 @@ export default async function AdminWarrantiesPage() {
   const warranties = await getWarrantyRegistrations()
 
   return (
-    <div className="p-6 md:p-10 space-y-8">
+    <div className="p-6 md:p-10 space-y-8 animate-fade-in">
       <div>
         <h1 className="font-serif text-3xl font-bold text-forest-dark">Warranty Registrations & Claims</h1>
         <p className="text-sm text-secondary mt-1">

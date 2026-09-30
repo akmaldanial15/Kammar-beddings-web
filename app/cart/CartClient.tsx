@@ -150,7 +150,7 @@ export function CartClient() {
 
   return (
     <div className="bg-warmwhite py-10 sm:py-16">
-      <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
+      <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 animate-fade-in">
         <div className="flex items-center justify-between pb-6 mb-8 border-b border-borderLight">
           <div>
             <h1 className="font-serif text-3xl sm:text-4xl font-bold text-forest">
@@ -184,7 +184,7 @@ export function CartClient() {
 
         <div className="grid grid-cols-1 lg:grid-cols-12 gap-8 lg:gap-12 items-start">
           {/* Left Column: Cart Items List */}
-          <div className="lg:col-span-8 space-y-4">
+          <div className="lg:col-span-8 space-y-4 animate-fade-in-up">
             <div className="divide-y divide-borderLight border border-borderLight rounded-2xl overflow-hidden bg-cream-light shadow-subtle">
               {items.map((item) => (
                 <div
@@ -290,7 +290,7 @@ export function CartClient() {
           </div>
 
           {/* Right Column: Order Summary & Checkout */}
-          <div className="lg:col-span-4 space-y-6">
+          <div className="lg:col-span-4 space-y-6 animate-fade-in-up delay-100">
             <div className="bg-cream-light rounded-2xl border border-borderLight p-6 space-y-5 shadow-card">
               <h2 className="font-serif text-xl font-bold text-forest pb-3 border-b border-borderLight">
                 {t.orderSummary}

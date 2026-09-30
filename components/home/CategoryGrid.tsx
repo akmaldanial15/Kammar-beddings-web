@@ -90,7 +90,9 @@ export function CategoryGrid() {
             <Link
               key={idx}
               href={type.link}
-              className="group relative h-[320px] sm:h-[380px] rounded-2xl overflow-hidden shadow-card border border-borderLight flex flex-col justify-end p-6 sm:p-8"
+              className={`group relative h-[320px] sm:h-[380px] rounded-2xl overflow-hidden shadow-card border border-borderLight flex flex-col justify-end p-6 sm:p-8 luxury-card-hover animate-fade-in-up ${
+                idx === 0 ? 'delay-50' : idx === 1 ? 'delay-100' : idx === 2 ? 'delay-150' : 'delay-200'
+              }`}
             >
               <Image
                 src={type.imageUrl}
@@ -101,7 +103,7 @@ export function CategoryGrid() {
               <div className="absolute inset-0 bg-gradient-to-t from-forest-dark/95 via-forest-dark/50 to-transparent" />
 
               <div className="relative z-10 space-y-2">
-                <span className="inline-block px-2.5 py-0.5 rounded text-[10px] font-bold uppercase tracking-wider bg-gold text-forest-dark">
+                <span className="inline-block px-2.5 py-0.5 rounded text-[10px] font-bold uppercase tracking-wider bg-gold text-forest-dark shadow-xs">
                   {type.tag}
                 </span>
                 <h3 className="font-serif text-2xl sm:text-3xl font-bold text-warmwhite group-hover:text-gold-light transition-colors">
@@ -127,7 +129,7 @@ export function CategoryGrid() {
             </h4>
             <Link
               href="/collections/mattress"
-              className="text-xs font-semibold text-gold-dark hover:text-forest flex items-center space-x-1"
+              className="text-xs font-semibold text-gold-dark hover:text-forest flex items-center space-x-1 transition-colors"
             >
               <span>View All Accessories</span>
               <ArrowRight className="w-3.5 h-3.5" />
@@ -139,7 +141,9 @@ export function CategoryGrid() {
               <Link
                 key={idx}
                 href={cat.link}
-                className="group relative rounded-xl overflow-hidden bg-cream border border-borderLight shadow-subtle hover:shadow-card transition-all"
+                className={`group relative rounded-xl overflow-hidden bg-cream border border-borderLight shadow-subtle hover:shadow-card transition-all luxury-card-hover animate-fade-in-up ${
+                  idx === 0 ? 'delay-100' : idx === 1 ? 'delay-150' : idx === 2 ? 'delay-200' : 'delay-250'
+                }`}
               >
                 <div className="relative aspect-[4/3] w-full overflow-hidden">
                   <Image

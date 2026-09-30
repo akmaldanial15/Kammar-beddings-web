@@ -231,7 +231,7 @@ export function Header() {
 
                   {/* Mega Menu Dropdown */}
                   {isMattressMegaOpen && (
-                    <div className="absolute top-full left-1/2 -translate-x-1/2 w-[860px] bg-warmwhite rounded-2xl shadow-2xl border border-borderLight p-6 grid grid-cols-4 gap-6 animate-fadeIn z-50 mt-1">
+                    <div className="absolute top-full left-1/2 -translate-x-1/2 w-[860px] bg-warmwhite rounded-2xl shadow-2xl border border-borderLight p-6 grid grid-cols-4 gap-6 animate-fade-in-down z-50 mt-1">
                       {/* Col 1: By Material */}
                       <div>
                         <h4 className="text-[11px] font-bold uppercase tracking-wider text-gold-dark pb-2 border-b border-borderLight mb-3">
@@ -506,12 +506,12 @@ export function Header() {
         <div className="fixed inset-0 z-50 lg:hidden">
           {/* Backdrop */}
           <div
-            className="fixed inset-0 bg-forest-dark/60 backdrop-blur-sm transition-opacity"
+            className="fixed inset-0 bg-forest-dark/60 backdrop-blur-sm transition-opacity animate-fade-in"
             onClick={() => setIsMobileMenuOpen(false)}
           />
 
           {/* Drawer Panel */}
-          <div className="fixed inset-y-0 left-0 max-w-xs w-full bg-warmwhite shadow-2xl flex flex-col justify-between overflow-y-auto animate-slideInRight">
+          <div className="fixed inset-y-0 left-0 max-w-xs w-full bg-warmwhite shadow-2xl flex flex-col justify-between overflow-y-auto animate-slide-in-left">
             <div>
               {/* Drawer Top Header */}
               <div className="p-4 border-b border-borderLight flex items-center justify-between bg-cream/50">
@@ -573,7 +573,7 @@ export function Header() {
                   </button>
 
                   {mobileExpandedSection === 'mattresses' && (
-                    <div className="pl-3 pb-2 space-y-2 text-xs text-charcoal-muted animate-fadeIn">
+                    <div className="pl-3 pb-2 space-y-2 text-xs text-charcoal-muted animate-fade-in">
                       <Link
                         href="/collections/mattress"
                         onClick={() => setIsMobileMenuOpen(false)}

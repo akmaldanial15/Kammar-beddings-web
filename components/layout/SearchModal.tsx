@@ -85,9 +85,9 @@ export function SearchModal({ isOpen, onClose }: SearchModalProps) {
   }
 
   return (
-    <div className="fixed inset-0 z-50 flex flex-col bg-charcoal/60 backdrop-blur-sm animate-fadeIn">
+    <div className="fixed inset-0 z-50 flex flex-col bg-charcoal/60 backdrop-blur-sm animate-fade-in">
       <div
-        className="w-full bg-warmwhite border-b border-borderLight shadow-2xl py-6 px-4 md:px-8 transition-all"
+        className="w-full bg-warmwhite border-b border-borderLight shadow-2xl py-6 px-4 md:px-8 transition-all animate-fade-in-down"
         onClick={(e) => e.stopPropagation()}
       >
         <div className="max-w-4xl mx-auto">

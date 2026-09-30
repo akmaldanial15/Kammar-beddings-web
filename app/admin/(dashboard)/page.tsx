@@ -41,9 +41,9 @@ export default async function AdminDashboardOverview() {
   }
 
   return (
-    <div className="space-y-8">
+    <div className="space-y-8 animate-fade-in">
       {/* Page Title */}
-      <div>
+      <div className="animate-fade-in-up">
         <span className="text-xs uppercase tracking-[0.2em] font-bold text-gold-dark block mb-1">
           KAMAAR Beddings Operations Atelier
         </span>
@@ -58,10 +58,10 @@ export default async function AdminDashboardOverview() {
       {/* 4 Metric Cards */}
       <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-4 gap-6">
         {/* Verified Revenue */}
-        <div className="bg-warmwhite p-6 rounded-2xl border border-borderLight shadow-subtle space-y-2">
+        <div className="bg-warmwhite p-6 rounded-2xl border border-borderLight shadow-subtle space-y-2 animate-fade-in-up delay-50 luxury-card-hover">
           <div className="flex items-center justify-between text-xs text-charcoal-muted font-bold uppercase tracking-wider">
             <span>Verified Revenue</span>
-            <div className="w-8 h-8 rounded-lg bg-blue-50 text-blue-800 flex items-center justify-center">
+            <div className="w-8 h-8 rounded-lg bg-blue-50 text-blue-800 flex items-center justify-center transition-transform group-hover:scale-110">
               <DollarSign className="w-4 h-4" />
             </div>
           </div>
@@ -74,10 +74,10 @@ export default async function AdminDashboardOverview() {
         </div>
 
         {/* Paid Orders */}
-        <div className="bg-warmwhite p-6 rounded-2xl border border-borderLight shadow-subtle space-y-2">
+        <div className="bg-warmwhite p-6 rounded-2xl border border-borderLight shadow-subtle space-y-2 animate-fade-in-up delay-100 luxury-card-hover">
           <div className="flex items-center justify-between text-xs text-charcoal-muted font-bold uppercase tracking-wider">
             <span>Paid Orders</span>
-            <div className="w-8 h-8 rounded-lg bg-forest/10 text-forest flex items-center justify-center">
+            <div className="w-8 h-8 rounded-lg bg-forest/10 text-forest flex items-center justify-center transition-transform group-hover:scale-110">
               <ShoppingBag className="w-4 h-4" />
             </div>
           </div>
@@ -90,10 +90,10 @@ export default async function AdminDashboardOverview() {
         </div>
 
         {/* Average Order Value */}
-        <div className="bg-warmwhite p-6 rounded-2xl border border-borderLight shadow-subtle space-y-2">
+        <div className="bg-warmwhite p-6 rounded-2xl border border-borderLight shadow-subtle space-y-2 animate-fade-in-up delay-150 luxury-card-hover">
           <div className="flex items-center justify-between text-xs text-charcoal-muted font-bold uppercase tracking-wider">
             <span>Average Order Value</span>
-            <div className="w-8 h-8 rounded-lg bg-gold/15 text-gold-dark flex items-center justify-center">
+            <div className="w-8 h-8 rounded-lg bg-gold/15 text-gold-dark flex items-center justify-center transition-transform group-hover:scale-110">
               <TrendingUp className="w-4 h-4" />
             </div>
           </div>
@@ -106,10 +106,10 @@ export default async function AdminDashboardOverview() {
         </div>
 
         {/* Low Stock Alerts */}
-        <div className="bg-warmwhite p-6 rounded-2xl border border-borderLight shadow-subtle space-y-2">
+        <div className="bg-warmwhite p-6 rounded-2xl border border-borderLight shadow-subtle space-y-2 animate-fade-in-up delay-200 luxury-card-hover">
           <div className="flex items-center justify-between text-xs text-charcoal-muted font-bold uppercase tracking-wider">
             <span>Low Stock Alerts</span>
-            <div className="w-8 h-8 rounded-lg bg-amber-50 text-amber-700 flex items-center justify-center">
+            <div className="w-8 h-8 rounded-lg bg-amber-50 text-amber-700 flex items-center justify-center transition-transform group-hover:scale-110">
               <AlertTriangle className="w-4 h-4" />
             </div>
           </div>
@@ -125,7 +125,7 @@ export default async function AdminDashboardOverview() {
       {/* Grid: Recent Orders & Low Stock Table */}
       <div className="grid grid-cols-1 lg:grid-cols-12 gap-8 items-start">
         {/* Recent Orders Table */}
-        <div className="lg:col-span-8 bg-warmwhite rounded-2xl border border-borderLight shadow-card p-6 space-y-4">
+        <div className="lg:col-span-8 bg-warmwhite rounded-2xl border border-borderLight shadow-card p-6 space-y-4 animate-fade-in-up delay-250">
           <div className="flex items-center justify-between pb-3 border-b border-borderLight">
             <h2 className="font-serif text-lg font-bold text-forest">
               Recent Store Orders
@@ -202,14 +202,14 @@ export default async function AdminDashboardOverview() {
         </div>
 
         {/* Low Stock Alerts Box */}
-        <div className="lg:col-span-4 bg-warmwhite rounded-2xl border border-borderLight shadow-card p-6 space-y-4">
+        <div className="lg:col-span-4 bg-warmwhite rounded-2xl border border-borderLight shadow-card p-6 space-y-4 animate-fade-in-up delay-300">
           <div className="flex items-center justify-between pb-3 border-b border-borderLight">
             <h2 className="font-serif text-lg font-bold text-forest">
               Low Stock Warnings
             </h2>
             <Link
               href="/admin/inventory"
-              className="text-xs font-semibold text-gold-dark hover:text-forest"
+              className="text-xs font-semibold text-gold-dark hover:text-forest transition-colors"
             >
               Restock &rarr;
             </Link>
@@ -217,7 +217,10 @@ export default async function AdminDashboardOverview() {
 
           <div className="space-y-3">
             {lowStockVariants.slice(0, 5).map((v, i) => (
-              <div key={i} className="p-3 bg-cream rounded-xl border border-borderLight flex items-center justify-between text-xs">
+              <div
+                key={i}
+                className="p-3 bg-cream rounded-xl border border-borderLight flex items-center justify-between text-xs hover:border-gold/50 hover:bg-cream-light transition-all duration-200"
+              >
                 <div>
                   <h4 className="font-bold text-charcoal truncate max-w-[170px]">{v.product}</h4>
                   <span className="text-[10px] text-gold-dark font-medium">

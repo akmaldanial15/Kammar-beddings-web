@@ -52,11 +52,11 @@ export function QuickViewModal({ product, isOpen, onClose }: QuickViewModalProps
   return (
     <div className="fixed inset-0 z-50 flex items-center justify-center p-4 sm:p-6 overflow-y-auto">
       <div
-        className="fixed inset-0 bg-charcoal/60 backdrop-blur-sm transition-opacity"
+        className="fixed inset-0 bg-charcoal/60 backdrop-blur-sm transition-opacity animate-fade-in"
         onClick={onClose}
       />
 
-      <div className="relative bg-warmwhite rounded-2xl shadow-2xl max-w-3xl w-full border border-borderLight overflow-hidden z-10 flex flex-col md:flex-row max-h-[90vh]">
+      <div className="relative bg-warmwhite rounded-2xl shadow-2xl max-w-3xl w-full border border-borderLight overflow-hidden z-10 flex flex-col md:flex-row max-h-[90vh] animate-scale-in">
         {/* Close Button */}
         <button
           onClick={onClose}

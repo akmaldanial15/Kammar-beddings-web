@@ -16,6 +16,10 @@
   --color-sale: #A13D40;
 }
 
+html {
+  scroll-behavior: smooth;
+}
+
 body {
   background-color: var(--color-warmwhite);
   color: var(--color-charcoal);
@@ -55,26 +59,58 @@ h1, h2, h3, h4, .font-serif {
   outline-offset: 2px;
 }
 
+/* Stagger Animation Delays */
+.delay-50 {
+  animation-delay: 50ms;
+}
+.delay-100 {
+  animation-delay: 100ms;
+}
+.delay-150 {
+  animation-delay: 150ms;
+}
+.delay-200 {
+  animation-delay: 200ms;
+}
+.delay-250 {
+  animation-delay: 250ms;
+}
+.delay-300 {
+  animation-delay: 300ms;
+}
+.delay-400 {
+  animation-delay: 400ms;
+}
+
 /* Button & Card Micro-Interactions */
 .luxury-btn {
   transition: all 0.25s cubic-bezier(0.16, 1, 0.3, 1);
 }
 
 .luxury-btn:hover {
-  transform: translateY(-1px);
+  transform: translateY(-1.5px);
 }
 
 .luxury-btn:active {
-  transform: translateY(0);
+  transform: translateY(0) scale(0.98);
 }
 
 .product-card {
-  transition: transform 0.3s cubic-bezier(0.16, 1, 0.3, 1), box-shadow 0.3s cubic-bezier(0.16, 1, 0.3, 1);
+  transition: transform 0.35s cubic-bezier(0.16, 1, 0.3, 1), box-shadow 0.35s cubic-bezier(0.16, 1, 0.3, 1), border-color 0.25s ease;
 }
 
 .product-card:hover {
   transform: translateY(-4px);
-  box-shadow: 0 12px 30px rgba(10, 26, 51, 0.08);
+  box-shadow: 0 16px 36px rgba(10, 26, 51, 0.09);
+}
+
+.luxury-card-hover {
+  transition: transform 0.3s cubic-bezier(0.16, 1, 0.3, 1), box-shadow 0.3s cubic-bezier(0.16, 1, 0.3, 1), border-color 0.25s ease;
+}
+
+.luxury-card-hover:hover {
+  transform: translateY(-3px);
+  box-shadow: 0 14px 30px rgba(10, 26, 51, 0.08);
 }
 
 /* Hotspot Pulse */

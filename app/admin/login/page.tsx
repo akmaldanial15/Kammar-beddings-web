@@ -48,7 +48,7 @@ export default function AdminLoginPage() {
 
   return (
     <div className="min-h-screen bg-forest-dark flex items-center justify-center p-4">
-      <div className="max-w-md w-full bg-warmwhite rounded-3xl p-8 border border-borderLight shadow-2xl space-y-6">
+      <div className="max-w-md w-full bg-warmwhite rounded-3xl p-8 border border-borderLight shadow-2xl space-y-6 animate-scale-in">
         <div className="text-center space-y-2">
           <KamaarLogo variant="full" size="lg" theme="light" />
           <span className="text-[10px] uppercase tracking-[0.25em] text-gold-dark font-bold block pt-1">
@@ -57,7 +57,7 @@ export default function AdminLoginPage() {
         </div>
 
         {error && (
-          <div className="p-3 bg-red-50 text-sale text-xs rounded-xl border border-red-200 flex items-center space-x-2">
+          <div className="p-3 bg-red-50 text-sale text-xs rounded-xl border border-red-200 flex items-center space-x-2 animate-fade-in">
             <AlertCircle className="w-4 h-4 flex-shrink-0" />
             <span>{error}</span>
           </div>
@@ -73,8 +73,8 @@ export default function AdminLoginPage() {
               required
               value={email}
               onChange={(e) => setEmail(e.target.value)}
-              placeholder="e.g. owner@lenasleep.com.my"
-              className="w-full px-3.5 py-2.5 text-xs bg-cream-light border border-borderLight rounded-xl outline-none focus:border-gold font-medium"
+              placeholder="e.g. owner@kamaarbeddings.com"
+              className="w-full px-3.5 py-2.5 text-xs bg-cream-light border border-borderLight rounded-xl outline-none focus:border-gold font-medium transition-all"
             />
           </div>
 
@@ -87,14 +87,14 @@ export default function AdminLoginPage() {
               value={secretKey}
               onChange={(e) => setSecretKey(e.target.value)}
               placeholder="Enter master bootstrap passkey or leave blank for demo"
-              className="w-full px-3.5 py-2.5 text-xs bg-cream-light border border-borderLight rounded-xl outline-none focus:border-gold"
+              className="w-full px-3.5 py-2.5 text-xs bg-cream-light border border-borderLight rounded-xl outline-none focus:border-gold transition-all"
             />
           </div>
 
           <button
             type="submit"
             disabled={isLoading}
-            className="w-full py-3.5 bg-forest hover:bg-forest/90 text-warmwhite text-xs font-bold uppercase tracking-wider rounded-xl shadow-card transition-all flex items-center justify-center space-x-2 disabled:opacity-50"
+            className="w-full py-3.5 bg-forest hover:bg-forest/90 text-warmwhite text-xs font-bold uppercase tracking-wider rounded-xl shadow-card transition-all flex items-center justify-center space-x-2 disabled:opacity-50 luxury-btn"
           >
             <Lock className="w-4 h-4 text-gold" />
             <span>{isLoading ? 'Authenticating...' : 'Sign In to Dashboard'}</span>
@@ -109,10 +109,10 @@ export default function AdminLoginPage() {
           <div className="grid grid-cols-2 gap-2 text-[11px]">
             <button
               type="button"
-              onClick={() => handleQuickSelect('owner@lenasleep.com.my')}
-              className={`p-2 rounded-lg border text-left transition-colors ${
-                email === 'owner@lenasleep.com.my'
-                  ? 'bg-forest text-warmwhite font-bold border-forest'
+              onClick={() => handleQuickSelect('owner@kamaarbeddings.com')}
+              className={`p-2 rounded-lg border text-left transition-all ${
+                email === 'owner@kamaarbeddings.com'
+                  ? 'bg-forest text-warmwhite font-bold border-forest shadow-xs'
                   : 'bg-cream text-charcoal border-borderLight hover:border-gold'
               }`}
             >
@@ -122,10 +122,10 @@ export default function AdminLoginPage() {
 
             <button
               type="button"
-              onClick={() => handleQuickSelect('catalog@lenasleep.com.my')}
-              className={`p-2 rounded-lg border text-left transition-colors ${
-                email === 'catalog@lenasleep.com.my'
-                  ? 'bg-forest text-warmwhite font-bold border-forest'
+              onClick={() => handleQuickSelect('catalog@kamaarbeddings.com')}
+              className={`p-2 rounded-lg border text-left transition-all ${
+                email === 'catalog@kamaarbeddings.com'
+                  ? 'bg-forest text-warmwhite font-bold border-forest shadow-xs'
                   : 'bg-cream text-charcoal border-borderLight hover:border-gold'
               }`}
             >
@@ -135,10 +135,10 @@ export default function AdminLoginPage() {
 
             <button
               type="button"
-              onClick={() => handleQuickSelect('orders@lenasleep.com.my')}
-              className={`p-2 rounded-lg border text-left transition-colors ${
-                email === 'orders@lenasleep.com.my'
-                  ? 'bg-forest text-warmwhite font-bold border-forest'
+              onClick={() => handleQuickSelect('orders@kamaarbeddings.com')}
+              className={`p-2 rounded-lg border text-left transition-all ${
+                email === 'orders@kamaarbeddings.com'
+                  ? 'bg-forest text-warmwhite font-bold border-forest shadow-xs'
                   : 'bg-cream text-charcoal border-borderLight hover:border-gold'
               }`}
             >
@@ -148,10 +148,10 @@ export default function AdminLoginPage() {
 
             <button
               type="button"
-              onClick={() => handleQuickSelect('editor@lenasleep.com.my')}
-              className={`p-2 rounded-lg border text-left transition-colors ${
-                email === 'editor@lenasleep.com.my'
-                  ? 'bg-forest text-warmwhite font-bold border-forest'
+              onClick={() => handleQuickSelect('editor@kamaarbeddings.com')}
+              className={`p-2 rounded-lg border text-left transition-all ${
+                email === 'editor@kamaarbeddings.com'
+                  ? 'bg-forest text-warmwhite font-bold border-forest shadow-xs'
                   : 'bg-cream text-charcoal border-borderLight hover:border-gold'
               }`}
             >
@@ -161,9 +161,17 @@ export default function AdminLoginPage() {
           </div>
         </div>
 
-        <div className="pt-2 text-center">
-          <Link href="/" className="text-xs text-charcoal-muted hover:text-forest underline">
-            &larr; Return to Public Storefront
+        <div className="pt-2 text-center space-y-1">
+          <p className="text-[11px] text-charcoal-muted font-medium">
+            Dedicated Administrative Workspace &bull; Session Secured
+          </p>
+          <Link
+            href="/"
+            target="_blank"
+            rel="noopener noreferrer"
+            className="text-[10.5px] text-charcoal-muted/70 hover:text-gold transition-colors inline-block"
+          >
+            Open Public Storefront in New Tab &nearr;
           </Link>
         </div>
       </div>

@@ -301,8 +301,15 @@ export function CollectionClient({
               </div>
             ) : (
               <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 gap-6">
-                {filteredAndSortedProducts.map((product) => (
-                  <ProductCard key={product.id} product={product} />
+                {filteredAndSortedProducts.map((product, idx) => (
+                  <div
+                    key={product.id}
+                    className={`animate-fade-in-up ${
+                      idx % 6 === 0 ? 'delay-50' : idx % 6 === 1 ? 'delay-100' : idx % 6 === 2 ? 'delay-150' : idx % 6 === 3 ? 'delay-200' : idx % 6 === 4 ? 'delay-250' : 'delay-300'
+                    }`}
+                  >
+                    <ProductCard product={product} />
+                  </div>
                 ))}
               </div>
             )}
@@ -314,10 +321,10 @@ export function CollectionClient({
       {isMobileFilterOpen && (
         <div className="fixed inset-0 z-50 lg:hidden">
           <div
-            className="fixed inset-0 bg-charcoal/60 backdrop-blur-sm"
+            className="fixed inset-0 bg-charcoal/60 backdrop-blur-sm animate-fade-in"
             onClick={() => setIsMobileFilterOpen(false)}
           />
-          <div className="fixed inset-y-0 right-0 w-4/5 max-w-sm bg-warmwhite shadow-2xl z-50 p-6 flex flex-col justify-between overflow-y-auto">
+          <div className="fixed inset-y-0 right-0 w-4/5 max-w-sm bg-warmwhite shadow-2xl z-50 p-6 flex flex-col justify-between overflow-y-auto animate-slide-in-right">
             <div className="space-y-6">
               <div className="flex items-center justify-between pb-3 border-b border-borderLight">
                 <h3 className="font-serif text-xl font-bold text-forest">{t.filterBy}</h3>
