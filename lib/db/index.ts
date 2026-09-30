@@ -16,6 +16,7 @@ import {
   SiteSettings,
   StaffMember,
   AuditLog,
+  Affiliate,
 } from '@/types'
 import {
   initialCategories,
@@ -27,6 +28,7 @@ import {
   initialSiteSettings,
   initialStaffMembers,
   initialReviews,
+  initialAffiliates,
 } from './seedData'
 
 interface DatabaseSchema {
@@ -45,6 +47,7 @@ interface DatabaseSchema {
   siteSettings: SiteSettings
   staffMembers: StaffMember[]
   auditLogs: AuditLog[]
+  affiliates: Affiliate[]
 }
 
 const DATA_DIR = path.join(process.cwd(), 'data')
@@ -77,6 +80,7 @@ function ensureDb(): DatabaseSchema {
       siteSettings: initialSiteSettings,
       staffMembers: initialStaffMembers,
       auditLogs: [],
+      affiliates: initialAffiliates,
     }
     fs.writeFileSync(DB_FILE, JSON.stringify(initialDb, null, 2), 'utf-8')
     dbCache = initialDb
@@ -86,6 +90,11 @@ function ensureDb(): DatabaseSchema {
   try {
     const data = fs.readFileSync(DB_FILE, 'utf-8')
     dbCache = JSON.parse(data) as DatabaseSchema
+    // Backwards compatibility migration for affiliates
+    if (!dbCache.affiliates) {
+      dbCache.affiliates = initialAffiliates
+      saveDb(dbCache)
+    }
     return dbCache!
   } catch (err) {
     console.error('Error reading db file, falling back to seed:', err)
@@ -105,6 +114,7 @@ function ensureDb(): DatabaseSchema {
       siteSettings: initialSiteSettings,
       staffMembers: initialStaffMembers,
       auditLogs: [],
+      affiliates: initialAffiliates,
     }
     dbCache = initialDb
     return initialDb
@@ -400,8 +410,22 @@ export async function updateOrderStatus(
   const order = db.orders.find((o) => o.id === orderId)
   if (!order) return null
 
+  const previousPaymentStatus = order.paymentStatus
   Object.assign(order, updates, { updatedAt: new Date().toISOString() })
   saveDb(db)
+
+  // When order becomes paid, credit affiliate if attributed
+  if (
+    updates.paymentStatus === 'paid' &&
+    previousPaymentStatus !== 'paid' &&
+    order.affiliateCode
+  ) {
+    await recordAffiliateSale(
+      order.affiliateCode,
+      order.totalSen,
+      order.affiliateCommissionSen || 0
+    )
+  }
 
   logAdminAction(actorEmail, 'order_status_updated', 'order', orderId, updates)
   return order
@@ -733,4 +757,120 @@ export async function updateBusinessStatus(id: string, status: 'new' | 'in_progr
   item.status = status
   saveDb(db)
   return true
+}
+
+// ==========================================
+// AFFILIATE & REFERRAL REPOSITORY
+// ==========================================
+
+export async function getAffiliates(): Promise<Affiliate[]> {
+  const db = ensureDb()
+  return db.affiliates || []
+}
+
+export async function getAffiliateById(id: string): Promise<Affiliate | null> {
+  const db = ensureDb()
+  return db.affiliates?.find((a) => a.id === id) || null
+}
+
+export async function getAffiliateByCode(code: string): Promise<Affiliate | null> {
+  const db = ensureDb()
+  if (!code) return null
+  const clean = code.trim().toUpperCase()
+  return db.affiliates?.find((a) => a.code.toUpperCase() === clean && a.isActive) || null
+}
+
+export async function createAffiliate(
+  data: Omit<Affiliate, 'id' | 'createdAt' | 'totalSalesCount' | 'totalSalesRevenueSen' | 'totalCommissionSen'>,
+  actorEmail: string = 'admin'
+): Promise<Affiliate> {
+  const db = ensureDb()
+  if (!db.affiliates) db.affiliates = []
+
+  const cleanCode = data.code.trim().toUpperCase()
+  const existing = db.affiliates.find((a) => a.code.toUpperCase() === cleanCode)
+  if (existing) {
+    throw new Error(`Affiliate code "${cleanCode}" is already in use.`)
+  }
+
+  const newAffiliate: Affiliate = {
+    ...data,
+    id: `aff-${Date.now()}-${Math.random().toString(36).substring(2, 6)}`,
+    code: cleanCode,
+    totalSalesCount: 0,
+    totalSalesRevenueSen: 0,
+    totalCommissionSen: 0,
+    createdAt: new Date().toISOString(),
+  }
+
+  db.affiliates.push(newAffiliate)
+  saveDb(db)
+
+  logAdminAction(actorEmail, 'affiliate_created', 'affiliate', newAffiliate.id, {
+    code: newAffiliate.code,
+    name: newAffiliate.name,
+  })
+
+  return newAffiliate
+}
+
+export async function updateAffiliate(
+  id: string,
+  updates: Partial<Affiliate>,
+  actorEmail: string = 'admin'
+): Promise<Affiliate | null> {
+  const db = ensureDb()
+  if (!db.affiliates) return null
+
+  const affiliate = db.affiliates.find((a) => a.id === id)
+  if (!affiliate) return null
+
+  if (updates.code) {
+    const cleanCode = updates.code.trim().toUpperCase()
+    const collision = db.affiliates.find((a) => a.code.toUpperCase() === cleanCode && a.id !== id)
+    if (collision) {
+      throw new Error(`Affiliate code "${cleanCode}" is already in use by another agent.`)
+    }
+    updates.code = cleanCode
+  }
+
+  Object.assign(affiliate, updates)
+  saveDb(db)
+
+  logAdminAction(actorEmail, 'affiliate_updated', 'affiliate', id, updates)
+  return affiliate
+}
+
+export async function deleteAffiliate(id: string, actorEmail: string = 'admin'): Promise<boolean> {
+  const db = ensureDb()
+  if (!db.affiliates) return false
+
+  const idx = db.affiliates.findIndex((a) => a.id === id)
+  if (idx >= 0) {
+    const code = db.affiliates[idx].code
+    db.affiliates.splice(idx, 1)
+    saveDb(db)
+    logAdminAction(actorEmail, 'affiliate_deleted', 'affiliate', id, { code })
+    return true
+  }
+  return false
+}
+
+export async function recordAffiliateSale(
+  code: string,
+  saleRevenueSen: number,
+  commissionSen: number
+): Promise<void> {
+  const db = ensureDb()
+  if (!db.affiliates) return
+
+  const clean = code.trim().toUpperCase()
+  const affiliate = db.affiliates.find((a) => a.code.toUpperCase() === clean)
+  if (!affiliate) return
+
+  affiliate.totalSalesCount = (affiliate.totalSalesCount || 0) + 1
+  affiliate.totalSalesRevenueSen = (affiliate.totalSalesRevenueSen || 0) + saleRevenueSen
+  affiliate.totalCommissionSen = (affiliate.totalCommissionSen || 0) + commissionSen
+
+  saveDb(db)
 }

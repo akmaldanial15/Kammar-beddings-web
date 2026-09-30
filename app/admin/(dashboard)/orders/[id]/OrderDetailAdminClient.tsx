@@ -13,6 +13,8 @@ import {
   ShieldCheck,
   FileText,
   Save,
+  Tag,
+  Share2,
 } from 'lucide-react'
 import Link from 'next/link'
 
@@ -423,6 +425,52 @@ export function OrderDetailAdminClient({ initialOrder }: OrderDetailAdminClientP
                 </div>
               )}
             </div>
+          </div>
+
+          {/* Affiliate Referral & Remark Card */}
+          <div className="bg-warmwhite p-6 rounded-2xl border border-borderLight shadow-sm space-y-4">
+            <h3 className="font-serif text-lg font-bold text-forest-dark border-b border-borderLight pb-3 flex items-center justify-between">
+              <span className="flex items-center space-x-2">
+                <Share2 className="w-4 h-4 text-gold" />
+                <span>Affiliate Referral & Remark</span>
+              </span>
+              {order.affiliateCode && (
+                <span className="px-2 py-0.5 rounded-full bg-gold/20 text-forest-dark font-mono text-[10px] font-bold">
+                  {order.affiliateCode}
+                </span>
+              )}
+            </h3>
+
+            {order.affiliateCode ? (
+              <div className="space-y-3 text-xs">
+                <div>
+                  <span className="text-secondary block">Referred By Agent</span>
+                  <span className="font-bold text-charcoal text-sm">{order.affiliateName || 'Affiliate Agent'}</span>
+                  <span className="font-mono text-[10px] text-secondary block">Code: {order.affiliateCode}</span>
+                </div>
+
+                <div className="p-3 bg-cream/70 rounded-xl border border-borderLight space-y-1">
+                  <span className="text-[10px] font-bold uppercase tracking-wider text-secondary block">
+                    System Remark
+                  </span>
+                  <p className="text-charcoal font-medium">
+                    {order.affiliateRemark || `Sale referred by affiliate agent: ${order.affiliateCode}`}
+                  </p>
+                </div>
+
+                <div className="flex justify-between items-center pt-2 border-t border-borderLight">
+                  <span className="text-secondary font-medium">Commission Payable</span>
+                  <span className="font-serif font-bold text-base text-forest">
+                    {formatMYR(order.affiliateCommissionSen || 0)}
+                  </span>
+                </div>
+              </div>
+            ) : (
+              <div className="text-center py-4 text-xs text-secondary space-y-1">
+                <p className="font-medium text-charcoal">Direct Organic Customer</p>
+                <p className="text-[11px]">No affiliate or referral link was attached to this checkout.</p>
+              </div>
+            )}
           </div>
 
           {/* Delivery Address & Bulky Specs */}

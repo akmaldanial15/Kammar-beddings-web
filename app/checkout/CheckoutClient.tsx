@@ -1,6 +1,6 @@
 'use client'
 
-import React, { useState } from 'react'
+import React, { useState, useEffect } from 'react'
 import Link from 'next/link'
 import Image from 'next/image'
 import { useRouter, useSearchParams } from 'next/navigation'
@@ -15,6 +15,7 @@ import {
   AlertCircle,
   CheckCircle2,
   Calendar,
+  Tag,
 } from 'lucide-react'
 import { useCart } from '@/lib/context/CartContext'
 import { useLanguage } from '@/lib/i18n/LanguageContext'
@@ -52,6 +53,24 @@ export function CheckoutClient() {
 
   const [isSubmitting, setIsSubmitting] = useState(false)
   const [errorMessage, setErrorMessage] = useState('')
+  const [affiliateCode, setAffiliateCode] = useState('')
+
+  // Load affiliate referral attribution from localStorage or cookie
+  useEffect(() => {
+    try {
+      const stored = localStorage.getItem('kamaar_ref')
+      if (stored) {
+        setAffiliateCode(stored.trim().toUpperCase())
+      } else {
+        const match = document.cookie.match(/(?:^|;\s*)kamaar_ref=([^;]+)/)
+        if (match && match[1]) {
+          setAffiliateCode(decodeURIComponent(match[1]).trim().toUpperCase())
+        }
+      }
+    } catch (e) {
+      // Ignore private browsing storage restriction
+    }
+  }, [])
 
   // Check if any item is a mattress
   const hasBulkyMattress = items.some(
@@ -146,6 +165,7 @@ export function CheckoutClient() {
             preferredDeliveryDate: preferredDate || undefined,
           },
           couponCode: couponCode || undefined,
+          affiliateCode: affiliateCode.trim() || undefined,
         }),
       })
 
@@ -482,6 +502,57 @@ export function CheckoutClient() {
                     </div>
                   </div>
                 ))}
+              </div>
+
+              {/* Affiliate / Referral Attribution Widget */}
+              <div className="pt-3 border-t border-borderLight">
+                {affiliateCode ? (
+                  <div className="p-2.5 bg-gold/10 border border-gold/30 rounded-xl flex items-center justify-between">
+                    <div className="flex items-center space-x-2">
+                      <Tag className="w-3.5 h-3.5 text-gold-dark flex-shrink-0" />
+                      <div>
+                        <span className="text-[10px] text-secondary uppercase tracking-wider block font-bold">
+                          Referral Partner Tagged
+                        </span>
+                        <span className="text-xs font-bold text-forest font-mono">
+                          {affiliateCode}
+                        </span>
+                      </div>
+                    </div>
+                    <button
+                      type="button"
+                      onClick={() => {
+                        setAffiliateCode('')
+                        try {
+                          localStorage.removeItem('kamaar_ref')
+                          document.cookie = 'kamaar_ref=; path=/; max-age=0'
+                        } catch (e) {}
+                      }}
+                      className="text-[10px] text-sale font-medium hover:underline px-2 py-1"
+                    >
+                      Remove
+                    </button>
+                  </div>
+                ) : (
+                  <details className="text-xs group">
+                    <summary className="cursor-pointer text-secondary hover:text-forest font-medium flex items-center justify-between select-none py-1">
+                      <span className="flex items-center space-x-1.5">
+                        <Tag className="w-3 h-3 text-gold" />
+                        <span>Referred by a KAMAAR agent / affiliate?</span>
+                      </span>
+                      <span className="text-[10px] text-gold group-open:rotate-180 transition-transform">▼</span>
+                    </summary>
+                    <div className="pt-2 flex space-x-2">
+                      <input
+                        type="text"
+                        placeholder="e.g. AFF-DANIAL"
+                        value={affiliateCode}
+                        onChange={(e) => setAffiliateCode(e.target.value.toUpperCase())}
+                        className="flex-1 px-3 py-1.5 text-xs bg-cream-light border border-borderLight rounded-lg uppercase font-mono outline-none focus:border-gold"
+                      />
+                    </div>
+                  </details>
+                )}
               </div>
 
               {/* Pricing Totals */}

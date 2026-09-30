@@ -91,6 +91,7 @@ export function OrdersClient({ initialOrders }: OrdersClientProps) {
                 <tr>
                   <th className="py-3.5 px-4">Order Number</th>
                   <th className="py-3.5 px-4">Customer</th>
+                  <th className="py-3.5 px-4">Referral / Agent</th>
                   <th className="py-3.5 px-4">Items Summary</th>
                   <th className="py-3.5 px-4">Destination</th>
                   <th className="py-3.5 px-4">Total (MYR)</th>
@@ -119,6 +120,26 @@ export function OrdersClient({ initialOrders }: OrdersClientProps) {
                       <td className="py-4 px-4">
                         <span className="font-bold text-forest-dark block">{order.customerName}</span>
                         <span className="text-[10px] text-secondary">{order.customerEmail}</span>
+                      </td>
+                      <td className="py-4 px-4">
+                        {order.affiliateCode ? (
+                          <div>
+                            <span className="inline-flex items-center space-x-1 px-2 py-0.5 rounded-full bg-gold/20 text-forest-dark text-[10px] font-bold font-mono">
+                              <span>🏷️</span>
+                              <span>{order.affiliateCode}</span>
+                            </span>
+                            <span className="text-[10.5px] text-charcoal font-medium block mt-0.5 truncate max-w-[130px]">
+                              {order.affiliateName || 'Affiliate'}
+                            </span>
+                            {order.affiliateCommissionSen !== undefined && (
+                              <span className="text-[9.5px] text-forest font-bold block">
+                                Comm: {formatMYR(order.affiliateCommissionSen)}
+                              </span>
+                            )}
+                          </div>
+                        ) : (
+                          <span className="text-[11px] text-secondary/60 italic">Direct Organic</span>
+                        )}
                       </td>
                       <td className="py-4 px-4">
                         <span className="font-medium text-charcoal block">

@@ -189,8 +189,29 @@ export interface Order {
   trackingNumber?: string
   carrier?: string
   internalNotes?: string
+  affiliateCode?: string
+  affiliateName?: string
+  affiliateCommissionSen?: number
+  affiliateRemark?: string
   createdAt: string
   updatedAt: string
+}
+
+export interface Affiliate {
+  id: string
+  code: string // e.g. 'AFF-DANIAL', 'SITI10'
+  name: string
+  email: string
+  phone: string
+  bankName: string
+  bankAccountNumber: string
+  commissionType: 'percentage' | 'fixed_amount'
+  commissionRate: number // e.g. 10 for 10%
+  totalSalesCount: number
+  totalSalesRevenueSen: number
+  totalCommissionSen: number
+  isActive: boolean
+  createdAt: string
 }
 
 export interface Review {

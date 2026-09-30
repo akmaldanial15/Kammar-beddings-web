@@ -1,5 +1,5 @@
 // Rich Seed Dataset for KAMAAR SLEEP Platform
-import { Product, Category, Collection, Coupon, Showroom, BlogPost, SiteSettings, StaffMember, Review } from '@/types'
+import { Product, Category, Collection, Coupon, Showroom, BlogPost, SiteSettings, StaffMember, Review, Affiliate } from '@/types'
 
 export const initialCategories: Category[] = [
   {
@@ -1143,5 +1143,56 @@ export const initialReviews: Review[] = [
     isVerifiedPurchase: true,
     status: 'approved',
     createdAt: '2026-09-22T11:20:00Z',
+  },
+]
+
+export const initialAffiliates: Affiliate[] = [
+  {
+    id: 'aff-danial',
+    code: 'AFF-DANIAL',
+    name: 'Ahmad Danial',
+    email: 'danial@kamaar.my',
+    phone: '+60 12-345 6789',
+    bankName: 'Maybank',
+    bankAccountNumber: '164012345678',
+    commissionType: 'percentage',
+    commissionRate: 10,
+    totalSalesCount: 4,
+    totalSalesRevenueSen: 1319600, // RM 13,196.00
+    totalCommissionSen: 131960,   // RM 1,319.60
+    isActive: true,
+    createdAt: '2026-08-01T10:00:00Z',
+  },
+  {
+    id: 'aff-izzah',
+    code: 'AFF-IZZAH',
+    name: 'Nurul Izzah',
+    email: 'izzah.aff@gmail.com',
+    phone: '+60 17-889 1234',
+    bankName: 'CIMB Bank',
+    bankAccountNumber: '7012345678',
+    commissionType: 'percentage',
+    commissionRate: 8,
+    totalSalesCount: 2,
+    totalSalesRevenueSen: 599800, // RM 5,998.00
+    totalCommissionSen: 47984,   // RM 479.84
+    isActive: true,
+    createdAt: '2026-08-15T14:30:00Z',
+  },
+  {
+    id: 'aff-hafiz',
+    code: 'AFF-HAFIZ',
+    name: 'Hafiz Rozlan',
+    email: 'hafiz.rozlan@yahoo.com',
+    phone: '+60 19-223 9988',
+    bankName: 'Bank Islam',
+    bankAccountNumber: '12038010045678',
+    commissionType: 'percentage',
+    commissionRate: 10,
+    totalSalesCount: 1,
+    totalSalesRevenueSen: 289900, // RM 2,899.00
+    totalCommissionSen: 28990,   // RM 289.90
+    isActive: true,
+    createdAt: '2026-09-01T09:00:00Z',
   },
 ]

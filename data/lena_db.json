@@ -2227,5 +2227,55 @@
       },
       "createdAt": "2026-09-30T10:58:09.096Z"
     }
+  ],
+  "affiliates": [
+    {
+      "id": "aff-danial",
+      "code": "AFF-DANIAL",
+      "name": "Ahmad Danial",
+      "email": "danial@kamaar.my",
+      "phone": "+60 12-345 6789",
+      "bankName": "Maybank",
+      "bankAccountNumber": "164012345678",
+      "commissionType": "percentage",
+      "commissionRate": 10,
+      "totalSalesCount": 4,
+      "totalSalesRevenueSen": 1319600,
+      "totalCommissionSen": 131960,
+      "isActive": true,
+      "createdAt": "2026-08-01T10:00:00Z"
+    },
+    {
+      "id": "aff-izzah",
+      "code": "AFF-IZZAH",
+      "name": "Nurul Izzah",
+      "email": "izzah.aff@gmail.com",
+      "phone": "+60 17-889 1234",
+      "bankName": "CIMB Bank",
+      "bankAccountNumber": "7012345678",
+      "commissionType": "percentage",
+      "commissionRate": 8,
+      "totalSalesCount": 2,
+      "totalSalesRevenueSen": 599800,
+      "totalCommissionSen": 47984,
+      "isActive": true,
+      "createdAt": "2026-08-15T14:30:00Z"
+    },
+    {
+      "id": "aff-hafiz",
+      "code": "AFF-HAFIZ",
+      "name": "Hafiz Rozlan",
+      "email": "hafiz.rozlan@yahoo.com",
+      "phone": "+60 19-223 9988",
+      "bankName": "Bank Islam",
+      "bankAccountNumber": "12038010045678",
+      "commissionType": "percentage",
+      "commissionRate": 10,
+      "totalSalesCount": 1,
+      "totalSalesRevenueSen": 289900,
+      "totalCommissionSen": 28990,
+      "isActive": true,
+      "createdAt": "2026-09-01T09:00:00Z"
+    }
   ]
 }

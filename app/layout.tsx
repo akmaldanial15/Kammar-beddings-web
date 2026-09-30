@@ -9,6 +9,7 @@ import { Header } from '@/components/layout/Header'
 import { CartDrawer } from '@/components/cart/CartDrawer'
 import { Footer } from '@/components/layout/Footer'
 import { WhatsAppButton } from '@/components/common/WhatsAppButton'
+import { AffiliateTracker } from '@/components/common/AffiliateTracker'
 
 export const metadata: Metadata = {
   title: 'KAMAAR Beddings | 100% Pure Natural Latex & Luxury Hybrid Mattresses Malaysia',
@@ -53,6 +54,7 @@ export default function RootLayout({
           <CartProvider>
             <WishlistProvider>
               <CompareProvider>
+                <AffiliateTracker />
                 <AnnouncementBar />
                 <Header />
                 <CartDrawer />

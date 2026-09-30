@@ -5,6 +5,7 @@ import {
   validateCoupon,
   reserveStock,
   createOrder,
+  getAffiliateByCode,
 } from '@/lib/db'
 import { calculateShippingFee, validateMalaysianPostcode, validateMalaysianPhone } from '@/lib/utils/format'
 import { stripeProvider } from '@/lib/payment/stripe'
@@ -37,6 +38,7 @@ const CheckoutRequestSchema = z.object({
     preferredDeliveryDate: z.string().optional(),
   }).optional(),
   couponCode: z.string().optional(),
+  affiliateCode: z.string().optional(),
 })
 
 export async function POST(request: NextRequest) {
@@ -51,7 +53,7 @@ export async function POST(request: NextRequest) {
       )
     }
 
-    const { items, customer, shippingAddress, deliveryDetails, couponCode } = parseResult.data
+    const { items, customer, shippingAddress, deliveryDetails, couponCode, affiliateCode } = parseResult.data
 
     // 1. Re-validate each item price and stock against server database (Never trust client)
     let subtotalSen = 0
@@ -124,7 +126,32 @@ export async function POST(request: NextRequest) {
 
     const totalSen = Math.max(0, subtotalSen - discountSen + shippingCalc.shippingSen)
 
-    // 4. Reserve stock atomically
+    // 4. Resolve Affiliate & Referral attribution (if any)
+    let affiliateAttribution: {
+      code: string
+      name: string
+      commissionSen: number
+      remark: string
+    } | undefined = undefined
+
+    if (affiliateCode) {
+      const affiliate = await getAffiliateByCode(affiliateCode)
+      if (affiliate && affiliate.isActive) {
+        const commSen =
+          affiliate.commissionType === 'fixed_amount'
+            ? affiliate.commissionRate * 100
+            : Math.round((subtotalSen * affiliate.commissionRate) / 100)
+
+        affiliateAttribution = {
+          code: affiliate.code,
+          name: affiliate.name,
+          commissionSen: commSen,
+          remark: `Sale dirujuk oleh Affiliate: ${affiliate.name} (Kod: ${affiliate.code}) | Komisen: RM ${(commSen / 100).toFixed(2)} (${affiliate.commissionRate}%)`,
+        }
+      }
+    }
+
+    // 5. Reserve stock atomically
     for (const item of validatedOrderItems) {
       const res = await reserveStock(item.variantId, item.quantity)
       if (!res.success) {
@@ -132,11 +159,15 @@ export async function POST(request: NextRequest) {
       }
     }
 
-    // 5. Persist order in database with immutable snapshot
+    // 6. Persist order in database with immutable snapshot
     const order = await createOrder({
       customerEmail: customer.email,
       customerName: customer.fullName,
       customerPhone: customer.phone,
+      affiliateCode: affiliateAttribution?.code,
+      affiliateName: affiliateAttribution?.name,
+      affiliateCommissionSen: affiliateAttribution?.commissionSen,
+      affiliateRemark: affiliateAttribution?.remark,
       shippingAddress: {
         fullName: customer.fullName,
         phone: customer.phone,
