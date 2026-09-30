@@ -279,15 +279,6 @@ export function Footer() {
                   Book Showroom Consultation &rarr;
                 </Link>
               </div>
-
-              <div className="pt-2">
-                <Link
-                  href="/admin/login"
-                  className="text-[11px] text-warmwhite/40 hover:text-gold transition-colors"
-                >
-                  Staff & Admin Portal
-                </Link>
-              </div>
             </div>
           </div>
         </div>
