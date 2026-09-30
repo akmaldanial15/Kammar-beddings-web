@@ -1,6 +1,6 @@
 'use client'
 
-import React, { useState, useEffect } from 'react'
+import React, { useState, useEffect, useRef } from 'react'
 import Link from 'next/link'
 import { usePathname } from 'next/navigation'
 import {
@@ -40,6 +40,25 @@ export function Header() {
   const [isMattressMegaOpen, setIsMattressMegaOpen] = useState(false)
   const [mobileExpandedSection, setMobileExpandedSection] = useState<string | null>('mattresses')
 
+  const megaTimeoutRef = useRef<NodeJS.Timeout | null>(null)
+
+  const handleOpenMega = () => {
+    if (megaTimeoutRef.current) {
+      clearTimeout(megaTimeoutRef.current)
+      megaTimeoutRef.current = null
+    }
+    setIsMattressMegaOpen(true)
+  }
+
+  const handleCloseMega = () => {
+    if (megaTimeoutRef.current) {
+      clearTimeout(megaTimeoutRef.current)
+    }
+    megaTimeoutRef.current = setTimeout(() => {
+      setIsMattressMegaOpen(false)
+    }, 220) // 220ms intent buffer: ensures mouse crossing gap never drops menu
+  }
+
   // Scroll listener for sticky header transition
   useEffect(() => {
     const handleScroll = () => {
@@ -51,6 +70,9 @@ export function Header() {
 
   // Close menus on route change
   useEffect(() => {
+    if (megaTimeoutRef.current) {
+      clearTimeout(megaTimeoutRef.current)
+    }
     setIsMobileMenuOpen(false)
     setIsMattressMegaOpen(false)
   }, [pathname])
@@ -207,15 +229,15 @@ export function Header() {
           <div className="bg-warmwhite/95 backdrop-blur-md border-b border-borderLight shadow-xs">
             <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
               <nav className="flex items-center justify-center space-x-8 xl:space-x-12 py-2.5 text-[13.5px] xl:text-[14px] font-medium text-charcoal">
-                {/* 1. Mattresses (with Mega Menu) */}
+                {/* 1. Mattresses (with Mega Menu & Zero-Gap Hover Bridge) */}
                 <div
-                  className="relative"
-                  onMouseEnter={() => setIsMattressMegaOpen(true)}
-                  onMouseLeave={() => setIsMattressMegaOpen(false)}
+                  className="relative py-1"
+                  onMouseEnter={handleOpenMega}
+                  onMouseLeave={handleCloseMega}
                 >
                   <Link
                     href="/collections/mattress"
-                    className={`flex items-center space-x-1.5 py-1 hover:text-forest transition-colors group ${
+                    className={`flex items-center space-x-1.5 py-1.5 hover:text-forest transition-colors group ${
                       pathname.startsWith('/collections/mattress')
                         ? 'text-forest font-bold border-b-2 border-gold'
                         : ''
@@ -229,9 +251,17 @@ export function Header() {
                     />
                   </Link>
 
-                  {/* Mega Menu Dropdown */}
+                  {/* Mega Menu Dropdown with Hover Bridge Container */}
                   {isMattressMegaOpen && (
-                    <div className="absolute top-full left-1/2 -translate-x-1/2 w-[860px] bg-warmwhite rounded-2xl shadow-2xl border border-borderLight p-6 grid grid-cols-4 gap-6 animate-fade-in-down z-50 mt-1">
+                    <div
+                      className="absolute top-full left-1/2 -translate-x-1/2 pt-2 z-50 pointer-events-auto"
+                      onMouseEnter={handleOpenMega}
+                      onMouseLeave={handleCloseMega}
+                    >
+                      {/* Invisible Hover Bridge: covers gap between button and card */}
+                      <div className="absolute -top-3 left-0 right-0 h-4 bg-transparent" />
+
+                      <div className="w-[860px] bg-warmwhite rounded-2xl shadow-2xl border border-borderLight p-6 grid grid-cols-4 gap-6 animate-fade-in-down">
                       {/* Col 1: By Material */}
                       <div>
                         <h4 className="text-[11px] font-bold uppercase tracking-wider text-gold-dark pb-2 border-b border-borderLight mb-3">
@@ -370,8 +400,9 @@ export function Header() {
                         </Link>
                       </div>
                     </div>
-                  )}
-                </div>
+                  </div>
+                )}
+              </div>
 
                 {/* 2. Pillows */}
                 <Link
