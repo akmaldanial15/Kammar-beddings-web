@@ -171,11 +171,11 @@ export function CartClient() {
 
         {/* Free Gift Notification if Qualified */}
         {hasQueenOrKingMattress && (
-          <div className="mb-8 p-4 bg-emerald-50 rounded-2xl border border-emerald-300 flex items-center space-x-3 text-emerald-900">
-            <Gift className="w-6 h-6 text-emerald-600 flex-shrink-0" />
+          <div className="mb-8 p-4 bg-blue-50/80 rounded-2xl border border-blue-200 flex items-center space-x-3 text-blue-950">
+            <Gift className="w-6 h-6 text-blue-600 flex-shrink-0" />
             <div className="text-xs">
               <span className="font-bold">Gift with Purchase Qualified!</span>
-              <p className="text-emerald-800 mt-0.5">
+              <p className="text-blue-900 mt-0.5">
                 Your Queen/King mattress purchase automatically qualifies for a free Ergonomic Cervical Contour Natural Latex Pillow (worth RM269.00), included with delivery.
               </p>
             </div>

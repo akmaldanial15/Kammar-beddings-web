@@ -70,8 +70,8 @@ export function ReviewsSection({ reviews }: ReviewsSectionProps) {
                 <div>
                   <h4 className="text-xs font-bold text-forest">{rev.customerName}</h4>
                   {rev.isVerifiedPurchase && (
-                    <span className="flex items-center space-x-1 text-[10px] text-emerald-700 font-semibold mt-0.5">
-                      <CheckCircle className="w-3 h-3 text-emerald-600" />
+                    <span className="flex items-center space-x-1 text-[10px] text-blue-800 font-semibold mt-0.5">
+                      <CheckCircle className="w-3 h-3 text-blue-600" />
                       <span>Verified Purchaser</span>
                     </span>
                   )}

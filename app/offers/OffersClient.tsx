@@ -123,7 +123,7 @@ export function OffersClient({ coupons, eligibleProducts }: OffersClientProps) {
                       onClick={() => handleCopy(coupon.code)}
                       className={`px-3 py-1.5 rounded text-xs font-semibold flex items-center space-x-1 transition-all ${
                         isCopied
-                          ? 'bg-emerald-700 text-white font-bold'
+                          ? 'bg-blue-600 text-white font-bold'
                           : 'bg-forest hover:bg-forest-dark text-warmwhite'
                       }`}
                     >

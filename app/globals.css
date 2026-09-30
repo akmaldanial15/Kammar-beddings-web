@@ -5,14 +5,14 @@
 @tailwind utilities;
 
 :root {
-  --color-forest: #153D32;
-  --color-forest-dark: #102B24;
+  --color-forest: #102A4E;
+  --color-forest-dark: #0A1A33;
   --color-gold: #B49A58;
-  --color-cream: #F6F2E9;
-  --color-warmwhite: #FFFDFA;
-  --color-charcoal: #202824;
-  --color-charcoal-muted: #646D67;
-  --color-border-light: #E4E2DB;
+  --color-cream: #F4F7FB;
+  --color-warmwhite: #FFFFFF;
+  --color-charcoal: #0F172A;
+  --color-charcoal-muted: #475569;
+  --color-border-light: #E2E8F0;
   --color-sale: #A13D40;
 }
 
@@ -37,21 +37,21 @@ h1, h2, h3, h4, .font-serif {
 }
 
 ::-webkit-scrollbar-track {
-  background: #F6F2E9;
+  background: #F4F7FB;
 }
 
 ::-webkit-scrollbar-thumb {
-  background: #B49A58;
+  background: #1B3B6B;
   border-radius: 4px;
 }
 
 ::-webkit-scrollbar-thumb:hover {
-  background: #937B3C;
+  background: #102A4E;
 }
 
 /* Accessible focus visible rings */
 :focus-visible {
-  outline: 2px solid #B49A58;
+  outline: 2px solid #1B3B6B;
   outline-offset: 2px;
 }
 
@@ -74,7 +74,7 @@ h1, h2, h3, h4, .font-serif {
 
 .product-card:hover {
   transform: translateY(-4px);
-  box-shadow: 0 12px 30px rgba(16, 43, 36, 0.08);
+  box-shadow: 0 12px 30px rgba(10, 26, 51, 0.08);
 }
 
 /* Hotspot Pulse */

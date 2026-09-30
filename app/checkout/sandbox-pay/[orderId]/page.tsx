@@ -143,7 +143,7 @@ export default function SandboxPaymentPage({ params }: Props) {
             <button
               onClick={() => handleSimulatePayment('success')}
               disabled={simulating}
-              className="w-full py-3.5 bg-emerald-700 hover:bg-emerald-800 text-white text-xs font-bold uppercase tracking-wider rounded-xl shadow-card flex items-center justify-center space-x-2 transition-all disabled:opacity-50"
+              className="w-full py-3.5 bg-forest hover:bg-forest-dark text-warmwhite text-xs font-bold uppercase tracking-wider rounded-xl shadow-card flex items-center justify-center space-x-2 transition-all disabled:opacity-50"
             >
               <CheckCircle className="w-4 h-4" />
               <span>Simulate Successful Stripe Payment (Mark Order Paid)</span>

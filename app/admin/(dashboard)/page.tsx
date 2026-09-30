@@ -61,7 +61,7 @@ export default async function AdminDashboardOverview() {
         <div className="bg-warmwhite p-6 rounded-2xl border border-borderLight shadow-subtle space-y-2">
           <div className="flex items-center justify-between text-xs text-charcoal-muted font-bold uppercase tracking-wider">
             <span>Verified Revenue</span>
-            <div className="w-8 h-8 rounded-lg bg-emerald-50 text-emerald-700 flex items-center justify-center">
+            <div className="w-8 h-8 rounded-lg bg-blue-50 text-blue-800 flex items-center justify-center">
               <DollarSign className="w-4 h-4" />
             </div>
           </div>
@@ -173,7 +173,7 @@ export default async function AdminDashboardOverview() {
                         <span
                           className={`px-2 py-0.5 rounded text-[10px] font-bold uppercase ${
                             order.paymentStatus === 'paid'
-                              ? 'bg-emerald-100 text-emerald-800'
+                              ? 'bg-blue-100 text-blue-900'
                               : 'bg-amber-100 text-amber-800'
                           }`}
                         >

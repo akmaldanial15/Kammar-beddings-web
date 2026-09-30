@@ -313,7 +313,7 @@ export function FinderClient({ products }: FinderClientProps) {
                         <span className="text-xs font-bold uppercase tracking-wider text-gold-dark">
                           {product.material}
                         </span>
-                        <span className="px-3 py-1 bg-emerald-100 text-emerald-800 font-bold text-xs rounded-full">
+                        <span className="px-3 py-1 bg-blue-100 text-blue-900 font-bold text-xs rounded-full">
                           {matchPercent}% Compatibility Match
                         </span>
                       </div>
@@ -333,7 +333,7 @@ export function FinderClient({ products }: FinderClientProps) {
                         </span>
                         {reasons.map((r, i) => (
                           <div key={i} className="flex items-center space-x-1.5 text-xs text-charcoal-muted">
-                            <Check className="w-3.5 h-3.5 text-emerald-600 flex-shrink-0" />
+                            <Check className="w-3.5 h-3.5 text-blue-600 flex-shrink-0" />
                             <span>{r}</span>
                           </div>
                         ))}

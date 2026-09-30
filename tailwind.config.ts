@@ -10,29 +10,29 @@ const config: Config = {
     extend: {
       colors: {
         forest: {
-          DEFAULT: '#153D32', // Deep forest
-          dark: '#102B24',    // Dark forest
-          light: '#1F4F42',
-          surface: '#153D320D',
+          DEFAULT: '#102A4E', // Royal Midnight Navy Blue (Primary)
+          dark: '#0A1A33',    // Deep Obsidian Midnight Blue (Headers, footers, dark backgrounds)
+          light: '#1B3B6B',   // Royal Sapphire Accent Blue
+          surface: '#102A4E0D', // Subtle 5% royal blue tint
         },
         gold: {
-          DEFAULT: '#B49A58', // Muted gold
-          light: '#C7AF72',
+          DEFAULT: '#B49A58', // Muted Luxury Gold (Pairs regally with Royal Navy Blue)
+          light: '#D4AF37',
           dark: '#937B3C',
-          subtle: '#FAF6EE',
+          subtle: '#F6F8FC',
         },
         cream: {
-          DEFAULT: '#F6F2E9', // Cream background
-          light: '#FCFAF6',
-          dark: '#ECE6D8',
+          DEFAULT: '#F4F7FB', // Crisp pearl luxury white-blue background
+          light: '#FAFCFE',
+          dark: '#E5ECF4',
         },
-        warmwhite: '#FFFDFA',
+        warmwhite: '#FFFFFF',
         charcoal: {
-          DEFAULT: '#202824', // Primary text
-          muted: '#646D67',   // Secondary text
-          light: '#424D47',
+          DEFAULT: '#0F172A', // Deep slate primary text
+          muted: '#475569',   // Slate secondary text
+          light: '#334155',
         },
-        borderLight: '#E4E2DB',
+        borderLight: '#E2E8F0', // Slate border light
         sale: '#A13D40',     // Restrained sale accent
       },
       fontFamily: {
@@ -40,10 +40,10 @@ const config: Config = {
         sans: ['Inter', 'Plus Jakarta Sans', 'system-ui', 'sans-serif'],
       },
       boxShadow: {
-        'subtle': '0 2px 10px rgba(16, 43, 36, 0.04)',
-        'card': '0 4px 20px rgba(16, 43, 36, 0.06)',
-        'dropdown': '0 10px 30px rgba(16, 43, 36, 0.1)',
-        'drawer': '-4px 0 25px rgba(16, 43, 36, 0.12)',
+        'subtle': '0 2px 10px rgba(10, 26, 51, 0.04)',
+        'card': '0 4px 20px rgba(10, 26, 51, 0.06)',
+        'dropdown': '0 10px 30px rgba(10, 26, 51, 0.1)',
+        'drawer': '-4px 0 25px rgba(10, 26, 51, 0.12)',
       },
       borderRadius: {
         'premium': '8px',

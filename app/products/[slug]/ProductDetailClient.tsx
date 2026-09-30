@@ -256,8 +256,8 @@ export function ProductDetailClient({
                   </span>
                 )}
               </div>
-              <p className="text-xs text-emerald-800 font-semibold pt-1 flex items-center space-x-1">
-                <Truck className="w-3.5 h-3.5 text-emerald-700" />
+              <p className="text-xs text-blue-950 font-semibold pt-1 flex items-center space-x-1">
+                <Truck className="w-3.5 h-3.5 text-blue-700" />
                 <span>Complimentary White-Glove Peninsular Delivery & Room Setup</span>
               </p>
             </div>
@@ -655,7 +655,7 @@ export function ProductDetailClient({
                         <div className="flex items-center space-x-2">
                           <span className="font-bold text-xs text-charcoal">{rev.customerName}</span>
                           {rev.isVerifiedPurchase && (
-                            <span className="text-[10px] text-emerald-700 bg-emerald-50 px-2 py-0.5 rounded font-semibold border border-emerald-200">
+                            <span className="text-[10px] text-blue-800 bg-blue-50 px-2 py-0.5 rounded font-semibold border border-blue-200">
                               Verified Purchase
                             </span>
                           )}
