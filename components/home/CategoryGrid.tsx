@@ -51,7 +51,7 @@ export function CategoryGrid() {
       name: 'Mattress Toppers',
       description: '5cm & 7.5cm natural latex slabs',
       link: '/collections/toppers-protectors',
-      imageUrl: 'https://images.unsplash.com/photo-1540518614846-7ede433c4ef4?auto=format&fit=crop&w=600&q=80',
+      imageUrl: '/images/products/topper-latex-5cm.jpg',
     },
     {
       name: 'Hardwood Bedframes',

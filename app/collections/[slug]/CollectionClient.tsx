@@ -136,7 +136,8 @@ export function CollectionClient({
             </button>
 
             <span className="text-xs text-charcoal-muted font-medium">
-              Showing <strong className="text-forest">{filteredAndSortedProducts.length}</strong> {t.resultsFound}
+              Showing <strong className="text-forest">{filteredAndSortedProducts.length}</strong>{' '}
+              {category?.name ? `${category.name.toLowerCase()} found` : t.resultsFound}
             </span>
 
             {hasActiveFilters && (
@@ -173,7 +174,7 @@ export function CollectionClient({
             <div className="flex items-center justify-between pb-3 border-b border-borderLight">
               <span className="text-xs font-bold uppercase tracking-wider text-forest flex items-center space-x-1.5">
                 <Filter className="w-3.5 h-3.5 text-gold-dark" />
-                <span>{t.filterBy}</span>
+                <span>{category?.name ? `Filter ${category.name}` : t.filterBy}</span>
               </span>
               {hasActiveFilters && (
                 <button
@@ -327,7 +328,9 @@ export function CollectionClient({
           <div className="fixed inset-y-0 right-0 w-4/5 max-w-sm bg-warmwhite shadow-2xl z-50 p-6 flex flex-col justify-between overflow-y-auto animate-slide-in-right">
             <div className="space-y-6">
               <div className="flex items-center justify-between pb-3 border-b border-borderLight">
-                <h3 className="font-serif text-xl font-bold text-forest">{t.filterBy}</h3>
+                <h3 className="font-serif text-xl font-bold text-forest">
+                  {category?.name ? `Filter ${category.name}` : t.filterBy}
+                </h3>
                 <button
                   onClick={() => setIsMobileFilterOpen(false)}
                   className="p-1 text-charcoal-muted hover:text-charcoal"

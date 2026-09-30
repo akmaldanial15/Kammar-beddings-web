@@ -140,7 +140,7 @@ export function ProductCard({ product }: ProductCardProps) {
               </span>
               {product.firmness && (
                 <span className="bg-cream px-2 py-0.5 rounded border border-borderLight">
-                  {product.firmness} ({product.firmnessScale}/10)
+                  {product.firmness}{product.firmnessScale ? ` (${product.firmnessScale}/10)` : ''}
                 </span>
               )}
             </div>
