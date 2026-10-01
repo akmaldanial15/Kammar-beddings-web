@@ -1,15 +1,41 @@
 'use client'
 
-import React, { useState } from 'react'
-import { Product, Category, ProductVariant } from '@/types'
+import React, { useState, useEffect } from 'react'
+import { Product, Category, ProductVariant, ProductImage } from '@/types'
 import { formatMYR } from '@/lib/utils/format'
-import { Search, Plus, Edit2, Archive, CheckCircle, Eye, Tag, AlertCircle } from 'lucide-react'
+import {
+  Search,
+  Plus,
+  Edit2,
+  Archive,
+  CheckCircle,
+  Eye,
+  Tag,
+  AlertCircle,
+  ExternalLink,
+  Layers,
+  ShieldCheck,
+  Image as ImageIcon,
+  Sparkles,
+  Sliders,
+  Trash2,
+  Save,
+  X,
+  BedDouble,
+  Check,
+  Package,
+  FileText,
+  Copy,
+  Info,
+} from 'lucide-react'
 import Link from 'next/link'
 
 interface ProductsClientProps {
   initialProducts: Product[]
   categories: Category[]
 }
+
+type TabType = 'general' | 'variants' | 'specs' | 'images' | 'features'
 
 export function ProductsClient({ initialProducts, categories }: ProductsClientProps) {
   const [products, setProducts] = useState<Product[]>(initialProducts)
@@ -20,24 +46,136 @@ export function ProductsClient({ initialProducts, categories }: ProductsClientPr
   const [isSaving, setIsSaving] = useState(false)
   const [message, setMessage] = useState<{ text: string; type: 'success' | 'error' } | null>(null)
 
+  // Modal specific state
+  const [activeTab, setActiveTab] = useState<TabType>('general')
+  const [newFeatureText, setNewFeatureText] = useState('')
+  const [newImageUrl, setNewImageUrl] = useState('')
+  const [newImageAlt, setNewImageAlt] = useState('')
+
   // Filtered list
   const filtered = products.filter((p) => {
     const matchesSearch =
       p.name.toLowerCase().includes(search.toLowerCase()) ||
-      (p.material && p.material.toLowerCase().includes(search.toLowerCase()))
+      (p.material && p.material.toLowerCase().includes(search.toLowerCase())) ||
+      p.slug.toLowerCase().includes(search.toLowerCase())
     const matchesCat = selectedCat === 'all' || p.categoryId === selectedCat
     const matchesStatus = selectedStatus === 'all' || p.status === selectedStatus
     return matchesSearch && matchesCat && matchesStatus
   })
 
+  // Keyboard shortcut: Ctrl+S or Cmd+S to save
+  useEffect(() => {
+    const handleKeyDown = (e: KeyboardEvent) => {
+      if ((e.ctrlKey || e.metaKey) && e.key === 's') {
+        if (editingProduct && !isSaving) {
+          e.preventDefault()
+          handleSaveProduct()
+        }
+      }
+      if (e.key === 'Escape' && editingProduct && !isSaving) {
+        setEditingProduct(null)
+      }
+    }
+    window.addEventListener('keydown', handleKeyDown)
+    return () => window.removeEventListener('keydown', handleKeyDown)
+  }, [editingProduct, isSaving])
+
   const handleEditClick = (p: Product) => {
-    // Deep clone to allow safe editing
     setEditingProduct(JSON.parse(JSON.stringify(p)))
+    setActiveTab('general')
+    setNewFeatureText('')
+    setNewImageUrl('')
+    setNewImageAlt('')
   }
 
-  const handleSaveProduct = async (e: React.FormEvent) => {
-    e.preventDefault()
+  const handleOpenNewProduct = () => {
+    const newId = `prod-${Date.now()}`
+    const newProd: Product = {
+      id: newId,
+      name: 'New Luxury Mattress',
+      slug: `new-luxury-mattress-${Date.now().toString().slice(-4)}`,
+      subtitle: 'Handcrafted Malaysian Comfort with 100% Organic Dunlop Latex',
+      tagline: 'Pure Restorative Sleep',
+      description:
+        'The epitome of handcrafted Malaysian sleep luxury. Made from 100% sustainably harvested organic latex with no toxic polyurethane foam, chemical adhesives, or metal coils.',
+      shortDescription: 'Signature 100% organic natural latex mattress with dual-density ergonomic zoning.',
+      productType: 'mattress',
+      categoryId: categories[0]?.id || 'cat-mattresses',
+      material: '100% Natural Latex',
+      firmness: 'Medium Firm',
+      firmnessScale: 6,
+      thicknessCm: 30,
+      warrantyYears: 12,
+      trialNights: 100,
+      features: [
+        '100% Organic Malaysian Natural Latex',
+        'Zero synthetic foam, zero VOC emissions & hypoallergenic',
+        'Naturally dust-mite, fungal & antibacterial resistant',
+        'Belgian Organic Tencel zip-off washable cover',
+      ],
+      layers: [],
+      specifications: {},
+      faq: [],
+      images: [
+        {
+          id: `img-${Date.now()}`,
+          productId: newId,
+          imageUrl: 'https://images.unsplash.com/photo-1631049307264-da0ec9d70304?auto=format&fit=crop&w=800&q=80',
+          altText: 'New Luxury Mattress',
+          displayOrder: 1,
+          isPrimary: true,
+        },
+      ],
+      variants: [
+        {
+          id: `var-${Date.now()}-qen`,
+          productId: newId,
+          sku: 'KAM-NLM-QEN',
+          sizeName: 'Queen',
+          dimensions: '152 x 190 x 30 cm',
+          priceSen: 229900,
+          compareAtPriceSen: 289900,
+          stockQuantity: 12,
+          isActive: true,
+          isAvailable: true,
+        },
+        {
+          id: `var-${Date.now()}-kng`,
+          productId: newId,
+          sku: 'KAM-NLM-KNG',
+          sizeName: 'King',
+          dimensions: '183 x 190 x 30 cm',
+          priceSen: 279900,
+          compareAtPriceSen: 349900,
+          stockQuantity: 8,
+          isActive: true,
+          isAvailable: true,
+        },
+      ],
+      isFeatured: false,
+      status: 'draft',
+      createdAt: new Date().toISOString(),
+      updatedAt: new Date().toISOString(),
+    }
+
+    setEditingProduct(newProd)
+    setActiveTab('general')
+  }
+
+  const handleSaveProduct = async (e?: React.FormEvent) => {
+    if (e) e.preventDefault()
     if (!editingProduct) return
+
+    if (!editingProduct.name.trim() || !editingProduct.slug.trim()) {
+      setMessage({ text: 'Nama produk dan slug URL wajib diisi.', type: 'error' })
+      return
+    }
+
+    if (!editingProduct.variants || editingProduct.variants.length === 0) {
+      setMessage({ text: 'Produk mesti mempunyai sekurang-kurangnya satu varian saiz.', type: 'error' })
+      setActiveTab('variants')
+      return
+    }
 
     setIsSaving(true)
     setMessage(null)
@@ -60,20 +198,20 @@ export function ProductsClient({ initialProducts, categories }: ProductsClientPr
           }
           return [data.product, ...prev]
         })
-        setMessage({ text: 'Product updated successfully.', type: 'success' })
+        setMessage({ text: `Produk "${data.product.name}" berjaya disimpan!`, type: 'success' })
         setEditingProduct(null)
       } else {
-        setMessage({ text: data.error || 'Failed to save product.', type: 'error' })
+        setMessage({ text: data.error || 'Gagal menyimpan produk.', type: 'error' })
       }
     } catch (err: any) {
-      setMessage({ text: err.message || 'Network error occurred.', type: 'error' })
+      setMessage({ text: err.message || 'Ralat komunikasi pelayan berlaku.', type: 'error' })
     } finally {
       setIsSaving(false)
     }
   }
 
   const handleArchive = async (id: string) => {
-    if (!confirm('Are you sure you want to archive this product? It will be hidden from storefront.')) return
+    if (!confirm('Adakah anda pasti mahu mengarkibkan produk ini? Produk tidak akan dipaparkan di kedai.')) return
 
     try {
       const res = await fetch(`/api/admin/products?id=${id}`, { method: 'DELETE' })
@@ -82,60 +220,167 @@ export function ProductsClient({ initialProducts, categories }: ProductsClientPr
         setProducts((prev) =>
           prev.map((p) => (p.id === id ? { ...p, status: 'archived' as const } : p))
         )
-        setMessage({ text: 'Product archived successfully.', type: 'success' })
+        setMessage({ text: 'Produk berjaya diarkibkan.', type: 'success' })
       } else {
-        setMessage({ text: data.error || 'Failed to archive.', type: 'error' })
+        setMessage({ text: data.error || 'Gagal mengarkibkan produk.', type: 'error' })
       }
     } catch {
-      setMessage({ text: 'Failed to archive product.', type: 'error' })
+      setMessage({ text: 'Ralat semasa mengarkibkan produk.', type: 'error' })
     }
   }
+
+  // Variant Helpers
+  const addPresetVariant = (sizeName: string, defaultDims: string, defaultPriceSen: number) => {
+    if (!editingProduct) return
+    const prefix = editingProduct.slug
+      .replace(/[^a-z0-9]/gi, '')
+      .slice(0, 4)
+      .toUpperCase()
+    const sizeCode = sizeName.replace(/[^a-z0-9]/gi, '').slice(0, 3).toUpperCase()
+    const newVar: ProductVariant = {
+      id: `var-${Date.now()}-${Math.random().toString(36).substr(2, 4)}`,
+      productId: editingProduct.id,
+      sku: `KAM-${prefix || 'PRD'}-${sizeCode}`,
+      sizeName,
+      dimensions: defaultDims,
+      priceSen: defaultPriceSen,
+      compareAtPriceSen: Math.round(defaultPriceSen * 1.25),
+      stockQuantity: 10,
+      isActive: true,
+      isAvailable: true,
+    }
+    setEditingProduct({
+      ...editingProduct,
+      variants: [...editingProduct.variants, newVar],
+    })
+  }
+
+  const removeVariant = (vIdx: number) => {
+    if (!editingProduct) return
+    if (editingProduct.variants.length <= 1) {
+      alert('Produk mesti mempunyai sekurang-kurangnya satu varian saiz.')
+      return
+    }
+    const next = editingProduct.variants.filter((_, idx) => idx !== vIdx)
+    setEditingProduct({ ...editingProduct, variants: next })
+  }
+
+  // Image Helpers
+  const handleAddImage = () => {
+    if (!editingProduct || !newImageUrl.trim()) return
+    const newImg: ProductImage = {
+      id: `img-${Date.now()}`,
+      productId: editingProduct.id,
+      imageUrl: newImageUrl.trim(),
+      altText: newImageAlt.trim() || editingProduct.name,
+      displayOrder: (editingProduct.images?.length || 0) + 1,
+      isPrimary: (editingProduct.images?.length || 0) === 0,
+    }
+    setEditingProduct({
+      ...editingProduct,
+      images: [...(editingProduct.images || []), newImg],
+    })
+    setNewImageUrl('')
+    setNewImageAlt('')
+  }
+
+  const setPrimaryImage = (imgId: string) => {
+    if (!editingProduct) return
+    const nextImages = (editingProduct.images || []).map((img) => ({
+      ...img,
+      isPrimary: img.id === imgId,
+    }))
+    setEditingProduct({ ...editingProduct, images: nextImages })
+  }
+
+  const removeImage = (imgId: string) => {
+    if (!editingProduct) return
+    const nextImages = (editingProduct.images || []).filter((img) => img.id !== imgId)
+    if (nextImages.length > 0 && !nextImages.some((img) => img.isPrimary)) {
+      nextImages[0].isPrimary = true
+    }
+    setEditingProduct({ ...editingProduct, images: nextImages })
+  }
+
+  // Feature Helpers
+  const handleAddFeature = (text?: string) => {
+    const feat = (text || newFeatureText).trim()
+    if (!editingProduct || !feat) return
+    if (editingProduct.features?.includes(feat)) return
+    setEditingProduct({
+      ...editingProduct,
+      features: [...(editingProduct.features || []), feat],
+    })
+    setNewFeatureText('')
+  }
+
+  const handleRemoveFeature = (index: number) => {
+    if (!editingProduct) return
+    const nextFeatures = (editingProduct.features || []).filter((_, idx) => idx !== index)
+    setEditingProduct({ ...editingProduct, features: nextFeatures })
+  }
+
+  const getFirmnessLabel = (scale: number): string => {
+    if (scale <= 2) return 'Plush Soft'
+    if (scale <= 4) return 'Medium Soft'
+    if (scale <= 6) return 'Medium Firm'
+    if (scale <= 8) return 'Firm'
+    return 'Orthopaedic Firm'
+  }
+
+  // Primary image for modal header
+  const primaryThumb =
+    editingProduct?.images?.find((img) => img.isPrimary)?.imageUrl ||
+    editingProduct?.images?.[0]?.imageUrl ||
+    ''
+
+  const currentCategory = categories.find((c) => c.id === editingProduct?.categoryId)
 
   return (
     <div className="space-y-6">
       {/* Toast Notification */}
       {message && (
         <div
-          className={`p-4 rounded-xl flex items-center justify-between text-sm ${
+          className={`p-4 rounded-xl flex items-center justify-between text-sm shadow-sm animate-fade-in ${
             message.type === 'success'
-              ? 'bg-forest/10 border border-forest/20 text-forest-dark'
-              : 'bg-sale/10 border border-sale/20 text-sale'
+              ? 'bg-emerald-50 border border-emerald-200 text-emerald-800'
+              : 'bg-rose-50 border border-rose-200 text-rose-800'
           }`}
         >
           <div className="flex items-center space-x-2">
             {message.type === 'success' ? (
-              <CheckCircle className="w-5 h-5 text-forest" />
+              <CheckCircle className="w-5 h-5 text-emerald-600" />
             ) : (
-              <AlertCircle className="w-5 h-5 text-sale" />
+              <AlertCircle className="w-5 h-5 text-rose-600" />
             )}
-            <span>{message.text}</span>
+            <span className="font-medium">{message.text}</span>
           </div>
           <button onClick={() => setMessage(null)} className="text-xs font-bold underline">
-            Dismiss
+            Tutup
           </button>
         </div>
       )}
 
       {/* Filter and Search Bar */}
-      <div className="bg-warmwhite p-4 rounded-2xl border border-borderLight flex flex-col md:flex-row gap-4 items-center justify-between shadow-sm animate-fade-in">
-        <div className="relative w-full md:w-80">
-          <Search className="w-4 h-4 text-secondary absolute left-3.5 top-1/2 -translate-y-1/2" />
+      <div className="bg-warmwhite p-4 rounded-2xl border border-borderLight flex flex-col md:flex-row gap-4 items-center justify-between shadow-xs animate-fade-in">
+        <div className="relative flex-1 w-full">
+          <Search className="w-4 h-4 text-charcoal-muted absolute left-3.5 top-3" />
           <input
             type="text"
-            placeholder="Search products or material..."
+            placeholder="Cari produk mengikut nama, slug atau bahan utama..."
             value={search}
             onChange={(e) => setSearch(e.target.value)}
-            className="w-full pl-10 pr-4 py-2 text-xs rounded-xl bg-cream/50 border border-borderLight focus:outline-none focus:border-forest"
+            className="w-full pl-10 pr-4 py-2 text-xs rounded-xl bg-cream/50 border border-borderLight focus:outline-none focus:ring-2 focus:ring-gold/30 focus:border-gold transition-all"
           />
         </div>
 
-        <div className="flex flex-wrap items-center gap-3 w-full md:w-auto">
+        <div className="flex items-center space-x-3 w-full md:w-auto">
           <select
             value={selectedCat}
             onChange={(e) => setSelectedCat(e.target.value)}
-            className="text-xs px-3 py-2 rounded-xl bg-cream/50 border border-borderLight focus:outline-none focus:border-forest"
+            className="text-xs px-3 py-2 rounded-xl bg-cream/50 border border-borderLight focus:outline-none focus:border-gold transition-all"
           >
-            <option value="all">All Categories</option>
+            <option value="all">Semua Kategori</option>
             {categories.map((c) => (
               <option key={c.id} value={c.id}>
                 {c.name}
@@ -146,484 +391,1165 @@ export function ProductsClient({ initialProducts, categories }: ProductsClientPr
           <select
             value={selectedStatus}
             onChange={(e) => setSelectedStatus(e.target.value)}
-            className="text-xs px-3 py-2 rounded-xl bg-cream/50 border border-borderLight focus:outline-none focus:border-forest"
+            className="text-xs px-3 py-2 rounded-xl bg-cream/50 border border-borderLight focus:outline-none focus:border-gold transition-all"
           >
-            <option value="all">All Statuses</option>
-            <option value="published">Published</option>
-            <option value="draft">Draft</option>
-            <option value="archived">Archived</option>
+            <option value="all">Semua Status</option>
+            <option value="published">Diterbitkan (Published)</option>
+            <option value="draft">Draf (Draft)</option>
+            <option value="archived">Diarkib (Archived)</option>
           </select>
 
           <button
-            onClick={() => {
-              const newId = `prod-${Date.now()}`
-              const newProd: Product = {
-                id: newId,
-                name: 'New Luxury Mattress',
-                slug: `new-mattress-${Date.now()}`,
-                subtitle: 'Handcrafted Malaysian Comfort',
-                description: 'Detailed description of the new product.',
-                productType: 'mattress',
-                categoryId: categories[0]?.id || 'cat-mattresses',
-                material: 'Natural Latex & Pocket Spring',
-                firmness: 'Medium Firm',
-                firmnessScale: 6,
-                thicknessCm: 28,
-                warrantyYears: 10,
-                trialNights: 100,
-                features: ['Zero Motion Transfer', 'Cooling Tencel Cover', 'Organic Latex Core'],
-                layers: [],
-                specifications: {},
-                faq: [],
-                images: [
-                  {
-                    id: `img-${Date.now()}`,
-                    productId: newId,
-                    imageUrl: 'https://images.unsplash.com/photo-1631049307264-da0ec9d70304?q=80&w=800',
-                    altText: 'New Mattress',
-                    displayOrder: 1,
-                    isPrimary: true,
-                  },
-                ],
-                isFeatured: false,
-                status: 'draft',
-                createdAt: new Date().toISOString(),
-                updatedAt: new Date().toISOString(),
-                variants: [
-                  {
-                    id: `var-${Date.now()}-1`,
-                    productId: newId,
-                    sku: `KAMAAR-NEW-QN`,
-                    sizeName: 'Queen',
-                    dimensions: '152 x 190 x 28 cm',
-                    priceSen: 189900,
-                    stockQuantity: 10,
-                    isActive: true,
-                  },
-                ],
-              }
-              setEditingProduct(newProd)
-            }}
-            className="flex items-center space-x-2 bg-forest text-warmwhite px-4 py-2 rounded-xl text-xs font-bold hover:bg-forest-dark transition-colors shadow-sm luxury-btn"
+            onClick={handleOpenNewProduct}
+            className="flex items-center space-x-2 bg-forest hover:bg-forest-dark text-warmwhite px-4 py-2 rounded-xl text-xs font-bold shadow-sm hover:shadow transition-all whitespace-nowrap"
           >
-            <Plus className="w-3.5 h-3.5 text-gold" />
-            <span>Add Product</span>
+            <Plus className="w-4 h-4 text-gold" />
+            <span>Tambah Produk</span>
           </button>
         </div>
       </div>
 
       {/* Products Table */}
-      <div className="bg-warmwhite rounded-2xl border border-borderLight shadow-sm overflow-hidden animate-fade-in-up delay-100">
+      <div className="bg-warmwhite rounded-2xl border border-borderLight shadow-xs overflow-hidden">
         <div className="overflow-x-auto">
-          <table className="w-full text-left text-xs">
-            <thead className="bg-cream/60 border-b border-borderLight text-secondary uppercase font-semibold text-[10px] tracking-wider">
-              <tr>
-                <th className="py-3.5 px-4">Product</th>
-                <th className="py-3.5 px-4">Category</th>
-                <th className="py-3.5 px-4">Material / Firmness</th>
-                <th className="py-3.5 px-4">From Price</th>
-                <th className="py-3.5 px-4">Variants & Stock</th>
-                <th className="py-3.5 px-4">Status</th>
-                <th className="py-3.5 px-4 text-right">Actions</th>
+          <table className="w-full text-left text-xs border-collapse">
+            <thead>
+              <tr className="bg-cream/70 border-b border-borderLight text-charcoal font-semibold tracking-wider uppercase text-[11px]">
+                <th className="py-3.5 px-4">Produk Atelier</th>
+                <th className="py-3.5 px-4">Kategori</th>
+                <th className="py-3.5 px-4">Ketegasan & Bahan</th>
+                <th className="py-3.5 px-4 text-right">Harga Bermula</th>
+                <th className="py-3.5 px-4 text-center">Baki Stok</th>
+                <th className="py-3.5 px-4 text-center">Status</th>
+                <th className="py-3.5 px-4 text-right">Tindakan</th>
               </tr>
             </thead>
             <tbody className="divide-y divide-borderLight/60">
-              {filtered.map((prod) => {
-                const cat = categories.find((c) => c.id === prod.categoryId)
-                const minPrice = Math.min(...prod.variants.map((v) => v.priceSen))
-                const totalStock = prod.variants.reduce((acc, v) => acc + v.stockQuantity, 0)
+              {filtered.length === 0 ? (
+                <tr>
+                  <td colSpan={7} className="py-12 text-center text-charcoal-muted">
+                    Tiada produk sepadan dengan carian anda.
+                  </td>
+                </tr>
+              ) : (
+                filtered.map((product) => {
+                  const category = categories.find((c) => c.id === product.categoryId)
+                  const minPrice = Math.min(...product.variants.map((v) => v.priceSen))
+                  const totalStock = product.variants.reduce((acc, v) => acc + v.stockQuantity, 0)
+                  const primaryImg =
+                    product.images.find((img) => img.isPrimary)?.imageUrl ||
+                    product.images[0]?.imageUrl ||
+                    ''
 
-                return (
-                  <tr key={prod.id} className="hover:bg-cream/20 transition-colors">
-                    <td className="py-4 px-4">
-                      <div className="flex items-center space-x-3">
-                        <img
-                          src={prod.images[0]?.imageUrl || ''}
-                          alt={prod.name}
-                          className="w-12 h-12 rounded-lg object-cover border border-borderLight flex-shrink-0"
-                        />
-                        <div>
-                          <span className="font-bold text-forest-dark block line-clamp-1">
-                            {prod.name}
-                          </span>
-                          <span className="text-[10px] text-secondary font-mono">
-                            /{prod.slug}
-                          </span>
+                  return (
+                    <tr key={product.id} className="hover:bg-cream/30 transition-colors">
+                      <td className="py-3.5 px-4">
+                        <div className="flex items-center space-x-3">
+                          {primaryImg ? (
+                            <img
+                              src={primaryImg}
+                              alt={product.name}
+                              className="w-11 h-11 rounded-xl object-cover border border-borderLight flex-shrink-0"
+                            />
+                          ) : (
+                            <div className="w-11 h-11 rounded-xl bg-cream border border-borderLight flex items-center justify-center text-charcoal-muted flex-shrink-0">
+                              <BedDouble className="w-5 h-5 text-gold-dark" />
+                            </div>
+                          )}
+                          <div className="min-w-0">
+                            <span className="font-bold text-forest-dark text-sm block truncate">
+                              {product.name}
+                            </span>
+                            <span className="text-[11px] text-charcoal-muted block truncate font-mono">
+                              /products/{product.slug}
+                            </span>
+                          </div>
                         </div>
-                      </div>
-                    </td>
-                    <td className="py-4 px-4 font-medium text-secondary">
-                      {cat?.name || prod.categoryId}
-                    </td>
-                    <td className="py-4 px-4">
-                      <span className="font-medium text-charcoal block">{prod.material || 'Standard'}</span>
-                      {prod.firmness && (
-                        <span className="text-[10px] text-secondary">{prod.firmness}</span>
-                      )}
-                    </td>
-                    <td className="py-4 px-4 font-bold text-forest">
-                      {formatMYR(minPrice)}
-                    </td>
-                    <td className="py-4 px-4">
-                      <div className="space-y-1">
-                        <span className="font-semibold block">
-                          {prod.variants.length} variant(s)
+                      </td>
+
+                      <td className="py-3.5 px-4 font-medium text-charcoal">
+                        {category ? category.name : 'Uncategorized'}
+                      </td>
+
+                      <td className="py-3.5 px-4">
+                        <span className="block font-medium text-forest">{product.firmness || 'Standard'}</span>
+                        <span className="text-[10px] text-charcoal-muted truncate max-w-[150px] block">
+                          {product.material}
                         </span>
+                      </td>
+
+                      <td className="py-3.5 px-4 text-right font-bold text-forest-dark">
+                        {formatMYR(minPrice)}
+                      </td>
+
+                      <td className="py-3.5 px-4 text-center">
                         <span
-                          className={`inline-block px-2 py-0.5 rounded text-[10px] font-bold ${
+                          className={`inline-block px-2.5 py-1 rounded-full text-[10px] font-bold ${
                             totalStock === 0
-                              ? 'bg-sale/10 text-sale'
-                              : totalStock < 5
-                              ? 'bg-gold/20 text-forest-dark'
-                              : 'bg-forest/10 text-forest'
+                              ? 'bg-rose-100 text-rose-800 border border-rose-200'
+                              : totalStock <= 5
+                              ? 'bg-amber-100 text-amber-800 border border-amber-200'
+                              : 'bg-emerald-50 text-emerald-800 border border-emerald-200'
                           }`}
                         >
-                          {totalStock === 0 ? 'Out of stock' : `${totalStock} units available`}
+                          {totalStock === 0 ? 'Habis' : `${totalStock} unit`}
                         </span>
-                      </div>
-                    </td>
-                    <td className="py-4 px-4">
-                      <span
-                        className={`inline-block px-2 py-1 rounded-full text-[10px] font-bold uppercase tracking-wider ${
-                          prod.status === 'published'
-                            ? 'bg-forest/10 text-forest'
-                            : prod.status === 'draft'
-                            ? 'bg-gold/20 text-forest-dark'
-                            : 'bg-secondary/10 text-secondary'
-                        }`}
-                      >
-                        {prod.status}
-                      </span>
-                    </td>
-                    <td className="py-4 px-4 text-right">
-                      <div className="flex items-center justify-end space-x-2">
-                        {prod.status === 'published' && (
+                      </td>
+
+                      <td className="py-3.5 px-4 text-center">
+                        <span
+                          className={`px-2.5 py-0.5 rounded-full text-[10px] font-bold uppercase tracking-wider ${
+                            product.status === 'published'
+                              ? 'bg-emerald-100 text-emerald-800 border border-emerald-200'
+                              : product.status === 'draft'
+                              ? 'bg-amber-100 text-amber-800 border border-amber-200'
+                              : 'bg-zinc-100 text-zinc-600 border border-zinc-200'
+                          }`}
+                        >
+                          {product.status}
+                        </span>
+                      </td>
+
+                      <td className="py-3.5 px-4 text-right">
+                        <div className="flex items-center justify-end space-x-1.5">
                           <Link
-                            href={`/products/${prod.slug}`}
+                            href={`/products/${product.slug}`}
                             target="_blank"
-                            title="View on storefront"
-                            className="p-1.5 text-secondary hover:text-forest transition-colors"
+                            title="Pratonton di laman web"
+                            className="p-1.5 text-charcoal-muted hover:text-forest transition-colors rounded-lg hover:bg-cream"
                           >
                             <Eye className="w-4 h-4" />
                           </Link>
-                        )}
-                        <button
-                          onClick={() => handleEditClick(prod)}
-                          title="Edit product & variants"
-                          className="p-1.5 text-secondary hover:text-forest transition-colors"
-                        >
-                          <Edit2 className="w-4 h-4" />
-                        </button>
-                        {prod.status !== 'archived' && (
                           <button
-                            onClick={() => handleArchive(prod.id)}
-                            title="Archive product"
-                            className="p-1.5 text-secondary hover:text-sale transition-colors"
+                            onClick={() => handleEditClick(product)}
+                            title="Sunting produk atelier"
+                            className="p-1.5 text-charcoal-muted hover:text-forest transition-colors rounded-lg hover:bg-cream"
                           >
-                            <Archive className="w-4 h-4" />
+                            <Edit2 className="w-4 h-4" />
                           </button>
-                        )}
-                      </div>
-                    </td>
-                  </tr>
-                )
-              })}
+                          {product.status !== 'archived' && (
+                            <button
+                              onClick={() => handleArchive(product.id)}
+                              title="Arkibkan produk"
+                              className="p-1.5 text-charcoal-muted hover:text-rose-600 transition-colors rounded-lg hover:bg-rose-50"
+                            >
+                              <Archive className="w-4 h-4" />
+                            </button>
+                          )}
+                        </div>
+                      </td>
+                    </tr>
+                  )
+                })
+              )}
             </tbody>
           </table>
         </div>
       </div>
 
-      {/* Edit Product Modal */}
+      {/* ========================================================================= */}
+      {/* REDESIGNED LUXURY PRODUCT EDIT MODAL                                      */}
+      {/* ========================================================================= */}
       {editingProduct && (
-        <div className="fixed inset-0 z-50 bg-forest-dark/60 backdrop-blur-sm flex items-center justify-center p-4 overflow-y-auto">
-          <div className="bg-warmwhite w-full max-w-3xl rounded-3xl border border-borderLight shadow-2xl overflow-hidden my-8">
-            <div className="p-6 bg-forest-dark text-warmwhite flex items-center justify-between border-b border-borderLight/20">
-              <div>
-                <h3 className="font-serif text-xl font-bold text-warmwhite">
-                  Edit Atelier Product
-                </h3>
-                <span className="text-xs text-gold">Product ID: {editingProduct.id}</span>
+        <div className="fixed inset-0 z-50 bg-forest-dark/70 backdrop-blur-xs flex items-center justify-center p-3 sm:p-6 overflow-hidden animate-fade-in">
+          <div className="bg-warmwhite w-full max-w-5xl rounded-3xl border border-borderLight shadow-2xl overflow-hidden flex flex-col max-h-[92vh] animate-scale-in">
+            {/* Modal Header: Royal Midnight Navy & Warm Gold */}
+            <div className="px-6 py-4 bg-forest-dark text-warmwhite flex items-center justify-between border-b border-warmwhite/10 flex-shrink-0">
+              <div className="flex items-center space-x-3.5 min-w-0">
+                <div className="w-12 h-12 rounded-xl overflow-hidden border border-gold/40 bg-warmwhite/10 flex-shrink-0 flex items-center justify-center shadow-inner">
+                  {primaryThumb ? (
+                    <img src={primaryThumb} alt="" className="w-full h-full object-cover" />
+                  ) : (
+                    <BedDouble className="w-6 h-6 text-gold" />
+                  )}
+                </div>
+                <div className="min-w-0">
+                  <div className="flex items-center space-x-2">
+                    <span className="text-[10px] font-bold uppercase tracking-wider text-gold bg-gold/20 px-2 py-0.5 rounded">
+                      {currentCategory?.name || 'Atelier'}
+                    </span>
+                    <span className="text-[11px] font-mono text-warmwhite/50 truncate">
+                      ID: {editingProduct.id}
+                    </span>
+                  </div>
+                  <h3 className="font-serif text-lg font-bold text-warmwhite truncate mt-0.5">
+                    {editingProduct.name || 'Produk Baharu'}
+                  </h3>
+                </div>
               </div>
+
+              <div className="flex items-center space-x-3">
+                <Link
+                  href={`/products/${editingProduct.slug}`}
+                  target="_blank"
+                  className="hidden sm:inline-flex items-center space-x-1.5 px-3 py-1.5 rounded-lg bg-warmwhite/10 hover:bg-warmwhite/20 border border-warmwhite/15 text-xs font-semibold text-warmwhite transition-colors"
+                  title="Buka pratonton produk di storefront"
+                >
+                  <span>Lihat di Kedai</span>
+                  <ExternalLink className="w-3.5 h-3.5 text-gold" />
+                </Link>
+
+                <button
+                  onClick={() => setEditingProduct(null)}
+                  className="w-8 h-8 rounded-full bg-warmwhite/10 hover:bg-warmwhite/20 flex items-center justify-center text-warmwhite/80 hover:text-warmwhite transition-colors"
+                  title="Tutup (Esc)"
+                >
+                  <X className="w-4 h-4" />
+                </button>
+              </div>
+            </div>
+
+            {/* Interactive Tab Navigation Bar */}
+            <div className="bg-cream/70 border-b border-borderLight px-6 flex items-center space-x-2 overflow-x-auto flex-shrink-0 py-2">
               <button
-                onClick={() => setEditingProduct(null)}
-                className="text-warmwhite/60 hover:text-warmwhite text-lg font-bold"
+                type="button"
+                onClick={() => setActiveTab('general')}
+                className={`flex items-center space-x-2 px-3.5 py-2 rounded-xl text-xs font-bold transition-all ${
+                  activeTab === 'general'
+                    ? 'bg-warmwhite text-forest shadow-xs border border-borderLight'
+                    : 'text-charcoal-muted hover:text-charcoal hover:bg-warmwhite/50'
+                }`}
               >
-                ✕
+                <FileText className="w-3.5 h-3.5 text-gold-dark" />
+                <span>1. Maklumat Asas</span>
+              </button>
+
+              <button
+                type="button"
+                onClick={() => setActiveTab('variants')}
+                className={`flex items-center space-x-2 px-3.5 py-2 rounded-xl text-xs font-bold transition-all ${
+                  activeTab === 'variants'
+                    ? 'bg-warmwhite text-forest shadow-xs border border-borderLight'
+                    : 'text-charcoal-muted hover:text-charcoal hover:bg-warmwhite/50'
+                }`}
+              >
+                <Layers className="w-3.5 h-3.5 text-gold-dark" />
+                <span>2. Varian & Harga</span>
+                <span className="w-5 h-5 rounded-full bg-forest/10 text-forest text-[10px] font-black flex items-center justify-center">
+                  {editingProduct.variants?.length || 0}
+                </span>
+              </button>
+
+              <button
+                type="button"
+                onClick={() => setActiveTab('specs')}
+                className={`flex items-center space-x-2 px-3.5 py-2 rounded-xl text-xs font-bold transition-all ${
+                  activeTab === 'specs'
+                    ? 'bg-warmwhite text-forest shadow-xs border border-borderLight'
+                    : 'text-charcoal-muted hover:text-charcoal hover:bg-warmwhite/50'
+                }`}
+              >
+                <Sliders className="w-3.5 h-3.5 text-gold-dark" />
+                <span>3. Spesifikasi & Jaminan</span>
+              </button>
+
+              <button
+                type="button"
+                onClick={() => setActiveTab('images')}
+                className={`flex items-center space-x-2 px-3.5 py-2 rounded-xl text-xs font-bold transition-all ${
+                  activeTab === 'images'
+                    ? 'bg-warmwhite text-forest shadow-xs border border-borderLight'
+                    : 'text-charcoal-muted hover:text-charcoal hover:bg-warmwhite/50'
+                }`}
+              >
+                <ImageIcon className="w-3.5 h-3.5 text-gold-dark" />
+                <span>4. Galeri Media</span>
+                <span className="w-5 h-5 rounded-full bg-forest/10 text-forest text-[10px] font-black flex items-center justify-center">
+                  {editingProduct.images?.length || 0}
+                </span>
+              </button>
+
+              <button
+                type="button"
+                onClick={() => setActiveTab('features')}
+                className={`flex items-center space-x-2 px-3.5 py-2 rounded-xl text-xs font-bold transition-all ${
+                  activeTab === 'features'
+                    ? 'bg-warmwhite text-forest shadow-xs border border-borderLight'
+                    : 'text-charcoal-muted hover:text-charcoal hover:bg-warmwhite/50'
+                }`}
+              >
+                <Sparkles className="w-3.5 h-3.5 text-gold-dark" />
+                <span>5. Ciri-Ciri Khas</span>
+                <span className="w-5 h-5 rounded-full bg-forest/10 text-forest text-[10px] font-black flex items-center justify-center">
+                  {editingProduct.features?.length || 0}
+                </span>
               </button>
             </div>
 
-            <form onSubmit={handleSaveProduct} className="p-6 space-y-6 max-h-[75vh] overflow-y-auto">
-              <div className="grid grid-cols-1 md:grid-cols-2 gap-4">
-                <div>
-                  <label className="block text-xs font-bold text-forest-dark mb-1">
-                    Product Title *
-                  </label>
-                  <input
-                    type="text"
-                    required
-                    value={editingProduct.name}
-                    onChange={(e) =>
-                      setEditingProduct({ ...editingProduct, name: e.target.value })
-                    }
-                    className="w-full px-3 py-2 text-xs rounded-xl border border-borderLight focus:border-forest"
-                  />
-                </div>
+            {/* Scrollable Form Body */}
+            <form onSubmit={handleSaveProduct} className="flex-1 overflow-y-auto p-6 md:p-8 space-y-6">
+              {/* TAB 1: MAKLUMAT ASAS */}
+              {activeTab === 'general' && (
+                <div className="space-y-6 animate-fade-in">
+                  {/* Status Segmented Cards */}
+                  <div>
+                    <label className="block text-xs font-bold text-forest-dark uppercase tracking-wider mb-2">
+                      Status Paparan Produk
+                    </label>
+                    <div className="grid grid-cols-1 sm:grid-cols-3 gap-3">
+                      <button
+                        type="button"
+                        onClick={() =>
+                          setEditingProduct({ ...editingProduct, status: 'published' })
+                        }
+                        className={`p-3.5 rounded-2xl border text-left transition-all ${
+                          editingProduct.status === 'published'
+                            ? 'bg-emerald-50/80 border-emerald-500 ring-2 ring-emerald-500/20 shadow-xs'
+                            : 'bg-warmwhite border-borderLight hover:bg-cream/40'
+                        }`}
+                      >
+                        <div className="flex items-center justify-between">
+                          <span className="text-xs font-bold text-emerald-800 flex items-center space-x-1.5">
+                            <span className="w-2.5 h-2.5 rounded-full bg-emerald-500 animate-pulse" />
+                            <span>Diterbitkan (Published)</span>
+                          </span>
+                          {editingProduct.status === 'published' && (
+                            <Check className="w-4 h-4 text-emerald-600" />
+                          )}
+                        </div>
+                        <p className="text-[11px] text-charcoal-muted mt-1 leading-snug">
+                          Produk aktif dan sedia untuk dibeli oleh pelanggan di laman web.
+                        </p>
+                      </button>
 
-                <div>
-                  <label className="block text-xs font-bold text-forest-dark mb-1">
-                    Slug (URL identifier) *
-                  </label>
-                  <input
-                    type="text"
-                    required
-                    value={editingProduct.slug}
-                    onChange={(e) =>
-                      setEditingProduct({ ...editingProduct, slug: e.target.value })
-                    }
-                    className="w-full px-3 py-2 text-xs rounded-xl border border-borderLight focus:border-forest"
-                  />
-                </div>
+                      <button
+                        type="button"
+                        onClick={() =>
+                          setEditingProduct({ ...editingProduct, status: 'draft' })
+                        }
+                        className={`p-3.5 rounded-2xl border text-left transition-all ${
+                          editingProduct.status === 'draft'
+                            ? 'bg-amber-50/80 border-amber-500 ring-2 ring-amber-500/20 shadow-xs'
+                            : 'bg-warmwhite border-borderLight hover:bg-cream/40'
+                        }`}
+                      >
+                        <div className="flex items-center justify-between">
+                          <span className="text-xs font-bold text-amber-800 flex items-center space-x-1.5">
+                            <span className="w-2.5 h-2.5 rounded-full bg-amber-500" />
+                            <span>Draf (Draft)</span>
+                          </span>
+                          {editingProduct.status === 'draft' && (
+                            <Check className="w-4 h-4 text-amber-600" />
+                          )}
+                        </div>
+                        <p className="text-[11px] text-charcoal-muted mt-1 leading-snug">
+                          Hanya boleh dilihat oleh staf admin. Tersembunyi dari pembeli.
+                        </p>
+                      </button>
 
-                <div>
-                  <label className="block text-xs font-bold text-forest-dark mb-1">
-                    Category
-                  </label>
-                  <select
-                    value={editingProduct.categoryId}
-                    onChange={(e) =>
-                      setEditingProduct({ ...editingProduct, categoryId: e.target.value })
-                    }
-                    className="w-full px-3 py-2 text-xs rounded-xl border border-borderLight focus:border-forest"
-                  >
-                    {categories.map((c) => (
-                      <option key={c.id} value={c.id}>
-                        {c.name}
-                      </option>
-                    ))}
-                  </select>
-                </div>
+                      <button
+                        type="button"
+                        onClick={() =>
+                          setEditingProduct({ ...editingProduct, status: 'archived' })
+                        }
+                        className={`p-3.5 rounded-2xl border text-left transition-all ${
+                          editingProduct.status === 'archived'
+                            ? 'bg-zinc-100 border-zinc-500 ring-2 ring-zinc-500/20 shadow-xs'
+                            : 'bg-warmwhite border-borderLight hover:bg-cream/40'
+                        }`}
+                      >
+                        <div className="flex items-center justify-between">
+                          <span className="text-xs font-bold text-zinc-800 flex items-center space-x-1.5">
+                            <span className="w-2.5 h-2.5 rounded-full bg-zinc-400" />
+                            <span>Diarkib (Archived)</span>
+                          </span>
+                          {editingProduct.status === 'archived' && (
+                            <Check className="w-4 h-4 text-zinc-600" />
+                          )}
+                        </div>
+                        <p className="text-[11px] text-charcoal-muted mt-1 leading-snug">
+                          Katalog lama yang dihentikan tetapi disimpan untuk rujukan pesanan.
+                        </p>
+                      </button>
+                    </div>
+                  </div>
 
-                <div>
-                  <label className="block text-xs font-bold text-forest-dark mb-1">
-                    Status
-                  </label>
-                  <select
-                    value={editingProduct.status}
-                    onChange={(e) =>
-                      setEditingProduct({
-                        ...editingProduct,
-                        status: e.target.value as 'published' | 'draft' | 'archived',
-                      })
-                    }
-                    className="w-full px-3 py-2 text-xs rounded-xl border border-borderLight focus:border-forest"
-                  >
-                    <option value="published">Published</option>
-                    <option value="draft">Draft</option>
-                    <option value="archived">Archived</option>
-                  </select>
-                </div>
+                  {/* Title & Slug */}
+                  <div className="grid grid-cols-1 md:grid-cols-2 gap-4">
+                    <div>
+                      <label className="block text-xs font-bold text-forest-dark uppercase tracking-wider mb-1.5">
+                        Nama Penuh Produk <span className="text-rose-500">*</span>
+                      </label>
+                      <input
+                        type="text"
+                        required
+                        value={editingProduct.name}
+                        onChange={(e) => {
+                          const name = e.target.value
+                          setEditingProduct({
+                            ...editingProduct,
+                            name,
+                          })
+                        }}
+                        className="w-full px-4 py-2.5 text-xs rounded-xl bg-cream/40 border border-borderLight focus:outline-none focus:ring-2 focus:ring-gold/30 focus:border-gold font-medium"
+                      />
+                    </div>
 
-                <div>
-                  <label className="block text-xs font-bold text-forest-dark mb-1">
-                    Material Core
-                  </label>
-                  <input
-                    type="text"
-                    value={editingProduct.material || ''}
-                    onChange={(e) =>
-                      setEditingProduct({ ...editingProduct, material: e.target.value })
-                    }
-                    className="w-full px-3 py-2 text-xs rounded-xl border border-borderLight focus:border-forest"
-                  />
-                </div>
-
-                <div>
-                  <label className="block text-xs font-bold text-forest-dark mb-1">
-                    Firmness Level
-                  </label>
-                  <input
-                    type="text"
-                    value={editingProduct.firmness || ''}
-                    onChange={(e) =>
-                      setEditingProduct({ ...editingProduct, firmness: e.target.value })
-                    }
-                    placeholder="e.g. Medium Soft (4/10), Firm (8/10)"
-                    className="w-full px-3 py-2 text-xs rounded-xl border border-borderLight focus:border-forest"
-                  />
-                </div>
-              </div>
-
-              <div>
-                <label className="block text-xs font-bold text-forest-dark mb-1">
-                  Tagline / Subheading
-                </label>
-                <input
-                  type="text"
-                  value={editingProduct.tagline || ''}
-                  onChange={(e) =>
-                    setEditingProduct({ ...editingProduct, tagline: e.target.value })
-                  }
-                  className="w-full px-3 py-2 text-xs rounded-xl border border-borderLight focus:border-forest"
-                />
-              </div>
-
-              <div>
-                <label className="block text-xs font-bold text-forest-dark mb-1">
-                  Full Description
-                </label>
-                <textarea
-                  rows={3}
-                  value={editingProduct.description}
-                  onChange={(e) =>
-                    setEditingProduct({ ...editingProduct, description: e.target.value })
-                  }
-                  className="w-full px-3 py-2 text-xs rounded-xl border border-borderLight focus:border-forest"
-                />
-              </div>
-
-              {/* Variants Section */}
-              <div className="border-t border-borderLight pt-4 space-y-3">
-                <div className="flex items-center justify-between">
-                  <h4 className="font-bold text-xs text-forest-dark uppercase tracking-wider">
-                    Purchasable Variants (Sizes & Pricing)
-                  </h4>
-                  <button
-                    type="button"
-                    onClick={() => {
-                      const newVar: ProductVariant = {
-                        id: `var-${Date.now()}-${Math.random().toString(36).substr(2, 4)}`,
-                        productId: editingProduct.id,
-                        sku: `SKU-${Date.now()}`,
-                        sizeName: 'Custom Size',
-                        dimensions: '152 x 190 x 25 cm',
-                        priceSen: 159900,
-                        stockQuantity: 5,
-                        isActive: true,
-                        isAvailable: true,
-                      }
-                      setEditingProduct({
-                        ...editingProduct,
-                        variants: [...editingProduct.variants, newVar],
-                      })
-                    }}
-                    className="text-xs text-forest font-bold hover:underline"
-                  >
-                    + Add Size Variant
-                  </button>
-                </div>
-
-                <div className="space-y-3">
-                  {editingProduct.variants.map((variant, vIdx) => (
-                    <div
-                      key={variant.id}
-                      className="p-3 bg-cream/40 rounded-xl border border-borderLight grid grid-cols-2 md:grid-cols-5 gap-2 items-center"
-                    >
-                      <div>
-                        <label className="block text-[10px] text-secondary font-semibold">
-                          Size Name
+                    <div>
+                      <div className="flex items-center justify-between mb-1.5">
+                        <label className="block text-xs font-bold text-forest-dark uppercase tracking-wider">
+                          Slug URL Web <span className="text-rose-500">*</span>
                         </label>
-                        <input
-                          type="text"
-                          value={variant.sizeName}
-                          onChange={(e) => {
-                            const next = [...editingProduct.variants]
-                            next[vIdx].sizeName = e.target.value
-                            setEditingProduct({ ...editingProduct, variants: next })
-                          }}
-                          className="w-full px-2 py-1 text-xs rounded border border-borderLight bg-warmwhite"
-                        />
-                      </div>
-
-                      <div>
-                        <label className="block text-[10px] text-secondary font-semibold">
-                          SKU
-                        </label>
-                        <input
-                          type="text"
-                          value={variant.sku}
-                          onChange={(e) => {
-                            const next = [...editingProduct.variants]
-                            next[vIdx].sku = e.target.value
-                            setEditingProduct({ ...editingProduct, variants: next })
-                          }}
-                          className="w-full px-2 py-1 text-xs rounded border border-borderLight bg-warmwhite"
-                        />
-                      </div>
-
-                      <div>
-                        <label className="block text-[10px] text-secondary font-semibold">
-                          Price (RM)
-                        </label>
-                        <input
-                          type="number"
-                          step="0.01"
-                          value={(variant.priceSen / 100).toFixed(2)}
-                          onChange={(e) => {
-                            const val = parseFloat(e.target.value) || 0
-                            const next = [...editingProduct.variants]
-                            next[vIdx].priceSen = Math.round(val * 100)
-                            setEditingProduct({ ...editingProduct, variants: next })
-                          }}
-                          className="w-full px-2 py-1 text-xs rounded border border-borderLight bg-warmwhite"
-                        />
-                      </div>
-
-                      <div>
-                        <label className="block text-[10px] text-secondary font-semibold">
-                          Stock Quantity
-                        </label>
-                        <input
-                          type="number"
-                          value={variant.stockQuantity}
-                          onChange={(e) => {
-                            const val = parseInt(e.target.value) || 0
-                            const next = [...editingProduct.variants]
-                            next[vIdx].stockQuantity = val
-                            setEditingProduct({ ...editingProduct, variants: next })
-                          }}
-                          className="w-full px-2 py-1 text-xs rounded border border-borderLight bg-warmwhite"
-                        />
-                      </div>
-
-                      <div className="flex items-center justify-end space-x-2 pt-3 md:pt-0">
                         <button
                           type="button"
                           onClick={() => {
-                            if (editingProduct.variants.length <= 1) {
-                              alert('Product must have at least one variant.')
-                              return
-                            }
-                            const next = editingProduct.variants.filter((_, idx) => idx !== vIdx)
-                            setEditingProduct({ ...editingProduct, variants: next })
+                            const generated = editingProduct.name
+                              .toLowerCase()
+                              .replace(/[^a-z0-9]+/g, '-')
+                              .replace(/(^-|-$)+/g, '')
+                            setEditingProduct({ ...editingProduct, slug: generated })
                           }}
-                          className="text-[11px] text-sale font-bold hover:underline"
+                          className="text-[10px] text-forest font-bold hover:underline"
                         >
-                          Remove
+                          Jana dari Nama
+                        </button>
+                      </div>
+                      <div className="flex items-center">
+                        <span className="px-3 py-2.5 bg-cream border border-r-0 border-borderLight rounded-l-xl text-xs font-mono text-charcoal-muted select-none">
+                          /products/
+                        </span>
+                        <input
+                          type="text"
+                          required
+                          value={editingProduct.slug}
+                          onChange={(e) =>
+                            setEditingProduct({
+                              ...editingProduct,
+                              slug: e.target.value
+                                .toLowerCase()
+                                .replace(/[^a-z0-9]+/g, '-')
+                                .replace(/(^-|-$)+/g, ''),
+                            })
+                          }
+                          className="w-full px-3 py-2.5 text-xs rounded-r-xl bg-cream/40 border border-borderLight font-mono focus:outline-none focus:ring-2 focus:ring-gold/30 focus:border-gold"
+                        />
+                      </div>
+                    </div>
+                  </div>
+
+                  {/* Category & Product Type */}
+                  <div className="grid grid-cols-1 md:grid-cols-2 gap-4">
+                    <div>
+                      <label className="block text-xs font-bold text-forest-dark uppercase tracking-wider mb-1.5">
+                        Kategori Produk
+                      </label>
+                      <select
+                        value={editingProduct.categoryId}
+                        onChange={(e) =>
+                          setEditingProduct({ ...editingProduct, categoryId: e.target.value })
+                        }
+                        className="w-full px-3.5 py-2.5 text-xs rounded-xl bg-cream/40 border border-borderLight focus:outline-none focus:ring-2 focus:ring-gold/30 focus:border-gold"
+                      >
+                        {categories.map((c) => (
+                          <option key={c.id} value={c.id}>
+                            {c.name}
+                          </option>
+                        ))}
+                      </select>
+                    </div>
+
+                    <div>
+                      <label className="block text-xs font-bold text-forest-dark uppercase tracking-wider mb-1.5">
+                        Jenis Produk (Product Type)
+                      </label>
+                      <select
+                        value={editingProduct.productType}
+                        onChange={(e) =>
+                          setEditingProduct({
+                            ...editingProduct,
+                            productType: e.target.value as any,
+                          })
+                        }
+                        className="w-full px-3.5 py-2.5 text-xs rounded-xl bg-cream/40 border border-borderLight focus:outline-none focus:ring-2 focus:ring-gold/30 focus:border-gold"
+                      >
+                        <option value="mattress">Tilam (Mattress)</option>
+                        <option value="pillow">Bantal (Pillow)</option>
+                        <option value="topper">Topper & Pelindung (Topper)</option>
+                        <option value="bedframe">Rangka Katil (Bedframe)</option>
+                        <option value="bedding">Cadar & Linen (Bed Linen)</option>
+                      </select>
+                    </div>
+                  </div>
+
+                  {/* Subtitle / Tagline */}
+                  <div className="grid grid-cols-1 md:grid-cols-2 gap-4">
+                    <div>
+                      <label className="block text-xs font-bold text-forest-dark uppercase tracking-wider mb-1.5">
+                        Sub-Tajuk / Spesifikasi Ringkas
+                      </label>
+                      <input
+                        type="text"
+                        placeholder="Contoh: 100% Pure Organic Dunlop Latex with Belgian Tencel Cover"
+                        value={editingProduct.subtitle || ''}
+                        onChange={(e) =>
+                          setEditingProduct({ ...editingProduct, subtitle: e.target.value })
+                        }
+                        className="w-full px-4 py-2.5 text-xs rounded-xl bg-cream/40 border border-borderLight focus:outline-none focus:ring-2 focus:ring-gold/30 focus:border-gold"
+                      />
+                    </div>
+
+                    <div>
+                      <label className="block text-xs font-bold text-forest-dark uppercase tracking-wider mb-1.5">
+                        Tagline Promosi
+                      </label>
+                      <input
+                        type="text"
+                        placeholder="Contoh: Signature Handcrafted Malaysian Sleep Luxury"
+                        value={editingProduct.tagline || ''}
+                        onChange={(e) =>
+                          setEditingProduct({ ...editingProduct, tagline: e.target.value })
+                        }
+                        className="w-full px-4 py-2.5 text-xs rounded-xl bg-cream/40 border border-borderLight focus:outline-none focus:ring-2 focus:ring-gold/30 focus:border-gold"
+                      />
+                    </div>
+                  </div>
+
+                  {/* Descriptions */}
+                  <div>
+                    <label className="block text-xs font-bold text-forest-dark uppercase tracking-wider mb-1.5">
+                      Penerangan Penuh Produk
+                    </label>
+                    <textarea
+                      rows={4}
+                      value={editingProduct.description}
+                      onChange={(e) =>
+                        setEditingProduct({ ...editingProduct, description: e.target.value })
+                      }
+                      className="w-full px-4 py-2.5 text-xs rounded-xl bg-cream/40 border border-borderLight focus:outline-none focus:ring-2 focus:ring-gold/30 focus:border-gold leading-relaxed"
+                    />
+                  </div>
+
+                  {/* Homepage Featured Toggle */}
+                  <div className="p-4 bg-cream/40 rounded-2xl border border-borderLight flex items-center justify-between">
+                    <div>
+                      <span className="text-xs font-bold text-forest-dark block">
+                        Tampil Sebagai Produk Pilihan (Featured Collection)
+                      </span>
+                      <span className="text-[11px] text-charcoal-muted">
+                        Produk akan dipaparkan dalam sorotan muka hadapan homepage KAMAAR.
+                      </span>
+                    </div>
+                    <label className="relative inline-flex items-center cursor-pointer">
+                      <input
+                        type="checkbox"
+                        checked={Boolean(editingProduct.isFeatured)}
+                        onChange={(e) =>
+                          setEditingProduct({ ...editingProduct, isFeatured: e.target.checked })
+                        }
+                        className="sr-only peer"
+                      />
+                      <div className="w-11 h-6 bg-borderLight peer-focus:outline-none rounded-full peer peer-checked:after:translate-x-full peer-checked:after:border-warmwhite after:content-[''] after:absolute after:top-[2px] after:left-[2px] after:bg-warmwhite after:border-borderLight after:border after:rounded-full after:h-5 after:w-5 after:transition-all peer-checked:bg-forest"></div>
+                    </label>
+                  </div>
+                </div>
+              )}
+
+              {/* TAB 2: VARIAN SAIZ, HARGA & INVENTORI */}
+              {activeTab === 'variants' && (
+                <div className="space-y-6 animate-fade-in">
+                  {/* Top Stats Strip */}
+                  <div className="grid grid-cols-2 sm:grid-cols-4 gap-3">
+                    <div className="bg-cream/40 p-3.5 rounded-2xl border border-borderLight">
+                      <span className="text-[10px] uppercase font-bold text-charcoal-muted">Varian Saiz</span>
+                      <p className="text-xl font-bold font-serif text-forest-dark mt-0.5">
+                        {editingProduct.variants.length} Saiz
+                      </p>
+                    </div>
+
+                    <div className="bg-cream/40 p-3.5 rounded-2xl border border-borderLight">
+                      <span className="text-[10px] uppercase font-bold text-charcoal-muted">Jumlah Stok</span>
+                      <p className="text-xl font-bold font-serif text-emerald-700 mt-0.5">
+                        {editingProduct.variants.reduce((a, v) => a + Number(v.stockQuantity || 0), 0)} Unit
+                      </p>
+                    </div>
+
+                    <div className="bg-cream/40 p-3.5 rounded-2xl border border-borderLight">
+                      <span className="text-[10px] uppercase font-bold text-charcoal-muted">Harga Terendah</span>
+                      <p className="text-xl font-bold font-serif text-forest mt-0.5">
+                        {formatMYR(
+                          editingProduct.variants.length > 0
+                            ? Math.min(...editingProduct.variants.map((v) => v.priceSen))
+                            : 0
+                        )}
+                      </p>
+                    </div>
+
+                    <div className="bg-cream/40 p-3.5 rounded-2xl border border-borderLight">
+                      <span className="text-[10px] uppercase font-bold text-charcoal-muted">Harga Tertinggi</span>
+                      <p className="text-xl font-bold font-serif text-forest-dark mt-0.5">
+                        {formatMYR(
+                          editingProduct.variants.length > 0
+                            ? Math.max(...editingProduct.variants.map((v) => v.priceSen))
+                            : 0
+                        )}
+                      </p>
+                    </div>
+                  </div>
+
+                  {/* Fast Preset Buttons */}
+                  <div className="flex flex-wrap items-center justify-between gap-3 p-4 bg-cream/30 rounded-2xl border border-borderLight">
+                    <div>
+                      <span className="text-xs font-bold text-forest-dark block">
+                        Tambah Varian Pantas (Standard Sizes)
+                      </span>
+                      <span className="text-[11px] text-charcoal-muted">
+                        Klik untuk menjana saiz dan dimensi standard KAMAAR secara automatik.
+                      </span>
+                    </div>
+
+                    <div className="flex flex-wrap gap-2">
+                      <button
+                        type="button"
+                        onClick={() => addPresetVariant('Single', '90 x 190 x 30 cm', 139900)}
+                        className="px-3 py-1.5 rounded-xl bg-warmwhite border border-borderLight text-xs font-bold text-forest hover:bg-forest hover:text-warmwhite transition-colors shadow-2xs"
+                      >
+                        + Single
+                      </button>
+                      <button
+                        type="button"
+                        onClick={() => addPresetVariant('Super Single', '107 x 190 x 30 cm', 169900)}
+                        className="px-3 py-1.5 rounded-xl bg-warmwhite border border-borderLight text-xs font-bold text-forest hover:bg-forest hover:text-warmwhite transition-colors shadow-2xs"
+                      >
+                        + Super Single
+                      </button>
+                      <button
+                        type="button"
+                        onClick={() => addPresetVariant('Queen', '152 x 190 x 30 cm', 229900)}
+                        className="px-3 py-1.5 rounded-xl bg-warmwhite border border-borderLight text-xs font-bold text-forest hover:bg-forest hover:text-warmwhite transition-colors shadow-2xs"
+                      >
+                        + Queen
+                      </button>
+                      <button
+                        type="button"
+                        onClick={() => addPresetVariant('King', '183 x 190 x 30 cm', 279900)}
+                        className="px-3 py-1.5 rounded-xl bg-warmwhite border border-borderLight text-xs font-bold text-forest hover:bg-forest hover:text-warmwhite transition-colors shadow-2xs"
+                      >
+                        + King
+                      </button>
+                      <button
+                        type="button"
+                        onClick={() => addPresetVariant('Custom Size', 'Bespoke Order', 199900)}
+                        className="px-3 py-1.5 rounded-xl bg-warmwhite border border-borderLight text-xs font-bold text-gold-dark hover:bg-gold hover:text-forest-dark transition-colors shadow-2xs"
+                      >
+                        + Saiz Khas
+                      </button>
+                    </div>
+                  </div>
+
+                  {/* Variants Cards List */}
+                  <div className="space-y-4">
+                    {editingProduct.variants.map((variant, vIdx) => {
+                      const isLowStock = variant.stockQuantity > 0 && variant.stockQuantity <= 5
+                      const isOutOfStock = variant.stockQuantity === 0
+
+                      return (
+                        <div
+                          key={variant.id}
+                          className="p-5 bg-warmwhite rounded-2xl border border-borderLight shadow-2xs hover:shadow-xs transition-shadow space-y-4"
+                        >
+                          <div className="flex items-center justify-between border-b border-borderLight/60 pb-3">
+                            <div className="flex items-center space-x-2.5">
+                              <span className="w-6 h-6 rounded-full bg-forest text-warmwhite text-xs font-bold flex items-center justify-center">
+                                {vIdx + 1}
+                              </span>
+                              <span className="font-bold text-forest-dark text-sm">
+                                {variant.sizeName || 'Varian'}
+                              </span>
+                              <span className="text-[10px] font-mono text-charcoal-muted bg-cream px-2 py-0.5 rounded border border-borderLight">
+                                {variant.sku}
+                              </span>
+                            </div>
+
+                            <div className="flex items-center space-x-3">
+                              <span
+                                className={`px-2 py-0.5 rounded-full text-[10px] font-bold ${
+                                  isOutOfStock
+                                    ? 'bg-rose-100 text-rose-700'
+                                    : isLowStock
+                                    ? 'bg-amber-100 text-amber-700'
+                                    : 'bg-emerald-100 text-emerald-700'
+                                }`}
+                              >
+                                {isOutOfStock
+                                  ? 'Habis Stok'
+                                  : isLowStock
+                                  ? 'Stok Terhad'
+                                  : 'Stok Sedia Ada'}
+                              </span>
+
+                              <button
+                                type="button"
+                                onClick={() => removeVariant(vIdx)}
+                                className="p-1.5 rounded-lg text-charcoal-muted hover:text-rose-600 hover:bg-rose-50 transition-colors"
+                                title="Padam varian ini"
+                              >
+                                <Trash2 className="w-4 h-4" />
+                              </button>
+                            </div>
+                          </div>
+
+                          <div className="grid grid-cols-1 sm:grid-cols-2 md:grid-cols-5 gap-3">
+                            <div>
+                              <label className="block text-[11px] font-bold text-charcoal-muted mb-1">
+                                Nama Saiz
+                              </label>
+                              <input
+                                type="text"
+                                value={variant.sizeName}
+                                onChange={(e) => {
+                                  const next = [...editingProduct.variants]
+                                  next[vIdx].sizeName = e.target.value
+                                  setEditingProduct({ ...editingProduct, variants: next })
+                                }}
+                                className="w-full px-3 py-2 text-xs rounded-xl bg-cream/40 border border-borderLight focus:outline-none focus:ring-1 focus:ring-gold"
+                              />
+                            </div>
+
+                            <div>
+                              <label className="block text-[11px] font-bold text-charcoal-muted mb-1">
+                                Kod SKU
+                              </label>
+                              <input
+                                type="text"
+                                value={variant.sku}
+                                onChange={(e) => {
+                                  const next = [...editingProduct.variants]
+                                  next[vIdx].sku = e.target.value
+                                  setEditingProduct({ ...editingProduct, variants: next })
+                                }}
+                                className="w-full px-3 py-2 text-xs font-mono rounded-xl bg-cream/40 border border-borderLight focus:outline-none focus:ring-1 focus:ring-gold"
+                              />
+                            </div>
+
+                            <div>
+                              <label className="block text-[11px] font-bold text-charcoal-muted mb-1">
+                                Dimensi (P x L x T)
+                              </label>
+                              <input
+                                type="text"
+                                placeholder="152 x 190 x 30 cm"
+                                value={variant.dimensions || ''}
+                                onChange={(e) => {
+                                  const next = [...editingProduct.variants]
+                                  next[vIdx].dimensions = e.target.value
+                                  setEditingProduct({ ...editingProduct, variants: next })
+                                }}
+                                className="w-full px-3 py-2 text-xs rounded-xl bg-cream/40 border border-borderLight focus:outline-none focus:ring-1 focus:ring-gold"
+                              />
+                            </div>
+
+                            <div>
+                              <label className="block text-[11px] font-bold text-charcoal-muted mb-1">
+                                Harga Jualan
+                              </label>
+                              <div className="flex items-center">
+                                <span className="px-2.5 py-2 bg-cream border border-r-0 border-borderLight rounded-l-xl text-xs font-bold text-forest">
+                                  RM
+                                </span>
+                                <input
+                                  type="number"
+                                  step="0.01"
+                                  value={(variant.priceSen / 100).toFixed(2)}
+                                  onChange={(e) => {
+                                    const val = parseFloat(e.target.value) || 0
+                                    const next = [...editingProduct.variants]
+                                    next[vIdx].priceSen = Math.round(val * 100)
+                                    setEditingProduct({ ...editingProduct, variants: next })
+                                  }}
+                                  className="w-full px-3 py-2 text-xs rounded-r-xl bg-cream/40 border border-borderLight font-bold text-forest-dark focus:outline-none focus:ring-1 focus:ring-gold"
+                                />
+                              </div>
+                            </div>
+
+                            <div>
+                              <label className="block text-[11px] font-bold text-charcoal-muted mb-1">
+                                Baki Kuantiti Stok
+                              </label>
+                              <input
+                                type="number"
+                                min="0"
+                                value={variant.stockQuantity}
+                                onChange={(e) => {
+                                  const val = parseInt(e.target.value) || 0
+                                  const next = [...editingProduct.variants]
+                                  next[vIdx].stockQuantity = val
+                                  setEditingProduct({ ...editingProduct, variants: next })
+                                }}
+                                className="w-full px-3 py-2 text-xs rounded-xl bg-cream/40 border border-borderLight font-bold focus:outline-none focus:ring-1 focus:ring-gold"
+                              />
+                            </div>
+                          </div>
+                        </div>
+                      )
+                    })}
+                  </div>
+                </div>
+              )}
+
+              {/* TAB 3: SPESIFIKASI & JAMINAN */}
+              {activeTab === 'specs' && (
+                <div className="space-y-6 animate-fade-in">
+                  {/* Material Core */}
+                  <div>
+                    <label className="block text-xs font-bold text-forest-dark uppercase tracking-wider mb-1.5">
+                      Bahan Teras (Material Core)
+                    </label>
+                    <input
+                      type="text"
+                      placeholder="Contoh: 100% Pure Organic Latex & Cool Night Pocket Springs"
+                      value={editingProduct.material || ''}
+                      onChange={(e) =>
+                        setEditingProduct({ ...editingProduct, material: e.target.value })
+                      }
+                      className="w-full px-4 py-2.5 text-xs rounded-xl bg-cream/40 border border-borderLight focus:outline-none focus:ring-2 focus:ring-gold/30 focus:border-gold"
+                    />
+                  </div>
+
+                  {/* Firmness Slider (1 to 10) */}
+                  <div className="p-5 bg-cream/40 rounded-2xl border border-borderLight space-y-4">
+                    <div className="flex items-center justify-between">
+                      <div>
+                        <label className="text-xs font-bold text-forest-dark uppercase tracking-wider block">
+                          Skala Ketegasan Tilam (Firmness Rating)
+                        </label>
+                        <span className="text-[11px] text-charcoal-muted">
+                          Berdasarkan piawaian ergonomik tilam KAMAAR Sleep Atelier.
+                        </span>
+                      </div>
+                      <span className="px-3 py-1 rounded-full text-xs font-bold bg-gold/20 text-forest-dark border border-gold/40 shadow-2xs">
+                        {editingProduct.firmnessScale || 6} / 10 &bull;{' '}
+                        {getFirmnessLabel(editingProduct.firmnessScale || 6)}
+                      </span>
+                    </div>
+
+                    <input
+                      type="range"
+                      min="1"
+                      max="10"
+                      step="1"
+                      value={editingProduct.firmnessScale || 6}
+                      onChange={(e) => {
+                        const scale = parseInt(e.target.value) || 6
+                        setEditingProduct({
+                          ...editingProduct,
+                          firmnessScale: scale,
+                          firmness: getFirmnessLabel(scale),
+                        })
+                      }}
+                      className="w-full accent-forest cursor-pointer h-2 bg-borderLight rounded-lg"
+                    />
+
+                    <div className="flex justify-between text-[10px] text-charcoal-muted font-bold px-1 uppercase tracking-wider">
+                      <span>1 (Plush Soft)</span>
+                      <span>4 (Medium Soft)</span>
+                      <span>6 (Medium Firm)</span>
+                      <span>8 (Firm)</span>
+                      <span>10 (Orthopaedic)</span>
+                    </div>
+                  </div>
+
+                  {/* Thickness, Warranty, Trial Nights */}
+                  <div className="grid grid-cols-1 sm:grid-cols-3 gap-4">
+                    <div>
+                      <label className="block text-xs font-bold text-forest-dark uppercase tracking-wider mb-1.5">
+                        Ketebalan Tilam (cm)
+                      </label>
+                      <div className="flex items-center">
+                        <input
+                          type="number"
+                          min="1"
+                          placeholder="30"
+                          value={editingProduct.thicknessCm || ''}
+                          onChange={(e) =>
+                            setEditingProduct({
+                              ...editingProduct,
+                              thicknessCm: parseInt(e.target.value) || 0,
+                            })
+                          }
+                          className="w-full px-3.5 py-2.5 text-xs rounded-l-xl bg-cream/40 border border-borderLight focus:outline-none focus:ring-1 focus:ring-gold"
+                        />
+                        <span className="px-3 py-2.5 bg-cream border border-l-0 border-borderLight rounded-r-xl text-xs font-bold text-charcoal-muted">
+                          cm
+                        </span>
+                      </div>
+                    </div>
+
+                    <div>
+                      <label className="block text-xs font-bold text-forest-dark uppercase tracking-wider mb-1.5">
+                        Jaminan Rasmi (Tahun)
+                      </label>
+                      <div className="flex items-center">
+                        <input
+                          type="number"
+                          min="0"
+                          placeholder="12"
+                          value={editingProduct.warrantyYears || ''}
+                          onChange={(e) =>
+                            setEditingProduct({
+                              ...editingProduct,
+                              warrantyYears: parseInt(e.target.value) || 0,
+                            })
+                          }
+                          className="w-full px-3.5 py-2.5 text-xs rounded-l-xl bg-cream/40 border border-borderLight focus:outline-none focus:ring-1 focus:ring-gold"
+                        />
+                        <span className="px-3 py-2.5 bg-cream border border-l-0 border-borderLight rounded-r-xl text-xs font-bold text-charcoal-muted">
+                          Tahun
+                        </span>
+                      </div>
+                    </div>
+
+                    <div>
+                      <label className="block text-xs font-bold text-forest-dark uppercase tracking-wider mb-1.5">
+                        Percubaan Tidur Di Rumah
+                      </label>
+                      <div className="flex items-center">
+                        <input
+                          type="number"
+                          min="0"
+                          placeholder="100"
+                          value={editingProduct.trialNights || ''}
+                          onChange={(e) =>
+                            setEditingProduct({
+                              ...editingProduct,
+                              trialNights: parseInt(e.target.value) || 0,
+                            })
+                          }
+                          className="w-full px-3.5 py-2.5 text-xs rounded-l-xl bg-cream/40 border border-borderLight focus:outline-none focus:ring-1 focus:ring-gold"
+                        />
+                        <span className="px-3 py-2.5 bg-cream border border-l-0 border-borderLight rounded-r-xl text-xs font-bold text-charcoal-muted">
+                          Malam
+                        </span>
+                      </div>
+                    </div>
+                  </div>
+                </div>
+              )}
+
+              {/* TAB 4: GALERI MEDIA & IMEJ */}
+              {activeTab === 'images' && (
+                <div className="space-y-6 animate-fade-in">
+                  {/* Add New Image Form */}
+                  <div className="p-4 bg-cream/30 rounded-2xl border border-borderLight space-y-3">
+                    <span className="text-xs font-bold text-forest-dark block">
+                      Tambah Imej Baharu ke Galeri Produk
+                    </span>
+                    <div className="grid grid-cols-1 md:grid-cols-3 gap-3 items-center">
+                      <div className="md:col-span-2">
+                        <input
+                          type="text"
+                          placeholder="Masukkan URL Imej (cth: https://images.unsplash.com/... atau /images/...)"
+                          value={newImageUrl}
+                          onChange={(e) => setNewImageUrl(e.target.value)}
+                          className="w-full px-3.5 py-2 text-xs rounded-xl bg-warmwhite border border-borderLight focus:outline-none focus:ring-1 focus:ring-gold"
+                        />
+                      </div>
+                      <div className="flex items-center space-x-2">
+                        <input
+                          type="text"
+                          placeholder="Alt Text (Penerangan)"
+                          value={newImageAlt}
+                          onChange={(e) => setNewImageAlt(e.target.value)}
+                          className="w-full px-3 py-2 text-xs rounded-xl bg-warmwhite border border-borderLight focus:outline-none focus:ring-1 focus:ring-gold"
+                        />
+                        <button
+                          type="button"
+                          onClick={handleAddImage}
+                          className="px-4 py-2 bg-forest text-warmwhite text-xs font-bold rounded-xl hover:bg-forest-dark transition-colors whitespace-nowrap"
+                        >
+                          Tambah
                         </button>
                       </div>
                     </div>
-                  ))}
+                  </div>
+
+                  {/* Images Grid */}
+                  <div className="grid grid-cols-1 sm:grid-cols-2 md:grid-cols-3 gap-4">
+                    {(editingProduct.images || []).map((img, iIdx) => (
+                      <div
+                        key={img.id || iIdx}
+                        className={`p-3 bg-warmwhite rounded-2xl border transition-all relative group flex flex-col justify-between ${
+                          img.isPrimary
+                            ? 'border-gold ring-2 ring-gold/20 shadow-xs'
+                            : 'border-borderLight'
+                        }`}
+                      >
+                        <div className="w-full h-40 rounded-xl overflow-hidden bg-cream border border-borderLight mb-3 relative">
+                          <img
+                            src={img.imageUrl}
+                            alt={img.altText}
+                            className="w-full h-full object-cover"
+                          />
+                          {img.isPrimary && (
+                            <span className="absolute top-2 left-2 px-2 py-0.5 rounded-full text-[10px] font-bold bg-gold text-forest-dark shadow-xs flex items-center space-x-1">
+                              <Check className="w-3 h-3" />
+                              <span>Imej Utama</span>
+                            </span>
+                          )}
+                        </div>
+
+                        <div className="space-y-2">
+                          <input
+                            type="text"
+                            value={img.imageUrl}
+                            onChange={(e) => {
+                              const next = [...editingProduct.images]
+                              next[iIdx].imageUrl = e.target.value
+                              setEditingProduct({ ...editingProduct, images: next })
+                            }}
+                            className="w-full px-2.5 py-1 text-[11px] font-mono rounded-lg bg-cream/40 border border-borderLight"
+                          />
+
+                          <div className="flex items-center justify-between pt-1">
+                            {!img.isPrimary ? (
+                              <button
+                                type="button"
+                                onClick={() => setPrimaryImage(img.id)}
+                                className="text-[11px] text-forest font-bold hover:underline"
+                              >
+                                Jadikan Utama
+                              </button>
+                            ) : (
+                              <span className="text-[11px] text-gold-dark font-bold">
+                                Penutup Produk
+                              </span>
+                            )}
+
+                            <button
+                              type="button"
+                              onClick={() => removeImage(img.id)}
+                              className="text-[11px] text-rose-600 font-bold hover:underline"
+                            >
+                              Padam
+                            </button>
+                          </div>
+                        </div>
+                      </div>
+                    ))}
+                  </div>
                 </div>
+              )}
+
+              {/* TAB 5: CIRI-CIRI KHAS & KEISTIMEWAAN */}
+              {activeTab === 'features' && (
+                <div className="space-y-6 animate-fade-in">
+                  <div className="p-4 bg-cream/30 rounded-2xl border border-borderLight space-y-3">
+                    <span className="text-xs font-bold text-forest-dark block">
+                      Tambah Ciri Istimewa (Bullet Highlights)
+                    </span>
+                    <div className="flex items-center space-x-2">
+                      <input
+                        type="text"
+                        placeholder="Contoh: 100% Organic Malaysian Natural Latex (Tekan Enter atau klik Tambah)"
+                        value={newFeatureText}
+                        onChange={(e) => setNewFeatureText(e.target.value)}
+                        onKeyDown={(e) => {
+                          if (e.key === 'Enter') {
+                            e.preventDefault()
+                            handleAddFeature()
+                          }
+                        }}
+                        className="w-full px-4 py-2.5 text-xs rounded-xl bg-warmwhite border border-borderLight focus:outline-none focus:ring-1 focus:ring-gold"
+                      />
+                      <button
+                        type="button"
+                        onClick={() => handleAddFeature()}
+                        className="px-5 py-2.5 bg-forest text-warmwhite text-xs font-bold rounded-xl hover:bg-forest-dark transition-colors whitespace-nowrap"
+                      >
+                        + Tambah
+                      </button>
+                    </div>
+
+                    <div className="pt-2 flex flex-wrap gap-2 text-[11px] text-charcoal-muted">
+                      <span className="font-semibold text-forest">Cadangan pantas:</span>
+                      {[
+                        'Zero Synthetic Polyurethane Foam',
+                        'Belgian Organic Tencel Washable Cover',
+                        'Naturally Anti-Dustmite & Hypoallergenic',
+                        '7-Zone Pocket Spring Ergonomics',
+                        'Zero Motion Transfer Partner Sleep',
+                      ].map((preset) => (
+                        <button
+                          key={preset}
+                          type="button"
+                          onClick={() => handleAddFeature(preset)}
+                          className="px-2.5 py-1 rounded-lg bg-warmwhite border border-borderLight/80 hover:border-gold hover:text-forest transition-colors text-[10.5px]"
+                        >
+                          + {preset}
+                        </button>
+                      ))}
+                    </div>
+                  </div>
+
+                  {/* Features List */}
+                  <div className="space-y-2">
+                    {(editingProduct.features || []).map((feat, fIdx) => (
+                      <div
+                        key={fIdx}
+                        className="p-3 bg-warmwhite rounded-xl border border-borderLight flex items-center justify-between group hover:border-gold/50 transition-colors shadow-2xs"
+                      >
+                        <div className="flex items-center space-x-3">
+                          <span className="w-5 h-5 rounded-full bg-emerald-100 text-emerald-800 text-[10px] font-black flex items-center justify-center">
+                            ✓
+                          </span>
+                          <span className="text-xs font-medium text-forest-dark">{feat}</span>
+                        </div>
+
+                        <button
+                          type="button"
+                          onClick={() => handleRemoveFeature(fIdx)}
+                          className="text-charcoal-muted hover:text-rose-600 p-1 rounded transition-colors"
+                          title="Padam ciri ini"
+                        >
+                          <Trash2 className="w-3.5 h-3.5" />
+                        </button>
+                      </div>
+                    ))}
+                  </div>
+                </div>
+              )}
+
+              {/* Invisible submit button to allow form submit on Enter in inputs */}
+              <button type="submit" className="hidden" />
+            </form>
+
+            {/* Fixed Sticky Footer */}
+            <div className="px-6 py-4 bg-warmwhite border-t border-borderLight flex items-center justify-between flex-shrink-0 shadow-lg">
+              <div className="hidden sm:flex items-center space-x-2 text-xs text-charcoal-muted">
+                <span className="w-2 h-2 rounded-full bg-emerald-500 animate-pulse" />
+                <span>Menyunting: <strong className="text-forest-dark">{editingProduct.name}</strong></span>
+                <span className="text-borderLight">&bull;</span>
+                <span className="text-[11px] text-charcoal-muted font-mono">Tip: Ctrl + S untuk simpan</span>
               </div>
 
-              {/* Action buttons */}
-              <div className="flex items-center justify-end space-x-3 pt-4 border-t border-borderLight">
+              <div className="flex items-center space-x-3 w-full sm:w-auto justify-end">
                 <button
                   type="button"
                   onClick={() => setEditingProduct(null)}
-                  className="px-4 py-2 text-xs font-bold text-secondary hover:text-charcoal"
+                  className="px-4 py-2.5 text-xs font-bold text-charcoal-muted hover:text-charcoal rounded-xl hover:bg-cream transition-colors"
                 >
-                  Cancel
+                  Batal
                 </button>
+
                 <button
-                  type="submit"
+                  type="button"
+                  onClick={() => handleSaveProduct()}
                   disabled={isSaving}
-                  className="px-6 py-2.5 bg-forest text-warmwhite text-xs font-bold rounded-xl hover:bg-forest-dark transition-colors shadow-sm disabled:opacity-50"
+                  className="inline-flex items-center space-x-2 px-6 py-2.5 bg-forest hover:bg-forest-dark text-warmwhite text-xs font-bold rounded-xl transition-all shadow-sm hover:shadow disabled:opacity-50"
                 >
-                  {isSaving ? 'Saving Changes...' : 'Save Product & Variants'}
+                  {isSaving ? (
+                    <>
+                      <div className="w-4 h-4 border-2 border-warmwhite border-t-transparent rounded-full animate-spin" />
+                      <span>Menyimpan...</span>
+                    </>
+                  ) : (
+                    <>
+                      <Save className="w-4 h-4 text-gold" />
+                      <span>Simpan Produk & Varian</span>
+                    </>
+                  )}
                 </button>
               </div>
-            </form>
+            </div>
           </div>
         </div>
       )}
