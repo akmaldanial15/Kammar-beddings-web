@@ -8,7 +8,7 @@ export default async function AdminPromotionsPage() {
   const coupons = await getCoupons()
 
   return (
-    <div className="p-6 md:p-10 space-y-8 animate-fade-in">
+    <div className="p-6 md:p-10 space-y-8">
       <div className="animate-fade-in-up">
         <h1 className="font-serif text-3xl font-bold text-forest-dark">Promotions & Vouchers</h1>
         <p className="text-sm text-secondary mt-1">

@@ -1,6 +1,7 @@
 'use client'
 
-import React, { useState, useMemo } from 'react'
+import React, { useState, useEffect, useMemo } from 'react'
+import { createPortal } from 'react-dom'
 import Link from 'next/link'
 import { Coupon } from '@/types'
 import { formatMYR, formatDateMY } from '@/lib/utils/format'
@@ -36,6 +37,21 @@ export function PromotionsClient({ initialCoupons }: PromotionsClientProps) {
   const [coupons, setCoupons] = useState<Coupon[]>(initialCoupons)
   const [editingCoupon, setEditingCoupon] = useState<Coupon | null>(null)
   const [isSubmitting, setIsSubmitting] = useState(false)
+  const [mounted, setMounted] = useState(false)
+
+  useEffect(() => {
+    setMounted(true)
+  }, [])
+
+  useEffect(() => {
+    if (editingCoupon) {
+      const originalOverflow = document.body.style.overflow
+      document.body.style.overflow = 'hidden'
+      return () => {
+        document.body.style.overflow = originalOverflow
+      }
+    }
+  }, [editingCoupon])
   const [feedback, setFeedback] = useState<{ text: string; type: 'success' | 'error' } | null>(null)
   const [searchQuery, setSearchQuery] = useState('')
   const [statusFilter, setStatusFilter] = useState<'all' | 'featured' | 'active' | 'inactive'>('all')
@@ -627,9 +643,9 @@ export function PromotionsClient({ initialCoupons }: PromotionsClientProps) {
       {/* ========================================================================= */}
       {/* COMPREHENSIVE CONFIGURE COUPON VOUCHER MODAL (IMAGE 2 ENHANCED)           */}
       {/* ========================================================================= */}
-      {editingCoupon && (
-        <div className="fixed inset-0 z-50 bg-[#13325B]/70 backdrop-blur-md flex items-center justify-center p-4 overflow-y-auto animate-fade-in">
-          <div className="bg-warmwhite w-full max-w-2xl rounded-3xl border border-borderLight shadow-2xl overflow-hidden my-auto max-h-[92vh] flex flex-col animate-scale-in">
+      {editingCoupon && mounted && createPortal(
+        <div className="fixed inset-0 z-[9999] bg-[#13325B]/70 backdrop-blur-md flex items-center justify-center p-3 sm:p-4 overflow-y-auto animate-fade-in">
+          <div className="bg-warmwhite w-full max-w-2xl rounded-2xl sm:rounded-3xl border border-borderLight shadow-2xl overflow-hidden my-auto max-h-[94vh] flex flex-col animate-scale-in">
             {/* Modal Header */}
             <div className="p-6 bg-[#13325B] text-white flex items-center justify-between border-b border-[#B49A58]/20 flex-shrink-0">
               <div className="flex items-center space-x-3">
@@ -1143,7 +1159,8 @@ export function PromotionsClient({ initialCoupons }: PromotionsClientProps) {
               </div>
             </form>
           </div>
-        </div>
+        </div>,
+        document.body
       )}
     </div>
   )

@@ -60,7 +60,11 @@ h1, h2, h3, h4, .font-serif {
 }
 
 /* GPU Hardware Acceleration & Pre-Animation Hold for Silky Smooth Entrances */
-.animate-fade-in,
+.animate-fade-in {
+  animation-fill-mode: both !important;
+  will-change: opacity;
+}
+
 .animate-fade-in-up,
 .animate-fade-in-down,
 .animate-scale-in,
@@ -68,8 +72,6 @@ h1, h2, h3, h4, .font-serif {
 .animate-slide-in-left {
   animation-fill-mode: both !important;
   will-change: transform, opacity;
-  transform: translateZ(0);
-  -webkit-transform: translateZ(0);
   backface-visibility: hidden;
   -webkit-backface-visibility: hidden;
 }

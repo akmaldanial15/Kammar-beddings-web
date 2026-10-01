@@ -1,6 +1,7 @@
 'use client'
 
 import React, { useState, useEffect } from 'react'
+import { createPortal } from 'react-dom'
 import { Product, Category, ProductVariant, ProductImage } from '@/types'
 import { formatMYR } from '@/lib/utils/format'
 import {
@@ -45,6 +46,22 @@ export function ProductsClient({ initialProducts, categories }: ProductsClientPr
   const [editingProduct, setEditingProduct] = useState<Product | null>(null)
   const [isSaving, setIsSaving] = useState(false)
   const [message, setMessage] = useState<{ text: string; type: 'success' | 'error' } | null>(null)
+  const [mounted, setMounted] = useState(false)
+
+  useEffect(() => {
+    setMounted(true)
+  }, [])
+
+  // Lock body scroll when editing modal is open so the background page cannot scroll
+  useEffect(() => {
+    if (editingProduct) {
+      const originalOverflow = document.body.style.overflow
+      document.body.style.overflow = 'hidden'
+      return () => {
+        document.body.style.overflow = originalOverflow
+      }
+    }
+  }, [editingProduct])
 
   // Modal specific state
   const [activeTab, setActiveTab] = useState<TabType>('general')
@@ -759,11 +776,11 @@ export function ProductsClient({ initialProducts, categories }: ProductsClientPr
       {/* ========================================================================= */}
       {/* REDESIGNED LUXURY PRODUCT EDIT MODAL                                      */}
       {/* ========================================================================= */}
-      {editingProduct && (
-        <div className="fixed inset-0 z-50 bg-forest-dark/70 backdrop-blur-xs flex items-center justify-center p-3 sm:p-6 overflow-hidden animate-fade-in">
-          <div className="bg-warmwhite w-full max-w-5xl rounded-3xl border border-borderLight shadow-2xl overflow-hidden flex flex-col max-h-[92vh] animate-scale-in">
+      {editingProduct && mounted && createPortal(
+        <div className="fixed inset-0 z-[9999] bg-forest-dark/80 backdrop-blur-sm flex items-center justify-center p-2 sm:p-4 md:p-6 overflow-hidden animate-fade-in">
+          <div className="bg-warmwhite w-full max-w-5xl rounded-2xl sm:rounded-3xl border border-borderLight shadow-2xl overflow-hidden flex flex-col max-h-[96vh] sm:max-h-[92vh] my-auto animate-scale-in">
             {/* Modal Header: Royal Midnight Navy & Warm Gold */}
-            <div className="px-6 py-4 bg-forest-dark text-warmwhite flex items-center justify-between border-b border-warmwhite/10 flex-shrink-0">
+            <div className="px-4 py-3 sm:px-6 sm:py-4 bg-forest-dark text-warmwhite flex items-center justify-between border-b border-warmwhite/10 flex-shrink-0">
               <div className="flex items-center space-x-3.5 min-w-0">
                 <div className="w-12 h-12 rounded-xl overflow-hidden border border-gold/40 bg-warmwhite/10 flex-shrink-0 flex items-center justify-center shadow-inner">
                   {primaryThumb ? (
@@ -809,7 +826,7 @@ export function ProductsClient({ initialProducts, categories }: ProductsClientPr
             </div>
 
             {/* Interactive Tab Navigation Bar */}
-            <div className="bg-cream/70 border-b border-borderLight px-6 flex items-center space-x-2 overflow-x-auto flex-shrink-0 py-2">
+            <div className="bg-cream/70 border-b border-borderLight px-3 sm:px-6 flex items-center space-x-2 overflow-x-auto flex-shrink-0 py-2">
               <button
                 type="button"
                 onClick={() => setActiveTab('general')}
@@ -886,7 +903,7 @@ export function ProductsClient({ initialProducts, categories }: ProductsClientPr
             </div>
 
             {/* Scrollable Form Body */}
-            <form onSubmit={handleSaveProduct} className="flex-1 overflow-y-auto p-6 md:p-8 space-y-6">
+            <form onSubmit={handleSaveProduct} className="flex-1 overflow-y-auto p-4 sm:p-6 md:p-8 space-y-5 sm:space-y-6">
               {/* TAB 1: MAKLUMAT ASAS */}
               {activeTab === 'general' && (
                 <div className="space-y-6 animate-fade-in">
@@ -1722,7 +1739,7 @@ export function ProductsClient({ initialProducts, categories }: ProductsClientPr
             </form>
 
             {/* Fixed Sticky Footer */}
-            <div className="px-6 py-4 bg-warmwhite border-t border-borderLight flex items-center justify-between flex-shrink-0 shadow-lg">
+            <div className="px-4 py-3 sm:px-6 sm:py-4 bg-warmwhite border-t border-borderLight flex items-center justify-between flex-shrink-0 shadow-lg">
               <div className="hidden sm:flex items-center space-x-2 text-xs text-charcoal-muted">
                 <span className="w-2 h-2 rounded-full bg-emerald-500 animate-pulse" />
                 <span>Menyunting: <strong className="text-forest-dark">{editingProduct.name}</strong></span>
@@ -1734,7 +1751,7 @@ export function ProductsClient({ initialProducts, categories }: ProductsClientPr
                 <button
                   type="button"
                   onClick={() => setEditingProduct(null)}
-                  className="px-4 py-2.5 text-xs font-bold text-charcoal-muted hover:text-charcoal rounded-xl hover:bg-cream transition-colors"
+                  className="px-4 py-2 text-xs font-bold text-charcoal-muted hover:text-charcoal rounded-xl hover:bg-cream transition-colors"
                 >
                   Batal
                 </button>
@@ -1743,7 +1760,7 @@ export function ProductsClient({ initialProducts, categories }: ProductsClientPr
                   type="button"
                   onClick={() => handleSaveProduct()}
                   disabled={isSaving}
-                  className="inline-flex items-center space-x-2 px-6 py-2.5 bg-forest hover:bg-forest-dark text-warmwhite text-xs font-bold rounded-xl transition-all shadow-sm hover:shadow disabled:opacity-50"
+                  className="inline-flex items-center space-x-2 px-5 sm:px-6 py-2.5 bg-forest hover:bg-forest-dark text-warmwhite text-xs font-bold rounded-xl transition-all shadow-sm hover:shadow disabled:opacity-50"
                 >
                   {isSaving ? (
                     <>
@@ -1760,7 +1777,8 @@ export function ProductsClient({ initialProducts, categories }: ProductsClientPr
               </div>
             </div>
           </div>
-        </div>
+        </div>,
+        document.body
       )}
     </div>
   )

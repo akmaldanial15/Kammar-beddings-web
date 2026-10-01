@@ -1,6 +1,7 @@
 'use client'
 
-import React, { useState } from 'react'
+import React, { useState, useEffect } from 'react'
+import { createPortal } from 'react-dom'
 import { Category } from '@/types'
 import {
   Plus,
@@ -30,6 +31,21 @@ export function CategoriesClient({ initialCategories }: CategoriesClientProps) {
   const [isSubmitting, setIsSubmitting] = useState(false)
   const [feedback, setFeedback] = useState<{ text: string; type: 'success' | 'error' } | null>(null)
   const [filterSearch, setFilterSearch] = useState('')
+  const [mounted, setMounted] = useState(false)
+
+  useEffect(() => {
+    setMounted(true)
+  }, [])
+
+  useEffect(() => {
+    if (editingCategory) {
+      const originalOverflow = document.body.style.overflow
+      document.body.style.overflow = 'hidden'
+      return () => {
+        document.body.style.overflow = originalOverflow
+      }
+    }
+  }, [editingCategory])
 
   const showNotification = (text: string, type: 'success' | 'error') => {
     setFeedback({ text, type })
@@ -499,9 +515,9 @@ export function CategoriesClient({ initialCategories }: CategoriesClientProps) {
       </div>
 
       {/* Add / Edit Category Modal */}
-      {editingCategory && (
-        <div className="fixed inset-0 z-50 flex items-center justify-center p-4 bg-forest-dark/60 backdrop-blur-xs animate-fade-in">
-          <div className="bg-warmwhite w-full max-w-lg rounded-2xl shadow-2xl border border-borderLight overflow-hidden animate-scale-in">
+      {editingCategory && mounted && createPortal(
+        <div className="fixed inset-0 z-[9999] flex items-center justify-center p-3 sm:p-4 bg-forest-dark/70 backdrop-blur-sm animate-fade-in">
+          <div className="bg-warmwhite w-full max-w-lg rounded-2xl shadow-2xl border border-borderLight overflow-hidden animate-scale-in my-auto max-h-[94vh] flex flex-col">
             <div className="p-6 border-b border-borderLight bg-cream/40 flex items-center justify-between">
               <div>
                 <h3 className="font-serif text-lg font-bold text-forest-dark">
@@ -710,7 +726,8 @@ export function CategoriesClient({ initialCategories }: CategoriesClientProps) {
               </div>
             </form>
           </div>
-        </div>
+        </div>,
+        document.body
       )}
     </div>
   )
