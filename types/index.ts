@@ -131,6 +131,13 @@ export interface Coupon {
   startsAt: string
   endsAt: string
   isActive: boolean
+  // Extended controls
+  showOnHomepage?: boolean
+  featuredOrder?: number
+  customBadge?: string
+  customTitle?: string
+  customerRestriction?: 'all' | 'first_time' | 'existing_only'
+  applicableCategory?: 'all' | 'mattress' | 'pillows' | 'toppers-protectors' | 'bedframes' | string
 }
 
 export interface Address {

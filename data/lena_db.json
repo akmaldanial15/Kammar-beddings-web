@@ -2220,7 +2220,13 @@
       "perCustomerLimit": 1,
       "startsAt": "2026-01-01T00:00:00Z",
       "endsAt": "2026-12-31T23:59:59Z",
-      "isActive": true
+      "isActive": true,
+      "showOnHomepage": true,
+      "featuredOrder": 1,
+      "customTitle": "10% Mattress Privilege",
+      "customBadge": "10% OFF",
+      "customerRestriction": "first_time",
+      "applicableCategory": "mattress"
     },
     {
       "id": "coup-kamaar100",
@@ -2234,7 +2240,13 @@
       "perCustomerLimit": 1,
       "startsAt": "2026-01-01T00:00:00Z",
       "endsAt": "2026-12-31T23:59:59Z",
-      "isActive": true
+      "isActive": true,
+      "showOnHomepage": true,
+      "featuredOrder": 2,
+      "customTitle": "Instant RM100.00 Voucher",
+      "customBadge": "RM100.00 OFF",
+      "customerRestriction": "all",
+      "applicableCategory": "mattress"
     },
     {
       "id": "coup-welcome",
@@ -2249,7 +2261,13 @@
       "perCustomerLimit": 1,
       "startsAt": "2026-01-01T00:00:00Z",
       "endsAt": "2026-12-31T23:59:59Z",
-      "isActive": true
+      "isActive": true,
+      "showOnHomepage": true,
+      "featuredOrder": 3,
+      "customTitle": "10% Mattress Privilege",
+      "customBadge": "10% OFF",
+      "customerRestriction": "first_time",
+      "applicableCategory": "mattress"
     },
     {
       "id": "coup-tier100",
@@ -2263,7 +2281,13 @@
       "perCustomerLimit": 1,
       "startsAt": "2026-01-01T00:00:00Z",
       "endsAt": "2026-12-31T23:59:59Z",
-      "isActive": true
+      "isActive": true,
+      "showOnHomepage": true,
+      "featuredOrder": 4,
+      "customTitle": "Instant RM100.00 Voucher",
+      "customBadge": "RM100.00 OFF",
+      "customerRestriction": "all",
+      "applicableCategory": "mattress"
     },
     {
       "id": "coup-freeship",
@@ -2277,7 +2301,11 @@
       "perCustomerLimit": 2,
       "startsAt": "2026-01-01T00:00:00Z",
       "endsAt": "2026-12-31T23:59:59Z",
-      "isActive": true
+      "isActive": true,
+      "showOnHomepage": false,
+      "featuredOrder": 99,
+      "customerRestriction": "all",
+      "applicableCategory": "all"
     },
     {
       "id": "coup-vip15",
@@ -2292,7 +2320,11 @@
       "perCustomerLimit": 1,
       "startsAt": "2026-01-01T00:00:00Z",
       "endsAt": "2026-12-31T23:59:59Z",
-      "isActive": true
+      "isActive": true,
+      "showOnHomepage": false,
+      "featuredOrder": 99,
+      "customerRestriction": "all",
+      "applicableCategory": "all"
     }
   ],
   "orders": [

@@ -19,6 +19,28 @@ export function OffersSection({ coupons }: OffersSectionProps) {
     setTimeout(() => setCopiedCode(null), 2500)
   }
 
+  // Filter coupons chosen by Admin to display on homepage
+  const featuredCoupons = coupons
+    .filter((c) => c.isActive && c.showOnHomepage)
+    .sort((a, b) => (a.featuredOrder || 99) - (b.featuredOrder || 99))
+
+  // Fallback to active coupons if admin hasn't chosen any specifically yet
+  const displayCoupons =
+    featuredCoupons.length > 0 ? featuredCoupons : coupons.filter((c) => c.isActive).slice(0, 4)
+
+  if (displayCoupons.length === 0) {
+    return null
+  }
+
+  const gridColsClass =
+    displayCoupons.length === 1
+      ? 'max-w-md mx-auto grid-cols-1'
+      : displayCoupons.length === 2
+      ? 'max-w-3xl mx-auto grid-cols-1 sm:grid-cols-2'
+      : displayCoupons.length === 3
+      ? 'grid-cols-1 sm:grid-cols-2 lg:grid-cols-3'
+      : 'grid-cols-1 sm:grid-cols-2 lg:grid-cols-4'
+
   return (
     <section className="py-16 sm:py-24 bg-forest text-warmwhite">
       <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
@@ -45,10 +67,28 @@ export function OffersSection({ coupons }: OffersSectionProps) {
           </Link>
         </div>
 
-        {/* Coupon Cards Grid */}
-        <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-4 gap-6">
-          {coupons.slice(0, 4).map((coupon) => {
+        {/* Dynamic Coupon Cards Grid chosen by Admin */}
+        <div className={`grid gap-6 ${gridColsClass}`}>
+          {displayCoupons.map((coupon) => {
             const isCopied = copiedCode === coupon.code
+
+            // Derive badge & title from admin custom settings or smart defaults
+            const badgeText =
+              coupon.customBadge?.trim() ||
+              (coupon.discountType === 'percentage'
+                ? `${coupon.discountValue}% OFF`
+                : coupon.discountType === 'fixed_amount'
+                ? `${formatMYR(coupon.discountValue)} OFF`
+                : 'FREE SHIPPING')
+
+            const cardTitle =
+              coupon.customTitle?.trim() ||
+              (coupon.discountType === 'percentage'
+                ? `${coupon.discountValue}% Mattress Privilege`
+                : coupon.discountType === 'fixed_amount'
+                ? `Instant ${formatMYR(coupon.discountValue)} Voucher`
+                : 'Zero Shipping Fee')
+
             return (
               <div
                 key={coupon.id}
@@ -57,11 +97,7 @@ export function OffersSection({ coupons }: OffersSectionProps) {
                 <div>
                   <div className="flex items-center justify-between mb-3">
                     <span className="px-2.5 py-0.5 rounded bg-gold/20 text-gold text-[10px] font-bold uppercase tracking-wider">
-                      {coupon.discountType === 'percentage'
-                        ? `${coupon.discountValue}% OFF`
-                        : coupon.discountType === 'fixed_amount'
-                        ? `${formatMYR(coupon.discountValue)} OFF`
-                        : 'FREE SHIPPING'}
+                      {badgeText}
                     </span>
                     <span className="text-[10px] text-warmwhite/60 flex items-center space-x-1">
                       <Clock className="w-3 h-3 text-gold" />
@@ -70,11 +106,7 @@ export function OffersSection({ coupons }: OffersSectionProps) {
                   </div>
 
                   <h3 className="font-serif text-xl font-bold text-warmwhite mb-2">
-                    {coupon.discountType === 'percentage'
-                      ? `${coupon.discountValue}% Mattress Privilege`
-                      : coupon.discountType === 'fixed_amount'
-                      ? `Instant ${formatMYR(coupon.discountValue)} Voucher`
-                      : 'Zero Shipping Fee'}
+                    {cardTitle}
                   </h3>
 
                   <p className="text-xs text-warmwhite/70 leading-relaxed mb-4">
@@ -85,6 +117,16 @@ export function OffersSection({ coupons }: OffersSectionProps) {
                     <div>&bull; Minimum Spend: {formatMYR(coupon.minSpendSen)}</div>
                     {coupon.maxDiscountSen && (
                       <div>&bull; Max Discount: {formatMYR(coupon.maxDiscountSen)}</div>
+                    )}
+                    {coupon.customerRestriction === 'first_time' && (
+                      <div className="text-amber-300/80 font-medium">
+                        &bull; Eksklusif: Pelanggan Baharu
+                      </div>
+                    )}
+                    {coupon.customerRestriction === 'existing_only' && (
+                      <div className="text-amber-300/80 font-medium">
+                        &bull; Eksklusif: Pelanggan Setia / VIP
+                      </div>
                     )}
                   </div>
                 </div>
@@ -97,7 +139,7 @@ export function OffersSection({ coupons }: OffersSectionProps) {
 
                   <button
                     onClick={() => handleCopy(coupon.code)}
-                    className={`px-3 py-1.5 rounded text-xs font-semibold flex items-center space-x-1 transition-all ${
+                    className={`px-3 py-1.5 rounded text-xs font-semibold flex items-center space-x-1 transition-all cursor-pointer ${
                       isCopied
                         ? 'bg-gold text-forest-dark font-bold'
                         : 'bg-warmwhite/10 hover:bg-warmwhite/20 text-warmwhite'
