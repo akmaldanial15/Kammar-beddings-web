@@ -13,7 +13,7 @@
     },
     {
       "id": "cat-pillows",
-      "name": "Pillows",
+      "name": "Pillowss",
       "slug": "pillows",
       "description": "Ergonomic natural latex pillows contoured for cervical spinal alignment and cool comfort.",
       "imageUrl": "/images/products/pillow-contour-latex.jpg",
@@ -2591,6 +2591,63 @@
     }
   ],
   "auditLogs": [
+    {
+      "id": "aud-1790863813991-6arv",
+      "actorEmail": "owner@lenasleep.com.my",
+      "action": "category_updated",
+      "entityType": "category",
+      "entityId": "cat-pillows",
+      "details": {
+        "id": "cat-pillows",
+        "name": "Pillowss",
+        "slug": "pillows",
+        "description": "Ergonomic natural latex pillows contoured for cervical spinal alignment and cool comfort.",
+        "imageUrl": "/images/products/pillow-contour-latex.jpg",
+        "displayOrder": 2,
+        "showInNav": true,
+        "hasMegaMenu": false,
+        "isActive": true
+      },
+      "createdAt": "2026-10-01T14:10:13.991Z"
+    },
+    {
+      "id": "aud-1790863794537-qjia",
+      "actorEmail": "owner@lenasleep.com.my",
+      "action": "category_updated",
+      "entityType": "category",
+      "entityId": "cat-pillows",
+      "details": {
+        "id": "cat-pillows",
+        "name": "Pillow",
+        "slug": "pillows",
+        "description": "Ergonomic natural latex pillows contoured for cervical spinal alignment and cool comfort.",
+        "imageUrl": "/images/products/pillow-contour-latex.jpg",
+        "displayOrder": 2,
+        "showInNav": true,
+        "hasMegaMenu": false,
+        "isActive": true
+      },
+      "createdAt": "2026-10-01T14:09:54.537Z"
+    },
+    {
+      "id": "aud-1790863757620-xzln",
+      "actorEmail": "owner@lenasleep.com.my",
+      "action": "category_updated",
+      "entityType": "category",
+      "entityId": "cat-pillows",
+      "details": {
+        "id": "cat-pillows",
+        "name": "Pillow",
+        "slug": "pillows",
+        "description": "Ergonomic natural latex pillows contoured for cervical spinal alignment and cool comfort.",
+        "imageUrl": "/images/products/pillow-contour-latex.jpg",
+        "displayOrder": 2,
+        "showInNav": true,
+        "hasMegaMenu": false,
+        "isActive": true
+      },
+      "createdAt": "2026-10-01T14:09:17.620Z"
+    },
     {
       "id": "aud-1790860147417-1qbz",
       "actorEmail": "owner@lenasleep.com.my",

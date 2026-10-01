@@ -125,6 +125,9 @@ export function CategoriesClient({ initialCategories }: CategoriesClientProps) {
           setCategories((prev) => [...prev, data.category])
           showNotification(`Kategori "${data.category.name}" berjaya ditambah!`, 'success')
           setEditingCategory(null)
+          if (typeof window !== 'undefined') {
+            window.dispatchEvent(new CustomEvent('kamaar:categories_updated'))
+          }
         } else {
           showNotification(data.error || 'Gagal menambah kategori.', 'error')
         }
@@ -142,6 +145,9 @@ export function CategoriesClient({ initialCategories }: CategoriesClientProps) {
           )
           showNotification(`Kategori "${data.category.name}" berjaya dikemas kini!`, 'success')
           setEditingCategory(null)
+          if (typeof window !== 'undefined') {
+            window.dispatchEvent(new CustomEvent('kamaar:categories_updated'))
+          }
         } else {
           showNotification(data.error || 'Gagal mengemas kini kategori.', 'error')
         }
@@ -183,6 +189,9 @@ export function CategoriesClient({ initialCategories }: CategoriesClientProps) {
           `${fieldLabels[field]} untuk "${category.name}" ${updatedValue ? 'diaktifkan' : 'dinyahaktifkan'}.`,
           'success'
         )
+        if (typeof window !== 'undefined') {
+          window.dispatchEvent(new CustomEvent('kamaar:categories_updated'))
+        }
       }
     } catch {
       setCategories(originalCategories)
@@ -204,6 +213,9 @@ export function CategoriesClient({ initialCategories }: CategoriesClientProps) {
       if (res.ok && data.success) {
         setCategories((prev) => prev.filter((c) => c.id !== category.id))
         showNotification(`Kategori "${category.name}" telah dipadam.`, 'success')
+        if (typeof window !== 'undefined') {
+          window.dispatchEvent(new CustomEvent('kamaar:categories_updated'))
+        }
       } else {
         showNotification(data.error || 'Gagal memadam kategori.', 'error')
       }
@@ -239,6 +251,9 @@ export function CategoriesClient({ initialCategories }: CategoriesClientProps) {
       if (res.ok && data.categories) {
         setCategories(data.categories)
         showNotification('Susunan kategori berjaya dikemas kini!', 'success')
+        if (typeof window !== 'undefined') {
+          window.dispatchEvent(new CustomEvent('kamaar:categories_updated'))
+        }
       }
     } catch {
       showNotification('Gagal menyimpan susunan kategori.', 'error')

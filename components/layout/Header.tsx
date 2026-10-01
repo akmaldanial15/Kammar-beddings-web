@@ -1,6 +1,6 @@
 'use client'
 
-import React, { useState, useEffect, useRef } from 'react'
+import React, { useState, useEffect, useRef, useCallback } from 'react'
 import Link from 'next/link'
 import { usePathname } from 'next/navigation'
 import {
@@ -45,31 +45,45 @@ export function Header() {
     initialCategories.filter((c) => c.showInNav && c.isActive !== false)
   )
 
-  useEffect(() => {
-    let isMounted = true
-    fetch('/api/categories')
+  const fetchCategories = useCallback(() => {
+    fetch('/api/categories', { cache: 'no-store' })
       .then((res) => res.json())
       .then((data) => {
-        if (isMounted && data.categories && Array.isArray(data.categories)) {
+        if (data.categories && Array.isArray(data.categories)) {
           setNavCategories(data.categories)
         }
       })
       .catch((err) => {
         console.error('Failed to load categories for nav:', err)
       })
-    return () => {
-      isMounted = false
-    }
   }, [])
 
+  useEffect(() => {
+    fetchCategories()
+
+    // Sync when category is updated in admin, tab gets focused, or route changes
+    const handleUpdate = () => fetchCategories()
+    window.addEventListener('kamaar:categories_updated', handleUpdate)
+    window.addEventListener('focus', handleUpdate)
+
+    return () => {
+      window.removeEventListener('kamaar:categories_updated', handleUpdate)
+      window.removeEventListener('focus', handleUpdate)
+    }
+  }, [fetchCategories, pathname])
+
   const getCategoryLabel = (cat: Category) => {
-    if (cat.slug === 'mattress' && t.navMattresses) return t.navMattresses
-    if (cat.slug === 'pillows' && t.navPillows) return t.navPillows
-    if (cat.slug === 'toppers-protectors' && t.navToppers) return t.navToppers
-    if (cat.slug === 'bedframes' && t.navBedframes) return t.navBedframes
-    if (cat.slug === 'bedding' && t.navBedding) return t.navBedding
-    if (cat.slug === 'offers' && t.navOffers) return t.navOffers
-    if ((cat.slug === 'guide' || cat.customUrl === '/blog') && t.navSleepGuide) return t.navSleepGuide
+    // Only map standard untranslated default English names to Malay when user has selected BM language
+    if (locale === 'bm') {
+      if (cat.slug === 'mattress' && cat.name === 'Mattresses') return t.navMattresses || cat.name
+      if (cat.slug === 'pillows' && cat.name === 'Pillows') return t.navPillows || cat.name
+      if (cat.slug === 'toppers-protectors' && cat.name === 'Toppers & Protectors') return t.navToppers || cat.name
+      if (cat.slug === 'bedframes' && cat.name === 'Bedframes') return t.navBedframes || cat.name
+      if (cat.slug === 'bedding' && cat.name === 'Bed Linen') return t.navBedding || cat.name
+      if (cat.slug === 'offers' && cat.name === 'Offers & Bundles') return t.navOffers || cat.name
+      if ((cat.slug === 'guide' || cat.customUrl === '/blog') && cat.name === 'Sleep Guide') return t.navSleepGuide || cat.name
+    }
+    // Return live custom name configured by admin from database
     return cat.name
   }
 
