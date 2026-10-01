@@ -2592,6 +2592,14 @@
   ],
   "auditLogs": [
     {
+      "id": "aud-1790860147417-1qbz",
+      "actorEmail": "owner@lenasleep.com.my",
+      "action": "staff_logged_in",
+      "entityType": "staff",
+      "entityId": "staff-1",
+      "createdAt": "2026-10-01T13:09:07.417Z"
+    },
+    {
       "id": "aud-1790856390196-x6wc",
       "actorEmail": "owner@lenasleep.com.my",
       "action": "affiliate_password_reset_by_admin",
