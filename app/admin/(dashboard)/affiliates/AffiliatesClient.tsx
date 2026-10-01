@@ -23,6 +23,8 @@ import {
   MessageSquare,
   KeyRound,
   Sparkles,
+  BellRing,
+  RotateCcw,
 } from 'lucide-react'
 import Link from 'next/link'
 
@@ -75,11 +77,20 @@ export function AffiliatesClient({ initialAffiliates }: Props) {
   const [isSavingNote, setIsSavingNote] = useState(false)
   const [noteSaveSuccess, setNoteSaveSuccess] = useState(false)
 
-  // Aggregated KPI Metrics
+  // Reset Password Modal State (Admin direct reset + Pending request handler)
+  const [isResetModalOpen, setIsResetModalOpen] = useState(false)
+  const [resetTargetAffiliate, setResetTargetAffiliate] = useState<Affiliate | null>(null)
+  const [newPasscode, setNewPasscode] = useState('')
+  const [resetNote, setResetNote] = useState('')
+  const [isResetting, setIsResetting] = useState(false)
+  const [resetToastMessage, setResetToastMessage] = useState('')
+
+  // Aggregated KPI Metrics & Pending Resets
   const activeCount = affiliates.filter((a) => a.isActive).length
   const totalSalesCount = affiliates.reduce((acc, a) => acc + (a.totalSalesCount || 0), 0)
   const totalRevenueSen = affiliates.reduce((acc, a) => acc + (a.totalSalesRevenueSen || 0), 0)
   const totalCommissionSen = affiliates.reduce((acc, a) => acc + (a.totalCommissionSen || 0), 0)
+  const pendingResets = affiliates.filter((a) => a.passwordResetRequested)
 
   // Filtered list
   const filteredAffiliates = affiliates.filter(
@@ -182,6 +193,58 @@ export function AffiliatesClient({ initialAffiliates }: Props) {
     }
   }
 
+  const handleOpenResetModal = (aff: Affiliate) => {
+    setResetTargetAffiliate(aff)
+    setNewPasscode(aff.accessKey || 'kamaar123')
+    setResetNote(
+      aff.passwordResetRequested
+        ? `Kata laluan anda telah diset semula oleh pihak pentadbir KAMAAR berikutan permohonan anda.`
+        : aff.adminNotes || ''
+    )
+    setResetToastMessage('')
+    setIsResetModalOpen(true)
+  }
+
+  const handleExecuteResetPassword = async (e: React.FormEvent) => {
+    e.preventDefault()
+    if (!resetTargetAffiliate) return
+
+    setIsResetting(true)
+    setResetToastMessage('')
+
+    try {
+      const res = await fetch('/api/admin/affiliates/reset-password', {
+        method: 'POST',
+        headers: { 'Content-Type': 'application/json' },
+        body: JSON.stringify({
+          affiliateId: resetTargetAffiliate.id,
+          newPasscode: newPasscode.trim(),
+          adminNote: resetNote.trim(),
+        }),
+      })
+
+      const data = await res.json()
+
+      if (res.ok && data.affiliate) {
+        setAffiliates((prev) =>
+          prev.map((a) => (a.id === resetTargetAffiliate.id ? data.affiliate : a))
+        )
+        setResetToastMessage(data.message || 'Kata laluan berjaya diset semula!')
+        setTimeout(() => {
+          setIsResetModalOpen(false)
+          setResetToastMessage('')
+        }, 1500)
+      } else {
+        alert(data.error || 'Gagal menetapkan kata laluan.')
+      }
+    } catch (err) {
+      console.error('Failed to reset password:', err)
+      alert('Ralat sambungan pelayan.')
+    } finally {
+      setIsResetting(false)
+    }
+  }
+
   const handleCreateAffiliate = async (e: React.FormEvent) => {
     e.preventDefault()
     setErrorMessage('')
@@ -239,6 +302,45 @@ export function AffiliatesClient({ initialAffiliates }: Props) {
 
   return (
     <div className="space-y-8">
+      {/* Pending Password Reset Notification Banner */}
+      {pendingResets.length > 0 && (
+        <div className="bg-gradient-to-r from-amber-500/10 via-amber-50 to-orange-500/10 border-2 border-amber-400 rounded-2xl p-4 sm:p-5 shadow-sm animate-fade-in-up">
+          <div className="flex flex-col md:flex-row items-start md:items-center justify-between gap-4">
+            <div className="flex items-start space-x-3.5">
+              <div className="w-10 h-10 rounded-xl bg-amber-500 text-white flex items-center justify-center shrink-0 shadow-md">
+                <BellRing className="w-5 h-5 animate-bounce" />
+              </div>
+              <div>
+                <div className="flex items-center space-x-2">
+                  <span className="text-[10px] uppercase font-extrabold tracking-wider px-2 py-0.5 rounded-md bg-amber-500 text-white">
+                    Tindakan Pentadbir Diperlukan
+                  </span>
+                  <span className="text-xs font-bold text-amber-950">
+                    {pendingResets.length} Permintaan Set Semula Kata Laluan Ejen
+                  </span>
+                </div>
+                <p className="text-xs text-neutral-700 mt-1">
+                  Ejen affiliate telah melepasi pengesahan identiti (OTP Kod SMS/Emel) dan sedang menunggu kata laluan baharu daripada pihak pentadbir.
+                </p>
+              </div>
+            </div>
+
+            <div className="flex flex-wrap items-center gap-2 w-full md:w-auto">
+              {pendingResets.map((aff) => (
+                <button
+                  key={aff.id}
+                  onClick={() => handleOpenResetModal(aff)}
+                  className="flex items-center space-x-1.5 px-3.5 py-2 bg-amber-600 hover:bg-amber-700 text-white text-xs font-bold rounded-xl transition-all shadow-sm cursor-pointer hover:scale-[1.02]"
+                >
+                  <KeyRound className="w-3.5 h-3.5" />
+                  <span>Set Kata Laluan: {aff.name.split(' ')[0]} ({aff.code})</span>
+                </button>
+              ))}
+            </div>
+          </div>
+        </div>
+      )}
+
       {/* 4 KPI Metrics */}
       <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-4 gap-4">
         <div className="bg-warmwhite p-6 rounded-2xl border border-borderLight shadow-sm animate-fade-in-up delay-50 luxury-card-hover">
@@ -374,9 +476,17 @@ export function AffiliatesClient({ initialAffiliates }: Props) {
                   const isCopied = copiedCode === aff.code
 
                   return (
-                    <tr key={aff.id} className="hover:bg-cream/20 transition-colors">
+                    <tr key={aff.id} className={`transition-colors ${aff.passwordResetRequested ? 'bg-amber-50/40 hover:bg-amber-50/70' : 'hover:bg-cream/20'}`}>
                       <td className="py-4 px-4">
-                        <span className="font-bold text-forest-dark block text-sm">{aff.name}</span>
+                        <div className="flex flex-wrap items-center gap-2">
+                          <span className="font-bold text-forest-dark block text-sm">{aff.name}</span>
+                          {aff.passwordResetRequested && (
+                            <span className="inline-flex items-center gap-1 px-2 py-0.5 rounded-full text-[10px] font-bold bg-amber-100 text-amber-900 border border-amber-300 shadow-2xs animate-pulse">
+                              <BellRing className="w-2.5 h-2.5 text-amber-600 animate-bounce" />
+                              <span>Minta Reset (OTP {aff.passwordResetMethod === 'phone' ? 'SMS' : 'Emel'} Disahkan)</span>
+                            </span>
+                          )}
+                        </div>
                         <div className="flex items-center space-x-2 text-[10.5px] text-secondary mt-0.5">
                           {aff.phone && (
                             <span className="flex items-center space-x-0.5">
@@ -473,6 +583,25 @@ export function AffiliatesClient({ initialAffiliates }: Props) {
 
                       <td className="py-4 px-4 text-right">
                         <div className="flex items-center justify-end space-x-1">
+                          <button
+                            onClick={() => handleOpenResetModal(aff)}
+                            className={`p-1.5 rounded-lg transition-all inline-flex items-center relative ${
+                              aff.passwordResetRequested
+                                ? 'bg-amber-500 text-white hover:bg-amber-600 shadow-sm animate-pulse ring-2 ring-amber-400 ring-offset-1'
+                                : 'text-secondary hover:text-[#102A4E] hover:bg-[#102A4E]/10'
+                            }`}
+                            title={
+                              aff.passwordResetRequested
+                                ? 'PERHATIAN: Ejen mohon reset kata laluan (OTP Disahkan). Klik untuk set kata laluan baharu'
+                                : 'Set Semula Kata Laluan Ejen'
+                            }
+                          >
+                            <KeyRound className="w-3.5 h-3.5" />
+                            {aff.passwordResetRequested && (
+                              <span className="absolute -top-1 -right-1 w-2 h-2 bg-red-600 rounded-full border border-white" />
+                            )}
+                          </button>
+
                           <button
                             onClick={() => handleOpenNoteModal(aff)}
                             className="p-1.5 text-secondary hover:text-forest rounded-lg hover:bg-forest/10 transition-colors inline-flex items-center"
@@ -789,6 +918,153 @@ export function AffiliatesClient({ initialAffiliates }: Props) {
                     className="px-5 py-2 bg-[#102A4E] hover:bg-[#163660] text-white text-xs font-bold rounded-xl transition-all shadow-sm disabled:opacity-50 flex items-center gap-1.5 cursor-pointer"
                   >
                     {isSavingNote ? 'Menyimpan...' : 'Simpan & Hantar Nota'}
+                  </button>
+                </div>
+              </div>
+            </form>
+          </div>
+        </div>
+      )}
+
+      {/* Modal: Admin Direct Reset Password for Affiliate */}
+      {isResetModalOpen && resetTargetAffiliate && (
+        <div className="fixed inset-0 z-50 bg-forest-dark/60 backdrop-blur-sm flex items-center justify-center p-4">
+          <div className="bg-warmwhite w-full max-w-lg rounded-3xl border border-borderLight shadow-2xl overflow-hidden animate-in fade-in zoom-in-95 duration-200">
+            <div className="p-6 bg-[#102A4E] text-white flex items-center justify-between">
+              <div className="flex items-center space-x-3">
+                <div className="w-10 h-10 rounded-xl bg-[#B49A58]/20 border border-[#B49A58]/40 flex items-center justify-center text-[#D4AF37]">
+                  <KeyRound className="w-5 h-5" />
+                </div>
+                <div>
+                  <h3 className="font-serif text-lg font-bold">Set Semula Kata Laluan Ejen</h3>
+                  <p className="text-xs text-neutral-300 mt-0.5">
+                    {resetTargetAffiliate.name} ({resetTargetAffiliate.code})
+                  </p>
+                </div>
+              </div>
+              <button
+                onClick={() => setIsResetModalOpen(false)}
+                className="p-1.5 text-neutral-300 hover:text-white rounded-lg hover:bg-white/10"
+              >
+                <X className="w-5 h-5" />
+              </button>
+            </div>
+
+            <form onSubmit={handleExecuteResetPassword} className="p-6 space-y-4">
+              {resetTargetAffiliate.passwordResetRequested && (
+                <div className="p-3.5 bg-amber-50 border border-amber-300 rounded-2xl flex items-start space-x-3">
+                  <BellRing className="w-4 h-4 text-amber-600 shrink-0 mt-0.5 animate-bounce" />
+                  <div className="text-xs text-amber-900 leading-relaxed">
+                    <span className="font-bold block text-amber-950 mb-0.5">
+                      Permintaan Reset Diterima & Disahkan (OTP Verified)
+                    </span>
+                    Ejen ini telah berjaya mengesahkan identiti akaun melalui{' '}
+                    <strong className="font-bold text-amber-950">
+                      {resetTargetAffiliate.passwordResetMethod === 'phone' ? 'SMS Nombor Telefon' : 'Emel Berdaftar'}
+                    </strong>{' '}
+                    pada{' '}
+                    {resetTargetAffiliate.passwordResetRequestedAt
+                      ? new Date(resetTargetAffiliate.passwordResetRequestedAt).toLocaleTimeString('ms-MY', {
+                          hour: '2-digit',
+                          minute: '2-digit',
+                        })
+                      : 'sebentar tadi'}
+                    . Sila tetapkan kata laluan baharu untuk membolehkan ejen mengakses semula portal.
+                  </div>
+                </div>
+              )}
+
+              {resetToastMessage && (
+                <div className="p-3 bg-emerald-100 border border-emerald-300 rounded-xl text-emerald-800 text-xs font-bold flex items-center gap-2">
+                  <Check className="w-4 h-4 text-emerald-600" />
+                  <span>{resetToastMessage}</span>
+                </div>
+              )}
+
+              <div>
+                <label className="text-xs font-bold text-charcoal block mb-1">
+                  Kata Laluan Baharu <span className="text-sale">*</span>
+                </label>
+                <div className="relative">
+                  <KeyRound className="w-4 h-4 text-secondary absolute left-3 top-1/2 -translate-y-1/2" />
+                  <input
+                    type="text"
+                    required
+                    minLength={4}
+                    value={newPasscode}
+                    onChange={(e) => setNewPasscode(e.target.value)}
+                    placeholder="Contoh: kamaar123"
+                    className="w-full pl-9 pr-3.5 py-2.5 text-xs bg-cream-light border border-borderLight rounded-xl outline-none focus:border-forest font-mono text-charcoal font-bold"
+                  />
+                </div>
+                <span className="text-[10.5px] text-secondary mt-1 block">
+                  Ejen akan menggunakan kata laluan ini untuk log masuk portal bersama Kod ({resetTargetAffiliate.code}) atau Emel.
+                </span>
+
+                {/* Quick preset buttons */}
+                <div className="flex flex-wrap items-center gap-1.5 mt-2.5">
+                  <span className="text-[10px] text-secondary font-bold mr-1">Pilihan Pantas:</span>
+                  <button
+                    type="button"
+                    onClick={() => setNewPasscode('kamaar123')}
+                    className="px-2.5 py-1 bg-cream hover:bg-gold/20 text-[#102A4E] text-[10.5px] font-bold rounded-lg border border-borderLight transition-colors"
+                  >
+                    kamaar123
+                  </button>
+                  <button
+                    type="button"
+                    onClick={() => setNewPasscode(`KAM-${Math.floor(1000 + Math.random() * 9000)}`)}
+                    className="px-2.5 py-1 bg-cream hover:bg-gold/20 text-[#102A4E] text-[10.5px] font-bold rounded-lg border border-borderLight transition-colors"
+                  >
+                    Auto PIN 4-Digit
+                  </button>
+                  <button
+                    type="button"
+                    onClick={() => setNewPasscode(resetTargetAffiliate.code)}
+                    className="px-2.5 py-1 bg-cream hover:bg-gold/20 text-[#102A4E] text-[10.5px] font-bold rounded-lg border border-borderLight transition-colors"
+                  >
+                    Sama Kod ({resetTargetAffiliate.code})
+                  </button>
+                </div>
+              </div>
+
+              <div>
+                <label className="text-xs font-bold text-charcoal block mb-1">
+                  Nota Pentadbir Tambahan (Akan dipaparkan di portal ejen)
+                </label>
+                <textarea
+                  rows={2}
+                  value={resetNote}
+                  onChange={(e) => setResetNote(e.target.value)}
+                  placeholder="Kata laluan anda telah diset semula oleh pihak pentadbir KAMAAR. Sila log masuk ke portal ejen."
+                  className="w-full px-3.5 py-2 text-xs bg-cream-light border border-borderLight rounded-xl outline-none focus:border-forest text-charcoal"
+                />
+              </div>
+
+              <div className="pt-2 flex items-center justify-between border-t border-borderLight">
+                <Link
+                  href="/affiliate/login"
+                  target="_blank"
+                  className="text-xs text-[#102A4E] hover:underline flex items-center gap-1 font-semibold"
+                >
+                  <ExternalLink className="w-3 h-3" />
+                  <span>Uji Portal Ejen</span>
+                </Link>
+
+                <div className="flex items-center space-x-2">
+                  <button
+                    type="button"
+                    onClick={() => setIsResetModalOpen(false)}
+                    className="px-4 py-2 text-xs font-bold text-secondary hover:text-charcoal transition-colors"
+                  >
+                    Batal
+                  </button>
+                  <button
+                    type="submit"
+                    disabled={isResetting || !newPasscode.trim()}
+                    className="px-5 py-2 bg-[#102A4E] hover:bg-[#163660] text-white text-xs font-bold rounded-xl transition-all shadow-sm disabled:opacity-50 flex items-center gap-1.5 cursor-pointer"
+                  >
+                    {isResetting ? 'Menetapkan...' : 'Sahkan Reset Kata Laluan'}
                   </button>
                 </div>
               </div>

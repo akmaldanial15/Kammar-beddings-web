@@ -2560,6 +2560,30 @@
   ],
   "auditLogs": [
     {
+      "id": "aud-1790856390196-x6wc",
+      "actorEmail": "owner@lenasleep.com.my",
+      "action": "affiliate_password_reset_by_admin",
+      "entityType": "affiliate",
+      "entityId": "aff-danial",
+      "details": {
+        "code": "AFF-DANIAL",
+        "name": "Ahmad Danial"
+      },
+      "createdAt": "2026-10-01T12:06:30.196Z"
+    },
+    {
+      "id": "aud-1790856262293-inz4",
+      "actorEmail": "danial@kamaar.my",
+      "action": "affiliate_password_reset_verified",
+      "entityType": "affiliate",
+      "entityId": "aff-danial",
+      "details": {
+        "code": "AFF-DANIAL",
+        "method": "email"
+      },
+      "createdAt": "2026-10-01T12:04:22.293Z"
+    },
+    {
       "id": "aud-1790766059597-kn0q",
       "actorEmail": "owner@lenasleep.com.my",
       "action": "staff_logged_in",
@@ -2596,7 +2620,13 @@
       "totalSalesRevenueSen": 1319600,
       "totalCommissionSen": 131960,
       "isActive": true,
-      "createdAt": "2026-08-01T10:00:00Z"
+      "createdAt": "2026-08-01T10:00:00Z",
+      "passwordResetMethod": "email",
+      "passwordResetRequestedAt": "2026-10-01T12:03:29.763Z",
+      "passwordResetVerified": false,
+      "passwordResetRequested": false,
+      "accessKey": "kamaar123",
+      "adminNotes": "Kata laluan anda telah diset semula oleh pihak pentadbir KAMAAR berikutan permohonan anda."
     },
     {
       "id": "aff-izzah",

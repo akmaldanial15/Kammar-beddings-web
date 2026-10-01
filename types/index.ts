@@ -219,6 +219,11 @@ export interface Affiliate {
   createdAt: string
   adminNotes?: string // Private notes or payout communications sent from admin to agent
   accessKey?: string // Passcode/PIN for agent login
+  passwordResetRequested?: boolean // true if agent triggered password reset request
+  passwordResetRequestedAt?: string // ISO timestamp of reset request
+  passwordResetOtp?: string // 6-digit OTP verification code
+  passwordResetVerified?: boolean // true once OTP has been verified via email or phone
+  passwordResetMethod?: 'email' | 'phone' // channel chosen for verification
 }
 
 export interface Review {

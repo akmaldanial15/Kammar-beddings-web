@@ -1001,3 +1001,83 @@ export async function recordAffiliateSale(
 
   saveDb(db)
 }
+
+export async function requestAffiliatePasswordReset(
+  identifier: string,
+  method: 'email' | 'phone'
+): Promise<{ affiliate: Affiliate; otp: string } | null> {
+  const db = ensureDb()
+  if (!db.affiliates) return null
+  const clean = identifier.trim().toLowerCase()
+  const affiliate = db.affiliates.find(
+    (a) => (a.code.toLowerCase() === clean || a.email.toLowerCase() === clean) && a.isActive
+  )
+  if (!affiliate) return null
+
+  // Generate 6-digit OTP code
+  const otp = Math.floor(100000 + Math.random() * 900000).toString()
+  affiliate.passwordResetOtp = otp
+  affiliate.passwordResetMethod = method
+  affiliate.passwordResetRequestedAt = new Date().toISOString()
+  affiliate.passwordResetVerified = false
+
+  saveDb(db)
+  return { affiliate, otp }
+}
+
+export async function verifyAffiliatePasswordResetOtp(
+  identifier: string,
+  otp: string
+): Promise<{ success: boolean; affiliate?: Affiliate; error?: string }> {
+  const db = ensureDb()
+  if (!db.affiliates) return { success: false, error: 'Tiada pangkalan data ejen.' }
+  const clean = identifier.trim().toLowerCase()
+  const affiliate = db.affiliates.find(
+    (a) => (a.code.toLowerCase() === clean || a.email.toLowerCase() === clean) && a.isActive
+  )
+  if (!affiliate) return { success: false, error: 'Akaun ejen tidak ditemui.' }
+
+  if (!affiliate.passwordResetOtp || affiliate.passwordResetOtp !== otp.trim()) {
+    return { success: false, error: 'Kod pengesahan OTP tidak sah. Sila semak semula.' }
+  }
+
+  affiliate.passwordResetVerified = true
+  affiliate.passwordResetRequested = true
+  saveDb(db)
+
+  logAdminAction(affiliate.email, 'affiliate_password_reset_verified', 'affiliate', affiliate.id, {
+    code: affiliate.code,
+    method: affiliate.passwordResetMethod,
+  })
+
+  return { success: true, affiliate }
+}
+
+export async function adminResetAffiliatePassword(
+  affiliateId: string,
+  newPasscode: string,
+  adminNote?: string,
+  actorEmail: string = 'admin'
+): Promise<Affiliate | null> {
+  const db = ensureDb()
+  if (!db.affiliates) return null
+  const affiliate = db.affiliates.find((a) => a.id === affiliateId)
+  if (!affiliate) return null
+
+  affiliate.accessKey = newPasscode.trim()
+  affiliate.passwordResetRequested = false
+  affiliate.passwordResetOtp = undefined
+  affiliate.passwordResetVerified = false
+
+  if (adminNote && adminNote.trim()) {
+    affiliate.adminNotes = adminNote.trim()
+  }
+
+  saveDb(db)
+  logAdminAction(actorEmail, 'affiliate_password_reset_by_admin', 'affiliate', affiliate.id, {
+    code: affiliate.code,
+    name: affiliate.name,
+  })
+
+  return affiliate
+}
