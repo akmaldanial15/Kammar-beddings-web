@@ -87,15 +87,15 @@ export function AffiliatePortalClient({ affiliate, initialOrders }: Props) {
   const facebookUrl = `https://www.facebook.com/sharer/sharer.php?u=${encodeURIComponent(referralUrl)}`
 
   // QR Code URL using free reliable QR server API
-  const qrCodeUrl = `https://api.qrserver.com/v1/create-qr-code/?size=240x240&data=${encodeURIComponent(referralUrl)}&color=10-42-78`
+  const qrCodeUrl = `https://api.qrserver.com/v1/create-qr-code/?size=240x240&data=${encodeURIComponent(referralUrl)}&color=30-78-140`
 
   return (
     <div className="min-h-screen bg-[#F4F7FB] text-[#0A192F] pb-24">
       {/* TOP LUXURY APP BAR */}
-      <header className="bg-[#0B1E3B] text-white border-b border-[#B49A58]/20 sticky top-0 z-40 shadow-lg">
+      <header className="bg-[#13325B] text-white border-b border-[#B49A58]/20 sticky top-0 z-40 shadow-lg">
         <div className="max-w-6xl mx-auto px-4 sm:px-6 lg:px-8 py-3.5 flex items-center justify-between">
           <div className="flex items-center space-x-3">
-            <div className="w-10 h-10 rounded-xl bg-gradient-to-br from-[#102A4E] to-[#1e467d] border border-[#B49A58]/40 flex items-center justify-center shadow-md">
+            <div className="w-10 h-10 rounded-xl bg-gradient-to-br from-[#1E4E8C] to-[#2A6DB5] border border-[#B49A58]/40 flex items-center justify-center shadow-md">
               <Crown className="w-5 h-5 text-[#D4AF37]" />
             </div>
             <div>
@@ -136,7 +136,7 @@ export function AffiliatePortalClient({ affiliate, initialOrders }: Props) {
       </header>
 
       {/* HERO GREETING & STATUS BANNER */}
-      <div className="bg-gradient-to-r from-[#0B1E3B] via-[#102A4E] to-[#0B1E3B] text-white py-8 px-4 sm:px-6 lg:px-8 border-b border-[#B49A58]/20">
+      <div className="bg-gradient-to-r from-[#13325B] via-[#1E4E8C] to-[#13325B] text-white py-8 px-4 sm:px-6 lg:px-8 border-b border-[#B49A58]/20">
         <div className="max-w-6xl mx-auto">
           <div className="flex flex-wrap items-center justify-between gap-4">
             <div>
@@ -197,11 +197,11 @@ export function AffiliatePortalClient({ affiliate, initialOrders }: Props) {
               <span className="text-xs font-semibold uppercase tracking-wider text-charcoal-muted">
                 Jumlah Nilai Jualan
               </span>
-              <div className="w-8 h-8 rounded-lg bg-[#102A4E]/10 text-[#102A4E] flex items-center justify-center">
+              <div className="w-8 h-8 rounded-lg bg-[#1E4E8C]/10 text-[#1E4E8C] flex items-center justify-center">
                 <TrendingUp className="w-4 h-4" />
               </div>
             </div>
-            <div className="text-xl sm:text-2xl font-bold text-[#102A4E] font-mono">
+            <div className="text-xl sm:text-2xl font-bold text-[#1E4E8C] font-mono">
               {formatMYR(affiliate.totalSalesRevenueSen || 0)}
             </div>
             <p className="text-[11px] text-charcoal-muted mt-1">
@@ -249,7 +249,7 @@ export function AffiliatePortalClient({ affiliate, initialOrders }: Props) {
         </div>
 
         {/* 2. ADMIN NOTES & MESSAGES (THE USER'S PRIMARY REQUEST!) */}
-        <div className="bg-gradient-to-br from-[#102A4E] to-[#0A1A32] rounded-3xl p-6 sm:p-8 text-white border border-[#B49A58]/30 shadow-lg relative overflow-hidden">
+        <div className="bg-gradient-to-br from-[#1E4E8C] to-[#13325B] rounded-3xl p-6 sm:p-8 text-white border border-[#B49A58]/30 shadow-lg relative overflow-hidden">
           {/* Subtle gold emblem backdrop */}
           <div className="absolute right-0 top-0 translate-x-8 -translate-y-8 w-64 h-64 bg-[#B49A58]/10 rounded-full blur-2xl pointer-events-none" />
 
@@ -313,7 +313,7 @@ export function AffiliatePortalClient({ affiliate, initialOrders }: Props) {
               onClick={() => setShowQr(!showQr)}
               className="px-3.5 py-1.5 rounded-xl border border-borderLight hover:bg-neutral-50 text-xs font-semibold text-charcoal flex items-center gap-1.5 transition-colors cursor-pointer"
             >
-              <QrCode className="w-3.5 h-3.5 text-[#102A4E]" />
+              <QrCode className="w-3.5 h-3.5 text-[#1E4E8C]" />
               <span>{showQr ? 'Tutup Kod QR' : 'Tunjuk Kod QR'}</span>
             </button>
           </div>
@@ -332,7 +332,7 @@ export function AffiliatePortalClient({ affiliate, initialOrders }: Props) {
               />
               <button
                 onClick={handleCopyLink}
-                className="px-6 py-3 bg-[#102A4E] hover:bg-[#163660] text-white font-bold text-xs sm:text-sm rounded-xl transition-colors flex items-center justify-center gap-2 whitespace-nowrap cursor-pointer shadow-sm"
+                className="px-6 py-3 bg-[#1E4E8C] hover:bg-[#2A6DB5] text-white font-bold text-xs sm:text-sm rounded-xl transition-colors flex items-center justify-center gap-2 whitespace-nowrap cursor-pointer shadow-sm"
               >
                 {copiedLink ? <Check className="w-4 h-4 text-emerald-300" /> : <Copy className="w-4 h-4" />}
                 <span>{copiedLink ? 'Disalin!' : 'Salin Pautan'}</span>
@@ -341,11 +341,11 @@ export function AffiliatePortalClient({ affiliate, initialOrders }: Props) {
 
             <div className="flex items-center justify-between text-xs text-charcoal-muted pt-1">
               <span>
-                Kod Kupon / Rujukan Manual: <strong className="font-mono text-[#102A4E]">{affiliate.code}</strong>
+                Kod Kupon / Rujukan Manual: <strong className="font-mono text-[#1E4E8C]">{affiliate.code}</strong>
               </span>
               <button
                 onClick={handleCopyCode}
-                className="text-xs font-semibold text-[#102A4E] hover:underline flex items-center gap-1 cursor-pointer"
+                className="text-xs font-semibold text-[#1E4E8C] hover:underline flex items-center gap-1 cursor-pointer"
               >
                 {copiedCode ? <Check className="w-3 h-3 text-emerald-600" /> : <Copy className="w-3 h-3" />}
                 <span>{copiedCode ? 'Kod Disalin!' : 'Salin Kod'}</span>
@@ -450,7 +450,7 @@ export function AffiliatePortalClient({ affiliate, initialOrders }: Props) {
                 <tbody className="divide-y divide-borderLight">
                   {initialOrders.map((ord) => (
                     <tr key={ord.id} className="hover:bg-neutral-50/80 transition-colors">
-                      <td className="py-3.5 px-4 font-mono font-bold text-[#102A4E]">
+                      <td className="py-3.5 px-4 font-mono font-bold text-[#1E4E8C]">
                         {ord.orderNumber}
                       </td>
                       <td className="py-3.5 px-4 text-charcoal-muted whitespace-nowrap">
@@ -487,7 +487,7 @@ export function AffiliatePortalClient({ affiliate, initialOrders }: Props) {
         {/* 5. BANK ACCOUNT & PAYOUT DESTINATION */}
         <div className="bg-white rounded-3xl p-6 sm:p-8 border border-borderLight shadow-sm space-y-4">
           <div className="flex items-center space-x-3">
-            <div className="w-9 h-9 rounded-xl bg-[#102A4E]/10 text-[#102A4E] flex items-center justify-center">
+            <div className="w-9 h-9 rounded-xl bg-[#1E4E8C]/10 text-[#1E4E8C] flex items-center justify-center">
               <Building2 className="w-5 h-5" />
             </div>
             <div>
@@ -514,7 +514,7 @@ export function AffiliatePortalClient({ affiliate, initialOrders }: Props) {
               <span className="text-[11px] text-charcoal-muted uppercase tracking-wider block font-semibold">
                 Nombor Akaun Bank
               </span>
-              <span className="text-sm font-mono font-bold text-[#102A4E] mt-1 block">
+              <span className="text-sm font-mono font-bold text-[#1E4E8C] mt-1 block">
                 {affiliate.bankAccountNumber || '-'}
               </span>
             </div>

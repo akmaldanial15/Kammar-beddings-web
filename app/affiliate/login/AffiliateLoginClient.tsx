@@ -188,15 +188,15 @@ export function AffiliateLoginClient() {
   }
 
   return (
-    <div className="min-h-screen bg-[#071326] text-warmwhite flex flex-col justify-center items-center px-4 py-8 sm:py-12 relative overflow-x-hidden">
+    <div className="min-h-screen bg-[#0B1E38] text-warmwhite flex flex-col justify-center items-center px-4 py-8 sm:py-12 relative overflow-x-hidden">
       {/* Background ambient royal glow */}
-      <div className="absolute top-0 left-1/2 -translate-x-1/2 w-[700px] h-[400px] bg-gradient-to-b from-[#102A4E]/60 via-[#B49A58]/10 to-transparent blur-3xl pointer-events-none rounded-full" />
-      <div className="absolute -bottom-24 right-10 w-96 h-96 bg-[#163660]/40 blur-3xl pointer-events-none rounded-full" />
+      <div className="absolute top-0 left-1/2 -translate-x-1/2 w-[700px] h-[400px] bg-gradient-to-b from-[#1E4E8C]/60 via-[#B49A58]/10 to-transparent blur-3xl pointer-events-none rounded-full" />
+      <div className="absolute -bottom-24 right-10 w-96 h-96 bg-[#2A6DB5]/40 blur-3xl pointer-events-none rounded-full" />
 
       <div className="w-full max-w-md relative z-10 space-y-6">
         {/* Brand Header */}
         <div className="text-center space-y-3">
-          <div className="inline-flex items-center justify-center w-14 h-14 rounded-2xl bg-gradient-to-br from-[#102A4E] to-[#1e467d] border border-[#B49A58]/40 shadow-xl shadow-black/40">
+          <div className="inline-flex items-center justify-center w-14 h-14 rounded-2xl bg-gradient-to-br from-[#1E4E8C] to-[#2A6DB5] border border-[#B49A58]/40 shadow-xl shadow-black/40">
             <Crown className="w-7 h-7 text-[#D4AF37]" />
           </div>
           <div>
@@ -213,8 +213,8 @@ export function AffiliateLoginClient() {
         </div>
 
         {/* Login Card */}
-        <div className="bg-[#0D1F3C]/90 backdrop-blur-xl border border-white/10 rounded-3xl p-6 sm:p-8 shadow-2xl shadow-black/60 relative">
-          <div className="absolute top-0 right-8 -translate-y-1/2 px-3 py-1 bg-gradient-to-r from-[#B49A58] to-[#D4AF37] text-[#071326] text-[10px] font-black rounded-full uppercase tracking-wider flex items-center gap-1 shadow-md">
+        <div className="bg-[#13325B]/90 backdrop-blur-xl border border-white/10 rounded-3xl p-6 sm:p-8 shadow-2xl shadow-black/60 relative">
+          <div className="absolute top-0 right-8 -translate-y-1/2 px-3 py-1 bg-gradient-to-r from-[#B49A58] to-[#D4AF37] text-[#0B1E38] text-[10px] font-black rounded-full uppercase tracking-wider flex items-center gap-1 shadow-md">
             <Sparkles className="w-3 h-3" /> Ejen Rasmi
           </div>
 
@@ -238,7 +238,7 @@ export function AffiliateLoginClient() {
                   placeholder="cth: AFF-DANIAL atau danial@kamaar.my"
                   value={identifier}
                   onChange={(e) => setIdentifier(e.target.value)}
-                  className="w-full pl-10 pr-4 py-3 bg-[#071326]/70 border border-white/10 rounded-xl text-xs md:text-sm text-white placeholder-neutral-500 focus:outline-none focus:border-[#B49A58] transition-colors"
+                  className="w-full pl-10 pr-4 py-3 bg-[#0B1E38]/70 border border-white/10 rounded-xl text-xs md:text-sm text-white placeholder-neutral-500 focus:outline-none focus:border-[#B49A58] transition-colors"
                 />
               </div>
             </div>
@@ -259,7 +259,7 @@ export function AffiliateLoginClient() {
                   placeholder="Masukkan kata laluan / passcode"
                   value={passcode}
                   onChange={(e) => setPasscode(e.target.value)}
-                  className="w-full pl-10 pr-4 py-3 bg-[#071326]/70 border border-white/10 rounded-xl text-xs md:text-sm text-white placeholder-neutral-500 focus:outline-none focus:border-[#B49A58] transition-colors"
+                  className="w-full pl-10 pr-4 py-3 bg-[#0B1E38]/70 border border-white/10 rounded-xl text-xs md:text-sm text-white placeholder-neutral-500 focus:outline-none focus:border-[#B49A58] transition-colors"
                 />
               </div>
             </div>
@@ -334,8 +334,8 @@ export function AffiliateLoginClient() {
       {/* RESET PASSWORD / FORGOT PASSWORD VERIFICATION MODAL                       */}
       {/* ========================================================================= */}
       {isResetModalOpen && (
-        <div className="fixed inset-0 z-50 bg-[#071326]/85 backdrop-blur-md flex items-center justify-center p-4 animate-in fade-in duration-200 overflow-y-auto">
-          <div className="bg-[#0D1F3C] border border-[#B49A58]/30 w-full max-w-lg rounded-3xl p-6 sm:p-8 shadow-2xl relative text-warmwhite my-auto max-h-[92vh] overflow-y-auto">
+        <div className="fixed inset-0 z-50 bg-[#0B1E38]/85 backdrop-blur-md flex items-center justify-center p-4 animate-in fade-in duration-200 overflow-y-auto">
+          <div className="bg-[#13325B] border border-[#B49A58]/30 w-full max-w-lg rounded-3xl p-6 sm:p-8 shadow-2xl relative text-warmwhite my-auto max-h-[92vh] overflow-y-auto">
             <button
               onClick={() => setIsResetModalOpen(false)}
               className="absolute top-5 right-5 text-neutral-400 hover:text-white p-1 rounded-lg hover:bg-white/5 cursor-pointer"
@@ -345,7 +345,7 @@ export function AffiliateLoginClient() {
 
             {/* Modal Header */}
             <div className="text-center space-y-2 mb-6">
-              <div className="w-12 h-12 rounded-2xl bg-gradient-to-br from-[#102A4E] to-[#1e467d] border border-[#B49A58]/40 mx-auto flex items-center justify-center shadow-lg">
+              <div className="w-12 h-12 rounded-2xl bg-gradient-to-br from-[#1E4E8C] to-[#2A6DB5] border border-[#B49A58]/40 mx-auto flex items-center justify-center shadow-lg">
                 <RotateCcw className="w-6 h-6 text-[#D4AF37]" />
               </div>
               <h3 className="font-serif text-xl font-bold text-white">
@@ -378,7 +378,7 @@ export function AffiliateLoginClient() {
                         placeholder="cth: AFF-DANIAL atau danial@kamaar.my"
                         value={resetIdentifier}
                         onChange={(e) => setResetIdentifier(e.target.value)}
-                        className="w-full px-4 py-3 bg-[#071326] border border-white/10 rounded-xl text-xs md:text-sm text-white placeholder-neutral-500 focus:outline-none focus:border-[#B49A58]"
+                        className="w-full px-4 py-3 bg-[#0B1E38] border border-white/10 rounded-xl text-xs md:text-sm text-white placeholder-neutral-500 focus:outline-none focus:border-[#B49A58]"
                       />
                     </div>
 
@@ -412,7 +412,7 @@ export function AffiliateLoginClient() {
                           onClick={() => setVerificationMethod('email')}
                           className={`p-3 rounded-xl border text-left transition-all ${
                             verificationMethod === 'email'
-                              ? 'bg-[#102A4E] border-[#D4AF37] ring-1 ring-[#D4AF37]'
+                              ? 'bg-[#1E4E8C] border-[#D4AF37] ring-1 ring-[#D4AF37]'
                               : 'bg-white/5 border-white/10 hover:bg-white/10'
                           }`}
                         >
@@ -430,7 +430,7 @@ export function AffiliateLoginClient() {
                           onClick={() => setVerificationMethod('phone')}
                           className={`p-3 rounded-xl border text-left transition-all ${
                             verificationMethod === 'phone'
-                              ? 'bg-[#102A4E] border-[#D4AF37] ring-1 ring-[#D4AF37]'
+                              ? 'bg-[#1E4E8C] border-[#D4AF37] ring-1 ring-[#D4AF37]'
                               : 'bg-white/5 border-white/10 hover:bg-white/10'
                           }`}
                         >
@@ -496,7 +496,7 @@ export function AffiliateLoginClient() {
                     placeholder="cth: 123456"
                     value={otpInput}
                     onChange={(e) => setOtpInput(e.target.value.replace(/\D/g, ''))}
-                    className="w-full text-center text-xl tracking-[0.3em] font-mono py-3 bg-[#071326] border border-white/10 rounded-xl text-white placeholder-neutral-600 focus:outline-none focus:border-[#B49A58]"
+                    className="w-full text-center text-xl tracking-[0.3em] font-mono py-3 bg-[#0B1E38] border border-white/10 rounded-xl text-white placeholder-neutral-600 focus:outline-none focus:border-[#B49A58]"
                   />
                 </div>
 

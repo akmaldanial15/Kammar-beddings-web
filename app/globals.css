@@ -5,8 +5,8 @@
 @tailwind utilities;
 
 :root {
-  --color-forest: #102A4E;
-  --color-forest-dark: #0A1A33;
+  --color-forest: #1E4E8C;
+  --color-forest-dark: #13325B;
   --color-gold: #B49A58;
   --color-cream: #F4F7FB;
   --color-warmwhite: #FFFFFF;
@@ -45,17 +45,17 @@ h1, h2, h3, h4, .font-serif {
 }
 
 ::-webkit-scrollbar-thumb {
-  background: #1B3B6B;
+  background: #2A6DB5;
   border-radius: 4px;
 }
 
 ::-webkit-scrollbar-thumb:hover {
-  background: #102A4E;
+  background: #1E4E8C;
 }
 
 /* Accessible focus visible rings */
 :focus-visible {
-  outline: 2px solid #1B3B6B;
+  outline: 2px solid #2A6DB5;
   outline-offset: 2px;
 }
 

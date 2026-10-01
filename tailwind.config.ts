@@ -10,10 +10,10 @@ const config: Config = {
     extend: {
       colors: {
         forest: {
-          DEFAULT: '#102A4E', // Royal Midnight Navy Blue (Primary)
-          dark: '#0A1A33',    // Deep Obsidian Midnight Blue (Headers, footers, dark backgrounds)
-          light: '#1B3B6B',   // Royal Sapphire Accent Blue
-          surface: '#102A4E0D', // Subtle 5% royal blue tint
+          DEFAULT: '#1E4E8C', // Luminous Royal Sapphire Blue (Primary)
+          dark: '#13325B',    // Rich Deep Ocean Navy (Headers, footers, dark backgrounds)
+          light: '#2A6DB5',   // Radiant Azure Royal Blue
+          surface: '#1E4E8C0D', // Subtle 5% royal blue tint
         },
         gold: {
           DEFAULT: '#B49A58', // Muted Luxury Gold (Pairs regally with Royal Navy Blue)
