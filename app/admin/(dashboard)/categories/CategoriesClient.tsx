@@ -250,7 +250,7 @@ export function CategoriesClient({ initialCategories }: CategoriesClientProps) {
 
       {/* KPI Stats Cards */}
       <div className="grid grid-cols-2 md:grid-cols-4 gap-4">
-        <div className="bg-warmwhite p-5 rounded-2xl border border-borderLight shadow-xs">
+        <div className="bg-warmwhite p-5 rounded-2xl border border-borderLight shadow-xs animate-fade-in-up delay-50 luxury-card-hover">
           <div className="flex items-center justify-between">
             <span className="text-xs font-semibold uppercase tracking-wider text-charcoal-muted">Jumlah Kategori</span>
             <Layers className="w-4 h-4 text-gold-dark" />
@@ -259,7 +259,7 @@ export function CategoriesClient({ initialCategories }: CategoriesClientProps) {
           <span className="text-[11px] text-charcoal-muted mt-1 block">Semua dalam pangkalan data</span>
         </div>
 
-        <div className="bg-warmwhite p-5 rounded-2xl border border-borderLight shadow-xs">
+        <div className="bg-warmwhite p-5 rounded-2xl border border-borderLight shadow-xs animate-fade-in-up delay-100 luxury-card-hover">
           <div className="flex items-center justify-between">
             <span className="text-xs font-semibold uppercase tracking-wider text-charcoal-muted">Paparan Nav Bar</span>
             <Menu className="w-4 h-4 text-emerald-600" />
@@ -268,7 +268,7 @@ export function CategoriesClient({ initialCategories }: CategoriesClientProps) {
           <span className="text-[11px] text-charcoal-muted mt-1 block">Aktif pada bar navigasi atas</span>
         </div>
 
-        <div className="bg-warmwhite p-5 rounded-2xl border border-borderLight shadow-xs">
+        <div className="bg-warmwhite p-5 rounded-2xl border border-borderLight shadow-xs animate-fade-in-up delay-150 luxury-card-hover">
           <div className="flex items-center justify-between">
             <span className="text-xs font-semibold uppercase tracking-wider text-charcoal-muted">Megamenu Dropdown</span>
             <LayoutGrid className="w-4 h-4 text-gold-dark" />
@@ -277,7 +277,7 @@ export function CategoriesClient({ initialCategories }: CategoriesClientProps) {
           <span className="text-[11px] text-charcoal-muted mt-1 block">Kategori dengan menu bertingkat</span>
         </div>
 
-        <div className="bg-warmwhite p-5 rounded-2xl border border-borderLight shadow-xs">
+        <div className="bg-warmwhite p-5 rounded-2xl border border-borderLight shadow-xs animate-fade-in-up delay-200 luxury-card-hover">
           <div className="flex items-center justify-between">
             <span className="text-xs font-semibold uppercase tracking-wider text-charcoal-muted">Status Aktif</span>
             <Sparkles className="w-4 h-4 text-forest" />
@@ -288,7 +288,7 @@ export function CategoriesClient({ initialCategories }: CategoriesClientProps) {
       </div>
 
       {/* Action Bar */}
-      <div className="bg-warmwhite p-4 rounded-2xl border border-borderLight shadow-xs flex flex-col md:flex-row items-stretch md:items-center justify-between gap-4">
+      <div className="bg-warmwhite p-4 rounded-2xl border border-borderLight shadow-xs flex flex-col md:flex-row items-stretch md:items-center justify-between gap-4 animate-fade-in-up delay-250">
         <div className="flex-1 max-w-md">
           <input
             type="text"
@@ -311,7 +311,7 @@ export function CategoriesClient({ initialCategories }: CategoriesClientProps) {
       </div>
 
       {/* Main Categories Table */}
-      <div className="bg-warmwhite rounded-2xl border border-borderLight shadow-xs overflow-hidden">
+      <div className="bg-warmwhite rounded-2xl border border-borderLight shadow-xs overflow-hidden animate-fade-in-up delay-300">
         <div className="overflow-x-auto">
           <table className="w-full text-left text-xs border-collapse">
             <thead>
@@ -500,8 +500,8 @@ export function CategoriesClient({ initialCategories }: CategoriesClientProps) {
 
       {/* Add / Edit Category Modal */}
       {editingCategory && (
-        <div className="fixed inset-0 z-50 flex items-center justify-center p-4 bg-forest-dark/60 backdrop-blur-xs">
-          <div className="bg-warmwhite w-full max-w-lg rounded-2xl shadow-2xl border border-borderLight overflow-hidden animate-fade-in-up">
+        <div className="fixed inset-0 z-50 flex items-center justify-center p-4 bg-forest-dark/60 backdrop-blur-xs animate-fade-in">
+          <div className="bg-warmwhite w-full max-w-lg rounded-2xl shadow-2xl border border-borderLight overflow-hidden animate-scale-in">
             <div className="p-6 border-b border-borderLight bg-cream/40 flex items-center justify-between">
               <div>
                 <h3 className="font-serif text-lg font-bold text-forest-dark">

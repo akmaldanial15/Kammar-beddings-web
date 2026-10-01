@@ -250,7 +250,7 @@ export function PromotionsClient({ initialCoupons }: PromotionsClientProps) {
       {/* Toast Feedback */}
       {feedback && (
         <div
-          className={`p-4 rounded-2xl flex items-center justify-between text-xs sm:text-sm animate-in fade-in ${
+          className={`p-4 rounded-2xl flex items-center justify-between text-xs sm:text-sm animate-fade-in ${
             feedback.type === 'success'
               ? 'bg-emerald-50 border border-emerald-200 text-emerald-800'
               : 'bg-rose-50 border border-rose-200 text-rose-800'
@@ -276,7 +276,7 @@ export function PromotionsClient({ initialCoupons }: PromotionsClientProps) {
       {/* TOP METRIC CARDS */}
       <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-4 gap-4">
         {/* Total Active */}
-        <div className="bg-warmwhite rounded-2xl p-4 border border-borderLight shadow-xs">
+        <div className="bg-warmwhite rounded-2xl p-4 border border-borderLight shadow-xs animate-fade-in-up delay-50 luxury-card-hover">
           <div className="flex items-center justify-between text-secondary mb-1.5">
             <span className="text-[11px] font-bold uppercase tracking-wider text-charcoal-muted">
               Kupon Aktif
@@ -290,7 +290,7 @@ export function PromotionsClient({ initialCoupons }: PromotionsClientProps) {
         </div>
 
         {/* Featured on Homepage */}
-        <div className="bg-warmwhite rounded-2xl p-4 border border-borderLight shadow-xs">
+        <div className="bg-warmwhite rounded-2xl p-4 border border-borderLight shadow-xs animate-fade-in-up delay-100 luxury-card-hover">
           <div className="flex items-center justify-between text-secondary mb-1.5">
             <span className="text-[11px] font-bold uppercase tracking-wider text-charcoal-muted">
               Ditayang di Halaman Utama
@@ -309,7 +309,7 @@ export function PromotionsClient({ initialCoupons }: PromotionsClientProps) {
         </div>
 
         {/* Total Redemptions */}
-        <div className="bg-warmwhite rounded-2xl p-4 border border-borderLight shadow-xs">
+        <div className="bg-warmwhite rounded-2xl p-4 border border-borderLight shadow-xs animate-fade-in-up delay-150 luxury-card-hover">
           <div className="flex items-center justify-between text-secondary mb-1.5">
             <span className="text-[11px] font-bold uppercase tracking-wider text-charcoal-muted">
               Jumlah Penebusan
@@ -323,7 +323,7 @@ export function PromotionsClient({ initialCoupons }: PromotionsClientProps) {
         </div>
 
         {/* Inactive / Ended */}
-        <div className="bg-warmwhite rounded-2xl p-4 border border-borderLight shadow-xs">
+        <div className="bg-warmwhite rounded-2xl p-4 border border-borderLight shadow-xs animate-fade-in-up delay-200 luxury-card-hover">
           <div className="flex items-center justify-between text-secondary mb-1.5">
             <span className="text-[11px] font-bold uppercase tracking-wider text-charcoal-muted">
               Nyahaktif / Arkib
@@ -338,7 +338,7 @@ export function PromotionsClient({ initialCoupons }: PromotionsClientProps) {
       </div>
 
       {/* ACTION BAR: SEARCH, TABS & CREATE BUTTON */}
-      <div className="bg-warmwhite p-4 rounded-2xl border border-borderLight shadow-xs flex flex-col md:flex-row items-stretch md:items-center justify-between gap-4">
+      <div className="bg-warmwhite p-4 rounded-2xl border border-borderLight shadow-xs flex flex-col md:flex-row items-stretch md:items-center justify-between gap-4 animate-fade-in-up delay-250">
         {/* Left: Filter Tabs */}
         <div className="flex items-center gap-1.5 overflow-x-auto pb-1 md:pb-0">
           <button
@@ -411,7 +411,7 @@ export function PromotionsClient({ initialCoupons }: PromotionsClientProps) {
       </div>
 
       {/* COUPONS TABLE WITH DIRECT CONTROLS */}
-      <div className="bg-warmwhite rounded-3xl border border-borderLight shadow-sm overflow-hidden">
+      <div className="bg-warmwhite rounded-3xl border border-borderLight shadow-sm overflow-hidden animate-fade-in-up delay-300">
         <div className="overflow-x-auto">
           <table className="w-full text-left text-xs">
             <thead className="bg-[#F8FAFC] border-b border-borderLight text-charcoal-muted uppercase font-bold text-[10px] tracking-wider">
@@ -628,8 +628,8 @@ export function PromotionsClient({ initialCoupons }: PromotionsClientProps) {
       {/* COMPREHENSIVE CONFIGURE COUPON VOUCHER MODAL (IMAGE 2 ENHANCED)           */}
       {/* ========================================================================= */}
       {editingCoupon && (
-        <div className="fixed inset-0 z-50 bg-[#13325B]/70 backdrop-blur-md flex items-center justify-center p-4 overflow-y-auto animate-in fade-in duration-200">
-          <div className="bg-warmwhite w-full max-w-2xl rounded-3xl border border-borderLight shadow-2xl overflow-hidden my-auto max-h-[92vh] flex flex-col">
+        <div className="fixed inset-0 z-50 bg-[#13325B]/70 backdrop-blur-md flex items-center justify-center p-4 overflow-y-auto animate-fade-in">
+          <div className="bg-warmwhite w-full max-w-2xl rounded-3xl border border-borderLight shadow-2xl overflow-hidden my-auto max-h-[92vh] flex flex-col animate-scale-in">
             {/* Modal Header */}
             <div className="p-6 bg-[#13325B] text-white flex items-center justify-between border-b border-[#B49A58]/20 flex-shrink-0">
               <div className="flex items-center space-x-3">
