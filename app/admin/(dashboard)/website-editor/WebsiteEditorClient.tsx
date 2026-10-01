@@ -1,6 +1,6 @@
 'use client'
 
-import React, { useState } from 'react'
+import React, { useState, useRef } from 'react'
 import { WebsiteConfig, HeroSlideConfig, ReassuranceItemConfig } from '@/types'
 import {
   Palette,
@@ -20,6 +20,9 @@ import {
   Trash2,
   Eye,
   ChevronRight,
+  ChevronLeft,
+  ChevronDown,
+  Check,
   ShieldCheck,
   Truck,
   RotateCcw as TrialIcon,
@@ -210,18 +213,44 @@ export function WebsiteEditorClient({ initialConfig }: Props) {
   }
 
   const tabs = [
-    { id: 'theme', label: 'Warna & Tema', icon: Palette },
-    { id: 'hero', label: 'Slaid Hero & Gambar', icon: ImageIcon },
-    { id: 'announcement', label: 'Palang Pengumuman', icon: Bell },
-    { id: 'reassurance', label: 'Jaminan & Kelebihan', icon: Sparkles },
-    { id: 'story', label: 'Kisah Atelier', icon: BookOpen },
-    { id: 'promotions', label: 'Banner Promosi', icon: Tag },
-    { id: 'contact', label: 'WhatsApp & Sosial', icon: Share2 },
-    { id: 'visual', label: 'Animasi & Kesan', icon: Wand2 },
-  ]
+    { id: 'theme', label: 'Warna & Tema', shortLabel: 'Warna', icon: Palette, num: '1/8' },
+    { id: 'hero', label: 'Slaid Hero & Gambar', shortLabel: 'Hero Slaid', icon: ImageIcon, num: '2/8' },
+    { id: 'announcement', label: 'Palang Pengumuman', shortLabel: 'Pengumuman', icon: Bell, num: '3/8' },
+    { id: 'reassurance', label: 'Jaminan & Kelebihan', shortLabel: 'Kelebihan', icon: Sparkles, num: '4/8' },
+    { id: 'story', label: 'Kisah Atelier', shortLabel: 'Kisah', icon: BookOpen, num: '5/8' },
+    { id: 'promotions', label: 'Banner Promosi', shortLabel: 'Promosi', icon: Tag, num: '6/8' },
+    { id: 'contact', label: 'WhatsApp & Sosial', shortLabel: 'Sosial', icon: Share2, num: '7/8' },
+    { id: 'visual', label: 'Animasi & Kesan', shortLabel: 'Animasi', icon: Wand2, num: '8/8' },
+  ] as const
+
+  const [isMobileSelectorOpen, setIsMobileSelectorOpen] = useState(false)
+  const tabListRef = useRef<HTMLDivElement>(null)
+
+  const handleTabChange = (tabId: TabType) => {
+    setActiveTab(tabId)
+    setIsMobileSelectorOpen(false)
+    if (typeof window !== 'undefined') {
+      const el = document.getElementById(`tab-pill-${tabId}`)
+      if (el) {
+        el.scrollIntoView({ behavior: 'smooth', block: 'nearest', inline: 'center' })
+      }
+    }
+  }
+
+  const currentTabIndex = tabs.findIndex((t) => t.id === activeTab)
+  const currentTab = tabs[currentTabIndex] || tabs[0]
+  const hasPrevTab = currentTabIndex > 0
+  const hasNextTab = currentTabIndex < tabs.length - 1
+
+  const goToPrevTab = () => {
+    if (hasPrevTab) handleTabChange(tabs[currentTabIndex - 1].id as TabType)
+  }
+  const goToNextTab = () => {
+    if (hasNextTab) handleTabChange(tabs[currentTabIndex + 1].id as TabType)
+  }
 
   return (
-    <div className="space-y-6">
+    <div className="space-y-4 sm:space-y-6">
       {/* Toast Notification */}
       {saveSuccess && (
         <div className="fixed top-20 right-4 z-50 bg-emerald-600 text-white px-4 py-3 rounded-2xl shadow-xl flex items-center space-x-2.5 animate-in slide-in-from-top-4 duration-300">
@@ -246,35 +275,141 @@ export function WebsiteEditorClient({ initialConfig }: Props) {
       )}
 
       {/* TOP HEADER CONTROLS (Live Preview + Quick Save) */}
-      <div className="flex flex-col sm:flex-row items-stretch sm:items-center justify-between gap-3 bg-warmwhite p-3.5 sm:p-4 rounded-2xl border border-borderLight shadow-xs animate-fade-in-up delay-50">
-        <div className="flex items-center space-x-2">
-          <span className="text-xs font-bold text-forest-dark">Pratonton Langsung:</span>
+      <div className="flex items-center justify-between gap-2.5 bg-warmwhite p-3 sm:p-4 rounded-2xl border border-borderLight shadow-xs animate-fade-in-up delay-50">
+        <div className="flex items-center space-x-2 min-w-0">
           <Link
             href="/"
             target="_blank"
-            className="inline-flex items-center space-x-1.5 px-3 py-1.5 bg-cream hover:bg-gold/15 text-[#1E4E8C] border border-borderLight rounded-xl text-xs font-semibold transition-all hover:scale-[1.02]"
+            className="inline-flex items-center space-x-1.5 px-3 py-2 bg-cream hover:bg-gold/15 text-[#1E4E8C] border border-borderLight rounded-xl text-xs font-semibold transition-all hover:scale-[1.02] shrink-0 cursor-pointer"
           >
             <span>Buka Laman Web Awam</span>
-            <ExternalLink className="w-3 h-3 text-gold-dark" />
+            <ExternalLink className="w-3.5 h-3.5 text-gold-dark" />
           </Link>
+          <span className="hidden md:inline-flex items-center space-x-1 text-[11px] text-secondary">
+            <span className="w-1.5 h-1.5 rounded-full bg-emerald-500 animate-pulse" />
+            <span>Kemas kini langsung disegerakkan ke pangkalan data</span>
+          </span>
         </div>
 
-        <div className="flex items-center space-x-2.5">
-          <button
-            type="button"
-            onClick={() => handleSave()}
-            disabled={isSaving}
-            className="flex-1 sm:flex-initial flex items-center justify-center space-x-2 px-5 py-2.5 bg-forest hover:bg-forest-dark text-warmwhite text-xs font-bold rounded-xl transition-all shadow-sm disabled:opacity-50 cursor-pointer hover:scale-[1.02]"
-          >
-            <Save className="w-4 h-4" />
-            <span>{isSaving ? 'Menyimpan...' : 'Simpan Perubahan'}</span>
-          </button>
+        <div className="flex items-center space-x-2">
+          <div className="hidden sm:flex items-center space-x-2">
+            <button
+              type="button"
+              onClick={() => handleSave()}
+              disabled={isSaving}
+              className="flex items-center space-x-2 px-5 py-2.5 bg-[#1E4E8C] hover:bg-[#13325B] text-warmwhite text-xs font-bold rounded-xl transition-all shadow-sm disabled:opacity-50 cursor-pointer hover:scale-[1.02]"
+            >
+              <Save className="w-4 h-4 text-[#D4AF37]" />
+              <span>{isSaving ? 'Menyimpan...' : 'Simpan Perubahan'}</span>
+            </button>
+          </div>
+          <span className="sm:hidden text-[10px] font-bold px-2.5 py-1 bg-cream text-forest-dark rounded-xl border border-borderLight flex items-center space-x-1">
+            <span className="w-1.5 h-1.5 rounded-full bg-emerald-500" />
+            <span>8 Bahagian</span>
+          </span>
         </div>
       </div>
 
-      {/* HORIZONTAL SWIPEABLE TABS BAR */}
-      <div className="bg-warmwhite rounded-2xl border border-borderLight p-1.5 shadow-xs overflow-x-auto no-scrollbar animate-fade-in-up delay-100">
-        <div className="flex items-center space-x-1 min-w-max">
+      {/* MOBILE INTERACTIVE SECTION PICKER & STEP CONTROLLER (sm:hidden) */}
+      <div className="sm:hidden space-y-2 animate-fade-in-up delay-75">
+        <div className="bg-gradient-to-r from-[#13325B] to-[#1E4E8C] text-white p-2.5 rounded-2xl shadow-sm flex items-center justify-between gap-2 border border-[#B49A58]/20">
+          {/* Section selector button */}
+          <button
+            type="button"
+            onClick={() => setIsMobileSelectorOpen(!isMobileSelectorOpen)}
+            className="flex-1 flex items-center space-x-2.5 text-left p-1 rounded-xl hover:bg-white/10 transition-colors cursor-pointer min-w-0"
+          >
+            <div className="w-8 h-8 rounded-lg bg-white/15 flex items-center justify-center text-[#D4AF37] shrink-0">
+              {React.createElement(currentTab.icon, { className: 'w-4 h-4' })}
+            </div>
+            <div className="min-w-0 flex-1">
+              <div className="flex items-center space-x-1.5">
+                <span className="text-[10px] font-bold tracking-wider uppercase text-[#D4AF37]">
+                  Bahagian {currentTab.num}
+                </span>
+                <span className="w-1 h-1 rounded-full bg-emerald-400" />
+              </div>
+              <div className="text-xs font-bold text-white truncate flex items-center space-x-1">
+                <span>{currentTab.label}</span>
+                <ChevronDown
+                  className={`w-3.5 h-3.5 text-[#D4AF37] transition-transform duration-200 shrink-0 ${
+                    isMobileSelectorOpen ? 'rotate-180' : ''
+                  }`}
+                />
+              </div>
+            </div>
+          </button>
+
+          {/* Quick Prev & Next step buttons */}
+          <div className="flex items-center space-x-1 shrink-0">
+            <button
+              type="button"
+              disabled={!hasPrevTab}
+              onClick={goToPrevTab}
+              className="w-8 h-8 rounded-xl bg-white/10 hover:bg-white/20 disabled:opacity-25 disabled:pointer-events-none flex items-center justify-center text-white transition-all cursor-pointer"
+              title="Bahagian Sebelumnya"
+            >
+              <ChevronLeft className="w-4 h-4" />
+            </button>
+            <button
+              type="button"
+              disabled={!hasNextTab}
+              onClick={goToNextTab}
+              className="w-8 h-8 rounded-xl bg-white/10 hover:bg-white/20 disabled:opacity-25 disabled:pointer-events-none flex items-center justify-center text-white transition-all cursor-pointer"
+              title="Bahagian Seterusnya"
+            >
+              <ChevronRight className="w-4 h-4" />
+            </button>
+          </div>
+        </div>
+
+        {/* Dropdown sheet for mobile */}
+        {isMobileSelectorOpen && (
+          <div className="bg-warmwhite rounded-2xl border border-borderLight shadow-xl p-2 space-y-1 animate-in fade-in slide-in-from-top-2 duration-200">
+            <div className="px-3 py-1.5 text-[10px] font-bold uppercase tracking-wider text-secondary border-b border-borderLight/60 mb-1 flex items-center justify-between">
+              <span>Lompat Terus ke Bahagian:</span>
+              <span className="text-forest font-mono">{currentTab.num}</span>
+            </div>
+            <div className="grid grid-cols-1 gap-1 max-h-72 overflow-y-auto no-scrollbar">
+              {tabs.map((tab) => {
+                const TabIcon = tab.icon
+                const isAct = activeTab === tab.id
+                return (
+                  <button
+                    key={tab.id}
+                    type="button"
+                    onClick={() => handleTabChange(tab.id as TabType)}
+                    className={`w-full flex items-center justify-between px-3 py-2.5 rounded-xl text-xs font-bold transition-all text-left cursor-pointer ${
+                      isAct
+                        ? 'bg-[#1E4E8C] text-white shadow-xs'
+                        : 'text-forest-dark hover:bg-cream/80'
+                    }`}
+                  >
+                    <div className="flex items-center space-x-2.5">
+                      <TabIcon className={`w-4 h-4 shrink-0 ${isAct ? 'text-[#D4AF37]' : 'text-gold-dark'}`} />
+                      <span>{tab.label}</span>
+                    </div>
+                    <span
+                      className={`text-[10px] px-2 py-0.5 rounded-full ${
+                        isAct ? 'bg-white/20 text-white font-mono' : 'bg-cream text-secondary font-mono'
+                      }`}
+                    >
+                      {tab.num}
+                    </span>
+                  </button>
+                )
+              })}
+            </div>
+          </div>
+        )}
+      </div>
+
+      {/* HORIZONTAL SWIPEABLE PILLS RAIL (Mobile & Desktop) */}
+      <div className="relative bg-warmwhite rounded-2xl border border-borderLight p-1.5 shadow-xs animate-fade-in-up delay-100">
+        <div
+          ref={tabListRef}
+          className="flex items-center space-x-1 overflow-x-auto no-scrollbar scroll-smooth snap-x snap-mandatory py-0.5 px-0.5"
+        >
           {tabs.map((tab) => {
             const Icon = tab.icon
             const isActive = activeTab === tab.id
@@ -282,16 +417,18 @@ export function WebsiteEditorClient({ initialConfig }: Props) {
             return (
               <button
                 key={tab.id}
+                id={`tab-pill-${tab.id}`}
                 type="button"
-                onClick={() => setActiveTab(tab.id as TabType)}
-                className={`flex items-center space-x-2 px-3.5 py-2.5 rounded-xl text-xs font-bold transition-all cursor-pointer ${
+                onClick={() => handleTabChange(tab.id as TabType)}
+                className={`snap-start shrink-0 flex items-center space-x-1.5 sm:space-x-2 px-3 sm:px-3.5 py-2 sm:py-2.5 rounded-xl text-xs font-bold transition-all cursor-pointer ${
                   isActive
-                    ? 'bg-[#1E4E8C] text-white shadow-xs'
+                    ? 'bg-[#1E4E8C] text-white shadow-xs scale-[1.01]'
                     : 'text-secondary hover:text-forest-dark hover:bg-cream/60'
                 }`}
               >
-                <Icon className={`w-3.5 h-3.5 ${isActive ? 'text-[#D4AF37]' : 'text-secondary'}`} />
-                <span>{tab.label}</span>
+                <Icon className={`w-3.5 h-3.5 shrink-0 ${isActive ? 'text-[#D4AF37]' : 'text-secondary'}`} />
+                <span className="sm:hidden">{tab.shortLabel}</span>
+                <span className="hidden sm:inline">{tab.label}</span>
               </button>
             )
           })}
@@ -1527,7 +1664,7 @@ export function WebsiteEditorClient({ initialConfig }: Props) {
                   <label className="font-bold text-forest-dark block">
                     Gaya Lengkungan Bucu Kad (Border Radius)
                   </label>
-                  <div className="grid grid-cols-3 gap-3">
+                  <div className="grid grid-cols-1 sm:grid-cols-3 gap-2.5 sm:gap-3">
                     {[
                       { id: 'rounded-xl', label: 'Minimalis (12px)' },
                       { id: 'rounded-2xl', label: 'Elegan (16px) - Disyorkan' },
@@ -1561,20 +1698,54 @@ export function WebsiteEditorClient({ initialConfig }: Props) {
           </div>
         )}
 
+        {/* MOBILE / DESKTOP SEQUENTIAL STEP NAVIGATION */}
+        <div className="flex items-center justify-between gap-2 p-2.5 sm:p-3.5 bg-warmwhite rounded-2xl border border-borderLight shadow-xs">
+          <button
+            type="button"
+            disabled={!hasPrevTab}
+            onClick={goToPrevTab}
+            className="flex items-center space-x-1.5 px-3 py-2 rounded-xl text-xs font-semibold border border-borderLight bg-cream/50 text-forest-dark disabled:opacity-30 disabled:pointer-events-none hover:bg-cream transition-all cursor-pointer"
+          >
+            <ChevronLeft className="w-3.5 h-3.5 text-forest" />
+            <span className="hidden xs:inline text-secondary font-normal">Sebelum:</span>
+            <span className="font-bold">{hasPrevTab ? tabs[currentTabIndex - 1].shortLabel : 'Mula'}</span>
+          </button>
+
+          <div className="text-center">
+            <span className="text-[11px] font-bold text-forest-dark block truncate max-w-[130px] xs:max-w-none">
+              {currentTab.label}
+            </span>
+            <span className="text-[10px] text-secondary">
+              Seksyen {currentTabIndex + 1} daripada {tabs.length}
+            </span>
+          </div>
+
+          <button
+            type="button"
+            disabled={!hasNextTab}
+            onClick={goToNextTab}
+            className="flex items-center space-x-1.5 px-3 py-2 rounded-xl text-xs font-semibold border border-borderLight bg-cream/50 text-forest-dark disabled:opacity-30 disabled:pointer-events-none hover:bg-cream transition-all cursor-pointer"
+          >
+            <span className="hidden xs:inline text-secondary font-normal">Seterusnya:</span>
+            <span className="font-bold">{hasNextTab ? tabs[currentTabIndex + 1].shortLabel : 'Tamat'}</span>
+            <ChevronRight className="w-3.5 h-3.5 text-forest" />
+          </button>
+        </div>
+
         {/* STICKY BOTTOM SAVE ACTION BAR FOR MOBILE & DESKTOP */}
-        <div className="sticky bottom-4 z-40 bg-warmwhite/95 backdrop-blur-md p-3.5 sm:p-4 rounded-2xl border border-[#B49A58]/30 shadow-lg flex items-center justify-between gap-3 animate-fade-in-up">
-          <div className="flex items-center space-x-2">
+        <div className="sticky bottom-2 sm:bottom-4 z-40 bg-warmwhite/95 backdrop-blur-md p-2.5 sm:p-4 rounded-2xl border border-[#B49A58]/30 shadow-lg flex items-center justify-between gap-2 sm:gap-3 animate-fade-in-up pb-[max(0.625rem,env(safe-area-inset-bottom))]">
+          <div className="hidden sm:flex items-center space-x-2">
             <span className="w-2 h-2 rounded-full bg-emerald-500 animate-pulse" />
-            <span className="text-xs font-semibold text-secondary hidden sm:inline">
+            <span className="text-xs font-semibold text-secondary">
               Perubahan sedia disimpan ke pangkalan data KAMAAR
             </span>
           </div>
 
-          <div className="flex items-center space-x-2.5 w-full sm:w-auto justify-end">
+          <div className="flex items-center space-x-2 w-full sm:w-auto justify-end">
             <Link
               href="/"
               target="_blank"
-              className="flex items-center space-x-1.5 px-3.5 py-2.5 bg-cream hover:bg-gold/15 text-[#1E4E8C] border border-borderLight rounded-xl text-xs font-semibold transition-all cursor-pointer shrink-0"
+              className="flex items-center justify-center space-x-1.5 px-3.5 py-2.5 bg-cream hover:bg-gold/15 text-[#1E4E8C] border border-borderLight rounded-xl text-xs font-semibold transition-all cursor-pointer shrink-0"
             >
               <Eye className="w-3.5 h-3.5 text-gold-dark" />
               <span>Lihat Laman</span>
@@ -1583,7 +1754,7 @@ export function WebsiteEditorClient({ initialConfig }: Props) {
             <button
               type="submit"
               disabled={isSaving}
-              className="flex-1 sm:flex-initial flex items-center justify-center space-x-2 px-6 py-2.5 bg-[#1E4E8C] hover:bg-[#13325B] text-warmwhite text-xs font-bold rounded-xl transition-all shadow-md disabled:opacity-50 cursor-pointer hover:scale-[1.02]"
+              className="flex-1 sm:flex-initial flex items-center justify-center space-x-2 px-4 sm:px-6 py-2.5 bg-[#1E4E8C] hover:bg-[#13325B] text-warmwhite text-xs font-bold rounded-xl transition-all shadow-md disabled:opacity-50 cursor-pointer hover:scale-[1.02]"
             >
               <Save className="w-4 h-4 text-[#D4AF37]" />
               <span>{isSaving ? 'Menyimpan...' : 'Simpan Perubahan Laman Web'}</span>
