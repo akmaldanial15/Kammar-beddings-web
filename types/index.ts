@@ -212,6 +212,8 @@ export interface Affiliate {
   totalCommissionSen: number
   isActive: boolean
   createdAt: string
+  adminNotes?: string // Private notes or payout communications sent from admin to agent
+  accessKey?: string // Passcode/PIN for agent login
 }
 
 export interface Review {

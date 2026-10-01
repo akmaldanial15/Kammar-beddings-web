@@ -780,6 +780,30 @@ export async function getAffiliateByCode(code: string): Promise<Affiliate | null
   return db.affiliates?.find((a) => a.code.toUpperCase() === clean && a.isActive) || null
 }
 
+export async function getAffiliateByIdentifier(identifier: string): Promise<Affiliate | null> {
+  const db = ensureDb()
+  if (!identifier) return null
+  const clean = identifier.trim().toLowerCase()
+  return (
+    db.affiliates?.find(
+      (a) =>
+        (a.code.toLowerCase() === clean || a.email.toLowerCase() === clean) &&
+        a.isActive
+    ) || null
+  )
+}
+
+export async function getAffiliateOrders(code: string): Promise<Order[]> {
+  const db = ensureDb()
+  if (!code) return []
+  const clean = code.trim().toUpperCase()
+  return (
+    db.orders
+      ?.filter((o) => o.affiliateCode && o.affiliateCode.trim().toUpperCase() === clean)
+      .sort((a, b) => new Date(b.createdAt).getTime() - new Date(a.createdAt).getTime()) || []
+  )
+}
+
 export async function createAffiliate(
   data: Omit<Affiliate, 'id' | 'createdAt' | 'totalSalesCount' | 'totalSalesRevenueSen' | 'totalCommissionSen'>,
   actorEmail: string = 'admin'

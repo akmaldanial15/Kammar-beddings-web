@@ -20,7 +20,11 @@ import {
   X,
   Edit2,
   Trash2,
+  MessageSquare,
+  KeyRound,
+  Sparkles,
 } from 'lucide-react'
+import Link from 'next/link'
 
 interface Props {
   initialAffiliates: Affiliate[]
@@ -60,6 +64,16 @@ export function AffiliatesClient({ initialAffiliates }: Props) {
   const [bankName, setBankName] = useState('Maybank')
   const [bankAccountNumber, setBankAccountNumber] = useState('')
   const [commissionRate, setCommissionRate] = useState(10)
+  const [newAdminNotes, setNewAdminNotes] = useState('')
+  const [newAccessKey, setNewAccessKey] = useState('')
+
+  // Note Modal State (For Admin sending direct notes to affiliate)
+  const [isNoteModalOpen, setIsNoteModalOpen] = useState(false)
+  const [selectedAffiliate, setSelectedAffiliate] = useState<Affiliate | null>(null)
+  const [noteText, setNoteText] = useState('')
+  const [accessKeyText, setAccessKeyText] = useState('')
+  const [isSavingNote, setIsSavingNote] = useState(false)
+  const [noteSaveSuccess, setNoteSaveSuccess] = useState(false)
 
   // Aggregated KPI Metrics
   const activeCount = affiliates.filter((a) => a.isActive).length
@@ -113,6 +127,61 @@ export function AffiliatesClient({ initialAffiliates }: Props) {
     }
   }
 
+  const handleOpenNoteModal = (aff: Affiliate) => {
+    setSelectedAffiliate(aff)
+    setNoteText(aff.adminNotes || '')
+    setAccessKeyText(aff.accessKey || 'kamaar123')
+    setNoteSaveSuccess(false)
+    setIsNoteModalOpen(true)
+  }
+
+  const handleSaveNote = async (e: React.FormEvent) => {
+    e.preventDefault()
+    if (!selectedAffiliate) return
+
+    setIsSavingNote(true)
+    setNoteSaveSuccess(false)
+
+    try {
+      const res = await fetch(`/api/admin/affiliates/${selectedAffiliate.id}`, {
+        method: 'PATCH',
+        headers: { 'Content-Type': 'application/json' },
+        body: JSON.stringify({
+          adminNotes: noteText.trim(),
+          accessKey: accessKeyText.trim() || 'kamaar123',
+        }),
+      })
+
+      const data = await res.json()
+
+      if (res.ok && data.affiliate) {
+        setAffiliates((prev) =>
+          prev.map((a) =>
+            a.id === selectedAffiliate.id
+              ? {
+                  ...a,
+                  adminNotes: noteText.trim(),
+                  accessKey: accessKeyText.trim() || 'kamaar123',
+                }
+              : a
+          )
+        )
+        setNoteSaveSuccess(true)
+        setTimeout(() => {
+          setIsNoteModalOpen(false)
+          setNoteSaveSuccess(false)
+        }, 1200)
+      } else {
+        alert(data.error || 'Gagal mengemas kini nota.')
+      }
+    } catch (err) {
+      console.error('Failed to save note:', err)
+      alert('Ralat sambungan pelayan.')
+    } finally {
+      setIsSavingNote(false)
+    }
+  }
+
   const handleCreateAffiliate = async (e: React.FormEvent) => {
     e.preventDefault()
     setErrorMessage('')
@@ -137,6 +206,8 @@ export function AffiliatesClient({ initialAffiliates }: Props) {
           bankAccountNumber: bankAccountNumber.trim(),
           commissionType: 'percentage',
           commissionRate: Number(commissionRate) || 10,
+          adminNotes: newAdminNotes.trim(),
+          accessKey: newAccessKey.trim() || 'kamaar123',
         }),
       })
 
@@ -157,6 +228,8 @@ export function AffiliatesClient({ initialAffiliates }: Props) {
       setPhone('')
       setBankAccountNumber('')
       setCommissionRate(10)
+      setNewAdminNotes('')
+      setNewAccessKey('')
     } catch (err: any) {
       setErrorMessage(err.message || 'Ralat sambungan pelayan.')
     } finally {
@@ -250,13 +323,25 @@ export function AffiliatesClient({ initialAffiliates }: Props) {
           />
         </div>
 
-        <button
-          onClick={() => setIsModalOpen(true)}
-          className="w-full sm:w-auto flex items-center justify-center space-x-2 px-5 py-2.5 bg-forest text-warmwhite text-xs font-bold rounded-xl hover:bg-forest-dark transition-all duration-200 hover:scale-[1.02] shadow-sm"
-        >
-          <Plus className="w-4 h-4" />
-          <span>Daftar Ejen Affiliate Baru</span>
-        </button>
+        <div className="flex items-center gap-2.5 w-full sm:w-auto">
+          <Link
+            href="/affiliate/login"
+            target="_blank"
+            className="flex-1 sm:flex-initial flex items-center justify-center space-x-1.5 px-4 py-2.5 bg-warmwhite border border-[#B49A58] text-[#102A4E] hover:bg-[#B49A58]/10 text-xs font-bold rounded-xl transition-all shadow-xs"
+          >
+            <KeyRound className="w-3.5 h-3.5 text-[#B49A58]" />
+            <span>Portal Log Masuk Ejen</span>
+            <ExternalLink className="w-3 h-3 text-[#B49A58]" />
+          </Link>
+
+          <button
+            onClick={() => setIsModalOpen(true)}
+            className="flex-1 sm:flex-initial flex items-center justify-center space-x-2 px-5 py-2.5 bg-forest text-warmwhite text-xs font-bold rounded-xl hover:bg-forest-dark transition-all duration-200 hover:scale-[1.02] shadow-sm"
+          >
+            <Plus className="w-4 h-4" />
+            <span>Daftar Ejen Baru</span>
+          </button>
+        </div>
       </div>
 
       {/* Affiliates Table */}
@@ -279,6 +364,7 @@ export function AffiliatesClient({ initialAffiliates }: Props) {
                   <th className="py-3.5 px-4">Jumlah Jualan (MYR)</th>
                   <th className="py-3.5 px-4">Komisen Terkumpul</th>
                   <th className="py-3.5 px-4">Akaun Bank Payout</th>
+                  <th className="py-3.5 px-4">Nota Pentadbir (Admin Note)</th>
                   <th className="py-3.5 px-4">Status</th>
                   <th className="py-3.5 px-4 text-right">Tindakan</th>
                 </tr>
@@ -356,6 +442,22 @@ export function AffiliatesClient({ initialAffiliates }: Props) {
                         </span>
                       </td>
 
+                      {/* Admin Note Column */}
+                      <td className="py-4 px-4 max-w-[210px]">
+                        {aff.adminNotes ? (
+                          <div className="space-y-1">
+                            <span className="inline-flex items-center gap-1 text-[9.5px] font-bold text-emerald-800 bg-emerald-100 px-2 py-0.5 rounded-full">
+                              <Sparkles className="w-2.5 h-2.5" /> Ada Mesej Pentadbir
+                            </span>
+                            <p className="text-[11px] text-charcoal truncate" title={aff.adminNotes}>
+                              {aff.adminNotes}
+                            </p>
+                          </div>
+                        ) : (
+                          <span className="text-[11px] text-neutral-400 italic">Tiada nota dihantar</span>
+                        )}
+                      </td>
+
                       <td className="py-4 px-4">
                         <button
                           onClick={() => handleToggleStatus(aff.id, aff.isActive)}
@@ -370,13 +472,23 @@ export function AffiliatesClient({ initialAffiliates }: Props) {
                       </td>
 
                       <td className="py-4 px-4 text-right">
-                        <button
-                          onClick={() => handleDelete(aff.id, aff.name)}
-                          className="p-1.5 text-secondary hover:text-sale rounded-lg hover:bg-sale/10 transition-colors"
-                          title="Padam ejen"
-                        >
-                          <Trash2 className="w-3.5 h-3.5" />
-                        </button>
+                        <div className="flex items-center justify-end space-x-1">
+                          <button
+                            onClick={() => handleOpenNoteModal(aff)}
+                            className="p-1.5 text-secondary hover:text-forest rounded-lg hover:bg-forest/10 transition-colors inline-flex items-center"
+                            title="Tulis / Edit Nota Pentadbir Untuk Ejen Ini"
+                          >
+                            <MessageSquare className="w-3.5 h-3.5 text-[#102A4E]" />
+                          </button>
+
+                          <button
+                            onClick={() => handleDelete(aff.id, aff.name)}
+                            className="p-1.5 text-secondary hover:text-sale rounded-lg hover:bg-sale/10 transition-colors"
+                            title="Padam ejen"
+                          >
+                            <Trash2 className="w-3.5 h-3.5" />
+                          </button>
+                        </div>
                       </td>
                     </tr>
                   )
@@ -531,6 +643,39 @@ export function AffiliatesClient({ initialAffiliates }: Props) {
                 </div>
               </div>
 
+              <div className="p-4 bg-emerald-50/60 rounded-2xl border border-emerald-200/60 space-y-3">
+                <span className="text-xs font-bold text-emerald-950 flex items-center gap-1.5">
+                  <Sparkles className="w-3.5 h-3.5 text-emerald-600" />
+                  Nota Pentadbir & Akses Portal Ejen
+                </span>
+
+                <div>
+                  <label className="text-[11px] font-medium text-charcoal block mb-1">
+                    Nota Khas Untuk Ejen (Akan dipaparkan di portal ejen)
+                  </label>
+                  <textarea
+                    rows={2}
+                    placeholder="Contoh: Selamat datang ke pasukan rakan niaga KAMAAR! Sila rujuk kempen promosi bulan ini."
+                    value={newAdminNotes}
+                    onChange={(e) => setNewAdminNotes(e.target.value)}
+                    className="w-full px-3 py-2 text-xs bg-white border border-emerald-200 rounded-xl outline-none focus:border-forest"
+                  />
+                </div>
+
+                <div>
+                  <label className="text-[11px] font-medium text-charcoal block mb-1">
+                    Kata Laluan Log Masuk Ejen (Default: kamaar123)
+                  </label>
+                  <input
+                    type="text"
+                    placeholder="kamaar123"
+                    value={newAccessKey}
+                    onChange={(e) => setNewAccessKey(e.target.value)}
+                    className="w-full px-3 py-2 text-xs bg-white border border-emerald-200 rounded-xl outline-none focus:border-forest"
+                  />
+                </div>
+              </div>
+
               <div className="flex items-center justify-end space-x-3 pt-3 border-t border-borderLight">
                 <button
                   type="button"
@@ -546,6 +691,106 @@ export function AffiliatesClient({ initialAffiliates }: Props) {
                 >
                   {isSubmitting ? 'Mendaftar...' : 'Sahkan & Cipta Kod'}
                 </button>
+              </div>
+            </form>
+          </div>
+        </div>
+      )}
+
+      {/* Modal: Write / Edit Admin Notes to Affiliate */}
+      {isNoteModalOpen && selectedAffiliate && (
+        <div className="fixed inset-0 z-50 bg-forest-dark/60 backdrop-blur-sm flex items-center justify-center p-4">
+          <div className="bg-warmwhite w-full max-w-lg rounded-3xl border border-borderLight shadow-2xl overflow-hidden animate-in fade-in zoom-in-95 duration-200">
+            <div className="p-6 bg-[#102A4E] text-white flex items-center justify-between">
+              <div className="flex items-center space-x-3">
+                <div className="w-10 h-10 rounded-xl bg-[#B49A58]/20 border border-[#B49A58]/40 flex items-center justify-center text-[#D4AF37]">
+                  <MessageSquare className="w-5 h-5" />
+                </div>
+                <div>
+                  <h3 className="font-serif text-lg font-bold">Nota Pentadbir Untuk Ejen</h3>
+                  <p className="text-xs text-neutral-300 mt-0.5">
+                    {selectedAffiliate.name} ({selectedAffiliate.code})
+                  </p>
+                </div>
+              </div>
+              <button
+                onClick={() => setIsNoteModalOpen(false)}
+                className="p-1.5 text-neutral-300 hover:text-white rounded-lg hover:bg-white/10"
+              >
+                <X className="w-5 h-5" />
+              </button>
+            </div>
+
+            <form onSubmit={handleSaveNote} className="p-6 space-y-4">
+              {noteSaveSuccess && (
+                <div className="p-3 bg-emerald-100 border border-emerald-300 rounded-xl text-emerald-800 text-xs font-bold flex items-center gap-2">
+                  <Check className="w-4 h-4 text-emerald-600" />
+                  <span>Nota dan akses berjaya dikemas kini! Ejen boleh melihat mesej ini di portal mereka.</span>
+                </div>
+              )}
+
+              <div>
+                <label className="text-xs font-bold text-charcoal block mb-1">
+                  Mesej / Nota Rasmi Pentadbir (Dipaparkan terus di dashboard ejen)
+                </label>
+                <textarea
+                  rows={4}
+                  required
+                  placeholder="Contoh: Pembayaran komisen RM 1,319.60 telah selesai didepositkan ke akaun Maybank anda. Sila tumpukan perhatian kepada promosi Tilam Hybrid minggu hadapan..."
+                  value={noteText}
+                  onChange={(e) => setNoteText(e.target.value)}
+                  className="w-full px-3.5 py-2.5 text-xs bg-cream-light border border-borderLight rounded-xl outline-none focus:border-forest leading-relaxed text-charcoal"
+                />
+                <span className="text-[10.5px] text-secondary mt-1 block">
+                  Ejen akan melihat nota ini secara langsung pada kad mesej utama di portal mereka.
+                </span>
+              </div>
+
+              <div>
+                <label className="text-xs font-bold text-charcoal block mb-1">
+                  Kata Laluan / Kunci Akses Log Masuk Ejen
+                </label>
+                <div className="relative">
+                  <KeyRound className="w-4 h-4 text-secondary absolute left-3 top-1/2 -translate-y-1/2" />
+                  <input
+                    type="text"
+                    value={accessKeyText}
+                    onChange={(e) => setAccessKeyText(e.target.value)}
+                    placeholder="kamaar123"
+                    className="w-full pl-9 pr-3.5 py-2 text-xs bg-cream-light border border-borderLight rounded-xl outline-none focus:border-forest font-mono"
+                  />
+                </div>
+                <span className="text-[10px] text-secondary mt-0.5 block">
+                  Ejen boleh log masuk menggunakan kod ({selectedAffiliate.code}) dan kata laluan ini.
+                </span>
+              </div>
+
+              <div className="pt-2 flex items-center justify-between border-t border-borderLight">
+                <Link
+                  href="/affiliate/login"
+                  target="_blank"
+                  className="text-xs text-[#102A4E] hover:underline flex items-center gap-1 font-semibold"
+                >
+                  <ExternalLink className="w-3 h-3" />
+                  <span>Uji Log Masuk Ejen</span>
+                </Link>
+
+                <div className="flex items-center space-x-2">
+                  <button
+                    type="button"
+                    onClick={() => setIsNoteModalOpen(false)}
+                    className="px-4 py-2 text-xs font-bold text-secondary hover:text-charcoal transition-colors"
+                  >
+                    Batal
+                  </button>
+                  <button
+                    type="submit"
+                    disabled={isSavingNote}
+                    className="px-5 py-2 bg-[#102A4E] hover:bg-[#163660] text-white text-xs font-bold rounded-xl transition-all shadow-sm disabled:opacity-50 flex items-center gap-1.5 cursor-pointer"
+                  >
+                    {isSavingNote ? 'Menyimpan...' : 'Simpan & Hantar Nota'}
+                  </button>
+                </div>
               </div>
             </form>
           </div>

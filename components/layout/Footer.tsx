@@ -239,6 +239,12 @@ export function Footer() {
                   Order Tracking & Receipts
                 </Link>
               </li>
+              <li>
+                <Link href="/affiliate/login" className="text-gold/90 hover:text-gold transition-colors font-medium flex items-center gap-1.5">
+                  <span>Affiliate & Agent Portal</span>
+                  <span className="text-[9.5px] px-1.5 py-0.5 bg-gold/20 rounded font-bold text-gold">Ejen</span>
+                </Link>
+              </li>
             </ul>
           </div>
 

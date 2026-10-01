@@ -1288,6 +1288,8 @@ export const initialAffiliates: Affiliate[] = [
     totalCommissionSen: 131960,   // RM 1,319.60
     isActive: true,
     createdAt: '2026-08-01T10:00:00Z',
+    adminNotes: 'Tahniah Danial atas pencapaian Top Performer bulan September! Pindahan komisen RM 1,319.60 telah selesai dikreditkan ke akaun Maybank anda. Sila fokus pada kempen Royale Heritage Mattress minggu hadapan.',
+    accessKey: 'kamaar123',
   },
   {
     id: 'aff-izzah',
@@ -1304,6 +1306,8 @@ export const initialAffiliates: Affiliate[] = [
     totalCommissionSen: 47984,   // RM 479.84
     isActive: true,
     createdAt: '2026-08-15T14:30:00Z',
+    adminNotes: 'Baki komisen RM 479.84 dijadualkan untuk pembayaran batch seterusnya pada 5hb ini. Terima kasih!',
+    accessKey: 'kamaar123',
   },
   {
     id: 'aff-hafiz',
@@ -1320,5 +1324,7 @@ export const initialAffiliates: Affiliate[] = [
     totalCommissionSen: 28990,   // RM 289.90
     isActive: true,
     createdAt: '2026-09-01T09:00:00Z',
+    adminNotes: 'Selamat datang ke KAMAAR Beddings Affiliate Partner Program! Sila pastikan anda kongsikan link rujukan anda di media sosial.',
+    accessKey: 'kamaar123',
   },
 ]
