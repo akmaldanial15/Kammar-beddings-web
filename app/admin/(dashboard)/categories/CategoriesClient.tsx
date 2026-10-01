@@ -699,10 +699,11 @@ export function CategoriesClient({ initialCategories }: CategoriesClientProps) {
       {/* Add / Edit Category Modal */}
       {editingCategory && mounted && createPortal(
         <div className="fixed inset-0 z-[9999] flex items-center justify-center p-3 sm:p-4 bg-forest-dark/70 backdrop-blur-sm animate-fade-in">
-          <div className="bg-warmwhite w-full max-w-lg rounded-2xl shadow-2xl border border-borderLight overflow-hidden animate-scale-in my-auto max-h-[94vh] flex flex-col">
-            <div className="p-6 border-b border-borderLight bg-cream/40 flex items-center justify-between">
+          <div className="bg-warmwhite w-full max-w-lg rounded-2xl shadow-2xl border border-borderLight overflow-hidden animate-scale-in my-auto max-h-[90vh] sm:max-h-[88vh] flex flex-col">
+            {/* Header: Fixed top */}
+            <div className="p-4 sm:p-5 border-b border-borderLight bg-cream/40 flex items-center justify-between flex-shrink-0">
               <div>
-                <h3 className="font-serif text-lg font-bold text-forest-dark">
+                <h3 className="font-serif text-base sm:text-lg font-bold text-forest-dark">
                   {isNew ? 'Tambah Kategori Baru' : `Edit Kategori: ${editingCategory.name}`}
                 </h3>
                 <p className="text-xs text-charcoal-muted mt-0.5">
@@ -710,187 +711,193 @@ export function CategoriesClient({ initialCategories }: CategoriesClientProps) {
                 </p>
               </div>
               <button
+                type="button"
                 onClick={() => setEditingCategory(null)}
-                className="text-charcoal-muted hover:text-charcoal p-1.5 rounded-lg hover:bg-cream"
+                className="text-charcoal-muted hover:text-charcoal p-1.5 rounded-lg hover:bg-cream text-lg leading-none"
+                aria-label="Tutup"
               >
                 &times;
               </button>
             </div>
 
-            <form onSubmit={handleSave} className="p-6 space-y-4">
-              {/* Name */}
-              <div>
-                <label className="block text-xs font-bold text-forest uppercase tracking-wider mb-1">
-                  Nama Kategori <span className="text-rose-500">*</span>
-                </label>
-                <input
-                  type="text"
-                  required
-                  placeholder="Contoh: Luxury Quilts, Mattresses, Bed Linen"
-                  value={editingCategory.name || ''}
-                  onChange={(e) => handleNameChange(e.target.value)}
-                  className="w-full px-3.5 py-2.5 rounded-xl border border-borderLight bg-cream/30 text-sm focus:outline-none focus:ring-2 focus:ring-gold/30 focus:border-gold"
-                />
-              </div>
-
-              {/* Slug */}
-              <div>
-                <label className="block text-xs font-bold text-forest uppercase tracking-wider mb-1">
-                  Slug URL <span className="text-rose-500">*</span>
-                </label>
-                <div className="flex items-center">
-                  <span className="px-3 py-2.5 bg-cream border border-r-0 border-borderLight rounded-l-xl text-xs font-mono text-charcoal-muted">
-                    /collections/
-                  </span>
+            {/* Form with scrollable body and sticky action footer */}
+            <form onSubmit={handleSave} className="flex-1 min-h-0 flex flex-col overflow-hidden">
+              {/* Scrollable Fields Body */}
+              <div className="flex-1 min-h-0 overflow-y-auto overscroll-contain p-4 sm:p-6 space-y-4">
+                {/* Name */}
+                <div>
+                  <label className="block text-xs font-bold text-forest uppercase tracking-wider mb-1">
+                    Nama Kategori <span className="text-rose-500">*</span>
+                  </label>
                   <input
                     type="text"
                     required
-                    placeholder="luxury-quilts"
-                    value={editingCategory.slug || ''}
-                    onChange={(e) =>
-                      setEditingCategory((prev) => ({
-                        ...prev,
-                        slug: e.target.value
-                          .toLowerCase()
-                          .replace(/[^a-z0-9]+/g, '-')
-                          .replace(/(^-|-$)+/g, ''),
-                      }))
-                    }
-                    className="w-full px-3.5 py-2.5 rounded-r-xl border border-borderLight bg-cream/30 text-sm font-mono focus:outline-none focus:ring-2 focus:ring-gold/30 focus:border-gold"
+                    placeholder="Contoh: Luxury Quilts, Mattresses, Bed Linen"
+                    value={editingCategory.name || ''}
+                    onChange={(e) => handleNameChange(e.target.value)}
+                    className="w-full px-3.5 py-2.5 rounded-xl border border-borderLight bg-cream/30 text-sm focus:outline-none focus:ring-2 focus:ring-gold/30 focus:border-gold"
                   />
                 </div>
-              </div>
 
-              {/* Custom URL & Badge */}
-              <div className="grid grid-cols-2 gap-3">
+                {/* Slug */}
                 <div>
                   <label className="block text-xs font-bold text-forest uppercase tracking-wider mb-1">
-                    Custom URL (Pilihan)
+                    Slug URL <span className="text-rose-500">*</span>
+                  </label>
+                  <div className="flex items-center">
+                    <span className="px-3 py-2.5 bg-cream border border-r-0 border-borderLight rounded-l-xl text-xs font-mono text-charcoal-muted">
+                      /collections/
+                    </span>
+                    <input
+                      type="text"
+                      required
+                      placeholder="luxury-quilts"
+                      value={editingCategory.slug || ''}
+                      onChange={(e) =>
+                        setEditingCategory((prev) => ({
+                          ...prev,
+                          slug: e.target.value
+                            .toLowerCase()
+                            .replace(/[^a-z0-9]+/g, '-')
+                            .replace(/(^-|-$)+/g, ''),
+                        }))
+                      }
+                      className="w-full px-3.5 py-2.5 rounded-r-xl border border-borderLight bg-cream/30 text-sm font-mono focus:outline-none focus:ring-2 focus:ring-gold/30 focus:border-gold"
+                    />
+                  </div>
+                </div>
+
+                {/* Custom URL & Badge */}
+                <div className="grid grid-cols-2 gap-3">
+                  <div>
+                    <label className="block text-xs font-bold text-forest uppercase tracking-wider mb-1">
+                      Custom URL (Pilihan)
+                    </label>
+                    <input
+                      type="text"
+                      placeholder="Contoh: /offers atau /blog"
+                      value={editingCategory.customUrl || ''}
+                      onChange={(e) =>
+                        setEditingCategory((prev) => ({ ...prev, customUrl: e.target.value }))
+                      }
+                      className="w-full px-3.5 py-2.5 rounded-xl border border-borderLight bg-cream/30 text-xs font-mono focus:outline-none focus:ring-2 focus:ring-gold/30 focus:border-gold"
+                    />
+                    <span className="text-[10px] text-charcoal-muted mt-0.5 block">
+                      Tinggalkan kosong untuk guna /collections/[slug]
+                    </span>
+                  </div>
+
+                  <div>
+                    <label className="block text-xs font-bold text-forest uppercase tracking-wider mb-1">
+                      Badge Tag (Pilihan)
+                    </label>
+                    <input
+                      type="text"
+                      placeholder="Contoh: SALE, NEW, HOT"
+                      value={editingCategory.badge || ''}
+                      onChange={(e) =>
+                        setEditingCategory((prev) => ({ ...prev, badge: e.target.value }))
+                      }
+                      className="w-full px-3.5 py-2.5 rounded-xl border border-borderLight bg-cream/30 text-xs focus:outline-none focus:ring-2 focus:ring-gold/30 focus:border-gold"
+                    />
+                    <span className="text-[10px] text-charcoal-muted mt-0.5 block">
+                      Pelekat teks kecil di sebelah nama
+                    </span>
+                  </div>
+                </div>
+
+                {/* Image URL */}
+                <div>
+                  <label className="block text-xs font-bold text-forest uppercase tracking-wider mb-1">
+                    URL Imej Kategori
                   </label>
                   <input
                     type="text"
-                    placeholder="Contoh: /offers atau /blog"
-                    value={editingCategory.customUrl || ''}
+                    placeholder="https://... atau /images/..."
+                    value={editingCategory.imageUrl || ''}
                     onChange={(e) =>
-                      setEditingCategory((prev) => ({ ...prev, customUrl: e.target.value }))
-                    }
-                    className="w-full px-3.5 py-2.5 rounded-xl border border-borderLight bg-cream/30 text-xs font-mono focus:outline-none focus:ring-2 focus:ring-gold/30 focus:border-gold"
-                  />
-                  <span className="text-[10px] text-charcoal-muted mt-0.5 block">
-                    Tinggalkan kosong untuk guna /collections/[slug]
-                  </span>
-                </div>
-
-                <div>
-                  <label className="block text-xs font-bold text-forest uppercase tracking-wider mb-1">
-                    Badge Tag (Pilihan)
-                  </label>
-                  <input
-                    type="text"
-                    placeholder="Contoh: SALE, NEW, HOT"
-                    value={editingCategory.badge || ''}
-                    onChange={(e) =>
-                      setEditingCategory((prev) => ({ ...prev, badge: e.target.value }))
+                      setEditingCategory((prev) => ({ ...prev, imageUrl: e.target.value }))
                     }
                     className="w-full px-3.5 py-2.5 rounded-xl border border-borderLight bg-cream/30 text-xs focus:outline-none focus:ring-2 focus:ring-gold/30 focus:border-gold"
                   />
-                  <span className="text-[10px] text-charcoal-muted mt-0.5 block">
-                    Pelekat teks kecil di sebelah nama
-                  </span>
+                </div>
+
+                {/* Description */}
+                <div>
+                  <label className="block text-xs font-bold text-forest uppercase tracking-wider mb-1">
+                    Penerangan Ringkas
+                  </label>
+                  <textarea
+                    rows={2}
+                    placeholder="Penerangan keistimewaan koleksi untuk SEO & paparan katalog..."
+                    value={editingCategory.description || ''}
+                    onChange={(e) =>
+                      setEditingCategory((prev) => ({ ...prev, description: e.target.value }))
+                    }
+                    className="w-full px-3.5 py-2 rounded-xl border border-borderLight bg-cream/30 text-xs focus:outline-none focus:ring-2 focus:ring-gold/30 focus:border-gold"
+                  />
+                </div>
+
+                {/* Toggles */}
+                <div className="bg-cream/40 p-3.5 rounded-xl border border-borderLight space-y-3">
+                  {/* Show in Nav Bar */}
+                  <label className="flex items-center justify-between cursor-pointer">
+                    <div>
+                      <span className="text-xs font-bold text-forest block">Tampil di Navigation Bar (Header)</span>
+                      <span className="text-[11px] text-charcoal-muted">
+                        Kategori akan dipaparkan di menu atas untuk semua pelawat web.
+                      </span>
+                    </div>
+                    <input
+                      type="checkbox"
+                      checked={editingCategory.showInNav ?? true}
+                      onChange={(e) =>
+                        setEditingCategory((prev) => ({ ...prev, showInNav: e.target.checked }))
+                      }
+                      className="w-4 h-4 rounded text-forest focus:ring-gold"
+                    />
+                  </label>
+
+                  {/* Has MegaMenu */}
+                  <label className="flex items-center justify-between cursor-pointer border-t border-borderLight/60 pt-2.5">
+                    <div>
+                      <span className="text-xs font-bold text-forest block">Aktifkan Dropdown Mega Menu</span>
+                      <span className="text-[11px] text-charcoal-muted">
+                        Membuka panel dropdown mega menu (Material, Saiz, Firmness & Quiz).
+                      </span>
+                    </div>
+                    <input
+                      type="checkbox"
+                      checked={Boolean(editingCategory.hasMegaMenu)}
+                      onChange={(e) =>
+                        setEditingCategory((prev) => ({ ...prev, hasMegaMenu: e.target.checked }))
+                      }
+                      className="w-4 h-4 rounded text-forest focus:ring-gold"
+                    />
+                  </label>
+
+                  {/* Active Status */}
+                  <label className="flex items-center justify-between cursor-pointer border-t border-borderLight/60 pt-2.5">
+                    <div>
+                      <span className="text-xs font-bold text-forest block">Status Kategori Aktif</span>
+                      <span className="text-[11px] text-charcoal-muted">
+                        Jika dimatikan, kategori ini akan disembunyikan sepenuhnya.
+                      </span>
+                    </div>
+                    <input
+                      type="checkbox"
+                      checked={editingCategory.isActive ?? true}
+                      onChange={(e) =>
+                        setEditingCategory((prev) => ({ ...prev, isActive: e.target.checked }))
+                      }
+                      className="w-4 h-4 rounded text-forest focus:ring-gold"
+                    />
+                  </label>
                 </div>
               </div>
 
-              {/* Image URL */}
-              <div>
-                <label className="block text-xs font-bold text-forest uppercase tracking-wider mb-1">
-                  URL Imej Kategori
-                </label>
-                <input
-                  type="text"
-                  placeholder="https://... atau /images/..."
-                  value={editingCategory.imageUrl || ''}
-                  onChange={(e) =>
-                    setEditingCategory((prev) => ({ ...prev, imageUrl: e.target.value }))
-                  }
-                  className="w-full px-3.5 py-2.5 rounded-xl border border-borderLight bg-cream/30 text-xs focus:outline-none focus:ring-2 focus:ring-gold/30 focus:border-gold"
-                />
-              </div>
-
-              {/* Description */}
-              <div>
-                <label className="block text-xs font-bold text-forest uppercase tracking-wider mb-1">
-                  Penerangan Ringkas
-                </label>
-                <textarea
-                  rows={2}
-                  placeholder="Penerangan keistimewaan koleksi untuk SEO & paparan katalog..."
-                  value={editingCategory.description || ''}
-                  onChange={(e) =>
-                    setEditingCategory((prev) => ({ ...prev, description: e.target.value }))
-                  }
-                  className="w-full px-3.5 py-2 rounded-xl border border-borderLight bg-cream/30 text-xs focus:outline-none focus:ring-2 focus:ring-gold/30 focus:border-gold"
-                />
-              </div>
-
-              {/* Toggles */}
-              <div className="bg-cream/40 p-3.5 rounded-xl border border-borderLight space-y-3">
-                {/* Show in Nav Bar */}
-                <label className="flex items-center justify-between cursor-pointer">
-                  <div>
-                    <span className="text-xs font-bold text-forest block">Tampil di Navigation Bar (Header)</span>
-                    <span className="text-[11px] text-charcoal-muted">
-                      Kategori akan dipaparkan di menu atas untuk semua pelawat web.
-                    </span>
-                  </div>
-                  <input
-                    type="checkbox"
-                    checked={editingCategory.showInNav ?? true}
-                    onChange={(e) =>
-                      setEditingCategory((prev) => ({ ...prev, showInNav: e.target.checked }))
-                    }
-                    className="w-4 h-4 rounded text-forest focus:ring-gold"
-                  />
-                </label>
-
-                {/* Has MegaMenu */}
-                <label className="flex items-center justify-between cursor-pointer border-t border-borderLight/60 pt-2.5">
-                  <div>
-                    <span className="text-xs font-bold text-forest block">Aktifkan Dropdown Mega Menu</span>
-                    <span className="text-[11px] text-charcoal-muted">
-                      Membuka panel dropdown mega menu (Material, Saiz, Firmness & Quiz).
-                    </span>
-                  </div>
-                  <input
-                    type="checkbox"
-                    checked={Boolean(editingCategory.hasMegaMenu)}
-                    onChange={(e) =>
-                      setEditingCategory((prev) => ({ ...prev, hasMegaMenu: e.target.checked }))
-                    }
-                    className="w-4 h-4 rounded text-forest focus:ring-gold"
-                  />
-                </label>
-
-                {/* Active Status */}
-                <label className="flex items-center justify-between cursor-pointer border-t border-borderLight/60 pt-2.5">
-                  <div>
-                    <span className="text-xs font-bold text-forest block">Status Kategori Aktif</span>
-                    <span className="text-[11px] text-charcoal-muted">
-                      Jika dimatikan, kategori ini akan disembunyikan sepenuhnya.
-                    </span>
-                  </div>
-                  <input
-                    type="checkbox"
-                    checked={editingCategory.isActive ?? true}
-                    onChange={(e) =>
-                      setEditingCategory((prev) => ({ ...prev, isActive: e.target.checked }))
-                    }
-                    className="w-4 h-4 rounded text-forest focus:ring-gold"
-                  />
-                </label>
-              </div>
-
-              {/* Form Buttons */}
-              <div className="flex items-center justify-end space-x-3 pt-3 border-t border-borderLight">
+              {/* Sticky Form Action Buttons Footer */}
+              <div className="flex items-center justify-end space-x-3 p-3.5 sm:px-6 sm:py-4 border-t border-borderLight bg-warmwhite flex-shrink-0 shadow-xs">
                 <button
                   type="button"
                   onClick={() => setEditingCategory(null)}

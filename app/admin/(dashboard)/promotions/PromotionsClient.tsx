@@ -714,9 +714,10 @@ export function PromotionsClient({ initialCoupons }: PromotionsClientProps) {
             </div>
 
             {/* Modal Form Body */}
-            <form onSubmit={handleSaveCoupon} className="p-6 space-y-5 text-xs overflow-y-auto flex-1">
-              {/* TAB 1: DISCOUNT & BASIC INFO */}
-              {activeModalTab === 'discount' && (
+            <form onSubmit={handleSaveCoupon} className="flex-1 min-h-0 flex flex-col overflow-hidden">
+              <div className="p-4 sm:p-6 space-y-5 text-xs overflow-y-auto overscroll-contain flex-1 min-h-0">
+                {/* TAB 1: DISCOUNT & BASIC INFO */}
+                {activeModalTab === 'discount' && (
                 <div className="space-y-4 animate-in fade-in">
                   <div className="grid grid-cols-1 sm:grid-cols-2 gap-4">
                     <div>
@@ -1131,33 +1132,34 @@ export function PromotionsClient({ initialCoupons }: PromotionsClientProps) {
                   </label>
                 </div>
               </div>
+            </div>
 
-              {/* Modal Buttons */}
-              <div className="flex items-center justify-between pt-4 border-t border-borderLight">
-                <div className="text-[11px] text-secondary">
-                  Status: <strong>{editingCoupon.isActive ? 'Aktif' : 'Nyahaktif'}</strong> •{' '}
-                  Homepage:{' '}
-                  <strong>{editingCoupon.showOnHomepage ? 'Ditayang (Ya)' : 'Tidak'}</strong>
-                </div>
-
-                <div className="flex items-center space-x-2">
-                  <button
-                    type="button"
-                    onClick={() => setEditingCoupon(null)}
-                    className="px-4 py-2 font-bold text-secondary hover:text-charcoal rounded-xl hover:bg-neutral-100 transition-colors cursor-pointer"
-                  >
-                    Batal
-                  </button>
-                  <button
-                    type="submit"
-                    disabled={isSubmitting}
-                    className="px-5 py-2.5 bg-[#1E4E8C] text-white font-bold rounded-xl hover:bg-[#2A6DB5] transition-colors shadow-sm disabled:opacity-50 cursor-pointer flex items-center gap-1.5"
-                  >
-                    {isSubmitting ? 'Menyimpan...' : 'Simpan Konfigurasi Promosi'}
-                  </button>
-                </div>
+            {/* Fixed Sticky Modal Buttons Footer */}
+            <div className="flex items-center justify-between p-3.5 sm:px-6 sm:py-4 border-t border-borderLight bg-neutral-50/95 backdrop-blur-sm flex-shrink-0">
+              <div className="text-[11px] text-secondary">
+                Status: <strong>{editingCoupon.isActive ? 'Aktif' : 'Nyahaktif'}</strong> •{' '}
+                Homepage:{' '}
+                <strong>{editingCoupon.showOnHomepage ? 'Ditayang (Ya)' : 'Tidak'}</strong>
               </div>
-            </form>
+
+              <div className="flex items-center space-x-2">
+                <button
+                  type="button"
+                  onClick={() => setEditingCoupon(null)}
+                  className="px-4 py-2 font-bold text-secondary hover:text-charcoal rounded-xl hover:bg-neutral-100 transition-colors cursor-pointer"
+                >
+                  Batal
+                </button>
+                <button
+                  type="submit"
+                  disabled={isSubmitting}
+                  className="px-5 py-2.5 bg-[#1E4E8C] text-white font-bold rounded-xl hover:bg-[#2A6DB5] transition-colors shadow-sm disabled:opacity-50 cursor-pointer flex items-center gap-1.5"
+                >
+                  {isSubmitting ? 'Menyimpan...' : 'Simpan Konfigurasi Promosi'}
+                </button>
+              </div>
+            </div>
+          </form>
           </div>
         </div>,
         document.body
