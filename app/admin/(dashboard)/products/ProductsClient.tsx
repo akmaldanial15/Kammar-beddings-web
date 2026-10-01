@@ -362,55 +362,264 @@ export function ProductsClient({ initialProducts, categories }: ProductsClientPr
       )}
 
       {/* Filter and Search Bar */}
-      <div className="bg-warmwhite p-4 rounded-2xl border border-borderLight flex flex-col md:flex-row gap-4 items-center justify-between shadow-xs animate-fade-in">
-        <div className="relative flex-1 w-full">
-          <Search className="w-4 h-4 text-charcoal-muted absolute left-3.5 top-3" />
-          <input
-            type="text"
-            placeholder="Cari produk mengikut nama, slug atau bahan utama..."
-            value={search}
-            onChange={(e) => setSearch(e.target.value)}
-            className="w-full pl-10 pr-4 py-2 text-xs rounded-xl bg-cream/50 border border-borderLight focus:outline-none focus:ring-2 focus:ring-gold/30 focus:border-gold transition-all"
-          />
+      <div className="bg-warmwhite p-3.5 sm:p-4 rounded-2xl border border-borderLight shadow-xs space-y-3 animate-fade-in">
+        <div className="flex flex-col md:flex-row gap-3 items-stretch md:items-center justify-between">
+          {/* Search Input */}
+          <div className="relative flex-1 w-full">
+            <Search className="w-4 h-4 text-charcoal-muted absolute left-3.5 top-3" />
+            <input
+              type="text"
+              placeholder="Cari produk mengikut nama, slug atau bahan..."
+              value={search}
+              onChange={(e) => setSearch(e.target.value)}
+              className="w-full pl-10 pr-4 py-2.5 text-xs rounded-xl bg-cream/50 border border-borderLight focus:outline-none focus:ring-2 focus:ring-gold/30 focus:border-gold transition-all"
+            />
+          </div>
+
+          {/* Desktop Filter Dropdowns & Add Button */}
+          <div className="hidden md:flex items-center space-x-3 w-auto flex-shrink-0">
+            <select
+              value={selectedCat}
+              onChange={(e) => setSelectedCat(e.target.value)}
+              className="text-xs px-3 py-2.5 rounded-xl bg-cream/50 border border-borderLight focus:outline-none focus:border-gold transition-all cursor-pointer"
+            >
+              <option value="all">Semua Kategori</option>
+              {categories.map((c) => (
+                <option key={c.id} value={c.id}>
+                  {c.name}
+                </option>
+              ))}
+            </select>
+
+            <select
+              value={selectedStatus}
+              onChange={(e) => setSelectedStatus(e.target.value)}
+              className="text-xs px-3 py-2.5 rounded-xl bg-cream/50 border border-borderLight focus:outline-none focus:border-gold transition-all cursor-pointer"
+            >
+              <option value="all">Semua Status</option>
+              <option value="published">Diterbitkan (Published)</option>
+              <option value="draft">Draf (Draft)</option>
+              <option value="archived">Diarkib (Archived)</option>
+            </select>
+
+            <button
+              onClick={handleOpenNewProduct}
+              className="flex items-center space-x-2 bg-forest hover:bg-forest-dark text-warmwhite px-4 py-2.5 rounded-xl text-xs font-bold shadow-sm hover:shadow transition-all whitespace-nowrap cursor-pointer"
+            >
+              <Plus className="w-4 h-4 text-gold" />
+              <span>Tambah Produk</span>
+            </button>
+          </div>
         </div>
 
-        <div className="flex items-center space-x-3 w-full md:w-auto">
-          <select
-            value={selectedCat}
-            onChange={(e) => setSelectedCat(e.target.value)}
-            className="text-xs px-3 py-2 rounded-xl bg-cream/50 border border-borderLight focus:outline-none focus:border-gold transition-all"
-          >
-            <option value="all">Semua Kategori</option>
-            {categories.map((c) => (
-              <option key={c.id} value={c.id}>
-                {c.name}
-              </option>
-            ))}
-          </select>
+        {/* Mobile View Filters & Primary Add Button */}
+        <div className="md:hidden space-y-2.5 pt-1 border-t border-borderLight/40">
+          <div className="grid grid-cols-2 gap-2">
+            <div className="space-y-1">
+              <label className="text-[10px] uppercase font-bold text-charcoal-muted tracking-wider block">
+                Kategori
+              </label>
+              <select
+                value={selectedCat}
+                onChange={(e) => setSelectedCat(e.target.value)}
+                className="w-full text-xs px-2.5 py-2 rounded-xl bg-cream/60 border border-borderLight focus:outline-none focus:border-gold transition-all font-medium truncate"
+              >
+                <option value="all">Semua Kategori</option>
+                {categories.map((c) => (
+                  <option key={c.id} value={c.id}>
+                    {c.name}
+                  </option>
+                ))}
+              </select>
+            </div>
 
-          <select
-            value={selectedStatus}
-            onChange={(e) => setSelectedStatus(e.target.value)}
-            className="text-xs px-3 py-2 rounded-xl bg-cream/50 border border-borderLight focus:outline-none focus:border-gold transition-all"
-          >
-            <option value="all">Semua Status</option>
-            <option value="published">Diterbitkan (Published)</option>
-            <option value="draft">Draf (Draft)</option>
-            <option value="archived">Diarkib (Archived)</option>
-          </select>
+            <div className="space-y-1">
+              <label className="text-[10px] uppercase font-bold text-charcoal-muted tracking-wider block">
+                Status
+              </label>
+              <select
+                value={selectedStatus}
+                onChange={(e) => setSelectedStatus(e.target.value)}
+                className="w-full text-xs px-2.5 py-2 rounded-xl bg-cream/60 border border-borderLight focus:outline-none focus:border-gold transition-all font-medium truncate"
+              >
+                <option value="all">Semua Status</option>
+                <option value="published">Diterbitkan</option>
+                <option value="draft">Draf</option>
+                <option value="archived">Diarkib</option>
+              </select>
+            </div>
+          </div>
 
           <button
             onClick={handleOpenNewProduct}
-            className="flex items-center space-x-2 bg-forest hover:bg-forest-dark text-warmwhite px-4 py-2 rounded-xl text-xs font-bold shadow-sm hover:shadow transition-all whitespace-nowrap"
+            className="w-full py-2.5 px-4 bg-forest hover:bg-forest-dark text-warmwhite rounded-xl text-xs font-bold flex items-center justify-center space-x-2 shadow-sm active:scale-98 transition-all cursor-pointer"
           >
             <Plus className="w-4 h-4 text-gold" />
-            <span>Tambah Produk</span>
+            <span>Tambah Produk Baharu</span>
           </button>
         </div>
       </div>
 
-      {/* Products Table */}
-      <div className="bg-warmwhite rounded-2xl border border-borderLight shadow-xs overflow-hidden">
+      {/* MOBILE PRODUCT CARDS (Optimized for Mobile View) */}
+      <div className="md:hidden space-y-3 animate-fade-in-up delay-100">
+        <div className="flex items-center justify-between text-xs text-charcoal-muted px-1">
+          <span>Menunjukkan <strong className="text-forest-dark font-bold">{filtered.length}</strong> daripada {products.length} produk</span>
+          {(search || selectedCat !== 'all' || selectedStatus !== 'all') && (
+            <button
+              onClick={() => {
+                setSearch('')
+                setSelectedCat('all')
+                setSelectedStatus('all')
+              }}
+              className="text-[11px] font-bold text-forest hover:underline"
+            >
+              Set Semula
+            </button>
+          )}
+        </div>
+
+        {filtered.length === 0 ? (
+          <div className="bg-warmwhite rounded-2xl border border-borderLight p-8 text-center space-y-2 shadow-xs">
+            <BedDouble className="w-10 h-10 text-charcoal-muted mx-auto opacity-40" />
+            <p className="font-bold text-forest-dark text-sm">Tiada produk sepadan</p>
+            <p className="text-xs text-secondary">Cuba tukar kata kunci carian atau penapis kategori/status.</p>
+          </div>
+        ) : (
+          filtered.map((product) => {
+            const category = categories.find((c) => c.id === product.categoryId)
+            const minPrice = Math.min(...product.variants.map((v) => v.priceSen))
+            const totalStock = product.variants.reduce((acc, v) => acc + v.stockQuantity, 0)
+            const primaryImg =
+              product.images.find((img) => img.isPrimary)?.imageUrl ||
+              product.images[0]?.imageUrl ||
+              ''
+
+            return (
+              <div
+                key={product.id}
+                className="bg-warmwhite rounded-2xl border border-borderLight shadow-xs p-4 space-y-3.5 transition-all hover:border-gold/40 animate-fade-in-up"
+              >
+                {/* Header: Thumbnail + Category Pill + Name + Status */}
+                <div className="flex items-start space-x-3">
+                  {primaryImg ? (
+                    <img
+                      src={primaryImg}
+                      alt={product.name}
+                      className="w-16 h-16 rounded-xl object-cover border border-borderLight flex-shrink-0 bg-cream/30 shadow-2xs"
+                    />
+                  ) : (
+                    <div className="w-16 h-16 rounded-xl bg-cream border border-borderLight flex items-center justify-center text-charcoal-muted flex-shrink-0">
+                      <BedDouble className="w-6 h-6 text-gold-dark" />
+                    </div>
+                  )}
+
+                  <div className="min-w-0 flex-1">
+                    <div className="flex items-center justify-between gap-1.5 mb-1">
+                      <span className="text-[10px] font-bold text-forest-dark bg-cream px-2 py-0.5 rounded-md uppercase tracking-wider truncate max-w-[150px]">
+                        {category ? category.name : 'Umum'}
+                      </span>
+                      <span
+                        className={`px-2 py-0.5 rounded-full text-[9px] font-bold uppercase tracking-wider flex-shrink-0 ${
+                          product.status === 'published'
+                            ? 'bg-emerald-100 text-emerald-800 border border-emerald-200'
+                            : product.status === 'draft'
+                            ? 'bg-amber-100 text-amber-800 border border-amber-200'
+                            : 'bg-zinc-100 text-zinc-600 border border-zinc-200'
+                        }`}
+                      >
+                        {product.status === 'published' ? 'Aktif' : product.status}
+                      </span>
+                    </div>
+
+                    <h3 className="font-bold text-forest-dark text-sm leading-snug line-clamp-2">
+                      {product.name}
+                    </h3>
+                    <p className="text-[10px] text-charcoal-muted font-mono truncate mt-0.5">
+                      /products/{product.slug}
+                    </p>
+                  </div>
+                </div>
+
+                {/* Key Metrics: Price, Stock, Variants, Specs */}
+                <div className="bg-cream/40 rounded-xl p-3 grid grid-cols-2 gap-2 text-xs border border-borderLight/60">
+                  <div>
+                    <span className="text-[10px] text-charcoal-muted block uppercase tracking-wider font-bold">
+                      Harga Bermula
+                    </span>
+                    <span className="font-serif font-bold text-forest-dark text-base">
+                      {formatMYR(minPrice)}
+                    </span>
+                  </div>
+
+                  <div>
+                    <span className="text-[10px] text-charcoal-muted block uppercase tracking-wider font-bold">
+                      Baki Stok
+                    </span>
+                    <span
+                      className={`inline-block px-2.5 py-0.5 rounded-full text-[10px] font-bold mt-0.5 ${
+                        totalStock === 0
+                          ? 'bg-rose-100 text-rose-800 border border-rose-200'
+                          : totalStock <= 5
+                          ? 'bg-amber-100 text-amber-800 border border-amber-200'
+                          : 'bg-emerald-50 text-emerald-800 border border-emerald-200'
+                      }`}
+                    >
+                      {totalStock === 0 ? 'Habis Stok' : `${totalStock} unit`}
+                    </span>
+                  </div>
+
+                  {(product.firmness || product.material) && (
+                    <div className="col-span-2 pt-2 border-t border-borderLight/40 flex items-center justify-between text-[11px] text-secondary">
+                      <span className="truncate">
+                        {product.firmness && <strong className="text-forest font-medium">{product.firmness}</strong>}
+                        {product.firmness && product.material && ' • '}
+                        {product.material && <span className="text-charcoal-muted">{product.material}</span>}
+                      </span>
+                      <span className="text-[10px] text-charcoal-muted font-mono ml-2 flex-shrink-0">
+                        {product.variants.length} saiz
+                      </span>
+                    </div>
+                  )}
+                </div>
+
+                {/* Action Buttons: Full Thumb Friendly */}
+                <div className="flex items-center gap-2 pt-0.5">
+                  <button
+                    onClick={() => handleEditClick(product)}
+                    className="flex-1 py-2.5 px-3 rounded-xl bg-forest hover:bg-forest-dark text-warmwhite text-xs font-bold flex items-center justify-center space-x-1.5 shadow-xs active:scale-98 transition-all cursor-pointer"
+                  >
+                    <Edit2 className="w-3.5 h-3.5 text-gold" />
+                    <span>Sunting Produk</span>
+                  </button>
+
+                  <Link
+                    href={`/products/${product.slug}`}
+                    target="_blank"
+                    title="Pratonton di laman web"
+                    className="py-2.5 px-3 rounded-xl bg-cream hover:bg-cream/80 text-charcoal text-xs font-semibold flex items-center justify-center space-x-1 border border-borderLight transition-all active:scale-98"
+                  >
+                    <Eye className="w-3.5 h-3.5 text-charcoal-muted" />
+                    <span>Pratonton</span>
+                  </Link>
+
+                  {product.status !== 'archived' && (
+                    <button
+                      onClick={() => handleArchive(product.id)}
+                      title="Arkibkan produk"
+                      className="p-2.5 rounded-xl bg-rose-50 hover:bg-rose-100 text-rose-600 transition-colors border border-rose-200/50 active:scale-98 cursor-pointer"
+                    >
+                      <Archive className="w-3.5 h-3.5" />
+                    </button>
+                  )}
+                </div>
+              </div>
+            )
+          })
+        )}
+      </div>
+
+      {/* Desktop Products Table */}
+      <div className="hidden md:block bg-warmwhite rounded-2xl border border-borderLight shadow-xs overflow-hidden animate-fade-in-up delay-200">
         <div className="overflow-x-auto">
           <table className="w-full text-left text-xs border-collapse">
             <thead>
