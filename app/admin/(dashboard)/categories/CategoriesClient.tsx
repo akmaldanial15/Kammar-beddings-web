@@ -18,6 +18,7 @@ import {
   Sparkles,
   LayoutGrid,
   Menu,
+  Search,
 } from 'lucide-react'
 
 interface CategoriesClientProps {
@@ -265,8 +266,8 @@ export function CategoriesClient({ initialCategories }: CategoriesClientProps) {
       )}
 
       {/* KPI Stats Cards */}
-      <div className="grid grid-cols-2 md:grid-cols-4 gap-4">
-        <div className="bg-warmwhite p-5 rounded-2xl border border-borderLight shadow-xs animate-fade-in-up delay-50 luxury-card-hover">
+      <div className="grid grid-cols-2 md:grid-cols-4 gap-3 sm:gap-4">
+        <div className="bg-warmwhite p-4 sm:p-5 rounded-2xl border border-borderLight shadow-xs animate-fade-in-up delay-50 luxury-card-hover">
           <div className="flex items-center justify-between">
             <span className="text-xs font-semibold uppercase tracking-wider text-charcoal-muted">Jumlah Kategori</span>
             <Layers className="w-4 h-4 text-gold-dark" />
@@ -275,7 +276,7 @@ export function CategoriesClient({ initialCategories }: CategoriesClientProps) {
           <span className="text-[11px] text-charcoal-muted mt-1 block">Semua dalam pangkalan data</span>
         </div>
 
-        <div className="bg-warmwhite p-5 rounded-2xl border border-borderLight shadow-xs animate-fade-in-up delay-100 luxury-card-hover">
+        <div className="bg-warmwhite p-4 sm:p-5 rounded-2xl border border-borderLight shadow-xs animate-fade-in-up delay-100 luxury-card-hover">
           <div className="flex items-center justify-between">
             <span className="text-xs font-semibold uppercase tracking-wider text-charcoal-muted">Paparan Nav Bar</span>
             <Menu className="w-4 h-4 text-emerald-600" />
@@ -284,7 +285,7 @@ export function CategoriesClient({ initialCategories }: CategoriesClientProps) {
           <span className="text-[11px] text-charcoal-muted mt-1 block">Aktif pada bar navigasi atas</span>
         </div>
 
-        <div className="bg-warmwhite p-5 rounded-2xl border border-borderLight shadow-xs animate-fade-in-up delay-150 luxury-card-hover">
+        <div className="bg-warmwhite p-4 sm:p-5 rounded-2xl border border-borderLight shadow-xs animate-fade-in-up delay-150 luxury-card-hover">
           <div className="flex items-center justify-between">
             <span className="text-xs font-semibold uppercase tracking-wider text-charcoal-muted">Megamenu Dropdown</span>
             <LayoutGrid className="w-4 h-4 text-gold-dark" />
@@ -293,7 +294,7 @@ export function CategoriesClient({ initialCategories }: CategoriesClientProps) {
           <span className="text-[11px] text-charcoal-muted mt-1 block">Kategori dengan menu bertingkat</span>
         </div>
 
-        <div className="bg-warmwhite p-5 rounded-2xl border border-borderLight shadow-xs animate-fade-in-up delay-200 luxury-card-hover">
+        <div className="bg-warmwhite p-4 sm:p-5 rounded-2xl border border-borderLight shadow-xs animate-fade-in-up delay-200 luxury-card-hover">
           <div className="flex items-center justify-between">
             <span className="text-xs font-semibold uppercase tracking-wider text-charcoal-muted">Status Aktif</span>
             <Sparkles className="w-4 h-4 text-forest" />
@@ -304,30 +305,208 @@ export function CategoriesClient({ initialCategories }: CategoriesClientProps) {
       </div>
 
       {/* Action Bar */}
-      <div className="bg-warmwhite p-4 rounded-2xl border border-borderLight shadow-xs flex flex-col md:flex-row items-stretch md:items-center justify-between gap-4 animate-fade-in-up delay-250">
-        <div className="flex-1 max-w-md">
+      <div className="bg-warmwhite p-3.5 sm:p-4 rounded-2xl border border-borderLight shadow-xs flex flex-col md:flex-row items-stretch md:items-center justify-between gap-3 animate-fade-in-up delay-250">
+        <div className="relative flex-1 max-w-md">
+          <Search className="w-4 h-4 text-charcoal-muted absolute left-3.5 top-3" />
           <input
             type="text"
             placeholder="Cari kategori mengikut nama, slug atau badge..."
             value={filterSearch}
             onChange={(e) => setFilterSearch(e.target.value)}
-            className="w-full px-4 py-2.5 rounded-xl border border-borderLight bg-cream/50 text-sm focus:outline-none focus:ring-2 focus:ring-gold/30 focus:border-gold transition-all"
+            className="w-full pl-10 pr-4 py-2.5 rounded-xl border border-borderLight bg-cream/50 text-xs sm:text-sm focus:outline-none focus:ring-2 focus:ring-gold/30 focus:border-gold transition-all"
           />
         </div>
 
-        <div className="flex items-center space-x-3">
-          <button
-            onClick={handleOpenNew}
-            className="inline-flex items-center space-x-2 bg-forest hover:bg-forest-dark text-warmwhite px-4 py-2.5 rounded-xl text-sm font-bold shadow-sm hover:shadow transition-all"
-          >
-            <Plus className="w-4 h-4 text-gold" />
-            <span>Tambah Kategori Baru</span>
-          </button>
-        </div>
+        <button
+          onClick={handleOpenNew}
+          className="w-full md:w-auto inline-flex items-center justify-center space-x-2 bg-forest hover:bg-forest-dark text-warmwhite px-4 py-2.5 rounded-xl text-xs sm:text-sm font-bold shadow-sm hover:shadow transition-all cursor-pointer active:scale-98"
+        >
+          <Plus className="w-4 h-4 text-gold" />
+          <span>Tambah Kategori Baru</span>
+        </button>
       </div>
 
-      {/* Main Categories Table */}
-      <div className="bg-warmwhite rounded-2xl border border-borderLight shadow-xs overflow-hidden animate-fade-in-up delay-300">
+      {/* MOBILE CATEGORY CARDS (Optimized for Mobile View) */}
+      <div className="md:hidden space-y-3 animate-fade-in-up delay-300">
+        <div className="flex items-center justify-between text-xs text-charcoal-muted px-1">
+          <span>Menunjukkan <strong className="text-forest-dark font-bold">{filteredCategories.length}</strong> kategori</span>
+          {filterSearch && (
+            <button
+              onClick={() => setFilterSearch('')}
+              className="text-[11px] font-bold text-forest hover:underline"
+            >
+              Set Semula
+            </button>
+          )}
+        </div>
+
+        {filteredCategories.length === 0 ? (
+          <div className="bg-warmwhite rounded-2xl border border-borderLight p-8 text-center space-y-2 shadow-xs">
+            <Layers className="w-10 h-10 text-charcoal-muted mx-auto opacity-40" />
+            <p className="font-bold text-forest-dark text-sm">Tiada kategori dijumpai</p>
+            <p className="text-xs text-secondary">Cuba tukar kata kunci carian anda.</p>
+          </div>
+        ) : (
+          filteredCategories.map((cat, index) => {
+            const targetUrl = cat.customUrl || `/collections/${cat.slug}`
+            return (
+              <div
+                key={cat.id}
+                className="bg-warmwhite rounded-2xl border border-borderLight shadow-xs p-4 space-y-3 transition-all hover:border-gold/40 animate-fade-in-up"
+              >
+                {/* Top: Reorder controls + Thumbnail + Details */}
+                <div className="flex items-start space-x-3">
+                  {/* Reorder Buttons Column */}
+                  <div className="flex flex-col items-center justify-center bg-cream/70 rounded-xl p-1 border border-borderLight/60 flex-shrink-0">
+                    <button
+                      onClick={() => handleMove(index, 'up')}
+                      disabled={index === 0}
+                      title="Gerak Ke Atas"
+                      className="p-1 rounded hover:bg-cream disabled:opacity-20 text-charcoal-muted hover:text-forest transition-colors cursor-pointer"
+                    >
+                      <ChevronUp className="w-3.5 h-3.5" />
+                    </button>
+                    <span className="font-bold font-mono text-[11px] text-forest-dark my-0.5">
+                      #{cat.displayOrder || index + 1}
+                    </span>
+                    <button
+                      onClick={() => handleMove(index, 'down')}
+                      disabled={index === categories.length - 1}
+                      title="Gerak Ke Bawah"
+                      className="p-1 rounded hover:bg-cream disabled:opacity-20 text-charcoal-muted hover:text-forest transition-colors cursor-pointer"
+                    >
+                      <ChevronDown className="w-3.5 h-3.5" />
+                    </button>
+                  </div>
+
+                  {/* Thumbnail Image */}
+                  <div className="w-14 h-14 rounded-xl overflow-hidden bg-cream border border-borderLight flex items-center justify-center flex-shrink-0">
+                    {cat.imageUrl ? (
+                      <img
+                        src={cat.imageUrl}
+                        alt={cat.name}
+                        onError={(e) => {
+                          (e.target as HTMLElement).style.display = 'none'
+                        }}
+                        className="w-full h-full object-cover"
+                      />
+                    ) : (
+                      <Layers className="w-6 h-6 text-gold-dark" />
+                    )}
+                  </div>
+
+                  {/* Info: Name, Slug, Link & Badge */}
+                  <div className="min-w-0 flex-1">
+                    <div className="flex items-center justify-between gap-1 mb-0.5">
+                      <h3 className="font-bold text-forest-dark text-sm leading-snug truncate">
+                        {cat.name}
+                      </h3>
+                      {cat.badge && (
+                        <span className="inline-block px-2 py-0.5 rounded text-[9px] font-bold uppercase tracking-wider bg-rose-100 text-rose-700 border border-rose-200 flex-shrink-0">
+                          {cat.badge}
+                        </span>
+                      )}
+                    </div>
+
+                    <p className="text-[10px] text-charcoal-muted font-mono truncate">
+                      slug: {cat.slug}
+                    </p>
+
+                    <a
+                      href={targetUrl}
+                      target="_blank"
+                      rel="noreferrer"
+                      className="inline-flex items-center space-x-1 text-[11px] text-forest hover:text-gold transition-colors font-mono mt-0.5 truncate max-w-full"
+                    >
+                      <span className="truncate">{targetUrl}</span>
+                      <ExternalLink className="w-2.5 h-2.5 flex-shrink-0" />
+                    </a>
+                  </div>
+                </div>
+
+                {/* Toggles Grid: Nav Bar, Mega Menu, Status */}
+                <div className="bg-cream/40 rounded-xl p-2.5 grid grid-cols-3 gap-1.5 border border-borderLight/60 text-center">
+                  {/* Nav Bar Toggle */}
+                  <button
+                    type="button"
+                    onClick={() => handleToggleField(cat, 'showInNav')}
+                    className={`py-1.5 px-1.5 rounded-lg text-[10px] font-bold flex flex-col items-center justify-center gap-0.5 border transition-all cursor-pointer ${
+                      cat.showInNav
+                        ? 'bg-emerald-50 text-emerald-800 border-emerald-200'
+                        : 'bg-warmwhite text-neutral-400 border-borderLight'
+                    }`}
+                    title="Tukar paparan di Navigation Bar"
+                  >
+                    <div className="flex items-center gap-1">
+                      {cat.showInNav ? <Eye className="w-3 h-3 text-emerald-600" /> : <EyeOff className="w-3 h-3 text-neutral-400" />}
+                      <span>Nav Bar</span>
+                    </div>
+                    <span className="text-[9px] font-normal">{cat.showInNav ? 'Tampil' : 'Sembunyi'}</span>
+                  </button>
+
+                  {/* Mega Menu Toggle */}
+                  <button
+                    type="button"
+                    onClick={() => handleToggleField(cat, 'hasMegaMenu')}
+                    className={`py-1.5 px-1.5 rounded-lg text-[10px] font-bold flex flex-col items-center justify-center gap-0.5 border transition-all cursor-pointer ${
+                      cat.hasMegaMenu
+                        ? 'bg-gold/20 text-forest-dark border-gold/40'
+                        : 'bg-warmwhite text-neutral-400 border-borderLight'
+                    }`}
+                    title="Tukar status Mega Menu dropdown"
+                  >
+                    <div className="flex items-center gap-1">
+                      <LayoutGrid className="w-3 h-3 text-gold-dark" />
+                      <span>Mega Menu</span>
+                    </div>
+                    <span className="text-[9px] font-normal">{cat.hasMegaMenu ? 'Aktif' : 'Tiada'}</span>
+                  </button>
+
+                  {/* Status Active Toggle */}
+                  <button
+                    type="button"
+                    onClick={() => handleToggleField(cat, 'isActive')}
+                    className={`py-1.5 px-1.5 rounded-lg text-[10px] font-bold flex flex-col items-center justify-center gap-0.5 border transition-all cursor-pointer ${
+                      cat.isActive !== false
+                        ? 'bg-emerald-100 text-emerald-800 border-emerald-300'
+                        : 'bg-zinc-100 text-zinc-500 border-zinc-200'
+                    }`}
+                    title="Tukar status aktif kategori"
+                  >
+                    <div className="flex items-center gap-1">
+                      <Sparkles className="w-3 h-3 text-forest" />
+                      <span>Status</span>
+                    </div>
+                    <span className="text-[9px] font-normal">{cat.isActive !== false ? 'Aktif' : 'Nyahaktif'}</span>
+                  </button>
+                </div>
+
+                {/* Action Buttons: Thumb-friendly Edit & Delete */}
+                <div className="flex items-center gap-2 pt-0.5">
+                  <button
+                    onClick={() => handleOpenEdit(cat)}
+                    className="flex-1 py-2 px-3 rounded-xl bg-forest hover:bg-forest-dark text-warmwhite text-xs font-bold flex items-center justify-center space-x-1.5 shadow-xs active:scale-98 transition-all cursor-pointer"
+                  >
+                    <Edit2 className="w-3.5 h-3.5 text-gold" />
+                    <span>Sunting Kategori</span>
+                  </button>
+
+                  <button
+                    onClick={() => handleDelete(cat)}
+                    title="Padam Kategori"
+                    className="p-2 rounded-xl bg-rose-50 hover:bg-rose-100 text-rose-600 transition-colors border border-rose-200/50 active:scale-98 cursor-pointer"
+                  >
+                    <Trash2 className="w-3.5 h-3.5" />
+                  </button>
+                </div>
+              </div>
+            )
+          })
+        )}
+      </div>
+
+      {/* Main Categories Table (Desktop Only) */}
+      <div className="hidden md:block bg-warmwhite rounded-2xl border border-borderLight shadow-xs overflow-hidden animate-fade-in-up delay-300">
         <div className="overflow-x-auto">
           <table className="w-full text-left text-xs border-collapse">
             <thead>
@@ -386,6 +565,9 @@ export function CategoriesClient({ initialCategories }: CategoriesClientProps) {
                             <img
                               src={cat.imageUrl}
                               alt={cat.name}
+                              onError={(e) => {
+                                (e.target as HTMLElement).style.display = 'none'
+                              }}
                               className="w-10 h-10 rounded-lg object-cover border border-borderLight flex-shrink-0"
                             />
                           ) : (
