@@ -2379,8 +2379,11 @@
       "id": "ord-1790765872396-zbu5x",
       "orderNumber": "KAMAAR-2026-1001",
       "createdAt": "2026-09-30T10:57:52.396Z",
-      "updatedAt": "2026-09-30T10:58:09.094Z",
-      "paymentId": "pi_sim_1790765889082"
+      "updatedAt": "2026-10-01T14:37:39.946Z",
+      "paymentId": "pi_sim_1790765889082",
+      "carrier": "LENA White-Glove Fleet",
+      "trackingNumber": "",
+      "internalNotes": ""
     }
   ],
   "reviews": [
@@ -2591,6 +2594,104 @@
     }
   ],
   "auditLogs": [
+    {
+      "id": "aud-1790865459948-txyv",
+      "actorEmail": "owner@lenasleep.com.my",
+      "action": "order_status_updated",
+      "entityType": "order",
+      "entityId": "ord-1790765872396-zbu5x",
+      "details": {
+        "fulfillmentStatus": "processing",
+        "carrier": "LENA White-Glove Fleet",
+        "trackingNumber": "",
+        "internalNotes": ""
+      },
+      "createdAt": "2026-10-01T14:37:39.948Z"
+    },
+    {
+      "id": "aud-1790865457957-xy46",
+      "actorEmail": "owner@lenasleep.com.my",
+      "action": "order_status_updated",
+      "entityType": "order",
+      "entityId": "ord-1790765872396-zbu5x",
+      "details": {
+        "fulfillmentStatus": "delivered",
+        "carrier": "LENA White-Glove Fleet",
+        "trackingNumber": "",
+        "internalNotes": ""
+      },
+      "createdAt": "2026-10-01T14:37:37.957Z"
+    },
+    {
+      "id": "aud-1790865456911-f5yt",
+      "actorEmail": "owner@lenasleep.com.my",
+      "action": "order_status_updated",
+      "entityType": "order",
+      "entityId": "ord-1790765872396-zbu5x",
+      "details": {
+        "fulfillmentStatus": "processing",
+        "carrier": "LENA White-Glove Fleet",
+        "trackingNumber": "",
+        "internalNotes": ""
+      },
+      "createdAt": "2026-10-01T14:37:36.911Z"
+    },
+    {
+      "id": "aud-1790865455919-iozf",
+      "actorEmail": "owner@lenasleep.com.my",
+      "action": "order_status_updated",
+      "entityType": "order",
+      "entityId": "ord-1790765872396-zbu5x",
+      "details": {
+        "fulfillmentStatus": "delivered",
+        "carrier": "LENA White-Glove Fleet",
+        "trackingNumber": "",
+        "internalNotes": ""
+      },
+      "createdAt": "2026-10-01T14:37:35.919Z"
+    },
+    {
+      "id": "aud-1790865455415-ho55",
+      "actorEmail": "owner@lenasleep.com.my",
+      "action": "order_status_updated",
+      "entityType": "order",
+      "entityId": "ord-1790765872396-zbu5x",
+      "details": {
+        "fulfillmentStatus": "shipped",
+        "carrier": "LENA White-Glove Fleet",
+        "trackingNumber": "",
+        "internalNotes": ""
+      },
+      "createdAt": "2026-10-01T14:37:35.415Z"
+    },
+    {
+      "id": "aud-1790865454837-006b",
+      "actorEmail": "owner@lenasleep.com.my",
+      "action": "order_status_updated",
+      "entityType": "order",
+      "entityId": "ord-1790765872396-zbu5x",
+      "details": {
+        "fulfillmentStatus": "processing",
+        "carrier": "LENA White-Glove Fleet",
+        "trackingNumber": "",
+        "internalNotes": ""
+      },
+      "createdAt": "2026-10-01T14:37:34.837Z"
+    },
+    {
+      "id": "aud-1790865453497-l0b0",
+      "actorEmail": "owner@lenasleep.com.my",
+      "action": "order_status_updated",
+      "entityType": "order",
+      "entityId": "ord-1790765872396-zbu5x",
+      "details": {
+        "fulfillmentStatus": "scheduled",
+        "carrier": "LENA White-Glove Fleet",
+        "trackingNumber": "",
+        "internalNotes": ""
+      },
+      "createdAt": "2026-10-01T14:37:33.497Z"
+    },
     {
       "id": "aud-1790863813991-6arv",
       "actorEmail": "owner@lenasleep.com.my",
