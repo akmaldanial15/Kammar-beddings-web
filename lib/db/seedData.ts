@@ -1,5 +1,5 @@
 // Rich Seed Dataset for KAMAAR SLEEP Platform
-import { Product, Category, Collection, Coupon, Showroom, BlogPost, SiteSettings, StaffMember, Review, Affiliate } from '@/types'
+import { Product, Category, Collection, Coupon, Showroom, BlogPost, SiteSettings, StaffMember, Review, Affiliate, WebsiteConfig } from '@/types'
 
 export const initialCategories: Category[] = [
   {
@@ -1402,3 +1402,128 @@ export const initialAffiliates: Affiliate[] = [
     accessKey: 'kamaar123',
   },
 ]
+
+export const initialWebsiteConfig: WebsiteConfig = {
+  theme: {
+    primaryColor: '#1E4E8C',
+    primaryDarkColor: '#13325B',
+    accentGoldColor: '#B49A58',
+    backgroundColor: '#FFFFFF',
+    creamColor: '#F4F7FB',
+    textColor: '#0F172A',
+    saleColor: '#A13D40',
+    activePreset: 'sapphire-gold',
+  },
+  announcement: {
+    enabled: true,
+    leftBenefit: 'Complimentary White-Glove In-Home Setup Across Peninsular Malaysia',
+    centerText: 'Grand Launch Privileges: Enjoy RM100 Off with code',
+    highlightCode: 'KAMAAR100',
+    url: '/collections/mattress',
+    rightGuarantee: '10-Year Local Warranty • 100-Night Trial',
+    bgColor: '#13325B',
+    textColor: '#FFFFFF',
+  },
+  hero: {
+    slides: [
+      {
+        id: 'slide-1',
+        badge: '100% Malaysian Organic Latex',
+        title: 'Better nights begin with the right mattress.',
+        subtitle: 'Handcrafted with certified organic latex, zero synthetic fillers, and micro-zoned spinal alignment for deep, uninterrupted sleep.',
+        ctaText: 'Explore Mattresses',
+        ctaLink: '/collections/mattress',
+        secondaryCtaText: 'Take Mattress Finder Quiz',
+        secondaryCtaLink: '/finder',
+        imageUrl: 'https://images.unsplash.com/photo-1631049307264-da0ec9d70304?auto=format&fit=crop&w=1800&q=85',
+        isActive: true,
+      },
+      {
+        id: 'slide-2',
+        badge: 'Sub-Zero Active Cooling',
+        title: 'Engineered for tropical Malaysian nights.',
+        subtitle: 'Combining Japanese Ice-Silk filaments with aerated pinhole natural latex and 7-zone pocket springs for continuous cooling rest.',
+        ctaText: 'Discover Cool Night Hybrid',
+        ctaLink: '/products/lena-cool-night-hybrid-mattress',
+        secondaryCtaText: 'View All Collections',
+        secondaryCtaLink: '/collections/mattress',
+        imageUrl: 'https://images.unsplash.com/photo-1616046229478-9901c5536a45?auto=format&fit=crop&w=1800&q=85',
+        isActive: true,
+      },
+      {
+        id: 'slide-3',
+        badge: '5-Star Presidential Suite Comfort',
+        title: 'The Sovereign Luxe Grand Masterpiece.',
+        subtitle: 'Multi-tiered 34cm dual-spring architecture, plush Talalay latex pillowtop, and Belgian silk upholstery built for lifetime indulgence.',
+        ctaText: 'Experience Sovereign Luxe',
+        ctaLink: '/products/lena-sovereign-luxe-mattress',
+        secondaryCtaText: 'Book Showroom Trial',
+        secondaryCtaLink: '/showrooms',
+        imageUrl: 'https://images.unsplash.com/photo-1578683010236-d716f9a3f461?auto=format&fit=crop&w=1800&q=85',
+        isActive: true,
+      },
+    ],
+  },
+  reassurance: {
+    items: [
+      {
+        id: 'reassure-1',
+        icon: 'sparkles',
+        title: '100% Pure Natural Latex',
+        subtitle: 'Sustainably harvested certified Malaysian rubber sap with zero chemical off-gassing.',
+      },
+      {
+        id: 'reassure-2',
+        icon: 'trial',
+        title: '100-Night In-Home Trial',
+        subtitle: 'Experience true spinal rest in your bedroom. 100% money-back guarantee with zero restocking fee.',
+      },
+      {
+        id: 'reassure-3',
+        icon: 'shield',
+        title: '10-Year Local Warranty',
+        subtitle: 'Comprehensive structural sag and spring resilience protection backed directly by our Malaysian atelier.',
+      },
+      {
+        id: 'reassure-4',
+        icon: 'truck',
+        title: 'White-Glove Delivery & Setup',
+        subtitle: 'Carefully unpacked, assembled in your bedroom of choice, with old mattress removal available.',
+      },
+    ],
+  },
+  promotionsBanner: {
+    enabled: true,
+    badge: 'TAWARAN EKSKLUSIF ATELIER',
+    headline: 'Tingkatkan Mutu Tidur Anda dengan Baucar Bernilai RM100',
+    description: 'Nikmati diskaun istimewa untuk setiap pembelian tilam siri KAMAAR Ortho Rest, Nature First, dan Sovereign Luxe bulan ini.',
+    couponCode: 'KAMAAR100',
+    imageUrl: 'https://images.unsplash.com/photo-1505693416388-ac5ce068fe85?auto=format&fit=crop&w=1200&q=80',
+    ctaText: 'Tebus Baucar Sekarang',
+    ctaLink: '/collections/mattress',
+  },
+  storySection: {
+    badge: 'KAMAAR SLEEP ATELIER',
+    headline: 'Seni Pembuatan Tilam Mewah Semula Jadi Malaysia',
+    paragraph1: 'Di KAMAAR, kami mempercayai bahawa tidur yang lena adalah asas kepada kehidupan yang bertenaga. Setiap tilam direka dengan teliti menggunakan 100% susu getah asli organik dari ladang terpilih di Malaysia.',
+    paragraph2: 'Digabungkan dengan teknologi 7-Zon Poket Spring dan fabrik Ice-Silk Jepun, kami membawakan keselesaan bertaraf suite hotel 5-bintang terus ke kamar tidur anda.',
+    imageUrl: 'https://images.unsplash.com/photo-1540518614846-7ede433c4ef0?auto=format&fit=crop&w=1000&q=80',
+    signatureTitle: 'Tukang Mahir Atelier',
+    signatureSub: 'KAMAAR Sleep Sanctuary Malaysia',
+  },
+  socialAndContact: {
+    whatsappNumber: '+60123456789',
+    phoneDisplay: '+603 7722 1199',
+    emailDisplay: 'care@kamaarbeddings.com.my',
+    addressDisplay: 'KAMAAR Sleep Atelier, Bangsar, 59100 Kuala Lumpur',
+    instagramUrl: 'https://instagram.com',
+    tiktokUrl: 'https://tiktok.com',
+    facebookUrl: 'https://facebook.com',
+  },
+  appearance: {
+    enableEntranceAnimations: true,
+    enableFloatingBadges: true,
+    cardBorderRadius: 'rounded-2xl',
+  },
+}
+

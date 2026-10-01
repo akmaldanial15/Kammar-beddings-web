@@ -7,6 +7,7 @@ import { Header } from '@/components/layout/Header'
 import { CartDrawer } from '@/components/cart/CartDrawer'
 import { Footer } from '@/components/layout/Footer'
 import { WhatsAppButton } from '@/components/common/WhatsAppButton'
+import { ThemeInjector } from '@/components/layout/ThemeInjector'
 
 export function StorefrontShell({ children }: { children: React.ReactNode }) {
   const pathname = usePathname()
@@ -21,6 +22,7 @@ export function StorefrontShell({ children }: { children: React.ReactNode }) {
   // Public customer storefront experience
   return (
     <div className="flex flex-col min-h-screen">
+      <ThemeInjector />
       <AnnouncementBar />
       <Header />
       <CartDrawer />

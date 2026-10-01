@@ -383,3 +383,86 @@ export interface AuditLog {
   details?: Record<string, any>
   createdAt: string
 }
+
+export interface HeroSlideConfig {
+  id: string
+  badge: string
+  title: string
+  subtitle: string
+  ctaText: string
+  ctaLink: string
+  secondaryCtaText: string
+  secondaryCtaLink: string
+  imageUrl: string
+  isActive?: boolean
+}
+
+export interface ReassuranceItemConfig {
+  id: string
+  icon: string
+  title: string
+  subtitle: string
+}
+
+export interface WebsiteConfig {
+  theme: {
+    primaryColor: string       // e.g. #1E4E8C (Royal Sapphire Blue)
+    primaryDarkColor: string   // e.g. #13325B (Deep Ocean Navy)
+    accentGoldColor: string    // e.g. #B49A58 (Luxury Gold)
+    backgroundColor: string    // e.g. #FFFFFF (Warm White)
+    creamColor: string         // e.g. #F4F7FB (Crisp Pearl)
+    textColor: string          // e.g. #0F172A (Charcoal Slate)
+    saleColor: string          // e.g. #A13D40 (Crimson Sale)
+    activePreset?: string      // Preset identifier
+  }
+  announcement: {
+    enabled: boolean
+    leftBenefit: string
+    centerText: string
+    highlightCode: string
+    url: string
+    rightGuarantee: string
+    bgColor?: string
+    textColor?: string
+  }
+  hero: {
+    slides: HeroSlideConfig[]
+  }
+  reassurance: {
+    items: ReassuranceItemConfig[]
+  }
+  promotionsBanner: {
+    enabled: boolean
+    badge: string
+    headline: string
+    description: string
+    couponCode: string
+    imageUrl: string
+    ctaText: string
+    ctaLink: string
+  }
+  storySection: {
+    badge: string
+    headline: string
+    paragraph1: string
+    paragraph2: string
+    imageUrl: string
+    signatureTitle: string
+    signatureSub: string
+  }
+  socialAndContact: {
+    whatsappNumber: string
+    phoneDisplay: string
+    emailDisplay: string
+    addressDisplay: string
+    instagramUrl: string
+    tiktokUrl: string
+    facebookUrl: string
+  }
+  appearance: {
+    enableEntranceAnimations: boolean
+    enableFloatingBadges: boolean
+    cardBorderRadius: 'rounded-xl' | 'rounded-2xl' | 'rounded-3xl'
+  }
+}
+

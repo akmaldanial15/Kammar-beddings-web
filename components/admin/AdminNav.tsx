@@ -21,6 +21,7 @@ import {
   ChevronRight,
   LogOut,
   Sparkles,
+  Palette,
 } from 'lucide-react'
 import { KamaarLogo } from '@/components/brand/KamaarLogo'
 import { AdminLogoutButton } from './AdminLogoutButton'
@@ -37,6 +38,7 @@ const navItems = [
   { label: 'Overview', href: '/admin', icon: LayoutDashboard },
   { label: 'Products & Variants', href: '/admin/products', icon: BedDouble },
   { label: 'Categories & Nav', href: '/admin/categories', icon: Layers },
+  { label: 'Website Editor', href: '/admin/website-editor', icon: Palette, isNew: true },
   { label: 'Inventory & Stock', href: '/admin/inventory', icon: Boxes },
   { label: 'Orders & Fulfilment', href: '/admin/orders', icon: ShoppingBag },
   { label: 'Promotions & Coupons', href: '/admin/promotions', icon: Tag },
@@ -203,7 +205,14 @@ export function AdminNav({ session }: AdminNavProps) {
                         />
                         <span className="text-xs">{item.label}</span>
                       </div>
-                      {isActive && <ChevronRight className="w-3.5 h-3.5 text-[#D4AF37]" />}
+                      <div className="flex items-center space-x-1.5">
+                        {item.isNew && (
+                          <span className="px-1.5 py-0.5 text-[9px] font-bold rounded-md bg-[#D4AF37]/20 text-[#D4AF37] border border-[#D4AF37]/40 uppercase tracking-wider animate-pulse">
+                            Baru
+                          </span>
+                        )}
+                        {isActive && <ChevronRight className="w-3.5 h-3.5 text-[#D4AF37]" />}
+                      </div>
                     </Link>
                   )
                 })}
@@ -288,7 +297,14 @@ export function AdminNav({ session }: AdminNavProps) {
                     />
                     <span>{item.label}</span>
                   </div>
-                  {isActive && <ChevronRight className="w-3.5 h-3.5 text-[#D4AF37]" />}
+                  <div className="flex items-center space-x-1.5">
+                    {item.isNew && (
+                      <span className="px-1.5 py-0.5 text-[9px] font-bold rounded-md bg-[#D4AF37]/20 text-[#D4AF37] border border-[#D4AF37]/40 uppercase tracking-wider animate-pulse">
+                        Baru
+                      </span>
+                    )}
+                    {isActive && <ChevronRight className="w-3.5 h-3.5 text-[#D4AF37]" />}
+                  </div>
                 </Link>
               )
             })}

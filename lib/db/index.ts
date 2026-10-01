@@ -17,6 +17,7 @@ import {
   StaffMember,
   AuditLog,
   Affiliate,
+  WebsiteConfig,
 } from '@/types'
 import {
   initialCategories,
@@ -29,6 +30,7 @@ import {
   initialStaffMembers,
   initialReviews,
   initialAffiliates,
+  initialWebsiteConfig,
 } from './seedData'
 
 interface DatabaseSchema {
@@ -48,6 +50,7 @@ interface DatabaseSchema {
   staffMembers: StaffMember[]
   auditLogs: AuditLog[]
   affiliates: Affiliate[]
+  websiteConfig?: WebsiteConfig
 }
 
 const DATA_DIR = path.join(process.cwd(), 'data')
@@ -81,6 +84,7 @@ function ensureDb(): DatabaseSchema {
       staffMembers: initialStaffMembers,
       auditLogs: [],
       affiliates: initialAffiliates,
+      websiteConfig: initialWebsiteConfig,
     }
     fs.writeFileSync(DB_FILE, JSON.stringify(initialDb, null, 2), 'utf-8')
     dbCache = initialDb
@@ -93,6 +97,11 @@ function ensureDb(): DatabaseSchema {
     // Backwards compatibility migration for affiliates
     if (!dbCache.affiliates) {
       dbCache.affiliates = initialAffiliates
+      saveDb(dbCache)
+    }
+    // Backwards compatibility migration for websiteConfig
+    if (!dbCache.websiteConfig) {
+      dbCache.websiteConfig = initialWebsiteConfig
       saveDb(dbCache)
     }
     return dbCache!
@@ -711,6 +720,65 @@ export async function updateSiteSettings(settings: Partial<SiteSettings>, actorE
   logAdminAction(actorEmail, 'settings_updated', 'settings', 'siteSettings', settings)
   return db.siteSettings
 }
+
+export async function getWebsiteConfig(): Promise<WebsiteConfig> {
+  const db = ensureDb()
+  if (!db.websiteConfig) {
+    db.websiteConfig = initialWebsiteConfig
+    saveDb(db)
+  }
+  return db.websiteConfig
+}
+
+export async function updateWebsiteConfig(
+  config: Partial<WebsiteConfig>,
+  actorEmail: string = 'owner'
+): Promise<WebsiteConfig> {
+  const db = ensureDb()
+  const current = db.websiteConfig || initialWebsiteConfig
+  db.websiteConfig = {
+    ...current,
+    ...config,
+    theme: {
+      ...current.theme,
+      ...(config.theme || {}),
+    },
+    announcement: {
+      ...current.announcement,
+      ...(config.announcement || {}),
+    },
+    hero: {
+      ...current.hero,
+      ...(config.hero || {}),
+      slides: config.hero?.slides || current.hero.slides,
+    },
+    reassurance: {
+      ...current.reassurance,
+      ...(config.reassurance || {}),
+      items: config.reassurance?.items || current.reassurance.items,
+    },
+    promotionsBanner: {
+      ...current.promotionsBanner,
+      ...(config.promotionsBanner || {}),
+    },
+    storySection: {
+      ...current.storySection,
+      ...(config.storySection || {}),
+    },
+    socialAndContact: {
+      ...current.socialAndContact,
+      ...(config.socialAndContact || {}),
+    },
+    appearance: {
+      ...current.appearance,
+      ...(config.appearance || {}),
+    },
+  }
+  saveDb(db)
+  logAdminAction(actorEmail, 'website_config_updated', 'website_config', 'websiteConfig', config)
+  return db.websiteConfig
+}
+
 
 export async function getStaffMembers(): Promise<StaffMember[]> {
   const db = ensureDb()

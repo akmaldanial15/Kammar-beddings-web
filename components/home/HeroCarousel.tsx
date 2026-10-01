@@ -56,15 +56,36 @@ const slides: Slide[] = [
 
 export function HeroCarousel() {
   const { t } = useLanguage()
+  const [activeSlides, setActiveSlides] = useState<Slide[]>(slides)
   const [currentSlide, setCurrentSlide] = useState(0)
   const [isPlaying, setIsPlaying] = useState(true)
 
+  useEffect(() => {
+    fetch('/api/website-config', { cache: 'no-store' })
+      .then((res) => res.json())
+      .then((data) => {
+        if (data.config?.hero?.slides && Array.isArray(data.config.hero.slides) && data.config.hero.slides.length > 0) {
+          const validSlides = data.config.hero.slides.filter((s: any) => s.isActive !== false)
+          if (validSlides.length > 0) {
+            setActiveSlides(validSlides)
+          }
+        }
+      })
+      .catch((err) => console.error('Failed to load hero slides:', err))
+  }, [])
+
   const nextSlide = useCallback(() => {
-    setCurrentSlide((prev) => (prev + 1) % slides.length)
+    setActiveSlides((currentSlides) => {
+      setCurrentSlide((prev) => (prev + 1) % currentSlides.length)
+      return currentSlides
+    })
   }, [])
 
   const prevSlide = useCallback(() => {
-    setCurrentSlide((prev) => (prev - 1 + slides.length) % slides.length)
+    setActiveSlides((currentSlides) => {
+      setCurrentSlide((prev) => (prev - 1 + currentSlides.length) % currentSlides.length)
+      return currentSlides
+    })
   }, [])
 
   useEffect(() => {
@@ -76,7 +97,7 @@ export function HeroCarousel() {
   return (
     <section className="relative w-full h-[600px] sm:h-[680px] lg:h-[750px] overflow-hidden bg-forest-dark" aria-label="Hero Carousel">
       {/* Slides */}
-      {slides.map((slide, index) => (
+      {activeSlides.map((slide, index) => (
         <div
           key={slide.id}
           className={`absolute inset-0 transition-opacity duration-1000 ease-in-out ${
@@ -149,7 +170,7 @@ export function HeroCarousel() {
       <div className="absolute bottom-8 left-0 right-0 z-30 max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 flex items-center justify-between">
         {/* Indicators */}
         <div className="flex items-center space-x-2.5">
-          {slides.map((_, idx) => (
+          {activeSlides.map((_, idx) => (
             <button
               key={idx}
               onClick={() => setCurrentSlide(idx)}
