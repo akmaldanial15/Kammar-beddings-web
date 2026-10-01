@@ -25,10 +25,10 @@ export default async function AdminInventoryPage() {
   )
 
   return (
-    <div className="p-6 md:p-10 space-y-8">
+    <div className="p-3.5 sm:p-6 md:p-10 space-y-5 sm:space-y-8">
       <div>
-        <h1 className="font-serif text-3xl font-bold text-forest-dark">Inventory & Stock Movements</h1>
-        <p className="text-sm text-secondary mt-1">
+        <h1 className="font-serif text-2xl sm:text-3xl font-bold text-forest-dark">Inventory & Stock Movements</h1>
+        <p className="text-xs sm:text-sm text-secondary mt-1">
           Monitor real-time warehouse stock, configure safety buffers, and record audited stock adjustments.
         </p>
       </div>
