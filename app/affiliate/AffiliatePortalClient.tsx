@@ -528,6 +528,16 @@ export function AffiliatePortalClient({ affiliate, initialOrders }: Props) {
             * Sekiranya anda perlu menukar butiran perbankan anda, sila maklumkan pihak pengurusan KAMAAR Beddings melalui emel atau WhatsApp sokongan.
           </p>
         </div>
+
+        {/* PORTAL FOOTER */}
+        <footer className="pt-8 pb-4 text-center text-xs text-neutral-400 space-y-1">
+          <p className="font-medium text-neutral-500">
+            KAMAAR Beddings Malaysia Atelier • Portal Komisen Ejen Berdaftar
+          </p>
+          <p className="text-[11px] text-neutral-400">
+            Sebarang pertanyaan berkaitan pengiraan komisen atau penyata jualan, sila hubungi pengurusan atelier KAMAAR.
+          </p>
+        </footer>
       </main>
     </div>
   )

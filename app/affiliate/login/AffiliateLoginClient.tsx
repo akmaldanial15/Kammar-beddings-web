@@ -188,7 +188,7 @@ export function AffiliateLoginClient() {
   }
 
   return (
-    <div className="min-h-screen bg-[#071326] text-warmwhite flex flex-col justify-center items-center px-4 py-12 relative overflow-hidden">
+    <div className="min-h-screen bg-[#071326] text-warmwhite flex flex-col justify-center items-center px-4 py-8 sm:py-12 relative overflow-x-hidden">
       {/* Background ambient royal glow */}
       <div className="absolute top-0 left-1/2 -translate-x-1/2 w-[700px] h-[400px] bg-gradient-to-b from-[#102A4E]/60 via-[#B49A58]/10 to-transparent blur-3xl pointer-events-none rounded-full" />
       <div className="absolute -bottom-24 right-10 w-96 h-96 bg-[#163660]/40 blur-3xl pointer-events-none rounded-full" />
@@ -206,14 +206,14 @@ export function AffiliateLoginClient() {
             <h1 className="font-serif text-2xl md:text-3xl font-bold tracking-tight text-white mt-1">
               Portal Rakan Ejen Affiliate
             </h1>
-            <p className="text-xs text-neutral-400 mt-1 max-w-xs mx-auto">
+            <p className="text-xs text-neutral-400 mt-1 max-w-sm mx-auto leading-relaxed">
               Akses papan pemuka pendapatan komisen, pautan rujukan eksklusif & makluman terus daripada pengurusan.
             </p>
           </div>
         </div>
 
         {/* Login Card */}
-        <div className="bg-[#0D1F3C]/80 backdrop-blur-xl border border-white/10 rounded-3xl p-6 sm:p-8 shadow-2xl shadow-black/60 relative">
+        <div className="bg-[#0D1F3C]/90 backdrop-blur-xl border border-white/10 rounded-3xl p-6 sm:p-8 shadow-2xl shadow-black/60 relative">
           <div className="absolute top-0 right-8 -translate-y-1/2 px-3 py-1 bg-gradient-to-r from-[#B49A58] to-[#D4AF37] text-[#071326] text-[10px] font-black rounded-full uppercase tracking-wider flex items-center gap-1 shadow-md">
             <Sparkles className="w-3 h-3" /> Ejen Rasmi
           </div>
@@ -244,12 +244,14 @@ export function AffiliateLoginClient() {
             </div>
 
             <div>
-              <label className="block text-xs font-semibold text-neutral-300 mb-1.5 flex items-center justify-between">
-                <span>Kata Laluan / Kunci Akses Ejen</span>
-                <span className="text-[10px] text-neutral-400 font-normal">
+              <div className="flex flex-wrap items-center justify-between gap-1 mb-1.5">
+                <label className="text-xs font-semibold text-neutral-300">
+                  Kata Laluan / Kunci Akses Ejen
+                </label>
+                <span className="text-[10px] text-[#D4AF37]/90 font-medium">
                   (Default: Kod Affiliate atau Pin Admin)
                 </span>
-              </label>
+              </div>
               <div className="relative">
                 <KeyRound className="w-4 h-4 text-neutral-400 absolute left-3.5 top-1/2 -translate-y-1/2" />
                 <input
@@ -263,11 +265,11 @@ export function AffiliateLoginClient() {
             </div>
 
             {/* Forgot Password Trigger Link */}
-            <div className="flex justify-end">
+            <div className="flex justify-end pt-0.5">
               <button
                 type="button"
                 onClick={handleOpenReset}
-                className="text-[11px] text-[#D4AF37] hover:underline transition-colors flex items-center gap-1"
+                className="text-[11px] text-[#D4AF37] hover:underline transition-colors flex items-center gap-1.5 font-medium cursor-pointer"
               >
                 <RotateCcw className="w-3 h-3" />
                 <span>Lupa kata laluan? Set semula di sini</span>
@@ -295,11 +297,11 @@ export function AffiliateLoginClient() {
             <span className="text-[10px] uppercase tracking-wider text-neutral-400 font-bold block">
               Log Masuk Percubaan (Akaun Demo Ejen):
             </span>
-            <div className="grid grid-cols-2 gap-2">
+            <div className="grid grid-cols-1 sm:grid-cols-2 gap-2">
               <button
                 type="button"
                 onClick={() => handleQuickDemo('AFF-DANIAL', 'kamaar123')}
-                className="px-2.5 py-1.5 text-[11px] bg-white/5 hover:bg-white/10 border border-white/10 rounded-lg text-left transition-colors"
+                className="px-2.5 py-2 text-[11px] bg-white/5 hover:bg-white/10 border border-white/10 rounded-lg text-left transition-colors cursor-pointer"
               >
                 <div className="font-semibold text-neutral-200">Ahmad Danial</div>
                 <div className="text-[10px] text-[#D4AF37]">AFF-DANIAL</div>
@@ -307,7 +309,7 @@ export function AffiliateLoginClient() {
               <button
                 type="button"
                 onClick={() => handleQuickDemo('AFF-IZZAH', 'kamaar123')}
-                className="px-2.5 py-1.5 text-[11px] bg-white/5 hover:bg-white/10 border border-white/10 rounded-lg text-left transition-colors"
+                className="px-2.5 py-2 text-[11px] bg-white/5 hover:bg-white/10 border border-white/10 rounded-lg text-left transition-colors cursor-pointer"
               >
                 <div className="font-semibold text-neutral-200">Nurul Izzah</div>
                 <div className="text-[10px] text-[#D4AF37]">AFF-IZZAH</div>
@@ -317,9 +319,9 @@ export function AffiliateLoginClient() {
         </div>
 
         {/* Security / Back to store footer */}
-        <div className="flex items-center justify-between text-xs text-neutral-400 px-2">
-          <div className="flex items-center gap-1 text-[11px]">
-            <ShieldCheck className="w-3.5 h-3.5 text-emerald-400" />
+        <div className="flex flex-wrap items-center justify-between gap-2 text-xs text-neutral-400 px-2">
+          <div className="flex items-center gap-1.5 text-[11px]">
+            <ShieldCheck className="w-3.5 h-3.5 text-emerald-400 shrink-0" />
             <span>Akses Dilindungi & Disahkan</span>
           </div>
           <Link href="/" className="hover:text-white transition-colors text-[11px] underline">
@@ -332,11 +334,11 @@ export function AffiliateLoginClient() {
       {/* RESET PASSWORD / FORGOT PASSWORD VERIFICATION MODAL                       */}
       {/* ========================================================================= */}
       {isResetModalOpen && (
-        <div className="fixed inset-0 z-50 bg-[#071326]/80 backdrop-blur-md flex items-center justify-center p-4 animate-in fade-in duration-200">
-          <div className="bg-[#0D1F3C] border border-[#B49A58]/30 w-full max-w-lg rounded-3xl p-6 sm:p-8 shadow-2xl relative text-warmwhite">
+        <div className="fixed inset-0 z-50 bg-[#071326]/85 backdrop-blur-md flex items-center justify-center p-4 animate-in fade-in duration-200 overflow-y-auto">
+          <div className="bg-[#0D1F3C] border border-[#B49A58]/30 w-full max-w-lg rounded-3xl p-6 sm:p-8 shadow-2xl relative text-warmwhite my-auto max-h-[92vh] overflow-y-auto">
             <button
               onClick={() => setIsResetModalOpen(false)}
-              className="absolute top-5 right-5 text-neutral-400 hover:text-white p-1 rounded-lg hover:bg-white/5"
+              className="absolute top-5 right-5 text-neutral-400 hover:text-white p-1 rounded-lg hover:bg-white/5 cursor-pointer"
             >
               <X className="w-5 h-5" />
             </button>
@@ -349,7 +351,7 @@ export function AffiliateLoginClient() {
               <h3 className="font-serif text-xl font-bold text-white">
                 Set Semula Kata Laluan Ejen
               </h3>
-              <p className="text-xs text-neutral-400 max-w-xs mx-auto">
+              <p className="text-xs text-neutral-400 max-w-sm mx-auto leading-relaxed">
                 Pengesahan identiti melalui Emel atau Nombor Telefon diperlukan sebelum kata laluan diset semula.
               </p>
             </div>

@@ -10,11 +10,11 @@ import { WhatsAppButton } from '@/components/common/WhatsAppButton'
 
 export function StorefrontShell({ children }: { children: React.ReactNode }) {
   const pathname = usePathname()
-  const isAdmin = pathname?.startsWith('/admin')
+  const isStandalone = pathname?.startsWith('/admin') || pathname?.startsWith('/affiliate')
 
-  // If navigating any /admin route (login, dashboard, inventory, orders, etc.),
-  // render as an isolated, standalone administrative atelier with zero storefront clutter.
-  if (isAdmin) {
+  // If navigating any /admin or /affiliate route (login, portal, dashboard, reset, etc.),
+  // render as an isolated, standalone portal with zero customer storefront clutter.
+  if (isStandalone) {
     return <div className="min-h-screen bg-cream">{children}</div>
   }
 
