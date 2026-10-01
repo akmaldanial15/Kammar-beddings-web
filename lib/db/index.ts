@@ -231,7 +231,110 @@ export async function deleteProduct(id: string, actorEmail: string = 'system'): 
 
 export async function getCategories(): Promise<Category[]> {
   const db = ensureDb()
-  return db.categories.sort((a, b) => a.displayOrder - b.displayOrder)
+  if (!db.categories) db.categories = []
+  return [...db.categories].sort((a, b) => (a.displayOrder || 0) - (b.displayOrder || 0))
+}
+
+export async function getNavCategories(): Promise<Category[]> {
+  const categories = await getCategories()
+  return categories.filter((c) => c.showInNav !== false && c.isActive !== false)
+}
+
+export async function getCategoryById(id: string): Promise<Category | null> {
+  const db = ensureDb()
+  return db.categories?.find((c) => c.id === id) || null
+}
+
+export async function createCategory(
+  data: Omit<Category, 'id'>,
+  actorEmail: string = 'admin'
+): Promise<Category> {
+  const db = ensureDb()
+  if (!db.categories) db.categories = []
+
+  const cleanSlug = data.slug.trim().toLowerCase().replace(/[^a-z0-9_-]/g, '-')
+  const existing = db.categories.find((c) => c.slug.toLowerCase() === cleanSlug)
+  if (existing) {
+    throw new Error(`Category with slug "${cleanSlug}" already exists.`)
+  }
+
+  const newCategory: Category = {
+    ...data,
+    id: `cat-${Date.now()}-${Math.random().toString(36).substring(2, 6)}`,
+    slug: cleanSlug,
+    displayOrder: data.displayOrder ?? db.categories.length + 1,
+    showInNav: data.showInNav ?? true,
+    hasMegaMenu: data.hasMegaMenu ?? false,
+    isActive: data.isActive ?? true,
+  }
+
+  db.categories.push(newCategory)
+  saveDb(db)
+
+  logAdminAction(actorEmail, 'category_created', 'category', newCategory.id, {
+    name: newCategory.name,
+    slug: newCategory.slug,
+  })
+
+  return newCategory
+}
+
+export async function updateCategory(
+  id: string,
+  updates: Partial<Category>,
+  actorEmail: string = 'admin'
+): Promise<Category | null> {
+  const db = ensureDb()
+  if (!db.categories) return null
+
+  const cat = db.categories.find((c) => c.id === id)
+  if (!cat) return null
+
+  if (updates.slug) {
+    const cleanSlug = updates.slug.trim().toLowerCase().replace(/[^a-z0-9_-]/g, '-')
+    const collision = db.categories.find((c) => c.slug.toLowerCase() === cleanSlug && c.id !== id)
+    if (collision) {
+      throw new Error(`Category slug "${cleanSlug}" is already in use.`)
+    }
+    updates.slug = cleanSlug
+  }
+
+  Object.assign(cat, updates)
+  saveDb(db)
+
+  logAdminAction(actorEmail, 'category_updated', 'category', id, updates)
+  return cat
+}
+
+export async function deleteCategory(id: string, actorEmail: string = 'admin'): Promise<boolean> {
+  const db = ensureDb()
+  if (!db.categories) return false
+
+  const idx = db.categories.findIndex((c) => c.id === id)
+  if (idx >= 0) {
+    const name = db.categories[idx].name
+    db.categories.splice(idx, 1)
+    saveDb(db)
+    logAdminAction(actorEmail, 'category_deleted', 'category', id, { name })
+    return true
+  }
+  return false
+}
+
+export async function reorderCategories(orderedIds: string[], actorEmail: string = 'admin'): Promise<Category[]> {
+  const db = ensureDb()
+  if (!db.categories) return []
+
+  orderedIds.forEach((id, index) => {
+    const cat = db.categories.find((c) => c.id === id)
+    if (cat) {
+      cat.displayOrder = index + 1
+    }
+  })
+
+  saveDb(db)
+  logAdminAction(actorEmail, 'categories_reordered', 'category', undefined, { orderedIds })
+  return getCategories()
 }
 
 export async function getCollections(): Promise<Collection[]> {

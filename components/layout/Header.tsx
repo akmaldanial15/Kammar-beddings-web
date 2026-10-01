@@ -20,6 +20,8 @@ import {
   Phone,
   Globe,
 } from 'lucide-react'
+import { Category } from '@/types'
+import { initialCategories } from '@/lib/db/seedData'
 import { useLanguage } from '@/lib/i18n/LanguageContext'
 import { useCart } from '@/lib/context/CartContext'
 import { useWishlist } from '@/lib/context/WishlistContext'
@@ -39,6 +41,37 @@ export function Header() {
   const [isMobileMenuOpen, setIsMobileMenuOpen] = useState(false)
   const [isMattressMegaOpen, setIsMattressMegaOpen] = useState(false)
   const [mobileExpandedSection, setMobileExpandedSection] = useState<string | null>('mattresses')
+  const [navCategories, setNavCategories] = useState<Category[]>(() =>
+    initialCategories.filter((c) => c.showInNav && c.isActive !== false)
+  )
+
+  useEffect(() => {
+    let isMounted = true
+    fetch('/api/categories')
+      .then((res) => res.json())
+      .then((data) => {
+        if (isMounted && data.categories && Array.isArray(data.categories)) {
+          setNavCategories(data.categories)
+        }
+      })
+      .catch((err) => {
+        console.error('Failed to load categories for nav:', err)
+      })
+    return () => {
+      isMounted = false
+    }
+  }, [])
+
+  const getCategoryLabel = (cat: Category) => {
+    if (cat.slug === 'mattress' && t.navMattresses) return t.navMattresses
+    if (cat.slug === 'pillows' && t.navPillows) return t.navPillows
+    if (cat.slug === 'toppers-protectors' && t.navToppers) return t.navToppers
+    if (cat.slug === 'bedframes' && t.navBedframes) return t.navBedframes
+    if (cat.slug === 'bedding' && t.navBedding) return t.navBedding
+    if (cat.slug === 'offers' && t.navOffers) return t.navOffers
+    if ((cat.slug === 'guide' || cat.customUrl === '/blog') && t.navSleepGuide) return t.navSleepGuide
+    return cat.name
+  }
 
   const megaTimeoutRef = useRef<NodeJS.Timeout | null>(null)
 
@@ -229,244 +262,224 @@ export function Header() {
           <div className="bg-warmwhite/95 backdrop-blur-md border-b border-borderLight shadow-xs">
             <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 relative">
               <nav className="flex items-center justify-center space-x-8 xl:space-x-12 py-2.5 text-[13.5px] xl:text-[14px] font-medium text-charcoal">
-                {/* 1. Mattresses (with Mega Menu & Zero-Gap Hover Bridge) */}
-                <div
-                  className="py-1"
-                  onMouseEnter={handleOpenMega}
-                  onMouseLeave={handleCloseMega}
-                >
-                  <Link
-                    href="/collections/mattress"
-                    className={`flex items-center space-x-1.5 py-1.5 hover:text-forest transition-colors group ${
-                      pathname.startsWith('/collections/mattress')
-                        ? 'text-forest font-bold border-b-2 border-gold'
-                        : ''
-                    }`}
-                  >
-                    <span className="tracking-wide">{t.navMattresses}</span>
-                    <ChevronDown
-                      className={`w-3.5 h-3.5 text-gold-dark transition-transform duration-200 ${
-                        isMattressMegaOpen ? 'rotate-180' : ''
-                      }`}
-                    />
-                  </Link>
+                {navCategories.map((cat) => {
+                  const targetUrl = cat.customUrl || `/collections/${cat.slug}`
+                  const isActive =
+                    targetUrl === '/collections/mattress'
+                      ? pathname.startsWith('/collections/mattress')
+                      : targetUrl === '/blog'
+                      ? pathname.startsWith('/blog')
+                      : pathname === targetUrl
+                  const label = getCategoryLabel(cat)
 
-                  {/* Mega Menu Dropdown Centered in Category Nav Row */}
-                  {isMattressMegaOpen && (
-                    <div
-                      className="absolute top-full left-1/2 -translate-x-1/2 pt-2 z-50 pointer-events-auto"
-                      onMouseEnter={handleOpenMega}
-                      onMouseLeave={handleCloseMega}
-                    >
-                      {/* Invisible Hover Bridge: covers gap between button and card */}
-                      <div className="absolute -top-3 left-0 right-0 h-4 bg-transparent" />
-
-                      <div className="w-[860px] bg-warmwhite rounded-2xl shadow-2xl border border-borderLight p-6 grid grid-cols-4 gap-6 animate-fade-in-down">
-                      {/* Col 1: By Material */}
-                      <div>
-                        <h4 className="text-[11px] font-bold uppercase tracking-wider text-gold-dark pb-2 border-b border-borderLight mb-3">
-                          {t.byMaterial}
-                        </h4>
-                        <ul className="space-y-2.5 text-xs text-charcoal-muted">
-                          <li>
-                            <Link
-                              href="/collections/mattress?material=latex"
-                              className="hover:text-forest hover:font-semibold block transition-colors"
-                            >
-                              {t.naturalLatex}
-                            </Link>
-                          </li>
-                          <li>
-                            <Link
-                              href="/collections/mattress?material=hybrid"
-                              className="hover:text-forest hover:font-semibold block transition-colors"
-                            >
-                              {t.hybridSpring}
-                            </Link>
-                          </li>
-                          <li>
-                            <Link
-                              href="/collections/mattress?material=memory"
-                              className="hover:text-forest hover:font-semibold block transition-colors"
-                            >
-                              {t.memoryFoam}
-                            </Link>
-                          </li>
-                          <li>
-                            <Link
-                              href="/collections/mattress?material=ortho"
-                              className="hover:text-forest hover:font-semibold block transition-colors"
-                            >
-                              {t.orthopaedic}
-                            </Link>
-                          </li>
-                        </ul>
-                      </div>
-
-                      {/* Col 2: By Size */}
-                      <div>
-                        <h4 className="text-[11px] font-bold uppercase tracking-wider text-gold-dark pb-2 border-b border-borderLight mb-3">
-                          {t.bySize}
-                        </h4>
-                        <ul className="space-y-2.5 text-xs text-charcoal-muted">
-                          <li>
-                            <Link
-                              href="/collections/mattress?size=single"
-                              className="hover:text-forest hover:font-semibold block transition-colors"
-                            >
-                              {t.single}
-                            </Link>
-                          </li>
-                          <li>
-                            <Link
-                              href="/collections/mattress?size=supersingle"
-                              className="hover:text-forest hover:font-semibold block transition-colors"
-                            >
-                              {t.superSingle}
-                            </Link>
-                          </li>
-                          <li>
-                            <Link
-                              href="/collections/mattress?size=queen"
-                              className="hover:text-forest hover:font-semibold block transition-colors"
-                            >
-                              {t.queen}
-                            </Link>
-                          </li>
-                          <li>
-                            <Link
-                              href="/collections/mattress?size=king"
-                              className="hover:text-forest hover:font-semibold block transition-colors"
-                            >
-                              {t.king}
-                            </Link>
-                          </li>
-                        </ul>
-                      </div>
-
-                      {/* Col 3: By Firmness */}
-                      <div>
-                        <h4 className="text-[11px] font-bold uppercase tracking-wider text-gold-dark pb-2 border-b border-borderLight mb-3">
-                          {t.byFirmness}
-                        </h4>
-                        <ul className="space-y-2.5 text-xs text-charcoal-muted">
-                          <li>
-                            <Link
-                              href="/collections/mattress?firmness=soft"
-                              className="hover:text-forest hover:font-semibold block transition-colors"
-                            >
-                              {t.soft}
-                            </Link>
-                          </li>
-                          <li>
-                            <Link
-                              href="/collections/mattress?firmness=medium"
-                              className="hover:text-forest hover:font-semibold block transition-colors"
-                            >
-                              {t.medium}
-                            </Link>
-                          </li>
-                          <li>
-                            <Link
-                              href="/collections/mattress?firmness=firm"
-                              className="hover:text-forest hover:font-semibold block transition-colors"
-                            >
-                              {t.firm}
-                            </Link>
-                          </li>
-                        </ul>
-                      </div>
-
-                      {/* Col 4: Interactive Quiz Card */}
-                      <div className="bg-cream rounded-xl p-4 flex flex-col justify-between border border-borderLight shadow-sm">
-                        <div>
-                          <span className="inline-flex items-center space-x-1 text-[10px] font-bold uppercase tracking-wider text-forest bg-gold/25 px-2 py-0.5 rounded mb-2">
-                            <Sparkles className="w-3 h-3 text-gold-dark" />
-                            <span>Personalized Fit</span>
-                          </span>
-                          <h5 className="font-serif text-sm font-bold text-forest leading-snug">
-                            Unsure which mattress suits your body?
-                          </h5>
-                          <p className="text-[11px] text-charcoal-muted mt-1 leading-relaxed">
-                            Take our 60-second Mattress Finder quiz for personalized firmness recommendations.
-                          </p>
-                        </div>
+                  if (cat.hasMegaMenu) {
+                    return (
+                      <div
+                        key={cat.id}
+                        className="py-1"
+                        onMouseEnter={handleOpenMega}
+                        onMouseLeave={handleCloseMega}
+                      >
                         <Link
-                          href="/finder"
-                          className="mt-3 inline-flex items-center justify-between px-3 py-2 bg-forest text-warmwhite text-xs font-bold rounded-lg hover:bg-forest-dark transition-all group"
+                          href={targetUrl}
+                          className={`flex items-center space-x-1.5 py-1.5 hover:text-forest transition-colors group ${
+                            isActive ? 'text-forest font-bold border-b-2 border-gold' : ''
+                          }`}
                         >
-                          <span>Start Mattress Quiz</span>
-                          <ArrowRight className="w-3.5 h-3.5 text-gold group-hover:translate-x-0.5 transition-transform" />
+                          <span className="tracking-wide">{label}</span>
+                          <ChevronDown
+                            className={`w-3.5 h-3.5 text-gold-dark transition-transform duration-200 ${
+                              isMattressMegaOpen ? 'rotate-180' : ''
+                            }`}
+                          />
                         </Link>
+
+                        {/* Mega Menu Dropdown Centered in Category Nav Row */}
+                        {isMattressMegaOpen && (
+                          <div
+                            className="absolute top-full left-1/2 -translate-x-1/2 pt-2 z-50 pointer-events-auto"
+                            onMouseEnter={handleOpenMega}
+                            onMouseLeave={handleCloseMega}
+                          >
+                            {/* Invisible Hover Bridge: covers gap between button and card */}
+                            <div className="absolute -top-3 left-0 right-0 h-4 bg-transparent" />
+
+                            <div className="w-[860px] bg-warmwhite rounded-2xl shadow-2xl border border-borderLight p-6 grid grid-cols-4 gap-6 animate-fade-in-down">
+                              {/* Col 1: By Material */}
+                              <div>
+                                <h4 className="text-[11px] font-bold uppercase tracking-wider text-gold-dark pb-2 border-b border-borderLight mb-3">
+                                  {t.byMaterial}
+                                </h4>
+                                <ul className="space-y-2.5 text-xs text-charcoal-muted">
+                                  <li>
+                                    <Link
+                                      href="/collections/mattress?material=latex"
+                                      className="hover:text-forest hover:font-semibold block transition-colors"
+                                    >
+                                      {t.naturalLatex}
+                                    </Link>
+                                  </li>
+                                  <li>
+                                    <Link
+                                      href="/collections/mattress?material=hybrid"
+                                      className="hover:text-forest hover:font-semibold block transition-colors"
+                                    >
+                                      {t.hybridSpring}
+                                    </Link>
+                                  </li>
+                                  <li>
+                                    <Link
+                                      href="/collections/mattress?material=memory"
+                                      className="hover:text-forest hover:font-semibold block transition-colors"
+                                    >
+                                      {t.memoryFoam}
+                                    </Link>
+                                  </li>
+                                  <li>
+                                    <Link
+                                      href="/collections/mattress?material=ortho"
+                                      className="hover:text-forest hover:font-semibold block transition-colors"
+                                    >
+                                      {t.orthopaedic}
+                                    </Link>
+                                  </li>
+                                </ul>
+                              </div>
+
+                              {/* Col 2: By Size */}
+                              <div>
+                                <h4 className="text-[11px] font-bold uppercase tracking-wider text-gold-dark pb-2 border-b border-borderLight mb-3">
+                                  {t.bySize}
+                                </h4>
+                                <ul className="space-y-2.5 text-xs text-charcoal-muted">
+                                  <li>
+                                    <Link
+                                      href="/collections/mattress?size=single"
+                                      className="hover:text-forest hover:font-semibold block transition-colors"
+                                    >
+                                      {t.single}
+                                    </Link>
+                                  </li>
+                                  <li>
+                                    <Link
+                                      href="/collections/mattress?size=supersingle"
+                                      className="hover:text-forest hover:font-semibold block transition-colors"
+                                    >
+                                      {t.superSingle}
+                                    </Link>
+                                  </li>
+                                  <li>
+                                    <Link
+                                      href="/collections/mattress?size=queen"
+                                      className="hover:text-forest hover:font-semibold block transition-colors"
+                                    >
+                                      {t.queen}
+                                    </Link>
+                                  </li>
+                                  <li>
+                                    <Link
+                                      href="/collections/mattress?size=king"
+                                      className="hover:text-forest hover:font-semibold block transition-colors"
+                                    >
+                                      {t.king}
+                                    </Link>
+                                  </li>
+                                </ul>
+                              </div>
+
+                              {/* Col 3: By Firmness */}
+                              <div>
+                                <h4 className="text-[11px] font-bold uppercase tracking-wider text-gold-dark pb-2 border-b border-borderLight mb-3">
+                                  {t.byFirmness}
+                                </h4>
+                                <ul className="space-y-2.5 text-xs text-charcoal-muted">
+                                  <li>
+                                    <Link
+                                      href="/collections/mattress?firmness=soft"
+                                      className="hover:text-forest hover:font-semibold block transition-colors"
+                                    >
+                                      {t.soft}
+                                    </Link>
+                                  </li>
+                                  <li>
+                                    <Link
+                                      href="/collections/mattress?firmness=medium"
+                                      className="hover:text-forest hover:font-semibold block transition-colors"
+                                    >
+                                      {t.medium}
+                                    </Link>
+                                  </li>
+                                  <li>
+                                    <Link
+                                      href="/collections/mattress?firmness=firm"
+                                      className="hover:text-forest hover:font-semibold block transition-colors"
+                                    >
+                                      {t.firm}
+                                    </Link>
+                                  </li>
+                                </ul>
+                              </div>
+
+                              {/* Col 4: Interactive Quiz Card */}
+                              <div className="bg-cream rounded-xl p-4 flex flex-col justify-between border border-borderLight shadow-sm">
+                                <div>
+                                  <span className="inline-flex items-center space-x-1 text-[10px] font-bold uppercase tracking-wider text-forest bg-gold/25 px-2 py-0.5 rounded mb-2">
+                                    <Sparkles className="w-3 h-3 text-gold-dark" />
+                                    <span>Personalized Fit</span>
+                                  </span>
+                                  <h5 className="font-serif text-sm font-bold text-forest leading-snug">
+                                    Unsure which mattress suits your body?
+                                  </h5>
+                                  <p className="text-[11px] text-charcoal-muted mt-1 leading-relaxed">
+                                    Take our 60-second Mattress Finder quiz for personalized firmness recommendations.
+                                  </p>
+                                </div>
+                                <Link
+                                  href="/finder"
+                                  className="mt-3 inline-flex items-center justify-between px-3 py-2 bg-forest text-warmwhite text-xs font-bold rounded-lg hover:bg-forest-dark transition-all group"
+                                >
+                                  <span>Start Mattress Quiz</span>
+                                  <ArrowRight className="w-3.5 h-3.5 text-gold group-hover:translate-x-0.5 transition-transform" />
+                                </Link>
+                              </div>
+                            </div>
+                          </div>
+                        )}
                       </div>
-                    </div>
-                  </div>
-                )}
-              </div>
+                    )
+                  }
 
-                {/* 2. Pillows */}
-                <Link
-                  href="/collections/pillows"
-                  className={`hover:text-forest transition-colors py-1 tracking-wide ${
-                    pathname === '/collections/pillows' ? 'text-forest font-bold border-b-2 border-gold' : ''
-                  }`}
-                >
-                  {t.navPillows}
-                </Link>
-
-                {/* 3. Toppers & Protectors */}
-                <Link
-                  href="/collections/toppers-protectors"
-                  className={`hover:text-forest transition-colors py-1 tracking-wide ${
-                    pathname === '/collections/toppers-protectors' ? 'text-forest font-bold border-b-2 border-gold' : ''
-                  }`}
-                >
-                  {t.navToppers}
-                </Link>
-
-                {/* 4. Bedframes */}
-                <Link
-                  href="/collections/bedframes"
-                  className={`hover:text-forest transition-colors py-1 tracking-wide ${
-                    pathname === '/collections/bedframes' ? 'text-forest font-bold border-b-2 border-gold' : ''
-                  }`}
-                >
-                  {t.navBedframes}
-                </Link>
-
-                {/* 5. Bed Linen */}
-                <Link
-                  href="/collections/bedding"
-                  className={`hover:text-forest transition-colors py-1 tracking-wide ${
-                    pathname === '/collections/bedding' ? 'text-forest font-bold border-b-2 border-gold' : ''
-                  }`}
-                >
-                  {t.navBedding}
-                </Link>
-
-                {/* 6. Offers & Bundles with ruby SALE tag */}
-                <Link
-                  href="/offers"
-                  className={`flex items-center space-x-1.5 py-1 text-sale hover:text-forest transition-colors tracking-wide ${
-                    pathname === '/offers' ? 'font-bold border-b-2 border-sale' : 'font-semibold'
-                  }`}
-                >
-                  <Tag className="w-3.5 h-3.5" />
-                  <span>{t.navOffers}</span>
-                  <span className="text-[9px] uppercase tracking-wider bg-sale/10 text-sale px-1.5 py-0.5 rounded font-bold">
-                    SALE
-                  </span>
-                </Link>
-
-                {/* 7. Sleep Guide */}
-                <Link
-                  href="/blog"
-                  className={`hover:text-forest transition-colors py-1 tracking-wide ${
-                    pathname.startsWith('/blog') ? 'text-forest font-bold border-b-2 border-gold' : ''
-                  }`}
-                >
-                  {t.navSleepGuide}
-                </Link>
+                  const isSaleCategory = cat.badge?.toUpperCase() === 'SALE' || cat.slug === 'offers'
+                  return (
+                    <Link
+                      key={cat.id}
+                      href={targetUrl}
+                      className={`flex items-center space-x-1.5 py-1 transition-colors tracking-wide ${
+                        isSaleCategory
+                          ? `text-sale hover:text-forest ${
+                              isActive ? 'font-bold border-b-2 border-sale' : 'font-semibold'
+                            }`
+                          : `hover:text-forest ${
+                              isActive ? 'text-forest font-bold border-b-2 border-gold' : ''
+                            }`
+                      }`}
+                    >
+                      {isSaleCategory && <Tag className="w-3.5 h-3.5" />}
+                      <span>{label}</span>
+                      {cat.badge && (
+                        <span
+                          className={`text-[9px] uppercase tracking-wider px-1.5 py-0.5 rounded font-bold ${
+                            isSaleCategory
+                              ? 'bg-sale/10 text-sale'
+                              : 'bg-gold/20 text-forest-dark'
+                          }`}
+                        >
+                          {cat.badge}
+                        </span>
+                      )}
+                    </Link>
+                  )
+                })}
               </nav>
             </div>
           </div>
@@ -585,133 +598,117 @@ export function Header() {
                 </Link>
               </div>
 
-              {/* Accordion Categories */}
+              {/* Accordion & Category Links */}
               <nav className="p-4 space-y-1 text-sm font-medium">
-                {/* Mattresses Accordion */}
-                <div className="border-b border-borderLight/60 pb-1">
-                  <button
-                    onClick={() =>
-                      setMobileExpandedSection(mobileExpandedSection === 'mattresses' ? null : 'mattresses')
-                    }
-                    className="w-full flex items-center justify-between py-2.5 text-forest font-bold text-left"
-                  >
-                    <span>{t.navMattresses}</span>
-                    <ChevronDown
-                      className={`w-4 h-4 text-gold-dark transition-transform ${
-                        mobileExpandedSection === 'mattresses' ? 'rotate-180' : ''
-                      }`}
-                    />
-                  </button>
+                {navCategories.map((cat) => {
+                  const targetUrl = cat.customUrl || `/collections/${cat.slug}`
+                  const label = getCategoryLabel(cat)
+                  const isSaleCategory = cat.badge?.toUpperCase() === 'SALE' || cat.slug === 'offers'
 
-                  {mobileExpandedSection === 'mattresses' && (
-                    <div className="pl-3 pb-2 space-y-2 text-xs text-charcoal-muted animate-fade-in">
-                      <Link
-                        href="/collections/mattress"
-                        onClick={() => setIsMobileMenuOpen(false)}
-                        className="block py-1 text-forest font-bold underline"
-                      >
-                        All Mattresses Collection &rarr;
-                      </Link>
-                      <Link
-                        href="/collections/mattress?material=latex"
-                        onClick={() => setIsMobileMenuOpen(false)}
-                        className="block py-1 hover:text-forest"
-                      >
-                        100% Pure Natural Latex
-                      </Link>
-                      <Link
-                        href="/collections/mattress?material=hybrid"
-                        onClick={() => setIsMobileMenuOpen(false)}
-                        className="block py-1 hover:text-forest"
-                      >
-                        Cool Night Hybrid Series
-                      </Link>
-                      <Link
-                        href="/collections/mattress?material=ortho"
-                        onClick={() => setIsMobileMenuOpen(false)}
-                        className="block py-1 hover:text-forest"
-                      >
-                        Orthopaedic Spinal Firm
-                      </Link>
-                      <div className="pt-1.5 border-t border-borderLight/40 flex items-center space-x-3 text-[11px] font-semibold text-gold-dark">
-                        <Link href="/collections/mattress?size=single" onClick={() => setIsMobileMenuOpen(false)}>
-                          Single
-                        </Link>
-                        <span>&bull;</span>
-                        <Link href="/collections/mattress?size=queen" onClick={() => setIsMobileMenuOpen(false)}>
-                          Queen
-                        </Link>
-                        <span>&bull;</span>
-                        <Link href="/collections/mattress?size=king" onClick={() => setIsMobileMenuOpen(false)}>
-                          King
-                        </Link>
+                  if (cat.hasMegaMenu) {
+                    const isExpanded = mobileExpandedSection === cat.id || (mobileExpandedSection === 'mattresses' && cat.slug === 'mattress')
+                    return (
+                      <div key={cat.id} className="border-b border-borderLight/60 pb-1">
+                        <button
+                          onClick={() =>
+                            setMobileExpandedSection(isExpanded ? null : cat.id)
+                          }
+                          className="w-full flex items-center justify-between py-2.5 text-forest font-bold text-left"
+                        >
+                          <span>{label}</span>
+                          <ChevronDown
+                            className={`w-4 h-4 text-gold-dark transition-transform ${
+                              isExpanded ? 'rotate-180' : ''
+                            }`}
+                          />
+                        </button>
+
+                        {isExpanded && (
+                          <div className="pl-3 pb-2 space-y-2 text-xs text-charcoal-muted animate-fade-in">
+                            <Link
+                              href={targetUrl}
+                              onClick={() => setIsMobileMenuOpen(false)}
+                              className="block py-1 text-forest font-bold underline"
+                            >
+                              All {label} Collection &rarr;
+                            </Link>
+                            <Link
+                              href={`${targetUrl}?material=latex`}
+                              onClick={() => setIsMobileMenuOpen(false)}
+                              className="block py-1 hover:text-forest"
+                            >
+                              100% Pure Natural Latex
+                            </Link>
+                            <Link
+                              href={`${targetUrl}?material=hybrid`}
+                              onClick={() => setIsMobileMenuOpen(false)}
+                              className="block py-1 hover:text-forest"
+                            >
+                              Cool Night Hybrid Series
+                            </Link>
+                            <Link
+                              href={`${targetUrl}?material=ortho`}
+                              onClick={() => setIsMobileMenuOpen(false)}
+                              className="block py-1 hover:text-forest"
+                            >
+                              Orthopaedic Spinal Firm
+                            </Link>
+                            <div className="pt-1.5 border-t border-borderLight/40 flex items-center space-x-3 text-[11px] font-semibold text-gold-dark">
+                              <Link
+                                href={`${targetUrl}?size=single`}
+                                onClick={() => setIsMobileMenuOpen(false)}
+                              >
+                                Single
+                              </Link>
+                              <span>&bull;</span>
+                              <Link
+                                href={`${targetUrl}?size=queen`}
+                                onClick={() => setIsMobileMenuOpen(false)}
+                              >
+                                Queen
+                              </Link>
+                              <span>&bull;</span>
+                              <Link
+                                href={`${targetUrl}?size=king`}
+                                onClick={() => setIsMobileMenuOpen(false)}
+                              >
+                                King
+                              </Link>
+                            </div>
+                          </div>
+                        )}
                       </div>
-                    </div>
-                  )}
-                </div>
+                    )
+                  }
 
-                {/* Pillows */}
-                <Link
-                  href="/collections/pillows"
-                  onClick={() => setIsMobileMenuOpen(false)}
-                  className="flex items-center justify-between py-2.5 border-b border-borderLight/60 text-charcoal hover:text-forest"
-                >
-                  <span>{t.navPillows}</span>
-                  <span className="text-xs text-charcoal-muted">&rarr;</span>
-                </Link>
-
-                {/* Toppers */}
-                <Link
-                  href="/collections/toppers-protectors"
-                  onClick={() => setIsMobileMenuOpen(false)}
-                  className="flex items-center justify-between py-2.5 border-b border-borderLight/60 text-charcoal hover:text-forest"
-                >
-                  <span>{t.navToppers}</span>
-                  <span className="text-xs text-charcoal-muted">&rarr;</span>
-                </Link>
-
-                {/* Bedframes */}
-                <Link
-                  href="/collections/bedframes"
-                  onClick={() => setIsMobileMenuOpen(false)}
-                  className="flex items-center justify-between py-2.5 border-b border-borderLight/60 text-charcoal hover:text-forest"
-                >
-                  <span>{t.navBedframes}</span>
-                  <span className="text-xs text-charcoal-muted">&rarr;</span>
-                </Link>
-
-                {/* Bed Linen */}
-                <Link
-                  href="/collections/bedding"
-                  onClick={() => setIsMobileMenuOpen(false)}
-                  className="flex items-center justify-between py-2.5 border-b border-borderLight/60 text-charcoal hover:text-forest"
-                >
-                  <span>{t.navBedding}</span>
-                  <span className="text-xs text-charcoal-muted">&rarr;</span>
-                </Link>
-
-                {/* Offers */}
-                <Link
-                  href="/offers"
-                  onClick={() => setIsMobileMenuOpen(false)}
-                  className="flex items-center justify-between py-2.5 border-b border-borderLight/60 text-sale font-bold"
-                >
-                  <span className="flex items-center space-x-1.5">
-                    <Tag className="w-4 h-4" />
-                    <span>{t.navOffers}</span>
-                  </span>
-                  <span className="text-[10px] bg-sale/10 px-2 py-0.5 rounded font-bold">SALE</span>
-                </Link>
-
-                {/* Sleep Guide */}
-                <Link
-                  href="/blog"
-                  onClick={() => setIsMobileMenuOpen(false)}
-                  className="flex items-center justify-between py-2.5 border-b border-borderLight/60 text-charcoal hover:text-forest"
-                >
-                  <span>{t.navSleepGuide}</span>
-                  <span className="text-xs text-charcoal-muted">&rarr;</span>
-                </Link>
+                  return (
+                    <Link
+                      key={cat.id}
+                      href={targetUrl}
+                      onClick={() => setIsMobileMenuOpen(false)}
+                      className={`flex items-center justify-between py-2.5 border-b border-borderLight/60 ${
+                        isSaleCategory ? 'text-sale font-bold' : 'text-charcoal hover:text-forest'
+                      }`}
+                    >
+                      <div className="flex items-center space-x-2">
+                        {isSaleCategory && <Tag className="w-4 h-4 text-sale" />}
+                        <span>{label}</span>
+                        {cat.badge && (
+                          <span
+                            className={`text-[9px] uppercase tracking-wider px-1.5 py-0.5 rounded font-bold ${
+                              isSaleCategory
+                                ? 'bg-sale/10 text-sale'
+                                : 'bg-gold/20 text-forest-dark'
+                            }`}
+                          >
+                            {cat.badge}
+                          </span>
+                        )}
+                      </div>
+                      <span className="text-xs text-charcoal-muted">&rarr;</span>
+                    </Link>
+                  )
+                })}
 
                 {/* Compare */}
                 <Link

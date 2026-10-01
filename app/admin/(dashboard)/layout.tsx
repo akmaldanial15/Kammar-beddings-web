@@ -4,6 +4,7 @@ import { redirect } from 'next/navigation'
 import {
   LayoutDashboard,
   BedDouble,
+  Layers,
   Boxes,
   ShoppingBag,
   Tag,
@@ -29,6 +30,7 @@ export default async function AdminDashboardLayout({ children }: { children: Rea
   const navItems = [
     { label: 'Overview', href: '/admin', icon: LayoutDashboard },
     { label: 'Products & Variants', href: '/admin/products', icon: BedDouble },
+    { label: 'Categories & Nav', href: '/admin/categories', icon: Layers },
     { label: 'Inventory & Stock', href: '/admin/inventory', icon: Boxes },
     { label: 'Orders & Fulfilment', href: '/admin/orders', icon: ShoppingBag },
     { label: 'Promotions & Coupons', href: '/admin/promotions', icon: Tag },

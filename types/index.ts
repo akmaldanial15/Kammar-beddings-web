@@ -77,9 +77,14 @@ export interface Category {
   id: string
   name: string
   slug: string
-  description: string
-  imageUrl: string
+  description?: string
+  imageUrl?: string
   displayOrder: number
+  showInNav?: boolean // Controls whether it appears in the Tier-2 header navbar
+  hasMegaMenu?: boolean // Controls whether hover opens the rich megamenu dropdown
+  badge?: string // e.g. "SALE", "HOT", "NEW"
+  customUrl?: string // e.g. "/offers" or "/blog"
+  isActive?: boolean
 }
 
 export interface Collection {

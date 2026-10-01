@@ -41,7 +41,7 @@ export default async function CollectionPage({ params }: Props) {
   if (category) {
     relevantProducts = allProducts.filter((p) => p.categoryId === category.id)
     pageTitle = `${category.name} Collection`
-    pageDescription = category.description
+    pageDescription = category.description || ''
   } else if (collection) {
     if (slug === 'natural-latex') {
       relevantProducts = allProducts.filter((p) => p.material?.toLowerCase().includes('latex'))
