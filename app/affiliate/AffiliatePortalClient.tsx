@@ -136,18 +136,23 @@ export function AffiliatePortalClient({ affiliate, initialOrders }: Props) {
       </header>
 
       {/* HERO GREETING & STATUS BANNER */}
-      <div className="bg-gradient-to-r from-[#0B1E3B] via-[#102A4E] to-[#0B1E3B] text-white pt-8 pb-16 px-4 sm:px-6 lg:px-8 border-b border-[#B49A58]/20 relative">
-        <div className="max-w-6xl mx-auto space-y-3">
+      <div className="bg-gradient-to-r from-[#0B1E3B] via-[#102A4E] to-[#0B1E3B] text-white py-8 px-4 sm:px-6 lg:px-8 border-b border-[#B49A58]/20">
+        <div className="max-w-6xl mx-auto">
           <div className="flex flex-wrap items-center justify-between gap-4">
             <div>
               <span className="text-xs text-[#D4AF37] font-semibold flex items-center gap-1.5">
                 <Sparkles className="w-3.5 h-3.5" /> Selamat Kembali ke Atelier Rakan Niaga
               </span>
-              <h2 className="font-serif text-2xl sm:text-4xl font-bold tracking-tight text-white mt-1">
+              <h2 className="font-serif text-2xl sm:text-3xl font-bold tracking-tight text-white mt-1">
                 {affiliate.name}
               </h2>
-              <p className="text-xs sm:text-sm text-neutral-300 mt-1">
-                Kod Rujukan Anda: <span className="font-mono font-bold text-[#D4AF37] bg-white/10 px-2 py-0.5 rounded-md">{affiliate.code}</span> • Status: <span className="text-emerald-400 font-semibold">Aktif</span>
+              <p className="text-xs sm:text-sm text-neutral-300 mt-1 flex flex-wrap items-center gap-2">
+                <span>Kod Rujukan Anda:</span>
+                <span className="font-mono font-bold text-[#D4AF37] bg-white/10 px-2 py-0.5 rounded-md">
+                  {affiliate.code}
+                </span>
+                <span>• Status:</span>
+                <span className="text-emerald-400 font-semibold">Aktif</span>
               </p>
             </div>
 
@@ -165,7 +170,7 @@ export function AffiliatePortalClient({ affiliate, initialOrders }: Props) {
       </div>
 
       {/* MAIN CONTAINER */}
-      <main className="max-w-6xl mx-auto px-4 sm:px-6 lg:px-8 -mt-8 space-y-8">
+      <main className="max-w-6xl mx-auto px-4 sm:px-6 lg:px-8 py-8 space-y-8">
         {/* 1. TOP 4 METRICS CARDS */}
         <div className="grid grid-cols-2 lg:grid-cols-4 gap-4">
           {/* Total Commission */}
