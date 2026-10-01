@@ -3,7 +3,7 @@
 import React, { useState } from 'react'
 import Link from 'next/link'
 import Image from 'next/image'
-import { Heart, Scale, Eye, Sparkles, Check } from 'lucide-react'
+import { Heart, Scale, Eye, Sparkles, Check, ArrowRight } from 'lucide-react'
 import { Product } from '@/types'
 import { formatMYR } from '@/lib/utils/format'
 import { useWishlist } from '@/lib/context/WishlistContext'
@@ -157,17 +157,17 @@ export function ProductCard({ product }: ProductCardProps) {
           </div>
 
           {/* Pricing & Size Summary */}
-          <div className="pt-4 mt-3 border-t border-borderLight flex items-end justify-between">
-            <div>
-              <span className="text-[10px] uppercase tracking-wider text-charcoal-muted block">
+          <div className="pt-3.5 mt-3 border-t border-borderLight flex items-end justify-between gap-3">
+            <div className="min-w-0 flex-1">
+              <span className="text-[10px] uppercase tracking-wider text-charcoal-muted block leading-none mb-1">
                 {activeVariants.length > 1 ? `${t.fromPrice}` : 'Price'}
               </span>
-              <div className="flex items-baseline space-x-1.5">
-                <span className="text-base sm:text-lg font-bold text-forest">
+              <div className="flex flex-col">
+                <span className="text-base sm:text-lg font-bold text-forest leading-tight whitespace-nowrap">
                   {formatMYR(minPrice)}
                 </span>
                 {hasSavings && (
-                  <span className="text-xs text-charcoal-muted line-through">
+                  <span className="text-[11.5px] text-charcoal-muted line-through leading-tight whitespace-nowrap mt-0.5">
                     {formatMYR(maxCompareAt)}
                   </span>
                 )}
@@ -176,9 +176,10 @@ export function ProductCard({ product }: ProductCardProps) {
 
             <Link
               href={`/products/${product.slug}`}
-              className="text-xs font-bold text-forest hover:text-gold-dark flex items-center space-x-0.5 underline transition-colors"
+              className="flex-shrink-0 text-xs font-bold text-forest hover:text-gold-dark inline-flex items-center gap-1 underline transition-colors whitespace-nowrap pb-0.5"
             >
               <span>{t.viewDetails}</span>
+              <ArrowRight className="w-3.5 h-3.5" />
             </Link>
           </div>
         </div>
