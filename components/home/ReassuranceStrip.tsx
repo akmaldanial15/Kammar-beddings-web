@@ -42,10 +42,10 @@ export function ReassuranceStrip() {
                   <Icon className="w-6 h-6" />
                 </div>
                 <div>
-                  <h4 className="text-xs sm:text-sm font-bold text-forest uppercase tracking-wider">
+                  <h4 className="font-sans text-xs sm:text-sm font-bold text-forest uppercase tracking-wider">
                     {item.title}
                   </h4>
-                  <p className="text-xs text-charcoal-muted mt-0.5 leading-snug">
+                  <p className="font-sans text-xs text-charcoal-muted mt-0.5 leading-snug">
                     {item.subtitle}
                   </p>
                 </div>

@@ -65,7 +65,7 @@ const questions: Question[] = [
   {
     id: 'budget',
     title: 'What is your intended investment range?',
-    subtitle: 'Every LENA SLEEP mattress includes 10-year warranty & 100-night trial.',
+    subtitle: 'Every KAMAAR Beddings mattress includes 10-year warranty & 100-night trial.',
     options: [
       { label: 'Accessible Value (Under RM2,500)', description: 'Pure 100% natural latex essential comfort.', value: 'budget' },
       { label: 'Balanced Luxury (RM2,500 - RM4,500)', description: 'Signature 7-zone latex and cool hybrid pocket springs.', value: 'mid' },

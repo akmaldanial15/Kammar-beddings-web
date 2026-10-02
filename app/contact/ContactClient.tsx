@@ -63,7 +63,7 @@ export function ContactClient() {
               <Mail className="w-4 h-4 text-gold flex-shrink-0 mt-0.5" />
               <div>
                 <span className="font-bold text-warmwhite block">Email Enquiries</span>
-                <span>concierge@lenasleep.com.my</span>
+                <span>concierge@kamaarbeddings.com</span>
               </div>
             </div>
 

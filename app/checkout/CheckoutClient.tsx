@@ -129,7 +129,7 @@ export function CheckoutClient() {
     }
 
     if (!termsAgreed) {
-      setErrorMessage('Please agree to LENA SLEEP’s Terms of Service and Sleep Trial policy to proceed.')
+      setErrorMessage('Please agree to KAMAAR Beddings’ Terms of Service and Sleep Trial policy to proceed.')
       return
     }
 
