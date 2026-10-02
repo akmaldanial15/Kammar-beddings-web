@@ -9,7 +9,7 @@ export default async function AdminProductsPage() {
   const categories = await getCategories()
 
   return (
-    <div className="p-4 sm:p-6 md:p-10 space-y-6 md:space-y-8">
+    <div className="space-y-6 md:space-y-8">
       <div className="animate-fade-in-up">
         <h1 className="font-serif text-2xl sm:text-3xl font-bold text-forest-dark">Product Catalog & Atelier</h1>
         <p className="text-xs sm:text-sm text-secondary mt-1">

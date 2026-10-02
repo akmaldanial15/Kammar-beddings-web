@@ -17,7 +17,7 @@ export default async function AdminDashboardLayout({ children }: { children: Rea
       <AdminNav session={session} />
 
       {/* Main Administrative Content Area */}
-      <main className="flex-1 p-3.5 sm:p-6 md:p-10 overflow-x-hidden max-w-7xl mx-auto w-full min-w-0">
+      <main className="flex-1 p-3.5 sm:p-6 md:p-8 overflow-x-hidden max-w-[1500px] w-full min-w-0">
         {children}
       </main>
     </div>

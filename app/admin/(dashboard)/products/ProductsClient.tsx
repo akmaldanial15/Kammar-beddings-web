@@ -25,6 +25,7 @@ import {
   BedDouble,
   Check,
   Package,
+  Boxes,
   FileText,
   Copy,
   Info,
@@ -68,6 +69,7 @@ export function ProductsClient({ initialProducts, categories }: ProductsClientPr
   const [newFeatureText, setNewFeatureText] = useState('')
   const [newImageUrl, setNewImageUrl] = useState('')
   const [newImageAlt, setNewImageAlt] = useState('')
+  const [filterLowStockOnly, setFilterLowStockOnly] = useState(false)
 
   // Filtered list
   const filtered = products.filter((p) => {
@@ -77,8 +79,19 @@ export function ProductsClient({ initialProducts, categories }: ProductsClientPr
       p.slug.toLowerCase().includes(search.toLowerCase())
     const matchesCat = selectedCat === 'all' || p.categoryId === selectedCat
     const matchesStatus = selectedStatus === 'all' || p.status === selectedStatus
-    return matchesSearch && matchesCat && matchesStatus
+    const totalStock = p.variants.reduce((acc, v) => acc + v.stockQuantity, 0)
+    const matchesLowStock = !filterLowStockOnly || totalStock <= 10
+    return matchesSearch && matchesCat && matchesStatus && matchesLowStock
   })
+
+  // Executive KPI stats
+  const totalProductsCount = products.length
+  const publishedCount = products.filter((p) => p.status === 'published').length
+  const totalInventoryUnits = products.reduce((acc, p) => acc + p.variants.reduce((vAcc, v) => vAcc + v.stockQuantity, 0), 0)
+  const lowStockProductsCount = products.filter((p) => {
+    const stock = p.variants.reduce((vAcc, v) => vAcc + v.stockQuantity, 0)
+    return stock <= 10
+  }).length
 
   // Keyboard shortcut: Ctrl+S or Cmd+S to save
   useEffect(() => {
@@ -378,8 +391,98 @@ export function ProductsClient({ initialProducts, categories }: ProductsClientPr
         </div>
       )}
 
+      {/* Executive Quick Stats Cards (Desktop / PC View) */}
+      <div className="hidden sm:grid sm:grid-cols-2 lg:grid-cols-4 gap-4 animate-fade-in font-sans">
+        {/* Card 1: Total Products */}
+        <div className="bg-white rounded-2xl p-4.5 border border-slate-200/80 shadow-xs flex items-center justify-between">
+          <div>
+            <span className="text-[11px] font-bold uppercase tracking-wider text-slate-500 block">
+              Jumlah Produk
+            </span>
+            <span className="text-2xl font-bold text-forest-dark block mt-1 font-sans">
+              {totalProductsCount}
+            </span>
+            <span className="text-[11px] text-slate-400 mt-0.5 block">
+              Merangkumi semua kategori
+            </span>
+          </div>
+          <div className="w-12 h-12 rounded-2xl bg-blue-50 border border-blue-100 text-forest flex items-center justify-center flex-shrink-0">
+            <Package className="w-6 h-6" />
+          </div>
+        </div>
+
+        {/* Card 2: Published & Live */}
+        <div className="bg-white rounded-2xl p-4.5 border border-slate-200/80 shadow-xs flex items-center justify-between">
+          <div>
+            <span className="text-[11px] font-bold uppercase tracking-wider text-slate-500 block">
+              Aktif di Kedai
+            </span>
+            <span className="text-2xl font-bold text-emerald-700 block mt-1 font-sans">
+              {publishedCount}
+            </span>
+            <span className="text-[11px] text-emerald-600/90 mt-0.5 block font-medium">
+              ● Live untuk pelanggan
+            </span>
+          </div>
+          <div className="w-12 h-12 rounded-2xl bg-emerald-50 border border-emerald-100 text-emerald-600 flex items-center justify-center flex-shrink-0">
+            <CheckCircle className="w-6 h-6" />
+          </div>
+        </div>
+
+        {/* Card 3: Inventory Units */}
+        <div className="bg-white rounded-2xl p-4.5 border border-slate-200/80 shadow-xs flex items-center justify-between">
+          <div>
+            <span className="text-[11px] font-bold uppercase tracking-wider text-slate-500 block">
+              Jumlah Stok Fizikal
+            </span>
+            <span className="text-2xl font-bold text-forest-dark block mt-1 font-sans">
+              {totalInventoryUnits} <span className="text-xs font-semibold text-slate-500">unit</span>
+            </span>
+            <span className="text-[11px] text-slate-400 mt-0.5 block">
+              Semua saiz & varian
+            </span>
+          </div>
+          <div className="w-12 h-12 rounded-2xl bg-amber-50 border border-amber-100 text-gold-dark flex items-center justify-center flex-shrink-0">
+            <Boxes className="w-6 h-6" />
+          </div>
+        </div>
+
+        {/* Card 4: Low Stock Alert (Interactive filter) */}
+        <button
+          type="button"
+          onClick={() => setFilterLowStockOnly(!filterLowStockOnly)}
+          className={`rounded-2xl p-4.5 border transition-all text-left flex items-center justify-between cursor-pointer ${
+            filterLowStockOnly
+              ? 'bg-amber-100/70 border-amber-400 ring-2 ring-amber-400 shadow-sm'
+              : 'bg-white border-slate-200/80 shadow-xs hover:border-amber-300'
+          }`}
+        >
+          <div>
+            <div className="flex items-center space-x-1.5">
+              <span className="text-[11px] font-bold uppercase tracking-wider text-amber-800 block">
+                Stok Terhad / Habis
+              </span>
+              {filterLowStockOnly && (
+                <span className="text-[9px] px-1.5 py-0.2 bg-amber-600 text-white rounded font-bold">
+                  Aktif
+                </span>
+              )}
+            </div>
+            <span className="text-2xl font-bold text-amber-700 block mt-1 font-sans">
+              {lowStockProductsCount} <span className="text-xs font-semibold text-amber-700/80">SKU</span>
+            </span>
+            <span className="text-[11px] text-amber-700/90 mt-0.5 block font-medium">
+              {filterLowStockOnly ? 'Klik untuk papar semua' : 'Klik untuk tapis stok rendah'}
+            </span>
+          </div>
+          <div className="w-12 h-12 rounded-2xl bg-amber-50 border border-amber-200 text-amber-600 flex items-center justify-center flex-shrink-0">
+            <AlertCircle className="w-6 h-6" />
+          </div>
+        </button>
+      </div>
+
       {/* Filter and Search Bar */}
-      <div className="bg-warmwhite p-3.5 sm:p-4 rounded-2xl border border-borderLight shadow-xs space-y-3 animate-fade-in">
+      <div className="bg-white p-3.5 sm:p-4 rounded-2xl border border-slate-200/80 shadow-xs space-y-3 animate-fade-in font-sans">
         <div className="flex flex-col md:flex-row gap-3 items-stretch md:items-center justify-between">
           {/* Search Input */}
           <div className="relative flex-1 w-full">
@@ -398,7 +501,7 @@ export function ProductsClient({ initialProducts, categories }: ProductsClientPr
             <select
               value={selectedCat}
               onChange={(e) => setSelectedCat(e.target.value)}
-              className="text-xs px-3 py-2.5 rounded-xl bg-cream/50 border border-borderLight focus:outline-none focus:border-gold transition-all cursor-pointer"
+              className="text-xs px-3 py-2.5 rounded-xl bg-slate-50 border border-slate-200 focus:outline-none focus:border-gold transition-all cursor-pointer font-medium"
             >
               <option value="all">Semua Kategori</option>
               {categories.map((c) => (
@@ -411,10 +514,10 @@ export function ProductsClient({ initialProducts, categories }: ProductsClientPr
             <select
               value={selectedStatus}
               onChange={(e) => setSelectedStatus(e.target.value)}
-              className="text-xs px-3 py-2.5 rounded-xl bg-cream/50 border border-borderLight focus:outline-none focus:border-gold transition-all cursor-pointer"
+              className="text-xs px-3 py-2.5 rounded-xl bg-slate-50 border border-slate-200 focus:outline-none focus:border-gold transition-all cursor-pointer font-medium"
             >
               <option value="all">Semua Status</option>
-              <option value="published">Diterbitkan (Published)</option>
+              <option value="published">Diterbitkan (Live)</option>
               <option value="draft">Draf (Draft)</option>
               <option value="archived">Diarkib (Archived)</option>
             </select>
@@ -427,6 +530,46 @@ export function ProductsClient({ initialProducts, categories }: ProductsClientPr
               <span>Tambah Produk</span>
             </button>
           </div>
+        </div>
+
+        {/* Category Quick Filter Pills (Desktop View) */}
+        <div className="hidden md:flex items-center gap-1.5 pt-2 border-t border-slate-100 overflow-x-auto">
+          <button
+            type="button"
+            onClick={() => setSelectedCat('all')}
+            className={`px-3 py-1.5 rounded-xl text-xs font-bold transition-all cursor-pointer flex items-center space-x-1.5 flex-shrink-0 ${
+              selectedCat === 'all'
+                ? 'bg-forest-dark text-white shadow-xs'
+                : 'bg-slate-50 hover:bg-slate-100 text-slate-600 border border-slate-200/80'
+            }`}
+          >
+            <span>Semua Koleksi</span>
+            <span className={`text-[10px] px-1.5 py-0.2 rounded-full ${selectedCat === 'all' ? 'bg-white/20 text-white' : 'bg-slate-200 text-slate-600'}`}>
+              {products.length}
+            </span>
+          </button>
+
+          {categories.map((c) => {
+            const count = products.filter((p) => p.categoryId === c.id).length
+            const isSelected = selectedCat === c.id
+            return (
+              <button
+                key={c.id}
+                type="button"
+                onClick={() => setSelectedCat(c.id)}
+                className={`px-3 py-1.5 rounded-xl text-xs font-semibold transition-all cursor-pointer flex items-center space-x-1.5 flex-shrink-0 ${
+                  isSelected
+                    ? 'bg-forest-dark text-white font-bold shadow-xs'
+                    : 'bg-slate-50 hover:bg-slate-100 text-slate-600 border border-slate-200/80'
+                }`}
+              >
+                <span>{c.name}</span>
+                <span className={`text-[10px] px-1.5 py-0.2 rounded-full ${isSelected ? 'bg-white/20 text-white' : 'bg-slate-200 text-slate-500'}`}>
+                  {count}
+                </span>
+              </button>
+            )
+          })}
         </div>
 
         {/* Mobile View Filters & Primary Add Button */}
@@ -635,32 +778,51 @@ export function ProductsClient({ initialProducts, categories }: ProductsClientPr
         )}
       </div>
 
-      {/* Desktop Products Table */}
-      <div className="hidden md:block bg-warmwhite rounded-2xl border border-borderLight shadow-xs overflow-hidden animate-fade-in-up delay-200">
+      {/* Desktop Products Table (Redesigned for PC Clarity) */}
+      <div className="hidden md:block bg-white rounded-2xl border border-slate-200/90 shadow-xs overflow-hidden animate-fade-in-up delay-200 font-sans">
         <div className="overflow-x-auto">
           <table className="w-full text-left text-xs border-collapse">
             <thead>
-              <tr className="bg-cream/70 border-b border-borderLight text-charcoal font-semibold tracking-wider uppercase text-[11px]">
+              <tr className="bg-slate-50/90 border-b border-slate-200 text-slate-600 font-bold tracking-wider uppercase text-[11px]">
                 <th className="py-3.5 px-4">Produk Atelier</th>
-                <th className="py-3.5 px-4">Kategori</th>
-                <th className="py-3.5 px-4">Ketegasan & Bahan</th>
-                <th className="py-3.5 px-4 text-right">Harga Bermula</th>
-                <th className="py-3.5 px-4 text-center">Baki Stok</th>
-                <th className="py-3.5 px-4 text-center">Status</th>
+                <th className="py-3.5 px-3">Kategori</th>
+                <th className="py-3.5 px-3">Ketegasan & Bahan</th>
+                <th className="py-3.5 px-3 text-right">Harga Bermula</th>
+                <th className="py-3.5 px-3 text-center">Baki Stok</th>
+                <th className="py-3.5 px-3 text-center">Status</th>
                 <th className="py-3.5 px-4 text-right">Tindakan</th>
               </tr>
             </thead>
-            <tbody className="divide-y divide-borderLight/60">
+            <tbody className="divide-y divide-slate-100 font-sans">
               {filtered.length === 0 ? (
                 <tr>
-                  <td colSpan={7} className="py-12 text-center text-charcoal-muted">
-                    Tiada produk sepadan dengan carian anda.
+                  <td colSpan={7} className="py-14 text-center text-slate-400">
+                    <div className="max-w-xs mx-auto space-y-2">
+                      <BedDouble className="w-8 h-8 text-slate-300 mx-auto" />
+                      <p className="font-bold text-slate-700 text-sm">Tiada produk sepadan</p>
+                      <p className="text-xs text-slate-400">Cuba laraskan kata kunci carian atau penapis kategori di atas.</p>
+                      {(search || selectedCat !== 'all' || selectedStatus !== 'all' || filterLowStockOnly) && (
+                        <button
+                          type="button"
+                          onClick={() => {
+                            setSearch('')
+                            setSelectedCat('all')
+                            setSelectedStatus('all')
+                            setFilterLowStockOnly(false)
+                          }}
+                          className="mt-2 text-xs font-bold text-forest hover:underline"
+                        >
+                          Set Semula Semua Penapis
+                        </button>
+                      )}
+                    </div>
                   </td>
                 </tr>
               ) : (
                 filtered.map((product) => {
                   const category = categories.find((c) => c.id === product.categoryId)
                   const minPrice = Math.min(...product.variants.map((v) => v.priceSen))
+                  const maxPrice = Math.max(...product.variants.map((v) => v.priceSen))
                   const totalStock = product.variants.reduce((acc, v) => acc + v.stockQuantity, 0)
                   const primaryImg =
                     product.images.find((img) => img.isPrimary)?.imageUrl ||
@@ -668,96 +830,138 @@ export function ProductsClient({ initialProducts, categories }: ProductsClientPr
                     ''
 
                   return (
-                    <tr key={product.id} className="hover:bg-cream/30 transition-colors">
+                    <tr key={product.id} className="hover:bg-blue-50/30 transition-colors group">
+                      {/* Product Thumbnail + Name + Variant Meta */}
                       <td className="py-3.5 px-4">
                         <div className="flex items-center space-x-3">
-                          {primaryImg ? (
-                            <img
-                              src={primaryImg}
-                              alt={product.name}
-                              className="w-11 h-11 rounded-xl object-cover border border-borderLight flex-shrink-0"
-                            />
-                          ) : (
-                            <div className="w-11 h-11 rounded-xl bg-cream border border-borderLight flex items-center justify-center text-charcoal-muted flex-shrink-0">
+                          <div className="w-13 h-11 rounded-xl overflow-hidden border border-slate-200 shadow-2xs bg-slate-50 flex-shrink-0 flex items-center justify-center group-hover:border-gold/60 transition-colors">
+                            {primaryImg ? (
+                              <img
+                                src={primaryImg}
+                                alt={product.name}
+                                className="w-full h-full object-cover group-hover:scale-105 transition-transform duration-300"
+                              />
+                            ) : (
                               <BedDouble className="w-5 h-5 text-gold-dark" />
-                            </div>
-                          )}
+                            )}
+                          </div>
                           <div className="min-w-0">
-                            <span className="font-bold text-forest-dark text-sm block truncate">
+                            <span className="font-bold text-forest-dark text-sm block truncate group-hover:text-forest transition-colors">
                               {product.name}
                             </span>
-                            <span className="text-[11px] text-charcoal-muted block truncate font-mono">
-                              /products/{product.slug}
-                            </span>
+                            <div className="flex items-center gap-2 mt-0.5">
+                              <span className="text-[11px] text-slate-500 font-medium">
+                                {product.variants.length} saiz varian
+                              </span>
+                              <span className="text-slate-300">&bull;</span>
+                              <Link
+                                href={`/products/${product.slug}`}
+                                target="_blank"
+                                className="text-[11px] text-gold-dark hover:underline inline-flex items-center gap-0.5 font-medium"
+                              >
+                                <span>Lihat live</span>
+                                <ExternalLink className="w-2.5 h-2.5" />
+                              </Link>
+                            </div>
                           </div>
                         </div>
                       </td>
 
-                      <td className="py-3.5 px-4 font-medium text-charcoal">
-                        {category ? category.name : 'Uncategorized'}
-                      </td>
-
-                      <td className="py-3.5 px-4">
-                        <span className="block font-medium text-forest">{product.firmness || 'Standard'}</span>
-                        <span className="text-[10px] text-charcoal-muted truncate max-w-[150px] block">
-                          {product.material}
+                      {/* Category Pill */}
+                      <td className="py-3.5 px-3">
+                        <span className="inline-flex items-center px-2 py-0.5 rounded-lg text-xs font-semibold bg-slate-100 text-slate-700 border border-slate-200/80">
+                          {category ? category.name : 'Umum'}
                         </span>
                       </td>
 
-                      <td className="py-3.5 px-4 text-right font-bold text-forest-dark">
-                        {formatMYR(minPrice)}
+                      {/* Feel & Material */}
+                      <td className="py-3.5 px-3">
+                        {product.firmness ? (
+                          <span className="inline-block font-semibold text-xs text-forest px-2 py-0.5 rounded-md bg-forest/5 border border-forest/15">
+                            {product.firmness}
+                          </span>
+                        ) : (
+                          <span className="text-xs text-slate-400">-</span>
+                        )}
+                        <span className="text-[11px] text-slate-500 block truncate max-w-[150px] mt-0.5">
+                          {product.material || 'Lateks & Gentian Asli'}
+                        </span>
                       </td>
 
-                      <td className="py-3.5 px-4 text-center">
+                      {/* Price */}
+                      <td className="py-3.5 px-3 text-right">
+                        <span className="font-bold text-forest-dark text-sm block font-sans">
+                          {formatMYR(minPrice)}
+                        </span>
+                        {maxPrice > minPrice && (
+                          <span className="text-[10px] text-slate-400 block font-normal">
+                            hingga {formatMYR(maxPrice)}
+                          </span>
+                        )}
+                      </td>
+
+                      {/* Inventory Stock Pill */}
+                      <td className="py-3.5 px-3 text-center">
                         <span
-                          className={`inline-block px-2.5 py-1 rounded-full text-[10px] font-bold ${
+                          className={`inline-flex items-center gap-1.5 px-2.5 py-0.5 rounded-full text-xs font-bold ${
                             totalStock === 0
-                              ? 'bg-rose-100 text-rose-800 border border-rose-200'
-                              : totalStock <= 5
-                              ? 'bg-amber-100 text-amber-800 border border-amber-200'
-                              : 'bg-emerald-50 text-emerald-800 border border-emerald-200'
+                              ? 'bg-rose-50 text-rose-700 border border-rose-200'
+                              : totalStock <= 10
+                              ? 'bg-amber-50 text-amber-700 border border-amber-200'
+                              : 'bg-emerald-50 text-emerald-700 border border-emerald-200'
                           }`}
                         >
-                          {totalStock === 0 ? 'Habis' : `${totalStock} unit`}
+                          <span className={`w-1.5 h-1.5 rounded-full ${
+                            totalStock === 0 ? 'bg-rose-500' : totalStock <= 10 ? 'bg-amber-500' : 'bg-emerald-500'
+                          }`} />
+                          <span>{totalStock === 0 ? 'Habis' : `${totalStock} unit`}</span>
                         </span>
                       </td>
 
-                      <td className="py-3.5 px-4 text-center">
+                      {/* Store Status */}
+                      <td className="py-3.5 px-3 text-center">
                         <span
-                          className={`px-2.5 py-0.5 rounded-full text-[10px] font-bold uppercase tracking-wider ${
+                          className={`inline-flex items-center gap-1.5 px-2.5 py-0.5 rounded-full text-[11px] font-bold uppercase tracking-wider ${
                             product.status === 'published'
-                              ? 'bg-emerald-100 text-emerald-800 border border-emerald-200'
+                              ? 'bg-emerald-100/70 text-emerald-800 border border-emerald-300'
                               : product.status === 'draft'
-                              ? 'bg-amber-100 text-amber-800 border border-amber-200'
-                              : 'bg-zinc-100 text-zinc-600 border border-zinc-200'
+                              ? 'bg-amber-100/70 text-amber-800 border border-amber-300'
+                              : 'bg-slate-100 text-slate-600 border border-slate-300'
                           }`}
                         >
-                          {product.status}
+                          <span className={`w-1.5 h-1.5 rounded-full ${
+                            product.status === 'published' ? 'bg-emerald-500 animate-pulse' : 'bg-slate-400'
+                          }`} />
+                          <span>{product.status === 'published' ? 'Live' : product.status}</span>
                         </span>
                       </td>
 
+                      {/* Actions */}
                       <td className="py-3.5 px-4 text-right">
                         <div className="flex items-center justify-end space-x-1.5">
+                          <button
+                            onClick={() => handleEditClick(product)}
+                            title="Sunting produk atelier"
+                            className="px-2.5 py-1.5 rounded-lg bg-forest/10 hover:bg-forest text-forest hover:text-white font-semibold text-xs border border-forest/20 transition-all flex items-center space-x-1 cursor-pointer"
+                          >
+                            <Edit2 className="w-3.5 h-3.5" />
+                            <span>Sunting</span>
+                          </button>
+
                           <Link
                             href={`/products/${product.slug}`}
                             target="_blank"
                             title="Pratonton di laman web"
-                            className="p-1.5 text-charcoal-muted hover:text-forest transition-colors rounded-lg hover:bg-cream"
+                            className="p-1.5 text-slate-400 hover:text-forest transition-colors rounded-lg hover:bg-slate-100 border border-transparent hover:border-slate-200"
                           >
                             <Eye className="w-4 h-4" />
                           </Link>
-                          <button
-                            onClick={() => handleEditClick(product)}
-                            title="Sunting produk atelier"
-                            className="p-1.5 text-charcoal-muted hover:text-forest transition-colors rounded-lg hover:bg-cream"
-                          >
-                            <Edit2 className="w-4 h-4" />
-                          </button>
+
                           {product.status !== 'archived' && (
                             <button
                               onClick={() => handleArchive(product.id)}
                               title="Arkibkan produk"
-                              className="p-1.5 text-charcoal-muted hover:text-rose-600 transition-colors rounded-lg hover:bg-rose-50"
+                              className="p-1.5 text-slate-400 hover:text-rose-600 transition-colors rounded-lg hover:bg-rose-50 border border-transparent hover:border-rose-200 cursor-pointer"
                             >
                               <Archive className="w-4 h-4" />
                             </button>
@@ -770,6 +974,26 @@ export function ProductsClient({ initialProducts, categories }: ProductsClientPr
               )}
             </tbody>
           </table>
+        </div>
+
+        {/* Desktop Table Footer Info */}
+        <div className="px-5 py-3.5 bg-slate-50/70 border-t border-slate-200 flex items-center justify-between text-xs text-slate-500">
+          <span>
+            Menunjukkan <strong className="text-slate-800 font-bold">{filtered.length}</strong> daripada {products.length} produk atelier
+          </span>
+          {(search || selectedCat !== 'all' || selectedStatus !== 'all' || filterLowStockOnly) && (
+            <button
+              onClick={() => {
+                setSearch('')
+                setSelectedCat('all')
+                setSelectedStatus('all')
+                setFilterLowStockOnly(false)
+              }}
+              className="text-xs font-bold text-forest hover:underline cursor-pointer"
+            >
+              Set Semula Penapis
+            </button>
+          )}
         </div>
       </div>
 
