@@ -19,6 +19,7 @@ import {
   Tag,
   Phone,
   Globe,
+  BookOpen,
 } from 'lucide-react'
 import { Category } from '@/types'
 import { initialCategories } from '@/lib/db/seedData'
@@ -40,7 +41,7 @@ export function Header() {
   const [isSearchOpen, setIsSearchOpen] = useState(false)
   const [isMobileMenuOpen, setIsMobileMenuOpen] = useState(false)
   const [isMattressMegaOpen, setIsMattressMegaOpen] = useState(false)
-  const [mobileExpandedSection, setMobileExpandedSection] = useState<string | null>('mattresses')
+  const [mobileExpandedSection, setMobileExpandedSection] = useState<string | null>(null)
   const [navCategories, setNavCategories] = useState<Category[]>(() =>
     initialCategories.filter((c) => c.showInNav && c.isActive !== false)
   )
@@ -560,234 +561,380 @@ export function Header() {
       {/* ========================================================================= */}
       {/* MOBILE SLIDE-OVER DRAWER (ACCORDION & EXPANDED CONTROLS)                  */}
       {/* ========================================================================= */}
+      {/* ========================================================================= */}
+      {/* MOBILE SLIDE-OVER DRAWER (LUXURY ATELIER EDITION)                         */}
+      {/* ========================================================================= */}
       {isMobileMenuOpen && (
         <div className="fixed inset-0 z-50 lg:hidden">
-          {/* Backdrop */}
+          {/* Backdrop with silky blur */}
           <div
             className="fixed inset-0 bg-forest-dark/60 backdrop-blur-sm transition-opacity animate-fade-in"
             onClick={() => setIsMobileMenuOpen(false)}
           />
 
           {/* Drawer Panel */}
-          <div className="fixed inset-y-0 left-0 max-w-xs w-full bg-warmwhite shadow-2xl flex flex-col justify-between overflow-y-auto animate-slide-in-left">
-            <div>
-              {/* Drawer Top Header */}
-              <div className="p-4 border-b border-borderLight flex items-center justify-between bg-cream/50">
+          <div className="fixed inset-y-0 left-0 max-w-[340px] w-[88vw] bg-warmwhite shadow-2xl flex flex-col justify-between overflow-hidden animate-slide-in-left">
+            {/* SCROLLABLE MAIN CONTENT AREA */}
+            <div className="flex-1 overflow-y-auto no-scrollbar">
+              {/* TOP BRAND HEADER */}
+              <div className="p-4 border-b border-borderLight flex items-center justify-between bg-warmwhite sticky top-0 z-10 backdrop-blur-md">
                 <Link href="/" onClick={() => setIsMobileMenuOpen(false)} className="flex items-center">
                   <KamaarLogo variant="horizontal" size="sm" theme="light" />
                 </Link>
                 <button
                   onClick={() => setIsMobileMenuOpen(false)}
-                  className="p-2 text-charcoal-muted hover:text-forest rounded-full hover:bg-warmwhite transition-colors"
+                  className="w-8 h-8 flex items-center justify-center text-charcoal-muted hover:text-forest rounded-full bg-cream hover:bg-gold/15 transition-all cursor-pointer"
                   aria-label="Close menu"
                 >
-                  <X className="w-5 h-5" />
+                  <X className="w-4 h-4" />
                 </button>
               </div>
 
-              {/* Fast Action Buttons */}
-              <div className="p-4 bg-forest-dark text-warmwhite space-y-2">
-                <Link
-                  href="/finder"
-                  onClick={() => setIsMobileMenuOpen(false)}
-                  className="flex items-center justify-between p-2.5 rounded-xl bg-warmwhite/10 hover:bg-warmwhite/20 border border-gold/30 text-xs font-bold transition-all text-warmwhite"
+              {/* QUICK SEARCH BAR (High discovery affordance) */}
+              <div className="p-3 bg-cream/40 border-b border-borderLight/60">
+                <button
+                  onClick={() => {
+                    setIsMobileMenuOpen(false)
+                    setIsSearchOpen(true)
+                  }}
+                  className="w-full flex items-center justify-between px-3.5 py-2.5 rounded-xl bg-warmwhite border border-borderLight text-xs text-charcoal-muted hover:border-gold transition-all shadow-2xs"
                 >
                   <span className="flex items-center space-x-2">
-                    <Sparkles className="w-4 h-4 text-gold" />
-                    <span>60-Sec Mattress Finder Quiz</span>
+                    <Search className="w-3.5 h-3.5 text-gold-dark" />
+                    <span>{locale === 'bm' ? 'Cari tilam, bantal, saiz...' : 'Search mattresses, pillows...'}</span>
                   </span>
-                  <span className="text-gold">&rarr;</span>
-                </Link>
-
-                <Link
-                  href="/showrooms"
-                  onClick={() => setIsMobileMenuOpen(false)}
-                  className="flex items-center justify-between p-2.5 rounded-xl bg-warmwhite/5 hover:bg-warmwhite/10 border border-warmwhite/10 text-xs font-medium transition-all text-warmwhite/90"
-                >
-                  <span className="flex items-center space-x-2">
-                    <MapPin className="w-4 h-4 text-gold" />
-                    <span>Book Showroom Appointment</span>
+                  <span className="text-[10px] font-mono px-1.5 py-0.5 rounded bg-cream text-secondary border border-borderLight">
+                    Cari
                   </span>
-                  <span className="text-gold">&rarr;</span>
-                </Link>
+                </button>
               </div>
 
-              {/* Accordion & Category Links */}
-              <nav className="p-4 space-y-1 text-sm font-medium">
-                {navCategories.map((cat) => {
-                  const targetUrl = cat.customUrl || `/collections/${cat.slug}`
-                  const label = getCategoryLabel(cat)
-                  const isSaleCategory = cat.badge?.toUpperCase() === 'SALE' || cat.slug === 'offers'
-
-                  if (cat.hasMegaMenu) {
-                    const isExpanded = mobileExpandedSection === cat.id || (mobileExpandedSection === 'mattresses' && cat.slug === 'mattress')
-                    return (
-                      <div key={cat.id} className="border-b border-borderLight/60 pb-1">
-                        <button
-                          onClick={() =>
-                            setMobileExpandedSection(isExpanded ? null : cat.id)
-                          }
-                          className="w-full flex items-center justify-between py-2.5 text-forest font-bold text-left"
-                        >
-                          <span>{label}</span>
-                          <ChevronDown
-                            className={`w-4 h-4 text-gold-dark transition-transform ${
-                              isExpanded ? 'rotate-180' : ''
-                            }`}
-                          />
-                        </button>
-
-                        {isExpanded && (
-                          <div className="pl-3 pb-2 space-y-2 text-xs text-charcoal-muted animate-fade-in">
-                            <Link
-                              href={targetUrl}
-                              onClick={() => setIsMobileMenuOpen(false)}
-                              className="block py-1 text-forest font-bold underline"
-                            >
-                              All {label} Collection &rarr;
-                            </Link>
-                            <Link
-                              href={`${targetUrl}?material=latex`}
-                              onClick={() => setIsMobileMenuOpen(false)}
-                              className="block py-1 hover:text-forest"
-                            >
-                              100% Pure Natural Latex
-                            </Link>
-                            <Link
-                              href={`${targetUrl}?material=hybrid`}
-                              onClick={() => setIsMobileMenuOpen(false)}
-                              className="block py-1 hover:text-forest"
-                            >
-                              Cool Night Hybrid Series
-                            </Link>
-                            <Link
-                              href={`${targetUrl}?material=ortho`}
-                              onClick={() => setIsMobileMenuOpen(false)}
-                              className="block py-1 hover:text-forest"
-                            >
-                              Orthopaedic Spinal Firm
-                            </Link>
-                            <div className="pt-1.5 border-t border-borderLight/40 flex items-center space-x-3 text-[11px] font-semibold text-gold-dark">
-                              <Link
-                                href={`${targetUrl}?size=single`}
-                                onClick={() => setIsMobileMenuOpen(false)}
-                              >
-                                Single
-                              </Link>
-                              <span>&bull;</span>
-                              <Link
-                                href={`${targetUrl}?size=queen`}
-                                onClick={() => setIsMobileMenuOpen(false)}
-                              >
-                                Queen
-                              </Link>
-                              <span>&bull;</span>
-                              <Link
-                                href={`${targetUrl}?size=king`}
-                                onClick={() => setIsMobileMenuOpen(false)}
-                              >
-                                King
-                              </Link>
-                            </div>
-                          </div>
-                        )}
-                      </div>
-                    )
-                  }
-
-                  return (
-                    <Link
-                      key={cat.id}
-                      href={targetUrl}
-                      onClick={() => setIsMobileMenuOpen(false)}
-                      className={`flex items-center justify-between py-2.5 border-b border-borderLight/60 ${
-                        isSaleCategory ? 'text-sale font-bold' : 'text-charcoal hover:text-forest'
-                      }`}
-                    >
-                      <div className="flex items-center space-x-2">
-                        {isSaleCategory && <Tag className="w-4 h-4 text-sale" />}
-                        <span>{label}</span>
-                        {cat.badge && (
-                          <span
-                            className={`text-[9px] uppercase tracking-wider px-1.5 py-0.5 rounded font-bold ${
-                              isSaleCategory
-                                ? 'bg-sale/10 text-sale'
-                                : 'bg-gold/20 text-forest-dark'
-                            }`}
-                          >
-                            {cat.badge}
-                          </span>
-                        )}
-                      </div>
-                      <span className="text-xs text-charcoal-muted">&rarr;</span>
-                    </Link>
-                  )
-                })}
-
-                {/* Compare */}
-                <Link
-                  href="/compare"
-                  onClick={() => setIsMobileMenuOpen(false)}
-                  className="flex items-center justify-between py-2.5 text-charcoal hover:text-forest"
-                >
-                  <span className="flex items-center space-x-2">
-                    <Scale className="w-4 h-4 text-gold-dark" />
-                    <span>Compare Mattresses</span>
-                  </span>
-                  {compareCount > 0 && (
-                    <span className="w-5 h-5 rounded-full bg-gold text-forest-dark text-[11px] font-bold flex items-center justify-center">
-                      {compareCount}
-                    </span>
-                  )}
-                </Link>
-              </nav>
-            </div>
-
-            {/* Drawer Bottom Controls */}
-            <div className="p-4 border-t border-borderLight bg-cream/70 space-y-3">
-              {/* Language Switcher */}
-              <div className="flex items-center justify-between text-xs">
-                <span className="text-charcoal-muted font-medium">Language / Bahasa:</span>
-                <div className="flex items-center space-x-1 bg-warmwhite px-2 py-1 rounded-full border border-borderLight">
-                  <button
-                    onClick={() => setLocale('en')}
-                    className={`px-2 py-0.5 rounded text-xs font-semibold ${
-                      locale === 'en' ? 'bg-forest text-warmwhite' : 'text-charcoal-muted'
-                    }`}
+              {/* 2-COLUMN LUXURY DISCOVERY CARDS */}
+              <div className="p-3 bg-gradient-to-b from-cream/20 to-warmwhite border-b border-borderLight/60">
+                <div className="grid grid-cols-2 gap-2">
+                  {/* Finder Quiz Card */}
+                  <Link
+                    href="/finder"
+                    onClick={() => setIsMobileMenuOpen(false)}
+                    className="p-3 rounded-2xl bg-gradient-to-br from-warmwhite to-cream border border-[#B49A58]/35 shadow-2xs hover:border-[#1E4E8C] transition-all group flex flex-col justify-between"
                   >
-                    English
-                  </button>
-                  <button
-                    onClick={() => setLocale('bm')}
-                    className={`px-2 py-0.5 rounded text-xs font-semibold ${
-                      locale === 'bm' ? 'bg-forest text-warmwhite' : 'text-charcoal-muted'
-                    }`}
+                    <div className="flex items-center justify-between mb-1.5">
+                      <div className="w-7 h-7 rounded-xl bg-[#B49A58]/15 flex items-center justify-center text-[#B49A58]">
+                        <Sparkles className="w-3.5 h-3.5" />
+                      </div>
+                      <ArrowRight className="w-3 h-3 text-secondary group-hover:text-forest group-hover:translate-x-0.5 transition-all" />
+                    </div>
+                    <div>
+                      <span className="text-xs font-bold text-forest-dark block leading-snug">
+                        {locale === 'bm' ? 'Kuiz Cari Tilam' : 'Mattress Finder'}
+                      </span>
+                      <span className="text-[10px] text-secondary">
+                        {locale === 'bm' ? '60 saat padanan ideal' : '60-sec sleep quiz'}
+                      </span>
+                    </div>
+                  </Link>
+
+                  {/* Showroom Card */}
+                  <Link
+                    href="/showrooms"
+                    onClick={() => setIsMobileMenuOpen(false)}
+                    className="p-3 rounded-2xl bg-gradient-to-br from-warmwhite to-cream border border-[#B49A58]/35 shadow-2xs hover:border-[#1E4E8C] transition-all group flex flex-col justify-between"
                   >
-                    BM
-                  </button>
+                    <div className="flex items-center justify-between mb-1.5">
+                      <div className="w-7 h-7 rounded-xl bg-[#1E4E8C]/10 flex items-center justify-center text-[#1E4E8C]">
+                        <MapPin className="w-3.5 h-3.5" />
+                      </div>
+                      <ArrowRight className="w-3 h-3 text-secondary group-hover:text-forest group-hover:translate-x-0.5 transition-all" />
+                    </div>
+                    <div>
+                      <span className="text-xs font-bold text-forest-dark block leading-snug">
+                        {locale === 'bm' ? 'Bilik Pameran' : 'Showrooms'}
+                      </span>
+                      <span className="text-[10px] text-secondary">
+                        {locale === 'bm' ? 'Cuba tilam di butik' : 'Book VIP visit'}
+                      </span>
+                    </div>
+                  </Link>
                 </div>
               </div>
 
-              {/* Direct WhatsApp Concierge */}
+              {/* SECTION: STORE COLLECTIONS */}
+              <div className="p-3.5 space-y-1">
+                <div className="px-2 pb-1.5 flex items-center justify-between">
+                  <span className="text-[10px] font-bold tracking-widest uppercase text-secondary">
+                    {locale === 'bm' ? 'Koleksi Utama' : 'Store Collections'}
+                  </span>
+                  <span className="text-[10px] font-semibold text-gold-dark">
+                    100% Organik
+                  </span>
+                </div>
+
+                <nav className="space-y-1">
+                  {navCategories.map((cat) => {
+                    const targetUrl = cat.customUrl || `/collections/${cat.slug}`
+                    const label = getCategoryLabel(cat)
+                    const isSaleCategory = cat.badge?.toUpperCase() === 'SALE' || cat.slug === 'offers'
+                    const isMattress = cat.slug === 'mattress'
+
+                    if (cat.hasMegaMenu) {
+                      const isExpanded = mobileExpandedSection === cat.id || (mobileExpandedSection === 'mattresses' && isMattress)
+
+                      return (
+                        <div key={cat.id} className="rounded-2xl transition-colors overflow-hidden">
+                          <button
+                            type="button"
+                            onClick={() => setMobileExpandedSection(isExpanded ? null : cat.id)}
+                            className={`w-full flex items-center justify-between p-2.5 rounded-2xl text-xs font-bold transition-all text-left cursor-pointer ${
+                              isExpanded
+                                ? 'bg-[#1E4E8C] text-white shadow-xs'
+                                : 'text-forest-dark hover:bg-cream/80'
+                            }`}
+                          >
+                            <div className="flex items-center space-x-2.5">
+                              <span className={`w-7 h-7 rounded-xl flex items-center justify-center text-xs ${
+                                isExpanded ? 'bg-white/15 text-[#D4AF37]' : 'bg-cream text-forest'
+                              }`}>
+                                🛏️
+                              </span>
+                              <div>
+                                <span className="block">{label}</span>
+                                <span className={`text-[10px] font-normal ${isExpanded ? 'text-white/80' : 'text-secondary'}`}>
+                                  {locale === 'bm' ? 'Lateks Semula Jadi & Hibrid' : 'Organic Latex & Hybrid'}
+                                </span>
+                              </div>
+                            </div>
+                            <ChevronDown
+                              className={`w-4 h-4 transition-transform duration-200 ${
+                                isExpanded ? 'rotate-180 text-[#D4AF37]' : 'text-secondary'
+                              }`}
+                            />
+                          </button>
+
+                          {/* Smooth Collapsible Content */}
+                          {isExpanded && (
+                            <div className="p-2.5 mt-1 bg-cream/50 rounded-2xl border border-borderLight/60 space-y-2.5 animate-in fade-in duration-200">
+                              <Link
+                                href={targetUrl}
+                                onClick={() => setIsMobileMenuOpen(false)}
+                                className="flex items-center justify-between px-3 py-2 bg-warmwhite rounded-xl border border-borderLight text-xs font-bold text-forest hover:bg-forest hover:text-white transition-all shadow-2xs"
+                              >
+                                <span>{locale === 'bm' ? 'Terokai Semua Koleksi Tilam' : 'Explore All Mattresses'}</span>
+                                <span>&rarr;</span>
+                              </Link>
+
+                              <div className="space-y-1">
+                                <span className="text-[10px] font-bold uppercase tracking-wider text-secondary px-2 block">
+                                  {locale === 'bm' ? 'Pilihan Siri & Bahan' : 'Series & Feel'}
+                                </span>
+                                <Link
+                                  href={`${targetUrl}?material=latex`}
+                                  onClick={() => setIsMobileMenuOpen(false)}
+                                  className="flex items-center justify-between px-3 py-1.5 rounded-xl text-xs text-charcoal hover:bg-warmwhite hover:text-forest transition-colors"
+                                >
+                                  <span>100% Pure Natural Latex</span>
+                                  <span className="text-[9px] px-1.5 py-0.5 rounded-md bg-emerald-100 text-emerald-800 font-bold">
+                                    Eco-Cert
+                                  </span>
+                                </Link>
+                                <Link
+                                  href={`${targetUrl}?material=hybrid`}
+                                  onClick={() => setIsMobileMenuOpen(false)}
+                                  className="flex items-center justify-between px-3 py-1.5 rounded-xl text-xs text-charcoal hover:bg-warmwhite hover:text-forest transition-colors"
+                                >
+                                  <span>Cool Night Hybrid Series</span>
+                                  <span className="text-[9px] px-1.5 py-0.5 rounded-md bg-blue-100 text-blue-800 font-bold">
+                                    Ice-Silk
+                                  </span>
+                                </Link>
+                                <Link
+                                  href={`${targetUrl}?material=ortho`}
+                                  onClick={() => setIsMobileMenuOpen(false)}
+                                  className="flex items-center justify-between px-3 py-1.5 rounded-xl text-xs text-charcoal hover:bg-warmwhite hover:text-forest transition-colors"
+                                >
+                                  <span>Orthopaedic Spinal Support</span>
+                                  <span className="text-[9px] px-1.5 py-0.5 rounded-md bg-amber-100 text-amber-800 font-bold">
+                                    Firm
+                                  </span>
+                                </Link>
+                              </div>
+
+                              {/* Quick Size Chips */}
+                              <div className="pt-2 border-t border-borderLight/60">
+                                <span className="text-[10px] font-bold uppercase tracking-wider text-secondary px-2 block mb-1.5">
+                                  {locale === 'bm' ? 'Pilih Ikut Saiz' : 'Shop by Size'}
+                                </span>
+                                <div className="grid grid-cols-3 gap-1.5">
+                                  {['king', 'queen', 'single'].map((size) => (
+                                    <Link
+                                      key={size}
+                                      href={`${targetUrl}?size=${size}`}
+                                      onClick={() => setIsMobileMenuOpen(false)}
+                                      className="py-1.5 text-center text-xs font-semibold bg-warmwhite rounded-xl border border-borderLight hover:border-gold capitalize transition-colors"
+                                    >
+                                      {size}
+                                    </Link>
+                                  ))}
+                                </div>
+                              </div>
+                            </div>
+                          )}
+                        </div>
+                      )
+                    }
+
+                    // Standard category item
+                    const categoryIcons: Record<string, string> = {
+                      pillows: '🪶',
+                      'toppers-protectors': '☁️',
+                      bedframes: '🪵',
+                      bedding: '🧵',
+                      offers: '🏷️',
+                    }
+
+                    return (
+                      <Link
+                        key={cat.id}
+                        href={targetUrl}
+                        onClick={() => setIsMobileMenuOpen(false)}
+                        className={`flex items-center justify-between p-2.5 rounded-2xl text-xs font-bold transition-all ${
+                          isSaleCategory
+                            ? 'bg-sale/5 border border-sale/20 text-sale hover:bg-sale/10'
+                            : 'text-charcoal hover:bg-cream/80'
+                        }`}
+                      >
+                        <div className="flex items-center space-x-2.5">
+                          <span className="w-7 h-7 rounded-xl bg-cream flex items-center justify-center text-xs">
+                            {categoryIcons[cat.slug] || '✨'}
+                          </span>
+                          <span>{label}</span>
+                        </div>
+
+                        <div className="flex items-center space-x-1.5">
+                          {cat.badge && (
+                            <span
+                              className={`text-[9px] uppercase tracking-wider px-2 py-0.5 rounded-full font-extrabold ${
+                                isSaleCategory
+                                  ? 'bg-sale text-white shadow-2xs'
+                                  : 'bg-[#B49A58]/20 text-[#8C6B1C]'
+                              }`}
+                            >
+                              {cat.badge}
+                            </span>
+                          )}
+                          <span className="text-secondary text-sm">&rsaquo;</span>
+                        </div>
+                      </Link>
+                    )
+                  })}
+                </nav>
+              </div>
+
+              {/* SECTION: CARE & SERVICES */}
+              <div className="p-3.5 pt-0 space-y-1">
+                <div className="px-2 pb-1.5">
+                  <span className="text-[10px] font-bold tracking-widest uppercase text-secondary">
+                    {locale === 'bm' ? 'Perkhidmatan & Panduan' : 'Services & Care'}
+                  </span>
+                </div>
+
+                <div className="space-y-1">
+                  <Link
+                    href="/compare"
+                    onClick={() => setIsMobileMenuOpen(false)}
+                    className="flex items-center justify-between p-2.5 rounded-2xl text-xs font-medium text-charcoal hover:bg-cream transition-colors"
+                  >
+                    <div className="flex items-center space-x-2.5">
+                      <span className="w-7 h-7 rounded-xl bg-cream flex items-center justify-center text-xs">
+                        <Scale className="w-3.5 h-3.5 text-gold-dark" />
+                      </span>
+                      <span>{locale === 'bm' ? 'Bandingkan Tilam' : 'Compare Mattresses'}</span>
+                    </div>
+                    {compareCount > 0 ? (
+                      <span className="px-2 py-0.5 rounded-full bg-gold text-forest-dark text-[10px] font-bold">
+                        {compareCount}
+                      </span>
+                    ) : (
+                      <span className="text-secondary text-sm">&rsaquo;</span>
+                    )}
+                  </Link>
+
+                  <Link
+                    href="/blog"
+                    onClick={() => setIsMobileMenuOpen(false)}
+                    className="flex items-center justify-between p-2.5 rounded-2xl text-xs font-medium text-charcoal hover:bg-cream transition-colors"
+                  >
+                    <div className="flex items-center space-x-2.5">
+                      <span className="w-7 h-7 rounded-xl bg-cream flex items-center justify-center text-xs">
+                        <BookOpen className="w-3.5 h-3.5 text-gold-dark" />
+                      </span>
+                      <span>{locale === 'bm' ? 'Jurnal Sains Tidur' : 'Sleep Science Journal'}</span>
+                    </div>
+                    <span className="text-secondary text-sm">&rsaquo;</span>
+                  </Link>
+
+                  <Link
+                    href="/warranty"
+                    onClick={() => setIsMobileMenuOpen(false)}
+                    className="flex items-center justify-between p-2.5 rounded-2xl text-xs font-medium text-charcoal hover:bg-cream transition-colors"
+                  >
+                    <div className="flex items-center space-x-2.5">
+                      <span className="w-7 h-7 rounded-xl bg-cream flex items-center justify-center text-xs">
+                        <ShieldCheck className="w-3.5 h-3.5 text-gold-dark" />
+                      </span>
+                      <span>{locale === 'bm' ? '10-Tahun Jaminan & 100-Malam Trial' : '10-Yr Warranty & 100-Night Trial'}</span>
+                    </div>
+                    <span className="text-secondary text-sm">&rsaquo;</span>
+                  </Link>
+                </div>
+              </div>
+            </div>
+
+            {/* STICKY BOTTOM ACTION FOOTER (Thumb Zone) */}
+            <div className="p-3.5 border-t border-borderLight bg-warmwhite/95 backdrop-blur-md space-y-2.5 pb-[max(1rem,env(safe-area-inset-bottom))] shadow-lg">
+              {/* Language & Account bar */}
+              <div className="flex items-center justify-between text-xs">
+                <div className="flex items-center space-x-1.5">
+                  <Globe className="w-3.5 h-3.5 text-gold-dark" />
+                  <div className="inline-flex p-0.5 bg-cream rounded-full border border-borderLight text-[11px]">
+                    <button
+                      onClick={() => setLocale('en')}
+                      className={`px-2.5 py-1 rounded-full font-bold transition-all ${
+                        locale === 'en' ? 'bg-[#1E4E8C] text-white shadow-xs' : 'text-secondary hover:text-charcoal'
+                      }`}
+                    >
+                      EN
+                    </button>
+                    <button
+                      onClick={() => setLocale('bm')}
+                      className={`px-2.5 py-1 rounded-full font-bold transition-all ${
+                        locale === 'bm' ? 'bg-[#1E4E8C] text-white shadow-xs' : 'text-secondary hover:text-charcoal'
+                      }`}
+                    >
+                      BM
+                    </button>
+                  </div>
+                </div>
+
+                <Link
+                  href="/account"
+                  onClick={() => setIsMobileMenuOpen(false)}
+                  className="flex items-center space-x-1 text-xs font-bold text-forest hover:text-forest-dark"
+                >
+                  <User className="w-3.5 h-3.5 text-gold-dark" />
+                  <span>{locale === 'bm' ? 'Akaun Saya' : 'My Account'}</span>
+                </Link>
+              </div>
+
+              {/* WhatsApp Concierge Button */}
               <a
                 href="https://wa.me/60123456789?text=Hello%20KAMAAR%20Beddings,%20I%20would%20like%20to%20enquire%20about%20your%20mattresses."
                 target="_blank"
                 rel="noopener noreferrer"
-                className="w-full py-2.5 bg-forest hover:bg-forest-dark text-warmwhite text-xs font-bold rounded-xl flex items-center justify-center space-x-2 transition-colors shadow-sm"
+                className="w-full py-2.5 px-4 bg-gradient-to-r from-emerald-600 to-teal-700 hover:from-emerald-700 hover:to-teal-800 text-white text-xs font-bold rounded-xl flex items-center justify-center space-x-2 transition-all shadow-sm"
               >
-                <Phone className="w-3.5 h-3.5 text-gold" />
-                <span>WhatsApp Concierge</span>
+                <Phone className="w-3.5 h-3.5 text-emerald-200" />
+                <span>{locale === 'bm' ? 'WhatsApp Concierge (Bantuan Pantas)' : 'Official WhatsApp Concierge'}</span>
               </a>
-
-              {/* Customer Account */}
-              <Link
-                href="/account"
-                onClick={() => setIsMobileMenuOpen(false)}
-                className="w-full py-2 bg-warmwhite hover:bg-cream text-charcoal border border-borderLight text-xs font-semibold rounded-xl flex items-center justify-center space-x-1.5 transition-colors"
-              >
-                <User className="w-3.5 h-3.5 text-gold-dark" />
-                <span>Customer Sanctuary Portal</span>
-              </Link>
             </div>
           </div>
         </div>
