@@ -2562,6 +2562,14 @@
   "staffMembers": [
     {
       "id": "staff-1",
+      "email": "owner@kamaarbeddings.com",
+      "name": "Syed Danial (Store Owner)",
+      "role": "owner",
+      "isActive": true,
+      "createdAt": "2026-09-01T00:00:00Z"
+    },
+    {
+      "id": "staff-1-legacy",
       "email": "owner@lenasleep.com.my",
       "name": "Syed Danial (Store Owner)",
       "role": "owner",
@@ -2570,6 +2578,14 @@
     },
     {
       "id": "staff-2",
+      "email": "catalog@kamaarbeddings.com",
+      "name": "Nurul Huda (Catalog Manager)",
+      "role": "catalog_manager",
+      "isActive": true,
+      "createdAt": "2026-09-01T00:00:00Z"
+    },
+    {
+      "id": "staff-2-legacy",
       "email": "catalog@lenasleep.com.my",
       "name": "Nurul Huda (Catalog Manager)",
       "role": "catalog_manager",
@@ -2578,6 +2594,14 @@
     },
     {
       "id": "staff-3",
+      "email": "orders@kamaarbeddings.com",
+      "name": "Kenji Tan (Order & Logistics)",
+      "role": "order_manager",
+      "isActive": true,
+      "createdAt": "2026-09-01T00:00:00Z"
+    },
+    {
+      "id": "staff-3-legacy",
       "email": "orders@lenasleep.com.my",
       "name": "Kenji Tan (Order & Logistics)",
       "role": "order_manager",
@@ -2586,6 +2610,14 @@
     },
     {
       "id": "staff-4",
+      "email": "editor@kamaarbeddings.com",
+      "name": "Melissa Kaur (Content Editor)",
+      "role": "content_editor",
+      "isActive": true,
+      "createdAt": "2026-09-01T00:00:00Z"
+    },
+    {
+      "id": "staff-4-legacy",
       "email": "editor@lenasleep.com.my",
       "name": "Melissa Kaur (Content Editor)",
       "role": "content_editor",
@@ -2594,6 +2626,30 @@
     }
   ],
   "auditLogs": [
+    {
+      "id": "aud-1790943697745-sdhq",
+      "actorEmail": "owner@kamaarbeddings.com",
+      "action": "staff_logged_in",
+      "entityType": "staff",
+      "entityId": "staff-1",
+      "createdAt": "2026-10-02T12:21:37.745Z"
+    },
+    {
+      "id": "aud-1790943630891-x8u8",
+      "actorEmail": "catalog@kamaarbeddings.com",
+      "action": "staff_logged_in",
+      "entityType": "staff",
+      "entityId": "staff-2",
+      "createdAt": "2026-10-02T12:20:30.891Z"
+    },
+    {
+      "id": "aud-1790943625868-gy8w",
+      "actorEmail": "owner@kamaarbeddings.com",
+      "action": "staff_logged_in",
+      "entityType": "staff",
+      "entityId": "staff-1",
+      "createdAt": "2026-10-02T12:20:25.868Z"
+    },
     {
       "id": "aud-1790867330274-aekn",
       "actorEmail": "owner@lenasleep.com.my",
