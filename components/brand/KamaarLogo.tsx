@@ -1,6 +1,6 @@
 'use client'
 
-import React from 'react'
+import React, { useId } from 'react'
 import Image from 'next/image'
 
 interface KamaarLogoProps {
@@ -18,9 +18,14 @@ export function KamaarLogo({
   className = '',
   useImage = false,
 }: KamaarLogoProps) {
+  const uid = useId().replace(/[^a-zA-Z0-9_-]/g, '')
+  const goldGrad1 = `goldGrad1-${uid}`
+  const goldGrad2 = `goldGrad2-${uid}`
+  const midnightBlue = `midnightBlue-${uid}`
+
   // Height sizing
   const emblemSizes = {
-    sm: 32,
+    sm: 34,
     md: 44,
     lg: 56,
     xl: 72,
@@ -53,34 +58,29 @@ export function KamaarLogo({
       viewBox="0 0 120 120"
       fill="none"
       xmlns="http://www.w3.org/2000/svg"
-      className="flex-shrink-0 drop-shadow-md"
+      className="flex-shrink-0 drop-shadow-sm select-none"
     >
       <defs>
         {/* Luxury Gold Gradients */}
-        <linearGradient id="goldGrad1" x1="0%" y1="0%" x2="100%" y2="100%">
+        <linearGradient id={goldGrad1} x1="0%" y1="0%" x2="100%" y2="100%">
           <stop offset="0%" stopColor="#F9E29D" />
           <stop offset="35%" stopColor="#D4AF37" />
           <stop offset="70%" stopColor="#B38F2E" />
           <stop offset="100%" stopColor="#E6C765" />
         </linearGradient>
 
-        <linearGradient id="goldGrad2" x1="100%" y1="0%" x2="0%" y2="100%">
+        <linearGradient id={goldGrad2} x1="100%" y1="0%" x2="0%" y2="100%">
           <stop offset="0%" stopColor="#FFF2BF" />
           <stop offset="45%" stopColor="#C5A059" />
           <stop offset="100%" stopColor="#8C6B1C" />
         </linearGradient>
 
         {/* Midnight Royal Blue for K fill */}
-        <linearGradient id="midnightBlue" x1="0%" y1="0%" x2="100%" y2="100%">
+        <linearGradient id={midnightBlue} x1="0%" y1="0%" x2="100%" y2="100%">
           <stop offset="0%" stopColor="#132B54" />
           <stop offset="50%" stopColor="#0B1A36" />
           <stop offset="100%" stopColor="#071226" />
         </linearGradient>
-
-        {/* Inner glow and shadow filters */}
-        <filter id="goldShine" x="-20%" y="-20%" width="140%" height="140%">
-          <feDropShadow dx="0" dy="2" stdDeviation="2" floodColor="#000000" floodOpacity="0.4" />
-        </filter>
       </defs>
 
       {/* Outer Golden Layered Frame (Rounded Square with open cut) */}
@@ -90,22 +90,21 @@ export function KamaarLogo({
         width="82"
         height="82"
         rx="16"
-        fill="url(#midnightBlue)"
-        stroke="url(#goldGrad1)"
+        fill={`url(#${midnightBlue})`}
+        stroke={`url(#${goldGrad1})`}
         strokeWidth="3.5"
-        filter="url(#goldShine)"
       />
 
       {/* Decorative Golden Corner Trim / Outer Shield Border */}
       <path
         d="M16 36 V 26 C 16 19 21 14 28 14 H 42"
-        stroke="url(#goldGrad1)"
+        stroke={`url(#${goldGrad1})`}
         strokeWidth="4"
         strokeLinecap="round"
       />
       <path
         d="M20 90 V 78"
-        stroke="url(#goldGrad1)"
+        stroke={`url(#${goldGrad1})`}
         strokeWidth="4"
         strokeLinecap="round"
       />
@@ -113,47 +112,47 @@ export function KamaarLogo({
       {/* Golden Book / Mattress Bedding Pages Fan (Bottom-Right) */}
       <path
         d="M62 76 C 70 76 80 82 96 90 C 85 91 74 88 64 86 Z"
-        fill="url(#goldGrad1)"
+        fill={`url(#${goldGrad1})`}
       />
       <path
         d="M64 81 C 74 81 86 86 100 95 C 88 96 76 93 64 91 Z"
-        fill="url(#goldGrad2)"
-        stroke="url(#goldGrad1)"
+        fill={`url(#${goldGrad2})`}
+        stroke={`url(#${goldGrad1})`}
         strokeWidth="0.8"
       />
       <path
         d="M62 86 C 72 87 84 92 98 100 C 82 101 70 97 58 95 Z"
-        fill="url(#goldGrad1)"
+        fill={`url(#${goldGrad1})`}
       />
 
       {/* Stylized Bold Capital 'K' with Gold Bevel Border */}
       {/* Vertical Stem of K */}
       <path
         d="M32 25 H 45 V 75 H 32 Z"
-        fill="url(#midnightBlue)"
-        stroke="url(#goldGrad1)"
+        fill={`url(#${midnightBlue})`}
+        stroke={`url(#${goldGrad1})`}
         strokeWidth="2.5"
         strokeLinejoin="round"
       />
       {/* Top Diagonal Arm of K */}
       <path
         d="M45 50 L 72 25 H 85 L 53 54 Z"
-        fill="url(#midnightBlue)"
-        stroke="url(#goldGrad1)"
+        fill={`url(#${midnightBlue})`}
+        stroke={`url(#${goldGrad1})`}
         strokeWidth="2.5"
         strokeLinejoin="round"
       />
       {/* Bottom Diagonal Leg of K */}
       <path
         d="M51 49 L 78 75 H 64 L 42 55 Z"
-        fill="url(#midnightBlue)"
-        stroke="url(#goldGrad1)"
+        fill={`url(#${midnightBlue})`}
+        stroke={`url(#${goldGrad1})`}
         strokeWidth="2.5"
         strokeLinejoin="round"
       />
 
       {/* Subtle specular reflection on the K stem */}
-      <line x1="36" y1="27" x2="36" y2="73" stroke="url(#goldGrad2)" strokeWidth="1" strokeOpacity="0.7" />
+      <line x1="36" y1="27" x2="36" y2="73" stroke={`url(#${goldGrad2})`} strokeWidth="1" strokeOpacity="0.7" />
     </svg>
   )
 
