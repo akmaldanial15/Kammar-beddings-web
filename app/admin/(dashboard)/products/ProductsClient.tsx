@@ -29,6 +29,10 @@ import {
   FileText,
   Copy,
   Info,
+  ChevronLeft,
+  ChevronRight,
+  ZoomIn,
+  Maximize2,
 } from 'lucide-react'
 import Link from 'next/link'
 
@@ -53,16 +57,54 @@ export function ProductsClient({ initialProducts, categories }: ProductsClientPr
     setMounted(true)
   }, [])
 
-  // Lock body scroll when editing modal is open so the background page cannot scroll
+  // State for image lightbox modal window
+  const [previewImageModal, setPreviewImageModal] = useState<{
+    product: Product
+    activeImageIndex: number
+  } | null>(null)
+
+  // Lock body scroll when editing modal or image lightbox modal is open so the background page cannot scroll
   useEffect(() => {
-    if (editingProduct) {
+    if (editingProduct || previewImageModal) {
       const originalOverflow = document.body.style.overflow
       document.body.style.overflow = 'hidden'
       return () => {
         document.body.style.overflow = originalOverflow
       }
     }
-  }, [editingProduct])
+  }, [editingProduct, previewImageModal])
+
+  // Keyboard navigation for image lightbox modal (Esc to close, Left/Right arrows to navigate)
+  useEffect(() => {
+    if (!previewImageModal) return
+    const handleKeyDown = (e: KeyboardEvent) => {
+      if (e.key === 'Escape') {
+        setPreviewImageModal(null)
+      } else if (e.key === 'ArrowLeft' && previewImageModal.product.images.length > 1) {
+        setPreviewImageModal((prev) =>
+          prev
+            ? {
+                ...prev,
+                activeImageIndex:
+                  (prev.activeImageIndex - 1 + prev.product.images.length) %
+                  prev.product.images.length,
+              }
+            : null
+        )
+      } else if (e.key === 'ArrowRight' && previewImageModal.product.images.length > 1) {
+        setPreviewImageModal((prev) =>
+          prev
+            ? {
+                ...prev,
+                activeImageIndex: (prev.activeImageIndex + 1) % prev.product.images.length,
+              }
+            : null
+        )
+      }
+    }
+    window.addEventListener('keydown', handleKeyDown)
+    return () => window.removeEventListener('keydown', handleKeyDown)
+  }, [previewImageModal])
 
   // Modal specific state
   const [activeTab, setActiveTab] = useState<TabType>('general')
@@ -661,17 +703,29 @@ export function ProductsClient({ initialProducts, categories }: ProductsClientPr
               >
                 {/* Header: Thumbnail + Category Pill + Name + Status */}
                 <div className="flex items-start space-x-3">
-                  {primaryImg ? (
-                    <img
-                      src={primaryImg}
-                      alt={product.name}
-                      className="w-16 h-16 rounded-xl object-cover border border-borderLight flex-shrink-0 bg-cream/30 shadow-2xs"
-                    />
-                  ) : (
-                    <div className="w-16 h-16 rounded-xl bg-cream border border-borderLight flex items-center justify-center text-charcoal-muted flex-shrink-0">
-                      <BedDouble className="w-6 h-6 text-gold-dark" />
-                    </div>
-                  )}
+                  <button
+                    type="button"
+                    onClick={() => setPreviewImageModal({ product, activeImageIndex: 0 })}
+                    className="relative w-16 h-16 rounded-xl overflow-hidden border border-borderLight flex-shrink-0 bg-cream/30 shadow-2xs group/mthumb cursor-zoom-in text-left focus:outline-none focus:ring-2 focus:ring-gold/50"
+                    title="Klik untuk besarkan gambar produk"
+                  >
+                    {primaryImg ? (
+                      <>
+                        <img
+                          src={primaryImg}
+                          alt={product.name}
+                          className="w-full h-full object-cover group-hover/mthumb:scale-105 transition-transform"
+                        />
+                        <div className="absolute inset-0 bg-forest-dark/35 opacity-0 group-hover/mthumb:opacity-100 transition-opacity flex items-center justify-center backdrop-blur-[1px]">
+                          <ZoomIn className="w-5 h-5 text-white drop-shadow-md" />
+                        </div>
+                      </>
+                    ) : (
+                      <div className="w-full h-full flex items-center justify-center text-charcoal-muted">
+                        <BedDouble className="w-6 h-6 text-gold-dark" />
+                      </div>
+                    )}
+                  </button>
 
                   <div className="min-w-0 flex-1">
                     <div className="flex items-center justify-between gap-1.5 mb-1">
@@ -834,17 +888,27 @@ export function ProductsClient({ initialProducts, categories }: ProductsClientPr
                       {/* Product Thumbnail + Name + Variant Meta */}
                       <td className="py-3.5 px-4">
                         <div className="flex items-center space-x-3">
-                          <div className="w-13 h-11 rounded-xl overflow-hidden border border-slate-200 shadow-2xs bg-slate-50 flex-shrink-0 flex items-center justify-center group-hover:border-gold/60 transition-colors">
+                          <button
+                            type="button"
+                            onClick={() => setPreviewImageModal({ product, activeImageIndex: 0 })}
+                            className="relative w-13 h-11 rounded-xl overflow-hidden border border-slate-200 shadow-2xs bg-slate-50 flex-shrink-0 flex items-center justify-center group/thumb hover:border-gold transition-all cursor-zoom-in text-left focus:outline-none focus:ring-2 focus:ring-gold/50"
+                            title="Klik untuk besarkan gambar produk"
+                          >
                             {primaryImg ? (
-                              <img
-                                src={primaryImg}
-                                alt={product.name}
-                                className="w-full h-full object-cover group-hover:scale-105 transition-transform duration-300"
-                              />
+                              <>
+                                <img
+                                  src={primaryImg}
+                                  alt={product.name}
+                                  className="w-full h-full object-cover group-hover/thumb:scale-110 transition-transform duration-300"
+                                />
+                                <div className="absolute inset-0 bg-forest-dark/35 opacity-0 group-hover/thumb:opacity-100 transition-opacity flex items-center justify-center backdrop-blur-[1px]">
+                                  <ZoomIn className="w-4 h-4 text-white drop-shadow-md" />
+                                </div>
+                              </>
                             ) : (
                               <BedDouble className="w-5 h-5 text-gold-dark" />
                             )}
-                          </div>
+                          </button>
                           <div className="min-w-0">
                             <span className="font-bold text-forest-dark text-sm block truncate group-hover:text-forest transition-colors">
                               {product.name}
@@ -1998,6 +2062,207 @@ export function ProductsClient({ initialProducts, categories }: ProductsClientPr
                     </>
                   )}
                 </button>
+              </div>
+            </div>
+          </div>
+        </div>,
+        document.body
+      )}
+
+      {/* ========================================================================= */}
+      {/* LUXURY PRODUCT IMAGE LIGHTBOX / POPUP WINDOW                              */}
+      {/* ========================================================================= */}
+      {previewImageModal && mounted && createPortal(
+        <div
+          className="fixed inset-0 z-[100000] bg-forest-dark/85 backdrop-blur-md flex items-center justify-center p-3 sm:p-6 animate-fade-in"
+          onClick={(e) => {
+            if (e.target === e.currentTarget) setPreviewImageModal(null)
+          }}
+        >
+          <div className="relative max-w-4xl w-full bg-slate-900/95 text-warmwhite rounded-2xl sm:rounded-3xl border border-white/15 shadow-2xl overflow-hidden flex flex-col max-h-[94vh] animate-scale-in">
+            {/* Header */}
+            <div className="px-5 py-4 bg-slate-950/80 border-b border-white/10 flex items-center justify-between flex-shrink-0">
+              <div className="flex items-center space-x-3 min-w-0 pr-4">
+                <div className="w-9 h-9 rounded-xl bg-gold/15 border border-gold/30 flex items-center justify-center text-gold flex-shrink-0">
+                  <ImageIcon className="w-4 h-4" />
+                </div>
+                <div className="min-w-0">
+                  <div className="flex items-center gap-2">
+                    <span className="text-[10px] font-bold uppercase tracking-wider text-gold bg-gold/20 px-2 py-0.5 rounded">
+                      {categories.find((c) => c.id === previewImageModal.product.categoryId)?.name || 'Koleksi Atelier'}
+                    </span>
+                    {previewImageModal.product.images.length > 1 && (
+                      <span className="text-[11px] text-slate-400 font-mono">
+                        Foto {previewImageModal.activeImageIndex + 1} / {previewImageModal.product.images.length}
+                      </span>
+                    )}
+                  </div>
+                  <h3 className="font-serif text-base sm:text-lg font-bold text-white truncate mt-0.5">
+                    {previewImageModal.product.name}
+                  </h3>
+                </div>
+              </div>
+
+              {/* Header Actions */}
+              <div className="flex items-center space-x-2 flex-shrink-0">
+                <Link
+                  href={`/products/${previewImageModal.product.slug}`}
+                  target="_blank"
+                  className="hidden sm:inline-flex items-center space-x-1.5 px-3 py-1.5 rounded-lg bg-white/10 hover:bg-white/20 border border-white/10 text-xs font-semibold text-white transition-colors"
+                  title="Buka produk di kedai"
+                >
+                  <span>Lihat di Kedai</span>
+                  <ExternalLink className="w-3.5 h-3.5 text-gold" />
+                </Link>
+
+                <button
+                  onClick={() => {
+                    const prod = previewImageModal.product
+                    setPreviewImageModal(null)
+                    handleEditClick(prod)
+                  }}
+                  className="hidden sm:inline-flex items-center space-x-1.5 px-3 py-1.5 rounded-lg bg-gold/20 hover:bg-gold/30 border border-gold/40 text-xs font-semibold text-gold transition-colors cursor-pointer"
+                  title="Sunting produk ini"
+                >
+                  <Edit2 className="w-3.5 h-3.5" />
+                  <span>Sunting</span>
+                </button>
+
+                <button
+                  onClick={() => setPreviewImageModal(null)}
+                  className="w-8 h-8 rounded-full bg-white/10 hover:bg-rose-500/80 hover:text-white text-slate-300 flex items-center justify-center transition-colors cursor-pointer"
+                  title="Tutup (Esc)"
+                >
+                  <X className="w-4 h-4" />
+                </button>
+              </div>
+            </div>
+
+            {/* Main Image Stage */}
+            <div className="relative flex-1 bg-black/60 flex items-center justify-center p-4 sm:p-8 min-h-[300px] max-h-[62vh] select-none overflow-hidden">
+              {(() => {
+                const currentImg =
+                  previewImageModal.product.images[previewImageModal.activeImageIndex] ||
+                  previewImageModal.product.images[0]
+
+                if (!currentImg?.imageUrl) {
+                  return (
+                    <div className="text-center py-12 text-slate-400">
+                      <BedDouble className="w-16 h-16 mx-auto mb-2 text-gold/40" />
+                      <p className="text-sm">Tiada gambar tersedia untuk produk ini.</p>
+                    </div>
+                  )
+                }
+
+                return (
+                  <div className="relative max-h-full max-w-full flex items-center justify-center">
+                    <img
+                      src={currentImg.imageUrl}
+                      alt={currentImg.altText || previewImageModal.product.name}
+                      className="max-h-[58vh] w-auto max-w-full object-contain rounded-xl shadow-2xl ring-1 ring-white/15"
+                    />
+
+                    {currentImg.isPrimary && (
+                      <div className="absolute top-3 left-3 bg-forest-dark/80 backdrop-blur-md text-gold text-[11px] font-bold px-2.5 py-1 rounded-full border border-gold/30 flex items-center gap-1.5 shadow-md">
+                        <Sparkles className="w-3 h-3" />
+                        <span>Gambar Utama</span>
+                      </div>
+                    )}
+                  </div>
+                )
+              })()}
+
+              {/* Prev / Next Chevrons (if multiple images) */}
+              {previewImageModal.product.images.length > 1 && (
+                <>
+                  <button
+                    onClick={() =>
+                      setPreviewImageModal((prev) =>
+                        prev
+                          ? {
+                              ...prev,
+                              activeImageIndex:
+                                (prev.activeImageIndex - 1 + prev.product.images.length) %
+                                prev.product.images.length,
+                            }
+                          : null
+                      )
+                    }
+                    className="absolute left-3 sm:left-5 top-1/2 -translate-y-1/2 w-10 h-10 rounded-full bg-slate-900/80 hover:bg-gold hover:text-forest-dark border border-white/20 text-white flex items-center justify-center transition-all shadow-xl cursor-pointer"
+                    title="Gambar sebelumnya (←)"
+                  >
+                    <ChevronLeft className="w-5 h-5" />
+                  </button>
+
+                  <button
+                    onClick={() =>
+                      setPreviewImageModal((prev) =>
+                        prev
+                          ? {
+                              ...prev,
+                              activeImageIndex:
+                                (prev.activeImageIndex + 1) % prev.product.images.length,
+                            }
+                          : null
+                      )
+                    }
+                    className="absolute right-3 sm:right-5 top-1/2 -translate-y-1/2 w-10 h-10 rounded-full bg-slate-900/80 hover:bg-gold hover:text-forest-dark border border-white/20 text-white flex items-center justify-center transition-all shadow-xl cursor-pointer"
+                    title="Gambar seterusnya (→)"
+                  >
+                    <ChevronRight className="w-5 h-5" />
+                  </button>
+                </>
+              )}
+            </div>
+
+            {/* Bottom Gallery Thumbnail Strip & Meta */}
+            <div className="px-5 py-3 bg-slate-950/90 border-t border-white/10 flex flex-col sm:flex-row items-center justify-between gap-3">
+              {/* Thumbnail Strip */}
+              {previewImageModal.product.images.length > 1 ? (
+                <div className="flex items-center space-x-2 overflow-x-auto py-1 max-w-full">
+                  {previewImageModal.product.images.map((img, idx) => (
+                    <button
+                      key={img.id || idx}
+                      onClick={() =>
+                        setPreviewImageModal((prev) =>
+                          prev ? { ...prev, activeImageIndex: idx } : null
+                        )
+                      }
+                      className={`relative w-12 h-10 rounded-lg overflow-hidden border-2 transition-all flex-shrink-0 cursor-pointer ${
+                        previewImageModal.activeImageIndex === idx
+                          ? 'border-gold ring-2 ring-gold/40 scale-105'
+                          : 'border-white/20 opacity-60 hover:opacity-100 hover:border-white/50'
+                      }`}
+                    >
+                      <img src={img.imageUrl} alt="" className="w-full h-full object-cover" />
+                    </button>
+                  ))}
+                </div>
+              ) : (
+                <div className="text-xs text-slate-400">
+                  {previewImageModal.product.images[0]?.altText || previewImageModal.product.name}
+                </div>
+              )}
+
+              {/* Keyboard Hints & Quick Info */}
+              <div className="flex items-center space-x-3 text-[11px] text-slate-400 flex-shrink-0">
+                <span className="hidden md:inline">
+                  Guna kekunci <kbd className="px-1.5 py-0.5 bg-white/10 rounded text-[10px] text-slate-300">Esc</kbd> untuk tutup
+                </span>
+                {previewImageModal.product.images.length > 1 && (
+                  <span className="hidden md:inline">
+                    &bull; <kbd className="px-1.5 py-0.5 bg-white/10 rounded text-[10px] text-slate-300">&larr;</kbd> <kbd className="px-1.5 py-0.5 bg-white/10 rounded text-[10px] text-slate-300">&rarr;</kbd> navigasi
+                  </span>
+                )}
+                <a
+                  href={previewImageModal.product.images[previewImageModal.activeImageIndex]?.imageUrl || '#'}
+                  target="_blank"
+                  rel="noreferrer"
+                  className="text-gold hover:underline font-medium inline-flex items-center gap-1"
+                >
+                  <Maximize2 className="w-3 h-3" />
+                  <span>Buka Tab Penuh</span>
+                </a>
               </div>
             </div>
           </div>
