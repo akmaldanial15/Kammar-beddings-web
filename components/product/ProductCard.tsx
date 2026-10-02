@@ -121,8 +121,12 @@ export function ProductCard({ product }: ProductCardProps) {
           {/* Quick View Button on Hover */}
           <div className="absolute inset-x-3 bottom-3 opacity-0 group-hover:opacity-100 transition-opacity duration-300 z-10 hidden sm:block">
             <button
-              onClick={() => setIsQuickViewOpen(true)}
-              className="w-full py-2 bg-warmwhite/95 hover:bg-warmwhite text-forest text-xs font-bold rounded-lg shadow-lg border border-borderLight flex items-center justify-center space-x-1.5 transition-colors"
+              onClick={(e) => {
+                e.preventDefault()
+                e.stopPropagation()
+                setIsQuickViewOpen(true)
+              }}
+              className="w-full py-2 bg-warmwhite/95 hover:bg-warmwhite text-forest text-xs font-bold rounded-lg shadow-lg border border-borderLight flex items-center justify-center space-x-1.5 transition-colors cursor-pointer"
             >
               <Eye className="w-3.5 h-3.5 text-gold-dark" />
               <span>{t.quickView}</span>

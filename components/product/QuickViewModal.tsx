@@ -1,6 +1,7 @@
 'use client'
 
-import React, { useState } from 'react'
+import React, { useState, useEffect } from 'react'
+import { createPortal } from 'react-dom'
 import Link from 'next/link'
 import Image from 'next/image'
 import { X, Check, ShieldCheck, RotateCcw, Truck, ShoppingBag, ArrowRight } from 'lucide-react'
@@ -25,8 +26,44 @@ export function QuickViewModal({ product, isOpen, onClose }: QuickViewModalProps
   )
   const [quantity, setQuantity] = useState(1)
   const [activeImageIndex, setActiveImageIndex] = useState(0)
+  const [mounted, setMounted] = useState(false)
 
-  if (!isOpen) return null
+  useEffect(() => {
+    setMounted(true)
+  }, [])
+
+  // Sync selected variant when modal opens
+  useEffect(() => {
+    if (isOpen) {
+      const active = product.variants.filter((v) => v.isActive)
+      setSelectedVariant(active[0] || product.variants[0])
+      setQuantity(1)
+      setActiveImageIndex(0)
+    }
+  }, [isOpen, product])
+
+  // Lock background scroll when Quick View modal is active
+  useEffect(() => {
+    if (isOpen) {
+      const originalOverflow = document.body.style.overflow
+      document.body.style.overflow = 'hidden'
+      return () => {
+        document.body.style.overflow = originalOverflow
+      }
+    }
+  }, [isOpen])
+
+  // Close on Escape key press
+  useEffect(() => {
+    if (!isOpen) return
+    const handleKeyDown = (e: KeyboardEvent) => {
+      if (e.key === 'Escape') onClose()
+    }
+    window.addEventListener('keydown', handleKeyDown)
+    return () => window.removeEventListener('keydown', handleKeyDown)
+  }, [isOpen, onClose])
+
+  if (!isOpen || !mounted) return null
 
   const handleAddToCart = () => {
     addItem({
@@ -49,14 +86,14 @@ export function QuickViewModal({ product, isOpen, onClose }: QuickViewModalProps
     selectedVariant.compareAtPriceSen &&
     selectedVariant.compareAtPriceSen > selectedVariant.priceSen
 
-  return (
-    <div className="fixed inset-0 z-50 flex items-center justify-center p-4 sm:p-6 overflow-y-auto">
+  return createPortal(
+    <div className="fixed inset-0 z-[99999] flex items-center justify-center p-3 sm:p-6 overflow-y-auto">
       <div
-        className="fixed inset-0 bg-charcoal/60 backdrop-blur-sm transition-opacity animate-fade-in"
+        className="fixed inset-0 bg-charcoal/70 backdrop-blur-md transition-opacity animate-fade-in"
         onClick={onClose}
       />
 
-      <div className="relative bg-warmwhite rounded-2xl shadow-2xl max-w-3xl w-full border border-borderLight overflow-hidden z-10 flex flex-col md:flex-row max-h-[90vh] animate-scale-in">
+      <div className="relative bg-warmwhite rounded-2xl sm:rounded-3xl shadow-2xl max-w-3xl w-full border border-borderLight overflow-hidden z-10 flex flex-col md:flex-row max-h-[92vh] sm:max-h-[88vh] animate-scale-in my-auto">
         {/* Close Button */}
         <button
           onClick={onClose}
@@ -209,6 +246,7 @@ export function QuickViewModal({ product, isOpen, onClose }: QuickViewModalProps
           </div>
         </div>
       </div>
-    </div>
+    </div>,
+    document.body
   )
 }
