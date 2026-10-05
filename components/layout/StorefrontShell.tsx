@@ -11,12 +11,20 @@ import { ThemeInjector } from '@/components/layout/ThemeInjector'
 
 export function StorefrontShell({ children }: { children: React.ReactNode }) {
   const pathname = usePathname()
-  const isStandalone = pathname?.startsWith('/admin') || pathname?.startsWith('/affiliate')
+  const isStandalone =
+    pathname?.startsWith('/admin') ||
+    pathname?.startsWith('/affiliate') ||
+    pathname?.startsWith('/checkout')
 
-  // If navigating any /admin or /affiliate route (login, portal, dashboard, reset, etc.),
+  // If navigating any /admin, /affiliate, or /checkout route,
   // render as an isolated, standalone portal with zero customer storefront clutter.
   if (isStandalone) {
-    return <div className="min-h-screen bg-cream">{children}</div>
+    return (
+      <div className="min-h-screen bg-cream">
+        <ThemeInjector />
+        {children}
+      </div>
+    )
   }
 
   // Public customer storefront experience

@@ -22,6 +22,9 @@ import {
   ExternalLink,
   Info,
   X,
+  ArrowLeft,
+  Check,
+  Copy,
 } from 'lucide-react'
 import { useCart } from '@/lib/context/CartContext'
 import { useLanguage } from '@/lib/i18n/LanguageContext'
@@ -42,10 +45,10 @@ interface CheckoutClientProps {
 const MALAYSIAN_BANKS = [
   { id: 'mb2u', name: 'Maybank2u', popular: true },
   { id: 'cimb', name: 'CIMB Clicks', popular: true },
-  { id: 'pbb', name: 'Public Bank Online', popular: true },
+  { id: 'pbb', name: 'Public Bank', popular: true },
   { id: 'rhb', name: 'RHB Now', popular: true },
   { id: 'hlb', name: 'Hong Leong Connect', popular: true },
-  { id: 'ambank', name: 'AmBank Online' },
+  { id: 'ambank', name: 'AmBank Online', popular: true },
   { id: 'bimb', name: 'Bank Islam' },
   { id: 'affina', name: 'Affin Bank' },
   { id: 'alliance', name: 'Alliance Bank' },
@@ -97,7 +100,7 @@ export function CheckoutClient({ initialPaymentSettings }: CheckoutClientProps) 
     loadFreshMethods()
   }, [])
 
-  // Form states matching Getha / Shopify layout
+  // Form states
   const [contactInfo, setContactInfo] = useState('')
   const [newsletterConsent, setNewsletterConsent] = useState(true)
   const [country, setCountry] = useState('Malaysia')
@@ -118,7 +121,7 @@ export function CheckoutClient({ initialPaymentSettings }: CheckoutClientProps) 
   const [floorLevel, setFloorLevel] = useState('Ground Floor')
   const [deliveryNotes, setDeliveryNotes] = useState(notes || '')
 
-  // Inline Card States (simulated / stripe client token)
+  // Inline Card States
   const [cardNumber, setCardNumber] = useState('')
   const [cardExpiry, setCardExpiry] = useState('')
   const [cardCvc, setCardCvc] = useState('')
@@ -131,10 +134,27 @@ export function CheckoutClient({ initialPaymentSettings }: CheckoutClientProps) 
   const [inputCoupon, setInputCoupon] = useState('')
   const [couponError, setCouponError] = useState('')
   const [couponSuccess, setCouponSuccess] = useState('')
+  const [copiedBank, setCopiedBank] = useState(false)
 
   const [isSubmitting, setIsSubmitting] = useState(false)
   const [errorMessage, setErrorMessage] = useState('')
   const [affiliateCode, setAffiliateCode] = useState('')
+
+  // Format credit card number with spaces
+  const handleCardNumberChange = (e: React.ChangeEvent<HTMLInputElement>) => {
+    const raw = e.target.value.replace(/\D/g, '').slice(0, 16)
+    const formatted = raw.replace(/(\d{4})(?=\d)/g, '$1 ')
+    setCardNumber(formatted)
+  }
+
+  // Format expiry date with slash
+  const handleCardExpiryChange = (e: React.ChangeEvent<HTMLInputElement>) => {
+    let raw = e.target.value.replace(/\D/g, '').slice(0, 4)
+    if (raw.length >= 2) {
+      raw = raw.slice(0, 2) + ' / ' + raw.slice(2)
+    }
+    setCardExpiry(raw)
+  }
 
   // Load affiliate referral attribution
   useEffect(() => {
@@ -156,18 +176,20 @@ export function CheckoutClient({ initialPaymentSettings }: CheckoutClientProps) 
   // Check if any item is a mattress
   const hasBulkyMattress = items.some(
     (i) =>
-      i.sku.includes('RH') ||
-      i.sku.includes('CN') ||
-      i.sku.includes('OR') ||
-      i.sku.includes('EC') ||
-      i.sku.includes('SL') ||
-      i.sku.includes('CS') ||
-      i.sku.includes('NF') ||
-      i.sku.includes('LC') ||
-      i.sku.includes('CP') ||
-      i.sku.includes('MS') ||
-      i.sku.includes('DS') ||
-      i.sku.includes('CF')
+      i.sku?.includes('RH') ||
+      i.sku?.includes('CN') ||
+      i.sku?.includes('OR') ||
+      i.sku?.includes('EC') ||
+      i.sku?.includes('SL') ||
+      i.sku?.includes('CS') ||
+      i.sku?.includes('NF') ||
+      i.sku?.includes('LC') ||
+      i.sku?.includes('CP') ||
+      i.sku?.includes('MS') ||
+      i.sku?.includes('DS') ||
+      i.sku?.includes('CF') ||
+      (i.productName || i.title || '').toLowerCase().includes('tilam') ||
+      (i.productName || i.title || '').toLowerCase().includes('mattress')
   )
 
   // Shipping calculation
@@ -212,6 +234,14 @@ export function CheckoutClient({ initialPaymentSettings }: CheckoutClientProps) 
     }
   }
 
+  const handleCopyBankAccount = () => {
+    if (typeof navigator !== 'undefined' && navigator.clipboard) {
+      navigator.clipboard.writeText('512345678901')
+      setCopiedBank(true)
+      setTimeout(() => setCopiedBank(false), 2000)
+    }
+  }
+
   // Handle Order Submit
   const handleSubmit = async (e: React.FormEvent) => {
     e.preventDefault()
@@ -223,12 +253,12 @@ export function CheckoutClient({ initialPaymentSettings }: CheckoutClientProps) 
     }
 
     if (!contactInfo || !contactInfo.trim()) {
-      setErrorMessage('Sila masukkan alamat emel atau nombor telefon di bahagian Contact.')
+      setErrorMessage('Sila masukkan alamat emel atau nombor telefon di bahagian Maklumat Hubungan.')
       return
     }
 
     if (!lastName || !lastName.trim()) {
-      setErrorMessage('Sila masukkan Nama Akhir (Last name).')
+      setErrorMessage('Sila masukkan Nama Akhir (Last Name).')
       return
     }
 
@@ -320,7 +350,7 @@ export function CheckoutClient({ initialPaymentSettings }: CheckoutClientProps) 
         return (
           <span
             key={type}
-            className="px-1.5 py-0.5 rounded text-[10px] font-black tracking-tighter bg-[#1A1F71] text-white border border-[#1A1F71]"
+            className="px-2 py-0.5 rounded text-[10px] font-black tracking-wider bg-[#1A1F71] text-white border border-[#1A1F71] shadow-2xs"
           >
             VISA
           </span>
@@ -329,17 +359,18 @@ export function CheckoutClient({ initialPaymentSettings }: CheckoutClientProps) 
         return (
           <span
             key={type}
-            className="px-1.5 py-0.5 rounded text-[10px] font-bold bg-[#EB001B] text-white flex items-center space-x-0.5"
+            className="px-2 py-0.5 rounded text-[10px] font-bold bg-[#111] text-white flex items-center space-x-1 border border-neutral-300 shadow-2xs"
           >
-            <span className="w-2 h-2 rounded-full bg-[#EB001B] inline-block" />
-            <span className="w-2 h-2 rounded-full bg-[#F79E1B] -ml-1 inline-block" />
+            <span className="w-2.5 h-2.5 rounded-full bg-[#EB001B] inline-block" />
+            <span className="w-2.5 h-2.5 rounded-full bg-[#F79E1B] -ml-1.5 inline-block opacity-90" />
+            <span className="text-[9px] font-extrabold ml-1">MC</span>
           </span>
         )
       case 'amex':
         return (
           <span
             key={type}
-            className="px-1.5 py-0.5 rounded text-[10px] font-black bg-[#2E77BB] text-white border border-[#2E77BB]"
+            className="px-2 py-0.5 rounded text-[10px] font-black bg-[#0070CE] text-white border border-[#0070CE] shadow-2xs"
           >
             AMEX
           </span>
@@ -348,7 +379,7 @@ export function CheckoutClient({ initialPaymentSettings }: CheckoutClientProps) 
         return (
           <span
             key={type}
-            className="px-2 py-0.5 rounded text-[10px] font-black bg-[#E2F700] text-black tracking-tight"
+            className="px-2 py-0.5 rounded text-[10px] font-black bg-[#E2F700] text-black tracking-tight border border-[#D5E800] shadow-2xs"
           >
             atome
           </span>
@@ -357,7 +388,7 @@ export function CheckoutClient({ initialPaymentSettings }: CheckoutClientProps) 
         return (
           <span
             key={type}
-            className="px-2 py-0.5 rounded text-[10px] font-extrabold bg-[#00529C] text-white tracking-wider"
+            className="px-2 py-0.5 rounded text-[10px] font-extrabold bg-[#00529C] text-white tracking-wider border border-[#00529C] shadow-2xs"
           >
             FPX
           </span>
@@ -366,34 +397,25 @@ export function CheckoutClient({ initialPaymentSettings }: CheckoutClientProps) 
         return (
           <span
             key={type}
-            className="px-1.5 py-0.5 rounded text-[10px] font-bold bg-[#015CA9] text-white"
+            className="px-2 py-0.5 rounded text-[10px] font-bold bg-[#015CA9] text-white border border-[#015CA9]"
           >
-            TNG
+            TNG eWallet
           </span>
         )
       case 'grabpay':
         return (
           <span
             key={type}
-            className="px-1.5 py-0.5 rounded text-[10px] font-bold bg-[#00B140] text-white"
+            className="px-2 py-0.5 rounded text-[10px] font-bold bg-[#00B140] text-white border border-[#00B140]"
           >
             GrabPay
-          </span>
-        )
-      case 'boost':
-        return (
-          <span
-            key={type}
-            className="px-1.5 py-0.5 rounded text-[10px] font-bold bg-[#ED1C24] text-white"
-          >
-            Boost
           </span>
         )
       case 'duitnow':
         return (
           <span
             key={type}
-            className="px-2 py-0.5 rounded text-[10px] font-black bg-[#ED1A3B] text-white tracking-tight"
+            className="px-2 py-0.5 rounded text-[10px] font-black bg-[#ED1A3B] text-white tracking-tight border border-[#ED1A3B]"
           >
             DuitNow
           </span>
@@ -402,7 +424,7 @@ export function CheckoutClient({ initialPaymentSettings }: CheckoutClientProps) 
         return (
           <span
             key={type}
-            className="px-1.5 py-0.5 rounded text-[10px] font-semibold bg-neutral-200 text-neutral-800"
+            className="px-2 py-0.5 rounded text-[10px] font-semibold bg-neutral-200 text-neutral-800"
           >
             {type}
           </span>
@@ -410,82 +432,158 @@ export function CheckoutClient({ initialPaymentSettings }: CheckoutClientProps) 
     }
   }
 
+  // Fallback product image if missing or empty
+  const defaultProductImage = '/images/products/mattress-miracle-sleep.jpg'
+
   if (items.length === 0 && !isSubmitting) {
     return (
-      <div className="py-24 text-center bg-warmwhite min-h-[70vh] flex flex-col items-center justify-center space-y-4 px-4 font-sans">
-        <div className="w-16 h-16 rounded-full bg-forest/10 text-forest flex items-center justify-center">
-          <ShoppingBag className="w-8 h-8 text-gold" />
+      <div className="min-h-screen bg-[#FAF7F2] text-[#222] font-sans flex flex-col justify-center items-center py-20 px-4">
+        <div className="w-full max-w-md bg-white rounded-3xl p-8 sm:p-10 border border-[#E8E2D8] shadow-sm text-center space-y-6">
+          <div className="w-16 h-16 rounded-2xl bg-cream text-forest mx-auto flex items-center justify-center border border-borderLight">
+            <ShoppingBag className="w-8 h-8 text-gold" />
+          </div>
+          <div className="space-y-2">
+            <h2 className="font-serif text-2xl font-bold text-forest">
+              Troli Beli-Belah Anda Kosong
+            </h2>
+            <p className="text-sm text-charcoal-muted leading-relaxed">
+              Anda belum menambah sebarang tilam atau aksesori mewah ke dalam troli anda.
+            </p>
+          </div>
+          <Link
+            href="/collections/mattress"
+            className="w-full inline-flex items-center justify-center py-3.5 px-6 bg-forest hover:bg-forest-dark text-warmwhite text-sm font-bold rounded-xl transition-all shadow-md group"
+          >
+            <span>Terokai Koleksi Tilam KAMAAR</span>
+            <ArrowRight className="w-4 h-4 ml-2 group-hover:translate-x-1 transition-transform" />
+          </Link>
         </div>
-        <h2 className="font-serif text-2xl sm:text-3xl font-bold text-forest">
-          Troli Beli-Belah Anda Kosong
-        </h2>
-        <p className="text-xs text-charcoal-muted max-w-md">
-          Anda belum menambah sebarang tilam atau aksesori ke dalam troli anda.
-        </p>
-        <Link
-          href="/collections/mattress"
-          className="px-6 py-3 bg-forest hover:bg-forest-dark text-warmwhite text-xs font-bold rounded-xl transition-all shadow-sm"
-        >
-          Lihat Koleksi Tilam KAMAAR
-        </Link>
       </div>
     )
   }
 
   return (
-    <div className="min-h-screen bg-white text-[#333333] font-sans antialiased">
+    <div className="min-h-screen bg-[#FDFBF7] text-[#2D2A26] font-sans antialiased selection:bg-gold/20 selection:text-forest">
       {/* ========================================================================= */}
-      {/* 1. TOP MINIMALIST HEADER (Getha / Shopify Style)                         */}
+      {/* 1. BESPOKE LUXURY ATELIER CHECKOUT HEADER (DISTRACTION-FREE)             */}
       {/* ========================================================================= */}
-      <header className="border-b border-[#E6E6E6] bg-white sticky top-0 z-30">
-        <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 h-16 flex items-center justify-between">
-          <Link href="/" className="block">
-            <KamaarLogo variant="horizontal" size="sm" theme="light" />
-          </Link>
-
+      <header className="border-b border-[#E8E2D8] bg-white/95 backdrop-blur-md sticky top-0 z-40 shadow-2xs">
+        <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 h-20 flex items-center justify-between gap-4">
+          {/* Left: Back to Cart Button */}
           <Link
             href="/cart"
-            className="p-2 text-charcoal hover:text-forest transition-colors relative flex items-center"
-            title="Kembali ke Troli"
+            className="inline-flex items-center space-x-2 text-xs font-semibold text-charcoal-muted hover:text-forest py-2 px-3 rounded-lg hover:bg-stone-50 transition-colors"
           >
-            <ShoppingBag className="w-5 h-5 text-forest" />
-            <span className="absolute -top-1 -right-1 w-4 h-4 rounded-full bg-forest text-warmwhite text-[10px] font-bold flex items-center justify-center">
+            <ArrowLeft className="w-4 h-4 text-forest" />
+            <span className="hidden sm:inline">Kembali ke Troli</span>
+            <span className="inline-flex items-center justify-center w-5 h-5 rounded-full bg-cream text-forest text-[11px] font-bold border border-borderLight">
               {items.reduce((sum, i) => sum + i.quantity, 0)}
             </span>
           </Link>
+
+          {/* Center: Kamaar Logo & Atelier Subtitle */}
+          <div className="flex flex-col items-center">
+            <Link href="/" className="block">
+              <KamaarLogo variant="horizontal" size="md" theme="light" />
+            </Link>
+            <span className="text-[10px] font-bold tracking-[0.2em] uppercase text-gold/90 mt-0.5">
+              Atelier Secure Checkout
+            </span>
+          </div>
+
+          {/* Right: Security Guarantee Badge */}
+          <div className="flex items-center space-x-2 text-right">
+            <div className="w-8 h-8 rounded-full bg-emerald-50 border border-emerald-200 flex items-center justify-center text-emerald-600 shrink-0">
+              <Lock className="w-4 h-4 text-emerald-700" />
+            </div>
+            <div className="hidden md:block text-left">
+              <span className="text-[11px] font-bold text-forest block leading-none">
+                256-Bit SSL Enkripsi
+              </span>
+              <span className="text-[10px] text-charcoal-muted block mt-0.5">
+                Patuh Piawaian PCI-DSS
+              </span>
+            </div>
+          </div>
         </div>
       </header>
 
       {/* ========================================================================= */}
-      {/* 2. TWO-COLUMN CHECKOUT LAYOUT (Exact Getha Style)                        */}
+      {/* 2. PROGRESS STEPPER BAR                                                   */}
       {/* ========================================================================= */}
-      <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
-        <div className="grid grid-cols-1 lg:grid-cols-12 min-h-[calc(100vh-64px)]">
+      <div className="bg-[#FAF7F2] border-b border-[#E8E2D8] py-3">
+        <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 flex items-center justify-center">
+          <nav className="flex items-center space-x-2 sm:space-x-4 text-xs font-medium text-charcoal-muted">
+            <Link href="/cart" className="hover:text-forest flex items-center space-x-1.5 text-emerald-700 font-semibold">
+              <CheckCircle2 className="w-3.5 h-3.5 text-emerald-600" />
+              <span>1. Troli</span>
+            </Link>
+            <span className="text-neutral-300">/</span>
+            <span className="flex items-center space-x-1.5 text-forest font-bold">
+              <span className="w-4 h-4 rounded-full bg-forest text-warmwhite text-[10px] flex items-center justify-center">
+                2
+              </span>
+              <span>Penghantaran &amp; Pembayaran</span>
+            </span>
+            <span className="text-neutral-300">/</span>
+            <span className="flex items-center space-x-1.5 text-charcoal-muted/60">
+              <span className="w-4 h-4 rounded-full bg-neutral-200 text-neutral-600 text-[10px] flex items-center justify-center">
+                3
+              </span>
+              <span>Pengesahan Selesai</span>
+            </span>
+          </nav>
+        </div>
+      </div>
+
+      {/* ========================================================================= */}
+      {/* 3. TWO-COLUMN BESPOKE CHECKOUT LAYOUT                                    */}
+      {/* ========================================================================= */}
+      <main className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 py-8 lg:py-12">
+        <div className="grid grid-cols-1 lg:grid-cols-12 gap-8 lg:gap-12 items-start">
           {/* --------------------------------------------------------------------- */}
-          {/* LEFT COLUMN: Customer, Shipping & Payment Form (Span 7)              */}
+          {/* LEFT COLUMN: Checkout Form (7 Columns)                               */}
           {/* --------------------------------------------------------------------- */}
-          <div className="lg:col-span-7 py-8 lg:py-12 lg:pr-12 xl:pr-16 space-y-8">
-            {/* Express Checkout (Google Pay / Apple Pay) */}
+          <div className="lg:col-span-7 space-y-8">
+            {/* Express Checkout Module */}
             {paymentSettings?.expressCheckoutEnabled !== false && (
-              <div className="space-y-4">
-                <div className="text-center">
-                  <span className="text-xs text-neutral-500 font-medium">Express checkout</span>
+              <div className="bg-white rounded-2xl p-5 sm:p-6 border border-[#E8E2D8] shadow-2xs space-y-4">
+                <div className="flex items-center justify-between">
+                  <span className="text-xs font-bold uppercase tracking-wider text-charcoal-muted flex items-center gap-1.5">
+                    <Sparkles className="w-3.5 h-3.5 text-gold" />
+                    Express Checkout
+                  </span>
+                  <span className="text-[11px] text-charcoal-muted">Pembayaran Pantas 1-Klik</span>
                 </div>
 
-                <div className="flex items-center justify-center">
+                <div className="grid grid-cols-1 sm:grid-cols-2 gap-3">
                   <button
                     type="button"
                     onClick={handleSubmit}
-                    className="w-full max-w-sm py-3 px-6 bg-black hover:bg-neutral-900 active:scale-[0.99] text-white rounded-xl font-bold flex items-center justify-center space-x-2 transition-all shadow-xs cursor-pointer"
+                    className="w-full py-3.5 px-4 bg-black hover:bg-neutral-800 active:scale-[0.99] text-white rounded-xl font-bold flex items-center justify-center space-x-2 transition-all shadow-xs cursor-pointer border border-neutral-700"
                   >
-                    <span className="font-sans font-black text-sm tracking-tight">G Pay</span>
+                    <span className="font-sans font-black text-sm tracking-tight text-white">G Pay</span>
+                    <span className="text-[11px] text-neutral-400 font-normal">| Instant Pay</span>
+                  </button>
+
+                  <button
+                    type="button"
+                    onClick={() => {
+                      setSelectedMethodId('pay-fpx')
+                      const el = document.getElementById('payment-section')
+                      el?.scrollIntoView({ behavior: 'smooth' })
+                    }}
+                    className="w-full py-3.5 px-4 bg-[#00529C] hover:bg-[#00417C] active:scale-[0.99] text-white rounded-xl font-bold flex items-center justify-center space-x-2 transition-all shadow-xs cursor-pointer"
+                  >
+                    <span className="font-mono font-black text-sm tracking-wider">FPX</span>
+                    <span className="text-[11px] text-sky-100 font-normal">| Online Banking</span>
                   </button>
                 </div>
 
-                <div className="relative flex items-center justify-center">
-                  <div className="border-t border-[#E6E6E6] w-full" />
-                  <span className="bg-white px-3 text-xs text-neutral-400 uppercase font-medium absolute">
-                    OR
+                <div className="relative flex items-center justify-center pt-2">
+                  <div className="border-t border-[#E8E2D8] w-full" />
+                  <span className="bg-white px-3 text-[11px] font-bold text-charcoal-muted uppercase tracking-wider absolute">
+                    Atau Teruskan dengan Butiran Anda
                   </span>
                 </div>
               </div>
@@ -493,263 +591,366 @@ export function CheckoutClient({ initialPaymentSettings }: CheckoutClientProps) 
 
             {/* Error notifications */}
             {isCancelled && (
-              <div className="p-4 bg-amber-50 rounded-xl border border-amber-300 text-amber-900 text-xs flex items-center space-x-2">
-                <AlertCircle className="w-4 h-4 shrink-0" />
-                <span>Sesi pembayaran sebelum ini telah dibatalkan. Anda boleh menyemak semula butiran anda di bawah.</span>
+              <div className="p-4 bg-amber-50 rounded-2xl border border-amber-200 text-amber-900 text-xs flex items-center space-x-3">
+                <AlertCircle className="w-5 h-5 shrink-0 text-amber-600" />
+                <span>Sesi pembayaran sebelum ini telah dibatalkan. Anda boleh menyemak semula butiran anda di bawah dan mencuba kaedah lain.</span>
               </div>
             )}
 
             {errorMessage && (
-              <div className="p-4 bg-red-50 rounded-xl border border-red-300 text-sale text-xs flex items-center space-x-2">
-                <AlertCircle className="w-4 h-4 shrink-0" />
-                <span>{errorMessage}</span>
+              <div className="p-4 bg-red-50 rounded-2xl border border-red-200 text-red-900 text-xs flex items-center space-x-3">
+                <AlertCircle className="w-5 h-5 shrink-0 text-red-600" />
+                <span className="font-medium">{errorMessage}</span>
               </div>
             )}
 
             <form onSubmit={handleSubmit} className="space-y-8">
-              {/* SECTION: Contact */}
-              <div className="space-y-3">
-                <div className="flex items-center justify-between">
-                  <h2 className="text-lg font-bold text-neutral-900">Contact</h2>
+              {/* SECTION 1: Contact Information */}
+              <div className="bg-white rounded-2xl p-6 sm:p-7 border border-[#E8E2D8] shadow-2xs space-y-4">
+                <div className="flex items-center justify-between border-b border-[#E8E2D8]/60 pb-3">
+                  <div className="flex items-center space-x-2.5">
+                    <span className="w-6 h-6 rounded-full bg-forest text-warmwhite text-xs font-bold flex items-center justify-center">
+                      1
+                    </span>
+                    <h2 className="text-base font-bold text-forest">Maklumat Hubungan</h2>
+                  </div>
                   <Link
                     href="/account/login"
-                    className="text-xs text-[#1E4E8C] hover:underline font-semibold"
+                    className="text-xs text-forest hover:text-gold font-semibold underline underline-offset-2 transition-colors"
                   >
-                    Sign in
+                    Log Masuk Akaun
                   </Link>
                 </div>
 
-                <div className="relative">
-                  <input
-                    type="text"
-                    required
-                    value={contactInfo}
-                    onChange={(e) => setContactInfo(e.target.value)}
-                    placeholder="Email or mobile phone number"
-                    className="w-full px-3.5 py-3 rounded-xl border border-[#D9D9D9] text-sm text-neutral-900 placeholder-neutral-400 outline-none focus:border-[#1E4E8C] focus:ring-1 focus:ring-[#1E4E8C] transition-all"
-                  />
-                  <div className="absolute right-3.5 top-1/2 -translate-y-1/2 text-neutral-400 cursor-help" title="Kami akan menghantar nombor penjejakan dan resit pesanan ke sini.">
-                    <HelpCircle className="w-4 h-4" />
+                <div className="space-y-2">
+                  <label className="text-xs font-semibold text-forest block">
+                    Alamat Emel atau Nombor Telefon <span className="text-red-500">*</span>
+                  </label>
+                  <div className="relative">
+                    <input
+                      type="text"
+                      required
+                      value={contactInfo}
+                      onChange={(e) => setContactInfo(e.target.value)}
+                      placeholder="cth: nama@kamaar.my atau 012 345 6789"
+                      className="w-full px-4 py-3 rounded-xl border border-[#D5CEC2] bg-[#FAF7F2]/40 text-sm text-[#222] placeholder-neutral-400 outline-none focus:border-forest focus:ring-2 focus:ring-forest/10 transition-all font-sans"
+                    />
+                    <div
+                      className="absolute right-3.5 top-1/2 -translate-y-1/2 text-neutral-400 cursor-help"
+                      title="Kami akan menghantar nombor penjejakan lori dan resit pesanan rasmi ke sini."
+                    >
+                      <HelpCircle className="w-4 h-4" />
+                    </div>
                   </div>
+                  <p className="text-[11px] text-charcoal-muted">
+                    Resit pesanan dan nombor penjejakan penghantaran akan dihantar ke sini.
+                  </p>
                 </div>
 
-                <label className="flex items-center space-x-2.5 cursor-pointer text-xs text-neutral-700">
+                <label className="flex items-start space-x-3 cursor-pointer pt-1 select-none">
                   <input
                     type="checkbox"
                     checked={newsletterConsent}
                     onChange={(e) => setNewsletterConsent(e.target.checked)}
-                    className="w-4 h-4 rounded accent-[#1E4E8C]"
+                    className="w-4 h-4 mt-0.5 rounded accent-forest cursor-pointer"
                   />
-                  <span>Email me with news and offers</span>
+                  <span className="text-xs text-charcoal-muted leading-relaxed">
+                    Langgan tawaran eksklusif, keistimewaan VIP, dan panduan penjagaan tilam KAMAAR.
+                  </span>
                 </label>
               </div>
 
-              {/* SECTION: Delivery Address */}
-              <div className="space-y-3">
-                <h2 className="text-lg font-bold text-neutral-900">Delivery</h2>
+              {/* SECTION 2: Delivery Address */}
+              <div className="bg-white rounded-2xl p-6 sm:p-7 border border-[#E8E2D8] shadow-2xs space-y-5">
+                <div className="flex items-center space-x-2.5 border-b border-[#E8E2D8]/60 pb-3">
+                  <span className="w-6 h-6 rounded-full bg-forest text-warmwhite text-xs font-bold flex items-center justify-center">
+                    2
+                  </span>
+                  <h2 className="text-base font-bold text-forest">Alamat Penghantaran</h2>
+                </div>
 
                 {/* Country / Region */}
-                <div>
-                  <label className="text-[11px] text-neutral-500 font-medium block mb-1">
-                    Country/Region
-                  </label>
+                <div className="space-y-1.5">
+                  <label className="text-xs font-semibold text-forest block">Negara / Wilayah</label>
                   <div className="relative">
                     <select
                       value={country}
                       onChange={(e) => setCountry(e.target.value)}
-                      className="w-full px-3.5 py-3 rounded-xl border border-[#D9D9D9] text-sm text-neutral-900 bg-neutral-50 outline-none focus:border-[#1E4E8C] appearance-none"
+                      className="w-full px-4 py-3 rounded-xl border border-[#D5CEC2] bg-[#FAF7F2]/50 text-sm text-[#222] outline-none focus:border-forest appearance-none font-sans font-medium"
                     >
-                      <option value="Malaysia">Malaysia</option>
-                      <option value="Singapore">Singapore (Hubungi Concierge)</option>
+                      <option value="Malaysia">Malaysia (Penghantaran Percuma Semenanjung)</option>
+                      <option value="Singapore">Singapore (Hubungi Concierge untuk Tempahan Khas)</option>
                     </select>
-                    <ChevronDown className="w-4 h-4 text-neutral-400 absolute right-3.5 top-1/2 -translate-y-1/2 pointer-events-none" />
+                    <ChevronDown className="w-4 h-4 text-neutral-500 absolute right-4 top-1/2 -translate-y-1/2 pointer-events-none" />
                   </div>
                 </div>
 
                 {/* Names */}
-                <div className="grid grid-cols-1 sm:grid-cols-2 gap-3">
+                <div className="grid grid-cols-1 sm:grid-cols-2 gap-4">
+                  <div className="space-y-1.5">
+                    <label className="text-xs font-semibold text-forest block">Nama Pertama</label>
+                    <input
+                      type="text"
+                      value={firstName}
+                      onChange={(e) => setFirstName(e.target.value)}
+                      placeholder="cth: Ahmad"
+                      className="w-full px-4 py-3 rounded-xl border border-[#D5CEC2] bg-[#FAF7F2]/40 text-sm text-[#222] placeholder-neutral-400 outline-none focus:border-forest focus:ring-2 focus:ring-forest/10 transition-all"
+                    />
+                  </div>
+
+                  <div className="space-y-1.5">
+                    <label className="text-xs font-semibold text-forest block">
+                      Nama Akhir <span className="text-red-500">*</span>
+                    </label>
+                    <input
+                      type="text"
+                      required
+                      value={lastName}
+                      onChange={(e) => setLastName(e.target.value)}
+                      placeholder="cth: Danial"
+                      className="w-full px-4 py-3 rounded-xl border border-[#D5CEC2] bg-[#FAF7F2]/40 text-sm text-[#222] placeholder-neutral-400 outline-none focus:border-forest focus:ring-2 focus:ring-forest/10 transition-all"
+                    />
+                  </div>
+                </div>
+
+                {/* Company (Optional) */}
+                <div className="space-y-1.5">
+                  <label className="text-xs font-medium text-charcoal-muted block">
+                    Nama Syarikat / Organisasi (Pilihan)
+                  </label>
                   <input
                     type="text"
-                    value={firstName}
-                    onChange={(e) => setFirstName(e.target.value)}
-                    placeholder="First name (optional)"
-                    className="w-full px-3.5 py-3 rounded-xl border border-[#D9D9D9] text-sm text-neutral-900 placeholder-neutral-400 outline-none focus:border-[#1E4E8C] transition-all"
-                  />
-                  <input
-                    type="text"
-                    required
-                    value={lastName}
-                    onChange={(e) => setLastName(e.target.value)}
-                    placeholder="Last name"
-                    className="w-full px-3.5 py-3 rounded-xl border border-[#D9D9D9] text-sm text-neutral-900 placeholder-neutral-400 outline-none focus:border-[#1E4E8C] transition-all"
+                    value={company}
+                    onChange={(e) => setCompany(e.target.value)}
+                    placeholder="cth: KAMAAR Beddings Boutique / Kediaman Peribadi"
+                    className="w-full px-4 py-3 rounded-xl border border-[#D5CEC2] bg-[#FAF7F2]/40 text-sm text-[#222] placeholder-neutral-400 outline-none focus:border-forest focus:ring-2 focus:ring-forest/10 transition-all"
                   />
                 </div>
 
-                {/* Company */}
-                <input
-                  type="text"
-                  value={company}
-                  onChange={(e) => setCompany(e.target.value)}
-                  placeholder="Company (optional)"
-                  className="w-full px-3.5 py-3 rounded-xl border border-[#D9D9D9] text-sm text-neutral-900 placeholder-neutral-400 outline-none focus:border-[#1E4E8C] transition-all"
-                />
+                {/* Address Line 1 */}
+                <div className="space-y-1.5">
+                  <label className="text-xs font-semibold text-forest block">
+                    Alamat Jalan (No. Rumah &amp; Nama Jalan) <span className="text-red-500">*</span>
+                  </label>
+                  <input
+                    type="text"
+                    required
+                    value={addressLine1}
+                    onChange={(e) => setAddressLine1(e.target.value)}
+                    placeholder="cth: No. 12, Jalan Telawi 3, Bangsar Baru"
+                    className="w-full px-4 py-3 rounded-xl border border-[#D5CEC2] bg-[#FAF7F2]/40 text-sm text-[#222] placeholder-neutral-400 outline-none focus:border-forest focus:ring-2 focus:ring-forest/10 transition-all"
+                  />
+                </div>
 
-                {/* Address */}
-                <input
-                  type="text"
-                  required
-                  value={addressLine1}
-                  onChange={(e) => setAddressLine1(e.target.value)}
-                  placeholder="Address"
-                  className="w-full px-3.5 py-3 rounded-xl border border-[#D9D9D9] text-sm text-neutral-900 placeholder-neutral-400 outline-none focus:border-[#1E4E8C] transition-all"
-                />
-
-                {/* Apartment, suite, etc. */}
-                <input
-                  type="text"
-                  value={addressLine2}
-                  onChange={(e) => setAddressLine2(e.target.value)}
-                  placeholder="Apartment, suite, etc. (optional)"
-                  className="w-full px-3.5 py-3 rounded-xl border border-[#D9D9D9] text-sm text-neutral-900 placeholder-neutral-400 outline-none focus:border-[#1E4E8C] transition-all"
-                />
+                {/* Address Line 2 */}
+                <div className="space-y-1.5">
+                  <label className="text-xs font-medium text-charcoal-muted block">
+                    Unit, Blok, Kondominium (Pilihan)
+                  </label>
+                  <input
+                    type="text"
+                    value={addressLine2}
+                    onChange={(e) => setAddressLine2(e.target.value)}
+                    placeholder="cth: Blok B, Tingkat 15-02"
+                    className="w-full px-4 py-3 rounded-xl border border-[#D5CEC2] bg-[#FAF7F2]/40 text-sm text-[#222] placeholder-neutral-400 outline-none focus:border-forest focus:ring-2 focus:ring-forest/10 transition-all"
+                  />
+                </div>
 
                 {/* Postcode, City, State Grid */}
-                <div className="grid grid-cols-1 sm:grid-cols-3 gap-3">
-                  <input
-                    type="text"
-                    required
-                    maxLength={5}
-                    value={postcode}
-                    onChange={(e) => setPostcode(e.target.value)}
-                    placeholder="Postcode"
-                    className="w-full px-3.5 py-3 rounded-xl border border-[#D9D9D9] text-sm text-neutral-900 placeholder-neutral-400 outline-none focus:border-[#1E4E8C] font-mono transition-all"
-                  />
+                <div className="grid grid-cols-1 sm:grid-cols-3 gap-4">
+                  <div className="space-y-1.5">
+                    <label className="text-xs font-semibold text-forest block">
+                      Poskod <span className="text-red-500">*</span>
+                    </label>
+                    <input
+                      type="text"
+                      required
+                      maxLength={5}
+                      value={postcode}
+                      onChange={(e) => setPostcode(e.target.value)}
+                      placeholder="50450"
+                      className="w-full px-4 py-3 rounded-xl border border-[#D5CEC2] bg-[#FAF7F2]/40 text-sm text-[#222] placeholder-neutral-400 outline-none focus:border-forest focus:ring-2 focus:ring-forest/10 font-mono transition-all"
+                    />
+                  </div>
 
-                  <input
-                    type="text"
-                    required
-                    value={city}
-                    onChange={(e) => setCity(e.target.value)}
-                    placeholder="City"
-                    className="w-full px-3.5 py-3 rounded-xl border border-[#D9D9D9] text-sm text-neutral-900 placeholder-neutral-400 outline-none focus:border-[#1E4E8C] transition-all"
-                  />
+                  <div className="space-y-1.5">
+                    <label className="text-xs font-semibold text-forest block">
+                      Bandar <span className="text-red-500">*</span>
+                    </label>
+                    <input
+                      type="text"
+                      required
+                      value={city}
+                      onChange={(e) => setCity(e.target.value)}
+                      placeholder="Kuala Lumpur"
+                      className="w-full px-4 py-3 rounded-xl border border-[#D5CEC2] bg-[#FAF7F2]/40 text-sm text-[#222] placeholder-neutral-400 outline-none focus:border-forest focus:ring-2 focus:ring-forest/10 transition-all"
+                    />
+                  </div>
 
-                  <div className="relative">
-                    <select
-                      value={state}
-                      onChange={(e) => setState(e.target.value)}
-                      className="w-full px-3.5 py-3 rounded-xl border border-[#D9D9D9] text-sm text-neutral-900 bg-white outline-none focus:border-[#1E4E8C] appearance-none"
-                    >
-                      {MALAYSIAN_STATES.map((st) => (
-                        <option key={st} value={st}>
-                          {st}
-                        </option>
-                      ))}
-                    </select>
-                    <ChevronDown className="w-4 h-4 text-neutral-400 absolute right-3.5 top-1/2 -translate-y-1/2 pointer-events-none" />
+                  <div className="space-y-1.5">
+                    <label className="text-xs font-semibold text-forest block">Negeri</label>
+                    <div className="relative">
+                      <select
+                        value={state}
+                        onChange={(e) => setState(e.target.value)}
+                        className="w-full px-4 py-3 rounded-xl border border-[#D5CEC2] bg-[#FAF7F2]/40 text-sm text-[#222] outline-none focus:border-forest appearance-none font-sans"
+                      >
+                        {MALAYSIAN_STATES.map((st) => (
+                          <option key={st} value={st}>
+                            {st}
+                          </option>
+                        ))}
+                      </select>
+                      <ChevronDown className="w-4 h-4 text-neutral-500 absolute right-4 top-1/2 -translate-y-1/2 pointer-events-none" />
+                    </div>
                   </div>
                 </div>
 
                 {/* Phone */}
-                <div className="relative">
-                  <input
-                    type="tel"
-                    value={phone}
-                    onChange={(e) => setPhone(e.target.value)}
-                    placeholder="Phone"
-                    className="w-full px-3.5 py-3 rounded-xl border border-[#D9D9D9] text-sm text-neutral-900 placeholder-neutral-400 outline-none focus:border-[#1E4E8C] transition-all"
-                  />
-                  <div className="absolute right-3.5 top-1/2 -translate-y-1/2 text-neutral-400 cursor-help" title="Diperlukan untuk koordinasi lori penghantaran tilam.">
-                    <HelpCircle className="w-4 h-4" />
+                <div className="space-y-1.5">
+                  <label className="text-xs font-semibold text-forest block">Nombor Telefon Penerima</label>
+                  <div className="relative">
+                    <input
+                      type="tel"
+                      value={phone}
+                      onChange={(e) => setPhone(e.target.value)}
+                      placeholder="012 345 6789"
+                      className="w-full px-4 py-3 rounded-xl border border-[#D5CEC2] bg-[#FAF7F2]/40 text-sm text-[#222] placeholder-neutral-400 outline-none focus:border-forest focus:ring-2 focus:ring-forest/10 transition-all"
+                    />
+                    <div
+                      className="absolute right-3.5 top-1/2 -translate-y-1/2 text-neutral-400 cursor-help"
+                      title="Diperlukan untuk kru penghantaran menghubungi anda sebelum tiba."
+                    >
+                      <HelpCircle className="w-4 h-4" />
+                    </div>
                   </div>
+                  <p className="text-[11px] text-charcoal-muted">
+                    Pemandu lori KAMAAR akan menghubungi nombor ini untuk menjadualkan masa ketibaan.
+                  </p>
                 </div>
 
-                {/* Lift Access & Floor level for bulky mattresses */}
+                {/* White-Glove Installation Concierge (bulky items) */}
                 {hasBulkyMattress && (
-                  <div className="p-4 bg-cream/40 rounded-xl border border-[#E6E6E6] space-y-3 text-xs">
-                    <span className="font-bold text-forest block">
-                      🚚 Maklumat Pemasangan Tilam KAMAAR (White-Glove Setup)
-                    </span>
-                    <div className="grid grid-cols-1 sm:grid-cols-2 gap-3">
-                      <div>
-                        <label className="text-[11px] text-neutral-500 block mb-1">
+                  <div className="p-4 sm:p-5 bg-[#FAF7F2] rounded-2xl border border-gold/40 space-y-4 text-xs">
+                    <div className="flex items-center space-x-2 text-forest font-bold text-sm">
+                      <Truck className="w-4 h-4 text-gold shrink-0" />
+                      <span>Perkhidmatan White-Glove Setup Percuma</span>
+                    </div>
+                    <p className="text-[11px] text-charcoal-muted leading-relaxed">
+                      Kru KAMAAR akan membawa tilam terus ke dalam bilik tidur anda, membuka pembungkusan, dan memasang tilam di atas rangka katil anda dengan rapi.
+                    </p>
+
+                    <div className="grid grid-cols-1 sm:grid-cols-2 gap-3 pt-1">
+                      <div className="space-y-1">
+                        <label className="text-[11px] font-semibold text-forest block">
                           Akses Lif di Kediaman Anda
                         </label>
                         <select
                           value={hasLiftAccess ? 'yes' : 'no'}
                           onChange={(e) => setHasLiftAccess(e.target.value === 'yes')}
-                          className="w-full px-3 py-2 bg-white rounded-lg border border-[#D9D9D9]"
+                          className="w-full px-3 py-2.5 bg-white rounded-xl border border-[#D5CEC2] text-xs text-[#222]"
                         >
-                          <option value="yes">Ada Lif Penumpang / Servis</option>
-                          <option value="no">Tiada Lif (Naik Tangga Manual)</option>
+                          <option value="yes">Ada Lif Penumpang / Kargo</option>
+                          <option value="no">Tiada Lif (Kru Angkut Tangga)</option>
                         </select>
                       </div>
 
-                      <div>
-                        <label className="text-[11px] text-neutral-500 block mb-1">
+                      <div className="space-y-1">
+                        <label className="text-[11px] font-semibold text-forest block">
                           Aras Tingkat Bilik Tidur
                         </label>
                         <input
                           type="text"
                           value={floorLevel}
                           onChange={(e) => setFloorLevel(e.target.value)}
-                          placeholder="cth: Tingkat 2 / Ground Floor"
-                          className="w-full px-3 py-2 bg-white rounded-lg border border-[#D9D9D9]"
+                          placeholder="cth: Tingkat Bawah / Tingkat 2"
+                          className="w-full px-3 py-2.5 bg-white rounded-xl border border-[#D5CEC2] text-xs text-[#222]"
                         />
                       </div>
+                    </div>
+
+                    <div className="space-y-1 pt-1">
+                      <label className="text-[11px] font-semibold text-forest block">
+                        Nota Khas untuk Pemandu &amp; Kru Pemasangan (Pilihan)
+                      </label>
+                      <textarea
+                        rows={2}
+                        value={deliveryNotes}
+                        onChange={(e) => setDeliveryNotes(e.target.value)}
+                        placeholder="cth: Sila daftar di pos pengawal Kondo, hubungi sebelum sampai, atau tarikh pindah rumah baru..."
+                        className="w-full px-3 py-2 bg-white rounded-xl border border-[#D5CEC2] text-xs text-[#222] resize-none outline-none focus:border-forest"
+                      />
                     </div>
                   </div>
                 )}
 
-                {/* Save info for next time checkbox */}
-                <label className="flex items-center space-x-2.5 cursor-pointer text-xs text-neutral-700 pt-1">
+                {/* Save info for next time */}
+                <label className="flex items-center space-x-3 cursor-pointer pt-1 select-none">
                   <input
                     type="checkbox"
                     checked={saveInfoForNextTime}
                     onChange={(e) => setSaveInfoForNextTime(e.target.checked)}
-                    className="w-4 h-4 rounded accent-[#1E4E8C]"
+                    className="w-4 h-4 rounded accent-forest cursor-pointer"
                   />
-                  <span>Save this information for next time</span>
+                  <span className="text-xs text-charcoal-muted">
+                    Simpan maklumat penghantaran ini untuk pesanan masa hadapan
+                  </span>
                 </label>
               </div>
 
-              {/* SECTION: Shipping Method */}
-              <div className="space-y-3">
-                <h2 className="text-lg font-bold text-neutral-900">Shipping method</h2>
+              {/* SECTION 3: Shipping Method */}
+              <div className="bg-white rounded-2xl p-6 sm:p-7 border border-[#E8E2D8] shadow-2xs space-y-4">
+                <div className="flex items-center space-x-2.5 border-b border-[#E8E2D8]/60 pb-3">
+                  <span className="w-6 h-6 rounded-full bg-forest text-warmwhite text-xs font-bold flex items-center justify-center">
+                    3
+                  </span>
+                  <h2 className="text-base font-bold text-forest">Kaedah Penghantaran</h2>
+                </div>
 
-                <div className="p-4 rounded-xl border border-[#D9D9D9] bg-white flex items-center justify-between">
-                  <div className="flex items-center space-x-3">
-                    <div className="w-4 h-4 rounded-full border-4 border-[#1E4E8C] bg-white" />
-                    <div>
-                      <span className="text-sm font-semibold text-neutral-900 block">
+                <div className="p-4 sm:p-5 rounded-2xl border-2 border-forest/30 bg-[#FAF7F2] flex items-center justify-between gap-4">
+                  <div className="flex items-start space-x-3.5 min-w-0">
+                    <div className="w-5 h-5 rounded-full border-4 border-forest bg-white mt-0.5 shrink-0" />
+                    <div className="min-w-0">
+                      <span className="text-sm font-bold text-forest block truncate">
                         {shippingInfo.isComplimentary
                           ? 'Complimentary White-Glove In-Home Setup'
-                          : 'Penghantaran Terus Semenanjung'}
+                          : 'Penghantaran Terus Semenanjung Malaysia'}
                       </span>
-                      <span className="text-xs text-neutral-500 block">
+                      <span className="text-xs text-charcoal-muted block mt-0.5">
                         {shippingInfo.isComplimentary
-                          ? 'Pemasangan percuma di bilik tidur anda • 3-7 hari bekerja'
-                          : 'Penghantaran standard berinsurans'}
+                          ? 'Penghantaran berjadual & pemasangan terus di bilik tidur anda • 3-7 hari bekerja'
+                          : 'Penghantaran standard berinsurans penuh'}
                       </span>
                     </div>
                   </div>
 
-                  <span className="text-sm font-bold text-forest">
-                    {shippingInfo.shippingSen === 0 ? 'Free' : formatMYR(shippingInfo.shippingSen)}
+                  <span className="text-sm font-extrabold text-forest shrink-0 bg-white px-3 py-1.5 rounded-lg border border-borderLight shadow-2xs">
+                    {shippingInfo.shippingSen === 0 ? 'PERCUMA' : formatMYR(shippingInfo.shippingSen)}
                   </span>
                 </div>
               </div>
 
-              {/* SECTION: Payment Accordion (Getha / Shopify Style) */}
-              <div className="space-y-3">
-                <div>
-                  <h2 className="text-lg font-bold text-neutral-900">Payment</h2>
-                  <p className="text-xs text-neutral-500">
-                    All transactions are secure and encrypted.
-                  </p>
+              {/* SECTION 4: Payment Methods Accordion */}
+              <div id="payment-section" className="bg-white rounded-2xl p-6 sm:p-7 border border-[#E8E2D8] shadow-2xs space-y-5">
+                <div className="flex items-center justify-between border-b border-[#E8E2D8]/60 pb-3">
+                  <div className="flex items-center space-x-2.5">
+                    <span className="w-6 h-6 rounded-full bg-forest text-warmwhite text-xs font-bold flex items-center justify-center">
+                      4
+                    </span>
+                    <h2 className="text-base font-bold text-forest">Kaedah Pembayaran</h2>
+                  </div>
+                  <span className="text-xs text-charcoal-muted flex items-center gap-1">
+                    <Lock className="w-3.5 h-3.5 text-emerald-600" />
+                    TLS 256-Bit
+                  </span>
                 </div>
 
-                <div className="rounded-xl border border-[#D9D9D9] overflow-hidden divide-y divide-[#D9D9D9] bg-white">
+                <p className="text-xs text-charcoal-muted leading-relaxed">
+                  Semua transaksi diproses secara disulitkan dan mematuhi standard keselamatan perbankan tertinggi.
+                </p>
+
+                {/* Payment Option List */}
+                <div className="rounded-2xl border border-[#D5CEC2] overflow-hidden divide-y divide-[#D5CEC2] bg-white">
                   {activeMethods.map((method) => {
                     const isSelected = selectedMethodId === method.id
 
@@ -757,24 +958,24 @@ export function CheckoutClient({ initialPaymentSettings }: CheckoutClientProps) 
                       <div key={method.id} className="transition-colors">
                         {/* Header Row */}
                         <label
-                          className={`flex items-center justify-between p-4 cursor-pointer select-none transition-colors ${
-                            isSelected ? 'bg-[#F4F7FB]' : 'hover:bg-neutral-50'
+                          className={`flex items-center justify-between p-4 sm:p-4.5 cursor-pointer select-none transition-colors ${
+                            isSelected ? 'bg-[#FAF7F2]' : 'hover:bg-stone-50/60'
                           }`}
                         >
-                          <div className="flex items-center space-x-3 min-w-0 pr-2">
+                          <div className="flex items-center space-x-3.5 min-w-0 pr-2">
                             <input
                               type="radio"
                               name="paymentMethod"
                               checked={isSelected}
                               onChange={() => setSelectedMethodId(method.id)}
-                              className="w-4 h-4 accent-[#1E4E8C] shrink-0"
+                              className="w-4 h-4 accent-forest shrink-0 cursor-pointer"
                             />
                             <div className="min-w-0">
-                              <span className="text-sm font-semibold text-neutral-900 block truncate">
+                              <span className="text-sm font-bold text-forest block truncate">
                                 {method.name}
                               </span>
                               {method.subtitle && (
-                                <span className="text-[11px] text-neutral-500 block truncate">
+                                <span className="text-xs text-charcoal-muted block truncate mt-0.5">
                                   {method.subtitle}
                                 </span>
                               )}
@@ -791,71 +992,96 @@ export function CheckoutClient({ initialPaymentSettings }: CheckoutClientProps) 
 
                         {/* Expanded Content Subcard when selected */}
                         {isSelected && (
-                          <div className="p-4 sm:p-5 bg-[#F9FAFC] border-t border-[#D9D9D9] space-y-4 animate-in fade-in duration-200">
-                            {/* CASE 1: Credit Card inline fields */}
+                          <div className="p-4 sm:p-6 bg-[#FAF7F2]/60 border-t border-[#D5CEC2] space-y-4">
+                            {/* CASE 1: Credit / Debit Card inline fields */}
                             {method.providerType === 'credit_card' && (
-                              <div className="space-y-3 max-w-md mx-auto">
-                                <div className="relative">
-                                  <input
-                                    type="text"
-                                    maxLength={19}
-                                    value={cardNumber}
-                                    onChange={(e) => setCardNumber(e.target.value)}
-                                    placeholder="Card number"
-                                    className="w-full px-3.5 py-3 rounded-xl border border-[#D9D9D9] text-sm text-neutral-900 placeholder-neutral-400 outline-none focus:border-[#1E4E8C] bg-white font-mono"
-                                  />
-                                  <Lock className="w-4 h-4 text-neutral-400 absolute right-3.5 top-1/2 -translate-y-1/2" />
-                                </div>
-
-                                <div className="grid grid-cols-2 gap-3">
-                                  <input
-                                    type="text"
-                                    maxLength={5}
-                                    value={cardExpiry}
-                                    onChange={(e) => setCardExpiry(e.target.value)}
-                                    placeholder="Expiration date (MM / YY)"
-                                    className="w-full px-3.5 py-3 rounded-xl border border-[#D9D9D9] text-sm text-neutral-900 placeholder-neutral-400 outline-none focus:border-[#1E4E8C] bg-white font-mono"
-                                  />
+                              <div className="space-y-3.5 max-w-lg mx-auto">
+                                <div className="space-y-1.5">
+                                  <label className="text-xs font-semibold text-forest block">
+                                    Nombor Kad Kredit / Debit
+                                  </label>
                                   <div className="relative">
                                     <input
-                                      type="password"
-                                      maxLength={4}
-                                      value={cardCvc}
-                                      onChange={(e) => setCardCvc(e.target.value)}
-                                      placeholder="Security code"
-                                      className="w-full px-3.5 py-3 rounded-xl border border-[#D9D9D9] text-sm text-neutral-900 placeholder-neutral-400 outline-none focus:border-[#1E4E8C] bg-white font-mono"
+                                      type="text"
+                                      maxLength={19}
+                                      value={cardNumber}
+                                      onChange={handleCardNumberChange}
+                                      placeholder="4532 •••• •••• 8921"
+                                      className="w-full px-4 py-3 rounded-xl border border-[#D5CEC2] text-sm text-[#222] placeholder-neutral-400 outline-none focus:border-forest bg-white font-mono shadow-2xs"
                                     />
-                                    <span title="3-digit nombor di belakang kad anda" className="absolute right-3.5 top-1/2 -translate-y-1/2 cursor-help inline-flex">
-                                      <HelpCircle className="w-4 h-4 text-neutral-400" />
-                                    </span>
+                                    <Lock className="w-4 h-4 text-neutral-400 absolute right-4 top-1/2 -translate-y-1/2" />
                                   </div>
                                 </div>
 
-                                <input
-                                  type="text"
-                                  value={cardName}
-                                  onChange={(e) => setCardName(e.target.value)}
-                                  placeholder="Name on card"
-                                  className="w-full px-3.5 py-3 rounded-xl border border-[#D9D9D9] text-sm text-neutral-900 placeholder-neutral-400 outline-none focus:border-[#1E4E8C] bg-white"
-                                />
+                                <div className="grid grid-cols-2 gap-3">
+                                  <div className="space-y-1.5">
+                                    <label className="text-xs font-semibold text-forest block">
+                                      Tarikh Luput (MM / YY)
+                                    </label>
+                                    <input
+                                      type="text"
+                                      maxLength={7}
+                                      value={cardExpiry}
+                                      onChange={handleCardExpiryChange}
+                                      placeholder="MM / YY"
+                                      className="w-full px-4 py-3 rounded-xl border border-[#D5CEC2] text-sm text-[#222] placeholder-neutral-400 outline-none focus:border-forest bg-white font-mono shadow-2xs"
+                                    />
+                                  </div>
 
-                                <label className="flex items-center space-x-2 cursor-pointer text-xs text-neutral-700 pt-1">
+                                  <div className="space-y-1.5">
+                                    <label className="text-xs font-semibold text-forest block">
+                                      Kod Keselamatan (CVV)
+                                    </label>
+                                    <div className="relative">
+                                      <input
+                                        type="password"
+                                        maxLength={4}
+                                        value={cardCvc}
+                                        onChange={(e) => setCardCvc(e.target.value.replace(/\D/g, ''))}
+                                        placeholder="123"
+                                        className="w-full px-4 py-3 rounded-xl border border-[#D5CEC2] text-sm text-[#222] placeholder-neutral-400 outline-none focus:border-forest bg-white font-mono shadow-2xs"
+                                      />
+                                      <span
+                                        title="3 atau 4 digit nombor di belakang kad anda"
+                                        className="absolute right-4 top-1/2 -translate-y-1/2 cursor-help inline-flex"
+                                      >
+                                        <HelpCircle className="w-4 h-4 text-neutral-400" />
+                                      </span>
+                                    </div>
+                                  </div>
+                                </div>
+
+                                <div className="space-y-1.5">
+                                  <label className="text-xs font-semibold text-forest block">
+                                    Nama Pemegang Kad (seperti pada kad)
+                                  </label>
+                                  <input
+                                    type="text"
+                                    value={cardName}
+                                    onChange={(e) => setCardName(e.target.value)}
+                                    placeholder="cth: AHMAD DANIAL"
+                                    className="w-full px-4 py-3 rounded-xl border border-[#D5CEC2] text-sm text-[#222] placeholder-neutral-400 outline-none focus:border-forest bg-white shadow-2xs"
+                                  />
+                                </div>
+
+                                <label className="flex items-center space-x-2.5 cursor-pointer text-xs text-charcoal-muted pt-1 select-none">
                                   <input
                                     type="checkbox"
                                     checked={useShippingAsBilling}
                                     onChange={(e) => setUseShippingAsBilling(e.target.checked)}
-                                    className="w-4 h-4 rounded accent-[#1E4E8C]"
+                                    className="w-4 h-4 rounded accent-forest"
                                   />
-                                  <span>Use shipping address as billing address</span>
+                                  <span>Gunakan alamat penghantaran sebagai alamat bil</span>
                                 </label>
                               </div>
                             )}
 
                             {/* CASE 2: Atome BNPL 3x Installment Calculator */}
                             {method.providerType === 'atome_bnpl' && (
-                              <div className="p-4 bg-white rounded-xl border border-[#D9D9D9] space-y-3">
-                                <div className="flex items-center justify-between border-b border-neutral-100 pb-2">
-                                  <span className="text-xs font-bold text-neutral-800">
+                              <div className="p-4 sm:p-5 bg-white rounded-2xl border border-[#D5CEC2] space-y-4">
+                                <div className="flex items-center justify-between border-b border-neutral-100 pb-3">
+                                  <span className="text-xs font-bold text-forest flex items-center gap-1.5">
+                                    <Sparkles className="w-3.5 h-3.5 text-gold" />
                                     Pelan Ansuran Atome 3x Bulan (0% Interest)
                                   </span>
                                   <span className="text-[10px] font-black px-2 py-0.5 rounded bg-[#E2F700] text-black">
@@ -864,92 +1090,125 @@ export function CheckoutClient({ initialPaymentSettings }: CheckoutClientProps) 
                                 </div>
 
                                 <div className="grid grid-cols-3 gap-2 text-center">
-                                  <div className="p-2.5 rounded-lg bg-neutral-50 border border-neutral-200">
-                                    <span className="text-[10px] text-neutral-500 block">Hari Ini</span>
-                                    <span className="text-xs font-bold text-forest block">
+                                  <div className="p-3 rounded-xl bg-[#FAF7F2] border border-[#E8E2D8]">
+                                    <span className="text-[10px] text-charcoal-muted block">Hari Ini</span>
+                                    <span className="text-xs sm:text-sm font-extrabold text-forest block mt-0.5">
                                       {formatMYR(Math.round(finalTotalSen / 3))}
                                     </span>
                                   </div>
-                                  <div className="p-2.5 rounded-lg bg-neutral-50 border border-neutral-200">
-                                    <span className="text-[10px] text-neutral-500 block">Bulan 2 (30 Hari)</span>
-                                    <span className="text-xs font-bold text-neutral-800 block">
+                                  <div className="p-3 rounded-xl bg-[#FAF7F2] border border-[#E8E2D8]">
+                                    <span className="text-[10px] text-charcoal-muted block">Bulan 2 (30 Hari)</span>
+                                    <span className="text-xs sm:text-sm font-extrabold text-forest block mt-0.5">
                                       {formatMYR(Math.round(finalTotalSen / 3))}
                                     </span>
                                   </div>
-                                  <div className="p-2.5 rounded-lg bg-neutral-50 border border-neutral-200">
-                                    <span className="text-[10px] text-neutral-500 block">Bulan 3 (60 Hari)</span>
-                                    <span className="text-xs font-bold text-neutral-800 block">
+                                  <div className="p-3 rounded-xl bg-[#FAF7F2] border border-[#E8E2D8]">
+                                    <span className="text-[10px] text-charcoal-muted block">Bulan 3 (60 Hari)</span>
+                                    <span className="text-xs sm:text-sm font-extrabold text-forest block mt-0.5">
                                       {formatMYR(finalTotalSen - 2 * Math.round(finalTotalSen / 3))}
                                     </span>
                                   </div>
                                 </div>
 
-                                <p className="text-[11px] text-neutral-600 leading-relaxed">
+                                <p className="text-[11px] text-charcoal-muted leading-relaxed">
                                   {method.instructions ||
-                                    'Anda akan dibawa ke portal selamat Atome untuk melengkapkan pengesahan identiti dan pelan ansuran 3 bulan 0% anda.'}
+                                    'Anda akan dibawa ke portal selamat Atome untuk melengkapkan pengesahan identiti dan memulakan pelan ansuran 3 bulan 0% anda serta-merta.'}
                                 </p>
                               </div>
                             )}
 
                             {/* CASE 3: FPX Online Banking Bank Selector */}
-                            {(method.providerType === 'payex' || method.providerType === 'eghl' || method.providerType === 'fpx') && (
+                            {(method.providerType === 'payex' ||
+                              method.providerType === 'eghl' ||
+                              method.providerType === 'fpx') && (
                               <div className="space-y-3">
-                                <span className="text-xs font-semibold text-neutral-800 block">
+                                <span className="text-xs font-bold text-forest block">
                                   Pilih Perbankan Internet (FPX) Anda:
                                 </span>
 
                                 <div className="grid grid-cols-2 sm:grid-cols-3 gap-2">
-                                  {MALAYSIAN_BANKS.slice(0, 6).map((bank) => (
+                                  {MALAYSIAN_BANKS.map((bank) => (
                                     <button
                                       key={bank.id}
                                       type="button"
                                       onClick={() => setSelectedBank(bank.id)}
-                                      className={`p-2.5 rounded-xl border text-left text-xs font-semibold transition-all cursor-pointer ${
+                                      className={`p-3 rounded-xl border text-left text-xs font-semibold transition-all cursor-pointer flex items-center justify-between ${
                                         selectedBank === bank.id
-                                          ? 'bg-[#1E4E8C] text-white border-[#1E4E8C] shadow-xs'
-                                          : 'bg-white text-neutral-800 border-[#D9D9D9] hover:bg-neutral-50'
+                                          ? 'bg-forest text-warmwhite border-forest shadow-xs'
+                                          : 'bg-white text-forest border-[#D5CEC2] hover:bg-stone-50'
                                       }`}
                                     >
-                                      {bank.name}
+                                      <span className="truncate">{bank.name}</span>
+                                      {selectedBank === bank.id && (
+                                        <Check className="w-3.5 h-3.5 text-gold shrink-0 ml-1" />
+                                      )}
                                     </button>
                                   ))}
                                 </div>
 
-                                <p className="text-[11px] text-neutral-500 leading-relaxed pt-1">
+                                <p className="text-[11px] text-charcoal-muted leading-relaxed pt-1">
                                   {method.instructions ||
-                                    'Selepas menekan butang "Pay now", anda akan dibawa ke gerbang perbankan selamat untuk log masuk ke akaun bank pilihan anda.'}
+                                    'Selepas menekan butang "Bayar Sekarang", anda akan dialihkan terus ke portal rasmi bank pilihan anda secara selamat.'}
                                 </p>
                               </div>
                             )}
 
                             {/* CASE 4: DuitNow QR & Manual Bank Transfer */}
                             {method.providerType === 'duitnow_qr' && (
-                              <div className="p-4 bg-white rounded-xl border border-[#D9D9D9] space-y-3">
-                                <div className="flex items-center space-x-2 text-forest font-bold text-xs">
-                                  <Building className="w-4 h-4 text-gold" />
-                                  <span>Akaun Rasmi KAMAAR BEDDINGS SDN BHD</span>
+                              <div className="p-4 sm:p-5 bg-white rounded-2xl border border-[#D5CEC2] space-y-3.5">
+                                <div className="flex items-center justify-between border-b border-neutral-100 pb-2.5">
+                                  <div className="flex items-center space-x-2 text-forest font-bold text-xs">
+                                    <Building className="w-4 h-4 text-gold" />
+                                    <span>Akaun Rasmi KAMAAR BEDDINGS SDN BHD</span>
+                                  </div>
+                                  <span className="text-[10px] font-bold px-2 py-0.5 rounded bg-emerald-100 text-emerald-800">
+                                    Disahkan
+                                  </span>
                                 </div>
 
-                                <div className="bg-cream/40 p-3 rounded-lg border border-borderLight text-xs space-y-1 font-mono">
-                                  <div>Bank: <strong className="text-forest">Maybank Berhad</strong></div>
-                                  <div>No. Akaun: <strong className="text-forest">5123 4567 8901</strong></div>
-                                  <div>Penerima: <strong className="text-forest">KAMAAR BEDDINGS SDN BHD</strong></div>
+                                <div className="bg-[#FAF7F2] p-4 rounded-xl border border-[#E8E2D8] text-xs space-y-2 font-mono">
+                                  <div className="flex justify-between items-center">
+                                    <span className="text-charcoal-muted">Bank:</span>
+                                    <strong className="text-forest">Maybank Berhad</strong>
+                                  </div>
+                                  <div className="flex justify-between items-center">
+                                    <span className="text-charcoal-muted">No. Akaun:</span>
+                                    <div className="flex items-center space-x-2">
+                                      <strong className="text-forest tracking-wider font-bold">5123 4567 8901</strong>
+                                      <button
+                                        type="button"
+                                        onClick={handleCopyBankAccount}
+                                        className="text-forest hover:text-gold transition-colors cursor-pointer"
+                                        title="Salin Nombor Akaun"
+                                      >
+                                        {copiedBank ? (
+                                          <Check className="w-3.5 h-3.5 text-emerald-600" />
+                                        ) : (
+                                          <Copy className="w-3.5 h-3.5" />
+                                        )}
+                                      </button>
+                                    </div>
+                                  </div>
+                                  <div className="flex justify-between items-center">
+                                    <span className="text-charcoal-muted">Penerima:</span>
+                                    <strong className="text-forest text-right">KAMAAR BEDDINGS SDN BHD</strong>
+                                  </div>
                                 </div>
 
-                                <p className="text-[11px] text-neutral-600 leading-relaxed">
+                                <p className="text-[11px] text-charcoal-muted leading-relaxed">
                                   {method.instructions ||
-                                    'Sila buat pindahan dana melalui aplikasi perbankan anda atau imbas DuitNow QR. Resit boleh dihantar kepada Concierge KAMAAR di WhatsApp.'}
+                                    'Sila buat pindahan dana melalui aplikasi perbankan anda. Resit bayaran boleh dihantar terus kepada Concierge KAMAAR melalui WhatsApp untuk pengesahan segera.'}
                                 </p>
                               </div>
                             )}
 
                             {/* CASE 5: Custom Instructions */}
                             {method.providerType === 'cod' && (
-                              <div className="p-4 bg-white rounded-xl border border-[#D9D9D9] space-y-2 text-xs">
+                              <div className="p-4 sm:p-5 bg-white rounded-2xl border border-[#D5CEC2] space-y-2 text-xs">
                                 <span className="font-bold text-forest block">
                                   💵 Pembayaran Semasa Penghantaran (COD / White-Glove Delivery)
                                 </span>
-                                <p className="text-[11px] text-neutral-600 leading-relaxed">
+                                <p className="text-[11px] text-charcoal-muted leading-relaxed">
                                   {method.description ||
                                     'Anda boleh membayar baki pesanan secara tunai atau pindahan bank DuitNow terus kepada kru pemasangan KAMAAR selepas tilam diletakkan di bilik tidur anda.'}
                                 </p>
@@ -963,194 +1222,266 @@ export function CheckoutClient({ initialPaymentSettings }: CheckoutClientProps) 
                 </div>
               </div>
 
-              {/* SECTION: Primary Submit Button */}
+              {/* PRIMARY SUBMIT CTA */}
               <div className="space-y-4 pt-2">
                 <button
                   type="submit"
                   disabled={isSubmitting}
-                  className="w-full py-4 px-8 bg-[#1E4E8C] hover:bg-[#13325B] active:scale-[0.99] text-white text-base font-bold rounded-xl transition-all shadow-md flex items-center justify-center space-x-2 disabled:opacity-50 cursor-pointer"
+                  className="w-full py-4.5 px-8 bg-forest hover:bg-forest-dark active:scale-[0.99] text-warmwhite text-base font-bold rounded-2xl transition-all shadow-lg hover:shadow-xl flex items-center justify-center space-x-3 disabled:opacity-50 cursor-pointer border border-forest/20"
                 >
-                  <Lock className="w-4 h-4 text-[#D4AF37]" />
-                  <span>
-                    {isSubmitting ? 'Processing Payment...' : 'Pay now'}
+                  <Lock className="w-5 h-5 text-gold shrink-0" />
+                  <span className="tracking-wide">
+                    {isSubmitting ? 'Memproses Pesanan Anda...' : `Bayar Sekarang • ${formatMYR(finalTotalSen)}`}
                   </span>
                 </button>
 
-                <div className="flex items-center justify-center space-x-2 text-[11px] text-neutral-500 text-center">
-                  <ShieldCheck className="w-4 h-4 text-emerald-600 shrink-0" />
-                  <span>
-                    Sesi bayaran dilindungi dengan standard keselamatan antarabangsa PCI-DSS &amp; TLS 256-bit.
-                  </span>
+                <div className="flex flex-col sm:flex-row items-center justify-center gap-2 sm:gap-4 text-[11px] text-charcoal-muted text-center pt-1">
+                  <div className="flex items-center space-x-1.5 text-emerald-700 font-semibold">
+                    <ShieldCheck className="w-4 h-4 text-emerald-600 shrink-0" />
+                    <span>Perlindungan Bayaran Penuh PCI-DSS &amp; Bank Negara</span>
+                  </div>
+                  <span className="hidden sm:inline text-neutral-300">•</span>
+                  <span>100% Hak Pemulangan Duit Terjamin</span>
                 </div>
               </div>
 
-              {/* SECTION: Legal Footer Links */}
-              <div className="pt-8 border-t border-[#E6E6E6] flex flex-wrap items-center justify-center sm:justify-start gap-4 text-xs text-[#1E4E8C]">
-                <Link href="/pages/refund-policy" className="hover:underline">
-                  Refund policy
+              {/* LEGAL & POLICY FOOTER */}
+              <div className="pt-6 border-t border-[#E8E2D8] flex flex-wrap items-center justify-center gap-4 text-xs text-charcoal-muted">
+                <Link href="/pages/refund-policy" className="hover:text-forest underline underline-offset-2">
+                  Polisi Pemulangan (100-Malam)
                 </Link>
-                <Link href="/pages/shipping-policy" className="hover:underline">
-                  Shipping policy
+                <span>•</span>
+                <Link href="/pages/shipping-policy" className="hover:text-forest underline underline-offset-2">
+                  Polisi Penghantaran White-Glove
                 </Link>
-                <Link href="/pages/privacy-policy" className="hover:underline">
-                  Privacy policy
+                <span>•</span>
+                <Link href="/pages/privacy-policy" className="hover:text-forest underline underline-offset-2">
+                  Dasar Privasi
                 </Link>
-                <Link href="/pages/terms-of-service" className="hover:underline">
-                  Terms of service
+                <span>•</span>
+                <Link href="/pages/terms-of-service" className="hover:text-forest underline underline-offset-2">
+                  Terma &amp; Syarat
                 </Link>
               </div>
             </form>
           </div>
 
           {/* --------------------------------------------------------------------- */}
-          {/* RIGHT COLUMN: Order Summary & Coupon Code (Span 5)                   */}
+          {/* RIGHT COLUMN: Order Summary Card (5 Columns)                          */}
           {/* --------------------------------------------------------------------- */}
-          <div className="lg:col-span-5 bg-[#FAFAFA] border-t lg:border-t-0 lg:border-l border-[#E6E6E6] py-8 lg:py-12 lg:pl-10 xl:pl-12">
-            <div className="lg:sticky lg:top-24 space-y-6">
-              {/* Product Line Items */}
-              <div className="space-y-4 max-h-[380px] overflow-y-auto pr-1">
-                {items.map((item) => (
-                  <div key={item.variantId} className="flex items-center justify-between gap-3">
-                    <div className="flex items-center space-x-3.5 min-w-0">
-                      {/* Image Thumbnail with Quantity Badge */}
-                      <div className="relative w-16 h-16 rounded-xl border border-[#E6E6E6] bg-white overflow-hidden shrink-0">
-                        {item.imageUrl || item.image ? (
+          <div className="lg:col-span-5">
+            <div className="lg:sticky lg:top-28 bg-[#FAF7F2] rounded-3xl p-6 sm:p-7 border border-[#E8E2D8] shadow-sm space-y-6">
+              {/* Order Summary Header */}
+              <div className="flex items-center justify-between border-b border-[#E8E2D8] pb-4">
+                <div className="flex items-center space-x-2">
+                  <ShoppingBag className="w-5 h-5 text-forest" />
+                  <h3 className="font-serif text-lg font-bold text-forest">Ringkasan Pesanan</h3>
+                </div>
+                <span className="text-xs font-bold text-forest px-2.5 py-1 rounded-full bg-cream border border-borderLight shadow-2xs">
+                  {items.reduce((sum, i) => sum + i.quantity, 0)} Item
+                </span>
+              </div>
+
+              {/* Product Line Items (Zero Overlap Guaranteed!) */}
+              <div className="space-y-4 max-h-[380px] overflow-y-auto pr-1 divide-y divide-[#E8E2D8]/70">
+                {items.map((item) => {
+                  const resolvedImg = item.imageUrl || item.image || defaultProductImage
+                  const resolvedTitle = item.productName || item.title || 'KAMAAR Luxury Mattress'
+                  const resolvedVariant = item.sizeName || item.variantName || item.dimensions || 'Single (90×190cm)'
+
+                  return (
+                    <div
+                      key={item.variantId}
+                      className="flex items-center justify-between gap-4 pt-4 first:pt-0"
+                    >
+                      {/* Left: Thumbnail & Quantity Badge */}
+                      <div className="relative shrink-0">
+                        <div className="w-16 h-16 rounded-2xl border border-[#E8E2D8] bg-white overflow-hidden relative shadow-2xs">
                           <Image
-                            src={item.imageUrl || item.image || ''}
-                            alt={item.productName || item.title || 'Product'}
+                            src={resolvedImg}
+                            alt={resolvedTitle}
                             fill
                             sizes="64px"
                             className="object-cover"
                           />
-                        ) : (
-                          <div className="w-full h-full bg-cream flex items-center justify-center">
-                            <ShoppingBag className="w-6 h-6 text-gold" />
-                          </div>
-                        )}
-                        {/* Quantity Badge Overlay */}
-                        <span className="absolute -top-1 -right-1 w-5 h-5 rounded-full bg-neutral-700 text-white text-[11px] font-bold flex items-center justify-center shadow-xs">
+                        </div>
+                        {/* Quantity Badge (Outside overflow-hidden so it never clips) */}
+                        <span className="absolute -top-2 -right-2 z-10 w-5 h-5 rounded-full bg-forest text-warmwhite text-[11px] font-bold flex items-center justify-center shadow-md border-2 border-white ring-1 ring-forest/20">
                           {item.quantity}
                         </span>
                       </div>
 
-                      {/* Product Title & Variant */}
-                      <div className="min-w-0 flex-1">
-                        <span className="text-sm font-bold text-neutral-900 block truncate">
-                          {item.productName || item.title}
+                      {/* Middle: Product Title & Variant Details (Expands smoothly) */}
+                      <div className="min-w-0 flex-1 flex flex-col justify-center gap-0.5">
+                        <h4 className="text-sm font-bold text-forest leading-snug truncate">
+                          {resolvedTitle}
+                        </h4>
+                        <p className="text-xs text-charcoal-muted leading-tight truncate">
+                          {resolvedVariant}
+                        </p>
+                        {item.sku && (
+                          <span className="text-[10px] text-charcoal-muted/70 font-mono tracking-tight">
+                            SKU: {item.sku}
+                          </span>
+                        )}
+                      </div>
+
+                      {/* Right: Line Total */}
+                      <div className="shrink-0 text-right">
+                        <span className="text-sm font-bold text-forest font-serif block">
+                          {formatMYR(item.priceSen * item.quantity)}
                         </span>
-                        <span className="text-xs text-neutral-500 block truncate">
-                          {item.sizeName || item.variantName || 'Single (90x190cm)'}
-                        </span>
+                        {item.compareAtPriceSen && item.compareAtPriceSen > item.priceSen && (
+                          <span className="text-[11px] text-charcoal-muted/60 line-through block">
+                            {formatMYR(item.compareAtPriceSen * item.quantity)}
+                          </span>
+                        )}
                       </div>
                     </div>
-
-                    {/* Line Total */}
-                    <span className="text-sm font-semibold text-neutral-900 shrink-0">
-                      {formatMYR(item.priceSen * item.quantity)}
-                    </span>
-                  </div>
-                ))}
+                  )
+                })}
               </div>
 
-              {/* Discount Code Input */}
-              <div className="pt-4 border-t border-[#E6E6E6] space-y-2">
+              {/* Discount Code Input Module */}
+              <div className="pt-4 border-t border-[#E8E2D8] space-y-2.5">
                 <form onSubmit={handleApplyCoupon} className="flex items-center space-x-2">
                   <div className="relative flex-1">
                     <input
                       type="text"
                       value={inputCoupon}
                       onChange={(e) => setInputCoupon(e.target.value)}
-                      placeholder="Discount code"
-                      className="w-full px-3.5 py-3 rounded-xl border border-[#D9D9D9] text-sm text-neutral-900 placeholder-neutral-400 bg-white outline-none focus:border-[#1E4E8C] uppercase font-mono transition-all"
+                      placeholder="Kod Diskaun / Baucar"
+                      className="w-full px-4 py-3 rounded-xl border border-[#D5CEC2] text-xs text-[#222] placeholder-neutral-400 bg-white outline-none focus:border-forest uppercase font-mono transition-all shadow-2xs"
                     />
                   </div>
                   <button
                     type="submit"
-                    className="px-5 py-3 rounded-xl bg-neutral-200 hover:bg-neutral-300 active:bg-neutral-400 text-neutral-800 text-sm font-bold transition-colors cursor-pointer"
+                    className="px-5 py-3 rounded-xl bg-forest hover:bg-forest-dark text-warmwhite text-xs font-bold transition-all shadow-xs cursor-pointer shrink-0"
                   >
-                    Apply
+                    Tebus
                   </button>
                 </form>
 
                 {couponError && (
-                  <p className="text-xs text-sale font-medium">{couponError}</p>
+                  <p className="text-xs text-red-600 font-medium flex items-center gap-1">
+                    <AlertCircle className="w-3.5 h-3.5" />
+                    <span>{couponError}</span>
+                  </p>
                 )}
                 {couponSuccess && (
-                  <p className="text-xs text-emerald-700 font-medium">{couponSuccess}</p>
+                  <p className="text-xs text-emerald-700 font-medium flex items-center gap-1">
+                    <CheckCircle2 className="w-3.5 h-3.5" />
+                    <span>{couponSuccess}</span>
+                  </p>
                 )}
 
                 {/* Applied coupon badge */}
                 {couponCode && (
-                  <div className="flex items-center justify-between p-2.5 rounded-xl bg-emerald-50 border border-emerald-200 text-xs">
-                    <div className="flex items-center space-x-1.5 text-emerald-800 font-bold">
-                      <Tag className="w-3.5 h-3.5" />
+                  <div className="flex items-center justify-between p-3 rounded-xl bg-emerald-50 border border-emerald-200 text-xs shadow-2xs">
+                    <div className="flex items-center space-x-2 text-emerald-900 font-bold">
+                      <Tag className="w-4 h-4 text-emerald-700" />
                       <span>{couponCode}</span>
-                      <span className="text-emerald-600 font-normal">(-{formatMYR(discountSen)})</span>
+                      <span className="text-emerald-700 font-medium">(-{formatMYR(discountSen)})</span>
                     </div>
                     <button
                       type="button"
                       onClick={() => removeCoupon()}
-                      className="text-neutral-400 hover:text-neutral-700 cursor-pointer"
+                      className="text-neutral-400 hover:text-neutral-700 p-1 cursor-pointer"
                       title="Buang kupon"
                     >
                       <X className="w-4 h-4" />
                     </button>
                   </div>
                 )}
+
+                {!couponCode && (
+                  <div className="flex items-center justify-between text-[11px] text-charcoal-muted pt-1">
+                    <span>Ada kod promosi pelancaran?</span>
+                    <button
+                      type="button"
+                      onClick={() => {
+                        applyCoupon('KAMAAR100')
+                        setCouponSuccess('Baucar "KAMAAR100" berjaya ditebus!')
+                      }}
+                      className="text-forest hover:text-gold font-bold underline cursor-pointer"
+                    >
+                      Cuba KAMAAR100
+                    </button>
+                  </div>
+                )}
               </div>
 
               {/* Pricing Breakdown */}
-              <div className="pt-4 border-t border-[#E6E6E6] space-y-2.5 text-sm">
-                <div className="flex items-center justify-between text-neutral-600">
-                  <span>Subtotal</span>
-                  <span className="font-medium text-neutral-900">{formatMYR(subtotalSen)}</span>
+              <div className="pt-4 border-t border-[#E8E2D8] space-y-3 text-sm">
+                <div className="flex items-center justify-between text-charcoal-muted">
+                  <span>Jumlah Kasar (Subtotal)</span>
+                  <span className="font-semibold text-forest font-serif">{formatMYR(subtotalSen)}</span>
                 </div>
 
-                <div className="flex items-center justify-between text-neutral-600">
-                  <span className="flex items-center space-x-1">
-                    <span>Shipping</span>
-                    <span title="Penghantaran percuma untuk tilam Semenanjung Malaysia" className="cursor-help inline-flex">
-                      <HelpCircle className="w-3.5 h-3.5 text-neutral-400" />
+                <div className="flex items-center justify-between text-charcoal-muted">
+                  <span className="flex items-center space-x-1.5">
+                    <span>Penghantaran White-Glove</span>
+                    <span
+                      title="Penghantaran & pemasangan percuma di bilik tidur anda di seluruh Semenanjung Malaysia"
+                      className="cursor-help inline-flex text-neutral-400"
+                    >
+                      <HelpCircle className="w-3.5 h-3.5" />
                     </span>
                   </span>
-                  <span className="font-medium text-neutral-900">
-                    {shippingInfo.shippingSen === 0 ? 'Free' : formatMYR(shippingInfo.shippingSen)}
+                  <span className="font-bold text-forest">
+                    {shippingInfo.shippingSen === 0 ? 'PERCUMA' : formatMYR(shippingInfo.shippingSen)}
                   </span>
                 </div>
 
                 {discountSen > 0 && (
-                  <div className="flex items-center justify-between text-emerald-700 font-medium">
-                    <span>Discount</span>
+                  <div className="flex items-center justify-between text-emerald-700 font-semibold">
+                    <span>Diskaun Baucar ({couponCode})</span>
                     <span>-{formatMYR(discountSen)}</span>
                   </div>
                 )}
 
-                {/* Total Row (Getha Style) */}
-                <div className="pt-4 border-t border-[#E6E6E6] flex items-center justify-between">
-                  <span className="text-base font-bold text-neutral-900">Total</span>
-                  <div className="flex items-baseline space-x-1.5">
-                    <span className="text-xs text-neutral-500 font-normal">MYR</span>
-                    <span className="text-2xl font-black text-neutral-900">
-                      {formatMYR(finalTotalSen)}
+                {/* Grand Total */}
+                <div className="pt-4 border-t border-[#E8E2D8] flex items-center justify-between">
+                  <div>
+                    <span className="text-base font-bold text-forest block">Jumlah Keseluruhan</span>
+                    <span className="text-[11px] text-charcoal-muted block mt-0.5">
+                      Termasuk Cukai SST 0% &amp; Insurans
+                    </span>
+                  </div>
+                  <div className="flex items-baseline space-x-1 text-right">
+                    <span className="text-xs text-charcoal-muted font-bold">MYR</span>
+                    <span className="text-2xl sm:text-3xl font-serif font-black text-forest tracking-tight">
+                      {formatMYR(finalTotalSen).replace('RM', '')}
                     </span>
                   </div>
                 </div>
               </div>
 
-              {/* Guarantees Box */}
-              <div className="p-4 rounded-2xl bg-white border border-[#E6E6E6] space-y-2 text-xs text-neutral-600">
+              {/* KAMAAR Atelier Guarantees Card */}
+              <div className="p-4 sm:p-5 rounded-2xl bg-white border border-[#E8E2D8] space-y-3 text-xs shadow-2xs">
                 <div className="flex items-center space-x-2 text-forest font-bold">
-                  <Sparkles className="w-4 h-4 text-gold" />
-                  <span>Jaminan Tidur KAMAAR Beddings</span>
+                  <Sparkles className="w-4 h-4 text-gold shrink-0" />
+                  <span>Jaminan Kualiti Eksklusif KAMAAR</span>
                 </div>
-                <p className="text-[11px] leading-relaxed">
-                  Semua tilam dilindungi oleh <strong>Jaminan Terhad Tempatan 10-Tahun</strong> dan <strong>Percubaan Tidur 100-Malam</strong> di rumah anda.
-                </p>
+                <ul className="space-y-2 text-[11px] text-charcoal-muted leading-relaxed">
+                  <li className="flex items-start space-x-2">
+                    <ShieldCheck className="w-4 h-4 text-emerald-600 shrink-0 mt-0.5" />
+                    <span><strong>Jaminan Pengilang 10-Tahun:</strong> Perlindungan kualiti struktur tilam.</span>
+                  </li>
+                  <li className="flex items-start space-x-2">
+                    <RotateCcw className="w-4 h-4 text-emerald-600 shrink-0 mt-0.5" />
+                    <span><strong>Percubaan Tidur 100-Malam:</strong> Jaminan kepuasan tidur di rumah anda.</span>
+                  </li>
+                  <li className="flex items-start space-x-2">
+                    <Truck className="w-4 h-4 text-emerald-600 shrink-0 mt-0.5" />
+                    <span><strong>White-Glove Setup:</strong> Pasukan profesional KAMAAR pasang terus ke bilik.</span>
+                  </li>
+                </ul>
               </div>
             </div>
           </div>
         </div>
-      </div>
+      </main>
     </div>
   )
 }
