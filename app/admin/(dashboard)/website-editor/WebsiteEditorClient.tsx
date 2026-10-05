@@ -373,6 +373,8 @@ export function WebsiteEditorClient({ initialConfig }: Props) {
   ] as const
 
   const [isMobileSelectorOpen, setIsMobileSelectorOpen] = useState(false)
+  const [activeMegaSection, setActiveMegaSection] = useState<string>('col-material')
+  const [isMegaPreviewOpen, setIsMegaPreviewOpen] = useState<boolean>(true)
   const tabListRef = useRef<HTMLDivElement>(null)
 
   // Listen to ?tab= query parameter on mount
@@ -1239,345 +1241,672 @@ export function WebsiteEditorClient({ initialConfig }: Props) {
         {/* ========================================================================= */}
         {activeTab === 'megamenu' && (() => {
           const menu = config.megaMenu || initialWebsiteConfig.megaMenu
+          const activeCol = menu.columns.find((c) => c.id === activeMegaSection)
+          const isPromoActive = activeMegaSection === 'promo-card'
+
           return (
-            <div className="space-y-6 animate-fade-in-up">
-              {/* Header Card */}
-              <div className="bg-warmwhite p-4 sm:p-6 rounded-2xl border border-borderLight shadow-xs flex flex-col sm:flex-row items-start sm:items-center justify-between gap-3">
-                <div className="space-y-1">
+            <div className="space-y-5 animate-fade-in-up">
+              {/* Header & Quick Actions Bar */}
+              <div className="bg-warmwhite p-4 sm:p-5 rounded-2xl border border-borderLight shadow-xs flex flex-col sm:flex-row items-start sm:items-center justify-between gap-3">
+                <div className="space-y-0.5">
                   <div className="flex items-center space-x-2">
-                    <Layers className="w-5 h-5 text-gold-dark" />
+                    <div className="w-8 h-8 rounded-xl bg-[#1E4E8C]/10 text-[#1E4E8C] flex items-center justify-center">
+                      <Layers className="w-4 h-4 text-[#B49A58]" />
+                    </div>
                     <h3 className="font-serif text-base sm:text-lg font-bold text-forest-dark">
-                      Pengurusan Kandungan Dropdown Mega Menu (Kawasan Tilam)
+                      Pengurusan Mega Menu (Kawasan Tilam)
                     </h3>
                   </div>
-                  <p className="text-xs text-secondary leading-relaxed">
-                    Ubah tajuk lajur (Pilihan Bahan, Pilihan Saiz, Pilihan Ketegasan), senarai pautan tilam, pautan URL, serta kad kuis/promosi interaktif yang muncul semasa kursor hover di menu &apos;Tilam&apos;.
+                  <p className="text-xs text-secondary">
+                    Pilih bahagian di bawah untuk edit tajuk, pautan URL, dan kad kuis mengikut keselesaan anda di telefon dan PC.
                   </p>
                 </div>
-                <button
-                  type="button"
-                  onClick={handleResetMegaMenuToDefaults}
-                  className="inline-flex items-center space-x-1.5 px-3.5 py-2 bg-cream hover:bg-gold/15 text-forest-dark border border-borderLight rounded-xl text-xs font-semibold transition-all hover:scale-[1.02] shrink-0 cursor-pointer"
-                  title="Pulihkan susunan lajur dan pautan kepada tetapan asal KAMAAR"
-                >
-                  <RotateCcw className="w-3.5 h-3.5 text-gold-dark" />
-                  <span>Pulihkan Default KAMAAR</span>
-                </button>
+
+                <div className="flex items-center space-x-2 self-stretch sm:self-auto shrink-0">
+                  <button
+                    type="button"
+                    onClick={() => setIsMegaPreviewOpen(!isMegaPreviewOpen)}
+                    className="flex-1 sm:flex-initial inline-flex items-center justify-center space-x-1.5 px-3 py-2 bg-cream hover:bg-gold/15 text-forest border border-borderLight rounded-xl text-xs font-semibold transition-all cursor-pointer"
+                    title="Tunjuk atau sembunyikan pratonton langsung"
+                  >
+                    <Eye className="w-3.5 h-3.5 text-gold-dark" />
+                    <span>{isMegaPreviewOpen ? 'Sembunyi Pratonton' : 'Tunjuk Pratonton'}</span>
+                  </button>
+
+                  <button
+                    type="button"
+                    onClick={handleResetMegaMenuToDefaults}
+                    className="inline-flex items-center justify-center space-x-1 px-3 py-2 bg-cream hover:bg-red-50 text-secondary hover:text-red-600 border border-borderLight rounded-xl text-xs font-medium transition-all cursor-pointer"
+                    title="Pulihkan susunan asal KAMAAR"
+                  >
+                    <RotateCcw className="w-3.5 h-3.5 text-gold-dark" />
+                    <span className="hidden md:inline">Reset Default</span>
+                  </button>
+                </div>
               </div>
 
-              {/* LIVE STOREFRONT PREVIEW */}
-              <div className="bg-warmwhite p-4 sm:p-6 rounded-2xl border border-borderLight shadow-xs space-y-3">
-                <div className="flex items-center justify-between border-b border-borderLight pb-2">
-                  <div className="flex items-center space-x-2">
-                    <Eye className="w-4 h-4 text-gold-dark" />
-                    <span className="text-xs font-bold text-forest-dark uppercase tracking-wider">
-                      Pratonton Sebenar Mega Menu (Live Storefront Preview)
+              {/* COLLAPSIBLE LIVE STOREFRONT PREVIEW */}
+              {isMegaPreviewOpen && (
+                <div className="bg-warmwhite p-4 sm:p-5 rounded-2xl border border-borderLight shadow-xs space-y-3 animate-in fade-in duration-200">
+                  <div className="flex items-center justify-between border-b border-borderLight pb-2.5">
+                    <div className="flex items-center space-x-2">
+                      <span className="w-2 h-2 rounded-full bg-emerald-500 animate-pulse" />
+                      <span className="text-[11px] font-bold text-forest-dark uppercase tracking-wider">
+                        Pratonton Sebenar Mega Menu (Live Preview)
+                      </span>
+                    </div>
+                    <span className="text-[11px] text-secondary hidden sm:inline">
+                      Klik mana-mana lajur pada pratonton untuk terus menyuntingnya
                     </span>
                   </div>
-                  <span className="text-[11px] text-secondary">
-                    Dipaparkan di Desktop apabila kursor melayang atas menu &apos;Tilam&apos;
-                  </span>
-                </div>
 
-                <div className="p-4 sm:p-6 bg-[#0E1A2B]/5 rounded-2xl border border-borderLight/80 overflow-x-auto">
-                  <div className="min-w-[800px] max-w-[880px] mx-auto bg-warmwhite rounded-2xl shadow-xl border border-borderLight p-6 grid grid-cols-4 gap-6">
-                    {menu.columns.map((col) => (
-                      <div key={col.id}>
-                        <h4 className="text-[11px] font-bold uppercase tracking-wider text-[#B49A58] pb-2 border-b border-borderLight mb-3">
-                          {col.titleBm || col.title}
-                        </h4>
-                        <ul className="space-y-2 text-xs text-charcoal-muted">
-                          {col.items.map((item) => (
-                            <li key={item.id} className="hover:text-forest transition-colors truncate">
-                              <span className="font-medium text-charcoal">{item.labelBm || item.label}</span>
-                              <span className="block text-[10px] text-secondary font-mono truncate">{item.href}</span>
-                            </li>
-                          ))}
-                        </ul>
-                      </div>
-                    ))}
+                  <div className="p-3 sm:p-6 bg-[#0E1A2B]/5 rounded-2xl border border-borderLight/80 overflow-x-auto no-scrollbar">
+                    <div className="text-[10px] text-secondary sm:hidden mb-2 text-center">
+                      👉 Leret ke tepi untuk lihat semua 4 bahagian
+                    </div>
 
-                    {/* Promo / Quiz Card Preview */}
-                    {menu.promoCard.enabled !== false ? (
-                      <div className="bg-cream rounded-xl p-4 flex flex-col justify-between border border-borderLight shadow-xs">
-                        <div>
-                          <span className="inline-flex items-center space-x-1 text-[10px] font-bold uppercase tracking-wider text-forest bg-gold/25 px-2 py-0.5 rounded mb-2">
-                            <Sparkles className="w-3 h-3 text-gold-dark" />
-                            <span>{menu.promoCard.badge || 'PERSONALIZED FIT'}</span>
-                          </span>
-                          <h5 className="font-serif text-sm font-bold text-forest leading-snug">
-                            {menu.promoCard.title || 'Tajuk Kuis'}
-                          </h5>
-                          <p className="text-[11px] text-charcoal-muted mt-1 leading-relaxed line-clamp-3">
-                            {menu.promoCard.description || 'Penerangan kuis atau promosi khas.'}
-                          </p>
-                        </div>
-                        <div className="mt-3 inline-flex items-center justify-between px-3 py-2 bg-forest text-warmwhite text-xs font-bold rounded-lg pointer-events-none">
-                          <span>{menu.promoCard.buttonText || 'Mula Sekarang'}</span>
-                          <ChevronRight className="w-3.5 h-3.5 text-gold" />
-                        </div>
+                    <div className="min-w-[800px] max-w-[860px] mx-auto bg-warmwhite rounded-2xl shadow-xl border border-borderLight p-6 grid grid-cols-4 gap-6">
+                      {menu.columns.map((col, idx) => {
+                        const isColSelected = activeMegaSection === col.id
+                        return (
+                          <div
+                            key={col.id}
+                            onClick={() => setActiveMegaSection(col.id)}
+                            className={`p-3 rounded-xl transition-all cursor-pointer border ${
+                              isColSelected
+                                ? 'bg-gold/10 border-gold shadow-md ring-2 ring-gold/40'
+                                : 'border-transparent hover:bg-cream/60'
+                            }`}
+                            title="Klik untuk sunting lajur ini"
+                          >
+                            <div className="flex items-center justify-between pb-1.5 border-b border-borderLight mb-2.5">
+                              <h4 className="text-[11px] font-bold uppercase tracking-wider text-[#B49A58] truncate">
+                                {col.titleBm || col.title || `Lajur #${idx + 1}`}
+                              </h4>
+                              {isColSelected && (
+                                <span className="text-[9px] px-1.5 py-0.2 rounded bg-gold text-forest font-bold shrink-0">
+                                  Aktif
+                                </span>
+                              )}
+                            </div>
+                            <ul className="space-y-1.5 text-xs text-charcoal-muted">
+                              {col.items.map((item) => (
+                                <li key={item.id} className="truncate">
+                                  <span className="font-medium text-charcoal block truncate">
+                                    {item.labelBm || item.label}
+                                  </span>
+                                  <span className="text-[9px] text-secondary font-mono block truncate">
+                                    {item.href}
+                                  </span>
+                                </li>
+                              ))}
+                            </ul>
+                          </div>
+                        )
+                      })}
+
+                      {/* Promo / Quiz Card Preview */}
+                      <div
+                        onClick={() => setActiveMegaSection('promo-card')}
+                        className={`rounded-xl transition-all cursor-pointer border ${
+                          isPromoActive
+                            ? 'ring-2 ring-gold/60 shadow-md border-gold'
+                            : 'border-transparent hover:opacity-90'
+                        }`}
+                        title="Klik untuk sunting kad kuis ini"
+                      >
+                        {menu.promoCard.enabled !== false ? (
+                          <div className="bg-cream h-full rounded-xl p-4 flex flex-col justify-between border border-borderLight shadow-xs">
+                            <div>
+                              <div className="flex items-center justify-between mb-2">
+                                <span className="inline-flex items-center space-x-1 text-[9px] font-bold uppercase tracking-wider text-forest bg-gold/25 px-2 py-0.5 rounded">
+                                  <Sparkles className="w-3 h-3 text-gold-dark" />
+                                  <span>{menu.promoCard.badge || 'PERSONALIZED FIT'}</span>
+                                </span>
+                                {isPromoActive && (
+                                  <span className="text-[9px] px-1.5 py-0.2 rounded bg-gold text-forest font-bold">
+                                    Aktif
+                                  </span>
+                                )}
+                              </div>
+                              <h5 className="font-serif text-xs font-bold text-forest leading-snug line-clamp-2">
+                                {menu.promoCard.title || 'Tajuk Kuis'}
+                              </h5>
+                              <p className="text-[10px] text-charcoal-muted mt-1 leading-relaxed line-clamp-2">
+                                {menu.promoCard.description || 'Penerangan kuis.'}
+                              </p>
+                            </div>
+                            <div className="mt-3 inline-flex items-center justify-between px-2.5 py-1.5 bg-forest text-warmwhite text-[11px] font-bold rounded-lg pointer-events-none">
+                              <span className="truncate">{menu.promoCard.buttonText || 'Mula Sekarang'}</span>
+                              <ChevronRight className="w-3 h-3 text-gold shrink-0 ml-1" />
+                            </div>
+                          </div>
+                        ) : (
+                          <div className="h-full border border-dashed border-borderLight rounded-xl p-4 flex flex-col items-center justify-center text-center text-xs text-secondary italic bg-cream/30">
+                            <span>Kad Kuis Dinonaktifkan</span>
+                            <span className="text-[10px] text-gold-dark font-semibold mt-1">Klik untuk aktifkan</span>
+                          </div>
+                        )}
                       </div>
-                    ) : (
-                      <div className="border border-dashed border-borderLight rounded-xl p-4 flex items-center justify-center text-xs text-secondary italic">
-                        Kad Kuis / Promosi Dinonaktifkan
-                      </div>
-                    )}
+                    </div>
                   </div>
+                </div>
+              )}
+
+              {/* SUB-NAVIGATION PILLS (Switch between Columns & Promo Card) */}
+              <div className="bg-warmwhite p-2 rounded-2xl border border-borderLight shadow-xs">
+                <div className="flex items-center gap-1.5 overflow-x-auto no-scrollbar scroll-smooth snap-x snap-mandatory py-1 px-1">
+                  {menu.columns.map((col, idx) => {
+                    const isAct = activeMegaSection === col.id
+                    const colIcons = ['🌿', '📏', '⚖️']
+                    return (
+                      <button
+                        key={col.id}
+                        type="button"
+                        onClick={() => setActiveMegaSection(col.id)}
+                        className={`snap-start shrink-0 px-3.5 sm:px-4 py-2.5 rounded-xl text-xs font-bold transition-all flex items-center space-x-2 border cursor-pointer ${
+                          isAct
+                            ? 'bg-[#1E4E8C] text-white border-[#1E4E8C] shadow-md scale-[1.01]'
+                            : 'bg-warmwhite text-charcoal hover:bg-cream border-borderLight'
+                        }`}
+                      >
+                        <span className="text-sm">{colIcons[idx] || '📑'}</span>
+                        <div className="text-left">
+                          <span className="block truncate max-w-[130px] sm:max-w-none">
+                            {col.titleBm || col.title || `Lajur #${idx + 1}`}
+                          </span>
+                          <span className={`text-[10px] font-normal block ${isAct ? 'text-white/80' : 'text-secondary'}`}>
+                            Lajur #{idx + 1} • {col.items.length} pautan
+                          </span>
+                        </div>
+                      </button>
+                    )
+                  })}
+
+                  {/* Promo Card Sub-Tab */}
+                  <button
+                    type="button"
+                    onClick={() => setActiveMegaSection('promo-card')}
+                    className={`snap-start shrink-0 px-3.5 sm:px-4 py-2.5 rounded-xl text-xs font-bold transition-all flex items-center space-x-2 border cursor-pointer ${
+                      isPromoActive
+                        ? 'bg-[#1E4E8C] text-white border-[#1E4E8C] shadow-md scale-[1.01]'
+                        : 'bg-warmwhite text-charcoal hover:bg-cream border-borderLight'
+                    }`}
+                  >
+                    <span className="text-sm">✨</span>
+                    <div className="text-left">
+                      <span className="block">Kad Kuis & Promosi</span>
+                      <span className={`text-[10px] font-normal block ${isPromoActive ? 'text-white/80' : 'text-secondary'}`}>
+                        Lajur #4 • {menu.promoCard.enabled !== false ? 'Aktif' : 'Tutup'}
+                      </span>
+                    </div>
+                  </button>
                 </div>
               </div>
 
-              {/* EDIT COLUMNS 1, 2, 3 */}
-              <div className="space-y-4">
-                <div className="flex items-center justify-between">
-                  <h4 className="font-serif text-base font-bold text-forest-dark">
-                    Sunting 3 Lajur Pautan Kategori
-                  </h4>
-                  <span className="text-xs text-secondary">
-                    {menu.columns.length} Lajur Aktif
-                  </span>
-                </div>
-
-                <div className="grid grid-cols-1 lg:grid-cols-3 gap-4">
-                  {menu.columns.map((col, colIndex) => (
-                    <div
-                      key={col.id}
-                      className="bg-warmwhite rounded-2xl border border-borderLight p-4 sm:p-5 space-y-4 shadow-xs flex flex-col justify-between"
-                    >
-                      <div className="space-y-3">
-                        <div className="flex items-center justify-between border-b border-borderLight pb-2">
-                          <span className="text-[11px] font-bold uppercase tracking-wider text-forest flex items-center space-x-1.5">
-                            <span className="w-5 h-5 rounded-md bg-forest text-warmwhite flex items-center justify-center text-[10px]">
-                              {colIndex + 1}
-                            </span>
-                            <span>Lajur #{colIndex + 1}</span>
-                          </span>
-                          <span className="text-[10px] font-mono bg-cream px-2 py-0.5 rounded text-secondary">
-                            {col.items.length} pautan
+              {/* ACTIVE COLUMN EDITOR (Spacious, Full-Width, Touch-Friendly) */}
+              {activeCol && !isPromoActive && (
+                <div className="space-y-4 animate-in fade-in duration-200">
+                  {/* Card 1: Column Titles (BM & EN) */}
+                  <div className="bg-warmwhite rounded-2xl border border-borderLight p-4 sm:p-6 space-y-4 shadow-xs">
+                    <div className="flex items-center justify-between border-b border-borderLight pb-3">
+                      <div className="flex items-center space-x-2">
+                        <span className="w-7 h-7 rounded-xl bg-forest/10 text-forest font-bold text-xs flex items-center justify-center">
+                          {menu.columns.findIndex((c) => c.id === activeCol.id) + 1}
+                        </span>
+                        <div>
+                          <h4 className="font-serif text-base font-bold text-forest-dark">
+                            Tajuk Lajur: {activeCol.titleBm || activeCol.title}
+                          </h4>
+                          <span className="text-[11px] text-secondary">
+                            Tajuk ini dipaparkan di bahagian paling atas lajur dropdown
                           </span>
                         </div>
+                      </div>
+                    </div>
 
-                        {/* Column Titles in BM & EN */}
-                        <div className="space-y-2">
-                          <div>
-                            <label className="block text-[11px] font-bold text-charcoal mb-0.5">
-                              Tajuk Lajur (Bahasa Melayu)
-                            </label>
-                            <input
-                              type="text"
-                              value={col.titleBm || ''}
-                              onChange={(e) =>
-                                handleUpdateMegaColumnTitle(col.id, col.title, e.target.value)
-                              }
-                              placeholder="Contoh: Pilihan Bahan"
-                              className="w-full px-3 py-1.5 bg-cream-light border border-borderLight rounded-xl text-xs font-semibold outline-none focus:border-forest"
-                            />
-                          </div>
-                          <div>
-                            <label className="block text-[10px] text-secondary mb-0.5">
-                              Tajuk Lajur (English)
-                            </label>
-                            <input
-                              type="text"
-                              value={col.title || ''}
-                              onChange={(e) =>
-                                handleUpdateMegaColumnTitle(col.id, e.target.value, col.titleBm || '')
-                              }
-                              placeholder="e.g. Shop by Material"
-                              className="w-full px-3 py-1.5 bg-cream-light border border-borderLight rounded-xl text-xs outline-none focus:border-forest"
-                            />
-                          </div>
-                        </div>
+                    <div className="grid grid-cols-1 sm:grid-cols-2 gap-4 text-xs">
+                      <div>
+                        <label className="block font-bold text-charcoal mb-1 flex items-center space-x-1.5">
+                          <span>🇲🇾</span>
+                          <span>Tajuk Lajur (Bahasa Melayu)</span>
+                        </label>
+                        <input
+                          type="text"
+                          value={activeCol.titleBm || ''}
+                          onChange={(e) =>
+                            handleUpdateMegaColumnTitle(activeCol.id, activeCol.title, e.target.value)
+                          }
+                          placeholder="Contoh: Pilihan Bahan"
+                          className="w-full px-3.5 py-2.5 bg-cream-light border border-borderLight rounded-xl text-xs font-semibold outline-none focus:border-forest"
+                        />
+                      </div>
 
-                        {/* List of Link Items */}
-                        <div className="space-y-2.5 pt-2 border-t border-borderLight/70">
-                          <span className="text-[10px] font-bold uppercase tracking-wider text-secondary block">
-                            Senarai Pautan Dalam Lajur Ini:
-                          </span>
+                      <div>
+                        <label className="block font-bold text-charcoal mb-1 flex items-center space-x-1.5">
+                          <span>🇬🇧</span>
+                          <span>Tajuk Lajur (English)</span>
+                        </label>
+                        <input
+                          type="text"
+                          value={activeCol.title || ''}
+                          onChange={(e) =>
+                            handleUpdateMegaColumnTitle(activeCol.id, e.target.value, activeCol.titleBm || '')
+                          }
+                          placeholder="e.g. Shop by Material"
+                          className="w-full px-3.5 py-2.5 bg-cream-light border border-borderLight rounded-xl text-xs outline-none focus:border-forest"
+                        />
+                      </div>
+                    </div>
+                  </div>
 
-                          <div className="space-y-2 max-h-80 overflow-y-auto pr-1">
-                            {col.items.map((item, itemIdx) => (
-                              <div
-                                key={item.id}
-                                className="p-2.5 bg-cream/50 rounded-xl border border-borderLight space-y-1.5 hover:border-gold/40 transition-colors"
-                              >
-                                <div className="flex items-center justify-between gap-1">
-                                  <span className="text-[10px] font-mono text-secondary">
-                                    #{itemIdx + 1}
-                                  </span>
-                                  <div className="flex items-center space-x-1">
-                                    <button
-                                      type="button"
-                                      disabled={itemIdx === 0}
-                                      onClick={() => handleMoveMegaMenuItem(col.id, item.id, 'up')}
-                                      className="p-1 rounded hover:bg-cream disabled:opacity-20 text-charcoal transition-colors cursor-pointer"
-                                      title="Alih ke atas"
-                                    >
-                                      <ArrowUp className="w-3 h-3" />
-                                    </button>
-                                    <button
-                                      type="button"
-                                      disabled={itemIdx === col.items.length - 1}
-                                      onClick={() => handleMoveMegaMenuItem(col.id, item.id, 'down')}
-                                      className="p-1 rounded hover:bg-cream disabled:opacity-20 text-charcoal transition-colors cursor-pointer"
-                                      title="Alih ke bawah"
-                                    >
-                                      <ArrowDown className="w-3 h-3" />
-                                    </button>
-                                    <button
-                                      type="button"
-                                      onClick={() => handleDeleteMegaMenuItem(col.id, item.id)}
-                                      className="p-1 rounded hover:bg-red-50 text-red-500 transition-colors cursor-pointer"
-                                      title="Padam pautan ini"
-                                    >
-                                      <Trash2 className="w-3 h-3" />
-                                    </button>
-                                  </div>
-                                </div>
-
-                                <div>
-                                  <input
-                                    type="text"
-                                    value={item.labelBm || ''}
-                                    onChange={(e) =>
-                                      handleUpdateMegaMenuItem(col.id, item.id, { labelBm: e.target.value })
-                                    }
-                                    placeholder="Nama Pautan (BM)"
-                                    className="w-full px-2.5 py-1 bg-white border border-borderLight rounded-lg text-xs font-medium outline-none focus:border-forest"
-                                  />
-                                </div>
-
-                                <div className="grid grid-cols-2 gap-1.5">
-                                  <input
-                                    type="text"
-                                    value={item.label || ''}
-                                    onChange={(e) =>
-                                      handleUpdateMegaMenuItem(col.id, item.id, { label: e.target.value })
-                                    }
-                                    placeholder="English Label"
-                                    className="w-full px-2 py-1 bg-white border border-borderLight rounded-lg text-[11px] outline-none focus:border-forest"
-                                  />
-                                  <input
-                                    type="text"
-                                    value={item.href || ''}
-                                    onChange={(e) =>
-                                      handleUpdateMegaMenuItem(col.id, item.id, { href: e.target.value })
-                                    }
-                                    placeholder="/collections/mattress..."
-                                    className="w-full px-2 py-1 bg-white border border-borderLight rounded-lg font-mono text-[10px] outline-none focus:border-forest"
-                                  />
-                                </div>
-                              </div>
-                            ))}
-                          </div>
-                        </div>
+                  {/* Card 2: Link Items Inside Column */}
+                  <div className="bg-warmwhite rounded-2xl border border-borderLight p-4 sm:p-6 space-y-4 shadow-xs">
+                    <div className="flex flex-col sm:flex-row sm:items-center justify-between gap-2 border-b border-borderLight pb-3">
+                      <div>
+                        <h4 className="font-serif text-base font-bold text-forest-dark">
+                          Senarai Pautan Tilam ({activeCol.items.length})
+                        </h4>
+                        <p className="text-xs text-secondary mt-0.5">
+                          Pelanggan boleh klik pautan ini untuk melihat tilam mengikut pilihan spesifik.
+                        </p>
                       </div>
 
                       <button
                         type="button"
-                        onClick={() => handleAddMegaMenuItem(col.id)}
-                        className="mt-3 w-full py-2 px-3 border border-dashed border-forest/40 hover:border-forest bg-forest/5 hover:bg-forest/10 text-forest rounded-xl text-xs font-bold flex items-center justify-center space-x-1.5 transition-all cursor-pointer"
+                        onClick={() => handleAddMegaMenuItem(activeCol.id)}
+                        className="inline-flex items-center space-x-1.5 px-3.5 py-2 bg-forest text-warmwhite text-xs font-bold rounded-xl hover:bg-forest-dark transition-all cursor-pointer shadow-xs shrink-0 self-start sm:self-auto"
                       >
-                        <Plus className="w-3.5 h-3.5" />
+                        <Plus className="w-4 h-4 text-gold" />
                         <span>Tambah Pautan Baru</span>
                       </button>
                     </div>
-                  ))}
-                </div>
-              </div>
 
-              {/* EDIT PROMO / QUIZ CARD (COLUMN 4) */}
-              <div className="bg-warmwhite p-4 sm:p-6 rounded-2xl border border-borderLight shadow-xs space-y-4">
-                <div className="flex items-center justify-between border-b border-borderLight pb-3">
-                  <div className="flex items-center space-x-2">
-                    <Sparkles className="w-4 h-4 text-gold-dark" />
-                    <div>
-                      <h4 className="font-serif text-base font-bold text-forest-dark">
-                        Kad Kuis / Promosi Interaktif (Lajur ke-4)
-                      </h4>
-                      <p className="text-xs text-secondary">
-                        Kad khas berwarna krim di sebelah kanan mega menu untuk mengarahkan pengguna ke kuiz kesesuaian tilam atau promosi.
+                    {/* Links List */}
+                    <div className="space-y-3">
+                      {activeCol.items.map((item, itemIdx) => (
+                        <div
+                          key={item.id}
+                          className="p-3.5 sm:p-4 bg-cream/40 rounded-2xl border border-borderLight space-y-3 hover:border-gold/50 transition-colors shadow-2xs"
+                        >
+                          {/* Item Header & Reordering */}
+                          <div className="flex items-center justify-between">
+                            <div className="flex items-center space-x-2">
+                              <span className="w-6 h-6 rounded-lg bg-warmwhite text-forest font-mono font-bold text-xs flex items-center justify-center border border-borderLight">
+                                {itemIdx + 1}
+                              </span>
+                              <span className="text-xs font-bold text-forest-dark">
+                                {item.labelBm || item.label || 'Pautan Baru'}
+                              </span>
+                            </div>
+
+                            <div className="flex items-center space-x-1">
+                              <button
+                                type="button"
+                                disabled={itemIdx === 0}
+                                onClick={() => handleMoveMegaMenuItem(activeCol.id, item.id, 'up')}
+                                className="p-1.5 rounded-lg bg-warmwhite hover:bg-cream border border-borderLight disabled:opacity-25 text-charcoal transition-all cursor-pointer"
+                                title="Alih pautan ke atas"
+                              >
+                                <ArrowUp className="w-3.5 h-3.5" />
+                              </button>
+                              <button
+                                type="button"
+                                disabled={itemIdx === activeCol.items.length - 1}
+                                onClick={() => handleMoveMegaMenuItem(activeCol.id, item.id, 'down')}
+                                className="p-1.5 rounded-lg bg-warmwhite hover:bg-cream border border-borderLight disabled:opacity-25 text-charcoal transition-all cursor-pointer"
+                                title="Alih pautan ke bawah"
+                              >
+                                <ArrowDown className="w-3.5 h-3.5" />
+                              </button>
+                              <button
+                                type="button"
+                                onClick={() => handleDeleteMegaMenuItem(activeCol.id, item.id)}
+                                className="p-1.5 rounded-lg bg-warmwhite hover:bg-red-50 border border-borderLight text-red-500 hover:text-red-700 transition-all cursor-pointer"
+                                title="Padam pautan ini"
+                              >
+                                <Trash2 className="w-3.5 h-3.5" />
+                              </button>
+                            </div>
+                          </div>
+
+                          {/* Inputs: BM & EN Names */}
+                          <div className="grid grid-cols-1 sm:grid-cols-2 gap-3 text-xs">
+                            <div>
+                              <label className="block text-[11px] font-bold text-charcoal mb-1">
+                                Nama Pautan (Bahasa Melayu)
+                              </label>
+                              <input
+                                type="text"
+                                value={item.labelBm || ''}
+                                onChange={(e) =>
+                                  handleUpdateMegaMenuItem(activeCol.id, item.id, { labelBm: e.target.value })
+                                }
+                                placeholder="Contoh: 100% Lateks Semula Jadi"
+                                className="w-full px-3 py-2 bg-warmwhite border border-borderLight rounded-xl text-xs font-semibold outline-none focus:border-forest"
+                              />
+                            </div>
+
+                            <div>
+                              <label className="block text-[11px] font-bold text-charcoal mb-1">
+                                English Label
+                              </label>
+                              <input
+                                type="text"
+                                value={item.label || ''}
+                                onChange={(e) =>
+                                  handleUpdateMegaMenuItem(activeCol.id, item.id, { label: e.target.value })
+                                }
+                                placeholder="e.g. 100% Natural Latex"
+                                className="w-full px-3 py-2 bg-warmwhite border border-borderLight rounded-xl text-xs outline-none focus:border-forest"
+                              />
+                            </div>
+                          </div>
+
+                          {/* Full-Width URL Input */}
+                          <div className="space-y-1.5 text-xs">
+                            <label className="block text-[11px] font-bold text-charcoal">
+                              Pautan Destinasi (URL)
+                            </label>
+                            <div className="flex items-center space-x-2">
+                              <div className="relative flex-1">
+                                <input
+                                  type="text"
+                                  value={item.href || ''}
+                                  onChange={(e) =>
+                                    handleUpdateMegaMenuItem(activeCol.id, item.id, { href: e.target.value })
+                                  }
+                                  placeholder="/collections/mattress?material=latex"
+                                  className="w-full pl-3 pr-8 py-2 bg-warmwhite border border-borderLight rounded-xl font-mono text-xs outline-none focus:border-forest"
+                                />
+                                {item.href && (
+                                  <Link
+                                    href={item.href}
+                                    target="_blank"
+                                    className="absolute right-2.5 top-1/2 -translate-y-1/2 text-secondary hover:text-forest"
+                                    title="Uji buka pautan di tab baru"
+                                  >
+                                    <LinkIcon className="w-3.5 h-3.5" />
+                                  </Link>
+                                )}
+                              </div>
+                            </div>
+
+                            {/* Quick Suggestion Chips */}
+                            <div className="flex items-center gap-1.5 flex-wrap pt-1">
+                              <span className="text-[10px] text-secondary">Pintasan Cepat:</span>
+                              {activeCol.id === 'col-material' && (
+                                <>
+                                  <button
+                                    type="button"
+                                    onClick={() => handleUpdateMegaMenuItem(activeCol.id, item.id, { href: '/collections/mattress?material=latex' })}
+                                    className="text-[10px] px-2 py-0.5 rounded-lg bg-warmwhite hover:bg-gold/15 text-forest border border-borderLight font-mono cursor-pointer"
+                                  >
+                                    ?material=latex
+                                  </button>
+                                  <button
+                                    type="button"
+                                    onClick={() => handleUpdateMegaMenuItem(activeCol.id, item.id, { href: '/collections/mattress?material=hybrid' })}
+                                    className="text-[10px] px-2 py-0.5 rounded-lg bg-warmwhite hover:bg-gold/15 text-forest border border-borderLight font-mono cursor-pointer"
+                                  >
+                                    ?material=hybrid
+                                  </button>
+                                  <button
+                                    type="button"
+                                    onClick={() => handleUpdateMegaMenuItem(activeCol.id, item.id, { href: '/collections/mattress?material=memory' })}
+                                    className="text-[10px] px-2 py-0.5 rounded-lg bg-warmwhite hover:bg-gold/15 text-forest border border-borderLight font-mono cursor-pointer"
+                                  >
+                                    ?material=memory
+                                  </button>
+                                  <button
+                                    type="button"
+                                    onClick={() => handleUpdateMegaMenuItem(activeCol.id, item.id, { href: '/collections/mattress?material=ortho' })}
+                                    className="text-[10px] px-2 py-0.5 rounded-lg bg-warmwhite hover:bg-gold/15 text-forest border border-borderLight font-mono cursor-pointer"
+                                  >
+                                    ?material=ortho
+                                  </button>
+                                </>
+                              )}
+
+                              {activeCol.id === 'col-size' && (
+                                <>
+                                  <button
+                                    type="button"
+                                    onClick={() => handleUpdateMegaMenuItem(activeCol.id, item.id, { href: '/collections/mattress?size=single' })}
+                                    className="text-[10px] px-2 py-0.5 rounded-lg bg-warmwhite hover:bg-gold/15 text-forest border border-borderLight font-mono cursor-pointer"
+                                  >
+                                    ?size=single
+                                  </button>
+                                  <button
+                                    type="button"
+                                    onClick={() => handleUpdateMegaMenuItem(activeCol.id, item.id, { href: '/collections/mattress?size=supersingle' })}
+                                    className="text-[10px] px-2 py-0.5 rounded-lg bg-warmwhite hover:bg-gold/15 text-forest border border-borderLight font-mono cursor-pointer"
+                                  >
+                                    ?size=supersingle
+                                  </button>
+                                  <button
+                                    type="button"
+                                    onClick={() => handleUpdateMegaMenuItem(activeCol.id, item.id, { href: '/collections/mattress?size=queen' })}
+                                    className="text-[10px] px-2 py-0.5 rounded-lg bg-warmwhite hover:bg-gold/15 text-forest border border-borderLight font-mono cursor-pointer"
+                                  >
+                                    ?size=queen
+                                  </button>
+                                  <button
+                                    type="button"
+                                    onClick={() => handleUpdateMegaMenuItem(activeCol.id, item.id, { href: '/collections/mattress?size=king' })}
+                                    className="text-[10px] px-2 py-0.5 rounded-lg bg-warmwhite hover:bg-gold/15 text-forest border border-borderLight font-mono cursor-pointer"
+                                  >
+                                    ?size=king
+                                  </button>
+                                </>
+                              )}
+
+                              {activeCol.id === 'col-firmness' && (
+                                <>
+                                  <button
+                                    type="button"
+                                    onClick={() => handleUpdateMegaMenuItem(activeCol.id, item.id, { href: '/collections/mattress?firmness=soft' })}
+                                    className="text-[10px] px-2 py-0.5 rounded-lg bg-warmwhite hover:bg-gold/15 text-forest border border-borderLight font-mono cursor-pointer"
+                                  >
+                                    ?firmness=soft
+                                  </button>
+                                  <button
+                                    type="button"
+                                    onClick={() => handleUpdateMegaMenuItem(activeCol.id, item.id, { href: '/collections/mattress?firmness=medium' })}
+                                    className="text-[10px] px-2 py-0.5 rounded-lg bg-warmwhite hover:bg-gold/15 text-forest border border-borderLight font-mono cursor-pointer"
+                                  >
+                                    ?firmness=medium
+                                  </button>
+                                  <button
+                                    type="button"
+                                    onClick={() => handleUpdateMegaMenuItem(activeCol.id, item.id, { href: '/collections/mattress?firmness=firm' })}
+                                    className="text-[10px] px-2 py-0.5 rounded-lg bg-warmwhite hover:bg-gold/15 text-forest border border-borderLight font-mono cursor-pointer"
+                                  >
+                                    ?firmness=firm
+                                  </button>
+                                </>
+                              )}
+
+                              <button
+                                type="button"
+                                onClick={() => handleUpdateMegaMenuItem(activeCol.id, item.id, { href: '/collections/mattress' })}
+                                className="text-[10px] px-2 py-0.5 rounded-lg bg-warmwhite hover:bg-gold/15 text-forest border border-borderLight font-mono cursor-pointer"
+                              >
+                                /collections/mattress
+                              </button>
+                            </div>
+                          </div>
+                        </div>
+                      ))}
+                    </div>
+
+                    <button
+                      type="button"
+                      onClick={() => handleAddMegaMenuItem(activeCol.id)}
+                      className="w-full py-3 px-4 border border-dashed border-forest/40 hover:border-forest bg-forest/5 hover:bg-forest/10 text-forest rounded-2xl text-xs font-bold flex items-center justify-center space-x-2 transition-all cursor-pointer"
+                    >
+                      <Plus className="w-4 h-4" />
+                      <span>Tambah Pautan Baru Dalam Lajur {activeCol.titleBm || activeCol.title}</span>
+                    </button>
+                  </div>
+                </div>
+              )}
+
+              {/* ACTIVE PROMO CARD EDITOR (Lajur ke-4) */}
+              {isPromoActive && (
+                <div className="bg-warmwhite p-4 sm:p-6 rounded-2xl border border-borderLight shadow-xs space-y-5 animate-in fade-in duration-200">
+                  <div className="flex items-center justify-between border-b border-borderLight pb-4">
+                    <div className="flex items-center space-x-2.5">
+                      <div className="w-9 h-9 rounded-xl bg-gold/20 text-gold-dark flex items-center justify-center">
+                        <Sparkles className="w-5 h-5 text-gold-dark" />
+                      </div>
+                      <div>
+                        <h4 className="font-serif text-base font-bold text-forest-dark">
+                          Kad Kuis & Promosi Interaktif (Lajur ke-4)
+                        </h4>
+                        <p className="text-xs text-secondary">
+                          Kad sorotan berwarna krim di sebelah kanan mega menu untuk menarik minat pelanggan ke kuiz tilam atau tawaran istimewa.
+                        </p>
+                      </div>
+                    </div>
+
+                    <label className="flex items-center space-x-2 cursor-pointer bg-cream px-3 py-1.5 rounded-xl border border-borderLight">
+                      <input
+                        type="checkbox"
+                        checked={menu.promoCard.enabled !== false}
+                        onChange={(e) => handleUpdateMegaPromo({ enabled: e.target.checked })}
+                        className="w-4 h-4 text-forest rounded accent-forest cursor-pointer"
+                      />
+                      <span className="text-xs font-bold text-charcoal">
+                        {menu.promoCard.enabled !== false ? 'Kad Aktif' : 'Kad Ditutup'}
+                      </span>
+                    </label>
+                  </div>
+
+                  {menu.promoCard.enabled !== false ? (
+                    <div className="grid grid-cols-1 sm:grid-cols-2 gap-4 text-xs">
+                      <div>
+                        <label className="block font-bold text-charcoal mb-1">
+                          Teks Lencana Kecil (Badge)
+                        </label>
+                        <input
+                          type="text"
+                          value={menu.promoCard.badge || ''}
+                          onChange={(e) => handleUpdateMegaPromo({ badge: e.target.value })}
+                          placeholder="Contoh: PERSONALIZED FIT"
+                          className="w-full px-3.5 py-2.5 bg-cream-light border border-borderLight rounded-xl font-semibold outline-none focus:border-forest"
+                        />
+                      </div>
+
+                      <div>
+                        <label className="block font-bold text-charcoal mb-1">
+                          Pautan Destinasi Butang (URL)
+                        </label>
+                        <input
+                          type="text"
+                          value={menu.promoCard.buttonUrl || ''}
+                          onChange={(e) => handleUpdateMegaPromo({ buttonUrl: e.target.value })}
+                          placeholder="/finder atau /trial"
+                          className="w-full px-3.5 py-2.5 bg-cream-light border border-borderLight rounded-xl font-mono text-xs outline-none focus:border-forest"
+                        />
+                        <div className="flex items-center gap-1.5 mt-1.5">
+                          <span className="text-[10px] text-secondary">Pintasan:</span>
+                          <button
+                            type="button"
+                            onClick={() => handleUpdateMegaPromo({ buttonUrl: '/finder' })}
+                            className="text-[10px] px-2 py-0.5 rounded bg-cream hover:bg-gold/15 text-forest border border-borderLight font-mono cursor-pointer"
+                          >
+                            /finder
+                          </button>
+                          <button
+                            type="button"
+                            onClick={() => handleUpdateMegaPromo({ buttonUrl: '/trial' })}
+                            className="text-[10px] px-2 py-0.5 rounded bg-cream hover:bg-gold/15 text-forest border border-borderLight font-mono cursor-pointer"
+                          >
+                            /trial
+                          </button>
+                          <button
+                            type="button"
+                            onClick={() => handleUpdateMegaPromo({ buttonUrl: '/showrooms' })}
+                            className="text-[10px] px-2 py-0.5 rounded bg-cream hover:bg-gold/15 text-forest border border-borderLight font-mono cursor-pointer"
+                          >
+                            /showrooms
+                          </button>
+                        </div>
+                      </div>
+
+                      <div className="sm:col-span-2">
+                        <label className="block font-bold text-charcoal mb-1">
+                          Tajuk Utama Kad (Headline)
+                        </label>
+                        <input
+                          type="text"
+                          value={menu.promoCard.title || ''}
+                          onChange={(e) => handleUpdateMegaPromo({ title: e.target.value })}
+                          placeholder="Contoh: Unsure which mattress suits your body?"
+                          className="w-full px-3.5 py-2.5 bg-cream-light border border-borderLight rounded-xl font-serif text-sm font-bold outline-none focus:border-forest"
+                        />
+                      </div>
+
+                      <div className="sm:col-span-2">
+                        <label className="block font-bold text-charcoal mb-1">
+                          Penerangan / Arahan Kuis (Description)
+                        </label>
+                        <textarea
+                          rows={2}
+                          value={menu.promoCard.description || ''}
+                          onChange={(e) => handleUpdateMegaPromo({ description: e.target.value })}
+                          placeholder="Contoh: Take our 60-second Mattress Finder quiz for personalized firmness recommendations."
+                          className="w-full px-3.5 py-2.5 bg-cream-light border border-borderLight rounded-xl outline-none focus:border-forest leading-relaxed text-xs"
+                        />
+                      </div>
+
+                      <div className="sm:col-span-2">
+                        <label className="block font-bold text-charcoal mb-1">
+                          Teks Pada Butang Tindakan (CTA)
+                        </label>
+                        <input
+                          type="text"
+                          value={menu.promoCard.buttonText || ''}
+                          onChange={(e) => handleUpdateMegaPromo({ buttonText: e.target.value })}
+                          placeholder="Contoh: Start Mattress Quiz"
+                          className="w-full px-3.5 py-2.5 bg-cream-light border border-borderLight rounded-xl font-bold outline-none focus:border-forest"
+                        />
+                      </div>
+                    </div>
+                  ) : (
+                    <div className="p-8 text-center bg-cream/40 rounded-2xl border border-dashed border-borderLight space-y-2">
+                      <p className="text-xs text-charcoal-muted">
+                        Kad kuis ini kini ditutup. Hanya 3 lajur pautan tilam yang akan dipaparkan kepada pelanggan di storefront.
                       </p>
+                      <button
+                        type="button"
+                        onClick={() => handleUpdateMegaPromo({ enabled: true })}
+                        className="px-4 py-2 bg-forest text-warmwhite text-xs font-bold rounded-xl hover:bg-forest-dark transition-all cursor-pointer"
+                      >
+                        Aktifkan Semula Kad Kuis
+                      </button>
                     </div>
-                  </div>
-                  <label className="flex items-center space-x-2 cursor-pointer">
-                    <input
-                      type="checkbox"
-                      checked={menu.promoCard.enabled !== false}
-                      onChange={(e) => handleUpdateMegaPromo({ enabled: e.target.checked })}
-                      className="w-4 h-4 text-forest rounded accent-forest cursor-pointer"
-                    />
-                    <span className="text-xs font-bold text-charcoal">Aktifkan Kad</span>
-                  </label>
+                  )}
                 </div>
+              )}
 
-                {menu.promoCard.enabled !== false && (
-                  <div className="grid grid-cols-1 sm:grid-cols-2 gap-4 text-xs">
-                    <div>
-                      <label className="block font-bold text-charcoal mb-1">
-                        Teks Lencana Kecil (Badge)
-                      </label>
-                      <input
-                        type="text"
-                        value={menu.promoCard.badge || ''}
-                        onChange={(e) => handleUpdateMegaPromo({ badge: e.target.value })}
-                        placeholder="Contoh: PERSONALIZED FIT"
-                        className="w-full px-3 py-2 bg-cream-light border border-borderLight rounded-xl font-semibold outline-none focus:border-forest"
-                      />
-                    </div>
+              {/* BOTTOM SAVE CONTROLLER */}
+              <div className="bg-warmwhite p-4 rounded-2xl border border-borderLight shadow-xs flex flex-col sm:flex-row items-center justify-between gap-3">
+                <span className="text-xs text-secondary flex items-center space-x-1.5 text-center sm:text-left">
+                  <span className="w-2 h-2 rounded-full bg-emerald-500 animate-pulse shrink-0" />
+                  <span>Kemas kini akan disegerakkan terus ke storefront desktop & menu telefon tanpa reload.</span>
+                </span>
 
-                    <div>
-                      <label className="block font-bold text-charcoal mb-1">
-                        Pautan Destinasi Butang (URL)
-                      </label>
-                      <input
-                        type="text"
-                        value={menu.promoCard.buttonUrl || ''}
-                        onChange={(e) => handleUpdateMegaPromo({ buttonUrl: e.target.value })}
-                        placeholder="/finder atau /trial"
-                        className="w-full px-3 py-2 bg-cream-light border border-borderLight rounded-xl font-mono text-[11px] outline-none focus:border-forest"
-                      />
-                    </div>
-
-                    <div className="sm:col-span-2">
-                      <label className="block font-bold text-charcoal mb-1">
-                        Tajuk Utama Kad (Headline)
-                      </label>
-                      <input
-                        type="text"
-                        value={menu.promoCard.title || ''}
-                        onChange={(e) => handleUpdateMegaPromo({ title: e.target.value })}
-                        placeholder="Contoh: Unsure which mattress suits your body?"
-                        className="w-full px-3 py-2 bg-cream-light border border-borderLight rounded-xl font-serif text-sm font-bold outline-none focus:border-forest"
-                      />
-                    </div>
-
-                    <div className="sm:col-span-2">
-                      <label className="block font-bold text-charcoal mb-1">
-                        Penerangan / Arahan Kuis
-                      </label>
-                      <textarea
-                        rows={2}
-                        value={menu.promoCard.description || ''}
-                        onChange={(e) => handleUpdateMegaPromo({ description: e.target.value })}
-                        placeholder="Contoh: Take our 60-second Mattress Finder quiz for personalized firmness recommendations."
-                        className="w-full px-3 py-2 bg-cream-light border border-borderLight rounded-xl outline-none focus:border-forest leading-relaxed"
-                      />
-                    </div>
-
-                    <div>
-                      <label className="block font-bold text-charcoal mb-1">
-                        Teks Pada Butang Tindakan (CTA)
-                      </label>
-                      <input
-                        type="text"
-                        value={menu.promoCard.buttonText || ''}
-                        onChange={(e) => handleUpdateMegaPromo({ buttonText: e.target.value })}
-                        placeholder="Contoh: Start Mattress Quiz"
-                        className="w-full px-3 py-2 bg-cream-light border border-borderLight rounded-xl font-bold outline-none focus:border-forest"
-                      />
-                    </div>
-                  </div>
-                )}
+                <button
+                  type="button"
+                  onClick={() => handleSave()}
+                  disabled={isSaving}
+                  className="w-full sm:w-auto px-6 py-2.5 bg-[#1E4E8C] hover:bg-[#13325B] text-warmwhite text-xs font-bold rounded-xl transition-all shadow-sm disabled:opacity-50 cursor-pointer flex items-center justify-center space-x-2"
+                >
+                  <Save className="w-4 h-4 text-[#D4AF37]" />
+                  <span>{isSaving ? 'Menyimpan...' : 'Simpan Perubahan Mega Menu'}</span>
+                </button>
               </div>
             </div>
           )
