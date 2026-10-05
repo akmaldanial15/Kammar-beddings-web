@@ -2691,6 +2691,347 @@
   ],
   "auditLogs": [
     {
+      "id": "aud-1791200371336-6lhd",
+      "actorEmail": "owner@kamaarbeddings.com",
+      "action": "payment_settings_updated",
+      "entityType": "payment_settings",
+      "entityId": "paymentSettings",
+      "details": {
+        "expressCheckoutEnabled": true,
+        "enableGooglePay": true,
+        "enableApplePay": false,
+        "defaultMethodId": "pay-credit-card",
+        "methods": [
+          {
+            "id": "pay-credit-card",
+            "name": "Credit card",
+            "subtitle": "Visa, Mastercard & American Express",
+            "providerType": "credit_card",
+            "enabled": true,
+            "isDefault": true,
+            "testMode": true,
+            "sortOrder": 1,
+            "badgeIcons": [
+              "visa",
+              "mastercard",
+              "amex"
+            ],
+            "description": "All transactions are secure and encrypted. Dilindungi dengan protokol penyulitan 256-bit SSL.",
+            "instructions": "Masukkan butiran kad kredit atau debit anda untuk proses pembayaran segera yang selamat."
+          },
+          {
+            "id": "pay-atome-bnpl",
+            "name": "Atome PayLater - 3 easy payments, 0% interest",
+            "subtitle": "Bayar 3 kali ansuran bulanan tanpa sebarang caj faedah (0% APR)",
+            "providerType": "atome_bnpl",
+            "enabled": true,
+            "isDefault": false,
+            "testMode": true,
+            "sortOrder": 2,
+            "badgeIcons": [
+              "atome",
+              "visa",
+              "mastercard",
+              "amex"
+            ],
+            "installmentMonths": 3,
+            "description": "Pecahkan jumlah bil anda kepada 3 ansuran bulanan mudah tanpa caj faedah tersembunyi. Bayaran pertama ditolak hari ini.",
+            "instructions": "Pelan ansuran 0% faedah. Pengesahan segera tanpa kad kredit diperlukan."
+          },
+          {
+            "id": "pay-payex",
+            "name": "Payex",
+            "subtitle": "FPX Online Banking, Kad Kredit & DuitNow",
+            "providerType": "payex",
+            "enabled": true,
+            "isDefault": false,
+            "testMode": true,
+            "sortOrder": 3,
+            "badgeIcons": [
+              "visa",
+              "mastercard",
+              "fpx"
+            ],
+            "description": "Gerbang pembayaran rasmi yang menyokong FPX Perbankan Internet Malaysia dan kad kredit/debit.",
+            "instructions": "Pilih bank tempatan anda di skrin seterusnya untuk log masuk ke perbankan internet anda."
+          },
+          {
+            "id": "pay-eghl-adaptis",
+            "name": "ADAPTIS Payment Gateway (formerly eGHL)",
+            "subtitle": "FPX Malaysia, Touch n Go, GrabPay, Boost",
+            "providerType": "eghl",
+            "enabled": true,
+            "isDefault": false,
+            "testMode": true,
+            "sortOrder": 4,
+            "badgeIcons": [
+              "visa",
+              "mastercard",
+              "fpx",
+              "tng",
+              "grabpay",
+              "boost"
+            ],
+            "description": "Bayar melalui FPX Maybank2u, CIMB Clicks, Public Bank, RHB, Hong Leong atau e-Wallet pilihan anda.",
+            "instructions": "Pilih e-Wallet atau perbankan internet anda melalui gerbang ADAPTIS (eGHL) yang selamat."
+          },
+          {
+            "id": "pay-duitnow-qr",
+            "name": "DuitNow QR & Pindahan Bank Manual",
+            "subtitle": "Imbas Kod QR DuitNow atau pindahan akaun Maybank rasmi KAMAAR",
+            "providerType": "duitnow_qr",
+            "enabled": true,
+            "isDefault": false,
+            "testMode": false,
+            "sortOrder": 5,
+            "badgeIcons": [
+              "duitnow",
+              "fpx"
+            ],
+            "description": "Pindahan dana terus ke akaun bank korporat KAMAAR Beddings tanpa sebarang caj tambahan.",
+            "instructions": "Maybank KAMAAR BEDDINGS SDN BHD: 5123 4567 8901. Sila simpan resit transaksi untuk pengesahan concierge.",
+            "config": {
+              "bankName": "Maybank Berhad",
+              "accountName": "KAMAAR BEDDINGS SDN BHD",
+              "accountNumber": "5123 4567 8901"
+            }
+          }
+        ]
+      },
+      "createdAt": "2026-10-05T11:39:31.336Z"
+    },
+    {
+      "id": "aud-1791200359318-di35",
+      "actorEmail": "owner@kamaarbeddings.com",
+      "action": "website_config_updated",
+      "entityType": "website_config",
+      "entityId": "websiteConfig",
+      "details": {
+        "theme": {
+          "primaryColor": "#1B4D3E",
+          "primaryDarkColor": "#0D2A20",
+          "accentGoldColor": "#C2A649",
+          "backgroundColor": "#FFFFFF",
+          "creamColor": "#F3F7F4",
+          "textColor": "#0F172A",
+          "saleColor": "#A13D40",
+          "activePreset": "emerald-botanic"
+        },
+        "announcement": {
+          "enabled": true,
+          "leftBenefit": "Complimentary White-Glove In-Home Setup Across Peninsular Malaysia",
+          "centerText": "Grand Launch Privileges: Enjoy RM100 Off with code",
+          "highlightCode": "KAMAAR100",
+          "url": "/collections/mattress",
+          "rightGuarantee": "10-Year Local Warranty • 100-Night Trial",
+          "bgColor": "#0D2A20",
+          "textColor": "#FFFFFF"
+        },
+        "hero": {
+          "slides": [
+            {
+              "id": "slide-1",
+              "badge": "100% Malaysian Organic Latex",
+              "title": "Better nights begin with the right mattress.",
+              "subtitle": "Handcrafted with certified organic latex, zero synthetic fillers, and micro-zoned spinal alignment for deep, uninterrupted sleep.",
+              "ctaText": "Explore Mattresses",
+              "ctaLink": "/collections/mattress",
+              "secondaryCtaText": "Take Mattress Finder Quiz",
+              "secondaryCtaLink": "/finder",
+              "imageUrl": "https://images.unsplash.com/photo-1631049307264-da0ec9d70304?auto=format&fit=crop&w=1800&q=85",
+              "isActive": true
+            },
+            {
+              "id": "slide-2",
+              "badge": "Sub-Zero Active Cooling",
+              "title": "Engineered for tropical Malaysian nights.",
+              "subtitle": "Combining Japanese Ice-Silk filaments with aerated pinhole natural latex and 7-zone pocket springs for continuous cooling rest.",
+              "ctaText": "Discover Cool Night Hybrid",
+              "ctaLink": "/products/lena-cool-night-hybrid-mattress",
+              "secondaryCtaText": "View All Collections",
+              "secondaryCtaLink": "/collections/mattress",
+              "imageUrl": "https://images.unsplash.com/photo-1616046229478-9901c5536a45?auto=format&fit=crop&w=1800&q=85",
+              "isActive": true
+            },
+            {
+              "id": "slide-3",
+              "badge": "5-Star Presidential Suite Comfort",
+              "title": "The Sovereign Luxe Grand Masterpiece.",
+              "subtitle": "Multi-tiered 34cm dual-spring architecture, plush Talalay latex pillowtop, and Belgian silk upholstery built for lifetime indulgence.",
+              "ctaText": "Experience Sovereign Luxe",
+              "ctaLink": "/products/lena-sovereign-luxe-mattress",
+              "secondaryCtaText": "Book Showroom Trial",
+              "secondaryCtaLink": "/showrooms",
+              "imageUrl": "https://images.unsplash.com/photo-1578683010236-d716f9a3f461?auto=format&fit=crop&w=1800&q=85",
+              "isActive": true
+            }
+          ]
+        },
+        "reassurance": {
+          "items": [
+            {
+              "id": "reassure-1",
+              "icon": "sparkles",
+              "title": "100% Pure Natural Latex",
+              "subtitle": "Sustainably harvested certified Malaysian rubber sap with zero chemical off-gassing."
+            },
+            {
+              "id": "reassure-2",
+              "icon": "trial",
+              "title": "100-Night In-Home Trial",
+              "subtitle": "Experience true spinal rest in your bedroom. 100% money-back guarantee with zero restocking fee."
+            },
+            {
+              "id": "reassure-3",
+              "icon": "shield",
+              "title": "10-Year Local Warranty",
+              "subtitle": "Comprehensive structural sag and spring resilience protection backed directly by our Malaysian atelier."
+            },
+            {
+              "id": "reassure-4",
+              "icon": "truck",
+              "title": "White-Glove Delivery & Setup",
+              "subtitle": "Carefully unpacked, assembled in your bedroom of choice, with old mattress removal available."
+            }
+          ]
+        },
+        "promotionsBanner": {
+          "enabled": true,
+          "badge": "TAWARAN EKSKLUSIF ATELIER",
+          "headline": "Tingkatkan Mutu Tidur Anda dengan Baucar Bernilai RM100",
+          "description": "Nikmati diskaun istimewa untuk setiap pembelian tilam siri KAMAAR Ortho Rest, Nature First, dan Sovereign Luxe bulan ini.",
+          "couponCode": "KAMAAR100",
+          "imageUrl": "https://images.unsplash.com/photo-1505693416388-ac5ce068fe85?auto=format&fit=crop&w=1200&q=80",
+          "ctaText": "Tebus Baucar Sekarang",
+          "ctaLink": "/collections/mattress"
+        },
+        "storySection": {
+          "badge": "KAMAAR SLEEP ATELIER",
+          "headline": "Seni Pembuatan Tilam Mewah Semula Jadi Malaysia",
+          "paragraph1": "Di KAMAAR, kami mempercayai bahawa tidur yang lena adalah asas kepada kehidupan yang bertenaga. Setiap tilam direka dengan teliti menggunakan 100% susu getah asli organik dari ladang terpilih di Malaysia.",
+          "paragraph2": "Digabungkan dengan teknologi 7-Zon Poket Spring dan fabrik Ice-Silk Jepun, kami membawakan keselesaan bertaraf suite hotel 5-bintang terus ke kamar tidur anda.",
+          "imageUrl": "https://images.unsplash.com/photo-1540518614846-7ede433c4ef0?auto=format&fit=crop&w=1000&q=80",
+          "signatureTitle": "Tukang Mahir Atelier",
+          "signatureSub": "KAMAAR Sleep Sanctuary Malaysia"
+        },
+        "socialAndContact": {
+          "whatsappNumber": "+60123456789",
+          "phoneDisplay": "+603 7722 1199",
+          "emailDisplay": "care@kamaarbeddings.com.my",
+          "addressDisplay": "KAMAAR Sleep Atelier, Bangsar, 59100 Kuala Lumpur",
+          "instagramUrl": "https://instagram.com",
+          "tiktokUrl": "https://tiktok.com",
+          "facebookUrl": "https://facebook.com"
+        },
+        "appearance": {
+          "enableEntranceAnimations": true,
+          "enableFloatingBadges": true,
+          "cardBorderRadius": "rounded-2xl"
+        },
+        "megaMenu": {
+          "enabled": true,
+          "columns": [
+            {
+              "id": "col-material",
+              "title": "Shop by Material",
+              "titleBm": "Pilihan Bahan",
+              "items": [
+                {
+                  "id": "item-mat-1",
+                  "label": "100% Natural Latex",
+                  "labelBm": "100% Lateks Semula Jadi",
+                  "href": "/collections/mattress?material=latex"
+                },
+                {
+                  "id": "item-mat-2",
+                  "label": "Pocket Spring Hybrid",
+                  "labelBm": "Hibrid Pegas Poket Bebas",
+                  "href": "/collections/mattress?material=hybrid"
+                },
+                {
+                  "id": "item-mat-3",
+                  "label": "High Density Memory Foam",
+                  "labelBm": "Busa Memori Berketumpatan Tinggi",
+                  "href": "/collections/mattress?material=memory"
+                },
+                {
+                  "id": "item-mat-4",
+                  "label": "Orthopaedic Spinal Support",
+                  "labelBm": "Sokongan Ortopedik Tulang Belakang",
+                  "href": "/collections/mattress?material=ortho"
+                }
+              ]
+            },
+            {
+              "id": "col-size",
+              "title": "Shop by Size",
+              "titleBm": "Pilihan Saiz",
+              "items": [
+                {
+                  "id": "item-size-1",
+                  "label": "Single (91×190cm)",
+                  "labelBm": "Bujang / Single (91×190cm)",
+                  "href": "/collections/mattress?size=single"
+                },
+                {
+                  "id": "item-size-2",
+                  "label": "Super Single (107×190cm)",
+                  "labelBm": "Super Single (107×190cm)",
+                  "href": "/collections/mattress?size=supersingle"
+                },
+                {
+                  "id": "item-size-3",
+                  "label": "Queen (152×190cm)",
+                  "labelBm": "Permaisuri / Queen (152×190cm)",
+                  "href": "/collections/mattress?size=queen"
+                },
+                {
+                  "id": "item-size-4",
+                  "label": "King (183×190cm)",
+                  "labelBm": "Raja / King (183×190cm)",
+                  "href": "/collections/mattress?size=king"
+                }
+              ]
+            },
+            {
+              "id": "col-firmness",
+              "title": "Shop by Firmness",
+              "titleBm": "Pilihan Ketegasan & Keselesaan",
+              "items": [
+                {
+                  "id": "item-firm-1",
+                  "label": "Plush & Soft (1-3)",
+                  "labelBm": "Lembut Selesa (1-3)",
+                  "href": "/collections/mattress?firmness=soft"
+                },
+                {
+                  "id": "item-firm-2",
+                  "label": "Medium Balanced (4-6)",
+                  "labelBm": "Sederhana Seimbang (4-6)",
+                  "href": "/collections/mattress?firmness=medium"
+                },
+                {
+                  "id": "item-firm-3",
+                  "label": "Firm Orthopaedic (7-10)",
+                  "labelBm": "Tegas Ortopedik (7-10)",
+                  "href": "/collections/mattress?firmness=firm"
+                }
+              ]
+            }
+          ],
+          "promoCard": {
+            "enabled": true,
+            "badge": "Personalized Fit",
+            "title": "Unsure which mattress suits your body?",
+            "description": "Take our 60-second Mattress Finder quiz for personalized firmness recommendations.",
+            "buttonText": "Start Mattress Quiz",
+            "buttonUrl": "/finder"
+          }
+        }
+      },
+      "createdAt": "2026-10-05T11:39:19.318Z"
+    },
+    {
       "id": "aud-1790946278866-8xdf",
       "actorEmail": "owner@kamaarbeddings.com",
       "action": "category_updated",
@@ -3067,14 +3408,14 @@
   ],
   "websiteConfig": {
     "theme": {
-      "primaryColor": "#1E4E8C",
-      "primaryDarkColor": "#13325B",
-      "accentGoldColor": "#B49A58",
+      "primaryColor": "#1B4D3E",
+      "primaryDarkColor": "#0D2A20",
+      "accentGoldColor": "#C2A649",
       "backgroundColor": "#FFFFFF",
-      "creamColor": "#F4F7FB",
+      "creamColor": "#F3F7F4",
       "textColor": "#0F172A",
       "saleColor": "#A13D40",
-      "activePreset": "sapphire-gold"
+      "activePreset": "emerald-botanic"
     },
     "announcement": {
       "enabled": true,
@@ -3083,7 +3424,7 @@
       "highlightCode": "KAMAAR100",
       "url": "/collections/mattress",
       "rightGuarantee": "10-Year Local Warranty • 100-Night Trial",
-      "bgColor": "#13325B",
+      "bgColor": "#0D2A20",
       "textColor": "#FFFFFF"
     },
     "hero": {
@@ -3291,7 +3632,7 @@
   "paymentSettings": {
     "expressCheckoutEnabled": true,
     "enableGooglePay": true,
-    "enableApplePay": true,
+    "enableApplePay": false,
     "defaultMethodId": "pay-credit-card",
     "methods": [
       {

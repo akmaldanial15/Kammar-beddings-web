@@ -409,173 +409,230 @@ export function ProductsClient({ initialProducts, categories }: ProductsClientPr
   const currentCategory = categories.find((c) => c.id === editingProduct?.categoryId)
 
   return (
-    <div className="space-y-6">
+    <div className="space-y-5 md:space-y-6 max-w-full font-sans">
       {/* Toast Notification */}
       {message && (
         <div
-          className={`p-4 rounded-xl flex items-center justify-between text-sm shadow-sm animate-fade-in ${
+          className={`p-3.5 sm:p-4 rounded-2xl flex items-center justify-between text-xs sm:text-sm shadow-sm animate-fade-in border ${
             message.type === 'success'
-              ? 'bg-emerald-50 border border-emerald-200 text-emerald-800'
-              : 'bg-rose-50 border border-rose-200 text-rose-800'
+              ? 'bg-emerald-50/90 border-emerald-200 text-emerald-900'
+              : 'bg-rose-50/90 border-rose-200 text-rose-900'
           }`}
         >
-          <div className="flex items-center space-x-2">
+          <div className="flex items-center space-x-2.5">
             {message.type === 'success' ? (
-              <CheckCircle className="w-5 h-5 text-emerald-600" />
+              <CheckCircle className="w-5 h-5 text-emerald-600 flex-shrink-0" />
             ) : (
-              <AlertCircle className="w-5 h-5 text-rose-600" />
+              <AlertCircle className="w-5 h-5 text-rose-600 flex-shrink-0" />
             )}
             <span className="font-medium">{message.text}</span>
           </div>
-          <button onClick={() => setMessage(null)} className="text-xs font-bold underline">
+          <button
+            onClick={() => setMessage(null)}
+            className="text-xs font-bold text-slate-500 hover:text-slate-800 underline ml-3 flex-shrink-0 cursor-pointer"
+          >
             Tutup
           </button>
         </div>
       )}
 
-      {/* Executive Quick Stats Cards (Desktop / PC View) */}
-      <div className="hidden sm:grid sm:grid-cols-2 lg:grid-cols-4 gap-4 animate-fade-in font-sans">
-        {/* Card 1: Total Products */}
-        <div className="bg-white rounded-2xl p-4.5 border border-slate-200/80 shadow-xs flex items-center justify-between">
-          <div>
-            <span className="text-[11px] font-bold uppercase tracking-wider text-slate-500 block">
-              Jumlah Produk
-            </span>
-            <span className="text-2xl font-bold text-forest-dark block mt-1 font-sans">
-              {totalProductsCount}
-            </span>
-            <span className="text-[11px] text-slate-400 mt-0.5 block">
-              Merangkumi semua kategori
-            </span>
+      {/* 1. Integrated Luxury Header & Atelier Actions */}
+      <div className="flex flex-col sm:flex-row sm:items-center sm:justify-between gap-4 pb-0.5">
+        <div className="space-y-1">
+          <div className="inline-flex items-center gap-2 px-2.5 py-0.5 rounded-full bg-forest-dark/5 border border-forest-dark/10 text-forest-dark text-[10px] font-bold tracking-wider uppercase">
+            <Sparkles className="w-3 h-3 text-gold" />
+            <span>KAMAAR Atelier Suite</span>
           </div>
-          <div className="w-12 h-12 rounded-2xl bg-blue-50 border border-blue-100 text-forest flex items-center justify-center flex-shrink-0">
-            <Package className="w-6 h-6" />
-          </div>
+          <h1 className="font-serif text-2xl sm:text-3xl font-bold text-forest-dark tracking-tight">
+            Katalog Produk & Inventori
+          </h1>
+          <p className="text-xs sm:text-sm text-secondary max-w-2xl">
+            Uruskan spesifikasi tilam handcrafted, bantal anatomi, stok saiz & varian harga secara langsung.
+          </p>
         </div>
 
-        {/* Card 2: Published & Live */}
-        <div className="bg-white rounded-2xl p-4.5 border border-slate-200/80 shadow-xs flex items-center justify-between">
-          <div>
-            <span className="text-[11px] font-bold uppercase tracking-wider text-slate-500 block">
-              Aktif di Kedai
-            </span>
-            <span className="text-2xl font-bold text-emerald-700 block mt-1 font-sans">
-              {publishedCount}
-            </span>
-            <span className="text-[11px] text-emerald-600/90 mt-0.5 block font-medium">
-              ● Live untuk pelanggan
-            </span>
+        {/* Primary Action Button & Status Pill */}
+        <div className="flex items-center gap-2.5 flex-wrap sm:flex-nowrap flex-shrink-0">
+          <div className="hidden lg:flex items-center gap-2 px-3 py-2 rounded-xl bg-white border border-slate-200/80 shadow-xs text-xs font-semibold text-slate-700">
+            <span className="w-2 h-2 rounded-full bg-emerald-500 animate-pulse"></span>
+            <span>{publishedCount} Produk Live</span>
           </div>
-          <div className="w-12 h-12 rounded-2xl bg-emerald-50 border border-emerald-100 text-emerald-600 flex items-center justify-center flex-shrink-0">
-            <CheckCircle className="w-6 h-6" />
-          </div>
-        </div>
 
-        {/* Card 3: Inventory Units */}
-        <div className="bg-white rounded-2xl p-4.5 border border-slate-200/80 shadow-xs flex items-center justify-between">
-          <div>
-            <span className="text-[11px] font-bold uppercase tracking-wider text-slate-500 block">
-              Jumlah Stok Fizikal
-            </span>
-            <span className="text-2xl font-bold text-forest-dark block mt-1 font-sans">
-              {totalInventoryUnits} <span className="text-xs font-semibold text-slate-500">unit</span>
-            </span>
-            <span className="text-[11px] text-slate-400 mt-0.5 block">
-              Semua saiz & varian
-            </span>
-          </div>
-          <div className="w-12 h-12 rounded-2xl bg-amber-50 border border-amber-100 text-gold-dark flex items-center justify-center flex-shrink-0">
-            <Boxes className="w-6 h-6" />
-          </div>
+          <button
+            type="button"
+            onClick={handleOpenNewProduct}
+            className="w-full sm:w-auto inline-flex items-center justify-center gap-2 bg-gradient-to-r from-forest-dark to-forest hover:from-forest hover:to-forest-dark text-warmwhite px-4.5 py-2.5 sm:py-3 rounded-xl text-xs sm:text-sm font-bold shadow-md hover:shadow-lg active:scale-98 transition-all cursor-pointer whitespace-nowrap"
+          >
+            <Plus className="w-4 h-4 text-gold flex-shrink-0" />
+            <span>+ Tambah Produk Baharu</span>
+          </button>
         </div>
-
-        {/* Card 4: Low Stock Alert (Interactive filter) */}
-        <button
-          type="button"
-          onClick={() => setFilterLowStockOnly(!filterLowStockOnly)}
-          className={`rounded-2xl p-4.5 border transition-all text-left flex items-center justify-between cursor-pointer ${
-            filterLowStockOnly
-              ? 'bg-amber-100/70 border-amber-400 ring-2 ring-amber-400 shadow-sm'
-              : 'bg-white border-slate-200/80 shadow-xs hover:border-amber-300'
-          }`}
-        >
-          <div>
-            <div className="flex items-center space-x-1.5">
-              <span className="text-[11px] font-bold uppercase tracking-wider text-amber-800 block">
-                Stok Terhad / Habis
-              </span>
-              {filterLowStockOnly && (
-                <span className="text-[9px] px-1.5 py-0.2 bg-amber-600 text-white rounded font-bold">
-                  Aktif
-                </span>
-              )}
-            </div>
-            <span className="text-2xl font-bold text-amber-700 block mt-1 font-sans">
-              {lowStockProductsCount} <span className="text-xs font-semibold text-amber-700/80">SKU</span>
-            </span>
-            <span className="text-[11px] text-amber-700/90 mt-0.5 block font-medium">
-              {filterLowStockOnly ? 'Klik untuk papar semua' : 'Klik untuk tapis stok rendah'}
-            </span>
-          </div>
-          <div className="w-12 h-12 rounded-2xl bg-amber-50 border border-amber-200 text-amber-600 flex items-center justify-center flex-shrink-0">
-            <AlertCircle className="w-6 h-6" />
-          </div>
-        </button>
       </div>
 
-      {/* Filter and Search Bar */}
-      <div className="bg-white p-3.5 sm:p-4 rounded-2xl border border-slate-200/80 shadow-xs space-y-3 animate-fade-in font-sans">
-        <div className="flex flex-col md:flex-row gap-3 items-stretch md:items-center justify-between">
-          {/* Search Input */}
-          <div className="relative flex-1 w-full">
-            <Search className="w-4 h-4 text-charcoal-muted absolute left-3.5 top-3" />
-            <input
-              type="text"
-              placeholder="Cari produk mengikut nama, slug atau bahan..."
-              value={search}
-              onChange={(e) => setSearch(e.target.value)}
-              className="w-full pl-10 pr-4 py-2.5 text-xs rounded-xl bg-cream/50 border border-borderLight focus:outline-none focus:ring-2 focus:ring-gold/30 focus:border-gold transition-all"
-            />
+      {/* 2. Executive KPI Summary Ribbon (Unified Luxury Metric Strip) */}
+      <div className="bg-white rounded-2xl border border-slate-200/90 shadow-xs p-3 sm:p-4 font-sans">
+        <div className="grid grid-cols-2 lg:grid-cols-4 gap-3 sm:gap-4 divide-y sm:divide-y-0 sm:divide-x divide-slate-100">
+          {/* Metric 1: Total Products */}
+          <div className="flex items-center justify-between p-2 sm:px-3 sm:py-1">
+            <div>
+              <span className="text-[10px] sm:text-[11px] font-bold uppercase tracking-wider text-slate-400 block">
+                Jumlah Produk
+              </span>
+              <div className="flex items-baseline gap-1.5 mt-0.5">
+                <span className="text-xl sm:text-2xl font-bold text-forest-dark">{totalProductsCount}</span>
+                <span className="text-[11px] text-slate-500 font-medium">SKU Utama</span>
+              </div>
+              <span className="text-[10px] text-slate-400 block mt-0.5">Merangkumi semua kategori</span>
+            </div>
+            <div className="w-10 h-10 sm:w-11 sm:h-11 rounded-xl bg-blue-50/80 border border-blue-100 text-forest flex items-center justify-center flex-shrink-0">
+              <Package className="w-5 h-5" />
+            </div>
           </div>
 
-          {/* Desktop Filter Dropdowns & Add Button */}
-          <div className="hidden md:flex items-center space-x-3 w-auto flex-shrink-0">
-            <select
-              value={selectedCat}
-              onChange={(e) => setSelectedCat(e.target.value)}
-              className="text-xs px-3 py-2.5 rounded-xl bg-slate-50 border border-slate-200 focus:outline-none focus:border-gold transition-all cursor-pointer font-medium"
-            >
-              <option value="all">Semua Kategori</option>
-              {categories.map((c) => (
-                <option key={c.id} value={c.id}>
-                  {c.name}
-                </option>
-              ))}
-            </select>
+          {/* Metric 2: Published / Active */}
+          <div className="flex items-center justify-between p-2 sm:px-4 sm:py-1 pt-3 sm:pt-1">
+            <div>
+              <span className="text-[10px] sm:text-[11px] font-bold uppercase tracking-wider text-slate-400 block">
+                Aktif di Kedai
+              </span>
+              <div className="flex items-baseline gap-1.5 mt-0.5">
+                <span className="text-xl sm:text-2xl font-bold text-emerald-700">{publishedCount}</span>
+                <span className="text-[11px] text-emerald-600 font-semibold">Tersedia</span>
+              </div>
+              <span className="text-[10px] text-emerald-600/90 block mt-0.5 font-medium flex items-center gap-1">
+                <span className="w-1.5 h-1.5 rounded-full bg-emerald-500 inline-block"></span> Live untuk pembeli
+              </span>
+            </div>
+            <div className="w-10 h-10 sm:w-11 sm:h-11 rounded-xl bg-emerald-50/80 border border-emerald-100 text-emerald-600 flex items-center justify-center flex-shrink-0">
+              <CheckCircle className="w-5 h-5" />
+            </div>
+          </div>
 
-            <select
-              value={selectedStatus}
-              onChange={(e) => setSelectedStatus(e.target.value)}
-              className="text-xs px-3 py-2.5 rounded-xl bg-slate-50 border border-slate-200 focus:outline-none focus:border-gold transition-all cursor-pointer font-medium"
-            >
-              <option value="all">Semua Status</option>
-              <option value="published">Diterbitkan (Live)</option>
-              <option value="draft">Draf (Draft)</option>
-              <option value="archived">Diarkib (Archived)</option>
-            </select>
+          {/* Metric 3: Total Stock Units */}
+          <div className="flex items-center justify-between p-2 sm:px-4 sm:py-1 pt-3 sm:pt-1">
+            <div>
+              <span className="text-[10px] sm:text-[11px] font-bold uppercase tracking-wider text-slate-400 block">
+                Stok Fizikal
+              </span>
+              <div className="flex items-baseline gap-1.5 mt-0.5">
+                <span className="text-xl sm:text-2xl font-bold text-forest-dark">{totalInventoryUnits.toLocaleString()}</span>
+                <span className="text-[11px] text-slate-500 font-medium">unit</span>
+              </div>
+              <span className="text-[10px] text-slate-400 block mt-0.5">Semua saiz & varian</span>
+            </div>
+            <div className="w-10 h-10 sm:w-11 sm:h-11 rounded-xl bg-amber-50/80 border border-amber-100 text-gold-dark flex items-center justify-center flex-shrink-0">
+              <Boxes className="w-5 h-5" />
+            </div>
+          </div>
 
+          {/* Metric 4: Low Stock Alert (Interactive filter toggle) */}
+          <div className="p-2 sm:px-4 sm:py-1 pt-3 sm:pt-1">
             <button
-              onClick={handleOpenNewProduct}
-              className="flex items-center space-x-2 bg-forest hover:bg-forest-dark text-warmwhite px-4 py-2.5 rounded-xl text-xs font-bold shadow-sm hover:shadow transition-all whitespace-nowrap cursor-pointer"
+              type="button"
+              onClick={() => setFilterLowStockOnly(!filterLowStockOnly)}
+              className={`w-full h-full flex items-center justify-between p-2 rounded-xl border transition-all cursor-pointer text-left ${
+                filterLowStockOnly
+                  ? 'bg-amber-100/80 border-amber-400 ring-2 ring-amber-400/50 shadow-xs'
+                  : 'bg-slate-50/70 hover:bg-amber-50/50 border-slate-200/80 hover:border-amber-300'
+              }`}
             >
-              <Plus className="w-4 h-4 text-gold" />
-              <span>Tambah Produk</span>
+              <div>
+                <div className="flex items-center gap-1.5">
+                  <span className="text-[10px] sm:text-[11px] font-bold uppercase tracking-wider text-amber-800">
+                    Stok Terhad
+                  </span>
+                  {filterLowStockOnly && (
+                    <span className="text-[9px] px-1.5 py-0.2 bg-amber-600 text-white rounded font-bold">
+                      Aktif
+                    </span>
+                  )}
+                </div>
+                <div className="flex items-baseline gap-1.5 mt-0.5">
+                  <span className="text-xl sm:text-2xl font-bold text-amber-700">{lowStockProductsCount}</span>
+                  <span className="text-[11px] text-amber-700/80 font-medium">SKU</span>
+                </div>
+                <span className="text-[10px] text-amber-700/90 block mt-0.5 font-medium">
+                  {filterLowStockOnly ? '✓ Menapis stok rendah' : 'Klik untuk tapis ≤10 unit'}
+                </span>
+              </div>
+              <div
+                className={`w-9 h-9 sm:w-10 sm:h-10 rounded-xl flex items-center justify-center flex-shrink-0 ${
+                  filterLowStockOnly ? 'bg-amber-500 text-white' : 'bg-amber-100 text-amber-700'
+                }`}
+              >
+                <AlertCircle className="w-5 h-5" />
+              </div>
             </button>
           </div>
         </div>
+      </div>
 
-        {/* Category Quick Filter Pills (Desktop View) */}
-        <div className="hidden md:flex items-center gap-1.5 pt-2 border-t border-slate-100 overflow-x-auto">
+      {/* 3. Streamlined Search & Filter Atelier Console */}
+      <div className="bg-white rounded-2xl border border-slate-200/90 shadow-xs p-3.5 sm:p-4 space-y-3 font-sans">
+        {/* Search Row + Status Filter */}
+        <div className="flex flex-col sm:flex-row items-stretch sm:items-center gap-2.5 sm:gap-3">
+          {/* Search Input */}
+          <div className="relative flex-1">
+            <Search className="w-4 h-4 text-slate-400 absolute left-3.5 top-1/2 -translate-y-1/2" />
+            <input
+              type="text"
+              placeholder="Cari produk mengikut nama, slug, saiz atau bahan..."
+              value={search}
+              onChange={(e) => setSearch(e.target.value)}
+              className="w-full pl-10 pr-9 py-2.5 text-xs sm:text-sm rounded-xl bg-slate-50/70 border border-slate-200/90 focus:outline-none focus:ring-2 focus:ring-gold/30 focus:border-gold focus:bg-white transition-all text-slate-800 placeholder:text-slate-400"
+            />
+            {search && (
+              <button
+                type="button"
+                onClick={() => setSearch('')}
+                className="absolute right-3 top-1/2 -translate-y-1/2 text-slate-400 hover:text-slate-600 p-0.5 rounded-full hover:bg-slate-200 transition-all cursor-pointer"
+                title="Kosongkan carian"
+              >
+                <X className="w-3.5 h-3.5" />
+              </button>
+            )}
+          </div>
+
+          {/* Status Dropdown */}
+          <div className="flex items-center gap-2">
+            <div className="relative min-w-[150px] flex-1 sm:flex-initial">
+              <select
+                value={selectedStatus}
+                onChange={(e) => setSelectedStatus(e.target.value)}
+                className="w-full text-xs sm:text-sm px-3 py-2.5 rounded-xl bg-slate-50 border border-slate-200 text-slate-700 font-medium focus:outline-none focus:border-gold focus:ring-1 focus:ring-gold/30 transition-all cursor-pointer appearance-none pr-8"
+              >
+                <option value="all">Semua Status</option>
+                <option value="published">Diterbitkan (Live)</option>
+                <option value="draft">Draf (Draft)</option>
+                <option value="archived">Diarkib (Archived)</option>
+              </select>
+              <div className="pointer-events-none absolute right-2.5 top-1/2 -translate-y-1/2 text-slate-400">
+                <Sliders className="w-3.5 h-3.5" />
+              </div>
+            </div>
+
+            {/* Reset Filters Button if any filter active */}
+            {(search || selectedCat !== 'all' || selectedStatus !== 'all' || filterLowStockOnly) && (
+              <button
+                type="button"
+                onClick={() => {
+                  setSearch('')
+                  setSelectedCat('all')
+                  setSelectedStatus('all')
+                  setFilterLowStockOnly(false)
+                }}
+                className="px-3 py-2.5 text-xs font-bold text-rose-600 hover:bg-rose-50 rounded-xl border border-rose-200/80 transition-all cursor-pointer flex items-center gap-1.5 whitespace-nowrap"
+                title="Reset semua penapis"
+              >
+                <X className="w-3.5 h-3.5" />
+                <span>Reset</span>
+              </button>
+            )}
+          </div>
+        </div>
+
+        {/* Category Navigation Pills (Horizontal Luxury Carousel / Tabs) */}
+        <div className="flex items-center gap-1.5 pt-2.5 border-t border-slate-100 overflow-x-auto no-scrollbar scroll-smooth">
           <button
             type="button"
             onClick={() => setSelectedCat('all')}
@@ -586,7 +643,11 @@ export function ProductsClient({ initialProducts, categories }: ProductsClientPr
             }`}
           >
             <span>Semua Koleksi</span>
-            <span className={`text-[10px] px-1.5 py-0.2 rounded-full ${selectedCat === 'all' ? 'bg-white/20 text-white' : 'bg-slate-200 text-slate-600'}`}>
+            <span
+              className={`text-[10px] px-1.5 py-0.2 rounded-full font-semibold ${
+                selectedCat === 'all' ? 'bg-white/20 text-white' : 'bg-slate-200 text-slate-600'
+              }`}
+            >
               {products.length}
             </span>
           </button>
@@ -606,59 +667,16 @@ export function ProductsClient({ initialProducts, categories }: ProductsClientPr
                 }`}
               >
                 <span>{c.name}</span>
-                <span className={`text-[10px] px-1.5 py-0.2 rounded-full ${isSelected ? 'bg-white/20 text-white' : 'bg-slate-200 text-slate-500'}`}>
+                <span
+                  className={`text-[10px] px-1.5 py-0.2 rounded-full ${
+                    isSelected ? 'bg-white/20 text-white' : 'bg-slate-200 text-slate-500'
+                  }`}
+                >
                   {count}
                 </span>
               </button>
             )
           })}
-        </div>
-
-        {/* Mobile View Filters & Primary Add Button */}
-        <div className="md:hidden space-y-2.5 pt-1 border-t border-borderLight/40">
-          <div className="grid grid-cols-2 gap-2">
-            <div className="space-y-1">
-              <label className="text-[10px] uppercase font-bold text-charcoal-muted tracking-wider block">
-                Kategori
-              </label>
-              <select
-                value={selectedCat}
-                onChange={(e) => setSelectedCat(e.target.value)}
-                className="w-full text-xs px-2.5 py-2 rounded-xl bg-cream/60 border border-borderLight focus:outline-none focus:border-gold transition-all font-medium truncate"
-              >
-                <option value="all">Semua Kategori</option>
-                {categories.map((c) => (
-                  <option key={c.id} value={c.id}>
-                    {c.name}
-                  </option>
-                ))}
-              </select>
-            </div>
-
-            <div className="space-y-1">
-              <label className="text-[10px] uppercase font-bold text-charcoal-muted tracking-wider block">
-                Status
-              </label>
-              <select
-                value={selectedStatus}
-                onChange={(e) => setSelectedStatus(e.target.value)}
-                className="w-full text-xs px-2.5 py-2 rounded-xl bg-cream/60 border border-borderLight focus:outline-none focus:border-gold transition-all font-medium truncate"
-              >
-                <option value="all">Semua Status</option>
-                <option value="published">Diterbitkan</option>
-                <option value="draft">Draf</option>
-                <option value="archived">Diarkib</option>
-              </select>
-            </div>
-          </div>
-
-          <button
-            onClick={handleOpenNewProduct}
-            className="w-full py-2.5 px-4 bg-forest hover:bg-forest-dark text-warmwhite rounded-xl text-xs font-bold flex items-center justify-center space-x-2 shadow-sm active:scale-98 transition-all cursor-pointer"
-          >
-            <Plus className="w-4 h-4 text-gold" />
-            <span>Tambah Produk Baharu</span>
-          </button>
         </div>
       </div>
 
