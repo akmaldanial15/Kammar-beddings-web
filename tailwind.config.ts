@@ -36,8 +36,8 @@ const config: Config = {
         sale: '#A13D40',     // Restrained sale accent
       },
       fontFamily: {
-        serif: ['Cormorant Garamond', 'Playfair Display', 'Georgia', 'serif'],
-        sans: ['Inter', 'Plus Jakarta Sans', 'system-ui', 'sans-serif'],
+        serif: ['Playfair Display', 'Georgia', 'serif'],
+        sans: ['Plus Jakarta Sans', 'Inter', 'system-ui', 'sans-serif'],
       },
       boxShadow: {
         'subtle': '0 2px 10px rgba(10, 26, 51, 0.04)',

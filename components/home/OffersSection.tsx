@@ -105,26 +105,26 @@ export function OffersSection({ coupons }: OffersSectionProps) {
                     </span>
                   </div>
 
-                  <h3 className="font-serif text-xl font-bold text-warmwhite mb-2">
+                  <h3 className="font-serif text-xl font-bold text-warmwhite mb-2 tracking-tight">
                     {cardTitle}
                   </h3>
 
-                  <p className="text-xs text-warmwhite/70 leading-relaxed mb-4">
+                  <p className="text-xs text-warmwhite/85 leading-relaxed mb-4">
                     {coupon.description}
                   </p>
 
-                  <div className="text-[11px] text-warmwhite/50 space-y-1 mb-4">
+                  <div className="text-xs text-warmwhite/75 space-y-1.5 mb-4 font-medium">
                     <div>&bull; Minimum Spend: {formatMYR(coupon.minSpendSen)}</div>
                     {coupon.maxDiscountSen && (
                       <div>&bull; Max Discount: {formatMYR(coupon.maxDiscountSen)}</div>
                     )}
                     {coupon.customerRestriction === 'first_time' && (
-                      <div className="text-amber-300/80 font-medium">
+                      <div className="text-amber-300 font-semibold">
                         &bull; Eksklusif: Pelanggan Baharu
                       </div>
                     )}
                     {coupon.customerRestriction === 'existing_only' && (
-                      <div className="text-amber-300/80 font-medium">
+                      <div className="text-amber-300 font-semibold">
                         &bull; Eksklusif: Pelanggan Setia / VIP
                       </div>
                     )}
