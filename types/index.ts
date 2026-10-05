@@ -404,6 +404,35 @@ export interface ReassuranceItemConfig {
   subtitle: string
 }
 
+export interface MegaMenuItemConfig {
+  id: string
+  label: string
+  labelBm?: string
+  href: string
+}
+
+export interface MegaMenuColumnConfig {
+  id: string
+  title: string
+  titleBm?: string
+  items: MegaMenuItemConfig[]
+}
+
+export interface MegaMenuPromoConfig {
+  enabled: boolean
+  badge: string
+  title: string
+  description: string
+  buttonText: string
+  buttonUrl: string
+}
+
+export interface MegaMenuConfig {
+  enabled: boolean
+  columns: MegaMenuColumnConfig[]
+  promoCard: MegaMenuPromoConfig
+}
+
 export interface WebsiteConfig {
   theme: {
     primaryColor: string       // e.g. #1E4E8C (Royal Sapphire Blue)
@@ -425,6 +454,7 @@ export interface WebsiteConfig {
     bgColor?: string
     textColor?: string
   }
+  megaMenu: MegaMenuConfig
   hero: {
     slides: HeroSlideConfig[]
   }

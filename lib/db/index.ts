@@ -103,6 +103,9 @@ function ensureDb(): DatabaseSchema {
     if (!dbCache.websiteConfig) {
       dbCache.websiteConfig = initialWebsiteConfig
       saveDb(dbCache)
+    } else if (!dbCache.websiteConfig.megaMenu) {
+      dbCache.websiteConfig.megaMenu = initialWebsiteConfig.megaMenu
+      saveDb(dbCache)
     }
     return dbCache!
   } catch (err) {
@@ -726,6 +729,9 @@ export async function getWebsiteConfig(): Promise<WebsiteConfig> {
   if (!db.websiteConfig) {
     db.websiteConfig = initialWebsiteConfig
     saveDb(db)
+  } else if (!db.websiteConfig.megaMenu) {
+    db.websiteConfig.megaMenu = initialWebsiteConfig.megaMenu
+    saveDb(db)
   }
   return db.websiteConfig
 }
@@ -746,6 +752,15 @@ export async function updateWebsiteConfig(
     announcement: {
       ...current.announcement,
       ...(config.announcement || {}),
+    },
+    megaMenu: {
+      ...(current.megaMenu || initialWebsiteConfig.megaMenu),
+      ...(config.megaMenu || {}),
+      columns: config.megaMenu?.columns || (current.megaMenu?.columns ? current.megaMenu.columns : initialWebsiteConfig.megaMenu.columns),
+      promoCard: {
+        ...(current.megaMenu?.promoCard || initialWebsiteConfig.megaMenu.promoCard),
+        ...(config.megaMenu?.promoCard || {}),
+      },
     },
     hero: {
       ...current.hero,

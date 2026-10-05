@@ -1424,6 +1424,106 @@ export const initialWebsiteConfig: WebsiteConfig = {
     bgColor: '#13325B',
     textColor: '#FFFFFF',
   },
+  megaMenu: {
+    enabled: true,
+    columns: [
+      {
+        id: 'col-material',
+        title: 'Shop by Material',
+        titleBm: 'Pilihan Bahan',
+        items: [
+          {
+            id: 'item-mat-1',
+            label: '100% Natural Latex',
+            labelBm: '100% Lateks Semula Jadi',
+            href: '/collections/mattress?material=latex',
+          },
+          {
+            id: 'item-mat-2',
+            label: 'Pocket Spring Hybrid',
+            labelBm: 'Hibrid Pegas Poket Bebas',
+            href: '/collections/mattress?material=hybrid',
+          },
+          {
+            id: 'item-mat-3',
+            label: 'High Density Memory Foam',
+            labelBm: 'Busa Memori Berketumpatan Tinggi',
+            href: '/collections/mattress?material=memory',
+          },
+          {
+            id: 'item-mat-4',
+            label: 'Orthopaedic Spinal Support',
+            labelBm: 'Sokongan Ortopedik Tulang Belakang',
+            href: '/collections/mattress?material=ortho',
+          },
+        ],
+      },
+      {
+        id: 'col-size',
+        title: 'Shop by Size',
+        titleBm: 'Pilihan Saiz',
+        items: [
+          {
+            id: 'item-size-1',
+            label: 'Single (91×190cm)',
+            labelBm: 'Bujang / Single (91×190cm)',
+            href: '/collections/mattress?size=single',
+          },
+          {
+            id: 'item-size-2',
+            label: 'Super Single (107×190cm)',
+            labelBm: 'Super Single (107×190cm)',
+            href: '/collections/mattress?size=supersingle',
+          },
+          {
+            id: 'item-size-3',
+            label: 'Queen (152×190cm)',
+            labelBm: 'Permaisuri / Queen (152×190cm)',
+            href: '/collections/mattress?size=queen',
+          },
+          {
+            id: 'item-size-4',
+            label: 'King (183×190cm)',
+            labelBm: 'Raja / King (183×190cm)',
+            href: '/collections/mattress?size=king',
+          },
+        ],
+      },
+      {
+        id: 'col-firmness',
+        title: 'Shop by Firmness',
+        titleBm: 'Pilihan Ketegasan & Keselesaan',
+        items: [
+          {
+            id: 'item-firm-1',
+            label: 'Plush & Soft (1-3)',
+            labelBm: 'Lembut Selesa (1-3)',
+            href: '/collections/mattress?firmness=soft',
+          },
+          {
+            id: 'item-firm-2',
+            label: 'Medium Balanced (4-6)',
+            labelBm: 'Sederhana Seimbang (4-6)',
+            href: '/collections/mattress?firmness=medium',
+          },
+          {
+            id: 'item-firm-3',
+            label: 'Firm Orthopaedic (7-10)',
+            labelBm: 'Tegas Ortopedik (7-10)',
+            href: '/collections/mattress?firmness=firm',
+          },
+        ],
+      },
+    ],
+    promoCard: {
+      enabled: true,
+      badge: 'Personalized Fit',
+      title: 'Unsure which mattress suits your body?',
+      description: 'Take our 60-second Mattress Finder quiz for personalized firmness recommendations.',
+      buttonText: 'Start Mattress Quiz',
+      buttonUrl: '/finder',
+    },
+  },
   hero: {
     slides: [
       {

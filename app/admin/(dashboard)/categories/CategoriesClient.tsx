@@ -1,6 +1,7 @@
 'use client'
 
 import React, { useState, useEffect } from 'react'
+import Link from 'next/link'
 import { createPortal } from 'react-dom'
 import { Category } from '@/types'
 import {
@@ -460,22 +461,34 @@ export function CategoriesClient({ initialCategories }: CategoriesClientProps) {
                   </button>
 
                   {/* Mega Menu Toggle */}
-                  <button
-                    type="button"
-                    onClick={() => handleToggleField(cat, 'hasMegaMenu')}
-                    className={`py-1.5 px-1.5 rounded-lg text-[10px] font-bold flex flex-col items-center justify-center gap-0.5 border transition-all cursor-pointer ${
-                      cat.hasMegaMenu
-                        ? 'bg-gold/20 text-forest-dark border-gold/40'
-                        : 'bg-warmwhite text-neutral-400 border-borderLight'
-                    }`}
-                    title="Tukar status Mega Menu dropdown"
-                  >
-                    <div className="flex items-center gap-1">
-                      <LayoutGrid className="w-3 h-3 text-gold-dark" />
-                      <span>Mega Menu</span>
-                    </div>
-                    <span className="text-[9px] font-normal">{cat.hasMegaMenu ? 'Aktif' : 'Tiada'}</span>
-                  </button>
+                  <div className="flex flex-col gap-1 items-center justify-center">
+                    <button
+                      type="button"
+                      onClick={() => handleToggleField(cat, 'hasMegaMenu')}
+                      className={`w-full py-1.5 px-1.5 rounded-lg text-[10px] font-bold flex flex-col items-center justify-center gap-0.5 border transition-all cursor-pointer ${
+                        cat.hasMegaMenu
+                          ? 'bg-gold/20 text-forest-dark border-gold/40'
+                          : 'bg-warmwhite text-neutral-400 border-borderLight'
+                      }`}
+                      title="Tukar status Mega Menu dropdown"
+                    >
+                      <div className="flex items-center gap-1">
+                        <LayoutGrid className="w-3 h-3 text-gold-dark" />
+                        <span>Mega Menu</span>
+                      </div>
+                      <span className="text-[9px] font-normal">{cat.hasMegaMenu ? 'Aktif' : 'Tiada'}</span>
+                    </button>
+                    {cat.hasMegaMenu && (
+                      <Link
+                        href="/admin/website-editor?tab=megamenu"
+                        className="text-[9px] text-[#1E4E8C] font-semibold flex items-center gap-0.5 hover:underline"
+                        title="Sunting pautan & kad kuis Mega Menu"
+                      >
+                        <span>Ubah Isi</span>
+                        <ExternalLink className="w-2.5 h-2.5 text-gold-dark" />
+                      </Link>
+                    )}
+                  </div>
 
                   {/* Status Active Toggle */}
                   <button
@@ -655,17 +668,29 @@ export function CategoriesClient({ initialCategories }: CategoriesClientProps) {
 
                       {/* Toggle: Mega Menu */}
                       <td className="py-3.5 px-4 text-center">
-                        <button
-                          onClick={() => handleToggleField(cat, 'hasMegaMenu')}
-                          className={`inline-flex items-center space-x-1 px-2.5 py-1 rounded-full text-[11px] font-semibold transition-all ${
-                            cat.hasMegaMenu
-                              ? 'bg-gold/20 text-forest-dark font-bold hover:bg-gold/30'
-                              : 'bg-cream text-charcoal-muted hover:bg-borderLight/60'
-                          }`}
-                          title="Klik untuk aktifkan/matikan Mega Menu dropdown"
-                        >
-                          <span>{cat.hasMegaMenu ? 'Aktif' : 'Tiada'}</span>
-                        </button>
+                        <div className="flex flex-col items-center gap-1">
+                          <button
+                            onClick={() => handleToggleField(cat, 'hasMegaMenu')}
+                            className={`inline-flex items-center space-x-1 px-2.5 py-1 rounded-full text-[11px] font-semibold transition-all ${
+                              cat.hasMegaMenu
+                                ? 'bg-gold/20 text-forest-dark font-bold hover:bg-gold/30'
+                                : 'bg-cream text-charcoal-muted hover:bg-borderLight/60'
+                            }`}
+                            title="Klik untuk aktifkan/matikan Mega Menu dropdown"
+                          >
+                            <span>{cat.hasMegaMenu ? 'Aktif' : 'Tiada'}</span>
+                          </button>
+                          {cat.hasMegaMenu && (
+                            <Link
+                              href="/admin/website-editor?tab=megamenu"
+                              className="text-[10px] text-[#1E4E8C] hover:underline font-semibold flex items-center gap-0.5"
+                              title="Sunting pautan & kad kuis Mega Menu"
+                            >
+                              <span>Ubah Isi Menu</span>
+                              <ExternalLink className="w-2.5 h-2.5 text-gold-dark" />
+                            </Link>
+                          )}
+                        </div>
                       </td>
 
                       {/* Toggle: Active */}
@@ -890,6 +915,22 @@ export function CategoriesClient({ initialCategories }: CategoriesClientProps) {
                       className="w-4 h-4 rounded text-forest focus:ring-gold"
                     />
                   </label>
+
+                  {editingCategory.hasMegaMenu && (
+                    <div className="p-3 bg-gold/15 border border-gold/30 rounded-xl flex items-center justify-between text-xs animate-in fade-in duration-200">
+                      <div>
+                        <span className="font-bold text-forest block">Kandungan Mega Menu</span>
+                        <span className="text-[10px] text-charcoal-muted">Ubah tajuk lajur, senarai pautan dan kad kuis</span>
+                      </div>
+                      <Link
+                        href="/admin/website-editor?tab=megamenu"
+                        className="inline-flex items-center space-x-1.5 px-3 py-1.5 bg-forest text-warmwhite text-[11px] font-bold rounded-lg hover:bg-forest-dark transition-all hover:scale-105"
+                      >
+                        <span>Sunting Isi</span>
+                        <ExternalLink className="w-3 h-3 text-gold" />
+                      </Link>
+                    </div>
+                  )}
 
                   {/* Active Status */}
                   <label className="flex items-center justify-between cursor-pointer border-t border-borderLight/60 pt-2.5">
