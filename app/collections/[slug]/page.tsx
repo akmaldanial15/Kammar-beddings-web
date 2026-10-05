@@ -16,7 +16,7 @@ export async function generateMetadata({ params }: Props): Promise<Metadata> {
   const cat = categories.find((c) => c.slug === slug)
   const col = collections.find((c) => c.slug === slug)
 
-  const title = cat?.name || col?.name || (slug === 'mattress' ? 'Luxury Mattresses Collection' : 'Catalog Collection')
+  const title = cat?.name || col?.name || (slug === 'mattress' || slug === 'mattresses' ? 'Luxury Mattresses Collection' : 'Catalog Collection')
   return {
     title: `${title} | KAMAAR Beddings Malaysia`,
     description: cat?.description || col?.description || 'Browse handcrafted organic natural latex and ergonomic hybrid sleep products.',
@@ -31,7 +31,7 @@ export default async function CollectionPage({ params }: Props) {
     getCollections(),
   ])
 
-  const category = categories.find((c) => c.slug === slug)
+  const category = categories.find((c) => c.slug === slug || (slug === 'mattresses' && c.slug === 'mattress'))
   const collection = collections.find((c) => c.slug === slug)
 
   let relevantProducts = allProducts
@@ -54,7 +54,7 @@ export default async function CollectionPage({ params }: Props) {
     }
     pageTitle = collection.name
     pageDescription = collection.description
-  } else if (slug === 'mattress') {
+  } else if (slug === 'mattress' || slug === 'mattresses') {
     relevantProducts = allProducts.filter((p) => p.productType === 'mattress')
     pageTitle = 'Luxury Natural Latex & Hybrid Mattresses'
     pageDescription = 'Handcrafted in Malaysia with 100% pure organic latex, zero synthetic fillers, and micro-zoned spinal alignment for deep, restorative sleep.'
