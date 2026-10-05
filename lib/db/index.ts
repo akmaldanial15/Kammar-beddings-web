@@ -657,10 +657,9 @@ export async function addReview(review: Omit<Review, 'id' | 'createdAt' | 'statu
 // SHOWROOMS & APPOINTMENTS
 // ==========================================
 
-export async function getShowrooms(includeInactive: boolean = false): Promise<Showroom[]> {
+export async function getShowrooms(): Promise<Showroom[]> {
   const db = ensureDb()
-  const list = includeInactive ? db.showrooms : db.showrooms.filter((s) => s.isActive)
-  return list.sort((a, b) => a.displayOrder - b.displayOrder)
+  return db.showrooms.filter((s) => s.isActive).sort((a, b) => a.displayOrder - b.displayOrder)
 }
 
 export async function submitAppointment(data: Omit<AppointmentRequest, 'id' | 'status' | 'createdAt'>): Promise<AppointmentRequest> {
