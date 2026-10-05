@@ -2,14 +2,21 @@
 
 import React, { useState } from 'react'
 import { SiteSettings } from '@/types'
-import { Save, CheckCircle, AlertCircle, Building, Phone, Mail, MessageSquare, Truck, Bell } from 'lucide-react'
+import { Save, CheckCircle, AlertCircle, Building, Phone, Mail, MessageSquare, Truck, Bell, ShieldCheck, User } from 'lucide-react'
 
 interface SettingsClientProps {
   initialSettings: SiteSettings
+  currentAdminName?: string
+  currentAdminEmail?: string
 }
 
-export function SettingsClient({ initialSettings }: SettingsClientProps) {
+export function SettingsClient({
+  initialSettings,
+  currentAdminName = 'Kamaar Admin',
+  currentAdminEmail = 'admin@kamaarbeddings.com',
+}: SettingsClientProps) {
   const [settings, setSettings] = useState<SiteSettings>(initialSettings)
+  const [adminName, setAdminName] = useState(currentAdminName)
   const [isSaving, setIsSaving] = useState(false)
   const [feedback, setFeedback] = useState<{ text: string; type: 'success' | 'error' } | null>(null)
 
@@ -22,7 +29,7 @@ export function SettingsClient({ initialSettings }: SettingsClientProps) {
       const res = await fetch('/api/admin/settings', {
         method: 'POST',
         headers: { 'Content-Type': 'application/json' },
-        body: JSON.stringify({ settings }),
+        body: JSON.stringify({ settings, adminName }),
       })
 
       const data = await res.json()
@@ -100,6 +107,50 @@ export function SettingsClient({ initialSettings }: SettingsClientProps) {
                 onChange={(e) => setSettings({ ...settings, tagline: e.target.value })}
                 className="w-full px-3 py-2 rounded-xl border border-borderLight focus:border-forest"
               />
+            </div>
+          </div>
+        </div>
+
+        {/* Admin Staff & Atelier Profile */}
+        <div className="bg-warmwhite p-6 rounded-2xl border border-borderLight shadow-sm space-y-4">
+          <div className="flex items-center space-x-2 border-b border-borderLight pb-3">
+            <ShieldCheck className="w-4 h-4 text-gold" />
+            <h3 className="font-serif text-lg font-bold text-forest-dark">
+              Profil Pentadbir KAMAAR (Admin Profile)
+            </h3>
+          </div>
+
+          <div className="grid grid-cols-1 md:grid-cols-2 gap-4 text-xs">
+            <div>
+              <label className="block font-bold text-forest-dark mb-1">
+                Nama Rasmi Pentadbir (Admin Display Name)
+              </label>
+              <input
+                type="text"
+                required
+                value={adminName}
+                onChange={(e) => setAdminName(e.target.value)}
+                placeholder="cth: Kamaar Admin"
+                className="w-full px-3 py-2 rounded-xl border border-borderLight focus:border-forest font-medium"
+              />
+              <span className="text-[10px] text-secondary mt-1 block">
+                Nama ini dipaparkan pada bar navigasi atas, avatar profil, dan log audit admin.
+              </span>
+            </div>
+
+            <div>
+              <label className="block font-bold text-forest-dark mb-1">
+                Emel Log Masuk Pentadbir Utama
+              </label>
+              <input
+                type="email"
+                disabled
+                value={currentAdminEmail || 'admin@kamaarbeddings.com'}
+                className="w-full px-3 py-2 rounded-xl border border-borderLight bg-cream/40 text-secondary font-mono"
+              />
+              <span className="text-[10px] text-secondary mt-1 block">
+                Akaun peranan Pemilik (Store Owner). Hubungi sokongan untuk menukar emel utama.
+              </span>
             </div>
           </div>
         </div>

@@ -70,6 +70,13 @@ export function AdminNav({ session }: AdminNavProps) {
     }
   }, [isMobileMenuOpen])
 
+  // Ensure admin name displays as Kamaar Admin if empty or legacy
+  const adminName =
+    session?.name && !session.name.toLowerCase().includes('syed')
+      ? session.name
+      : 'Kamaar Admin'
+  const adminInitial = adminName.charAt(0).toUpperCase() || 'K'
+
   // Find active item title for mobile header
   const activeItem = navItems.find((item) => {
     if (item.href === '/admin') return pathname === '/admin'
@@ -122,9 +129,9 @@ export function AdminNav({ session }: AdminNavProps) {
             type="button"
             onClick={() => setIsMobileMenuOpen(true)}
             className="w-8 h-8 rounded-full bg-gradient-to-br from-[#1E4E8C] to-[#2A6DB5] border border-[#B49A58]/40 text-[#D4AF37] flex items-center justify-center font-bold text-xs shadow-xs cursor-pointer"
-            title={`${session.name} (${session.role})`}
+            title={`${adminName} (${session.role})`}
           >
-            {session.name.charAt(0)}
+            {adminInitial}
           </button>
         </div>
       </header>
@@ -166,11 +173,11 @@ export function AdminNav({ session }: AdminNavProps) {
               <div className="p-4 border-b border-white/10 bg-white/5">
                 <div className="flex items-center space-x-3">
                   <div className="w-9 h-9 rounded-xl bg-gradient-to-br from-[#1E4E8C] to-[#2A6DB5] border border-[#B49A58]/40 text-[#D4AF37] flex items-center justify-center font-bold text-sm shadow-md">
-                    {session.name.charAt(0)}
+                    {adminInitial}
                   </div>
                   <div className="min-w-0 flex-1">
                     <span className="text-xs font-bold text-white block truncate">
-                      {session.name}
+                      {adminName}
                     </span>
                     <span className="text-[10px] text-[#D4AF37] uppercase tracking-wider font-semibold block">
                       {session.role.replace('_', ' ')}
@@ -258,11 +265,11 @@ export function AdminNav({ session }: AdminNavProps) {
             <div className="mt-4 p-3 bg-white/5 rounded-xl border border-white/10">
               <div className="flex items-center space-x-2.5">
                 <div className="w-8 h-8 rounded-xl bg-gradient-to-br from-[#1E4E8C] to-[#2A6DB5] border border-[#B49A58]/40 text-[#D4AF37] flex items-center justify-center font-bold text-xs shadow-xs">
-                  {session.name.charAt(0)}
+                  {adminInitial}
                 </div>
                 <div className="min-w-0 flex-1">
                   <span className="text-xs font-bold text-white block truncate">
-                    {session.name}
+                    {adminName}
                   </span>
                   <span className="text-[10px] text-[#D4AF37] uppercase tracking-wider font-semibold block">
                     {session.role.replace('_', ' ')}

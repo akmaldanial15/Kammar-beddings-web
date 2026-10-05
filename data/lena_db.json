@@ -2561,17 +2561,25 @@
   },
   "staffMembers": [
     {
+      "id": "staff-admin-main",
+      "email": "admin@kamaarbeddings.com",
+      "name": "Kamaar Admin",
+      "role": "owner",
+      "isActive": true,
+      "createdAt": "2026-09-01T00:00:00Z"
+    },
+    {
       "id": "staff-1",
       "email": "owner@kamaarbeddings.com",
-      "name": "Syed Danial (Store Owner)",
+      "name": "Kamaar Admin",
       "role": "owner",
       "isActive": true,
       "createdAt": "2026-09-01T00:00:00Z"
     },
     {
       "id": "staff-1-legacy",
-      "email": "owner@lenasleep.com.my",
-      "name": "Syed Danial (Store Owner)",
+      "email": "owner@kamaarbeddings.com",
+      "name": "Kamaar Admin",
       "role": "owner",
       "isActive": true,
       "createdAt": "2026-09-01T00:00:00Z"
@@ -2579,15 +2587,15 @@
     {
       "id": "staff-2",
       "email": "catalog@kamaarbeddings.com",
-      "name": "Nurul Huda (Catalog Manager)",
+      "name": "Kamaar Catalog Manager",
       "role": "catalog_manager",
       "isActive": true,
       "createdAt": "2026-09-01T00:00:00Z"
     },
     {
       "id": "staff-2-legacy",
-      "email": "catalog@lenasleep.com.my",
-      "name": "Nurul Huda (Catalog Manager)",
+      "email": "catalog@kamaarbeddings.com",
+      "name": "Kamaar Catalog Manager",
       "role": "catalog_manager",
       "isActive": true,
       "createdAt": "2026-09-01T00:00:00Z"
@@ -2595,15 +2603,15 @@
     {
       "id": "staff-3",
       "email": "orders@kamaarbeddings.com",
-      "name": "Kenji Tan (Order & Logistics)",
+      "name": "Kamaar Order Manager",
       "role": "order_manager",
       "isActive": true,
       "createdAt": "2026-09-01T00:00:00Z"
     },
     {
       "id": "staff-3-legacy",
-      "email": "orders@lenasleep.com.my",
-      "name": "Kenji Tan (Order & Logistics)",
+      "email": "orders@kamaarbeddings.com",
+      "name": "Kamaar Order Manager",
       "role": "order_manager",
       "isActive": true,
       "createdAt": "2026-09-01T00:00:00Z"
@@ -2611,15 +2619,15 @@
     {
       "id": "staff-4",
       "email": "editor@kamaarbeddings.com",
-      "name": "Melissa Kaur (Content Editor)",
+      "name": "Kamaar Content Editor",
       "role": "content_editor",
       "isActive": true,
       "createdAt": "2026-09-01T00:00:00Z"
     },
     {
       "id": "staff-4-legacy",
-      "email": "editor@lenasleep.com.my",
-      "name": "Melissa Kaur (Content Editor)",
+      "email": "editor@kamaarbeddings.com",
+      "name": "Kamaar Content Editor",
       "role": "content_editor",
       "isActive": true,
       "createdAt": "2026-09-01T00:00:00Z"
@@ -2682,7 +2690,7 @@
     },
     {
       "id": "aud-1790867330274-aekn",
-      "actorEmail": "owner@lenasleep.com.my",
+      "actorEmail": "owner@kamaarbeddings.com",
       "action": "website_config_updated",
       "entityType": "website_config",
       "entityId": "websiteConfig",
@@ -2700,7 +2708,7 @@
     },
     {
       "id": "aud-1790867330264-nyaf",
-      "actorEmail": "owner@lenasleep.com.my",
+      "actorEmail": "owner@kamaarbeddings.com",
       "action": "staff_logged_in",
       "entityType": "staff",
       "entityId": "staff-1",
@@ -2708,7 +2716,7 @@
     },
     {
       "id": "aud-1790867311743-6eul",
-      "actorEmail": "owner@lenasleep.com.my",
+      "actorEmail": "owner@kamaarbeddings.com",
       "action": "staff_logged_in",
       "entityType": "staff",
       "entityId": "staff-1",
@@ -2716,7 +2724,7 @@
     },
     {
       "id": "aud-1790866264999-dzoj",
-      "actorEmail": "owner@lenasleep.com.my",
+      "actorEmail": "owner@kamaarbeddings.com",
       "action": "affiliate_updated",
       "entityType": "affiliate",
       "entityId": "aff-hafiz",
@@ -2727,7 +2735,7 @@
     },
     {
       "id": "aud-1790866264080-8s1l",
-      "actorEmail": "owner@lenasleep.com.my",
+      "actorEmail": "owner@kamaarbeddings.com",
       "action": "affiliate_updated",
       "entityType": "affiliate",
       "entityId": "aff-hafiz",
@@ -2738,7 +2746,7 @@
     },
     {
       "id": "aud-1790865459948-txyv",
-      "actorEmail": "owner@lenasleep.com.my",
+      "actorEmail": "owner@kamaarbeddings.com",
       "action": "order_status_updated",
       "entityType": "order",
       "entityId": "ord-1790765872396-zbu5x",
@@ -2752,7 +2760,7 @@
     },
     {
       "id": "aud-1790865457957-xy46",
-      "actorEmail": "owner@lenasleep.com.my",
+      "actorEmail": "owner@kamaarbeddings.com",
       "action": "order_status_updated",
       "entityType": "order",
       "entityId": "ord-1790765872396-zbu5x",
@@ -2766,7 +2774,7 @@
     },
     {
       "id": "aud-1790865456911-f5yt",
-      "actorEmail": "owner@lenasleep.com.my",
+      "actorEmail": "owner@kamaarbeddings.com",
       "action": "order_status_updated",
       "entityType": "order",
       "entityId": "ord-1790765872396-zbu5x",
@@ -2780,7 +2788,7 @@
     },
     {
       "id": "aud-1790865455919-iozf",
-      "actorEmail": "owner@lenasleep.com.my",
+      "actorEmail": "owner@kamaarbeddings.com",
       "action": "order_status_updated",
       "entityType": "order",
       "entityId": "ord-1790765872396-zbu5x",
@@ -2794,7 +2802,7 @@
     },
     {
       "id": "aud-1790865455415-ho55",
-      "actorEmail": "owner@lenasleep.com.my",
+      "actorEmail": "owner@kamaarbeddings.com",
       "action": "order_status_updated",
       "entityType": "order",
       "entityId": "ord-1790765872396-zbu5x",
@@ -2808,7 +2816,7 @@
     },
     {
       "id": "aud-1790865454837-006b",
-      "actorEmail": "owner@lenasleep.com.my",
+      "actorEmail": "owner@kamaarbeddings.com",
       "action": "order_status_updated",
       "entityType": "order",
       "entityId": "ord-1790765872396-zbu5x",
@@ -2822,7 +2830,7 @@
     },
     {
       "id": "aud-1790865453497-l0b0",
-      "actorEmail": "owner@lenasleep.com.my",
+      "actorEmail": "owner@kamaarbeddings.com",
       "action": "order_status_updated",
       "entityType": "order",
       "entityId": "ord-1790765872396-zbu5x",
@@ -2836,7 +2844,7 @@
     },
     {
       "id": "aud-1790863813991-6arv",
-      "actorEmail": "owner@lenasleep.com.my",
+      "actorEmail": "owner@kamaarbeddings.com",
       "action": "category_updated",
       "entityType": "category",
       "entityId": "cat-pillows",
@@ -2855,7 +2863,7 @@
     },
     {
       "id": "aud-1790863794537-qjia",
-      "actorEmail": "owner@lenasleep.com.my",
+      "actorEmail": "owner@kamaarbeddings.com",
       "action": "category_updated",
       "entityType": "category",
       "entityId": "cat-pillows",
@@ -2874,7 +2882,7 @@
     },
     {
       "id": "aud-1790863757620-xzln",
-      "actorEmail": "owner@lenasleep.com.my",
+      "actorEmail": "owner@kamaarbeddings.com",
       "action": "category_updated",
       "entityType": "category",
       "entityId": "cat-pillows",
@@ -2893,7 +2901,7 @@
     },
     {
       "id": "aud-1790860147417-1qbz",
-      "actorEmail": "owner@lenasleep.com.my",
+      "actorEmail": "owner@kamaarbeddings.com",
       "action": "staff_logged_in",
       "entityType": "staff",
       "entityId": "staff-1",
@@ -2901,7 +2909,7 @@
     },
     {
       "id": "aud-1790856390196-x6wc",
-      "actorEmail": "owner@lenasleep.com.my",
+      "actorEmail": "owner@kamaarbeddings.com",
       "action": "affiliate_password_reset_by_admin",
       "entityType": "affiliate",
       "entityId": "aff-danial",
@@ -2925,7 +2933,7 @@
     },
     {
       "id": "aud-1790766059597-kn0q",
-      "actorEmail": "owner@lenasleep.com.my",
+      "actorEmail": "owner@kamaarbeddings.com",
       "action": "staff_logged_in",
       "entityType": "staff",
       "entityId": "staff-1",

@@ -107,6 +107,49 @@ function ensureDb(): DatabaseSchema {
       dbCache.websiteConfig.megaMenu = initialWebsiteConfig.megaMenu
       saveDb(dbCache)
     }
+
+    // Backwards compatibility migration for staff members
+    if (dbCache.staffMembers) {
+      let migrated = false
+      for (const sm of dbCache.staffMembers) {
+        if (sm.name.includes('Syed Danial')) {
+          sm.name = 'Kamaar Admin'
+          migrated = true
+        }
+        if (sm.name.includes('Nurul Huda')) {
+          sm.name = 'Kamaar Catalog Manager'
+          migrated = true
+        }
+        if (sm.name.includes('Kenji Tan')) {
+          sm.name = 'Kamaar Order Manager'
+          migrated = true
+        }
+        if (sm.name.includes('Melissa Kaur')) {
+          sm.name = 'Kamaar Content Editor'
+          migrated = true
+        }
+        if (sm.email.includes('lenasleep.com.my')) {
+          sm.email = sm.email.replace('lenasleep.com.my', 'kamaarbeddings.com')
+          migrated = true
+        }
+      }
+      const hasAdmin = dbCache.staffMembers.some((s) => s.email === 'admin@kamaarbeddings.com')
+      if (!hasAdmin) {
+        dbCache.staffMembers.unshift({
+          id: 'staff-admin-main',
+          email: 'admin@kamaarbeddings.com',
+          name: 'Kamaar Admin',
+          role: 'owner',
+          isActive: true,
+          createdAt: '2026-09-01T00:00:00Z',
+        })
+        migrated = true
+      }
+      if (migrated) {
+        saveDb(dbCache)
+      }
+    }
+
     return dbCache!
   } catch (err) {
     console.error('Error reading db file, falling back to seed:', err)
@@ -798,6 +841,26 @@ export async function updateWebsiteConfig(
 export async function getStaffMembers(): Promise<StaffMember[]> {
   const db = ensureDb()
   return db.staffMembers
+}
+
+export async function updateStaffMemberName(emailOrId: string, newName: string): Promise<boolean> {
+  const db = ensureDb()
+  const clean = emailOrId.trim().toLowerCase()
+  let changed = false
+  for (const s of db.staffMembers) {
+    if (
+      s.email.toLowerCase() === clean ||
+      s.id === emailOrId ||
+      (s.role === 'owner' && (clean.includes('owner') || clean.includes('admin') || clean.includes('kamaar')))
+    ) {
+      s.name = newName.trim()
+      changed = true
+    }
+  }
+  if (changed) {
+    saveDb(db)
+  }
+  return changed
 }
 
 export function logAdminAction(actorEmail: string, action: string, entityType: string, entityId?: string, details?: Record<string, any>) {

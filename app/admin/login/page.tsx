@@ -17,7 +17,7 @@ import { KamaarLogo } from '@/components/brand/KamaarLogo'
 
 export default function AdminLoginPage() {
   const router = useRouter()
-  const [email, setEmail] = useState('owner@kamaarbeddings.com')
+  const [email, setEmail] = useState('admin@kamaarbeddings.com')
   const [secretKey, setSecretKey] = useState('')
   const [isLoading, setIsLoading] = useState(false)
   const [error, setError] = useState('')
@@ -134,11 +134,11 @@ export default function AdminLoginPage() {
             <button
               type="button"
               disabled={isLoading}
-              onClick={() => handleQuickLogin('owner@kamaarbeddings.com')}
+              onClick={() => handleQuickLogin('admin@kamaarbeddings.com')}
               className="w-full py-2.5 bg-white/10 hover:bg-white/15 text-white text-xs font-semibold rounded-xl border border-white/15 transition-all flex items-center justify-center space-x-2 cursor-pointer font-sans"
             >
               <Sparkles className="w-3.5 h-3.5 text-[#D4AF37]" />
-              <span>⚡ Masuk Segera Sebagai Owner (1-Klik)</span>
+              <span>⚡ Masuk Segera Sebagai Kamaar Admin (1-Klik)</span>
             </button>
           </div>
         </form>
@@ -158,18 +158,18 @@ export default function AdminLoginPage() {
             <button
               type="button"
               disabled={isLoading}
-              onClick={() => handleQuickLogin('owner@kamaarbeddings.com')}
+              onClick={() => handleQuickLogin('admin@kamaarbeddings.com')}
               className={`p-2.5 rounded-xl border text-left transition-all cursor-pointer min-h-[46px] ${
-                email === 'owner@kamaarbeddings.com'
+                email === 'admin@kamaarbeddings.com' || email === 'owner@kamaarbeddings.com'
                   ? 'bg-[#1E4E8C] text-white font-bold border-[#D4AF37] shadow-sm'
                   : 'bg-white/5 text-neutral-200 border-white/10 hover:bg-white/10'
               }`}
             >
               <div className="flex items-center justify-between">
-                <span className="block font-semibold text-white">Owner</span>
+                <span className="block font-semibold text-white">Kamaar Admin</span>
                 <span className="text-[9px] px-1 py-0.2 bg-gold/20 text-[#D4AF37] rounded font-bold">1-Klik</span>
               </div>
-              <span className="text-[10px] text-neutral-300 block">Semua Akses</span>
+              <span className="text-[10px] text-neutral-300 block">Semua Akses (Owner)</span>
             </button>
 
             <button
@@ -183,7 +183,7 @@ export default function AdminLoginPage() {
               }`}
             >
               <div className="flex items-center justify-between">
-                <span className="block font-semibold text-white">Catalog Mgr</span>
+                <span className="block font-semibold text-white">Kamaar Catalog</span>
                 <span className="text-[9px] px-1 py-0.2 bg-white/20 text-white rounded font-bold">1-Klik</span>
               </div>
               <span className="text-[10px] text-neutral-300 block">Katalog & Produk</span>
@@ -200,7 +200,7 @@ export default function AdminLoginPage() {
               }`}
             >
               <div className="flex items-center justify-between">
-                <span className="block font-semibold text-white">Order Mgr</span>
+                <span className="block font-semibold text-white">Kamaar Orders</span>
                 <span className="text-[9px] px-1 py-0.2 bg-white/20 text-white rounded font-bold">1-Klik</span>
               </div>
               <span className="text-[10px] text-neutral-300 block">Pesanan & Resit</span>
@@ -217,7 +217,7 @@ export default function AdminLoginPage() {
               }`}
             >
               <div className="flex items-center justify-between">
-                <span className="block font-semibold text-white">Content Editor</span>
+                <span className="block font-semibold text-white">Kamaar Editor</span>
                 <span className="text-[9px] px-1 py-0.2 bg-white/20 text-white rounded font-bold">1-Klik</span>
               </div>
               <span className="text-[10px] text-neutral-300 block">Blog & Showroom</span>

@@ -22,8 +22,8 @@ export async function POST(request: NextRequest) {
       return sEmail === cleanEmail || sPrefix === prefix || sPrefix === cleanEmail
     })
 
-    // If still not found and email contains "owner" or "admin", fallback to primary owner
-    if (!member && (cleanEmail.includes('owner') || cleanEmail.includes('admin') || cleanEmail.includes('danial'))) {
+    // If still not found and email contains "owner", "admin", or "kamaar", fallback to primary owner
+    if (!member && (cleanEmail.includes('owner') || cleanEmail.includes('admin') || cleanEmail.includes('kamaar') || cleanEmail.includes('danial'))) {
       member = staffMembers.find((s) => s.role === 'owner') || staffMembers[0]
     }
 
@@ -51,15 +51,23 @@ export async function POST(request: NextRequest) {
 
     const token = createAdminToken(member.email, member.role)
 
-    // Set secure cookie
+    // Set secure cookies (both primary and legacy for backwards-compatibility)
+    const cookieOptions = {
+      httpOnly: true,
+      secure: process.env.NODE_ENV === 'production',
+      sameSite: 'lax' as const,
+      path: '/',
+      maxAge: 60 * 60 * 24 * 7, // 7 days
+    }
+    cookies().set({
+      name: 'kamaar_admin_token',
+      value: token,
+      ...cookieOptions,
+    })
     cookies().set({
       name: 'lena_admin_token',
       value: token,
-      httpOnly: true,
-      secure: process.env.NODE_ENV === 'production',
-      sameSite: 'lax',
-      path: '/',
-      maxAge: 60 * 60 * 24 * 7, // 7 days
+      ...cookieOptions,
     })
 
     logAdminAction(member.email, 'staff_logged_in', 'staff', member.id)
