@@ -8,7 +8,7 @@ export async function GET() {
   if (!session) {
     return NextResponse.json({ error: 'Unauthorized' }, { status: 401 })
   }
-  const showrooms = await getShowrooms()
+  const showrooms = await getShowrooms(true)
   const appointments = await getAppointments()
   return NextResponse.json({ showrooms, appointments })
 }
@@ -53,5 +53,29 @@ export async function PATCH(req: NextRequest) {
     return NextResponse.json({ success: ok })
   } catch (error: any) {
     return NextResponse.json({ error: error.message || 'Failed to update appointment' }, { status: 500 })
+  }
+}
+
+export async function DELETE(req: NextRequest) {
+  const session = await getAdminSession()
+  if (!session) {
+    return NextResponse.json({ error: 'Unauthorized' }, { status: 401 })
+  }
+
+  if (session.role !== 'owner' && session.role !== 'content_editor') {
+    return NextResponse.json({ error: 'Forbidden' }, { status: 403 })
+  }
+
+  try {
+    const { searchParams } = new URL(req.url)
+    const id = searchParams.get('id')
+    if (!id) {
+      return NextResponse.json({ error: 'Missing showroom id' }, { status: 400 })
+    }
+
+    const ok = await deleteShowroom(id, session.email)
+    return NextResponse.json({ success: ok })
+  } catch (error: any) {
+    return NextResponse.json({ error: error.message || 'Failed to delete showroom' }, { status: 500 })
   }
 }
