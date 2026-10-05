@@ -14,6 +14,8 @@ interface CartContextType {
   clearCart: () => void
   couponCode: string
   setCouponCode: (code: string) => void
+  applyCoupon: (code: string) => void
+  removeCoupon: () => void
   notes: string
   setNotes: (notes: string) => void
   itemCount: number
@@ -113,6 +115,9 @@ export function CartProvider({ children }: { children: React.ReactNode }) {
     } catch {}
   }
 
+  const applyCoupon = (code: string) => setCouponCode(code)
+  const removeCoupon = () => setCouponCode('')
+
   const itemCount = items.reduce((sum, i) => sum + i.quantity, 0)
   const subtotalSen = items.reduce((sum, i) => sum + i.priceSen * i.quantity, 0)
 
@@ -129,6 +134,8 @@ export function CartProvider({ children }: { children: React.ReactNode }) {
         clearCart,
         couponCode,
         setCouponCode,
+        applyCoupon,
+        removeCoupon,
         notes,
         setNotes,
         itemCount,

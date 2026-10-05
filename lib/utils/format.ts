@@ -108,9 +108,10 @@ export function calculateShippingFee({
   shippingSen: number
   isFreeShipping: boolean
   label: string
+  isComplimentary?: boolean
 } {
   if (freeShippingPromo) {
-    return { shippingSen: 0, isFreeShipping: true, label: 'Free Shipping (Promotion Applied)' }
+    return { shippingSen: 0, isFreeShipping: true, isComplimentary: true, label: 'Free Shipping (Promotion Applied)' }
   }
 
   const isEastMalaysia = state ? EAST_MALAYSIA_STATES.includes(state) : false
@@ -121,6 +122,7 @@ export function calculateShippingFee({
     return {
       shippingSen: fee,
       isFreeShipping: false,
+      isComplimentary: false,
       label: hasBulkyItem ? 'East Malaysia Bulky Mattress Sea Freight' : 'East Malaysia Standard Courier',
     }
   }
@@ -130,6 +132,7 @@ export function calculateShippingFee({
     return {
       shippingSen: 0,
       isFreeShipping: true,
+      isComplimentary: true,
       label: hasBulkyItem ? 'Free White-Glove Mattress Delivery (Peninsular Malaysia)' : 'Free Shipping (Orders above RM500)',
     }
   }
@@ -138,6 +141,7 @@ export function calculateShippingFee({
   return {
     shippingSen: 3500, // RM35.00 standard courier
     isFreeShipping: false,
+    isComplimentary: false,
     label: 'Standard Peninsular Courier (RM35.00)',
   }
 }

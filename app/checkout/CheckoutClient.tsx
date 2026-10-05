@@ -825,7 +825,9 @@ export function CheckoutClient({ initialPaymentSettings }: CheckoutClientProps) 
                                       placeholder="Security code"
                                       className="w-full px-3.5 py-3 rounded-xl border border-[#D9D9D9] text-sm text-neutral-900 placeholder-neutral-400 outline-none focus:border-[#1E4E8C] bg-white font-mono"
                                     />
-                                    <HelpCircle className="w-4 h-4 text-neutral-400 absolute right-3.5 top-1/2 -translate-y-1/2 cursor-help" title="3-digit nombor di belakang kad anda" />
+                                    <span title="3-digit nombor di belakang kad anda" className="absolute right-3.5 top-1/2 -translate-y-1/2 cursor-help inline-flex">
+                                      <HelpCircle className="w-4 h-4 text-neutral-400" />
+                                    </span>
                                   </div>
                                 </div>
 
@@ -1012,10 +1014,10 @@ export function CheckoutClient({ initialPaymentSettings }: CheckoutClientProps) 
                     <div className="flex items-center space-x-3.5 min-w-0">
                       {/* Image Thumbnail with Quantity Badge */}
                       <div className="relative w-16 h-16 rounded-xl border border-[#E6E6E6] bg-white overflow-hidden shrink-0">
-                        {item.image ? (
+                        {item.imageUrl || item.image ? (
                           <Image
-                            src={item.image}
-                            alt={item.title}
+                            src={item.imageUrl || item.image || ''}
+                            alt={item.productName || item.title || 'Product'}
                             fill
                             sizes="64px"
                             className="object-cover"
@@ -1034,10 +1036,10 @@ export function CheckoutClient({ initialPaymentSettings }: CheckoutClientProps) 
                       {/* Product Title & Variant */}
                       <div className="min-w-0 flex-1">
                         <span className="text-sm font-bold text-neutral-900 block truncate">
-                          {item.title}
+                          {item.productName || item.title}
                         </span>
                         <span className="text-xs text-neutral-500 block truncate">
-                          {item.variantName || 'Single (90x190cm)'}
+                          {item.sizeName || item.variantName || 'Single (90x190cm)'}
                         </span>
                       </div>
                     </div>
@@ -1107,7 +1109,9 @@ export function CheckoutClient({ initialPaymentSettings }: CheckoutClientProps) 
                 <div className="flex items-center justify-between text-neutral-600">
                   <span className="flex items-center space-x-1">
                     <span>Shipping</span>
-                    <HelpCircle className="w-3.5 h-3.5 text-neutral-400" title="Penghantaran percuma untuk tilam Semenanjung Malaysia" />
+                    <span title="Penghantaran percuma untuk tilam Semenanjung Malaysia" className="cursor-help inline-flex">
+                      <HelpCircle className="w-3.5 h-3.5 text-neutral-400" />
+                    </span>
                   </span>
                   <span className="font-medium text-neutral-900">
                     {shippingInfo.shippingSen === 0 ? 'Free' : formatMYR(shippingInfo.shippingSen)}

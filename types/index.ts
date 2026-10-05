@@ -109,6 +109,9 @@ export interface CartItem {
   imageUrl: string
   quantity: number
   stockAvailable: number
+  title?: string
+  image?: string
+  variantName?: string
 }
 
 export interface Cart {
