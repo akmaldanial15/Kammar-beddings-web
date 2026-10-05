@@ -41,6 +41,12 @@ import {
   Percent,
   Compass,
   BookOpen,
+  UploadCloud,
+  Upload,
+  ImagePlus,
+  Loader2,
+  CheckCircle2,
+  RefreshCw,
 } from 'lucide-react'
 import Link from 'next/link'
 
@@ -127,6 +133,16 @@ export function ProductsClient({ initialProducts, categories }: ProductsClientPr
   const [newImageAlt, setNewImageAlt] = useState('')
   const [filterLowStockOnly, setFilterLowStockOnly] = useState(false)
 
+  // Image Upload states
+  const [imageUploadMode, setImageUploadMode] = useState<'upload' | 'url'>('upload')
+  const [isUploadingImage, setIsUploadingImage] = useState(false)
+  const [uploadError, setUploadError] = useState<string | null>(null)
+  const [uploadSuccessMsg, setUploadSuccessMsg] = useState<string | null>(null)
+  const [isDraggingOver, setIsDraggingOver] = useState(false)
+  const fileInputRef = useRef<HTMLInputElement>(null)
+  const replaceFileInputRef = useRef<HTMLInputElement>(null)
+  const [replacingImageIndex, setReplacingImageIndex] = useState<number | null>(null)
+
   // Close custom dropdowns on outside click
   useEffect(() => {
     const handleClickOutside = (e: MouseEvent) => {
@@ -186,6 +202,9 @@ export function ProductsClient({ initialProducts, categories }: ProductsClientPr
     setNewFeatureText('')
     setNewImageUrl('')
     setNewImageAlt('')
+    setUploadError(null)
+    setUploadSuccessMsg(null)
+    setImageUploadMode('upload')
   }
 
   const handleOpenNewProduct = () => {
@@ -365,7 +384,125 @@ export function ProductsClient({ initialProducts, categories }: ProductsClientPr
     setEditingProduct({ ...editingProduct, variants: next })
   }
 
-  // Image Helpers
+  // Image Helpers & Upload Handlers
+  const handleUploadFiles = async (files: FileList | File[]) => {
+    if (!editingProduct || !files || files.length === 0) return
+    setIsUploadingImage(true)
+    setUploadError(null)
+    setUploadSuccessMsg(null)
+
+    try {
+      const formData = new FormData()
+      for (let i = 0; i < files.length; i++) {
+        formData.append('files', files[i])
+      }
+
+      const res = await fetch('/api/admin/upload', {
+        method: 'POST',
+        body: formData,
+      })
+
+      const data = await res.json()
+
+      if (!res.ok || !data.success) {
+        throw new Error(data.error || 'Gagal memuat naik fail ke server')
+      }
+
+      const currentCount = editingProduct.images?.length || 0
+      const uploadedList = data.files || [{ url: data.url, originalName: files[0]?.name }]
+
+      const newImgs: ProductImage[] = uploadedList.map((item: any, idx: number) => ({
+        id: `img-${Date.now()}-${idx}`,
+        productId: editingProduct.id,
+        imageUrl: item.url,
+        altText: `${editingProduct.name} - Galeri ${currentCount + idx + 1}`,
+        displayOrder: currentCount + idx + 1,
+        isPrimary: currentCount === 0 && idx === 0,
+      }))
+
+      setEditingProduct({
+        ...editingProduct,
+        images: [...(editingProduct.images || []), ...newImgs],
+      })
+
+      setUploadSuccessMsg(`Berjaya memuat naik ${newImgs.length} gambar ke galeri!`)
+      setTimeout(() => setUploadSuccessMsg(null), 4000)
+    } catch (err: any) {
+      console.warn('Server upload failed, falling back to local file reader:', err)
+      try {
+        const readFilesPromises = Array.from(files).map((file, idx) => {
+          return new Promise<ProductImage>((resolve) => {
+            const reader = new FileReader()
+            reader.onload = (event) => {
+              const currentCount = editingProduct.images?.length || 0
+              resolve({
+                id: `img-${Date.now()}-${idx}`,
+                productId: editingProduct.id,
+                imageUrl: (event.target?.result as string) || '',
+                altText: `${editingProduct.name} - ${file.name.replace(/\.[^/.]+$/, '')}`,
+                displayOrder: currentCount + idx + 1,
+                isPrimary: currentCount === 0 && idx === 0,
+              })
+            }
+            reader.readAsDataURL(file)
+          })
+        })
+        const readImages = await Promise.all(readFilesPromises)
+        setEditingProduct({
+          ...editingProduct,
+          images: [...(editingProduct.images || []), ...readImages],
+        })
+        setUploadSuccessMsg(`Imej dimuatkan dari peranti (${readImages.length} fail)`)
+        setTimeout(() => setUploadSuccessMsg(null), 4000)
+      } catch {
+        setUploadError(err.message || 'Gagal membaca fail imej.')
+      }
+    } finally {
+      setIsUploadingImage(false)
+      if (fileInputRef.current) fileInputRef.current.value = ''
+    }
+  }
+
+  const handleReplaceImageFile = async (file: File) => {
+    if (!editingProduct || replacingImageIndex === null || !file) return
+    setIsUploadingImage(true)
+    setUploadError(null)
+
+    try {
+      const formData = new FormData()
+      formData.append('file', file)
+      const res = await fetch('/api/admin/upload', {
+        method: 'POST',
+        body: formData,
+      })
+      const data = await res.json()
+      if (res.ok && data.success && data.url) {
+        const next = [...(editingProduct.images || [])]
+        next[replacingImageIndex].imageUrl = data.url
+        setEditingProduct({ ...editingProduct, images: next })
+        setUploadSuccessMsg('Imej berjaya digantikan!')
+        setTimeout(() => setUploadSuccessMsg(null), 3000)
+      } else {
+        throw new Error(data.error || 'Gagal muat naik pengganti')
+      }
+    } catch {
+      // FileReader fallback
+      const reader = new FileReader()
+      reader.onload = (ev) => {
+        const next = [...(editingProduct.images || [])]
+        next[replacingImageIndex].imageUrl = ev.target?.result as string
+        setEditingProduct({ ...editingProduct, images: next })
+        setUploadSuccessMsg('Imej digantikan dari peranti!')
+        setTimeout(() => setUploadSuccessMsg(null), 3000)
+      }
+      reader.readAsDataURL(file)
+    } finally {
+      setIsUploadingImage(false)
+      setReplacingImageIndex(null)
+      if (replaceFileInputRef.current) replaceFileInputRef.current.value = ''
+    }
+  }
+
   const handleAddImage = () => {
     if (!editingProduct || !newImageUrl.trim()) return
     const newImg: ProductImage = {
@@ -382,6 +519,8 @@ export function ProductsClient({ initialProducts, categories }: ProductsClientPr
     })
     setNewImageUrl('')
     setNewImageAlt('')
+    setUploadSuccessMsg('Pautan imej berjaya ditambah ke galeri!')
+    setTimeout(() => setUploadSuccessMsg(null), 3000)
   }
 
   const setPrimaryImage = (imgId: string) => {
@@ -2744,67 +2883,239 @@ export function ProductsClient({ initialProducts, categories }: ProductsClientPr
               {/* ============================================================= */}
               {activeTab === 'images' && (
                 <div className="space-y-6 animate-fade-in">
-                  {/* Top Guide Explainer */}
-                  <div className="p-4 rounded-2xl bg-cream/50 border border-gold/30 flex items-start space-x-3 text-xs">
-                    <span className="w-6 h-6 rounded-lg bg-gold/30 flex items-center justify-center flex-shrink-0 text-gold-dark font-bold text-sm">
-                      📸
-                    </span>
-                    <div className="space-y-1">
-                      <span className="font-bold text-forest-dark block">
-                        Panduan Galeri Imej Produk KAMAAR
+                  {/* Hidden file inputs for upload & replace */}
+                  <input
+                    ref={fileInputRef}
+                    type="file"
+                    multiple
+                    accept="image/*"
+                    onChange={(e) => {
+                      if (e.target.files && e.target.files.length > 0) {
+                        handleUploadFiles(e.target.files)
+                      }
+                    }}
+                    className="hidden"
+                  />
+                  <input
+                    ref={replaceFileInputRef}
+                    type="file"
+                    accept="image/*"
+                    onChange={(e) => {
+                      if (e.target.files?.[0]) {
+                        handleReplaceImageFile(e.target.files[0])
+                      }
+                    }}
+                    className="hidden"
+                  />
+
+                  {/* Top Guide Explainer with Live Counters */}
+                  <div className="p-4 rounded-2xl bg-cream/50 border border-gold/30 flex flex-col sm:flex-row items-start sm:items-center justify-between gap-3 text-xs">
+                    <div className="flex items-start space-x-3">
+                      <span className="w-8 h-8 rounded-xl bg-gold/25 flex items-center justify-center flex-shrink-0 text-gold-dark font-bold text-sm shadow-2xs">
+                        📸
                       </span>
-                      <p className="text-[11px] text-charcoal-muted leading-relaxed">
-                        Gambar yang menarik dan jelas meningkatkan jualan sehingga 300%! Pastikan anda mempunyai sekurang-kurangnya <strong>1 Gambar Sampul Utama (Primary Image)</strong> dan beberapa gambar sudut dekat (tekstur fabrik, lapisan dalaman getah latex, atau suasana bilik tidur).
-                      </p>
+                      <div className="space-y-0.5">
+                        <span className="font-bold text-forest-dark block text-xs">
+                          Panduan Galeri Imej Produk KAMAAR
+                        </span>
+                        <p className="text-[11px] text-charcoal-muted leading-relaxed">
+                          Muat naik gambar berkualiti tinggi dari peranti anda. Pastikan mempunyai sekurang-kurangnya <strong>1 Gambar Sampul Utama</strong>.
+                        </p>
+                      </div>
+                    </div>
+
+                    <div className="flex items-center gap-2 flex-shrink-0 self-end sm:self-center">
+                      <span className="px-2.5 py-1 rounded-lg bg-warmwhite border border-borderLight text-[11px] font-semibold text-charcoal-muted">
+                        Jumlah: <strong>{editingProduct.images?.length || 0} Imej</strong>
+                      </span>
+                      {editingProduct.images?.some((img) => img.isPrimary) ? (
+                        <span className="px-2.5 py-1 rounded-lg bg-emerald-50 border border-emerald-200 text-[11px] font-semibold text-emerald-700 flex items-center gap-1">
+                          <Check className="w-3 h-3" /> Sampul Aktif
+                        </span>
+                      ) : (
+                        <span className="px-2.5 py-1 rounded-lg bg-amber-50 border border-amber-200 text-[11px] font-semibold text-amber-700 flex items-center gap-1">
+                          ⚠️ Tiada Sampul
+                        </span>
+                      )}
                     </div>
                   </div>
 
-                  {/* Add New Image Form */}
-                  <div className="p-4 sm:p-5 bg-warmwhite rounded-2xl border border-borderLight shadow-2xs space-y-3">
-                    <div className="flex items-center justify-between">
-                      <span className="text-xs font-bold text-forest-dark uppercase tracking-wider block">
-                        + Tambah Imej Baharu ke Galeri Produk
-                      </span>
-                      <span className="text-[10px] font-bold bg-cream px-2 py-0.5 rounded text-charcoal-muted border border-borderLight/60">
-                        URL Pautan Imej / CDN
-                      </span>
+                  {/* Add New Image Form with Mode Switcher */}
+                  <div className="bg-warmwhite rounded-2xl border border-borderLight shadow-2xs overflow-hidden">
+                    {/* Header with Luxury Mode Tabs */}
+                    <div className="p-4 sm:px-5 sm:py-3.5 bg-cream/40 border-b border-borderLight flex flex-col sm:flex-row items-start sm:items-center justify-between gap-3">
+                      <div>
+                        <span className="text-xs font-bold text-forest-dark uppercase tracking-wider block">
+                          + Tambah Imej Baharu ke Galeri Produk
+                        </span>
+                        <span className="text-[11px] text-charcoal-muted">
+                          Pilih kaedah muat naik fail atau pautan URL luar
+                        </span>
+                      </div>
+
+                      {/* Mode Switcher Tabs */}
+                      <div className="flex items-center p-1 bg-warmwhite rounded-xl border border-borderLight/80 shadow-2xs self-stretch sm:self-auto">
+                        <button
+                          type="button"
+                          onClick={() => setImageUploadMode('upload')}
+                          className={`flex-1 sm:flex-initial px-3.5 py-1.5 rounded-lg text-xs font-bold transition-all flex items-center justify-center space-x-1.5 ${
+                            imageUploadMode === 'upload'
+                              ? 'bg-forest text-warmwhite shadow-xs'
+                              : 'text-charcoal-muted hover:text-charcoal'
+                          }`}
+                        >
+                          <UploadCloud className="w-3.5 h-3.5 text-gold" />
+                          <span>Muat Naik Fail (Upload)</span>
+                        </button>
+                        <button
+                          type="button"
+                          onClick={() => setImageUploadMode('url')}
+                          className={`flex-1 sm:flex-initial px-3.5 py-1.5 rounded-lg text-xs font-bold transition-all flex items-center justify-center space-x-1.5 ${
+                            imageUploadMode === 'url'
+                              ? 'bg-forest text-warmwhite shadow-xs'
+                              : 'text-charcoal-muted hover:text-charcoal'
+                          }`}
+                        >
+                          <Tag className="w-3.5 h-3.5 text-gold" />
+                          <span>Pautan URL / CDN</span>
+                        </button>
+                      </div>
                     </div>
 
-                    <div className="grid grid-cols-1 md:grid-cols-3 gap-3 items-center">
-                      <div className="md:col-span-2">
-                        <label className="block text-[10.5px] font-bold text-charcoal-muted mb-1">
-                          Alamat URL Imej (Web URL atau /images/...)
-                        </label>
-                        <input
-                          type="text"
-                          placeholder="Masukkan URL imej (cth: https://images.unsplash.com/... atau /images/products/...)"
-                          value={newImageUrl}
-                          onChange={(e) => setNewImageUrl(e.target.value)}
-                          className="w-full px-3.5 py-2.5 text-xs rounded-xl bg-cream/40 border border-borderLight focus:outline-none focus:ring-1 focus:ring-gold font-mono"
-                        />
-                      </div>
-                      <div className="space-y-1">
-                        <label className="block text-[10.5px] font-bold text-charcoal-muted mb-1">
-                          Alt Text (Untuk SEO Google)
-                        </label>
-                        <div className="flex items-center space-x-2">
-                          <input
-                            type="text"
-                            placeholder="Cth: Tilam Queen Latex"
-                            value={newImageAlt}
-                            onChange={(e) => setNewImageAlt(e.target.value)}
-                            className="w-full px-3 py-2.5 text-xs rounded-xl bg-cream/40 border border-borderLight focus:outline-none focus:ring-1 focus:ring-gold"
-                          />
+                    {/* Mode 1: Luxury File Upload Dropzone */}
+                    {imageUploadMode === 'upload' ? (
+                      <div className="p-4 sm:p-6 space-y-4">
+                        <div
+                          onDragOver={(e) => {
+                            e.preventDefault()
+                            setIsDraggingOver(true)
+                          }}
+                          onDragLeave={() => setIsDraggingOver(false)}
+                          onDrop={(e) => {
+                            e.preventDefault()
+                            setIsDraggingOver(false)
+                            if (e.dataTransfer.files && e.dataTransfer.files.length > 0) {
+                              handleUploadFiles(e.dataTransfer.files)
+                            }
+                          }}
+                          onClick={() => fileInputRef.current?.click()}
+                          className={`relative rounded-2xl border-2 border-dashed p-6 sm:p-8 text-center transition-all cursor-pointer flex flex-col items-center justify-center group ${
+                            isDraggingOver
+                              ? 'border-gold bg-gold/10 scale-[1.01] shadow-md'
+                              : 'border-gold/40 hover:border-gold hover:bg-gold/5 bg-cream/30'
+                          }`}
+                        >
+                          <div className="w-14 h-14 rounded-2xl bg-gold/20 flex items-center justify-center text-gold-dark group-hover:scale-110 transition-transform mb-3 shadow-2xs">
+                            <UploadCloud className="w-7 h-7" />
+                          </div>
+
+                          <span className="text-sm font-bold text-forest-dark block mb-1">
+                            Klik untuk Pilih Fail Gambar dari Komputer / Telefon
+                          </span>
+                          <span className="text-xs text-charcoal-muted block mb-3">
+                            atau seret & lepaskan fail gambar (Drag & Drop) di sini
+                          </span>
+
+                          <div className="flex flex-wrap items-center justify-center gap-2 mb-4">
+                            <span className="text-[10px] font-semibold bg-warmwhite px-2.5 py-1 rounded-full border border-borderLight text-charcoal-muted">
+                              Menyokong JPG, PNG, WEBP, GIF, AVIF
+                            </span>
+                            <span className="text-[10px] font-semibold bg-emerald-50 text-emerald-700 px-2.5 py-1 rounded-full border border-emerald-200">
+                              ⚡ Boleh pilih banyak gambar sekaligus (Multi-Select)
+                            </span>
+                          </div>
+
                           <button
                             type="button"
-                            onClick={handleAddImage}
-                            className="px-4 py-2.5 bg-forest text-warmwhite text-xs font-bold rounded-xl hover:bg-forest-dark transition-colors whitespace-nowrap shadow-xs"
+                            className="px-5 py-2.5 rounded-xl bg-forest hover:bg-forest-dark text-warmwhite text-xs font-bold shadow-xs flex items-center space-x-2 transition-all group-hover:shadow-md"
                           >
-                            Tambah
+                            <ImagePlus className="w-4 h-4 text-gold" />
+                            <span>Pilih Fail Gambar dari Peranti</span>
                           </button>
                         </div>
+
+                        {/* Uploading progress indicator */}
+                        {isUploadingImage && (
+                          <div className="flex items-center justify-center space-x-3 p-3.5 bg-gold/10 border border-gold/30 rounded-xl text-xs text-forest-dark animate-pulse">
+                            <Loader2 className="w-4 h-4 animate-spin text-gold-dark" />
+                            <span className="font-semibold">
+                              Sedang memproses dan memuat naik fail imej ke server KAMAAR...
+                            </span>
+                          </div>
+                        )}
+
+                        {/* Status Feedback Banners */}
+                        {uploadSuccessMsg && (
+                          <div className="flex items-center space-x-2 p-3 bg-emerald-50 border border-emerald-200 rounded-xl text-xs text-emerald-800 animate-fade-in">
+                            <CheckCircle2 className="w-4 h-4 text-emerald-600 flex-shrink-0" />
+                            <span className="font-medium">{uploadSuccessMsg}</span>
+                          </div>
+                        )}
+
+                        {uploadError && (
+                          <div className="flex items-center space-x-2 p-3 bg-rose-50 border border-rose-200 rounded-xl text-xs text-rose-800 animate-fade-in">
+                            <AlertCircle className="w-4 h-4 text-rose-600 flex-shrink-0" />
+                            <span className="font-medium">{uploadError}</span>
+                          </div>
+                        )}
                       </div>
-                    </div>
+                    ) : (
+                      /* Mode 2: URL / CDN Input */
+                      <div className="p-4 sm:p-5 space-y-3">
+                        <div className="grid grid-cols-1 md:grid-cols-3 gap-3 items-center">
+                          <div className="md:col-span-2">
+                            <label className="block text-[10.5px] font-bold text-charcoal-muted mb-1">
+                              Alamat URL Imej (Web URL atau /images/...)
+                            </label>
+                            <input
+                              type="text"
+                              placeholder="Masukkan URL imej (cth: https://images.unsplash.com/... atau /images/products/...)"
+                              value={newImageUrl}
+                              onChange={(e) => setNewImageUrl(e.target.value)}
+                              className="w-full px-3.5 py-2.5 text-xs rounded-xl bg-cream/40 border border-borderLight focus:outline-none focus:ring-1 focus:ring-gold font-mono"
+                            />
+                          </div>
+                          <div className="space-y-1">
+                            <label className="block text-[10.5px] font-bold text-charcoal-muted mb-1">
+                              Alt Text (Untuk SEO Google)
+                            </label>
+                            <div className="flex items-center space-x-2">
+                              <input
+                                type="text"
+                                placeholder="Cth: Tilam Queen Latex"
+                                value={newImageAlt}
+                                onChange={(e) => setNewImageAlt(e.target.value)}
+                                className="w-full px-3 py-2.5 text-xs rounded-xl bg-cream/40 border border-borderLight focus:outline-none focus:ring-1 focus:ring-gold"
+                              />
+                              <button
+                                type="button"
+                                onClick={handleAddImage}
+                                className="px-4 py-2.5 bg-forest text-warmwhite text-xs font-bold rounded-xl hover:bg-forest-dark transition-colors whitespace-nowrap shadow-xs"
+                              >
+                                Tambah
+                              </button>
+                            </div>
+                          </div>
+                        </div>
+
+                        {uploadSuccessMsg && (
+                          <div className="flex items-center space-x-2 p-2.5 bg-emerald-50 border border-emerald-200 rounded-xl text-xs text-emerald-800">
+                            <CheckCircle2 className="w-4 h-4 text-emerald-600 flex-shrink-0" />
+                            <span>{uploadSuccessMsg}</span>
+                          </div>
+                        )}
+                      </div>
+                    )}
+                  </div>
+
+                  {/* Images Grid Header */}
+                  <div className="flex items-center justify-between pt-2">
+                    <span className="text-xs font-bold text-forest-dark uppercase tracking-wider block">
+                      Senarai Galeri Imej Produk ({editingProduct.images?.length || 0})
+                    </span>
+                    <span className="text-[11px] text-charcoal-muted">
+                      Klik <strong>&ldquo;Jadikan Sampul Utama&rdquo;</strong> untuk memilih foto utama di katalog
+                    </span>
                   </div>
 
                   {/* Images Grid */}
@@ -2818,12 +3129,12 @@ export function ProductsClient({ initialProducts, categories }: ProductsClientPr
                             : 'border-borderLight hover:border-gold/40'
                         }`}
                       >
-                        <div className="w-full h-44 rounded-xl overflow-hidden bg-cream border border-borderLight mb-3 relative flex items-center justify-center">
+                        <div className="w-full h-48 rounded-xl overflow-hidden bg-cream border border-borderLight mb-3 relative flex items-center justify-center">
                           {img.imageUrl ? (
                             <img
                               src={img.imageUrl}
                               alt={img.altText}
-                              className="w-full h-full object-cover"
+                              className="w-full h-full object-cover group-hover:scale-105 transition-transform duration-300"
                             />
                           ) : (
                             <BedDouble className="w-10 h-10 text-gold/40" />
@@ -2839,18 +3150,37 @@ export function ProductsClient({ initialProducts, categories }: ProductsClientPr
                               Galeri #{iIdx + 1}
                             </span>
                           )}
+
+                          {/* Quick Replace Overlay Button */}
+                          <button
+                            type="button"
+                            title="Ganti fail imej ini dengan imej baru"
+                            onClick={() => {
+                              setReplacingImageIndex(iIdx)
+                              replaceFileInputRef.current?.click()
+                            }}
+                            className="absolute bottom-2.5 right-2.5 px-2.5 py-1 rounded-lg text-[10px] font-bold bg-warmwhite/90 text-forest-dark hover:bg-warmwhite hover:text-forest shadow-xs backdrop-blur-xs flex items-center space-x-1 opacity-90 hover:opacity-100 transition-opacity"
+                          >
+                            <RefreshCw className="w-3 h-3 text-gold-dark" />
+                            <span>Ganti Fail</span>
+                          </button>
                         </div>
 
                         <div className="space-y-2">
                           <div>
-                            <label className="block text-[10px] font-bold text-charcoal-muted uppercase mb-0.5">
-                              Pautan Fail Gambar
-                            </label>
+                            <div className="flex items-center justify-between mb-0.5">
+                              <label className="text-[10px] font-bold text-charcoal-muted uppercase">
+                                Pautan Fail Gambar
+                              </label>
+                              <span className="text-[9.5px] font-mono text-slate-400 truncate max-w-[120px]">
+                                {img.imageUrl?.startsWith('data:') ? 'Base64 Local' : img.imageUrl?.slice(-20)}
+                              </span>
+                            </div>
                             <input
                               type="text"
                               value={img.imageUrl}
                               onChange={(e) => {
-                                const next = [...editingProduct.images]
+                                const next = [...(editingProduct.images || [])]
                                 next[iIdx].imageUrl = e.target.value
                                 setEditingProduct({ ...editingProduct, images: next })
                               }}
