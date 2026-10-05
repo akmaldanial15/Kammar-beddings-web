@@ -1,5 +1,19 @@
 // Rich Seed Dataset for KAMAAR SLEEP Platform
-import { Product, Category, Collection, Coupon, Showroom, BlogPost, SiteSettings, StaffMember, Review, Affiliate, WebsiteConfig } from '@/types'
+import {
+  Product,
+  Category,
+  Collection,
+  Coupon,
+  Showroom,
+  BlogPost,
+  SiteSettings,
+  StaffMember,
+  Review,
+  Affiliate,
+  WebsiteConfig,
+  PaymentSettings,
+  PaymentMethodConfig,
+} from '@/types'
 
 export const initialCategories: Category[] = [
   {
@@ -1634,4 +1648,85 @@ export const initialWebsiteConfig: WebsiteConfig = {
     cardBorderRadius: 'rounded-2xl',
   },
 }
+
+export const initialPaymentSettings: PaymentSettings = {
+  expressCheckoutEnabled: true,
+  enableGooglePay: true,
+  enableApplePay: true,
+  defaultMethodId: 'pay-credit-card',
+  methods: [
+    {
+      id: 'pay-credit-card',
+      name: 'Credit card',
+      subtitle: 'Visa, Mastercard & American Express',
+      providerType: 'credit_card',
+      enabled: true,
+      isDefault: true,
+      testMode: true,
+      sortOrder: 1,
+      badgeIcons: ['visa', 'mastercard', 'amex'],
+      description: 'All transactions are secure and encrypted. Dilindungi dengan protokol penyulitan 256-bit SSL.',
+      instructions: 'Masukkan butiran kad kredit atau debit anda untuk proses pembayaran segera yang selamat.',
+    },
+    {
+      id: 'pay-atome-bnpl',
+      name: 'Atome PayLater - 3 easy payments, 0% interest',
+      subtitle: 'Bayar 3 kali ansuran bulanan tanpa sebarang caj faedah (0% APR)',
+      providerType: 'atome_bnpl',
+      enabled: true,
+      isDefault: false,
+      testMode: true,
+      sortOrder: 2,
+      badgeIcons: ['atome', 'visa', 'mastercard', 'amex'],
+      installmentMonths: 3,
+      description: 'Pecahkan jumlah bil anda kepada 3 ansuran bulanan mudah tanpa caj faedah tersembunyi. Bayaran pertama ditolak hari ini.',
+      instructions: 'Pelan ansuran 0% faedah. Pengesahan segera tanpa kad kredit diperlukan.',
+    },
+    {
+      id: 'pay-payex',
+      name: 'Payex',
+      subtitle: 'FPX Online Banking, Kad Kredit & DuitNow',
+      providerType: 'payex',
+      enabled: true,
+      isDefault: false,
+      testMode: true,
+      sortOrder: 3,
+      badgeIcons: ['visa', 'mastercard', 'fpx'],
+      description: 'Gerbang pembayaran rasmi yang menyokong FPX Perbankan Internet Malaysia dan kad kredit/debit.',
+      instructions: 'Pilih bank tempatan anda di skrin seterusnya untuk log masuk ke perbankan internet anda.',
+    },
+    {
+      id: 'pay-eghl-adaptis',
+      name: 'ADAPTIS Payment Gateway (formerly eGHL)',
+      subtitle: 'FPX Malaysia, Touch n Go, GrabPay, Boost',
+      providerType: 'eghl',
+      enabled: true,
+      isDefault: false,
+      testMode: true,
+      sortOrder: 4,
+      badgeIcons: ['visa', 'mastercard', 'fpx', 'tng', 'grabpay', 'boost'],
+      description: 'Bayar melalui FPX Maybank2u, CIMB Clicks, Public Bank, RHB, Hong Leong atau e-Wallet pilihan anda.',
+      instructions: 'Pilih e-Wallet atau perbankan internet anda melalui gerbang ADAPTIS (eGHL) yang selamat.',
+    },
+    {
+      id: 'pay-duitnow-qr',
+      name: 'DuitNow QR & Pindahan Bank Manual',
+      subtitle: 'Imbas Kod QR DuitNow atau pindahan akaun Maybank rasmi KAMAAR',
+      providerType: 'duitnow_qr',
+      enabled: true,
+      isDefault: false,
+      testMode: false,
+      sortOrder: 5,
+      badgeIcons: ['duitnow', 'fpx'],
+      description: 'Pindahan dana terus ke akaun bank korporat KAMAAR Beddings tanpa sebarang caj tambahan.',
+      instructions: 'Maybank KAMAAR BEDDINGS SDN BHD: 5123 4567 8901. Sila simpan resit transaksi untuk pengesahan concierge.',
+      config: {
+        bankName: 'Maybank Berhad',
+        accountName: 'KAMAAR BEDDINGS SDN BHD',
+        accountNumber: '5123 4567 8901',
+      },
+    },
+  ],
+}
+
 

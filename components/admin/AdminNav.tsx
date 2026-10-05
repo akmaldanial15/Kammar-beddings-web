@@ -22,6 +22,7 @@ import {
   LogOut,
   Sparkles,
   Palette,
+  CreditCard,
 } from 'lucide-react'
 import { KamaarLogo } from '@/components/brand/KamaarLogo'
 import { AdminLogoutButton } from './AdminLogoutButton'
@@ -42,6 +43,7 @@ const navItems = [
   { label: 'Inventory & Stock', href: '/admin/inventory', icon: Boxes },
   { label: 'Orders & Fulfilment', href: '/admin/orders', icon: ShoppingBag },
   { label: 'Promotions & Coupons', href: '/admin/promotions', icon: Tag },
+  { label: 'Payment Settings', href: '/admin/payments', icon: CreditCard, isNew: true },
   { label: 'Affiliates & Agents', href: '/admin/affiliates', icon: Share2 },
   { label: 'Showroom Studios', href: '/admin/showrooms', icon: MapPin },
   { label: 'Warranty Registrations', href: '/admin/warranties', icon: ShieldCheck },

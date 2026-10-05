@@ -496,3 +496,52 @@ export interface WebsiteConfig {
   }
 }
 
+export type PaymentProviderType =
+  | 'credit_card'
+  | 'atome_bnpl'
+  | 'fpx'
+  | 'payex'
+  | 'eghl'
+  | 'duitnow_qr'
+  | 'cod'
+  | 'custom'
+
+export interface PaymentMethodConfig {
+  id: string
+  name: string
+  subtitle?: string
+  providerType: PaymentProviderType
+  enabled: boolean
+  isDefault?: boolean
+  testMode?: boolean
+  sortOrder: number
+  badgeIcons: string[] // e.g. ['visa', 'mastercard', 'fpx', 'atome', 'duitnow', 'tng', 'grabpay', 'boost', 'amex']
+  description?: string
+  instructions?: string
+  installmentMonths?: number // e.g. 3
+  minAmountSen?: number
+  maxAmountSen?: number
+  feePercent?: number
+  fixedFeeSen?: number
+  config?: {
+    merchantId?: string
+    apiKey?: string
+    secretKey?: string
+    bankName?: string
+    accountName?: string
+    accountNumber?: string
+    qrImageUrl?: string
+    sandboxUrl?: string
+    [key: string]: string | undefined
+  }
+}
+
+export interface PaymentSettings {
+  expressCheckoutEnabled: boolean
+  enableGooglePay: boolean
+  enableApplePay: boolean
+  defaultMethodId: string
+  methods: PaymentMethodConfig[]
+}
+
+

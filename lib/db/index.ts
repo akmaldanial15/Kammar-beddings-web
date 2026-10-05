@@ -18,6 +18,8 @@ import {
   AuditLog,
   Affiliate,
   WebsiteConfig,
+  PaymentSettings,
+  PaymentMethodConfig,
 } from '@/types'
 import {
   initialCategories,
@@ -31,6 +33,7 @@ import {
   initialReviews,
   initialAffiliates,
   initialWebsiteConfig,
+  initialPaymentSettings,
 } from './seedData'
 
 interface DatabaseSchema {
@@ -51,6 +54,7 @@ interface DatabaseSchema {
   auditLogs: AuditLog[]
   affiliates: Affiliate[]
   websiteConfig?: WebsiteConfig
+  paymentSettings?: PaymentSettings
 }
 
 const DATA_DIR = path.join(process.cwd(), 'data')
@@ -150,6 +154,12 @@ function ensureDb(): DatabaseSchema {
       }
     }
 
+    // Backwards compatibility migration for paymentSettings
+    if (!dbCache.paymentSettings) {
+      dbCache.paymentSettings = initialPaymentSettings
+      saveDb(dbCache)
+    }
+
     return dbCache!
   } catch (err) {
     console.error('Error reading db file, falling back to seed:', err)
@@ -170,6 +180,8 @@ function ensureDb(): DatabaseSchema {
       staffMembers: initialStaffMembers,
       auditLogs: [],
       affiliates: initialAffiliates,
+      websiteConfig: initialWebsiteConfig,
+      paymentSettings: initialPaymentSettings,
     }
     dbCache = initialDb
     return initialDb
@@ -885,6 +897,124 @@ export function logAdminAction(actorEmail: string, action: string, entityType: s
 export async function getAuditLogs(): Promise<AuditLog[]> {
   const db = ensureDb()
   return db.auditLogs
+}
+
+// ==========================================
+// PAYMENT GATEWAY & METHODS MANAGEMENT
+// ==========================================
+
+export async function getPaymentSettings(): Promise<PaymentSettings> {
+  const db = ensureDb()
+  if (!db.paymentSettings) {
+    db.paymentSettings = initialPaymentSettings
+    saveDb(db)
+  }
+  return db.paymentSettings
+}
+
+export async function updatePaymentSettings(
+  settings: Partial<PaymentSettings>,
+  actorEmail: string = 'admin'
+): Promise<PaymentSettings> {
+  const db = ensureDb()
+  if (!db.paymentSettings) {
+    db.paymentSettings = initialPaymentSettings
+  }
+  db.paymentSettings = {
+    ...db.paymentSettings,
+    ...settings,
+    methods: settings.methods || db.paymentSettings.methods,
+  }
+  saveDb(db)
+  logAdminAction(actorEmail, 'payment_settings_updated', 'payment_settings', 'paymentSettings', settings)
+  return db.paymentSettings
+}
+
+export async function savePaymentMethod(
+  method: PaymentMethodConfig,
+  actorEmail: string = 'admin'
+): Promise<PaymentMethodConfig> {
+  const db = ensureDb()
+  if (!db.paymentSettings) {
+    db.paymentSettings = { ...initialPaymentSettings }
+  }
+  const idx = db.paymentSettings.methods.findIndex((m) => m.id === method.id)
+  if (idx >= 0) {
+    db.paymentSettings.methods[idx] = method
+  } else {
+    // Determine sortOrder if not provided
+    if (!method.sortOrder) {
+      method.sortOrder = db.paymentSettings.methods.length + 1
+    }
+    db.paymentSettings.methods.push(method)
+  }
+  // If this method is set as default, unset others
+  if (method.isDefault) {
+    db.paymentSettings.defaultMethodId = method.id
+    db.paymentSettings.methods.forEach((m) => {
+      if (m.id !== method.id) m.isDefault = false
+    })
+  }
+  saveDb(db)
+  logAdminAction(actorEmail, 'payment_method_saved', 'payment_method', method.id, {
+    name: method.name,
+    enabled: method.enabled,
+    providerType: method.providerType,
+  })
+  return method
+}
+
+export async function deletePaymentMethod(
+  id: string,
+  actorEmail: string = 'admin'
+): Promise<boolean> {
+  const db = ensureDb()
+  if (!db.paymentSettings) return false
+  const initialLength = db.paymentSettings.methods.length
+  db.paymentSettings.methods = db.paymentSettings.methods.filter((m) => m.id !== id)
+  if (db.paymentSettings.methods.length !== initialLength) {
+    // If deleted method was default, set first remaining as default
+    if (db.paymentSettings.defaultMethodId === id && db.paymentSettings.methods.length > 0) {
+      db.paymentSettings.defaultMethodId = db.paymentSettings.methods[0].id
+      db.paymentSettings.methods[0].isDefault = true
+    }
+    saveDb(db)
+    logAdminAction(actorEmail, 'payment_method_deleted', 'payment_method', id)
+    return true
+  }
+  return false
+}
+
+export async function reorderPaymentMethods(
+  orderedIds: string[],
+  actorEmail: string = 'admin'
+): Promise<PaymentMethodConfig[]> {
+  const db = ensureDb()
+  if (!db.paymentSettings) {
+    db.paymentSettings = initialPaymentSettings
+  }
+  const methodMap = new Map(db.paymentSettings.methods.map((m) => [m.id, m]))
+  const newMethods: PaymentMethodConfig[] = []
+
+  orderedIds.forEach((id, index) => {
+    const method = methodMap.get(id)
+    if (method) {
+      method.sortOrder = index + 1
+      newMethods.push(method)
+      methodMap.delete(id)
+    }
+  })
+
+  // Append any methods not in orderedIds list
+  methodMap.forEach((method) => {
+    method.sortOrder = newMethods.length + 1
+    newMethods.push(method)
+  })
+
+  db.paymentSettings.methods = newMethods
+  saveDb(db)
+  logAdminAction(actorEmail, 'payment_methods_reordered', 'payment_settings', 'methods', { count: newMethods.length })
+  return db.paymentSettings.methods
 }
 
 export async function getOrdersByCustomerEmail(email: string): Promise<Order[]> {
