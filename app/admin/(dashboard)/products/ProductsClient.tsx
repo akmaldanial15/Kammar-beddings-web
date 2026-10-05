@@ -1,6 +1,6 @@
 'use client'
 
-import React, { useState, useEffect } from 'react'
+import React, { useState, useEffect, useRef } from 'react'
 import { createPortal } from 'react-dom'
 import { Product, Category, ProductVariant, ProductImage } from '@/types'
 import { formatMYR } from '@/lib/utils/format'
@@ -31,6 +31,8 @@ import {
   Info,
   ChevronLeft,
   ChevronRight,
+  ChevronDown,
+  Palette,
   ZoomIn,
   Maximize2,
   HelpCircle,
@@ -116,10 +118,28 @@ export function ProductsClient({ initialProducts, categories }: ProductsClientPr
   const [activeTab, setActiveTab] = useState<TabType>('general')
   const [showAdminTips, setShowAdminTips] = useState(true)
   const [copiedSlug, setCopiedSlug] = useState(false)
+  const [catDropdownOpen, setCatDropdownOpen] = useState(false)
+  const [typeDropdownOpen, setTypeDropdownOpen] = useState(false)
+  const catDropdownRef = useRef<HTMLDivElement>(null)
+  const typeDropdownRef = useRef<HTMLDivElement>(null)
   const [newFeatureText, setNewFeatureText] = useState('')
   const [newImageUrl, setNewImageUrl] = useState('')
   const [newImageAlt, setNewImageAlt] = useState('')
   const [filterLowStockOnly, setFilterLowStockOnly] = useState(false)
+
+  // Close custom dropdowns on outside click
+  useEffect(() => {
+    const handleClickOutside = (e: MouseEvent) => {
+      if (catDropdownRef.current && !catDropdownRef.current.contains(e.target as Node)) {
+        setCatDropdownOpen(false)
+      }
+      if (typeDropdownRef.current && !typeDropdownRef.current.contains(e.target as Node)) {
+        setTypeDropdownOpen(false)
+      }
+    }
+    document.addEventListener('mousedown', handleClickOutside)
+    return () => document.removeEventListener('mousedown', handleClickOutside)
+  }, [])
 
   // Filtered list
   const filtered = products.filter((p) => {
@@ -415,6 +435,114 @@ export function ProductsClient({ initialProducts, categories }: ProductsClientPr
     ''
 
   const currentCategory = categories.find((c) => c.id === editingProduct?.categoryId)
+
+  const getCategoryMeta = (catName?: string) => {
+    const n = (catName || '').toLowerCase()
+    if (n.includes('mattress') || n.includes('tilam')) {
+      return {
+        icon: BedDouble,
+        iconColor: 'text-amber-800 bg-amber-100 border-amber-300',
+        badgeText: 'Koleksi Tilam Utama',
+        desc: 'Koleksi tilam getah asli organik & hybrid luxury',
+        short: 'Tilam',
+      }
+    }
+    if (n.includes('pillow') || n.includes('bantal')) {
+      return {
+        icon: Sparkles,
+        iconColor: 'text-purple-800 bg-purple-100 border-purple-300',
+        badgeText: 'Bantal Ergonomik',
+        desc: 'Bantal kontur getah asli & mikrofiber leher',
+        short: 'Bantal',
+      }
+    }
+    if (n.includes('topper') || n.includes('protect')) {
+      return {
+        icon: Layers,
+        iconColor: 'text-blue-800 bg-blue-100 border-blue-300',
+        badgeText: 'Lapisan & Pelindung',
+        desc: 'Lapisan empuk tilam & pelindung kalis air',
+        short: 'Topper',
+      }
+    }
+    if (n.includes('bedframe') || n.includes('katil') || n.includes('frame')) {
+      return {
+        icon: Package,
+        iconColor: 'text-emerald-800 bg-emerald-100 border-emerald-300',
+        badgeText: 'Rangka Katil Mewah',
+        desc: 'Rangka katil kayu padu & upholsteri baldu',
+        short: 'Katil',
+      }
+    }
+    if (n.includes('linen') || n.includes('bedding') || n.includes('cadar')) {
+      return {
+        icon: Palette,
+        iconColor: 'text-rose-800 bg-rose-100 border-rose-300',
+        badgeText: 'Cadar Tencel & Tekstil',
+        desc: 'Cadar tencel organik, sarung duvet & bantal',
+        short: 'Linen',
+      }
+    }
+    if (n.includes('bundle') || n.includes('offer')) {
+      return {
+        icon: Tag,
+        iconColor: 'text-gold-dark bg-gold/20 border-gold/40',
+        badgeText: 'Pakej Kombo & Promosi',
+        desc: 'Pakej kombo jimat & promosi khas KAMAAR',
+        short: 'Kombo',
+      }
+    }
+    return {
+      icon: Compass,
+      iconColor: 'text-forest bg-forest/10 border-forest/20',
+      badgeText: 'Koleksi Tambahan',
+      desc: 'Kategori navigasi kedai online',
+      short: catName || 'Koleksi',
+    }
+  }
+
+  const productTypesList = [
+    {
+      type: 'mattress' as const,
+      name: 'Tilam (Mattress)',
+      badge: 'Format Lengkap ⭐',
+      desc: 'Graf ketegasan 1-10, waranti kilang 10-12 tahun & percubaan 100 malam.',
+      icon: BedDouble,
+      color: 'text-amber-800 bg-amber-100 border-amber-300',
+    },
+    {
+      type: 'pillow' as const,
+      name: 'Bantal (Pillow)',
+      badge: 'Aksesori Tidur',
+      desc: 'Format bantal getah asli ergonomik, sokongan servikal & sarung tencel.',
+      icon: Sparkles,
+      color: 'text-purple-800 bg-purple-100 border-purple-300',
+    },
+    {
+      type: 'topper' as const,
+      name: 'Topper & Pelindung (Topper)',
+      badge: 'Lapisan Tilam',
+      desc: 'Format lapisan getah asli tambahan & pelindung kalis air (waterproof).',
+      icon: Layers,
+      color: 'text-blue-800 bg-blue-100 border-blue-300',
+    },
+    {
+      type: 'bedframe' as const,
+      name: 'Rangka Katil (Bedframe)',
+      badge: 'Perabot Bilik',
+      desc: 'Format rangka katil kayu padu, reka bentuk kepala katil & baldu artisan.',
+      icon: Package,
+      color: 'text-emerald-800 bg-emerald-100 border-emerald-300',
+    },
+    {
+      type: 'bedding' as const,
+      name: 'Cadar & Linen (Bed Linen)',
+      badge: 'Tekstil Bilik',
+      desc: 'Format tekstil organik (cadar getah sekeliling, sarung bantal & duvet).',
+      icon: Palette,
+      color: 'text-rose-800 bg-rose-100 border-rose-300',
+    },
+  ]
 
   return (
     <div className="space-y-5 md:space-y-6 max-w-full font-sans">
@@ -1508,7 +1636,7 @@ export function ProductsClient({ initialProducts, categories }: ProductsClientPr
                     </div>
                   </div>
 
-                  {/* SEKSYEN 3: KATEGORI vs JENIS PRODUK (COMPARISON CARD) */}
+                  {/* SEKSYEN 3: KATEGORI vs JENIS PRODUK (LUXURY INTERACTIVE SELECTORS) */}
                   <div className="p-4 sm:p-5 rounded-2xl bg-cream/30 border border-borderLight space-y-3">
                     <div className="flex items-center space-x-2">
                       <span className="text-xs font-bold text-forest-dark uppercase tracking-wider">
@@ -1520,63 +1648,337 @@ export function ProductsClient({ initialProducts, categories }: ProductsClientPr
                     </div>
 
                     <div className="grid grid-cols-1 md:grid-cols-2 gap-4">
-                      {/* Kategori Produk */}
-                      <div className="p-3.5 bg-warmwhite rounded-xl border border-borderLight space-y-2">
+                      {/* 1. Kategori Navigasi Kedai */}
+                      <div
+                        className="p-4 bg-warmwhite rounded-2xl border border-borderLight shadow-2xs space-y-3 relative"
+                        ref={catDropdownRef}
+                      >
                         <div className="flex items-center justify-between">
-                          <label className="text-xs font-bold text-forest-dark">
-                            1. Kategori Navigasi Kedai
-                          </label>
+                          <div>
+                            <label className="text-xs font-bold text-forest-dark block">
+                              1. Kategori Navigasi Kedai
+                            </label>
+                            <span className="text-[10.5px] text-charcoal-muted">
+                              Menu utama & halaman koleksi web
+                            </span>
+                          </div>
                           <span className="text-[10px] font-bold bg-cream px-2 py-0.5 rounded text-charcoal-muted border border-borderLight/60">
-                            📂 Menu & Koleksi Web
+                            📂 Menu & Koleksi
                           </span>
                         </div>
-                        <p className="text-[11px] text-charcoal-muted leading-relaxed">
-                          Menentukan di mana produk ini dikelaskan dalam <strong>Menu Utama</strong> dan penapis katalog (contoh: Mattresses, Bedding, Pillows).
-                        </p>
-                        <select
-                          value={editingProduct.categoryId}
-                          onChange={(e) =>
-                            setEditingProduct({ ...editingProduct, categoryId: e.target.value })
-                          }
-                          className="w-full px-3.5 py-2.5 text-xs rounded-xl bg-cream/40 border border-borderLight focus:outline-none focus:ring-2 focus:ring-gold/30 focus:border-gold font-medium"
-                        >
-                          {categories.map((c) => (
-                            <option key={c.id} value={c.id}>
-                              {c.name}
-                            </option>
-                          ))}
-                        </select>
+
+                        {/* Luxury Custom Dropdown Trigger */}
+                        <div className="relative">
+                          {(() => {
+                            const selectedCat =
+                              categories.find((c) => c.id === editingProduct.categoryId) || categories[0]
+                            const meta = getCategoryMeta(selectedCat?.name)
+                            const IconComp = meta.icon
+
+                            return (
+                              <div>
+                                <button
+                                  type="button"
+                                  onClick={() => {
+                                    setCatDropdownOpen(!catDropdownOpen)
+                                    setTypeDropdownOpen(false)
+                                  }}
+                                  className={`w-full p-2.5 sm:p-3 rounded-xl border text-left flex items-center justify-between transition-all cursor-pointer ${
+                                    catDropdownOpen
+                                      ? 'bg-cream/60 border-gold ring-2 ring-gold/25 shadow-xs'
+                                      : 'bg-warmwhite border-borderLight hover:border-gold/60 hover:bg-cream/30'
+                                  }`}
+                                >
+                                  <div className="flex items-center space-x-3 min-w-0">
+                                    <div
+                                      className={`w-9 h-9 rounded-xl flex items-center justify-center flex-shrink-0 border ${meta.iconColor}`}
+                                    >
+                                      <IconComp className="w-4 h-4" />
+                                    </div>
+                                    <div className="min-w-0">
+                                      <span className="text-xs font-bold text-forest-dark block truncate">
+                                        {selectedCat?.name || 'Pilih Kategori'}
+                                      </span>
+                                      <span className="text-[10.5px] text-charcoal-muted block truncate">
+                                        {meta.badgeText} &bull; /collections/{selectedCat?.slug}
+                                      </span>
+                                    </div>
+                                  </div>
+
+                                  <div className="flex items-center space-x-1.5 flex-shrink-0 ml-2">
+                                    <span className="text-[10px] font-bold text-gold-dark bg-gold/15 px-2 py-0.5 rounded">
+                                      Tukar
+                                    </span>
+                                    <ChevronDown
+                                      className={`w-4 h-4 text-charcoal-muted transition-transform duration-200 ${
+                                        catDropdownOpen ? 'transform rotate-180 text-forest' : ''
+                                      }`}
+                                    />
+                                  </div>
+                                </button>
+
+                                {/* Custom Popover Dropdown Menu */}
+                                {catDropdownOpen && (
+                                  <div className="absolute left-0 right-0 top-full mt-1.5 z-50 bg-warmwhite rounded-2xl border border-gold/40 shadow-2xl p-2 space-y-1 animate-scale-in max-h-72 overflow-y-auto">
+                                    <div className="px-2.5 py-1 text-[10px] font-bold uppercase tracking-wider text-charcoal-muted border-b border-borderLight/60 mb-1 flex items-center justify-between">
+                                      <span>Pilih Kategori Paparan Kedai</span>
+                                      <span className="text-forest font-mono">{categories.length} Kategori</span>
+                                    </div>
+
+                                    {categories.map((c) => {
+                                      const itemMeta = getCategoryMeta(c.name)
+                                      const ItemIcon = itemMeta.icon
+                                      const isSelected = c.id === editingProduct.categoryId
+
+                                      return (
+                                        <button
+                                          key={c.id}
+                                          type="button"
+                                          onClick={() => {
+                                            setEditingProduct({ ...editingProduct, categoryId: c.id })
+                                            setCatDropdownOpen(false)
+                                          }}
+                                          className={`w-full p-2.5 rounded-xl text-left flex items-center justify-between transition-colors cursor-pointer ${
+                                            isSelected
+                                              ? 'bg-cream/80 border border-gold/40 text-forest-dark font-bold'
+                                              : 'hover:bg-cream/40 text-charcoal border border-transparent'
+                                          }`}
+                                        >
+                                          <div className="flex items-center space-x-2.5 min-w-0">
+                                            <div
+                                              className={`w-7 h-7 rounded-lg flex items-center justify-center flex-shrink-0 border ${itemMeta.iconColor}`}
+                                            >
+                                              <ItemIcon className="w-3.5 h-3.5" />
+                                            </div>
+                                            <div className="min-w-0">
+                                              <span className="text-xs block truncate font-bold text-forest-dark">
+                                                {c.name}
+                                              </span>
+                                              <span className="text-[10px] text-charcoal-muted block truncate">
+                                                {itemMeta.desc}
+                                              </span>
+                                            </div>
+                                          </div>
+
+                                          {isSelected ? (
+                                            <span className="w-5 h-5 rounded-full bg-emerald-100 text-emerald-700 flex items-center justify-center flex-shrink-0 ml-2">
+                                              <Check className="w-3 h-3" />
+                                            </span>
+                                          ) : (
+                                            <span className="text-[10px] font-mono text-charcoal-muted/60 flex-shrink-0 ml-2">
+                                              /{c.slug}
+                                            </span>
+                                          )}
+                                        </button>
+                                      )
+                                    })}
+                                  </div>
+                                )}
+                              </div>
+                            )
+                          })()}
+                        </div>
+
+                        {/* Quick 1-Click Category Pills */}
+                        <div className="pt-0.5">
+                          <span className="text-[10px] font-bold text-charcoal-muted uppercase tracking-wider block mb-1.5">
+                            Pilihan Pantas (1-Klik):
+                          </span>
+                          <div className="flex flex-wrap gap-1.5">
+                            {categories.slice(0, 5).map((c) => {
+                              const meta = getCategoryMeta(c.name)
+                              const isSelected = c.id === editingProduct.categoryId
+                              const PillIcon = meta.icon
+
+                              return (
+                                <button
+                                  key={c.id}
+                                  type="button"
+                                  onClick={() =>
+                                    setEditingProduct({ ...editingProduct, categoryId: c.id })
+                                  }
+                                  className={`inline-flex items-center space-x-1 px-2.5 py-1 rounded-lg text-[11px] font-medium transition-all cursor-pointer ${
+                                    isSelected
+                                      ? 'bg-forest text-warmwhite font-bold shadow-xs'
+                                      : 'bg-cream/60 border border-borderLight text-charcoal hover:border-gold hover:text-forest'
+                                  }`}
+                                >
+                                  <PillIcon className="w-3 h-3" />
+                                  <span>{c.name}</span>
+                                </button>
+                              )
+                            })}
+                          </div>
+                        </div>
                       </div>
 
-                      {/* Jenis Produk */}
-                      <div className="p-3.5 bg-warmwhite rounded-xl border border-borderLight space-y-2">
+                      {/* 2. Jenis Produk (Product Type) */}
+                      <div
+                        className="p-4 bg-warmwhite rounded-2xl border border-borderLight shadow-2xs space-y-3 relative"
+                        ref={typeDropdownRef}
+                      >
                         <div className="flex items-center justify-between">
-                          <label className="text-xs font-bold text-forest-dark">
-                            2. Jenis Produk (Product Type)
-                          </label>
+                          <div>
+                            <label className="text-xs font-bold text-forest-dark block">
+                              2. Jenis Produk (Product Type)
+                            </label>
+                            <span className="text-[10.5px] text-charcoal-muted">
+                              Format spesifikasi & atribut teknikal
+                            </span>
+                          </div>
                           <span className="text-[10px] font-bold bg-cream px-2 py-0.5 rounded text-charcoal-muted border border-borderLight/60">
-                            ⚙️ Ciri Format Spesifikasi
+                            ⚙️ Ciri Format
                           </span>
                         </div>
-                        <p className="text-[11px] text-charcoal-muted leading-relaxed">
-                          Menentukan format teknikal yang diaktifkan (contoh: jika <strong>Tilam</strong>, sistem aktifkan skala ketegasan 1-10 & jaminan malam percubaan).
-                        </p>
-                        <select
-                          value={editingProduct.productType}
-                          onChange={(e) =>
-                            setEditingProduct({
-                              ...editingProduct,
-                              productType: e.target.value as any,
-                            })
-                          }
-                          className="w-full px-3.5 py-2.5 text-xs rounded-xl bg-cream/40 border border-borderLight focus:outline-none focus:ring-2 focus:ring-gold/30 focus:border-gold font-medium"
-                        >
-                          <option value="mattress">Tilam (Mattress) — Ada Skala Ketegasan & Waranti</option>
-                          <option value="pillow">Bantal (Pillow) — Format Aksesori Tidur</option>
-                          <option value="topper">Topper & Pelindung — Format Lapisan Tilam</option>
-                          <option value="bedframe">Rangka Katil (Bedframe) — Format Perabot Bilik</option>
-                          <option value="bedding">Cadar & Linen (Bed Linen) — Format Tekstil</option>
-                        </select>
+
+                        {/* Luxury Custom Dropdown Trigger */}
+                        <div className="relative">
+                          {(() => {
+                            const currentTypeObj =
+                              productTypesList.find((t) => t.type === editingProduct.productType) ||
+                              productTypesList[0]
+                            const IconComp = currentTypeObj.icon
+
+                            return (
+                              <div>
+                                <button
+                                  type="button"
+                                  onClick={() => {
+                                    setTypeDropdownOpen(!typeDropdownOpen)
+                                    setCatDropdownOpen(false)
+                                  }}
+                                  className={`w-full p-2.5 sm:p-3 rounded-xl border text-left flex items-center justify-between transition-all cursor-pointer ${
+                                    typeDropdownOpen
+                                      ? 'bg-cream/60 border-gold ring-2 ring-gold/25 shadow-xs'
+                                      : 'bg-warmwhite border-borderLight hover:border-gold/60 hover:bg-cream/30'
+                                  }`}
+                                >
+                                  <div className="flex items-center space-x-3 min-w-0">
+                                    <div
+                                      className={`w-9 h-9 rounded-xl flex items-center justify-center flex-shrink-0 border ${currentTypeObj.color}`}
+                                    >
+                                      <IconComp className="w-4 h-4" />
+                                    </div>
+                                    <div className="min-w-0">
+                                      <span className="text-xs font-bold text-forest-dark block truncate">
+                                        {currentTypeObj.name}
+                                      </span>
+                                      <span className="text-[10.5px] text-charcoal-muted block truncate">
+                                        {currentTypeObj.badge} &bull; {currentTypeObj.desc.slice(0, 36)}...
+                                      </span>
+                                    </div>
+                                  </div>
+
+                                  <div className="flex items-center space-x-1.5 flex-shrink-0 ml-2">
+                                    <span className="text-[10px] font-bold text-gold-dark bg-gold/15 px-2 py-0.5 rounded">
+                                      Tukar
+                                    </span>
+                                    <ChevronDown
+                                      className={`w-4 h-4 text-charcoal-muted transition-transform duration-200 ${
+                                        typeDropdownOpen ? 'transform rotate-180 text-forest' : ''
+                                      }`}
+                                    />
+                                  </div>
+                                </button>
+
+                                {/* Custom Popover Dropdown Menu */}
+                                {typeDropdownOpen && (
+                                  <div className="absolute left-0 right-0 top-full mt-1.5 z-50 bg-warmwhite rounded-2xl border border-gold/40 shadow-2xl p-2 space-y-1 animate-scale-in">
+                                    <div className="px-2.5 py-1 text-[10px] font-bold uppercase tracking-wider text-charcoal-muted border-b border-borderLight/60 mb-1 flex items-center justify-between">
+                                      <span>Pilih Format Spesifikasi Produk</span>
+                                      <span className="text-forest font-mono">{productTypesList.length} Jenis</span>
+                                    </div>
+
+                                    {productTypesList.map((t) => {
+                                      const ItemIcon = t.icon
+                                      const isSelected = t.type === editingProduct.productType
+
+                                      return (
+                                        <button
+                                          key={t.type}
+                                          type="button"
+                                          onClick={() => {
+                                            setEditingProduct({
+                                              ...editingProduct,
+                                              productType: t.type as any,
+                                            })
+                                            setTypeDropdownOpen(false)
+                                          }}
+                                          className={`w-full p-2.5 rounded-xl text-left flex items-center justify-between transition-colors cursor-pointer ${
+                                            isSelected
+                                              ? 'bg-cream/80 border border-gold/40 text-forest-dark font-bold'
+                                              : 'hover:bg-cream/40 text-charcoal border border-transparent'
+                                          }`}
+                                        >
+                                          <div className="flex items-center space-x-3 min-w-0">
+                                            <div
+                                              className={`w-8 h-8 rounded-lg flex items-center justify-center flex-shrink-0 border ${t.color}`}
+                                            >
+                                              <ItemIcon className="w-4 h-4" />
+                                            </div>
+                                            <div className="min-w-0">
+                                              <div className="flex items-center gap-1.5">
+                                                <span className="text-xs font-bold text-forest-dark">
+                                                  {t.name}
+                                                </span>
+                                                <span className="text-[9.5px] font-bold bg-cream px-1.5 py-0.5 rounded border border-borderLight/60 text-charcoal-muted">
+                                                  {t.badge}
+                                                </span>
+                                              </div>
+                                              <span className="text-[10px] text-charcoal-muted block truncate mt-0.5">
+                                                {t.desc}
+                                              </span>
+                                            </div>
+                                          </div>
+
+                                          {isSelected && (
+                                            <span className="w-5 h-5 rounded-full bg-emerald-100 text-emerald-700 flex items-center justify-center flex-shrink-0 ml-2">
+                                              <Check className="w-3 h-3" />
+                                            </span>
+                                          )}
+                                        </button>
+                                      )
+                                    })}
+                                  </div>
+                                )}
+                              </div>
+                            )
+                          })()}
+                        </div>
+
+                        {/* Quick 1-Click Product Type Pills */}
+                        <div className="pt-0.5">
+                          <span className="text-[10px] font-bold text-charcoal-muted uppercase tracking-wider block mb-1.5">
+                            Pilihan Pantas (1-Klik):
+                          </span>
+                          <div className="flex flex-wrap gap-1.5">
+                            {productTypesList.map((t) => {
+                              const isSelected = t.type === editingProduct.productType
+                              const PillIcon = t.icon
+
+                              return (
+                                <button
+                                  key={t.type}
+                                  type="button"
+                                  onClick={() =>
+                                    setEditingProduct({
+                                      ...editingProduct,
+                                      productType: t.type as any,
+                                    })
+                                  }
+                                  className={`inline-flex items-center space-x-1 px-2.5 py-1 rounded-lg text-[11px] font-medium transition-all cursor-pointer ${
+                                    isSelected
+                                      ? 'bg-forest text-warmwhite font-bold shadow-xs'
+                                      : 'bg-cream/60 border border-borderLight text-charcoal hover:border-gold hover:text-forest'
+                                  }`}
+                                >
+                                  <PillIcon className="w-3 h-3" />
+                                  <span>{t.name.split(' ')[0]}</span>
+                                </button>
+                              )
+                            })}
+                          </div>
+                        </div>
                       </div>
                     </div>
                   </div>
