@@ -1412,31 +1412,40 @@ export function ProductsClient({ initialProducts, categories }: ProductsClientPr
               </div>
 
               <div className="flex items-center space-x-2 sm:space-x-3">
+                {/* Live URL Link Pill in Header */}
+                <div className="hidden md:flex items-center space-x-2 bg-warmwhite/10 px-2.5 py-1.5 rounded-lg border border-warmwhite/15 text-xs text-warmwhite">
+                  <span className="text-[10.5px] text-warmwhite/70 font-mono">/products/{editingProduct.slug}</span>
+                  <button
+                    type="button"
+                    onClick={() => {
+                      if (typeof window !== 'undefined') {
+                        navigator.clipboard.writeText(`${window.location.origin}/products/${editingProduct.slug}`)
+                        setCopiedSlug(true)
+                        setTimeout(() => setCopiedSlug(false), 2000)
+                      }
+                    }}
+                    className="text-gold hover:text-gold-light transition-colors"
+                    title="Salin pautan"
+                  >
+                    {copiedSlug ? (
+                      <span className="text-emerald-400 flex items-center gap-0.5 text-[10px]">
+                        <Check className="w-3 h-3" /> Disalin
+                      </span>
+                    ) : (
+                      <Copy className="w-3 h-3" />
+                    )}
+                  </button>
+                </div>
+
                 <Link
                   href={`/products/${editingProduct.slug}`}
                   target="_blank"
-                  className="hidden sm:inline-flex items-center space-x-1.5 px-3 py-1.5 rounded-lg bg-warmwhite/10 hover:bg-warmwhite/20 border border-warmwhite/15 text-xs font-semibold text-warmwhite transition-colors"
+                  className="inline-flex items-center space-x-1.5 px-3 py-1.5 rounded-lg bg-warmwhite/10 hover:bg-warmwhite/20 border border-warmwhite/15 text-xs font-semibold text-warmwhite transition-colors"
                   title="Buka paparan produk sebenar di kedai"
                 >
                   <span>Lihat di Kedai</span>
                   <ExternalLink className="w-3.5 h-3.5 text-gold" />
                 </Link>
-
-                <button
-                  type="button"
-                  onClick={() => setShowAdminTips(!showAdminTips)}
-                  className={`inline-flex items-center space-x-1.5 px-2.5 py-1.5 rounded-lg border text-xs font-medium transition-colors ${
-                    showAdminTips
-                      ? 'bg-gold/20 border-gold/40 text-gold hover:bg-gold/30'
-                      : 'bg-warmwhite/5 border-warmwhite/15 text-warmwhite/70 hover:bg-warmwhite/10'
-                  }`}
-                  title="Togol panduan mesra admin"
-                >
-                  <Lightbulb className="w-3.5 h-3.5" />
-                  <span className="hidden md:inline">
-                    {showAdminTips ? 'Panduan: Hidup' : 'Panduan: Padam'}
-                  </span>
-                </button>
 
                 <button
                   type="button"
@@ -1448,60 +1457,6 @@ export function ProductsClient({ initialProducts, categories }: ProductsClientPr
                 </button>
               </div>
             </div>
-
-            {/* Beginner Guide Banner (Togglable) */}
-            {showAdminTips && (
-              <div className="bg-gradient-to-r from-cream via-gold/10 to-cream border-b border-gold/20 px-4 py-2.5 sm:px-6 flex flex-col sm:flex-row sm:items-center justify-between gap-2 text-xs">
-                <div className="flex items-center space-x-2 text-forest-dark min-w-0">
-                  <span className="w-6 h-6 rounded-lg bg-gold/30 flex items-center justify-center flex-shrink-0 text-gold-dark font-bold">
-                    💡
-                  </span>
-                  <div className="min-w-0">
-                    <p className="font-bold text-[11.5px] text-forest-dark leading-tight">
-                      Panduan Mesra Admin Baru (100% Faham & Jelas)
-                    </p>
-                    <p className="text-[10.5px] text-charcoal-muted truncate">
-                      Setiap ruangan ada lencana{' '}
-                      <span className="font-bold text-forest bg-warmwhite px-1.5 py-0.5 rounded border border-borderLight/60">
-                        📍 Di Mana Dipaparkan?
-                      </span>{' '}
-                      supaya anda tahu tepat fungsinya di hadapan pembeli.
-                    </p>
-                  </div>
-                </div>
-
-                {/* Live URL Pill */}
-                <div className="flex items-center space-x-2 bg-warmwhite px-3 py-1 rounded-xl border border-gold/30 shadow-2xs flex-shrink-0 self-start sm:self-auto">
-                  <span className="text-[10px] font-bold text-charcoal-muted uppercase">Pautan Web:</span>
-                  <span className="text-[11px] font-mono text-forest font-bold truncate max-w-[200px]">
-                    /products/{editingProduct.slug}
-                  </span>
-                  <button
-                    type="button"
-                    onClick={() => {
-                      if (typeof window !== 'undefined') {
-                        const url = `${window.location.origin}/products/${editingProduct.slug}`
-                        navigator.clipboard.writeText(url)
-                        setCopiedSlug(true)
-                        setTimeout(() => setCopiedSlug(false), 2000)
-                      }
-                    }}
-                    className="text-[10px] font-bold text-gold-dark hover:underline flex items-center gap-1"
-                    title="Salin pautan penuh ke clipboard"
-                  >
-                    {copiedSlug ? (
-                      <span className="text-emerald-600 flex items-center gap-0.5">
-                        <Check className="w-3 h-3" /> Disalin!
-                      </span>
-                    ) : (
-                      <span className="flex items-center gap-0.5">
-                        <Copy className="w-3 h-3" /> Salin
-                      </span>
-                    )}
-                  </button>
-                </div>
-              </div>
-            )}
 
             {/* Interactive Tab Navigation Bar */}
             <div className="bg-cream/70 border-b border-borderLight px-3 sm:px-6 flex items-center space-x-2 overflow-x-auto flex-shrink-0 py-2">
@@ -1587,129 +1542,89 @@ export function ProductsClient({ initialProducts, categories }: ProductsClientPr
               {/* ============================================================= */}
               {activeTab === 'general' && (
                 <div className="space-y-6 animate-fade-in">
-                  {/* SEKSYEN 1: STATUS PAPARAN */}
-                  <div className="p-4 sm:p-5 rounded-2xl bg-cream/30 border border-borderLight space-y-3">
-                    <div className="flex flex-col sm:flex-row sm:items-center justify-between gap-1.5">
-                      <div>
-                        <div className="flex items-center space-x-2">
-                          <label className="text-xs font-bold text-forest-dark uppercase tracking-wider">
-                            Status Paparan Produk di Kedai
-                          </label>
-                          <span className="text-[10px] font-bold bg-forest/10 text-forest px-2 py-0.5 rounded-full">
-                            📍 Di Mana Ia Berfungsi?
-                          </span>
-                        </div>
-                        <p className="text-[11px] text-charcoal-muted mt-0.5">
-                          Mengawal sama ada produk ini boleh dilihat dan dibeli oleh pelanggan di kedai online KAMAAR.
-                        </p>
-                      </div>
-                    </div>
-
-                    <div className="grid grid-cols-1 sm:grid-cols-3 gap-3 pt-1">
-                      {/* Published */}
+                  {/* Status Paparan Produk */}
+                  <div className="p-4 rounded-2xl bg-warmwhite border border-borderLight shadow-2xs space-y-2">
+                    <label className="text-xs font-bold text-forest-dark uppercase tracking-wider block">
+                      Status Paparan Produk di Kedai
+                    </label>
+                    <div className="grid grid-cols-1 sm:grid-cols-3 gap-2.5">
                       <button
                         type="button"
                         onClick={() =>
                           setEditingProduct({ ...editingProduct, status: 'published' })
                         }
-                        className={`p-3.5 rounded-2xl border text-left transition-all ${
+                        className={`p-3 rounded-xl border text-left transition-all flex items-center justify-between ${
                           editingProduct.status === 'published'
-                            ? 'bg-emerald-50/90 border-emerald-500 ring-2 ring-emerald-500/25 shadow-xs'
-                            : 'bg-warmwhite border-borderLight hover:bg-cream/40'
+                            ? 'bg-emerald-50/90 border-emerald-500 ring-2 ring-emerald-500/20 shadow-xs'
+                            : 'bg-cream/30 border-borderLight hover:bg-cream/60'
                         }`}
                       >
-                        <div className="flex items-center justify-between mb-1">
-                          <span className="text-xs font-bold text-emerald-800 flex items-center space-x-1.5">
-                            <span className="w-2.5 h-2.5 rounded-full bg-emerald-500 animate-pulse" />
-                            <span>Diterbitkan (Live di Web)</span>
-                          </span>
-                          {editingProduct.status === 'published' && (
-                            <Check className="w-4 h-4 text-emerald-600" />
-                          )}
+                        <div className="flex items-center space-x-2.5">
+                          <span className="w-2.5 h-2.5 rounded-full bg-emerald-500 animate-pulse flex-shrink-0" />
+                          <div>
+                            <span className="text-xs font-bold text-forest-dark block">Diterbitkan (Live)</span>
+                            <span className="text-[10.5px] text-charcoal-muted">Aktif &amp; boleh dibeli di web</span>
+                          </div>
                         </div>
-                        <div className="text-[11px] text-emerald-700/80 font-medium mb-1">
-                          🟢 PRODUK AKTIF & BOLEH DIBELI
-                        </div>
-                        <p className="text-[11px] text-charcoal-muted leading-relaxed">
-                          Pelanggan boleh melihat produk ini di katalog, membuat carian Google, dan menekan butang &ldquo;Beli Sekarang&rdquo;.
-                        </p>
+                        {editingProduct.status === 'published' && (
+                          <Check className="w-4 h-4 text-emerald-600 flex-shrink-0" />
+                        )}
                       </button>
 
-                      {/* Draft */}
                       <button
                         type="button"
                         onClick={() =>
                           setEditingProduct({ ...editingProduct, status: 'draft' })
                         }
-                        className={`p-3.5 rounded-2xl border text-left transition-all ${
+                        className={`p-3 rounded-xl border text-left transition-all flex items-center justify-between ${
                           editingProduct.status === 'draft'
-                            ? 'bg-amber-50/90 border-amber-500 ring-2 ring-amber-500/25 shadow-xs'
-                            : 'bg-warmwhite border-borderLight hover:bg-cream/40'
+                            ? 'bg-amber-50/90 border-amber-500 ring-2 ring-amber-500/20 shadow-xs'
+                            : 'bg-cream/30 border-borderLight hover:bg-cream/60'
                         }`}
                       >
-                        <div className="flex items-center justify-between mb-1">
-                          <span className="text-xs font-bold text-amber-800 flex items-center space-x-1.5">
-                            <span className="w-2.5 h-2.5 rounded-full bg-amber-500" />
-                            <span>Draf (Simpanan Admin)</span>
-                          </span>
-                          {editingProduct.status === 'draft' && (
-                            <Check className="w-4 h-4 text-amber-600" />
-                          )}
+                        <div className="flex items-center space-x-2.5">
+                          <span className="w-2.5 h-2.5 rounded-full bg-amber-500 flex-shrink-0" />
+                          <div>
+                            <span className="text-xs font-bold text-forest-dark block">Draf Simpanan</span>
+                            <span className="text-[10.5px] text-charcoal-muted">Tersembunyi dari awam</span>
+                          </div>
                         </div>
-                        <div className="text-[11px] text-amber-700/80 font-medium mb-1">
-                          🟡 TERSEMBUNYI DARI ORANG AWAM
-                        </div>
-                        <p className="text-[11px] text-charcoal-muted leading-relaxed">
-                          Hanya staf admin yang login boleh melihat produk ini. Sesuai semasa anda sedang memasukkan gambar atau menunggu stok tiba.
-                        </p>
+                        {editingProduct.status === 'draft' && (
+                          <Check className="w-4 h-4 text-amber-600 flex-shrink-0" />
+                        )}
                       </button>
 
-                      {/* Archived */}
                       <button
                         type="button"
                         onClick={() =>
                           setEditingProduct({ ...editingProduct, status: 'archived' })
                         }
-                        className={`p-3.5 rounded-2xl border text-left transition-all ${
+                        className={`p-3 rounded-xl border text-left transition-all flex items-center justify-between ${
                           editingProduct.status === 'archived'
-                            ? 'bg-zinc-100 border-zinc-500 ring-2 ring-zinc-500/25 shadow-xs'
-                            : 'bg-warmwhite border-borderLight hover:bg-cream/40'
+                            ? 'bg-zinc-100 border-zinc-500 ring-2 ring-zinc-500/20 shadow-xs'
+                            : 'bg-cream/30 border-borderLight hover:bg-cream/60'
                         }`}
                       >
-                        <div className="flex items-center justify-between mb-1">
-                          <span className="text-xs font-bold text-zinc-800 flex items-center space-x-1.5">
-                            <span className="w-2.5 h-2.5 rounded-full bg-zinc-400" />
-                            <span>Diarkib (Tamat Jualan)</span>
-                          </span>
-                          {editingProduct.status === 'archived' && (
-                            <Check className="w-4 h-4 text-zinc-600" />
-                          )}
+                        <div className="flex items-center space-x-2.5">
+                          <span className="w-2.5 h-2.5 rounded-full bg-zinc-400 flex-shrink-0" />
+                          <div>
+                            <span className="text-xs font-bold text-forest-dark block">Diarkib (Lama)</span>
+                            <span className="text-[10.5px] text-charcoal-muted">Jualan telah ditamatkan</span>
+                          </div>
                         </div>
-                        <div className="text-[11px] text-zinc-600 font-medium mb-1">
-                          ⚪ JUALAN DITAMATKAN / LAMA
-                        </div>
-                        <p className="text-[11px] text-charcoal-muted leading-relaxed">
-                          Produk tidak lagi muncul di kedai, tetapi rekod dan sejarah belian lalu kekal disimpan untuk rujukan invois.
-                        </p>
+                        {editingProduct.status === 'archived' && (
+                          <Check className="w-4 h-4 text-zinc-600 flex-shrink-0" />
+                        )}
                       </button>
                     </div>
                   </div>
 
-                  {/* SEKSYEN 2: TAJUK & ALAMAT URL WEB */}
+                  {/* Nama Produk & Slug URL */}
                   <div className="grid grid-cols-1 md:grid-cols-2 gap-4">
-                    {/* Nama Penuh Produk */}
-                    <div className="p-4 rounded-2xl bg-warmwhite border border-borderLight shadow-2xs space-y-2">
-                      <div className="flex items-center justify-between">
-                        <label className="text-xs font-bold text-forest-dark uppercase tracking-wider">
-                          Nama Penuh Produk <span className="text-rose-500">*</span>
-                        </label>
-                        <span className="text-[10px] font-bold bg-amber-500/10 text-amber-800 px-2 py-0.5 rounded">
-                          📌 Tajuk Utama Pada Halaman & Kad
-                        </span>
-                      </div>
-                      <p className="text-[11px] text-charcoal-muted leading-snug">
-                        Nama rasmi produk. Ini tajuk paling besar yang dilihat oleh pelanggan di atas halaman produk, pada kad katalog kedai, resit pesanan, dan carian Google.
-                      </p>
+                    <div className="p-4 rounded-2xl bg-warmwhite border border-borderLight shadow-2xs space-y-1.5">
+                      <label className="text-xs font-bold text-forest-dark uppercase tracking-wider block">
+                        Nama Penuh Produk <span className="text-rose-500">*</span>
+                      </label>
                       <input
                         type="text"
                         required
@@ -1722,22 +1637,15 @@ export function ProductsClient({ initialProducts, categories }: ProductsClientPr
                             name,
                           })
                         }}
-                        className="w-full px-4 py-2.5 text-xs font-bold text-forest-dark rounded-xl bg-cream/40 border border-borderLight focus:outline-none focus:ring-2 focus:ring-gold/30 focus:border-gold"
+                        className="w-full px-3.5 py-2.5 text-xs font-bold text-forest-dark rounded-xl bg-cream/40 border border-borderLight focus:outline-none focus:ring-1 focus:ring-gold"
                       />
                     </div>
 
-                    {/* Slug URL Web */}
-                    <div className="p-4 rounded-2xl bg-warmwhite border border-borderLight shadow-2xs space-y-2">
+                    <div className="p-4 rounded-2xl bg-warmwhite border border-borderLight shadow-2xs space-y-1.5">
                       <div className="flex items-center justify-between">
-                        <label className="text-xs font-bold text-forest-dark uppercase tracking-wider">
+                        <label className="text-xs font-bold text-forest-dark uppercase tracking-wider block">
                           Slug URL Web <span className="text-rose-500">*</span>
                         </label>
-                        <span className="text-[10px] font-bold bg-blue-500/10 text-blue-800 px-2 py-0.5 rounded">
-                          🔗 Alamat Pautan Pelanggan
-                        </span>
-                      </div>
-                      <div className="flex items-center justify-between text-[11px] text-charcoal-muted">
-                        <span>Alamat pautan di browser (cth: kamaar.my/products/royal-heritage). Boleh kongsi di WhatsApp.</span>
                         <button
                           type="button"
                           onClick={() => {
@@ -1747,7 +1655,7 @@ export function ProductsClient({ initialProducts, categories }: ProductsClientPr
                               .replace(/(^-|-$)+/g, '')
                             setEditingProduct({ ...editingProduct, slug: generated })
                           }}
-                          className="text-[10.5px] text-forest font-bold hover:underline whitespace-nowrap ml-2"
+                          className="text-[10.5px] text-forest font-bold hover:underline whitespace-nowrap"
                         >
                           ⚡ Jana dari Nama
                         </button>
@@ -1769,40 +1677,30 @@ export function ProductsClient({ initialProducts, categories }: ProductsClientPr
                                 .replace(/(^-|-$)+/g, ''),
                             })
                           }
-                          className="w-full px-3 py-2.5 text-xs rounded-r-xl bg-cream/40 border border-borderLight font-mono focus:outline-none focus:ring-2 focus:ring-gold/30 focus:border-gold font-bold text-forest"
+                          className="w-full px-3 py-2.5 text-xs rounded-r-xl bg-cream/40 border border-borderLight font-mono focus:outline-none focus:ring-1 focus:ring-gold font-bold text-forest"
                         />
                       </div>
                     </div>
                   </div>
 
-                  {/* SEKSYEN 3: KATEGORI vs JENIS PRODUK (LUXURY INTERACTIVE SELECTORS) */}
+                  {/* SEKSYEN 3: KATEGORI vs JENIS PRODUK */}
                   <div className="p-4 sm:p-5 rounded-2xl bg-cream/30 border border-borderLight space-y-3">
-                    <div className="flex items-center space-x-2">
-                      <span className="text-xs font-bold text-forest-dark uppercase tracking-wider">
-                        Klasifikasi & Format Produk
-                      </span>
-                      <span className="text-[10px] font-bold bg-purple-500/10 text-purple-800 px-2 py-0.5 rounded">
-                        ❓ Apa Beza Kategori vs Jenis Produk?
-                      </span>
-                    </div>
+                    <span className="text-xs font-bold text-forest-dark uppercase tracking-wider block">
+                      Klasifikasi & Format Produk
+                    </span>
 
                     <div className="grid grid-cols-1 md:grid-cols-2 gap-4">
                       {/* 1. Kategori Navigasi Kedai */}
                       <div
-                        className="p-4 bg-warmwhite rounded-2xl border border-borderLight shadow-2xs space-y-3 relative"
+                        className="p-4 bg-warmwhite rounded-2xl border border-borderLight shadow-2xs space-y-2.5 relative"
                         ref={catDropdownRef}
                       >
-                        <div className="flex items-center justify-between">
-                          <div>
-                            <label className="text-xs font-bold text-forest-dark block">
-                              1. Kategori Navigasi Kedai
-                            </label>
-                            <span className="text-[10.5px] text-charcoal-muted">
-                              Menu utama & halaman koleksi web
-                            </span>
-                          </div>
-                          <span className="text-[10px] font-bold bg-cream px-2 py-0.5 rounded text-charcoal-muted border border-borderLight/60">
-                            📂 Menu & Koleksi
+                        <div>
+                          <label className="text-xs font-bold text-forest-dark block">
+                            Kategori Navigasi Kedai
+                          </label>
+                          <span className="text-[10.5px] text-charcoal-muted">
+                            Menu utama & halaman koleksi web
                           </span>
                         </div>
 
@@ -1918,55 +1816,19 @@ export function ProductsClient({ initialProducts, categories }: ProductsClientPr
                           })()}
                         </div>
 
-                        {/* Quick 1-Click Category Pills */}
-                        <div className="pt-0.5">
-                          <span className="text-[10px] font-bold text-charcoal-muted uppercase tracking-wider block mb-1.5">
-                            Pilihan Pantas (1-Klik):
-                          </span>
-                          <div className="flex flex-wrap gap-1.5">
-                            {categories.slice(0, 5).map((c) => {
-                              const meta = getCategoryMeta(c.name)
-                              const isSelected = c.id === editingProduct.categoryId
-                              const PillIcon = meta.icon
-
-                              return (
-                                <button
-                                  key={c.id}
-                                  type="button"
-                                  onClick={() =>
-                                    setEditingProduct({ ...editingProduct, categoryId: c.id })
-                                  }
-                                  className={`inline-flex items-center space-x-1 px-2.5 py-1 rounded-lg text-[11px] font-medium transition-all cursor-pointer ${
-                                    isSelected
-                                      ? 'bg-forest text-warmwhite font-bold shadow-xs'
-                                      : 'bg-cream/60 border border-borderLight text-charcoal hover:border-gold hover:text-forest'
-                                  }`}
-                                >
-                                  <PillIcon className="w-3 h-3" />
-                                  <span>{c.name}</span>
-                                </button>
-                              )
-                            })}
-                          </div>
-                        </div>
                       </div>
 
                       {/* 2. Jenis Produk (Product Type) */}
                       <div
-                        className="p-4 bg-warmwhite rounded-2xl border border-borderLight shadow-2xs space-y-3 relative"
+                        className="p-4 bg-warmwhite rounded-2xl border border-borderLight shadow-2xs space-y-2.5 relative"
                         ref={typeDropdownRef}
                       >
-                        <div className="flex items-center justify-between">
-                          <div>
-                            <label className="text-xs font-bold text-forest-dark block">
-                              2. Jenis Produk (Product Type)
-                            </label>
-                            <span className="text-[10.5px] text-charcoal-muted">
-                              Format spesifikasi & atribut teknikal
-                            </span>
-                          </div>
-                          <span className="text-[10px] font-bold bg-cream px-2 py-0.5 rounded text-charcoal-muted border border-borderLight/60">
-                            ⚙️ Ciri Format
+                        <div>
+                          <label className="text-xs font-bold text-forest-dark block">
+                            Jenis Produk (Product Type)
+                          </label>
+                          <span className="text-[10.5px] text-charcoal-muted">
+                            Format spesifikasi & atribut teknikal
                           </span>
                         </div>
 
@@ -2085,39 +1947,6 @@ export function ProductsClient({ initialProducts, categories }: ProductsClientPr
                           })()}
                         </div>
 
-                        {/* Quick 1-Click Product Type Pills */}
-                        <div className="pt-0.5">
-                          <span className="text-[10px] font-bold text-charcoal-muted uppercase tracking-wider block mb-1.5">
-                            Pilihan Pantas (1-Klik):
-                          </span>
-                          <div className="flex flex-wrap gap-1.5">
-                            {productTypesList.map((t) => {
-                              const isSelected = t.type === editingProduct.productType
-                              const PillIcon = t.icon
-
-                              return (
-                                <button
-                                  key={t.type}
-                                  type="button"
-                                  onClick={() =>
-                                    setEditingProduct({
-                                      ...editingProduct,
-                                      productType: t.type as any,
-                                    })
-                                  }
-                                  className={`inline-flex items-center space-x-1 px-2.5 py-1 rounded-lg text-[11px] font-medium transition-all cursor-pointer ${
-                                    isSelected
-                                      ? 'bg-forest text-warmwhite font-bold shadow-xs'
-                                      : 'bg-cream/60 border border-borderLight text-charcoal hover:border-gold hover:text-forest'
-                                  }`}
-                                >
-                                  <PillIcon className="w-3 h-3" />
-                                  <span>{t.name.split(' ')[0]}</span>
-                                </button>
-                              )
-                            })}
-                          </div>
-                        </div>
                       </div>
                     </div>
                   </div>
@@ -2125,18 +1954,10 @@ export function ProductsClient({ initialProducts, categories }: ProductsClientPr
                   {/* SEKSYEN 4: SUB-TAJUK vs TAGLINE PROMOSI */}
                   <div className="grid grid-cols-1 md:grid-cols-2 gap-4">
                     {/* Sub-Tajuk */}
-                    <div className="p-4 rounded-2xl bg-warmwhite border border-borderLight shadow-2xs space-y-2">
-                      <div className="flex items-center justify-between">
-                        <label className="text-xs font-bold text-forest-dark uppercase tracking-wider">
-                          Sub-Tajuk / Spesifikasi Ringkas
-                        </label>
-                        <span className="text-[10px] font-bold bg-emerald-500/10 text-emerald-800 px-2 py-0.5 rounded">
-                          🏷️ Tepat Di Bawah Tajuk Produk
-                        </span>
-                      </div>
-                      <p className="text-[11px] text-charcoal-muted leading-snug">
-                        Ringkasan bahan atau kelebihan fizikal (contoh: <em>&ldquo;100% Pure Organic Dunlop Latex with Belgian Tencel Cover&rdquo;</em>). Muncul di kad katalog & header produk.
-                      </p>
+                    <div className="p-4 rounded-2xl bg-warmwhite border border-borderLight shadow-2xs space-y-1.5">
+                      <label className="text-xs font-bold text-forest-dark uppercase tracking-wider block">
+                        Sub-Tajuk / Spesifikasi Ringkas
+                      </label>
                       <input
                         type="text"
                         placeholder="Contoh: 100% Pure Organic Dunlop Latex with Belgian Tencel Cover"
@@ -2144,23 +1965,15 @@ export function ProductsClient({ initialProducts, categories }: ProductsClientPr
                         onChange={(e) =>
                           setEditingProduct({ ...editingProduct, subtitle: e.target.value })
                         }
-                        className="w-full px-4 py-2.5 text-xs rounded-xl bg-cream/40 border border-borderLight focus:outline-none focus:ring-2 focus:ring-gold/30 focus:border-gold font-medium"
+                        className="w-full px-3.5 py-2.5 text-xs rounded-xl bg-cream/40 border border-borderLight focus:outline-none focus:ring-1 focus:ring-gold font-medium"
                       />
                     </div>
 
                     {/* Tagline Promosi */}
-                    <div className="p-4 rounded-2xl bg-warmwhite border border-borderLight shadow-2xs space-y-2">
-                      <div className="flex items-center justify-between">
-                        <label className="text-xs font-bold text-forest-dark uppercase tracking-wider">
-                          Tagline Promosi (Slogan)
-                        </label>
-                        <span className="text-[10px] font-bold bg-gold/20 text-gold-dark px-2 py-0.5 rounded">
-                          ✨ Slogan Promosi Mewah
-                        </span>
-                      </div>
-                      <p className="text-[11px] text-charcoal-muted leading-snug">
-                        Ayat pemikat pemasaran (contoh: <em>&ldquo;Signature Handcrafted Malaysian Sleep Luxury&rdquo;</em>). Memberikan rasa eksklusif kepada pembeli.
-                      </p>
+                    <div className="p-4 rounded-2xl bg-warmwhite border border-borderLight shadow-2xs space-y-1.5">
+                      <label className="text-xs font-bold text-forest-dark uppercase tracking-wider block">
+                        Tagline Promosi (Slogan)
+                      </label>
                       <input
                         type="text"
                         placeholder="Contoh: Signature Handcrafted Malaysian Sleep Luxury"
@@ -2168,64 +1981,38 @@ export function ProductsClient({ initialProducts, categories }: ProductsClientPr
                         onChange={(e) =>
                           setEditingProduct({ ...editingProduct, tagline: e.target.value })
                         }
-                        className="w-full px-4 py-2.5 text-xs rounded-xl bg-cream/40 border border-borderLight focus:outline-none focus:ring-2 focus:ring-gold/30 focus:border-gold font-medium"
+                        className="w-full px-3.5 py-2.5 text-xs rounded-xl bg-cream/40 border border-borderLight focus:outline-none focus:ring-1 focus:ring-gold font-medium"
                       />
                     </div>
                   </div>
 
                   {/* SEKSYEN 5: PENERANGAN PENUH PRODUK */}
                   <div className="p-4 sm:p-5 rounded-2xl bg-warmwhite border border-borderLight shadow-2xs space-y-2">
-                    <div className="flex items-center justify-between">
-                      <label className="text-xs font-bold text-forest-dark uppercase tracking-wider">
-                        Penerangan Penuh Produk (Detailed Product Story)
-                      </label>
-                      <span className="text-[10px] font-bold bg-indigo-500/10 text-indigo-800 px-2 py-0.5 rounded">
-                        📖 Tab Penerangan Di Halaman Pembelian
-                      </span>
-                    </div>
-                    <p className="text-[11px] text-charcoal-muted leading-relaxed">
-                      Cerita lengkap mengenai kelebihan produk, teknologi pembuatan, pensijilan organik, dan jaminan keselesaan. Pembeli membaca ini untuk membuat keputusan pembelian.
-                    </p>
+                    <label className="text-xs font-bold text-forest-dark uppercase tracking-wider block">
+                      Penerangan Penuh Produk (Product Story)
+                    </label>
                     <textarea
-                      rows={5}
+                      rows={4}
+                      placeholder="Tulis penerangan lengkap mengenai kelebihan produk, teknologi pembuatan, dan jaminan keselesaan..."
                       value={editingProduct.description}
                       onChange={(e) =>
                         setEditingProduct({ ...editingProduct, description: e.target.value })
                       }
-                      className="w-full px-4 py-3 text-xs rounded-xl bg-cream/40 border border-borderLight focus:outline-none focus:ring-2 focus:ring-gold/30 focus:border-gold leading-relaxed font-sans"
+                      className="w-full px-3.5 py-2.5 text-xs rounded-xl bg-cream/40 border border-borderLight focus:outline-none focus:ring-1 focus:ring-gold leading-relaxed font-sans"
                     />
-                    <p className="text-[10.5px] text-forest font-medium">
-                      💡 Tip Admin: Ceritakan tentang keaslian getah asli Malaysia, kelebihan menyokong tulang belakang, dan kebebasan daripada bahan kimia toksik.
-                    </p>
                   </div>
 
                   {/* SEKSYEN 6: TAMPIL SEBAGAI PRODUK PILIHAN HOMEPAGE */}
-                  <div className="p-4 sm:p-5 bg-gradient-to-r from-cream/60 via-gold/10 to-cream/60 rounded-2xl border border-gold/30 flex items-center justify-between">
-                    <div className="space-y-1 pr-4">
-                      <div className="flex items-center space-x-2">
-                        <span className="text-xs font-bold text-forest-dark">
-                          Tampil Sebagai Produk Pilihan (Featured Collection)
-                        </span>
-                        <span className="text-[10px] font-bold bg-gold/20 text-gold-dark px-2 py-0.5 rounded">
-                          ⭐ Muka Depan Homepage
-                        </span>
-                      </div>
-                      <p className="text-[11px] text-charcoal-muted leading-relaxed">
-                        Bila dihidupkan (ON), produk ini akan disematkan terus ke seksyen &ldquo;Koleksi Terpilih&rdquo; di muka hadapan (homepage) kamaar.my. Sangat sesuai untuk produk &ldquo;Best Seller&rdquo; atau &ldquo;Promosi Utama&rdquo;!
-                      </p>
-                      <div className="text-[10.5px] font-bold">
-                        {editingProduct.isFeatured ? (
-                          <span className="text-emerald-700 flex items-center gap-1">
-                            ✓ Sedang Ditampilkan Di Bahagian Sorotan Muka Depan
-                          </span>
-                        ) : (
-                          <span className="text-charcoal-muted">
-                            ⚪ Tersimpan biasa dalam katalog kategori sahaja
-                          </span>
-                        )}
-                      </div>
+                  <div className="p-4 sm:p-5 bg-warmwhite rounded-2xl border border-borderLight shadow-2xs flex items-center justify-between">
+                    <div>
+                      <span className="text-xs font-bold text-forest-dark block">
+                        Tampil Sebagai Produk Pilihan (Featured Collection)
+                      </span>
+                      <span className="text-[11px] text-charcoal-muted block mt-0.5">
+                        Paparkan produk ini di bahagian koleksi pilihan pada muka depan (Homepage kamaar.my)
+                      </span>
                     </div>
-                    <label className="relative inline-flex items-center cursor-pointer flex-shrink-0">
+                    <label className="relative inline-flex items-center cursor-pointer flex-shrink-0 ml-4">
                       <input
                         type="checkbox"
                         checked={Boolean(editingProduct.isFeatured)}
@@ -2245,21 +2032,6 @@ export function ProductsClient({ initialProducts, categories }: ProductsClientPr
               {/* ============================================================= */}
               {activeTab === 'variants' && (
                 <div className="space-y-6 animate-fade-in">
-                  {/* Top Concept Explainer */}
-                  <div className="p-4 rounded-2xl bg-cream/50 border border-gold/30 flex items-start space-x-3 text-xs">
-                    <span className="w-6 h-6 rounded-lg bg-gold/30 flex items-center justify-center flex-shrink-0 text-gold-dark font-bold text-sm">
-                      💡
-                    </span>
-                    <div className="space-y-1">
-                      <span className="font-bold text-forest-dark block">
-                        Apa Itu Varian Produk? (Size & Price Options)
-                      </span>
-                      <p className="text-[11px] text-charcoal-muted leading-relaxed">
-                        Anda <strong>tidak perlu cipta produk baharu</strong> untuk setiap saiz! 1 tilam boleh ada saiz <strong>Single, Super Single, Queen, King</strong>. Setiap saiz mempunyai harga jualan, harga asal sebelum diskaun, dan kuantiti stok yang tersendiri.
-                      </p>
-                    </div>
-                  </div>
-
                   {/* Top Stats Strip */}
                   <div className="grid grid-cols-2 sm:grid-cols-4 gap-3">
                     <div className="bg-cream/40 p-3.5 rounded-2xl border border-borderLight">
@@ -2300,17 +2072,10 @@ export function ProductsClient({ initialProducts, categories }: ProductsClientPr
                   </div>
 
                   {/* Fast Preset Buttons for Malaysian Standard Sizes */}
-                  <div className="p-4 bg-cream/30 rounded-2xl border border-borderLight space-y-2">
-                    <div className="flex flex-col sm:flex-row sm:items-center justify-between gap-1">
-                      <div>
-                        <span className="text-xs font-bold text-forest-dark block">
-                          ⚡ Tambah Saiz Piawai Malaysia Pantas (1-Klik)
-                        </span>
-                        <span className="text-[11px] text-charcoal-muted">
-                          Klik untuk menjana saiz, dimensi standard katil Malaysia & kod SKU secara automatik:
-                        </span>
-                      </div>
-                    </div>
+                  <div className="p-3.5 bg-cream/30 rounded-2xl border border-borderLight space-y-2">
+                    <span className="text-xs font-bold text-forest-dark uppercase tracking-wider block">
+                      Tambah Saiz Piawai Malaysia Pantas
+                    </span>
 
                     <div className="flex flex-wrap gap-2 pt-1">
                       <button
@@ -2425,18 +2190,13 @@ export function ProductsClient({ initialProducts, categories }: ProductsClientPr
                             </div>
                           </div>
 
-                          {/* Inputs with Educational Badges */}
+                          {/* Variant Inputs Grid */}
                           <div className="grid grid-cols-1 sm:grid-cols-2 md:grid-cols-3 lg:grid-cols-6 gap-3">
                             {/* Nama Saiz */}
                             <div className="space-y-1">
-                              <div className="flex items-center justify-between">
-                                <label className="text-[11px] font-bold text-forest-dark">
-                                  Nama Saiz
-                                </label>
-                                <span className="text-[9px] font-bold text-forest bg-cream px-1 rounded">
-                                  🏷️ Butang
-                                </span>
-                              </div>
+                              <label className="text-[11px] font-bold text-forest-dark block">
+                                Nama Saiz <span className="text-rose-500">*</span>
+                              </label>
                               <input
                                 type="text"
                                 placeholder="Queen"
@@ -2448,21 +2208,13 @@ export function ProductsClient({ initialProducts, categories }: ProductsClientPr
                                 }}
                                 className="w-full px-3 py-2 text-xs rounded-xl bg-cream/40 border border-borderLight focus:outline-none focus:ring-1 focus:ring-gold font-medium"
                               />
-                              <span className="text-[9.5px] text-charcoal-muted block">
-                                Pilihan di butang kedai
-                              </span>
                             </div>
 
                             {/* SKU */}
                             <div className="space-y-1">
-                              <div className="flex items-center justify-between">
-                                <label className="text-[11px] font-bold text-forest-dark">
-                                  Kod SKU
-                                </label>
-                                <span className="text-[9px] font-bold text-charcoal-muted bg-cream px-1 rounded">
-                                  📦 Gudang
-                                </span>
-                              </div>
+                              <label className="text-[11px] font-bold text-forest-dark block">
+                                Kod SKU
+                              </label>
                               <input
                                 type="text"
                                 placeholder="KAM-HER-QEN"
@@ -2474,21 +2226,13 @@ export function ProductsClient({ initialProducts, categories }: ProductsClientPr
                                 }}
                                 className="w-full px-3 py-2 text-xs font-mono rounded-xl bg-cream/40 border border-borderLight focus:outline-none focus:ring-1 focus:ring-gold font-bold text-forest"
                               />
-                              <span className="text-[9.5px] text-charcoal-muted block">
-                                Kod rujukan stokis
-                              </span>
                             </div>
 
                             {/* Dimensi */}
                             <div className="space-y-1">
-                              <div className="flex items-center justify-between">
-                                <label className="text-[11px] font-bold text-forest-dark">
-                                  Dimensi (P x L x T)
-                                </label>
-                                <span className="text-[9px] font-bold text-charcoal-muted bg-cream px-1 rounded">
-                                  📏 Ukuran
-                                </span>
-                              </div>
+                              <label className="text-[11px] font-bold text-forest-dark block">
+                                Dimensi (cm)
+                              </label>
                               <input
                                 type="text"
                                 placeholder="152 x 190 x 30 cm"
@@ -2500,21 +2244,13 @@ export function ProductsClient({ initialProducts, categories }: ProductsClientPr
                                 }}
                                 className="w-full px-3 py-2 text-xs rounded-xl bg-cream/40 border border-borderLight focus:outline-none focus:ring-1 focus:ring-gold font-medium"
                               />
-                              <span className="text-[9.5px] text-charcoal-muted block">
-                                Rujukan cadar pembeli
-                              </span>
                             </div>
 
                             {/* Harga Jualan Sebenar */}
                             <div className="space-y-1">
-                              <div className="flex items-center justify-between">
-                                <label className="text-[11px] font-bold text-forest-dark">
-                                  Harga Jualan
-                                </label>
-                                <span className="text-[9px] font-bold text-emerald-800 bg-emerald-50 px-1 rounded">
-                                  💰 Dicaj
-                                </span>
-                              </div>
+                              <label className="text-[11px] font-bold text-forest-dark block">
+                                Harga Jualan <span className="text-rose-500">*</span>
+                              </label>
                               <div className="flex items-center">
                                 <span className="px-2 py-2 bg-cream border border-r-0 border-borderLight rounded-l-xl text-xs font-bold text-forest">
                                   RM
@@ -2532,21 +2268,13 @@ export function ProductsClient({ initialProducts, categories }: ProductsClientPr
                                   className="w-full px-2.5 py-2 text-xs rounded-r-xl bg-cream/40 border border-borderLight font-bold text-forest-dark focus:outline-none focus:ring-1 focus:ring-gold"
                                 />
                               </div>
-                              <span className="text-[9.5px] text-charcoal-muted block">
-                                Harga akhir di checkout
-                              </span>
                             </div>
 
                             {/* Harga Asal Coret (Compare-At) */}
                             <div className="space-y-1">
-                              <div className="flex items-center justify-between">
-                                <label className="text-[11px] font-bold text-forest-dark">
-                                  Harga Asal (Coret)
-                                </label>
-                                <span className="text-[9px] font-bold text-amber-800 bg-amber-50 px-1 rounded">
-                                  🏷️ Diskaun
-                                </span>
-                              </div>
+                              <label className="text-[11px] font-bold text-forest-dark block">
+                                Harga Asal (Coret)
+                              </label>
                               <div className="flex items-center">
                                 <span className="px-2 py-2 bg-cream border border-r-0 border-borderLight rounded-l-xl text-xs font-bold text-charcoal-muted">
                                   RM
@@ -2570,21 +2298,13 @@ export function ProductsClient({ initialProducts, categories }: ProductsClientPr
                                   className="w-full px-2.5 py-2 text-xs rounded-r-xl bg-cream/40 border border-borderLight text-charcoal font-medium focus:outline-none focus:ring-1 focus:ring-gold"
                                 />
                               </div>
-                              <span className="text-[9.5px] text-charcoal-muted block">
-                                Sebelum diskaun (opsional)
-                              </span>
                             </div>
 
                             {/* Baki Stok Fizikal */}
                             <div className="space-y-1">
-                              <div className="flex items-center justify-between">
-                                <label className="text-[11px] font-bold text-forest-dark">
-                                  Baki Stok
-                                </label>
-                                <span className="text-[9px] font-bold text-blue-800 bg-blue-50 px-1 rounded">
-                                  📦 Unit
-                                </span>
-                              </div>
+                              <label className="text-[11px] font-bold text-forest-dark block">
+                                Baki Stok <span className="text-rose-500">*</span>
+                              </label>
                               <input
                                 type="number"
                                 min="0"
@@ -2603,9 +2323,6 @@ export function ProductsClient({ initialProducts, categories }: ProductsClientPr
                                     : 'bg-cream/40 border-borderLight text-forest-dark'
                                 }`}
                               />
-                              <span className="text-[9.5px] text-charcoal-muted block">
-                                Unit tersedia di gudang
-                              </span>
                             </div>
                           </div>
 
@@ -2631,35 +2348,12 @@ export function ProductsClient({ initialProducts, categories }: ProductsClientPr
               {/* TAB 3: SPESIFIKASI & JAMINAN                                  */}
               {/* ============================================================= */}
               {activeTab === 'specs' && (
-                <div className="space-y-6 animate-fade-in">
-                  {/* Top Guide Explainer */}
-                  <div className="p-4 rounded-2xl bg-cream/50 border border-gold/30 flex items-start space-x-3 text-xs">
-                    <span className="w-6 h-6 rounded-lg bg-gold/30 flex items-center justify-center flex-shrink-0 text-gold-dark font-bold text-sm">
-                      💡
-                    </span>
-                    <div className="space-y-1">
-                      <span className="font-bold text-forest-dark block">
-                        Spesifikasi Ergonomik & Jaminan (Trust & Assurance)
-                      </span>
-                      <p className="text-[11px] text-charcoal-muted leading-relaxed">
-                        Data ini dipaparkan dalam jadual spesifikasi dan lencana kelebihan produk. Pelanggan tilam mewah sangat mementingkan skala ketegasan, ketebalan, dan jaminan kilang sebelum membeli.
-                      </p>
-                    </div>
-                  </div>
-
+                <div className="space-y-5 animate-fade-in">
                   {/* Material Core */}
-                  <div className="p-4 sm:p-5 rounded-2xl bg-warmwhite border border-borderLight shadow-2xs space-y-2">
-                    <div className="flex items-center justify-between">
-                      <label className="text-xs font-bold text-forest-dark uppercase tracking-wider">
-                        Bahan Teras (Core Material)
-                      </label>
-                      <span className="text-[10px] font-bold bg-emerald-500/10 text-emerald-800 px-2 py-0.5 rounded">
-                        🌿 Lencana Keaslian Bahan
-                      </span>
-                    </div>
-                    <p className="text-[11px] text-charcoal-muted leading-relaxed">
-                      Bahan utama dalam tilam (contoh: <em>&ldquo;100% Pure Organic Latex &amp; Cool Night Pocket Springs&rdquo;</em>). Dipaparkan dalam lencana kualiti di sebelah gambar produk.
-                    </p>
+                  <div className="p-4 sm:p-5 rounded-2xl bg-warmwhite border border-borderLight shadow-2xs space-y-1.5">
+                    <label className="text-xs font-bold text-forest-dark uppercase tracking-wider block">
+                      Bahan Teras (Core Material)
+                    </label>
                     <input
                       type="text"
                       placeholder="Contoh: 100% Pure Organic Latex & Cool Night Pocket Springs"
@@ -2667,26 +2361,16 @@ export function ProductsClient({ initialProducts, categories }: ProductsClientPr
                       onChange={(e) =>
                         setEditingProduct({ ...editingProduct, material: e.target.value })
                       }
-                      className="w-full px-4 py-2.5 text-xs rounded-xl bg-cream/40 border border-borderLight focus:outline-none focus:ring-2 focus:ring-gold/30 focus:border-gold font-medium"
+                      className="w-full px-3.5 py-2.5 text-xs rounded-xl bg-cream/40 border border-borderLight focus:outline-none focus:ring-1 focus:ring-gold font-medium"
                     />
                   </div>
 
                   {/* Firmness Slider (1 to 10) */}
-                  <div className="p-5 bg-warmwhite rounded-2xl border border-borderLight shadow-2xs space-y-4">
+                  <div className="p-5 bg-warmwhite rounded-2xl border border-borderLight shadow-2xs space-y-3">
                     <div className="flex flex-col sm:flex-row sm:items-center justify-between gap-2">
-                      <div>
-                        <div className="flex items-center space-x-2">
-                          <label className="text-xs font-bold text-forest-dark uppercase tracking-wider block">
-                            Skala Ketegasan Tilam (Firmness Rating 1 - 10)
-                          </label>
-                          <span className="text-[10px] font-bold bg-indigo-500/10 text-indigo-800 px-2 py-0.5 rounded">
-                            📊 Graf Ergonomik Pada Laman Tilam
-                          </span>
-                        </div>
-                        <span className="text-[11px] text-charcoal-muted">
-                          Berdasarkan standard ergonomik tilam KAMAAR Sleep Atelier untuk panduan pembeli:
-                        </span>
-                      </div>
+                      <label className="text-xs font-bold text-forest-dark uppercase tracking-wider block">
+                        Skala Ketegasan Tilam (Firmness Rating 1 - 10)
+                      </label>
                       <span className="px-3.5 py-1.5 rounded-full text-xs font-bold bg-gold/20 text-forest-dark border border-gold/40 shadow-2xs self-start sm:self-auto">
                         Skor: {editingProduct.firmnessScale || 6} / 10 &bull;{' '}
                         {getFirmnessLabel(editingProduct.firmnessScale || 6)}
@@ -2710,7 +2394,7 @@ export function ProductsClient({ initialProducts, categories }: ProductsClientPr
                       className="w-full accent-forest cursor-pointer h-2.5 bg-borderLight rounded-lg"
                     />
 
-                    {/* Explanatory Firmness Level Guide */}
+                    {/* Firmness Level Guide */}
                     <div className="grid grid-cols-2 sm:grid-cols-5 gap-2 text-center pt-1">
                       <div
                         className={`p-2 rounded-xl border text-[10.5px] transition-colors ${
@@ -2721,7 +2405,6 @@ export function ProductsClient({ initialProducts, categories }: ProductsClientPr
                       >
                         <span className="block font-bold">1 - 2</span>
                         <span>Plush Soft</span>
-                        <span className="block text-[9px] text-charcoal-muted mt-0.5">Sangat lembut</span>
                       </div>
 
                       <div
@@ -2733,7 +2416,6 @@ export function ProductsClient({ initialProducts, categories }: ProductsClientPr
                       >
                         <span className="block font-bold">3 - 4</span>
                         <span>Medium Soft</span>
-                        <span className="block text-[9px] text-charcoal-muted mt-0.5">Sederhana lembut</span>
                       </div>
 
                       <div
@@ -2745,7 +2427,6 @@ export function ProductsClient({ initialProducts, categories }: ProductsClientPr
                       >
                         <span className="block font-bold">5 - 6 (Popular ⭐)</span>
                         <span>Medium Firm</span>
-                        <span className="block text-[9px] text-charcoal-muted mt-0.5">Semua posisi tidur</span>
                       </div>
 
                       <div
@@ -2757,7 +2438,6 @@ export function ProductsClient({ initialProducts, categories }: ProductsClientPr
                       >
                         <span className="block font-bold">7 - 8</span>
                         <span>Firm</span>
-                        <span className="block text-[9px] text-charcoal-muted mt-0.5">Sokongan mantap</span>
                       </div>
 
                       <div
@@ -2769,7 +2449,6 @@ export function ProductsClient({ initialProducts, categories }: ProductsClientPr
                       >
                         <span className="block font-bold">9 - 10</span>
                         <span>Orthopaedic</span>
-                        <span className="block text-[9px] text-charcoal-muted mt-0.5">Tulang belakang</span>
                       </div>
                     </div>
                   </div>
@@ -2777,19 +2456,11 @@ export function ProductsClient({ initialProducts, categories }: ProductsClientPr
                   {/* Thickness, Warranty, Trial Nights Grid */}
                   <div className="grid grid-cols-1 sm:grid-cols-3 gap-4">
                     {/* Ketebalan Tilam */}
-                    <div className="p-4 rounded-2xl bg-warmwhite border border-borderLight shadow-2xs space-y-2">
-                      <div className="flex items-center justify-between">
-                        <label className="text-xs font-bold text-forest-dark uppercase tracking-wider">
-                          Ketebalan Tilam (cm)
-                        </label>
-                        <span className="text-[10px] font-bold bg-cream px-1.5 py-0.5 rounded text-charcoal-muted border border-borderLight/60">
-                          📏 Ketinggian
-                        </span>
-                      </div>
-                      <p className="text-[11px] text-charcoal-muted leading-snug">
-                        Ketinggian fizikal tilam dari tapak ke permukaan atas (cth: 30 cm = ~12 inci). Pelanggan perlu tahu untuk membeli cadar yang muat.
-                      </p>
-                      <div className="flex items-center pt-1">
+                    <div className="p-4 rounded-2xl bg-warmwhite border border-borderLight shadow-2xs space-y-1.5">
+                      <label className="text-xs font-bold text-forest-dark uppercase tracking-wider block">
+                        Ketebalan Tilam (cm)
+                      </label>
+                      <div className="flex items-center">
                         <input
                           type="number"
                           min="1"
@@ -2810,19 +2481,11 @@ export function ProductsClient({ initialProducts, categories }: ProductsClientPr
                     </div>
 
                     {/* Jaminan Rasmi Kilang */}
-                    <div className="p-4 rounded-2xl bg-warmwhite border border-borderLight shadow-2xs space-y-2">
-                      <div className="flex items-center justify-between">
-                        <label className="text-xs font-bold text-forest-dark uppercase tracking-wider">
-                          Jaminan Rasmi (Tahun)
-                        </label>
-                        <span className="text-[10px] font-bold bg-amber-500/10 text-amber-800 px-1.5 py-0.5 rounded">
-                          🛡️ Waranti Kilang
-                        </span>
-                      </div>
-                      <p className="text-[11px] text-charcoal-muted leading-snug">
-                        Tempoh waranti kerosakan struktur dari KAMAAR (contoh: 10 atau 12 Tahun). Dipaparkan pada lencana jaminan rasmi.
-                      </p>
-                      <div className="flex items-center pt-1">
+                    <div className="p-4 rounded-2xl bg-warmwhite border border-borderLight shadow-2xs space-y-1.5">
+                      <label className="text-xs font-bold text-forest-dark uppercase tracking-wider block">
+                        Jaminan Rasmi (Tahun)
+                      </label>
+                      <div className="flex items-center">
                         <input
                           type="number"
                           min="0"
@@ -2843,19 +2506,11 @@ export function ProductsClient({ initialProducts, categories }: ProductsClientPr
                     </div>
 
                     {/* Percubaan Tidur Di Rumah */}
-                    <div className="p-4 rounded-2xl bg-warmwhite border border-borderLight shadow-2xs space-y-2">
-                      <div className="flex items-center justify-between">
-                        <label className="text-xs font-bold text-forest-dark uppercase tracking-wider">
-                          Percubaan Rumah (Malam)
-                        </label>
-                        <span className="text-[10px] font-bold bg-blue-500/10 text-blue-800 px-1.5 py-0.5 rounded">
-                          🌙 Trial Bebas Risiko
-                        </span>
-                      </div>
-                      <p className="text-[11px] text-charcoal-muted leading-snug">
-                        Berapa malam pelanggan boleh uji tilam di rumah tanpa risiko (contoh: 100 Malam). Jika tidak serasi, jaminan pulangan terpakai.
-                      </p>
-                      <div className="flex items-center pt-1">
+                    <div className="p-4 rounded-2xl bg-warmwhite border border-borderLight shadow-2xs space-y-1.5">
+                      <label className="text-xs font-bold text-forest-dark uppercase tracking-wider block">
+                        Percubaan Rumah (Malam)
+                      </label>
+                      <div className="flex items-center">
                         <input
                           type="number"
                           min="0"
@@ -2908,24 +2563,19 @@ export function ProductsClient({ initialProducts, categories }: ProductsClientPr
                     className="hidden"
                   />
 
-                  {/* Top Guide Explainer with Live Counters */}
-                  <div className="p-4 rounded-2xl bg-cream/50 border border-gold/30 flex flex-col sm:flex-row items-start sm:items-center justify-between gap-3 text-xs">
-                    <div className="flex items-start space-x-3">
-                      <span className="w-8 h-8 rounded-xl bg-gold/25 flex items-center justify-center flex-shrink-0 text-gold-dark font-bold text-sm shadow-2xs">
-                        📸
+                  {/* Top Summary Bar */}
+                  <div className="p-3.5 bg-warmwhite rounded-2xl border border-borderLight shadow-2xs flex items-center justify-between text-xs">
+                    <div>
+                      <span className="font-bold text-forest-dark uppercase tracking-wider text-xs block">
+                        Galeri Foto & Imej Produk
                       </span>
-                      <div className="space-y-0.5">
-                        <span className="font-bold text-forest-dark block text-xs">
-                          Panduan Galeri Imej Produk KAMAAR
-                        </span>
-                        <p className="text-[11px] text-charcoal-muted leading-relaxed">
-                          Muat naik gambar berkualiti tinggi dari peranti anda. Pastikan mempunyai sekurang-kurangnya <strong>1 Gambar Sampul Utama</strong>.
-                        </p>
-                      </div>
+                      <span className="text-[11px] text-charcoal-muted">
+                        Pilih sekurang-kurangnya 1 foto sebagai sampul utama
+                      </span>
                     </div>
 
-                    <div className="flex items-center gap-2 flex-shrink-0 self-end sm:self-center">
-                      <span className="px-2.5 py-1 rounded-lg bg-warmwhite border border-borderLight text-[11px] font-semibold text-charcoal-muted">
+                    <div className="flex items-center gap-2">
+                      <span className="px-2.5 py-1 rounded-lg bg-cream/60 border border-borderLight text-[11px] font-semibold text-charcoal-muted">
                         Jumlah: <strong>{editingProduct.images?.length || 0} Imej</strong>
                       </span>
                       {editingProduct.images?.some((img) => img.isPrimary) ? (
@@ -3212,11 +2862,6 @@ export function ProductsClient({ initialProducts, categories }: ProductsClientPr
                               Padam
                             </button>
                           </div>
-                          <p className="text-[9.5px] text-charcoal-muted">
-                            {img.isPrimary
-                              ? '⭐ Dipaparkan pada kad katalog, carian Google & troli.'
-                              : 'Dipaparkan dalam slaid galeri foto tambahan produk.'}
-                          </p>
                         </div>
                       </div>
                     ))}
@@ -3229,31 +2874,11 @@ export function ProductsClient({ initialProducts, categories }: ProductsClientPr
               {/* ============================================================= */}
               {activeTab === 'features' && (
                 <div className="space-y-6 animate-fade-in">
-                  {/* Top Guide Explainer */}
-                  <div className="p-4 rounded-2xl bg-cream/50 border border-gold/30 flex items-start space-x-3 text-xs">
-                    <span className="w-6 h-6 rounded-lg bg-gold/30 flex items-center justify-center flex-shrink-0 text-gold-dark font-bold text-sm">
-                      ✨
-                    </span>
-                    <div className="space-y-1">
-                      <span className="font-bold text-forest-dark block">
-                        Ciri-Ciri Khas &amp; Keistimewaan (Key Selling Highlights)
-                      </span>
-                      <p className="text-[11px] text-charcoal-muted leading-relaxed">
-                        Senarai tanda semak (checklist) ini akan <strong>dipaparkan betul-betul di bawah butang &ldquo;Beli Sekarang&rdquo;</strong> pada halaman produk. Pelanggan KAMAAR suka membaca senarai ringkas ini untuk kepastian kualiti sebelum menekan butang bayar!
-                      </p>
-                    </div>
-                  </div>
-
                   {/* Add Feature Form */}
                   <div className="p-4 sm:p-5 bg-warmwhite rounded-2xl border border-borderLight shadow-2xs space-y-3">
-                    <div className="flex items-center justify-between">
-                      <span className="text-xs font-bold text-forest-dark uppercase tracking-wider block">
-                        + Tambah Poin Keistimewaan Baharu
-                      </span>
-                      <span className="text-[10px] font-bold bg-emerald-500/10 text-emerald-800 px-2 py-0.5 rounded">
-                        ✓ Bullet Highlights
-                      </span>
-                    </div>
+                    <span className="text-xs font-bold text-forest-dark uppercase tracking-wider block">
+                      Tambah Ciri Keistimewaan Produk (Highlights)
+                    </span>
 
                     <div className="flex items-center space-x-2">
                       <input
