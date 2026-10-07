@@ -581,8 +581,20 @@ export async function updateOrderStatus(
   if (!order) return null
 
   const previousPaymentStatus = order.paymentStatus
+  const previousFulfillmentStatus = order.fulfillmentStatus
   Object.assign(order, updates, { updatedAt: new Date().toISOString() })
   saveDb(db)
+
+  // If order is cancelled or payment fails, automatically return reserved stock back to inventory
+  const isNowCancelledOrFailed =
+    (updates.fulfillmentStatus === 'cancelled' && previousFulfillmentStatus !== 'cancelled') ||
+    (updates.paymentStatus === 'failed' && previousPaymentStatus !== 'failed')
+
+  if (isNowCancelledOrFailed && order.items && order.items.length > 0) {
+    for (const item of order.items) {
+      await restoreStock(item.variantId, item.quantity)
+    }
+  }
 
   // When order becomes paid, credit affiliate if attributed
   if (

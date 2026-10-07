@@ -1401,6 +1401,19 @@
   ],
   "auditLogs": [
     {
+      "id": "aud-1791375804808-8qek",
+      "actorEmail": "stripe_webhook",
+      "action": "order_status_updated",
+      "entityType": "order",
+      "entityId": "ord-1791375787283-777rr",
+      "details": {
+        "paymentStatus": "paid",
+        "fulfillmentStatus": "processing",
+        "paymentId": "pi_sim_test"
+      },
+      "createdAt": "2026-10-07T12:23:24.808Z"
+    },
+    {
       "id": "aud-1791373517359-emlp",
       "actorEmail": "admin@kamaarbeddings.com",
       "action": "product_updated",
