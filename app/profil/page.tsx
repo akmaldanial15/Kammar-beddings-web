@@ -797,12 +797,36 @@ export default function ProfilPage() {
                   </p>
 
                   <div className="flex items-center gap-3 pt-2">
-                    <span className="px-3 py-1 rounded bg-[#00529C] text-white text-xs font-mono font-black tracking-wider">
-                      FPX
-                    </span>
-                    <span className="px-3 py-1 rounded bg-[#015CA9] text-white text-xs font-bold">
-                      Touch &apos;n Go eWallet
-                    </span>
+                    {/* FPX Logo Badge */}
+                    <div
+                      className="h-9 px-3 bg-white rounded-xl flex items-center justify-center border border-[#E8E2D8] shadow-xs hover:border-gold/50 transition-colors"
+                      title="FPX Online Banking"
+                    >
+                      <Image
+                        src="/images/payments/fpx.svg"
+                        alt="FPX Online Banking"
+                        width={60}
+                        height={20}
+                        className="h-5 w-auto object-contain"
+                      />
+                    </div>
+
+                    {/* Touch 'n Go eWallet Logo Badge */}
+                    <div
+                      className="h-9 px-3 bg-white rounded-xl flex items-center justify-center gap-2 border border-[#E8E2D8] shadow-xs hover:border-gold/50 transition-colors"
+                      title="Touch 'n Go eWallet"
+                    >
+                      <Image
+                        src="/images/payments/tng-ewallet.svg"
+                        alt="Touch 'n Go eWallet"
+                        width={24}
+                        height={24}
+                        className="h-6 w-6 object-contain rounded-xs"
+                      />
+                      <span className="font-bold text-xs text-[#015CA9] font-sans tracking-tight">
+                        Touch &apos;n Go <span className="font-medium text-slate-600 text-[11px]">eWallet</span>
+                      </span>
+                    </div>
                   </div>
                 </div>
 

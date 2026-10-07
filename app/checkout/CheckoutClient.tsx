@@ -988,9 +988,15 @@ export function CheckoutClient({ initialPaymentSettings }: CheckoutClientProps) 
                       </div>
 
                       <div className="flex items-center space-x-1 shrink-0">
-                        <span className="px-2.5 py-1 rounded text-xs font-black bg-[#00529C] text-white tracking-wider border border-[#00529C] shadow-2xs">
-                          FPX
-                        </span>
+                        <div className="h-7 px-2.5 bg-white rounded-md border border-[#D5CEC2] flex items-center justify-center shadow-xs">
+                          <Image
+                            src="/images/payments/fpx.svg"
+                            alt="FPX Online Banking"
+                            width={48}
+                            height={16}
+                            className="h-3.5 w-auto object-contain"
+                          />
+                        </div>
                       </div>
                     </label>
 
@@ -1058,9 +1064,18 @@ export function CheckoutClient({ initialPaymentSettings }: CheckoutClientProps) 
                       </div>
 
                       <div className="flex items-center space-x-1 shrink-0">
-                        <span className="px-2.5 py-1 rounded text-xs font-bold bg-[#015CA9] text-white border border-[#015CA9] shadow-2xs">
-                          TNG eWallet
-                        </span>
+                        <div className="h-7 px-2.5 bg-white rounded-md border border-[#D5CEC2] flex items-center justify-center gap-1.5 shadow-xs">
+                          <Image
+                            src="/images/payments/tng-ewallet.svg"
+                            alt="Touch 'n Go eWallet"
+                            width={18}
+                            height={18}
+                            className="h-4.5 w-4.5 object-contain rounded-xs"
+                          />
+                          <span className="font-bold text-[10px] text-[#015CA9] font-sans">
+                            Touch &apos;n Go
+                          </span>
+                        </div>
                       </div>
                     </label>
 

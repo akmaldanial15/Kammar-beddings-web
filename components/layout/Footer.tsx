@@ -2,6 +2,7 @@
 
 import React, { useState } from 'react'
 import Link from 'next/link'
+import Image from 'next/image'
 import {
   ShieldCheck,
   Truck,
@@ -368,18 +369,42 @@ export function Footer() {
           </div>
 
           {/* Payment Badges: STRICTLY FPX and TNG ONLY */}
-          <div className="flex flex-col sm:flex-row items-center space-y-2 sm:space-y-0 sm:space-x-3">
-            <span className="text-[11px] text-slate-300 flex items-center space-x-1">
-              <CreditCard className="w-3.5 h-3.5 text-gold" />
-              <span>{isBM ? 'Kaedah Pembayaran Sahaja:' : 'Accepted Payments Only:'}</span>
+          <div className="flex flex-col sm:flex-row items-center space-y-2 sm:space-y-0 sm:space-x-3.5">
+            <span className="text-[11px] text-slate-300 flex items-center space-x-1.5 font-medium">
+              <CreditCard className="w-3.5 h-3.5 text-gold flex-shrink-0" />
+              <span>{isBM ? 'Kaedah Pembayaran Sah:' : 'Accepted Payments:'}</span>
             </span>
-            <div className="flex items-center space-x-2">
-              <span className="px-3 py-1 bg-[#00529C] rounded-lg font-mono font-black text-[11px] tracking-wider text-white shadow-2xs border border-[#00529C]">
-                FPX ONLINE BANKING
-              </span>
-              <span className="px-3 py-1 bg-[#015CA9] rounded-lg font-bold text-[11px] text-white shadow-2xs border border-[#015CA9]">
-                TOUCH &apos;N GO eWALLET
-              </span>
+            <div className="flex items-center space-x-2.5">
+              {/* FPX Logo Badge */}
+              <div
+                className="h-8 px-2.5 bg-white rounded-lg flex items-center justify-center shadow-xs border border-white/20 hover:scale-105 transition-transform"
+                title="FPX Online Banking"
+              >
+                <Image
+                  src="/images/payments/fpx.svg"
+                  alt="FPX Online Banking"
+                  width={56}
+                  height={18}
+                  className="h-4.5 w-auto object-contain"
+                />
+              </div>
+
+              {/* Touch 'n Go eWallet Logo Badge */}
+              <div
+                className="h-8 px-2.5 bg-white rounded-lg flex items-center justify-center gap-1.5 shadow-xs border border-white/20 hover:scale-105 transition-transform"
+                title="Touch 'n Go eWallet"
+              >
+                <Image
+                  src="/images/payments/tng-ewallet.svg"
+                  alt="Touch 'n Go eWallet"
+                  width={22}
+                  height={22}
+                  className="h-5 w-5 object-contain rounded-xs"
+                />
+                <span className="font-bold text-[11px] text-[#015CA9] font-sans tracking-tight leading-none">
+                  Touch &apos;n Go <span className="font-medium text-slate-600 text-[10px]">eWallet</span>
+                </span>
+              </div>
             </div>
           </div>
         </div>
