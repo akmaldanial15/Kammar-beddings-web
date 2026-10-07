@@ -914,16 +914,50 @@ export function logAdminAction(actorEmail: string, action: string, entityType: s
     createdAt: new Date().toISOString(),
   }
   db.auditLogs.unshift(log)
-  // Keep last 500 logs
-  if (db.auditLogs.length > 500) {
-    db.auditLogs = db.auditLogs.slice(0, 500)
+  // Had maksimum simpanan: 100 rekod terkini/terawal sahaja
+  if (db.auditLogs.length > 100) {
+    db.auditLogs = db.auditLogs.slice(0, 100)
   }
   saveDb(db)
 }
 
 export async function getAuditLogs(): Promise<AuditLog[]> {
   const db = ensureDb()
+  if (db.auditLogs.length > 100) {
+    db.auditLogs = db.auditLogs.slice(0, 100)
+    saveDb(db)
+  }
   return db.auditLogs
+}
+
+export async function deleteAuditLog(id: string): Promise<boolean> {
+  const db = ensureDb()
+  const initialLength = db.auditLogs.length
+  db.auditLogs = db.auditLogs.filter((l) => l.id !== id)
+  if (db.auditLogs.length !== initialLength) {
+    saveDb(db)
+    return true
+  }
+  return false
+}
+
+export async function deleteAuditLogs(ids: string[]): Promise<number> {
+  const db = ensureDb()
+  const idSet = new Set(ids)
+  const initialLength = db.auditLogs.length
+  db.auditLogs = db.auditLogs.filter((l) => !idSet.has(l.id))
+  const removed = initialLength - db.auditLogs.length
+  if (removed > 0) {
+    saveDb(db)
+  }
+  return removed
+}
+
+export async function clearAuditLogs(): Promise<boolean> {
+  const db = ensureDb()
+  db.auditLogs = []
+  saveDb(db)
+  return true
 }
 
 // ==========================================
