@@ -197,7 +197,7 @@
       "firmness": "Medium Soft",
       "firmnessScale": 4,
       "thicknessCm": 8,
-      "warrantyYears": 1,
+      "warrantyYears": 0,
       "trialNights": 0,
       "features": [
         "Isian 100% Asian Polyester Fibre berkualiti tinggi & padat",
@@ -294,7 +294,7 @@
         }
       ],
       "createdAt": "2026-09-01T00:00:00Z",
-      "updatedAt": "2026-10-07T00:00:00Z"
+      "updatedAt": "2026-10-07T11:45:17.359Z"
     },
     {
       "id": "prod-tilam-kekabu-asli",
@@ -1400,6 +1400,17 @@
     }
   ],
   "auditLogs": [
+    {
+      "id": "aud-1791373517359-emlp",
+      "actorEmail": "admin@kamaarbeddings.com",
+      "action": "product_updated",
+      "entityType": "product",
+      "entityId": "prod-toto-asian-fibre",
+      "details": {
+        "name": "Tilam Toto Asian Polyester Fibre (Paling Lariss!!)"
+      },
+      "createdAt": "2026-10-07T11:45:17.359Z"
+    },
     {
       "id": "aud-1791200371336-6lhd",
       "actorEmail": "owner@kamaarbeddings.com",

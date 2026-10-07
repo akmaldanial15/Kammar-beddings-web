@@ -47,8 +47,11 @@ import {
   Loader2,
   CheckCircle2,
   RefreshCw,
+  Camera,
+  Clipboard,
 } from 'lucide-react'
 import Link from 'next/link'
+import { optimizeImageForUpload } from '@/components/admin/ImageUploadDropzone'
 
 interface ProductsClientProps {
   initialProducts: Product[]
@@ -140,6 +143,7 @@ export function ProductsClient({ initialProducts, categories }: ProductsClientPr
   const [uploadSuccessMsg, setUploadSuccessMsg] = useState<string | null>(null)
   const [isDraggingOver, setIsDraggingOver] = useState(false)
   const fileInputRef = useRef<HTMLInputElement>(null)
+  const cameraInputRef = useRef<HTMLInputElement>(null)
   const replaceFileInputRef = useRef<HTMLInputElement>(null)
   const [replacingImageIndex, setReplacingImageIndex] = useState<number | null>(null)
 
@@ -392,9 +396,15 @@ export function ProductsClient({ initialProducts, categories }: ProductsClientPr
     setUploadSuccessMsg(null)
 
     try {
+      const fileList = Array.from(files)
+      // Fast client-side optimization for smartphone camera & large files
+      const optimizedFiles = await Promise.all(
+        fileList.map((f) => optimizeImageForUpload(f))
+      )
+
       const formData = new FormData()
-      for (let i = 0; i < files.length; i++) {
-        formData.append('files', files[i])
+      for (let i = 0; i < optimizedFiles.length; i++) {
+        formData.append('files', optimizedFiles[i])
       }
 
       const res = await fetch('/api/admin/upload', {
@@ -430,7 +440,8 @@ export function ProductsClient({ initialProducts, categories }: ProductsClientPr
     } catch (err: any) {
       console.warn('Server upload failed, falling back to local file reader:', err)
       try {
-        const readFilesPromises = Array.from(files).map((file, idx) => {
+        const fileList = Array.from(files)
+        const readFilesPromises = fileList.map((file, idx) => {
           return new Promise<ProductImage>((resolve) => {
             const reader = new FileReader()
             reader.onload = (event) => {
@@ -460,6 +471,7 @@ export function ProductsClient({ initialProducts, categories }: ProductsClientPr
     } finally {
       setIsUploadingImage(false)
       if (fileInputRef.current) fileInputRef.current.value = ''
+      if (cameraInputRef.current) cameraInputRef.current.value = ''
     }
   }
 
@@ -469,8 +481,9 @@ export function ProductsClient({ initialProducts, categories }: ProductsClientPr
     setUploadError(null)
 
     try {
+      const optimizedFile = await optimizeImageForUpload(file)
       const formData = new FormData()
-      formData.append('file', file)
+      formData.append('file', optimizedFile)
       const res = await fetch('/api/admin/upload', {
         method: 'POST',
         body: formData,
@@ -502,6 +515,29 @@ export function ProductsClient({ initialProducts, categories }: ProductsClientPr
       if (replaceFileInputRef.current) replaceFileInputRef.current.value = ''
     }
   }
+
+  // Clipboard paste support (Ctrl+V) when media tab is active
+  useEffect(() => {
+    const handlePaste = (e: ClipboardEvent) => {
+      if (!editingProduct || activeTab !== 'images') return
+      const activeEl = document.activeElement
+      const isTextInput =
+        (activeEl?.tagName === 'INPUT' && (activeEl as HTMLInputElement).type === 'text') ||
+        activeEl?.tagName === 'TEXTAREA'
+      if (isTextInput) return
+
+      if (e.clipboardData?.files && e.clipboardData.files.length > 0) {
+        const imgFiles = Array.from(e.clipboardData.files).filter((f) => f.type.startsWith('image/'))
+        if (imgFiles.length > 0) {
+          e.preventDefault()
+          handleUploadFiles(imgFiles)
+        }
+      }
+    }
+
+    window.addEventListener('paste', handlePaste)
+    return () => window.removeEventListener('paste', handlePaste)
+  }, [editingProduct, activeTab])
 
   const handleAddImage = () => {
     if (!editingProduct || !newImageUrl.trim()) return
@@ -2535,7 +2571,7 @@ export function ProductsClient({ initialProducts, categories }: ProductsClientPr
               {/* ============================================================= */}
               {activeTab === 'images' && (
                 <div className="space-y-6 animate-fade-in">
-                  {/* Hidden file inputs for upload & replace */}
+                  {/* Hidden file inputs for upload, camera & replace */}
                   <input
                     ref={fileInputRef}
                     type="file"
@@ -2544,6 +2580,21 @@ export function ProductsClient({ initialProducts, categories }: ProductsClientPr
                     onChange={(e) => {
                       if (e.target.files && e.target.files.length > 0) {
                         handleUploadFiles(e.target.files)
+                        e.target.value = ''
+                      }
+                    }}
+                    className="hidden"
+                  />
+                  {/* Smartphone direct camera capture */}
+                  <input
+                    ref={cameraInputRef}
+                    type="file"
+                    accept="image/*"
+                    capture="environment"
+                    onChange={(e) => {
+                      if (e.target.files && e.target.files.length > 0) {
+                        handleUploadFiles(e.target.files)
+                        e.target.value = ''
                       }
                     }}
                     className="hidden"
@@ -2555,6 +2606,7 @@ export function ProductsClient({ initialProducts, categories }: ProductsClientPr
                     onChange={(e) => {
                       if (e.target.files?.[0]) {
                         handleReplaceImageFile(e.target.files[0])
+                        e.target.value = ''
                       }
                     }}
                     className="hidden"
@@ -2645,40 +2697,71 @@ export function ProductsClient({ initialProducts, categories }: ProductsClientPr
                               handleUploadFiles(e.dataTransfer.files)
                             }
                           }}
-                          onClick={() => fileInputRef.current?.click()}
-                          className={`relative rounded-2xl border-2 border-dashed p-6 sm:p-8 text-center transition-all cursor-pointer flex flex-col items-center justify-center group ${
+                          className={`relative rounded-2xl border-2 border-dashed p-5 sm:p-7 text-center transition-all flex flex-col items-center justify-center group ${
                             isDraggingOver
                               ? 'border-gold bg-gold/10 scale-[1.01] shadow-md'
                               : 'border-gold/40 hover:border-gold hover:bg-gold/5 bg-cream/30'
                           }`}
                         >
-                          <div className="w-14 h-14 rounded-2xl bg-gold/20 flex items-center justify-center text-gold-dark group-hover:scale-110 transition-transform mb-3 shadow-2xs">
-                            <UploadCloud className="w-7 h-7" />
+                          {/* Desktop Drag Area Click */}
+                          <div
+                            onClick={() => fileInputRef.current?.click()}
+                            className="cursor-pointer w-full flex flex-col items-center justify-center"
+                          >
+                            <div className="w-14 h-14 rounded-2xl bg-gold/20 flex items-center justify-center text-gold-dark group-hover:scale-110 transition-transform mb-3 shadow-2xs">
+                              <UploadCloud className="w-7 h-7" />
+                            </div>
+
+                            <span className="text-sm font-bold text-forest-dark block mb-1">
+                              Seret & Lepas Gambar ke Sini (Drag & Drop)
+                            </span>
+                            <span className="text-xs text-charcoal-muted block mb-3">
+                              atau klik untuk pilih fail dari peranti • Boleh juga tekan <kbd className="px-1.5 py-0.5 rounded bg-cream border border-borderLight font-mono text-[11px] font-bold text-forest">Ctrl + V</kbd> untuk Paste terus!
+                            </span>
                           </div>
 
-                          <span className="text-sm font-bold text-forest-dark block mb-1">
-                            Klik untuk Pilih Fail Gambar dari Komputer / Telefon
-                          </span>
-                          <span className="text-xs text-charcoal-muted block mb-3">
-                            atau seret & lepaskan fail gambar (Drag & Drop) di sini
-                          </span>
+                          {/* Quick Actions (Ultra Senang di Telefon Pintar & Tablet) */}
+                          <div className="w-full max-w-md pt-3 mt-1 border-t border-borderLight/60">
+                            <span className="text-[10px] font-bold uppercase tracking-wider text-charcoal-muted block mb-2">
+                              Pilihan Pantas Telefon & Komputer:
+                            </span>
+                            <div className="grid grid-cols-1 sm:grid-cols-2 gap-2 w-full">
+                              {/* Direct Camera Button */}
+                              <button
+                                type="button"
+                                onClick={(e) => {
+                                  e.stopPropagation()
+                                  cameraInputRef.current?.click()
+                                }}
+                                className="w-full py-2.5 px-3 rounded-xl bg-gradient-to-r from-amber-500 to-amber-600 hover:from-amber-600 hover:to-amber-700 text-white font-bold text-xs shadow-xs hover:shadow active:scale-98 transition-all flex items-center justify-center gap-2 cursor-pointer"
+                              >
+                                <Camera className="w-4 h-4 text-amber-100" />
+                                <span>Ambil Foto (Kamera)</span>
+                              </button>
 
-                          <div className="flex flex-wrap items-center justify-center gap-2 mb-4">
+                              {/* Gallery Picker (Multi-select) */}
+                              <button
+                                type="button"
+                                onClick={(e) => {
+                                  e.stopPropagation()
+                                  fileInputRef.current?.click()
+                                }}
+                                className="w-full py-2.5 px-3 rounded-xl bg-forest hover:bg-forest-dark text-warmwhite font-bold text-xs shadow-xs hover:shadow active:scale-98 transition-all flex items-center justify-center gap-2 cursor-pointer"
+                              >
+                                <ImagePlus className="w-4 h-4 text-gold" />
+                                <span>Pilih Galeri (Banyak Fail)</span>
+                              </button>
+                            </div>
+                          </div>
+
+                          <div className="flex flex-wrap items-center justify-center gap-2 mt-4">
                             <span className="text-[10px] font-semibold bg-warmwhite px-2.5 py-1 rounded-full border border-borderLight text-charcoal-muted">
                               Menyokong JPG, PNG, WEBP, GIF, AVIF
                             </span>
                             <span className="text-[10px] font-semibold bg-emerald-50 text-emerald-700 px-2.5 py-1 rounded-full border border-emerald-200">
-                              ⚡ Boleh pilih banyak gambar sekaligus (Multi-Select)
+                              ⚡ Auto Mampat WebP: Gambar telefon saiz besar dioptimumkan pantas
                             </span>
                           </div>
-
-                          <button
-                            type="button"
-                            className="px-5 py-2.5 rounded-xl bg-forest hover:bg-forest-dark text-warmwhite text-xs font-bold shadow-xs flex items-center space-x-2 transition-all group-hover:shadow-md"
-                          >
-                            <ImagePlus className="w-4 h-4 text-gold" />
-                            <span>Pilih Fail Gambar dari Peranti</span>
-                          </button>
                         </div>
 
                         {/* Uploading progress indicator */}

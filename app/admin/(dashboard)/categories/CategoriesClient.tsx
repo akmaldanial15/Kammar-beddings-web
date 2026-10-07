@@ -21,6 +21,7 @@ import {
   Menu,
   Search,
 } from 'lucide-react'
+import { ImageUploadDropzone } from '@/components/admin/ImageUploadDropzone'
 
 interface CategoriesClientProps {
   initialCategories: Category[]
@@ -846,21 +847,15 @@ export function CategoriesClient({ initialCategories }: CategoriesClientProps) {
                   </div>
                 </div>
 
-                {/* Image URL */}
-                <div>
-                  <label className="block text-xs font-bold text-forest uppercase tracking-wider mb-1">
-                    URL Imej Kategori
-                  </label>
-                  <input
-                    type="text"
-                    placeholder="https://... atau /images/..."
-                    value={editingCategory.imageUrl || ''}
-                    onChange={(e) =>
-                      setEditingCategory((prev) => ({ ...prev, imageUrl: e.target.value }))
-                    }
-                    className="w-full px-3.5 py-2.5 rounded-xl border border-borderLight bg-cream/30 text-xs focus:outline-none focus:ring-2 focus:ring-gold/30 focus:border-gold"
-                  />
-                </div>
+                {/* Image Upload Dropzone & Camera */}
+                <ImageUploadDropzone
+                  label="Imej Kategori"
+                  helperText="Imej dipaparkan pada bar navigasi megamenu, halaman katalog, dan kad kategori."
+                  value={editingCategory.imageUrl || ''}
+                  onChange={(url) =>
+                    setEditingCategory((prev) => ({ ...prev, imageUrl: url }))
+                  }
+                />
 
                 {/* Description */}
                 <div>

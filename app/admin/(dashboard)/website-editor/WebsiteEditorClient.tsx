@@ -46,6 +46,7 @@ import {
 } from 'lucide-react'
 import Link from 'next/link'
 import Image from 'next/image'
+import { ImageUploadDropzone } from '@/components/admin/ImageUploadDropzone'
 
 interface Props {
   initialConfig: WebsiteConfig
@@ -1013,19 +1014,13 @@ export function WebsiteEditorClient({ initialConfig }: Props) {
                         </div>
                       </div>
 
-                      <div>
-                        <label className="block font-bold text-charcoal mb-1">
-                          URL Gambar Latar Belakang (High-Res Image) *
-                        </label>
-                        <input
-                          type="text"
-                          required
-                          value={slide.imageUrl}
-                          onChange={(e) => handleUpdateSlide(slide.id, { imageUrl: e.target.value })}
-                          placeholder="https://images.unsplash.com/..."
-                          className="w-full px-3 py-2 bg-cream-light border border-borderLight rounded-xl outline-none focus:border-forest font-mono text-[11px]"
-                        />
-                      </div>
+                      <ImageUploadDropzone
+                        label="Gambar Latar Belakang Slaid (High-Res)"
+                        helperText="Seret & lepas gambar dari PC, guna kamera fon, atau pilih dari galeri."
+                        value={slide.imageUrl}
+                        onChange={(url) => handleUpdateSlide(slide.id, { imageUrl: url })}
+                        aspectRatio="video"
+                      />
 
                       {/* Quick 1-click Sample Bedding Image Presets */}
                       <div className="pt-1">
@@ -2090,37 +2085,18 @@ export function WebsiteEditorClient({ initialConfig }: Props) {
 
                 {/* Right: Decorative Image for Story */}
                 <div className="space-y-3">
-                  <div>
-                    <label className="block font-bold text-charcoal mb-1">
-                      URL Gambar Hiasan Atelier *
-                    </label>
-                    <input
-                      type="text"
-                      value={config.storySection.imageUrl}
-                      onChange={(e) =>
-                        setConfig({
-                          ...config,
-                          storySection: { ...config.storySection, imageUrl: e.target.value },
-                        })
-                      }
-                      placeholder="https://images.unsplash.com/..."
-                      className="w-full px-3 py-2 bg-cream-light border border-borderLight rounded-xl font-mono text-[11px] outline-none focus:border-forest"
-                    />
-                  </div>
-
-                  <div className="relative w-full h-64 sm:h-80 rounded-2xl overflow-hidden border border-borderLight bg-neutral-900 group shadow-xs">
-                    {config.storySection.imageUrl ? (
-                      <img
-                        src={config.storySection.imageUrl}
-                        alt="Atelier Craftsman"
-                        className="w-full h-full object-cover transition-transform group-hover:scale-105"
-                      />
-                    ) : (
-                      <div className="w-full h-full flex items-center justify-center text-neutral-400">
-                        Tiada URL Gambar
-                      </div>
-                    )}
-                  </div>
+                  <ImageUploadDropzone
+                    label="Gambar Hiasan Atelier & Kisah KAMAAR"
+                    helperText="Seret & lepas foto, tangkap gambar dengan kamera telefon, atau pilih dari galeri."
+                    value={config.storySection.imageUrl}
+                    onChange={(url) =>
+                      setConfig({
+                        ...config,
+                        storySection: { ...config.storySection, imageUrl: url },
+                      })
+                    }
+                    aspectRatio="square"
+                  />
                 </div>
               </div>
             </div>
@@ -2257,37 +2233,18 @@ export function WebsiteEditorClient({ initialConfig }: Props) {
 
                 {/* Right: Promotional Image */}
                 <div className="space-y-3">
-                  <div>
-                    <label className="block font-bold text-charcoal mb-1">
-                      URL Gambar Hiasan Promosi *
-                    </label>
-                    <input
-                      type="text"
-                      value={config.promotionsBanner.imageUrl}
-                      onChange={(e) =>
-                        setConfig({
-                          ...config,
-                          promotionsBanner: { ...config.promotionsBanner, imageUrl: e.target.value },
-                        })
-                      }
-                      placeholder="https://images.unsplash.com/..."
-                      className="w-full px-3 py-2 bg-cream-light border border-borderLight rounded-xl font-mono text-[11px] outline-none focus:border-forest"
-                    />
-                  </div>
-
-                  <div className="relative w-full h-64 sm:h-72 rounded-2xl overflow-hidden border border-borderLight bg-neutral-900 group shadow-xs">
-                    {config.promotionsBanner.imageUrl ? (
-                      <img
-                        src={config.promotionsBanner.imageUrl}
-                        alt="Promo Banner"
-                        className="w-full h-full object-cover transition-transform group-hover:scale-105"
-                      />
-                    ) : (
-                      <div className="w-full h-full flex items-center justify-center text-neutral-400">
-                        Tiada URL Gambar
-                      </div>
-                    )}
-                  </div>
+                  <ImageUploadDropzone
+                    label="Gambar Hiasan Promosi & Tawaran Khas"
+                    helperText="Poster tawaran, bilik tidur atau diskaun istimewa."
+                    value={config.promotionsBanner.imageUrl}
+                    onChange={(url) =>
+                      setConfig({
+                        ...config,
+                        promotionsBanner: { ...config.promotionsBanner, imageUrl: url },
+                      })
+                    }
+                    aspectRatio="video"
+                  />
                 </div>
               </div>
             </div>
