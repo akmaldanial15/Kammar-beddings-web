@@ -118,22 +118,55 @@ export function Header() {
   }
 
   const megaTimeoutRef = useRef<NodeJS.Timeout | null>(null)
+  const openTimeoutRef = useRef<NodeJS.Timeout | null>(null)
 
   const handleOpenMega = (menuKey: string) => {
+    // Clear pending close
     if (megaTimeoutRef.current) {
       clearTimeout(megaTimeoutRef.current)
       megaTimeoutRef.current = null
+    }
+
+    // If no menu is open, open immediately
+    if (!activeMega) {
+      setActiveMega(menuKey)
+      return
+    }
+
+    // If the same menu is already open, do nothing
+    if (activeMega === menuKey) return
+
+    // If switching between menus, require 100ms intentional hover
+    // so fast diagonal mouse movements towards dropdown items don't accidentally switch
+    if (openTimeoutRef.current) clearTimeout(openTimeoutRef.current)
+    openTimeoutRef.current = setTimeout(() => {
+      setActiveMega(menuKey)
+    }, 100)
+  }
+
+  const handleKeepMega = (menuKey: string) => {
+    if (megaTimeoutRef.current) {
+      clearTimeout(megaTimeoutRef.current)
+      megaTimeoutRef.current = null
+    }
+    if (openTimeoutRef.current) {
+      clearTimeout(openTimeoutRef.current)
+      openTimeoutRef.current = null
     }
     setActiveMega(menuKey)
   }
 
   const handleCloseMega = () => {
+    if (openTimeoutRef.current) {
+      clearTimeout(openTimeoutRef.current)
+      openTimeoutRef.current = null
+    }
     if (megaTimeoutRef.current) {
       clearTimeout(megaTimeoutRef.current)
     }
     megaTimeoutRef.current = setTimeout(() => {
       setActiveMega(null)
-    }, 200) // Intent buffer: ensures mouse crossing gap never drops menu
+    }, 350) // 350ms generous intent buffer: ensures mouse transit never drops menu
   }
 
   // Scroll listener for sticky header transition
@@ -147,9 +180,8 @@ export function Header() {
 
   // Close menus on route change
   useEffect(() => {
-    if (megaTimeoutRef.current) {
-      clearTimeout(megaTimeoutRef.current)
-    }
+    if (megaTimeoutRef.current) clearTimeout(megaTimeoutRef.current)
+    if (openTimeoutRef.current) clearTimeout(openTimeoutRef.current)
     setIsMobileMenuOpen(false)
     setActiveMega(null)
   }, [pathname])
@@ -315,6 +347,7 @@ export function Header() {
                 >
                   <Link
                     href="/collections/tilam-toto"
+                    onClick={() => setActiveMega(null)}
                     className={`inline-flex items-center gap-1.5 px-3 py-1.5 rounded-full transition-all duration-150 whitespace-nowrap group ${
                       pathname.startsWith('/collections/tilam-toto')
                         ? 'bg-forest text-warmwhite font-semibold shadow-xs'
@@ -338,12 +371,11 @@ export function Header() {
                   {/* Mega Menu: Tilam Toto */}
                   {activeMega === 'toto' && (
                     <div
-                      className="absolute top-full left-1/2 -translate-x-1/2 pt-2 z-50 pointer-events-auto"
-                      onMouseEnter={() => handleOpenMega('toto')}
+                      className="absolute top-full left-0 pt-2 z-50 pointer-events-auto"
+                      onMouseEnter={() => handleKeepMega('toto')}
                       onMouseLeave={handleCloseMega}
                     >
-                      <div className="absolute -top-3 left-0 right-0 h-4 bg-transparent" />
-                      <div className="w-[820px] bg-warmwhite rounded-2xl shadow-[0_25px_50px_-12px_rgba(13,40,24,0.18)] border border-borderLight p-5 grid grid-cols-12 gap-5 animate-fade-in-down">
+                      <div className="w-[820px] bg-warmwhite rounded-2xl shadow-[0_25px_50px_-12px_rgba(13,40,24,0.18)] border border-borderLight p-5 grid grid-cols-12 gap-5 animate-[fadeIn_0.15s_ease-out]">
                         {/* Col 1: Pilihan Saiz & Corak (4 cols) */}
                         <div className="col-span-4 border-r border-borderLight/80 pr-3">
                           <h4 className="text-[11px] font-bold uppercase tracking-wider text-gold-dark pb-2 border-b border-borderLight mb-2.5 flex items-center justify-between">
@@ -471,6 +503,7 @@ export function Header() {
                 >
                   <Link
                     href="/collections/tilam-kekabu"
+                    onClick={() => setActiveMega(null)}
                     className={`inline-flex items-center gap-1.5 px-3 py-1.5 rounded-full transition-all duration-150 whitespace-nowrap group ${
                       pathname.startsWith('/collections/tilam-kekabu')
                         ? 'bg-forest text-warmwhite font-semibold shadow-xs'
@@ -495,11 +528,10 @@ export function Header() {
                   {activeMega === 'kekabu' && (
                     <div
                       className="absolute top-full left-1/2 -translate-x-1/2 pt-2 z-50 pointer-events-auto"
-                      onMouseEnter={() => handleOpenMega('kekabu')}
+                      onMouseEnter={() => handleKeepMega('kekabu')}
                       onMouseLeave={handleCloseMega}
                     >
-                      <div className="absolute -top-3 left-0 right-0 h-4 bg-transparent" />
-                      <div className="w-[760px] bg-warmwhite rounded-2xl shadow-[0_25px_50px_-12px_rgba(13,40,24,0.18)] border border-borderLight p-5 grid grid-cols-12 gap-5 animate-fade-in-down">
+                      <div className="w-[760px] bg-warmwhite rounded-2xl shadow-[0_25px_50px_-12px_rgba(13,40,24,0.18)] border border-borderLight p-5 grid grid-cols-12 gap-5 animate-[fadeIn_0.15s_ease-out]">
                         <div className="col-span-7">
                           <h4 className="text-[11px] font-bold uppercase tracking-wider text-gold-dark pb-2 border-b border-borderLight mb-2.5">
                             Koleksi Kekabu Asli Tradisi Tempatan
@@ -587,6 +619,7 @@ export function Header() {
                 >
                   <Link
                     href="/collections/tilam-lipat"
+                    onClick={() => setActiveMega(null)}
                     className={`inline-flex items-center gap-1.5 px-3 py-1.5 rounded-full transition-all duration-150 whitespace-nowrap group ${
                       pathname.startsWith('/collections/tilam-lipat')
                         ? 'bg-forest text-warmwhite font-semibold shadow-xs'
@@ -611,11 +644,10 @@ export function Header() {
                   {activeMega === 'lipat' && (
                     <div
                       className="absolute top-full left-1/2 -translate-x-1/2 pt-2 z-50 pointer-events-auto"
-                      onMouseEnter={() => handleOpenMega('lipat')}
+                      onMouseEnter={() => handleKeepMega('lipat')}
                       onMouseLeave={handleCloseMega}
                     >
-                      <div className="absolute -top-3 left-0 right-0 h-4 bg-transparent" />
-                      <div className="w-[740px] bg-warmwhite rounded-2xl shadow-[0_25px_50px_-12px_rgba(13,40,24,0.18)] border border-borderLight p-5 grid grid-cols-12 gap-5 animate-fade-in-down">
+                      <div className="w-[740px] bg-warmwhite rounded-2xl shadow-[0_25px_50px_-12px_rgba(13,40,24,0.18)] border border-borderLight p-5 grid grid-cols-12 gap-5 animate-[fadeIn_0.15s_ease-out]">
                         <div className="col-span-7">
                           <h4 className="text-[11px] font-bold uppercase tracking-wider text-gold-dark pb-2 border-b border-borderLight mb-2.5">
                             Pilihan Tilam Lipat & Bujang Asrama
@@ -686,16 +718,17 @@ export function Header() {
                   onMouseEnter={() => handleOpenMega('bantal-cadar')}
                   onMouseLeave={handleCloseMega}
                 >
-                  <button
-                    type="button"
-                    className={`inline-flex items-center gap-1.5 px-3 py-1.5 rounded-full transition-all duration-150 whitespace-nowrap cursor-pointer ${
+                  <Link
+                    href="/collections/bantal"
+                    onClick={() => setActiveMega(null)}
+                    className={`inline-flex items-center gap-1.5 px-3 py-1.5 rounded-full transition-all duration-150 whitespace-nowrap group ${
                       pathname.startsWith('/collections/bantal') ||
                       pathname.startsWith('/collections/cadang-comforter')
                         ? 'bg-forest text-warmwhite font-semibold shadow-xs'
                         : 'hover:bg-forest/5 hover:text-forest text-charcoal font-medium'
                     }`}
                   >
-                    <Package className={`w-3.5 h-3.5 ${
+                    <Package className={`w-3.5 h-3.5 transition-transform group-hover:scale-110 ${
                       pathname.startsWith('/collections/bantal') || pathname.startsWith('/collections/cadang-comforter')
                         ? 'text-gold'
                         : 'text-gold-dark'
@@ -706,17 +739,16 @@ export function Header() {
                         activeMega === 'bantal-cadar' ? 'rotate-180' : ''
                       }`}
                     />
-                  </button>
+                  </Link>
 
                   {/* Dropdown: Bantal & Cadar */}
                   {activeMega === 'bantal-cadar' && (
                     <div
                       className="absolute top-full left-1/2 -translate-x-1/2 pt-2 z-50 pointer-events-auto"
-                      onMouseEnter={() => handleOpenMega('bantal-cadar')}
+                      onMouseEnter={() => handleKeepMega('bantal-cadar')}
                       onMouseLeave={handleCloseMega}
                     >
-                      <div className="absolute -top-3 left-0 right-0 h-4 bg-transparent" />
-                      <div className="w-[500px] bg-warmwhite rounded-2xl shadow-[0_20px_45px_-10px_rgba(13,40,24,0.18)] border border-borderLight p-5 grid grid-cols-2 gap-5 animate-fade-in-down">
+                      <div className="w-[500px] bg-warmwhite rounded-2xl shadow-[0_20px_45px_-10px_rgba(13,40,24,0.18)] border border-borderLight p-5 grid grid-cols-2 gap-5 animate-[fadeIn_0.15s_ease-out]">
                         {/* Col 1: Bantal */}
                         <div className="border-r border-borderLight/80 pr-4">
                           <h4 className="text-[11px] font-bold uppercase tracking-wider text-gold-dark pb-1.5 border-b border-borderLight mb-2.5">
@@ -805,9 +837,10 @@ export function Header() {
                   onMouseEnter={() => handleOpenMega('khas')}
                   onMouseLeave={handleCloseMega}
                 >
-                  <button
-                    type="button"
-                    className={`inline-flex items-center gap-1.5 px-3 py-1.5 rounded-full transition-all duration-150 whitespace-nowrap cursor-pointer ${
+                  <Link
+                    href="/collections/selimut-patchwork"
+                    onClick={() => setActiveMega(null)}
+                    className={`inline-flex items-center gap-1.5 px-3 py-1.5 rounded-full transition-all duration-150 whitespace-nowrap group ${
                       pathname.startsWith('/collections/selimut-patchwork') ||
                       pathname.startsWith('/collections/set-bayi') ||
                       pathname.startsWith('/collections/kusyen-sofa')
@@ -816,7 +849,13 @@ export function Header() {
                     }`}
                   >
                     <span>Koleksi Khas</span>
-                    <span className="px-1.5 py-0.2 rounded-full text-[9px] font-semibold bg-charcoal/5 text-charcoal-muted">
+                    <span className={`px-1.5 py-0.2 rounded-full text-[9px] font-semibold ${
+                      pathname.startsWith('/collections/selimut-patchwork') ||
+                      pathname.startsWith('/collections/set-bayi') ||
+                      pathname.startsWith('/collections/kusyen-sofa')
+                        ? 'bg-gold/20 text-gold'
+                        : 'bg-charcoal/5 text-charcoal-muted'
+                    }`}>
                       3
                     </span>
                     <ChevronDown
@@ -824,17 +863,16 @@ export function Header() {
                         activeMega === 'khas' ? 'rotate-180' : ''
                       }`}
                     />
-                  </button>
+                  </Link>
 
                   {/* Dropdown: Koleksi Khas */}
                   {activeMega === 'khas' && (
                     <div
                       className="absolute top-full left-1/2 -translate-x-1/2 pt-2 z-50 pointer-events-auto"
-                      onMouseEnter={() => handleOpenMega('khas')}
+                      onMouseEnter={() => handleKeepMega('khas')}
                       onMouseLeave={handleCloseMega}
                     >
-                      <div className="absolute -top-3 left-0 right-0 h-4 bg-transparent" />
-                      <div className="w-[620px] bg-warmwhite rounded-2xl shadow-[0_20px_45px_-10px_rgba(13,40,24,0.18)] border border-borderLight p-4 animate-fade-in-down">
+                      <div className="w-[620px] bg-warmwhite rounded-2xl shadow-[0_20px_45px_-10px_rgba(13,40,24,0.18)] border border-borderLight p-4 animate-[fadeIn_0.15s_ease-out]">
                         <h4 className="text-[11px] font-bold uppercase tracking-wider text-gold-dark pb-1.5 border-b border-borderLight mb-3">
                           Koleksi Jahitan Khas & Eksklusif Kilang
                         </h4>
@@ -915,6 +953,7 @@ export function Header() {
                 >
                   <Link
                     href="/collections/borong-gudang"
+                    onClick={() => setActiveMega(null)}
                     className="inline-flex items-center gap-1.5 px-3.5 py-1.5 rounded-full bg-gradient-to-r from-amber-100 via-amber-50 to-amber-100 hover:from-amber-200 hover:to-amber-100 text-amber-950 border border-amber-300 font-bold transition-all shadow-xs group whitespace-nowrap"
                   >
                     <Flame className="w-3.5 h-3.5 text-amber-600 fill-amber-500/30 animate-pulse" />
@@ -933,11 +972,10 @@ export function Header() {
                   {activeMega === 'borong' && (
                     <div
                       className="absolute top-full left-1/2 -translate-x-1/2 pt-2 z-50 pointer-events-auto"
-                      onMouseEnter={() => handleOpenMega('borong')}
+                      onMouseEnter={() => handleKeepMega('borong')}
                       onMouseLeave={handleCloseMega}
                     >
-                      <div className="absolute -top-3 left-0 right-0 h-4 bg-transparent" />
-                      <div className="w-[660px] bg-warmwhite rounded-2xl shadow-[0_25px_50px_-12px_rgba(13,40,24,0.22)] border border-amber-200 p-5 grid grid-cols-12 gap-5 animate-fade-in-down">
+                      <div className="w-[660px] bg-warmwhite rounded-2xl shadow-[0_25px_50px_-12px_rgba(13,40,24,0.22)] border border-amber-200 p-5 grid grid-cols-12 gap-5 animate-[fadeIn_0.15s_ease-out]">
                         <div className="col-span-6 border-r border-borderLight pr-4">
                           <div className="inline-flex items-center gap-1.5 text-[10px] font-black uppercase tracking-wider text-amber-800 bg-amber-100 px-2 py-0.5 rounded mb-2">
                             <Flame className="w-3 h-3 text-amber-600" />
@@ -1009,15 +1047,20 @@ export function Header() {
                   onMouseEnter={() => handleOpenMega('kilang')}
                   onMouseLeave={handleCloseMega}
                 >
-                  <button
-                    type="button"
-                    className={`inline-flex items-center gap-1.5 px-3 py-1.5 rounded-full transition-all duration-150 whitespace-nowrap cursor-pointer ${
+                  <Link
+                    href="/profil"
+                    onClick={() => setActiveMega(null)}
+                    className={`inline-flex items-center gap-1.5 px-3 py-1.5 rounded-full transition-all duration-150 whitespace-nowrap group ${
                       pathname.startsWith('/profil') || pathname.startsWith('/business')
                         ? 'bg-forest text-warmwhite font-semibold shadow-xs'
                         : 'hover:bg-forest/5 hover:text-forest text-charcoal font-medium'
                     }`}
                   >
-                    <Building2 className="w-3.5 h-3.5 text-forest/80" />
+                    <Building2 className={`w-3.5 h-3.5 transition-transform group-hover:scale-110 ${
+                      pathname.startsWith('/profil') || pathname.startsWith('/business')
+                        ? 'text-gold'
+                        : 'text-forest/80'
+                    }`} />
                     <span>Kilang & OEM</span>
                     <span className="text-[10px] font-semibold text-emerald-800 bg-emerald-100/80 px-1.5 py-0.2 rounded">
                       4 Unit
@@ -1027,17 +1070,16 @@ export function Header() {
                         activeMega === 'kilang' ? 'rotate-180' : ''
                       }`}
                     />
-                  </button>
+                  </Link>
 
                   {/* Dropdown: Kilang & OEM */}
                   {activeMega === 'kilang' && (
                     <div
                       className="absolute top-full right-0 pt-2 z-50 pointer-events-auto"
-                      onMouseEnter={() => handleOpenMega('kilang')}
+                      onMouseEnter={() => handleKeepMega('kilang')}
                       onMouseLeave={handleCloseMega}
                     >
-                      <div className="absolute -top-3 left-0 right-0 h-4 bg-transparent" />
-                      <div className="w-[360px] bg-warmwhite rounded-2xl shadow-[0_20px_45px_-10px_rgba(13,40,24,0.18)] border border-borderLight p-4 animate-fade-in-down">
+                      <div className="w-[360px] bg-warmwhite rounded-2xl shadow-[0_20px_45px_-10px_rgba(13,40,24,0.18)] border border-borderLight p-4 animate-[fadeIn_0.15s_ease-out]">
                         <h4 className="text-[11px] font-bold uppercase tracking-wider text-gold-dark pb-1.5 border-b border-borderLight mb-2.5">
                           Tunas Sinar Jaya Enterprise
                         </h4>
