@@ -712,34 +712,31 @@ export function ProductsClient({ initialProducts, categories }: ProductsClientPr
       )}
 
       {/* 1. Integrated Luxury Header & Atelier Actions */}
-      <div className="flex flex-col sm:flex-row sm:items-center sm:justify-between gap-4 pb-0.5">
-        <div className="space-y-1">
-          <div className="inline-flex items-center gap-2 px-2.5 py-0.5 rounded-full bg-forest-dark/5 border border-forest-dark/10 text-forest-dark text-[10px] font-bold tracking-wider uppercase">
-            <Sparkles className="w-3 h-3 text-gold" />
-            <span>KAMAAR Atelier Suite</span>
+      <div className="flex flex-col sm:flex-row sm:items-center sm:justify-between gap-3 sm:gap-4 pb-1">
+        <div className="space-y-0.5 sm:space-y-1">
+          <div className="flex items-center gap-1.5">
+            <span className="w-1.5 h-1.5 rounded-full bg-gold" />
+            <span className="text-[10px] font-bold tracking-wider uppercase text-forest-dark/75">
+              KAMAAR Atelier Suite
+            </span>
           </div>
-          <h1 className="font-serif text-2xl sm:text-3xl font-bold text-forest-dark tracking-tight">
+          <h1 className="font-serif text-xl sm:text-2xl lg:text-3xl font-bold text-forest-dark tracking-tight">
             Katalog Produk & Inventori
           </h1>
-          <p className="text-xs sm:text-sm text-secondary max-w-2xl">
-            Uruskan spesifikasi tilam handcrafted, bantal anatomi, stok saiz & varian harga secara langsung.
+          <p className="text-xs text-secondary max-w-xl hidden sm:block">
+            Uruskan spesifikasi tilam, bantal anatomi, stok saiz & varian harga secara langsung.
           </p>
         </div>
 
-        {/* Primary Action Button & Status Pill */}
-        <div className="flex items-center gap-2.5 flex-wrap sm:flex-nowrap flex-shrink-0">
-          <div className="hidden lg:flex items-center gap-2 px-3 py-2 rounded-xl bg-white border border-slate-200/80 shadow-xs text-xs font-semibold text-slate-700">
-            <span className="w-2 h-2 rounded-full bg-emerald-500 animate-pulse"></span>
-            <span>{publishedCount} Produk Live</span>
-          </div>
-
+        {/* Primary Action Button */}
+        <div className="flex items-center gap-2 flex-shrink-0">
           <button
             type="button"
             onClick={handleOpenNewProduct}
-            className="w-full sm:w-auto inline-flex items-center justify-center gap-2 bg-gradient-to-r from-forest-dark to-forest hover:from-forest hover:to-forest-dark text-warmwhite px-4.5 py-2.5 sm:py-3 rounded-xl text-xs sm:text-sm font-bold shadow-md hover:shadow-lg active:scale-98 transition-all cursor-pointer whitespace-nowrap"
+            className="w-full sm:w-auto inline-flex items-center justify-center gap-2 bg-gradient-to-r from-forest-dark to-forest hover:from-forest hover:to-forest-dark text-warmwhite px-4 py-2 sm:px-5 sm:py-2.5 rounded-xl text-xs sm:text-sm font-bold shadow-sm hover:shadow active:scale-98 transition-all cursor-pointer whitespace-nowrap"
           >
             <Plus className="w-4 h-4 text-gold flex-shrink-0" />
-            <span>+ Tambah Produk Baharu</span>
+            <span>Tambah Produk Baharu</span>
           </button>
         </div>
       </div>
