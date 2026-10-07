@@ -22,6 +22,10 @@ import {
   ShoppingBag,
   CheckCircle2,
   Store,
+  Factory,
+  BadgePercent,
+  HeartHandshake,
+  ArrowUpRight,
 } from 'lucide-react'
 
 export const metadata = {
@@ -106,21 +110,41 @@ const companyPillars = [
     num: '01',
     title: 'Kualiti Terjamin',
     desc: 'Penggunaan bahan mentah bermutu tinggi dan pemantauan kualiti ketat di setiap stesen.',
+    badge: '100% Kawalan QC',
+    highlight: 'Bahan Premium & Tahan Lasak',
+    icon: ShieldCheck,
+    iconBg: 'bg-emerald-50 text-emerald-700 border-emerald-200/80',
+    accentGradient: 'from-emerald-600 via-teal-500 to-emerald-700',
   },
   {
     num: '02',
     title: 'Pengeluaran Cekap',
     desc: 'Operasi kilang sistematik yang mampu memenuhi tempahan pukal mahupun individu dengan pantas.',
+    badge: 'Skala Industri',
+    highlight: 'Kapasiti Harian Tinggi',
+    icon: Factory,
+    iconBg: 'bg-forest/10 text-forest border-forest/20',
+    accentGradient: 'from-[#0D2818] via-emerald-800 to-[#163824]',
   },
   {
     num: '03',
     title: 'Harga Berpatutan',
     desc: 'Harga terus dari kilang tanpa orang tengah untuk penjimatan maksimum setiap pelanggan.',
+    badge: 'Terus Dari Kilang',
+    highlight: 'Tiada Markup Ejen',
+    icon: BadgePercent,
+    iconBg: 'bg-amber-50 text-amber-700 border-amber-200/80',
+    accentGradient: 'from-gold-dark via-gold to-amber-500',
   },
   {
     num: '04',
     title: 'Komitmen Pelanggan',
     desc: 'Khidmat layanan mesra dan jaminan kepuasan pelanggan adalah tunjang perniagaan kami.',
+    badge: 'Layanan Mesra',
+    highlight: 'Jaminan Kepuasan Penuh',
+    icon: HeartHandshake,
+    iconBg: 'bg-rose-50 text-rose-700 border-rose-200/80',
+    accentGradient: 'from-rose-600 via-amber-600 to-rose-700',
   },
 ]
 
@@ -128,7 +152,7 @@ export default function ProfilPage() {
   return (
     <div className="min-h-screen bg-[#FDFBF7] text-[#2D2A26] font-sans antialiased selection:bg-gold/20 selection:text-forest">
       {/* Hero Section */}
-      <section className="relative bg-gradient-to-br from-[#0D2818] via-[#163824] to-[#0D2818] text-white py-16 sm:py-24 overflow-hidden border-b border-gold/20">
+      <section className="relative bg-gradient-to-br from-[#0D2818] via-[#163824] to-[#0D2818] text-white pt-16 sm:pt-20 pb-24 sm:pb-32 overflow-hidden">
         <div className="absolute inset-0 opacity-10 bg-[radial-gradient(#D4AF37_1px,transparent_1px)] [background-size:24px_24px]" />
         
         <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 relative z-10">
@@ -220,31 +244,72 @@ export default function ProfilPage() {
         </div>
       </section>
 
-      {/* 4 Pillars Section */}
-      <section className="py-12 bg-white border-b border-[#E8E2D8]">
-        <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
-          <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-4 gap-6">
-            {companyPillars.map((p) => (
+      {/* 4 Pillars Section - Floating Modern Deck */}
+      <section className="relative z-20 -mt-14 sm:-mt-20 lg:-mt-24 px-4 sm:px-6 lg:px-8 max-w-7xl mx-auto mb-10 sm:mb-14">
+        <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-4 gap-5 lg:gap-6">
+          {companyPillars.map((p) => {
+            const Icon = p.icon
+            return (
               <div
                 key={p.num}
-                className="p-6 rounded-2xl bg-[#FAF7F2] border border-[#E8E2D8] hover:border-gold/60 transition-all space-y-2 group"
+                className="group relative bg-white/95 backdrop-blur-md rounded-2xl p-6 sm:p-7 border border-[#E8E2D8]/90 hover:border-gold/60 shadow-[0_12px_30px_-8px_rgba(13,40,24,0.1),0_4px_6px_-2px_rgba(13,40,24,0.03)] hover:shadow-[0_22px_45px_-10px_rgba(212,175,55,0.25)] hover:-translate-y-2 transition-all duration-300 flex flex-col justify-between overflow-hidden"
               >
-                <div className="flex items-center justify-between">
-                  <span className="font-serif text-2xl font-bold text-gold group-hover:scale-110 transition-transform">
-                    {p.num}
-                  </span>
-                  <Award className="w-5 h-5 text-forest/40 group-hover:text-forest transition-colors" />
+                {/* Top Glowing Gradient Accent Bar */}
+                <div
+                  className={`absolute top-0 left-0 right-0 h-1.5 bg-gradient-to-r ${p.accentGradient} opacity-70 group-hover:opacity-100 transition-opacity duration-300`}
+                />
+
+                {/* Subtle Ambient Radial Glow on hover */}
+                <div className="absolute -top-10 -right-10 w-28 h-28 bg-gold/10 rounded-full blur-2xl group-hover:bg-gold/20 transition-all duration-500 pointer-events-none" />
+
+                <div>
+                  {/* Top Bar: Serif Number + Styled Icon Badge */}
+                  <div className="flex items-center justify-between mb-4">
+                    <span className="font-serif text-3xl sm:text-4xl font-extrabold tracking-tight bg-gradient-to-br from-gold-dark via-gold to-amber-600 bg-clip-text text-transparent group-hover:scale-105 transition-transform origin-left">
+                      {p.num}
+                    </span>
+                    <div
+                      className={`w-12 h-12 rounded-2xl flex items-center justify-center border shadow-xs transition-all duration-300 group-hover:scale-110 group-hover:shadow-md ${p.iconBg}`}
+                    >
+                      <Icon className="w-5 h-5 transition-transform duration-300" />
+                    </div>
+                  </div>
+
+                  {/* Micro Pill Badge */}
+                  <div className="mb-2.5">
+                    <span className="inline-flex items-center gap-1.5 px-2.5 py-1 rounded-full text-[10px] font-bold uppercase tracking-wider bg-[#FAF7F2] text-forest/75 border border-[#E8E2D8] group-hover:border-gold/50 group-hover:bg-gold/10 group-hover:text-forest transition-all">
+                      <Sparkles className="w-3 h-3 text-gold" />
+                      {p.badge}
+                    </span>
+                  </div>
+
+                  {/* Pillar Title */}
+                  <h3 className="font-serif text-lg font-bold text-forest group-hover:text-gold-dark transition-colors tracking-tight mb-2">
+                    {p.title}
+                  </h3>
+
+                  {/* Pillar Description */}
+                  <p className="text-xs sm:text-[13px] text-charcoal-muted leading-relaxed">
+                    {p.desc}
+                  </p>
                 </div>
-                <h4 className="font-bold text-forest text-base">{p.title}</h4>
-                <p className="text-xs text-charcoal-muted leading-relaxed">{p.desc}</p>
+
+                {/* Bottom Highlight Feature / Trust Footnote */}
+                <div className="mt-5 pt-3.5 border-t border-[#F2ECE1] flex items-center justify-between text-[11px] font-semibold text-forest/80 group-hover:text-forest transition-colors">
+                  <span className="flex items-center gap-1.5">
+                    <CheckCircle2 className="w-3.5 h-3.5 text-emerald-600 group-hover:scale-110 transition-transform flex-shrink-0" />
+                    <span>{p.highlight}</span>
+                  </span>
+                  <ArrowUpRight className="w-3.5 h-3.5 text-gold opacity-60 group-hover:opacity-100 group-hover:translate-x-0.5 group-hover:-translate-y-0.5 transition-all flex-shrink-0" />
+                </div>
               </div>
-            ))}
-          </div>
+            )
+          })}
         </div>
       </section>
 
       {/* Tentang Kami & Aktiviti Pengilangan */}
-      <section id="tentang-kami" className="py-16 sm:py-20 max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
+      <section id="tentang-kami" className="py-12 sm:py-16 max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
         <div className="grid grid-cols-1 lg:grid-cols-12 gap-12 items-start">
           {/* Left Text */}
           <div className="lg:col-span-6 space-y-6">
