@@ -784,9 +784,23 @@ export async function getWebsiteConfig(): Promise<WebsiteConfig> {
   if (!db.websiteConfig) {
     db.websiteConfig = initialWebsiteConfig
     saveDb(db)
-  } else if (!db.websiteConfig.megaMenu) {
-    db.websiteConfig.megaMenu = initialWebsiteConfig.megaMenu
-    saveDb(db)
+  } else {
+    let changed = false
+    if (!db.websiteConfig.megaMenu) {
+      db.websiteConfig.megaMenu = initialWebsiteConfig.megaMenu
+      changed = true
+    }
+    if (!db.websiteConfig.appearance) {
+      db.websiteConfig.appearance = initialWebsiteConfig.appearance || {
+        enableEntranceAnimations: true,
+        enableFloatingBadges: true,
+        cardBorderRadius: 'rounded-2xl',
+      }
+      changed = true
+    }
+    if (changed) {
+      saveDb(db)
+    }
   }
   return db.websiteConfig
 }
@@ -840,7 +854,8 @@ export async function updateWebsiteConfig(
       ...(config.socialAndContact || {}),
     },
     appearance: {
-      ...current.appearance,
+      ...initialWebsiteConfig.appearance,
+      ...(current.appearance || {}),
       ...(config.appearance || {}),
     },
   }

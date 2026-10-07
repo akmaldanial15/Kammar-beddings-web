@@ -2336,6 +2336,11 @@
       "instagramUrl": "",
       "tiktokUrl": "https://www.tiktok.com/@kamaar_shop",
       "facebookUrl": "https://www.facebook.com"
+    },
+    "appearance": {
+      "enableEntranceAnimations": true,
+      "enableFloatingBadges": true,
+      "cardBorderRadius": "rounded-2xl"
     }
   },
   "paymentSettings": {

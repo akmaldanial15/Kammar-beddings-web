@@ -126,7 +126,14 @@ const SAMPLE_BEDROOM_IMAGES = [
 ]
 
 export function WebsiteEditorClient({ initialConfig }: Props) {
-  const [config, setConfig] = useState<WebsiteConfig>(initialConfig)
+  const [config, setConfig] = useState<WebsiteConfig>(() => ({
+    ...initialWebsiteConfig,
+    ...initialConfig,
+    appearance: {
+      ...initialWebsiteConfig.appearance,
+      ...(initialConfig?.appearance || {}),
+    },
+  }))
   const [activeTab, setActiveTab] = useState<TabType>('theme')
   const [isSaving, setIsSaving] = useState(false)
   const [saveSuccess, setSaveSuccess] = useState(false)
@@ -148,7 +155,14 @@ export function WebsiteEditorClient({ initialConfig }: Props) {
 
       const data = await res.json()
       if (res.ok && data.success) {
-        setConfig(data.config)
+        setConfig((prev) => ({
+          ...initialWebsiteConfig,
+          ...data.config,
+          appearance: {
+            ...initialWebsiteConfig.appearance,
+            ...(data.config?.appearance || prev.appearance || {}),
+          },
+        }))
         setSaveSuccess(true)
         if (typeof window !== 'undefined') {
           window.dispatchEvent(new Event('kamaar:website_config_updated'))
@@ -2411,15 +2425,16 @@ export function WebsiteEditorClient({ initialConfig }: Props) {
                   <label className="relative inline-flex items-center cursor-pointer">
                     <input
                       type="checkbox"
-                      checked={config.appearance.enableEntranceAnimations}
+                      checked={config.appearance?.enableEntranceAnimations ?? true}
                       onChange={(e) =>
-                        setConfig({
-                          ...config,
+                        setConfig((prev) => ({
+                          ...prev,
                           appearance: {
-                            ...config.appearance,
+                            ...initialWebsiteConfig.appearance,
+                            ...(prev.appearance || {}),
                             enableEntranceAnimations: e.target.checked,
                           },
-                        })
+                        }))
                       }
                       className="sr-only peer"
                     />
@@ -2439,15 +2454,16 @@ export function WebsiteEditorClient({ initialConfig }: Props) {
                   <label className="relative inline-flex items-center cursor-pointer">
                     <input
                       type="checkbox"
-                      checked={config.appearance.enableFloatingBadges}
+                      checked={config.appearance?.enableFloatingBadges ?? true}
                       onChange={(e) =>
-                        setConfig({
-                          ...config,
+                        setConfig((prev) => ({
+                          ...prev,
                           appearance: {
-                            ...config.appearance,
+                            ...initialWebsiteConfig.appearance,
+                            ...(prev.appearance || {}),
                             enableFloatingBadges: e.target.checked,
                           },
-                        })
+                        }))
                       }
                       className="sr-only peer"
                     />
@@ -2469,16 +2485,17 @@ export function WebsiteEditorClient({ initialConfig }: Props) {
                         key={rad.id}
                         type="button"
                         onClick={() =>
-                          setConfig({
-                            ...config,
+                          setConfig((prev) => ({
+                            ...prev,
                             appearance: {
-                              ...config.appearance,
+                              ...initialWebsiteConfig.appearance,
+                              ...(prev.appearance || {}),
                               cardBorderRadius: rad.id as any,
                             },
-                          })
+                          }))
                         }
                         className={`py-2.5 px-3 rounded-xl border text-xs font-semibold transition-all cursor-pointer ${
-                          config.appearance.cardBorderRadius === rad.id
+                          (config.appearance?.cardBorderRadius || 'rounded-2xl') === rad.id
                             ? 'bg-[#1E4E8C] text-white border-[#1E4E8C] shadow-xs'
                             : 'bg-white border-borderLight text-secondary hover:text-forest-dark'
                         }`}
