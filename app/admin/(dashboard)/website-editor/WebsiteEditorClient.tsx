@@ -43,6 +43,7 @@ import {
   ArrowUp,
   ArrowDown,
   ExternalLink as LinkIcon,
+  Building2,
 } from 'lucide-react'
 import Link from 'next/link'
 import Image from 'next/image'
@@ -52,7 +53,7 @@ interface Props {
   initialConfig: WebsiteConfig
 }
 
-type TabType = 'theme' | 'hero' | 'announcement' | 'megamenu' | 'reassurance' | 'story' | 'promotions' | 'contact' | 'visual'
+type TabType = 'theme' | 'hero' | 'announcement' | 'megamenu' | 'reassurance' | 'story' | 'companyProfile' | 'promotions' | 'contact' | 'visual'
 
 const THEME_PRESETS = [
   {
@@ -126,14 +127,37 @@ const SAMPLE_BEDROOM_IMAGES = [
 ]
 
 export function WebsiteEditorClient({ initialConfig }: Props) {
-  const [config, setConfig] = useState<WebsiteConfig>(() => ({
-    ...initialWebsiteConfig,
-    ...initialConfig,
-    appearance: {
-      ...initialWebsiteConfig.appearance,
-      ...(initialConfig?.appearance || {}),
-    },
-  }))
+  const [config, setConfig] = useState<WebsiteConfig>(() => {
+    const defaultProfile = initialWebsiteConfig.companyProfile!
+    const userProfile = initialConfig?.companyProfile
+
+    return {
+      ...initialWebsiteConfig,
+      ...initialConfig,
+      companyProfile: {
+        hero: {
+          ...defaultProfile.hero,
+          ...(userProfile?.hero || {}),
+        },
+        about: {
+          ...defaultProfile.about,
+          ...(userProfile?.about || {}),
+        },
+        facility: {
+          ...defaultProfile.facility,
+          ...(userProfile?.facility || {}),
+        },
+        visionMission: {
+          ...defaultProfile.visionMission,
+          ...(userProfile?.visionMission || {}),
+        },
+      },
+      appearance: {
+        ...initialWebsiteConfig.appearance,
+        ...(initialConfig?.appearance || {}),
+      },
+    }
+  })
   const [activeTab, setActiveTab] = useState<TabType>('theme')
   const [isSaving, setIsSaving] = useState(false)
   const [saveSuccess, setSaveSuccess] = useState(false)
@@ -155,9 +179,30 @@ export function WebsiteEditorClient({ initialConfig }: Props) {
 
       const data = await res.json()
       if (res.ok && data.success) {
+        const defaultProfile = initialWebsiteConfig.companyProfile!
+        const userProfile = data.config?.companyProfile
+
         setConfig((prev) => ({
           ...initialWebsiteConfig,
           ...data.config,
+          companyProfile: {
+            hero: {
+              ...defaultProfile.hero,
+              ...(userProfile?.hero || prev.companyProfile?.hero || {}),
+            },
+            about: {
+              ...defaultProfile.about,
+              ...(userProfile?.about || prev.companyProfile?.about || {}),
+            },
+            facility: {
+              ...defaultProfile.facility,
+              ...(userProfile?.facility || prev.companyProfile?.facility || {}),
+            },
+            visionMission: {
+              ...defaultProfile.visionMission,
+              ...(userProfile?.visionMission || prev.companyProfile?.visionMission || {}),
+            },
+          },
           appearance: {
             ...initialWebsiteConfig.appearance,
             ...(data.config?.appearance || prev.appearance || {}),
@@ -376,15 +421,16 @@ export function WebsiteEditorClient({ initialConfig }: Props) {
   }
 
   const tabs = [
-    { id: 'theme', label: 'Warna & Tema', shortLabel: 'Warna', icon: Palette, num: '1/9' },
-    { id: 'hero', label: 'Slaid Hero & Gambar', shortLabel: 'Hero Slaid', icon: ImageIcon, num: '2/9' },
-    { id: 'announcement', label: 'Palang Pengumuman', shortLabel: 'Pengumuman', icon: Bell, num: '3/9' },
-    { id: 'megamenu', label: 'Navigasi & Mega Menu', shortLabel: 'Mega Menu', icon: Layers, num: '4/9' },
-    { id: 'reassurance', label: 'Jaminan & Kelebihan', shortLabel: 'Kelebihan', icon: Sparkles, num: '5/9' },
-    { id: 'story', label: 'Kisah Atelier', shortLabel: 'Kisah', icon: BookOpen, num: '6/9' },
-    { id: 'promotions', label: 'Banner Promosi', shortLabel: 'Promosi', icon: Tag, num: '7/9' },
-    { id: 'contact', label: 'WhatsApp & Sosial', shortLabel: 'Sosial', icon: Share2, num: '8/9' },
-    { id: 'visual', label: 'Animasi & Kesan', shortLabel: 'Animasi', icon: Wand2, num: '9/9' },
+    { id: 'theme', label: 'Warna & Tema', shortLabel: 'Warna', icon: Palette, num: '1/10' },
+    { id: 'hero', label: 'Slaid Hero & Gambar', shortLabel: 'Hero Slaid', icon: ImageIcon, num: '2/10' },
+    { id: 'announcement', label: 'Palang Pengumuman', shortLabel: 'Pengumuman', icon: Bell, num: '3/10' },
+    { id: 'megamenu', label: 'Navigasi & Mega Menu', shortLabel: 'Mega Menu', icon: Layers, num: '4/10' },
+    { id: 'reassurance', label: 'Jaminan & Kelebihan', shortLabel: 'Kelebihan', icon: Sparkles, num: '5/10' },
+    { id: 'story', label: 'Kisah Atelier', shortLabel: 'Kisah', icon: BookOpen, num: '6/10' },
+    { id: 'companyProfile', label: 'Profil Syarikat & Kilang', shortLabel: 'Profil Kilang', icon: Building2, num: '7/10' },
+    { id: 'promotions', label: 'Banner Promosi', shortLabel: 'Promosi', icon: Tag, num: '8/10' },
+    { id: 'contact', label: 'WhatsApp & Sosial', shortLabel: 'Sosial', icon: Share2, num: '9/10' },
+    { id: 'visual', label: 'Animasi & Kesan', shortLabel: 'Animasi', icon: Wand2, num: '10/10' },
   ] as const
 
   const [isMobileSelectorOpen, setIsMobileSelectorOpen] = useState(false)
@@ -482,7 +528,7 @@ export function WebsiteEditorClient({ initialConfig }: Props) {
           </div>
           <span className="sm:hidden text-[10px] font-bold px-2.5 py-1 bg-cream text-forest-dark rounded-xl border border-borderLight flex items-center space-x-1">
             <span className="w-1.5 h-1.5 rounded-full bg-emerald-500" />
-            <span>8 Bahagian</span>
+            <span>10 Bahagian</span>
           </span>
         </div>
       </div>
@@ -2118,7 +2164,673 @@ export function WebsiteEditorClient({ initialConfig }: Props) {
         )}
 
         {/* ========================================================================= */}
-        {/* TAB 6: PROMOTIONS & LOOKBOOK BANNER                                       */}
+        {/* TAB 7: PROFIL SYARIKAT & PREMIS KILANG (/profil)                          */}
+        {/* ========================================================================= */}
+        {activeTab === 'companyProfile' && (() => {
+          const profile = (config.companyProfile || initialWebsiteConfig.companyProfile)!
+          const defaultProf = initialWebsiteConfig.companyProfile!
+          const aboutParagraphs = profile.about?.paragraphs || []
+          const visionPoints = profile.visionMission?.visionPoints || []
+
+          const updateCompanyHero = (updates: Partial<typeof profile.hero>) => {
+            setConfig((prev) => ({
+              ...prev,
+              companyProfile: {
+                ...(prev.companyProfile || defaultProf),
+                hero: {
+                  ...((prev.companyProfile || defaultProf).hero),
+                  ...updates,
+                },
+              },
+            }))
+          }
+
+          const updateCompanyAbout = (updates: Partial<typeof profile.about>) => {
+            setConfig((prev) => ({
+              ...prev,
+              companyProfile: {
+                ...(prev.companyProfile || defaultProf),
+                about: {
+                  ...((prev.companyProfile || defaultProf).about),
+                  ...updates,
+                },
+              },
+            }))
+          }
+
+          const updateCompanyFacility = (updates: Partial<typeof profile.facility>) => {
+            setConfig((prev) => ({
+              ...prev,
+              companyProfile: {
+                ...(prev.companyProfile || defaultProf),
+                facility: {
+                  ...((prev.companyProfile || defaultProf).facility),
+                  ...updates,
+                },
+              },
+            }))
+          }
+
+          const updateCompanyVisionMission = (updates: Partial<typeof profile.visionMission>) => {
+            setConfig((prev) => ({
+              ...prev,
+              companyProfile: {
+                ...(prev.companyProfile || defaultProf),
+                visionMission: {
+                  ...((prev.companyProfile || defaultProf).visionMission),
+                  ...updates,
+                },
+              },
+            }))
+          }
+
+          const handleUpdateParagraph = (idx: number, text: string) => {
+            const next = [...aboutParagraphs]
+            next[idx] = text
+            updateCompanyAbout({ paragraphs: next })
+          }
+
+          const handleAddParagraph = () => {
+            updateCompanyAbout({
+              paragraphs: [...aboutParagraphs, 'Tulis perenggan penerangan syarikat baru di sini.'],
+            })
+          }
+
+          const handleDeleteParagraph = (idx: number) => {
+            if (aboutParagraphs.length <= 1) {
+              alert('Sekurang-kurangnya satu perenggan diperlukan.')
+              return
+            }
+            updateCompanyAbout({
+              paragraphs: aboutParagraphs.filter((_, i) => i !== idx),
+            })
+          }
+
+          const handleMoveParagraph = (idx: number, direction: 'up' | 'down') => {
+            const targetIdx = direction === 'up' ? idx - 1 : idx + 1
+            if (targetIdx < 0 || targetIdx >= aboutParagraphs.length) return
+            const next = [...aboutParagraphs]
+            const temp = next[idx]
+            next[idx] = next[targetIdx]
+            next[targetIdx] = temp
+            updateCompanyAbout({ paragraphs: next })
+          }
+
+          const handleUpdateVisionPoint = (idx: number, text: string) => {
+            const next = [...visionPoints]
+            next[idx] = text
+            updateCompanyVisionMission({ visionPoints: next })
+          }
+
+          const handleAddVisionPoint = () => {
+            updateCompanyVisionMission({
+              visionPoints: [...visionPoints, 'Tulis poin visi baru di sini.'],
+            })
+          }
+
+          const handleDeleteVisionPoint = (idx: number) => {
+            if (visionPoints.length <= 1) {
+              alert('Sekurang-kurangnya satu poin visi diperlukan.')
+              return
+            }
+            updateCompanyVisionMission({
+              visionPoints: visionPoints.filter((_, i) => i !== idx),
+            })
+          }
+
+          const handleResetCompanyProfile = () => {
+            if (!confirm('Adakah anda pasti mahu memulihkan semua teks dan gambar profil syarikat kepada tetapan asal rasmi?')) {
+              return
+            }
+            setConfig((prev) => ({
+              ...prev,
+              companyProfile: initialWebsiteConfig.companyProfile,
+            }))
+          }
+
+          return (
+            <div className="space-y-6 animate-fade-in-up">
+              {/* Header Card */}
+              <div className="bg-warmwhite p-4 sm:p-6 rounded-2xl border border-borderLight shadow-xs flex flex-col md:flex-row md:items-center justify-between gap-4">
+                <div className="space-y-1">
+                  <div className="flex items-center space-x-2">
+                    <Building2 className="w-5 h-5 text-gold-dark" />
+                    <h3 className="font-serif text-base sm:text-lg font-bold text-forest-dark">
+                      Pengurusan Penuh Halaman Profil Syarikat & Kilang (/profil)
+                    </h3>
+                  </div>
+                  <p className="text-xs text-secondary">
+                    Ubah suai semua teks pengenalan syarikat, perenggan sejarah, moto rasmi, serta muat naik foto premis kilang & operasi terkini.
+                  </p>
+                </div>
+
+                <div className="flex items-center gap-2 shrink-0">
+                  <Link
+                    href="/profil"
+                    target="_blank"
+                    className="inline-flex items-center space-x-1.5 px-3.5 py-2 bg-[#1E4E8C]/10 hover:bg-[#1E4E8C]/20 text-[#1E4E8C] border border-[#1E4E8C]/30 rounded-xl text-xs font-bold transition-all cursor-pointer"
+                  >
+                    <ExternalLink className="w-3.5 h-3.5" />
+                    <span>Lihat Halaman /profil</span>
+                  </Link>
+
+                  <button
+                    type="button"
+                    onClick={handleResetCompanyProfile}
+                    className="inline-flex items-center space-x-1 px-3 py-2 bg-cream hover:bg-cream-dark text-secondary hover:text-forest-dark border border-borderLight rounded-xl text-xs font-semibold transition-all cursor-pointer"
+                    title="Pulihkan teks asal KAMAAR Beddings"
+                  >
+                    <RotateCcw className="w-3.5 h-3.5" />
+                    <span>Pulihkan Asal</span>
+                  </button>
+                </div>
+              </div>
+
+              {/* SEKSYEN 1: PENGENALAN KORPORAT / TENTANG KAMI */}
+              <div className="bg-warmwhite p-4 sm:p-6 rounded-2xl border-2 border-[#1E4E8C]/20 shadow-xs space-y-5">
+                <div className="flex items-center justify-between border-b border-borderLight pb-3">
+                  <div className="flex items-center space-x-2">
+                    <span className="w-2.5 h-2.5 rounded-full bg-[#1E4E8C]" />
+                    <h4 className="font-serif text-sm sm:text-base font-bold text-forest-dark">
+                      1. Pengenalan Korporat & &ldquo;Tentang Kami&rdquo; (Teks Sejarah & Latar Belakang)
+                    </h4>
+                  </div>
+                  <span className="text-[10px] font-bold px-2 py-0.5 rounded-md bg-[#1E4E8C]/10 text-[#1E4E8C]">
+                    Bahagian Utama
+                  </span>
+                </div>
+
+                <div className="grid grid-cols-1 sm:grid-cols-2 gap-4 text-xs">
+                  <div>
+                    <label className="block font-bold text-charcoal mb-1">
+                      Lencana Seksyen (Badge)
+                    </label>
+                    <input
+                      type="text"
+                      value={profile.about.badge}
+                      onChange={(e) => updateCompanyAbout({ badge: e.target.value })}
+                      placeholder="PENGENALAN KORPORAT"
+                      className="w-full px-3.5 py-2.5 bg-cream-light border border-borderLight rounded-xl font-bold tracking-wider uppercase outline-none focus:border-forest text-xs"
+                    />
+                  </div>
+
+                  <div>
+                    <label className="block font-bold text-charcoal mb-1">
+                      Tajuk Utama (Title)
+                    </label>
+                    <input
+                      type="text"
+                      value={profile.about.title}
+                      onChange={(e) => updateCompanyAbout({ title: e.target.value })}
+                      placeholder="Tentang Kami"
+                      className="w-full px-3.5 py-2.5 bg-cream-light border border-borderLight rounded-xl font-serif text-sm font-bold outline-none focus:border-forest"
+                    />
+                  </div>
+                </div>
+
+                {/* Paragraphs Editor */}
+                <div className="space-y-3 pt-2">
+                  <div className="flex items-center justify-between">
+                    <div>
+                      <label className="block text-xs font-bold text-charcoal">
+                        Perenggan Kandungan Sejarah & Penerangan ({aboutParagraphs.length} Perenggan)
+                      </label>
+                      <span className="text-[11px] text-secondary">
+                        Setiap perenggan dipaparkan sebagai perenggan teks yang kemas di seksyen Tentang Kami.
+                      </span>
+                    </div>
+
+                    <button
+                      type="button"
+                      onClick={handleAddParagraph}
+                      className="inline-flex items-center space-x-1 px-3 py-1.5 bg-[#1E4E8C] hover:bg-[#13325B] text-white rounded-xl text-xs font-bold transition-all shadow-xs cursor-pointer"
+                    >
+                      <Plus className="w-3.5 h-3.5" />
+                      <span>Tambah Perenggan</span>
+                    </button>
+                  </div>
+
+                  <div className="space-y-3">
+                    {aboutParagraphs.map((para, idx) => (
+                      <div
+                        key={idx}
+                        className="p-3.5 bg-cream/30 rounded-xl border border-borderLight space-y-2 hover:border-[#1E4E8C]/30 transition-all"
+                      >
+                        <div className="flex items-center justify-between">
+                          <span className="text-[11px] font-bold text-forest-dark uppercase tracking-wide">
+                            Perenggan #{idx + 1}
+                          </span>
+
+                          <div className="flex items-center space-x-1">
+                            <button
+                              type="button"
+                              disabled={idx === 0}
+                              onClick={() => handleMoveParagraph(idx, 'up')}
+                              className="p-1 rounded-md bg-warmwhite hover:bg-cream border border-borderLight disabled:opacity-20 text-charcoal transition-all cursor-pointer"
+                              title="Alih ke atas"
+                            >
+                              <ArrowUp className="w-3.5 h-3.5" />
+                            </button>
+                            <button
+                              type="button"
+                              disabled={idx === aboutParagraphs.length - 1}
+                              onClick={() => handleMoveParagraph(idx, 'down')}
+                              className="p-1 rounded-md bg-warmwhite hover:bg-cream border border-borderLight disabled:opacity-20 text-charcoal transition-all cursor-pointer"
+                              title="Alih ke bawah"
+                            >
+                              <ArrowDown className="w-3.5 h-3.5" />
+                            </button>
+                            <button
+                              type="button"
+                              onClick={() => handleDeleteParagraph(idx)}
+                              className="p-1 rounded-md bg-warmwhite hover:bg-red-50 border border-borderLight text-red-500 hover:text-red-700 transition-all cursor-pointer"
+                              title="Padam perenggan ini"
+                            >
+                              <Trash2 className="w-3.5 h-3.5" />
+                            </button>
+                          </div>
+                        </div>
+
+                        <textarea
+                          rows={3}
+                          value={para}
+                          onChange={(e) => handleUpdateParagraph(idx, e.target.value)}
+                          placeholder={`Tulis penerangan perenggan #${idx + 1}...`}
+                          className="w-full px-3 py-2 bg-white border border-borderLight rounded-xl text-xs leading-relaxed text-charcoal outline-none focus:border-forest"
+                        />
+                      </div>
+                    ))}
+                  </div>
+                </div>
+
+                {/* Moto Box Editor */}
+                <div className="p-4 bg-gradient-to-r from-amber-500/10 via-[#1E4E8C]/5 to-transparent rounded-2xl border border-amber-500/20 space-y-3">
+                  <div className="flex items-center space-x-2">
+                    <Sparkles className="w-4 h-4 text-amber-600" />
+                    <span className="text-xs font-bold text-forest-dark">
+                      Kotak Serlahan Moto Syarikat (Moto Box)
+                    </span>
+                  </div>
+
+                  <div className="grid grid-cols-1 sm:grid-cols-3 gap-3 text-xs">
+                    <div>
+                      <label className="block font-bold text-charcoal mb-1">Lencana Moto</label>
+                      <input
+                        type="text"
+                        value={profile.about.motoBadge}
+                        onChange={(e) => updateCompanyAbout({ motoBadge: e.target.value })}
+                        placeholder="MOTO SYARIKAT"
+                        className="w-full px-3 py-2 bg-white border border-borderLight rounded-xl font-bold uppercase outline-none focus:border-forest text-xs"
+                      />
+                    </div>
+                    <div className="sm:col-span-2">
+                      <label className="block font-bold text-charcoal mb-1">Teks Moto Syarikat</label>
+                      <input
+                        type="text"
+                        value={profile.about.motoText}
+                        onChange={(e) => updateCompanyAbout({ motoText: e.target.value })}
+                        placeholder="Kualiti Tanpa Kompromi, Tidur Lena Hak Anda"
+                        className="w-full px-3 py-2 bg-white border border-borderLight rounded-xl font-serif font-bold text-xs outline-none focus:border-forest"
+                      />
+                    </div>
+                  </div>
+                </div>
+              </div>
+
+              {/* SEKSYEN 2: PREMIS & OPERASI KILANG */}
+              <div className="bg-warmwhite p-4 sm:p-6 rounded-2xl border-2 border-emerald-600/20 shadow-xs space-y-5">
+                <div className="flex items-center justify-between border-b border-borderLight pb-3">
+                  <div className="flex items-center space-x-2">
+                    <MapPin className="w-4 h-4 text-emerald-600" />
+                    <h4 className="font-serif text-sm sm:text-base font-bold text-forest-dark">
+                      2. Premis & Operasi Kilang (Foto Kilang, Alamat & Kapasiti)
+                    </h4>
+                  </div>
+                  <span className="text-[10px] font-bold px-2 py-0.5 rounded-md bg-emerald-600/10 text-emerald-700">
+                    Foto & Fasiliti
+                  </span>
+                </div>
+
+                <div className="grid grid-cols-1 lg:grid-cols-2 gap-6 text-xs">
+                  {/* Left Column: Image Upload Dropzone */}
+                  <div className="space-y-2">
+                    <label className="block font-bold text-charcoal">
+                      Foto Bangunan & Premis Kilang
+                    </label>
+                    <ImageUploadDropzone
+                      label="Foto Bangunan Premis Kilang"
+                      helperText="Muat naik foto kilang di Tasek Gelugor (kamera telefon atau fail). Gambar ini dipaparkan terus dalam bingkai kemudahan kilang pada /profil."
+                      value={profile.facility.imageUrl}
+                      onChange={(url) => updateCompanyFacility({ imageUrl: url })}
+                      aspectRatio="video"
+                    />
+                  </div>
+
+                  {/* Right Column: Facility Text Information */}
+                  <div className="space-y-3">
+                    <div>
+                      <label className="block font-bold text-charcoal mb-1">
+                        Lencana Fasiliti (Badge)
+                      </label>
+                      <input
+                        type="text"
+                        value={profile.facility.badge}
+                        onChange={(e) => updateCompanyFacility({ badge: e.target.value })}
+                        placeholder="Premis & Operasi Kilang"
+                        className="w-full px-3 py-2 bg-cream-light border border-borderLight rounded-xl font-bold outline-none focus:border-forest"
+                      />
+                    </div>
+
+                    <div>
+                      <label className="block font-bold text-charcoal mb-1">
+                        Tajuk Utama / Alamat Lokasi Premis *
+                      </label>
+                      <textarea
+                        rows={2}
+                        value={profile.facility.title}
+                        onChange={(e) => updateCompanyFacility({ title: e.target.value })}
+                        placeholder="Premis Utama di 7878B Jalan Permatang Berangan, 13300 Tasek Gelugor, Seberang Perai Utara, Pulau Pinang."
+                        className="w-full px-3 py-2 bg-cream-light border border-borderLight rounded-xl font-serif text-xs font-bold outline-none focus:border-forest leading-relaxed"
+                      />
+                    </div>
+
+                    <div>
+                      <label className="block font-bold text-charcoal mb-1">
+                        Penerangan Operasi, Zon Penyimpanan & Kawalan Kualiti (QC)
+                      </label>
+                      <textarea
+                        rows={4}
+                        value={profile.facility.description}
+                        onChange={(e) => updateCompanyFacility({ description: e.target.value })}
+                        placeholder="Kawasan kilang yang luas dan teratur lengkap dengan zon penyimpanan bahan mentah berkualiti tinggi..."
+                        className="w-full px-3 py-2 bg-cream-light border border-borderLight rounded-xl outline-none focus:border-forest leading-relaxed text-xs"
+                      />
+                    </div>
+                  </div>
+                </div>
+              </div>
+
+              {/* SEKSYEN 3: HERO BANNER & HEADER PROFIL */}
+              <div className="bg-warmwhite p-4 sm:p-6 rounded-2xl border border-borderLight shadow-xs space-y-4">
+                <div className="flex items-center justify-between border-b border-borderLight pb-3">
+                  <div className="flex items-center space-x-2">
+                    <ImageIcon className="w-4 h-4 text-gold-dark" />
+                    <h4 className="font-serif text-sm sm:text-base font-bold text-forest-dark">
+                      3. Hero & Pengenalan Atas Halaman (/profil)
+                    </h4>
+                  </div>
+                  <span className="text-[10px] font-bold px-2 py-0.5 rounded-md bg-cream text-secondary">
+                    Banner Atas
+                  </span>
+                </div>
+
+                <div className="grid grid-cols-1 lg:grid-cols-2 gap-6 text-xs">
+                  <div className="space-y-3">
+                    <div className="grid grid-cols-1 sm:grid-cols-2 gap-3">
+                      <div>
+                        <label className="block font-bold text-charcoal mb-1">Lencana Hero</label>
+                        <input
+                          type="text"
+                          value={profile.hero.badge}
+                          onChange={(e) => updateCompanyHero({ badge: e.target.value })}
+                          placeholder="PROFIL KORPORAT"
+                          className="w-full px-3 py-2 bg-cream-light border border-borderLight rounded-xl font-bold uppercase outline-none focus:border-forest text-xs"
+                        />
+                      </div>
+                      <div>
+                        <label className="block font-bold text-charcoal mb-1">Jenama Dagangan</label>
+                        <input
+                          type="text"
+                          value={profile.hero.brandTitle}
+                          onChange={(e) => updateCompanyHero({ brandTitle: e.target.value })}
+                          placeholder="KAMAAR BEDDINGS"
+                          className="w-full px-3 py-2 bg-cream-light border border-borderLight rounded-xl font-bold outline-none focus:border-forest text-xs"
+                        />
+                      </div>
+                    </div>
+
+                    <div>
+                      <label className="block font-bold text-charcoal mb-1">Nama Rasmi Syarikat</label>
+                      <input
+                        type="text"
+                        value={profile.hero.companyName}
+                        onChange={(e) => updateCompanyHero({ companyName: e.target.value })}
+                        placeholder="TUNAS SINAR JAYA ENTERPRISE"
+                        className="w-full px-3 py-2 bg-cream-light border border-borderLight rounded-xl font-serif text-sm font-bold outline-none focus:border-forest"
+                      />
+                    </div>
+
+                    <div>
+                      <label className="block font-bold text-charcoal mb-1">Slogan / Tajuk Bawah</label>
+                      <input
+                        type="text"
+                        value={profile.hero.slogan}
+                        onChange={(e) => updateCompanyHero({ slogan: e.target.value })}
+                        placeholder="Pengeluar Tilam & Kelengkapan Tidur Berkualiti Tinggi Sejak 2012"
+                        className="w-full px-3 py-2 bg-cream-light border border-borderLight rounded-xl font-bold outline-none focus:border-forest text-xs"
+                      />
+                    </div>
+
+                    <div>
+                      <label className="block font-bold text-charcoal mb-1">Penerangan Ringkas Hero</label>
+                      <textarea
+                        rows={3}
+                        value={profile.hero.description}
+                        onChange={(e) => updateCompanyHero({ description: e.target.value })}
+                        placeholder="Komited menghasilkan tilam bertaraf premium hotel untuk kediaman anda..."
+                        className="w-full px-3 py-2 bg-cream-light border border-borderLight rounded-xl outline-none focus:border-forest text-xs leading-relaxed"
+                      />
+                    </div>
+                  </div>
+
+                  {/* Banner Image & Featured Card */}
+                  <div className="space-y-3">
+                    <ImageUploadDropzone
+                      label="Foto Kad Produk / Banner Hero"
+                      helperText="Foto produk atau banner utama di sudut kanan hero /profil."
+                      value={profile.hero.featuredImageUrl}
+                      onChange={(url) => updateCompanyHero({ featuredImageUrl: url })}
+                      aspectRatio="square"
+                    />
+
+                    <div>
+                      <label className="block font-bold text-charcoal mb-1">Lencana Kad Hero</label>
+                      <input
+                        type="text"
+                        value={profile.hero.featuredBadge}
+                        onChange={(e) => updateCompanyHero({ featuredBadge: e.target.value })}
+                        placeholder="Paling Lariss!!"
+                        className="w-full px-3 py-2 bg-cream-light border border-borderLight rounded-xl outline-none focus:border-forest text-xs font-bold uppercase"
+                      />
+                    </div>
+
+                    <div>
+                      <label className="block font-bold text-charcoal mb-1">Tajuk Kad Hero</label>
+                      <input
+                        type="text"
+                        value={profile.hero.featuredTitle}
+                        onChange={(e) => updateCompanyHero({ featuredTitle: e.target.value })}
+                        placeholder="Tilam Toto Asian Polyester Fibre"
+                        className="w-full px-3 py-2 bg-cream-light border border-borderLight rounded-xl outline-none focus:border-forest text-xs font-serif font-bold"
+                      />
+                    </div>
+
+                    <div>
+                      <label className="block font-bold text-charcoal mb-1">Penerangan / Subtajuk Kad</label>
+                      <input
+                        type="text"
+                        value={profile.hero.featuredSubtitle}
+                        onChange={(e) => updateCompanyHero({ featuredSubtitle: e.target.value })}
+                        placeholder="Random Design corak floral & geometri terus dari lantai pengeluaran kilang."
+                        className="w-full px-3 py-2 bg-cream-light border border-borderLight rounded-xl outline-none focus:border-forest text-xs"
+                      />
+                    </div>
+                  </div>
+                </div>
+              </div>
+
+              {/* SEKSYEN 4: MISI & VISI KAMI */}
+              <div className="bg-warmwhite p-4 sm:p-6 rounded-2xl border border-borderLight shadow-xs space-y-5">
+                <div className="flex items-center justify-between border-b border-borderLight pb-3">
+                  <div className="flex items-center space-x-2">
+                    <ShieldCheck className="w-4 h-4 text-gold-dark" />
+                    <h4 className="font-serif text-sm sm:text-base font-bold text-forest-dark">
+                      4. Misi & Visi Kami (Hala Tuju Korporat & Gambar Kuilting)
+                    </h4>
+                  </div>
+                  <span className="text-[10px] font-bold px-2 py-0.5 rounded-md bg-cream text-secondary">
+                    Hala Tuju
+                  </span>
+                </div>
+
+                <div className="grid grid-cols-1 lg:grid-cols-2 gap-6 text-xs">
+                  {/* Left: Mission & Vision Points */}
+                  <div className="space-y-4">
+                    {/* Mission */}
+                    <div className="p-3.5 bg-cream/30 rounded-xl border border-borderLight space-y-2">
+                      <label className="block font-bold text-forest-dark">
+                        Tajuk Misi
+                      </label>
+                      <input
+                        type="text"
+                        value={profile.visionMission.missionTitle}
+                        onChange={(e) => updateCompanyVisionMission({ missionTitle: e.target.value })}
+                        placeholder="Misi Kami"
+                        className="w-full px-3 py-2 bg-white border border-borderLight rounded-xl font-bold outline-none focus:border-forest"
+                      />
+
+                      <label className="block font-bold text-charcoal pt-1">
+                        Kenyataan Misi
+                      </label>
+                      <textarea
+                        rows={3}
+                        value={profile.visionMission.missionText}
+                        onChange={(e) => updateCompanyVisionMission({ missionText: e.target.value })}
+                        placeholder="Menyediakan produk tilam dan kelengkapan tidur bertaraf hotel..."
+                        className="w-full px-3 py-2 bg-white border border-borderLight rounded-xl outline-none focus:border-forest text-xs leading-relaxed"
+                      />
+                    </div>
+
+                    {/* Vision & Points */}
+                    <div className="p-3.5 bg-cream/30 rounded-xl border border-borderLight space-y-3">
+                      <div className="flex items-center justify-between">
+                        <label className="block font-bold text-forest-dark">
+                          Tajuk Visi & Poin Hala Tuju
+                        </label>
+                        <button
+                          type="button"
+                          onClick={handleAddVisionPoint}
+                          className="inline-flex items-center space-x-1 px-2.5 py-1 bg-[#1E4E8C] text-white rounded-lg text-[11px] font-bold hover:bg-[#13325B] transition-all cursor-pointer"
+                        >
+                          <Plus className="w-3 h-3" />
+                          <span>Tambah Poin</span>
+                        </button>
+                      </div>
+
+                      <input
+                        type="text"
+                        value={profile.visionMission.visionTitle}
+                        onChange={(e) => updateCompanyVisionMission({ visionTitle: e.target.value })}
+                        placeholder="Visi Kami"
+                        className="w-full px-3 py-2 bg-white border border-borderLight rounded-xl font-bold outline-none focus:border-forest"
+                      />
+
+                      <div className="space-y-2 pt-1">
+                        {visionPoints.map((point, pIdx) => (
+                          <div key={pIdx} className="flex items-center space-x-2">
+                            <span className="w-5 h-5 rounded-full bg-[#1E4E8C]/10 text-[#1E4E8C] flex items-center justify-center font-bold text-[10px] shrink-0 font-mono">
+                              {pIdx + 1}
+                            </span>
+                            <input
+                              type="text"
+                              value={point}
+                              onChange={(e) => handleUpdateVisionPoint(pIdx, e.target.value)}
+                              placeholder={`Poin visi #${pIdx + 1}...`}
+                              className="flex-1 px-3 py-1.5 bg-white border border-borderLight rounded-xl text-xs outline-none focus:border-forest"
+                            />
+                            <button
+                              type="button"
+                              onClick={() => handleDeleteVisionPoint(pIdx)}
+                              className="p-1.5 text-secondary hover:text-red-600 transition-colors cursor-pointer"
+                              title="Padam poin"
+                            >
+                              <Trash2 className="w-3.5 h-3.5" />
+                            </button>
+                          </div>
+                        ))}
+                      </div>
+                    </div>
+                  </div>
+
+                  {/* Right: Operations & Event / Community Photo */}
+                  <div className="space-y-3">
+                    <ImageUploadDropzone
+                      label="Foto Acara Jualan Gudang / Komuniti"
+                      helperText="Foto sambutan jualan gudang atau suasana operasi interaksi pelanggan."
+                      value={profile.visionMission.eventImageUrl}
+                      onChange={(url) => updateCompanyVisionMission({ eventImageUrl: url })}
+                      aspectRatio="video"
+                    />
+
+                    <div>
+                      <label className="block font-bold text-charcoal mb-1">Lencana Acara / Foto</label>
+                      <input
+                        type="text"
+                        value={profile.visionMission.eventBadge}
+                        onChange={(e) => updateCompanyVisionMission({ eventBadge: e.target.value })}
+                        placeholder="Komuniti & Sambutan Hangat"
+                        className="w-full px-3 py-2 bg-cream-light border border-borderLight rounded-xl outline-none focus:border-forest text-xs font-bold uppercase"
+                      />
+                    </div>
+
+                    <div>
+                      <label className="block font-bold text-charcoal mb-1">Tajuk Foto Acara</label>
+                      <input
+                        type="text"
+                        value={profile.visionMission.eventTitle}
+                        onChange={(e) => updateCompanyVisionMission({ eventTitle: e.target.value })}
+                        placeholder="Program Jualan Gudang Terus ke Pengguna"
+                        className="w-full px-3 py-2 bg-cream-light border border-borderLight rounded-xl outline-none focus:border-forest text-xs font-serif font-bold"
+                      />
+                    </div>
+
+                    <div>
+                      <label className="block font-bold text-charcoal mb-1">Kapsyen / Penerangan Acara</label>
+                      <textarea
+                        rows={2}
+                        value={profile.visionMission.eventSubtitle}
+                        onChange={(e) => updateCompanyVisionMission({ eventSubtitle: e.target.value })}
+                        placeholder="Sambutan luar biasa masyarakat setempat yang memilih tilam toto, cadar dan bantal KAMAAR dengan harga borong."
+                        className="w-full px-3 py-2 bg-cream-light border border-borderLight rounded-xl outline-none focus:border-forest text-xs leading-relaxed"
+                      />
+                    </div>
+                  </div>
+                </div>
+              </div>
+
+              {/* Bottom Quick Save */}
+              <div className="bg-warmwhite p-4 rounded-2xl border border-borderLight shadow-xs flex flex-col sm:flex-row items-center justify-between gap-3">
+                <span className="text-xs text-secondary flex items-center space-x-1.5 text-center sm:text-left">
+                  <span className="w-2 h-2 rounded-full bg-emerald-500 animate-pulse shrink-0" />
+                  <span>Kemas kini profil syarikat akan dipaparkan secara langsung pada halaman awam /profil.</span>
+                </span>
+
+                <button
+                  type="button"
+                  onClick={() => handleSave()}
+                  disabled={isSaving}
+                  className="w-full sm:w-auto px-6 py-2.5 bg-[#1E4E8C] hover:bg-[#13325B] text-warmwhite text-xs font-bold rounded-xl transition-all shadow-sm disabled:opacity-50 cursor-pointer flex items-center justify-center space-x-2"
+                >
+                  <Save className="w-4 h-4 text-[#D4AF37]" />
+                  <span>{isSaving ? 'Menyimpan...' : 'Simpan Perubahan Profil Syarikat'}</span>
+                </button>
+              </div>
+            </div>
+          )
+        })()}
+
+        {/* ========================================================================= */}
+        {/* TAB 8: PROMOTIONS & LOOKBOOK BANNER                                       */}
         {/* ========================================================================= */}
         {activeTab === 'promotions' && (
           <div className="space-y-6 animate-fade-in-up">

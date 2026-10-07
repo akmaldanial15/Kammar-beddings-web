@@ -810,6 +810,10 @@ export async function getWebsiteConfig(): Promise<WebsiteConfig> {
       }
       changed = true
     }
+    if (!db.websiteConfig.companyProfile) {
+      db.websiteConfig.companyProfile = initialWebsiteConfig.companyProfile
+      changed = true
+    }
     if (changed) {
       saveDb(db)
     }
@@ -861,6 +865,31 @@ export async function updateWebsiteConfig(
       ...current.storySection,
       ...(config.storySection || {}),
     },
+    companyProfile: {
+      ...(initialWebsiteConfig.companyProfile || {}),
+      ...(current.companyProfile || {}),
+      ...(config.companyProfile || {}),
+      hero: {
+        ...(initialWebsiteConfig.companyProfile?.hero || {}),
+        ...(current.companyProfile?.hero || {}),
+        ...(config.companyProfile?.hero || {}),
+      },
+      about: {
+        ...(initialWebsiteConfig.companyProfile?.about || {}),
+        ...(current.companyProfile?.about || {}),
+        ...(config.companyProfile?.about || {}),
+      },
+      facility: {
+        ...(initialWebsiteConfig.companyProfile?.facility || {}),
+        ...(current.companyProfile?.facility || {}),
+        ...(config.companyProfile?.facility || {}),
+      },
+      visionMission: {
+        ...(initialWebsiteConfig.companyProfile?.visionMission || {}),
+        ...(current.companyProfile?.visionMission || {}),
+        ...(config.companyProfile?.visionMission || {}),
+      },
+    } as any,
     socialAndContact: {
       ...current.socialAndContact,
       ...(config.socialAndContact || {}),

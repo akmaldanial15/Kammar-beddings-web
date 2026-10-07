@@ -493,10 +493,50 @@ export interface WebsiteConfig {
     tiktokUrl: string
     facebookUrl: string
   }
+  companyProfile?: CompanyProfileConfig
   appearance: {
     enableEntranceAnimations: boolean
     enableFloatingBadges: boolean
     cardBorderRadius: 'rounded-xl' | 'rounded-2xl' | 'rounded-3xl'
+  }
+}
+
+export interface CompanyProfileConfig {
+  hero: {
+    badge: string
+    companyName: string
+    brandTitle: string
+    slogan: string
+    description: string
+    featuredBadge: string
+    featuredTitle: string
+    featuredSubtitle: string
+    featuredImageUrl: string
+  }
+  about: {
+    badge: string
+    title: string
+    paragraphs: string[]
+    motoBadge: string
+    motoText: string
+  }
+  facility: {
+    badge: string
+    title: string
+    description: string
+    imageUrl: string
+  }
+  visionMission: {
+    badge: string
+    title: string
+    missionTitle: string
+    missionText: string
+    visionTitle: string
+    visionPoints: string[]
+    eventBadge: string
+    eventTitle: string
+    eventSubtitle: string
+    eventImageUrl: string
   }
 }
 

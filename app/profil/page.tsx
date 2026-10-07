@@ -28,6 +28,11 @@ import {
   ArrowUpRight,
 } from 'lucide-react'
 
+import { getWebsiteConfig } from '@/lib/db'
+import { initialWebsiteConfig } from '@/lib/db/seedData'
+
+export const dynamic = 'force-dynamic'
+
 export const metadata = {
   title: 'Profil Syarikat | TUNAS SINAR JAYA ENTERPRISE (KAMAAR BEDDINGS)',
   description:
@@ -148,7 +153,14 @@ const companyPillars = [
   },
 ]
 
-export default function ProfilPage() {
+export default async function ProfilPage() {
+  const config = await getWebsiteConfig().catch(() => initialWebsiteConfig)
+  const profile = config.companyProfile || initialWebsiteConfig.companyProfile!
+  const hero = profile.hero
+  const about = profile.about
+  const facility = profile.facility
+  const visionMission = profile.visionMission
+
   return (
     <div className="min-h-screen bg-[#FDFBF7] text-[#2D2A26] font-sans antialiased selection:bg-gold/20 selection:text-forest">
       {/* Hero Section */}
@@ -160,23 +172,23 @@ export default function ProfilPage() {
             <div className="lg:col-span-7 space-y-6">
               <div className="inline-flex items-center space-x-2 px-3 py-1.5 rounded-full bg-gold/15 border border-gold/30 text-gold-light text-xs font-semibold tracking-wide uppercase">
                 <Building2 className="w-4 h-4 text-gold" />
-                <span>Pengeluar Tekstil Bumiputera</span>
+                <span>{hero.badge}</span>
               </div>
 
               <div className="space-y-2">
                 <span className="text-sm font-bold tracking-[0.2em] uppercase text-sky-300 block">
-                  TUNAS SINAR JAYA ENTERPRISE
+                  {hero.companyName}
                 </span>
                 <h1 className="font-serif text-3xl sm:text-5xl font-bold tracking-tight text-warmwhite leading-tight">
-                  KAMAAR BEDDINGS
+                  {hero.brandTitle}
                 </h1>
                 <p className="text-gold italic text-lg sm:text-xl font-serif">
-                  &ldquo;Keselesaan anda keutamaan kami&rdquo;
+                  {hero.slogan}
                 </p>
               </div>
 
               <p className="text-warmwhite/80 text-sm sm:text-base leading-relaxed max-w-2xl">
-                Tunas Sinar Jaya Enterprise komited dalam menghasilkan produk jahitan tekstil berkualiti tinggi dengan harga berpatutan bagi memenuhi keperluan dan kepuasan pelanggan di seluruh Malaysia.
+                {hero.description}
               </p>
 
               <div className="flex flex-wrap gap-3 pt-2">
@@ -219,8 +231,8 @@ export default function ProfilPage() {
               <div className="relative rounded-3xl overflow-hidden border-2 border-gold/30 shadow-2xl bg-white/5 backdrop-blur-sm group">
                 <div className="relative aspect-[3/4] w-full">
                   <Image
-                    src="/images/hero/hero-tilam-toto-lifestyle.jpg"
-                    alt="Tilam Toto Asian Polyester Fibre - Tunas Sinar Jaya Enterprise"
+                    src={hero.featuredImageUrl || '/images/hero/hero-tilam-toto-lifestyle.jpg'}
+                    alt={hero.featuredTitle}
                     fill
                     sizes="(max-width: 1024px) 100vw, 40vw"
                     className="object-cover transition-transform duration-700 group-hover:scale-105"
@@ -229,13 +241,13 @@ export default function ProfilPage() {
                 </div>
                 <div className="absolute inset-0 bg-gradient-to-t from-black/80 via-transparent to-transparent flex flex-col justify-end p-6 text-white">
                   <span className="text-[11px] font-bold tracking-widest uppercase text-gold">
-                    Paling Lariss!!
+                    {hero.featuredBadge}
                   </span>
                   <h3 className="font-serif text-xl font-bold text-warmwhite">
-                    Tilam Toto Asian Polyester Fibre
+                    {hero.featuredTitle}
                   </h3>
                   <p className="text-xs text-warmwhite/80 mt-1">
-                    Random Design corak floral &amp; geometri terus dari lantai pengeluaran kilang.
+                    {hero.featuredSubtitle}
                   </p>
                 </div>
               </div>
@@ -315,36 +327,29 @@ export default function ProfilPage() {
           <div className="lg:col-span-6 space-y-6">
             <div className="space-y-2">
               <span className="text-xs font-bold uppercase tracking-wider text-gold-dark block">
-                Pengenalan Korporat
+                {about.badge}
               </span>
               <h2 className="font-serif text-3xl sm:text-4xl font-bold text-forest leading-tight">
-                Tentang Kami
+                {about.title}
               </h2>
               <div className="w-16 h-1 bg-gold rounded-full" />
             </div>
 
             <div className="prose prose-sm text-charcoal-muted leading-relaxed space-y-4">
-              <p>
-                <strong className="text-forest">TUNAS SINAR JAYA ENTERPRISE</strong> merupakan sebuah syarikat tempatan yang terlibat secara komited dalam <strong>pengilangan dan pemasaran produk jahitan tekstil</strong>.
-              </p>
-              <p>
-                Berbekalkan pengalaman yang kukuh, tenaga kerja mahir tempatan serta komitmen mendalam terhadap kualiti, syarikat kami sentiasa berusaha menghasilkan produk bilik tidur dan tilam yang memenuhi kehendak pelanggan pada <strong>harga yang amat kompetitif</strong>.
-              </p>
-              <p>
-                Kami memberi penekanan tegas kepada penggunaan <strong>bahan berkualiti</strong> (termasuk isian <em>Asian Polyester Fibre</em>), proses pengeluaran yang sistematik serta kawalan mutu (QC) yang ketat bagi memastikan setiap produk mencapai standard piawaian tertinggi.
-              </p>
-              <p className="font-semibold text-forest">
-                Syarikat komited untuk terus menjadi pengeluar tekstil Bumiputera yang dipercayai serta mampu bersaing di peringkat pasaran tempatan dan serantau.
-              </p>
+              {about.paragraphs.map((p, idx) => (
+                <p key={idx} className="whitespace-pre-line leading-relaxed">
+                  {p}
+                </p>
+              ))}
             </div>
 
             {/* Moto Box */}
             <div className="p-5 rounded-2xl bg-forest text-warmwhite border border-gold/30 space-y-1 shadow-md">
               <span className="text-[11px] font-bold uppercase tracking-widest text-gold block">
-                Moto Syarikat
+                {about.motoBadge}
               </span>
               <blockquote className="font-serif text-lg font-bold italic text-gold-light">
-                &ldquo;Kualiti Terjamin, Kepuasan Pelanggan Keutamaan.&rdquo;
+                {about.motoText}
               </blockquote>
             </div>
           </div>
@@ -354,8 +359,8 @@ export default function ProfilPage() {
             <div className="relative rounded-3xl overflow-hidden border border-[#E8E2D8] shadow-lg bg-white">
               <div className="relative aspect-[4/3] w-full">
                 <Image
-                  src="/images/company/hadapan-kilang.jpg"
-                  alt="Premis Kilang Tunas Sinar Jaya Enterprise di Tasek Gelugor"
+                  src={facility.imageUrl || '/images/company/hadapan-kilang.jpg'}
+                  alt={facility.title || 'Premis Kilang'}
                   fill
                   sizes="(max-width: 1024px) 100vw, 50vw"
                   className="object-cover"
@@ -363,13 +368,13 @@ export default function ProfilPage() {
               </div>
               <div className="p-5 bg-white border-t border-[#E8E2D8]">
                 <span className="text-xs font-bold uppercase tracking-wider text-gold-dark block">
-                  Premis &amp; Operasi Kilang
+                  {facility.badge}
                 </span>
                 <h4 className="font-serif text-base font-bold text-forest">
-                  Premis Utama di 7878B Jalan Permatang Berangan, Tasek Gelugor
+                  {facility.title}
                 </h4>
-                <p className="text-xs text-charcoal-muted mt-1">
-                  Kompleks pembuatan dan stor seluas ribuan kaki persegi yang menempatkan barisan mesin potong, unit jahitan dan stor produk siap.
+                <p className="text-xs text-charcoal-muted mt-1 leading-relaxed">
+                  {facility.description}
                 </p>
               </div>
             </div>
@@ -435,10 +440,10 @@ export default function ProfilPage() {
               <div className="space-y-4">
                 <div className="inline-flex items-center space-x-2 px-3 py-1 rounded-full bg-gold/15 text-gold-light text-xs font-semibold uppercase">
                   <Target className="w-4 h-4 text-gold" />
-                  <span>Hala Tuju Syarikat</span>
+                  <span>{visionMission.badge}</span>
                 </div>
                 <h2 className="font-serif text-3xl sm:text-4xl font-bold text-warmwhite">
-                  Misi &amp; Visi Kami
+                  {visionMission.title}
                 </h2>
               </div>
 
@@ -446,10 +451,10 @@ export default function ProfilPage() {
               <div className="p-6 rounded-2xl bg-white/5 border border-white/10 space-y-2">
                 <div className="flex items-center space-x-2 text-gold font-bold text-sm uppercase tracking-wider">
                   <Target className="w-5 h-5 text-gold" />
-                  <span>MISI SYARIKAT</span>
+                  <span>{visionMission.missionTitle}</span>
                 </div>
                 <p className="font-serif text-lg sm:text-xl text-warmwhite leading-relaxed">
-                  &ldquo;Menjadi syarikat pengilangan tekstil yang unggul, inovatif dan diyakini dalam menghasilkan produk berkualiti tinggi.&rdquo;
+                  {visionMission.missionText}
                 </p>
               </div>
 
@@ -457,17 +462,11 @@ export default function ProfilPage() {
               <div className="space-y-3">
                 <div className="flex items-center space-x-2 text-gold font-bold text-sm uppercase tracking-wider">
                   <Eye className="w-5 h-5 text-gold" />
-                  <span>VISI KAMI (5 TERAS UTAMA)</span>
+                  <span>{visionMission.visionTitle}</span>
                 </div>
 
                 <div className="space-y-2.5">
-                  {[
-                    'Menghasilkan produk tekstil yang berkualiti tinggi.',
-                    'Memberikan perkhidmatan terbaik kepada pelanggan.',
-                    'Mengamalkan proses pengeluaran yang cekap dan sistematik.',
-                    'Menawarkan harga yang kompetitif.',
-                    'Menjalinkan hubungan perniagaan yang kukuh bersama pelanggan dan rakan strategik.',
-                  ].map((visi, idx) => (
+                  {visionMission.visionPoints.map((visi, idx) => (
                     <div
                       key={idx}
                       className="flex items-start space-x-3 p-3 rounded-xl bg-white/5 border border-white/5"
@@ -487,8 +486,8 @@ export default function ProfilPage() {
               <div className="relative rounded-3xl overflow-hidden border-2 border-gold/40 shadow-2xl bg-black/40">
                 <div className="relative aspect-[4/5] w-full">
                   <Image
-                    src="/images/company/misi-visi-jualan-gudang.jpg"
-                    alt="Sambutan Pengunjung di Program Jualan Gudang KAMAAR Beddings"
+                    src={visionMission.eventImageUrl || '/images/company/misi-visi-jualan-gudang.jpg'}
+                    alt={visionMission.eventTitle}
                     fill
                     sizes="(max-width: 1024px) 100vw, 40vw"
                     className="object-cover"
@@ -496,13 +495,13 @@ export default function ProfilPage() {
                 </div>
                 <div className="p-5 bg-gradient-to-t from-black via-black/80 to-transparent absolute bottom-0 inset-x-0">
                   <span className="text-[10px] font-bold text-gold uppercase tracking-widest block">
-                    Komuniti &amp; Sambutan Hangat
+                    {visionMission.eventBadge}
                   </span>
                   <h4 className="font-serif text-base font-bold text-warmwhite">
-                    Program Jualan Gudang Terus ke Pengguna
+                    {visionMission.eventTitle}
                   </h4>
                   <p className="text-xs text-warmwhite/70 mt-1">
-                    Sambutan luar biasa masyarakat setempat yang memilih tilam toto, cadar dan bantal KAMAAR dengan harga borong.
+                    {visionMission.eventSubtitle}
                   </p>
                 </div>
               </div>

@@ -1571,6 +1571,55 @@ export const initialWebsiteConfig: WebsiteConfig = {
     "tiktokUrl": "https://www.tiktok.com/@kamaar_shop",
     "facebookUrl": "https://www.facebook.com"
   },
+  "companyProfile": {
+    "hero": {
+      "badge": "Pengeluar Tekstil Bumiputera",
+      "companyName": "TUNAS SINAR JAYA ENTERPRISE",
+      "brandTitle": "KAMAAR BEDDINGS",
+      "slogan": "“Keselesaan anda keutamaan kami”",
+      "description": "Tunas Sinar Jaya Enterprise komited dalam menghasilkan produk jahitan tekstil berkualiti tinggi dengan harga berpatutan bagi memenuhi keperluan dan kepuasan pelanggan di seluruh Malaysia.",
+      "featuredBadge": "Paling Lariss!!",
+      "featuredTitle": "Tilam Toto Asian Polyester Fibre",
+      "featuredSubtitle": "Random Design corak floral & geometri terus dari lantai pengeluaran kilang.",
+      "featuredImageUrl": "/images/hero/hero-tilam-toto-lifestyle.jpg"
+    },
+    "about": {
+      "badge": "Pengenalan Korporat",
+      "title": "Tentang Kami",
+      "paragraphs": [
+        "TUNAS SINAR JAYA ENTERPRISE merupakan sebuah syarikat tempatan yang terlibat secara komited dalam pengilangan dan pemasaran produk jahitan tekstil.",
+        "Berbekalkan pengalaman yang kukuh, tenaga kerja mahir tempatan serta komitmen mendalam terhadap kualiti, syarikat kami sentiasa berusaha menghasilkan produk bilik tidur dan tilam yang memenuhi kehendak pelanggan pada harga yang amat kompetitif.",
+        "Kami memberi penekanan tegas kepada penggunaan bahan berkualiti (termasuk isian Asian Polyester Fibre), proses pengeluaran yang sistematik serta kawalan mutu (QC) yang ketat bagi memastikan setiap produk mencapai standard piawaian tertinggi.",
+        "Syarikat komited untuk terus menjadi pengeluar tekstil Bumiputera yang dipercayai serta mampu bersaing di peringkat pasaran tempatan dan serantau."
+      ],
+      "motoBadge": "Moto Syarikat",
+      "motoText": "“Kualiti Terjamin, Kepuasan Pelanggan Keutamaan.”"
+    },
+    "facility": {
+      "badge": "Premis & Operasi Kilang",
+      "title": "Premis Utama di 7878B Jalan Permatang Berangan, Tasek Gelugor",
+      "description": "Kompleks pembuatan dan stor seluas ribuan kaki persegi yang menempatkan barisan mesin potong, unit jahitan dan stor produk siap.",
+      "imageUrl": "/images/company/hadapan-kilang.jpg"
+    },
+    "visionMission": {
+      "badge": "Hala Tuju Syarikat",
+      "title": "Misi & Visi Kami",
+      "missionTitle": "MISI SYARIKAT",
+      "missionText": "“Menjadi syarikat pengilangan tekstil yang unggul, inovatif dan diyakini dalam menghasilkan produk berkualiti tinggi.”",
+      "visionTitle": "VISI KAMI (5 TERAS UTAMA)",
+      "visionPoints": [
+        "Menghasilkan produk tekstil yang berkualiti tinggi.",
+        "Memberikan perkhidmatan terbaik kepada pelanggan.",
+        "Mengamalkan proses pengeluaran yang cekap dan sistematik.",
+        "Menawarkan harga yang kompetitif.",
+        "Menjalinkan hubungan perniagaan yang kukuh bersama pelanggan dan rakan strategik."
+      ],
+      "eventBadge": "Komuniti & Sambutan Hangat",
+      "eventTitle": "Program Jualan Gudang Terus ke Pengguna",
+      "eventSubtitle": "Sambutan luar biasa masyarakat setempat yang memilih tilam toto, cadar dan bantal KAMAAR dengan harga borong.",
+      "eventImageUrl": "/images/company/misi-visi-jualan-gudang.jpg"
+    }
+  },
   "appearance": {
     "enableEntranceAnimations": true,
     "enableFloatingBadges": true,
