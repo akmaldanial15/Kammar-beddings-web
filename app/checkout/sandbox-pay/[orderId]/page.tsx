@@ -137,32 +137,41 @@ export default function SandboxPaymentPage({ params }: Props) {
           {/* Test Buttons */}
           <div className="pt-6 border-t border-borderLight space-y-3">
             <h4 className="text-xs font-bold uppercase tracking-wider text-forest text-center">
-              Select Test Simulation Outcome
+              Pilih Hasil Simulasi Pembayaran (FPX / TNG)
             </h4>
 
             <button
               onClick={() => handleSimulatePayment('success')}
               disabled={simulating}
-              className="w-full py-3.5 bg-forest hover:bg-forest-dark text-warmwhite text-xs font-bold uppercase tracking-wider rounded-xl shadow-card flex items-center justify-center space-x-2 transition-all disabled:opacity-50"
+              className="w-full py-3.5 bg-[#00529C] hover:bg-[#00417C] text-white text-xs font-bold uppercase tracking-wider rounded-xl shadow-card flex items-center justify-center space-x-2 transition-all disabled:opacity-50 cursor-pointer"
             >
-              <CheckCircle className="w-4 h-4" />
-              <span>Simulate Successful Stripe Payment (Mark Order Paid)</span>
+              <CheckCircle className="w-4 h-4 text-emerald-300" />
+              <span>Simulasi FPX Online Banking Berjaya (Mark Order Paid)</span>
+            </button>
+
+            <button
+              onClick={() => handleSimulatePayment('success')}
+              disabled={simulating}
+              className="w-full py-3.5 bg-[#015CA9] hover:bg-[#004c8c] text-white text-xs font-bold uppercase tracking-wider rounded-xl shadow-card flex items-center justify-center space-x-2 transition-all disabled:opacity-50 cursor-pointer"
+            >
+              <CheckCircle className="w-4 h-4 text-emerald-300" />
+              <span>Simulasi Touch &apos;n Go eWallet Berjaya (Mark Order Paid)</span>
             </button>
 
             <button
               onClick={() => handleSimulatePayment('fail')}
               disabled={simulating}
-              className="w-full py-3 bg-red-100 hover:bg-red-200 text-red-800 text-xs font-bold uppercase tracking-wider rounded-xl flex items-center justify-center space-x-2 transition-all disabled:opacity-50"
+              className="w-full py-3 bg-red-100 hover:bg-red-200 text-red-800 text-xs font-bold uppercase tracking-wider rounded-xl flex items-center justify-center space-x-2 transition-all disabled:opacity-50 cursor-pointer"
             >
               <XCircle className="w-4 h-4" />
-              <span>Simulate Payment Failure / Bank Decline</span>
+              <span>Simulasi Bayaran Ditolak / Gagal</span>
             </button>
 
             <Link
               href="/checkout?cancelled=true"
               className="w-full py-2.5 text-center text-xs text-charcoal-muted hover:text-charcoal block underline"
             >
-              Simulate Customer Abort & Return to Cart
+              Batal &amp; Kembali ke Troli
             </Link>
           </div>
         </div>

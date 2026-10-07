@@ -51,10 +51,10 @@ export function AnnouncementBar() {
           </span>
           {announcement.url && (
             <Link
-              href={announcement.url}
+              href={announcement.url || '/collections/tilam-toto'}
               className="hidden sm:inline-flex items-center space-x-1 text-gold hover:text-gold-light font-bold underline ml-1.5 transition-colors"
             >
-              <span>Explore Mattresses</span>
+              <span>Lihat Tawaran Kilang</span>
               <ArrowRight className="w-3 h-3" />
             </Link>
           )}

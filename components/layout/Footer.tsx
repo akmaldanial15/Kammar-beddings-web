@@ -39,38 +39,38 @@ export function Footer() {
   const reassuranceItems = [
     {
       icon: Sparkles,
-      badge: isBM ? '100% Organik' : '100% Organic',
+      badge: isBM ? 'Terus Dari Kilang' : 'Factory Direct',
       badgeClass: 'bg-emerald-500/20 text-emerald-300 border-emerald-500/30',
-      title: t.reassureLatex,
-      subtitle: t.reassureLatexSub,
-      href: '/collections/mattress?material=latex',
+      title: isBM ? 'Harga Kilang Tanpa Orang Tengah' : 'Factory Direct Pricing',
+      subtitle: isBM ? 'Pengeluaran sendiri di Tasek Gelugor, Pulau Pinang' : 'In-house production in Tasek Gelugor',
+      href: '/profil',
       iconGradient: 'from-amber-400/25 via-emerald-400/15 to-transparent text-gold-light border-gold/30',
     },
     {
-      icon: RotateCcw,
-      badge: isBM ? '100 Malam' : '100 Nights',
+      icon: Award,
+      badge: isBM ? 'Paling Lariss' : 'Best Seller',
       badgeClass: 'bg-amber-500/20 text-amber-300 border-amber-500/30',
-      title: t.reassureTrial,
-      subtitle: t.reassureTrialSub,
-      href: '/trial',
+      title: isBM ? 'Asian Polyester Fibre' : 'Asian Polyester Fibre',
+      subtitle: isBM ? 'Isian serat lembut, empuk dan tahan leper' : 'High-density resilient soft fibre fill',
+      href: '/collections/tilam-toto',
       iconGradient: 'from-amber-400/25 via-amber-600/15 to-transparent text-amber-300 border-amber-400/30',
     },
     {
       icon: ShieldCheck,
-      badge: isBM ? '10 Tahun' : '10-Year',
+      badge: isBM ? 'Mutu Terjamin' : 'Quality Assured',
       badgeClass: 'bg-blue-500/20 text-blue-300 border-blue-500/30',
-      title: t.reassureWarranty,
-      subtitle: t.reassureWarrantySub,
-      href: '/warranty',
+      title: isBM ? 'Kualiti Jahitan & QC Ketat' : 'Strict Sewing & QC Standards',
+      subtitle: isBM ? 'Jahitan quilting kemas dan kain tahan lasak' : 'Durable quilting stitching and tough fabrics',
+      href: '/profil#tentang-kami',
       iconGradient: 'from-blue-400/25 via-indigo-600/15 to-transparent text-sky-300 border-blue-400/30',
     },
     {
       icon: Truck,
-      badge: isBM ? 'Percuma' : 'Free Delivery',
+      badge: isBM ? 'Pantas & Jimat' : 'Fast Shipping',
       badgeClass: 'bg-teal-500/20 text-teal-300 border-teal-500/30',
-      title: t.reassureDelivery,
-      subtitle: t.reassureDeliverySub,
-      href: '/delivery',
+      title: isBM ? 'Penghantaran & Pakej Borong' : 'Bulk Delivery & Retail Shipping',
+      subtitle: isBM ? 'Sedia kirim ke seluruh Malaysia untuk asrama & rumah' : 'Shipping available nationwide for hostels & homes',
+      href: '/collections/borong-gudang',
       iconGradient: 'from-teal-400/25 via-emerald-600/15 to-transparent text-teal-300 border-teal-400/30',
     },
   ]
@@ -203,106 +203,74 @@ export function Footer() {
                 </form>
               )}
             </div>
-          </div>
-
-          {/* Col 2: Shopping */}
+          </div>          {/* Col 2: Real Factory Product Collections */}
           <div className="space-y-3">
             <h5 className="font-sans text-xs font-bold uppercase tracking-widest text-gold pb-1 border-b border-warmwhite/10">
-              {t.shoppingCol}
+              {isBM ? 'Produk & Koleksi Kilang' : 'Factory Collections'}
             </h5>
             <ul className="space-y-2 font-sans text-xs text-slate-300">
               <li>
-                <Link href="/collections/mattress" className="hover:text-gold transition-colors py-0.5 inline-block">
-                  {isBM ? 'Semua Koleksi Tilam' : 'All Mattresses'}
+                <Link href="/collections/tilam-toto" className="hover:text-gold transition-colors py-0.5 inline-block font-semibold text-white">
+                  {isBM ? 'Tilam Toto (Paling Lariss!!)' : 'Tilam Toto (Best Seller)'}
                 </Link>
               </li>
               <li>
-                <Link href="/collections/mattress?material=latex" className="hover:text-gold transition-colors py-0.5 inline-block">
-                  {isBM ? '100% Lateks Semulajadi' : '100% Natural Latex'}
+                <Link href="/collections/tilam-lipat" className="hover:text-gold transition-colors py-0.5 inline-block">
+                  {isBM ? 'Tilam Lipat 3 & Bujang Asrama' : 'Foldable 3-Fold & Single Mattress'}
                 </Link>
               </li>
               <li>
-                <Link href="/collections/mattress?material=hybrid" className="hover:text-gold transition-colors py-0.5 inline-block">
-                  {isBM ? 'Tilam Hibrid Sejuk' : 'Cool Night Hybrid'}
+                <Link href="/collections/bantal" className="hover:text-gold transition-colors py-0.5 inline-block">
+                  {isBM ? 'Bantal Tidur Gebu & Bantal Peluk' : 'Polyester Fibre Pillows & Bolsters'}
                 </Link>
               </li>
               <li>
-                <Link href="/collections/mattress?material=ortho" className="hover:text-gold transition-colors py-0.5 inline-block">
-                  {isBM ? 'Ortopedik Tulang Belakang' : 'Orthopaedic Spinal'}
+                <Link href="/collections/cadang-comforter" className="hover:text-gold transition-colors py-0.5 inline-block">
+                  {isBM ? 'Cadar & Set Comforter Quilting' : 'Bedsheets & Quilting Comforter'}
                 </Link>
               </li>
               <li>
-                <Link href="/collections/pillows" className="hover:text-gold transition-colors py-0.5 inline-block">
-                  {isBM ? 'Bantal Lateks Asli' : 'Natural Latex Pillows'}
+                <Link href="/collections/borong-gudang" className="text-gold font-semibold hover:underline py-0.5 inline-block">
+                  {isBM ? 'Jualan Gudang & Pakej Borong Asrama' : 'Factory Warehouse Bulk Package'}
                 </Link>
               </li>
               <li>
-                <Link href="/collections/toppers-protectors" className="hover:text-gold transition-colors py-0.5 inline-block">
-                  {isBM ? 'Pelapik & Pelindung Tilam' : 'Mattress Toppers'}
-                </Link>
-              </li>
-              <li>
-                <Link href="/collections/bedframes" className="hover:text-gold transition-colors py-0.5 inline-block">
-                  {isBM ? 'Rangka Katil Kayu Padu' : 'Hardwood Bedframes'}
-                </Link>
-              </li>
-              <li>
-                <Link href="/collections/bedding" className="hover:text-gold transition-colors py-0.5 inline-block">
-                  {isBM ? 'Cadaran Buluh 1000TC' : '1000TC Bamboo Bedding'}
-                </Link>
-              </li>
-              <li>
-                <Link href="/offers" className="text-gold font-semibold hover:underline py-0.5 inline-block">
-                  {isBM ? 'Vaucer & Tawaran Istimewa' : 'Vouchers & Offers'}
+                <Link href="/profil" className="hover:text-gold transition-colors py-0.5 inline-block">
+                  {isBM ? 'Profil Syarikat & 4 Unit Kilang' : 'Company Profile & Factory Units'}
                 </Link>
               </li>
             </ul>
           </div>
 
-          {/* Col 3: Customer Care */}
+          {/* Col 3: Maklumat Syarikat & Pengilangan */}
           <div className="space-y-3">
             <h5 className="font-sans text-xs font-bold uppercase tracking-widest text-gold pb-1 border-b border-warmwhite/10">
-              {t.careCol}
+              {isBM ? 'Maklumat & Perkhidmatan' : 'Services & Information'}
             </h5>
             <ul className="space-y-2 font-sans text-xs text-slate-300">
               <li>
-                <Link href="/trial" className="hover:text-gold transition-colors py-0.5 inline-block">
-                  {isBM ? 'Percubaan Tidur 100 Malam' : '100-Night Sleep Trial'}
+                <Link href="/profil" className="hover:text-gold transition-colors py-0.5 inline-block font-medium text-white">
+                  {isBM ? 'Profil Tunas Sinar Jaya Enterprise' : 'Tunas Sinar Jaya Corporate Profile'}
                 </Link>
               </li>
               <li>
-                <Link href="/warranty" className="hover:text-gold transition-colors py-0.5 inline-block">
-                  {isBM ? 'Pendaftaran Jaminan Kualiti' : 'Warranty Registration'}
+                <Link href="/profil#tentang-kami" className="hover:text-gold transition-colors py-0.5 inline-block">
+                  {isBM ? 'Aktiviti Pengilangan 4 Unit' : '4 Factory Production Units'}
                 </Link>
               </li>
               <li>
-                <Link href="/delivery" className="hover:text-gold transition-colors py-0.5 inline-block">
-                  {isBM ? 'Penghantaran & Pemasangan' : 'Shipping & Bulky Delivery'}
+                <Link href="/profil#carta-organisasi" className="hover:text-gold transition-colors py-0.5 inline-block">
+                  {isBM ? 'Carta Organisasi Kilang' : 'Factory Organization Chart'}
                 </Link>
               </li>
               <li>
-                <Link href="/faq" className="hover:text-gold transition-colors py-0.5 inline-block">
-                  {isBM ? 'Soalan Lazim (FAQ)' : 'Frequently Asked Questions'}
-                </Link>
-              </li>
-              <li>
-                <Link href="/care-guide" className="hover:text-gold transition-colors py-0.5 inline-block">
-                  {isBM ? 'Panduan Penjagaan Tilam' : 'Latex Mattress Care Guide'}
-                </Link>
-              </li>
-              <li>
-                <Link href="/finder" className="hover:text-gold transition-colors py-0.5 inline-block">
-                  {isBM ? 'Kuiz Pencari Tilam 60s' : 'Mattress Finder Quiz'}
-                </Link>
-              </li>
-              <li>
-                <Link href="/compare" className="hover:text-gold transition-colors py-0.5 inline-block">
-                  {isBM ? 'Bandingkan Tilam' : 'Mattress Comparison Tool'}
+                <Link href="/collections/borong-gudang" className="hover:text-gold transition-colors py-0.5 inline-block">
+                  {isBM ? 'Program Jualan Gudang Kilang' : 'Factory Warehouse Sale Event'}
                 </Link>
               </li>
               <li>
                 <Link href="/account" className="hover:text-gold transition-colors py-0.5 inline-block">
-                  {isBM ? 'Semak Pesanan & Resit' : 'Order Tracking & Receipts'}
+                  {isBM ? 'Semak Pesanan & Penjejakan Lori' : 'Order Tracking & Delivery Status'}
                 </Link>
               </li>
               <li>
@@ -317,73 +285,90 @@ export function Footer() {
             </ul>
           </div>
 
-          {/* Col 4: Showrooms & Contact */}
+          {/* Col 4: Kilang & Hubungi Kami */}
           <div className="space-y-3">
             <h5 className="font-sans text-xs font-bold uppercase tracking-widest text-gold pb-1 border-b border-warmwhite/10">
-              {t.contactCol}
+              {isBM ? 'Kilang & Hubungi Kami' : 'Factory & Contact'}
             </h5>
             <div className="space-y-2.5 font-sans text-xs text-slate-300">
+              <div className="text-white font-semibold leading-tight">
+                TUNAS SINAR JAYA ENTERPRISE
+                <span className="text-gold block font-normal text-[11px] mt-0.5">KAMAAR BEDDINGS</span>
+              </div>
               <div className="flex items-start space-x-2">
                 <MapPin className="w-4 h-4 text-gold flex-shrink-0 mt-0.5" />
-                <span>Flagship: No. 88, Jalan Maarof, Bangsar, 59100 Kuala Lumpur</span>
+                <span className="leading-relaxed">
+                  7878B Jalan Permatang Berangan, 13300 Tasek Gelugor SPU, Pulau Pinang
+                </span>
               </div>
               <div className="flex items-center space-x-2">
                 <Phone className="w-4 h-4 text-gold flex-shrink-0" />
-                <a href="tel:+60377221199" className="hover:text-gold transition-colors">
-                  +603 7722 1199
+                <a href="tel:01164447908" className="hover:text-gold font-bold text-white transition-colors">
+                  011-6444 7908
                 </a>
               </div>
               <div className="flex items-center space-x-2">
                 <Mail className="w-4 h-4 text-gold flex-shrink-0" />
-                <a href="mailto:concierge@kamaarbeddings.com" className="hover:text-gold transition-colors">
-                  concierge@kamaarbeddings.com
+                <a href="mailto:tunassinar@gmail.com" className="hover:text-gold transition-colors">
+                  tunassinar@gmail.com
                 </a>
               </div>
-              <div className="flex items-start space-x-2">
+              <div className="flex items-start space-x-2 text-[11px] text-slate-400">
                 <Clock className="w-4 h-4 text-gold flex-shrink-0 mt-0.5" />
-                <span>Showroom Hours: Mon - Sun, 10:00 AM - 8:00 PM</span>
+                <span>Waktu Operasi Kilang: Isnin - Sabtu (9:00 AM - 6:00 PM)</span>
               </div>
 
-              <div className="pt-2">
-                <Link
-                  href="/showrooms"
-                  className="inline-block px-3.5 py-2 bg-white/[0.08] hover:bg-gold hover:text-forest-dark text-warmwhite rounded-xl text-xs font-semibold border border-gold/30 transition-all shadow-sm"
+              {/* Social Media Badges */}
+              <div className="pt-2 flex flex-wrap gap-2 text-[11px]">
+                <a
+                  href="https://facebook.com"
+                  target="_blank"
+                  rel="noopener noreferrer"
+                  className="px-2.5 py-1 bg-white/10 hover:bg-white/20 text-white rounded-lg transition-colors border border-white/15"
                 >
-                  {isBM ? 'Tempah Temujanji Showroom →' : 'Book Showroom Consultation →'}
-                </Link>
+                  FB: Jualan Gudang
+                </a>
+                <a
+                  href="https://tiktok.com"
+                  target="_blank"
+                  rel="noopener noreferrer"
+                  className="px-2.5 py-1 bg-white/10 hover:bg-white/20 text-white rounded-lg transition-colors border border-white/15"
+                >
+                  TikTok: @KAMAAR_SHOP
+                </a>
               </div>
             </div>
           </div>
         </div>
 
-        {/* Payment Gateways & Copyright */}
+        {/* Payment Gateways (Strictly FPX & TNG) & Copyright */}
         <div className="pt-8 border-t border-warmwhite/10 flex flex-col md:flex-row items-center justify-between text-xs text-slate-400 space-y-4 md:space-y-0 font-sans">
           <div>
-            <p>&copy; {new Date().getFullYear()} KAMAAR BEDDINGS SDN. BHD. (Company No. 202601099881). {t.allRightsReserved}</p>
+            <p>&copy; {new Date().getFullYear()} TUNAS SINAR JAYA ENTERPRISE (KAMAAR BEDDINGS). Hak Cipta Terpelihara.</p>
+            <p className="text-[11px] text-gold/80 italic mt-0.5">
+              &ldquo;Menjahit Kepercayaan, Menyulam Masa Depan&rdquo; &bull; &ldquo;Kualiti Jahitan, Kepuasan Terjamin&rdquo;
+            </p>
             <div className="flex space-x-4 mt-1.5 text-[11px] text-slate-400">
-              <Link href="/privacy" className="hover:text-gold transition-colors">Privacy Policy</Link>
+              <Link href="/privacy" className="hover:text-gold transition-colors">Dasar Privasi</Link>
               <span>&bull;</span>
-              <Link href="/terms" className="hover:text-gold transition-colors">Terms of Service</Link>
+              <Link href="/terms" className="hover:text-gold transition-colors">Terma &amp; Syarat</Link>
               <span>&bull;</span>
-              <Link href="/refunds" className="hover:text-gold transition-colors">Refund & Trial Terms</Link>
+              <Link href="/profil" className="hover:text-gold transition-colors">Profil Syarikat</Link>
             </div>
           </div>
 
-          {/* Payment Badges */}
+          {/* Payment Badges: STRICTLY FPX and TNG ONLY */}
           <div className="flex flex-col sm:flex-row items-center space-y-2 sm:space-y-0 sm:space-x-3">
             <span className="text-[11px] text-slate-300 flex items-center space-x-1">
               <CreditCard className="w-3.5 h-3.5 text-gold" />
-              <span>{isBM ? 'Pembayaran Selamat Stripe:' : 'Secured by Stripe:'}</span>
+              <span>{isBM ? 'Kaedah Pembayaran Sahaja:' : 'Accepted Payments Only:'}</span>
             </span>
             <div className="flex items-center space-x-2">
-              <span className="px-2.5 py-1 bg-white/[0.08] rounded-lg font-bold text-[10px] tracking-wider text-white border border-white/10">
-                VISA
+              <span className="px-3 py-1 bg-[#00529C] rounded-lg font-mono font-black text-[11px] tracking-wider text-white shadow-2xs border border-[#00529C]">
+                FPX ONLINE BANKING
               </span>
-              <span className="px-2.5 py-1 bg-white/[0.08] rounded-lg font-bold text-[10px] tracking-wider text-white border border-white/10">
-                MASTERCARD
-              </span>
-              <span className="px-2.5 py-1 bg-gold/15 rounded-lg font-bold text-[10px] tracking-wider text-gold border border-gold/30 font-mono">
-                FPX ONLINE
+              <span className="px-3 py-1 bg-[#015CA9] rounded-lg font-bold text-[11px] text-white shadow-2xs border border-[#015CA9]">
+                TOUCH &apos;N GO eWALLET
               </span>
             </div>
           </div>

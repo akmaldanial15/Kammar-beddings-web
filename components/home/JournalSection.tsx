@@ -21,13 +21,13 @@ export function JournalSection({ articles }: JournalSectionProps) {
           <div>
             <span className="text-xs uppercase tracking-[0.2em] font-semibold text-gold-dark flex items-center space-x-1.5 mb-2">
               <BookOpen className="w-3.5 h-3.5 text-gold" />
-              <span>Sleep Science Journal</span>
+              <span>Panduan &amp; Tips Tekstil KAMAAR</span>
             </span>
             <h2 className="font-serif text-3xl sm:text-4xl lg:text-5xl font-bold text-forest">
-              Clinical Insights for Deeper Rest
+              Panduan Penjagaan Tilam &amp; Tidur Lena
             </h2>
             <p className="text-sm sm:text-base text-charcoal-muted mt-2 max-w-xl">
-              Evidence-based guides on ergonomic spinal alignment, thermal dissipation, and non-toxic bedroom environments.
+              Panduan penjagaan tilam toto, kelebihan isian Asian Polyester Fibre dan tips memilih kelengkapan asrama &amp; kediaman.
             </p>
           </div>
 

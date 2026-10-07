@@ -74,9 +74,7 @@ export function CheckoutClient({ initialPaymentSettings }: CheckoutClientProps) 
     initialPaymentSettings?.methods?.filter((m) => m.enabled) || []
   )
   const [selectedMethodId, setSelectedMethodId] = useState<string>(
-    initialPaymentSettings?.defaultMethodId ||
-      initialPaymentSettings?.methods?.find((m) => m.enabled)?.id ||
-      'pay-credit-card'
+    initialPaymentSettings?.defaultMethodId || 'pay-fpx'
   )
 
   // Fetch updated methods on mount if not provided or to ensure fresh status
@@ -87,9 +85,15 @@ export function CheckoutClient({ initialPaymentSettings }: CheckoutClientProps) 
         if (res.ok) {
           const data = await res.json()
           if (data.methods) {
-            setActiveMethods(data.methods)
-            if (!selectedMethodId || !data.methods.some((m: any) => m.id === selectedMethodId)) {
-              setSelectedMethodId(data.defaultMethodId || data.methods[0]?.id)
+            // Strictly enforce only FPX and TNG
+            const allowed = data.methods.filter(
+              (m: any) => m.id === 'pay-fpx' || m.id === 'pay-tng' || m.providerType === 'fpx' || m.providerType === 'tng'
+            )
+            if (allowed.length > 0) {
+              setActiveMethods(allowed)
+              if (!allowed.some((m: any) => m.id === selectedMethodId)) {
+                setSelectedMethodId(allowed[0].id)
+              }
             }
           }
         }
@@ -559,15 +563,6 @@ export function CheckoutClient({ initialPaymentSettings }: CheckoutClientProps) 
                 <div className="grid grid-cols-1 sm:grid-cols-2 gap-3">
                   <button
                     type="button"
-                    onClick={handleSubmit}
-                    className="w-full py-3.5 px-4 bg-black hover:bg-neutral-800 active:scale-[0.99] text-white rounded-xl font-bold flex items-center justify-center space-x-2 transition-all shadow-xs cursor-pointer border border-neutral-700"
-                  >
-                    <span className="font-sans font-black text-sm tracking-tight text-white">G Pay</span>
-                    <span className="text-[11px] text-neutral-400 font-normal">| Instant Pay</span>
-                  </button>
-
-                  <button
-                    type="button"
                     onClick={() => {
                       setSelectedMethodId('pay-fpx')
                       const el = document.getElementById('payment-section')
@@ -576,7 +571,20 @@ export function CheckoutClient({ initialPaymentSettings }: CheckoutClientProps) 
                     className="w-full py-3.5 px-4 bg-[#00529C] hover:bg-[#00417C] active:scale-[0.99] text-white rounded-xl font-bold flex items-center justify-center space-x-2 transition-all shadow-xs cursor-pointer"
                   >
                     <span className="font-mono font-black text-sm tracking-wider">FPX</span>
-                    <span className="text-[11px] text-sky-100 font-normal">| Online Banking</span>
+                    <span className="text-[11px] text-sky-100 font-normal">| Perbankan Internet</span>
+                  </button>
+
+                  <button
+                    type="button"
+                    onClick={() => {
+                      setSelectedMethodId('pay-tng')
+                      const el = document.getElementById('payment-section')
+                      el?.scrollIntoView({ behavior: 'smooth' })
+                    }}
+                    className="w-full py-3.5 px-4 bg-[#015CA9] hover:bg-[#004c8c] active:scale-[0.99] text-white rounded-xl font-bold flex items-center justify-center space-x-2 transition-all shadow-xs cursor-pointer"
+                  >
+                    <span className="font-sans font-black text-sm tracking-tight text-white">TNG</span>
+                    <span className="text-[11px] text-sky-100 font-normal">| Touch &apos;n Go eWallet</span>
                   </button>
                 </div>
 
@@ -930,295 +938,194 @@ export function CheckoutClient({ initialPaymentSettings }: CheckoutClientProps) 
                 </div>
               </div>
 
-              {/* SECTION 4: Payment Methods Accordion */}
+              {/* SECTION 4: Payment Methods Accordion (FPX & TNG eWallet Only) */}
               <div id="payment-section" className="bg-white rounded-2xl p-6 sm:p-7 border border-[#E8E2D8] shadow-2xs space-y-5">
                 <div className="flex items-center justify-between border-b border-[#E8E2D8]/60 pb-3">
                   <div className="flex items-center space-x-2.5">
                     <span className="w-6 h-6 rounded-full bg-forest text-warmwhite text-xs font-bold flex items-center justify-center">
                       4
                     </span>
-                    <h2 className="text-base font-bold text-forest">Kaedah Pembayaran</h2>
+                    <h2 className="text-base font-bold text-forest">Kaedah Pembayaran (FPX &amp; TNG Sahaja)</h2>
                   </div>
                   <span className="text-xs text-charcoal-muted flex items-center gap-1">
                     <Lock className="w-3.5 h-3.5 text-emerald-600" />
-                    TLS 256-Bit
+                    Pembayaran Rasmi Sah
                   </span>
                 </div>
 
-                <p className="text-xs text-charcoal-muted leading-relaxed">
-                  Semua transaksi diproses secara disulitkan dan mematuhi standard keselamatan perbankan tertinggi.
-                </p>
+                <div className="bg-emerald-50/70 border border-emerald-200 p-3.5 rounded-xl text-xs text-emerald-950 flex items-start gap-2.5">
+                  <ShieldCheck className="w-4 h-4 text-emerald-700 shrink-0 mt-0.5" />
+                  <p className="leading-relaxed">
+                    Syarikat kami <strong>TUNAS SINAR JAYA ENTERPRISE</strong> menerima bayaran rasmi melalui <strong>FPX Perbankan Dalam Talian</strong> dan <strong>Touch &apos;n Go (TNG) eWallet</strong> sahaja bagi memastikan transaksi selamat dan pantas.
+                  </p>
+                </div>
 
                 {/* Payment Option List */}
                 <div className="rounded-2xl border border-[#D5CEC2] overflow-hidden divide-y divide-[#D5CEC2] bg-white">
-                  {activeMethods.map((method) => {
-                    const isSelected = selectedMethodId === method.id
-
-                    return (
-                      <div key={method.id} className="transition-colors">
-                        {/* Header Row */}
-                        <label
-                          className={`flex items-center justify-between p-4 sm:p-4.5 cursor-pointer select-none transition-colors ${
-                            isSelected ? 'bg-[#FAF7F2]' : 'hover:bg-stone-50/60'
-                          }`}
-                        >
-                          <div className="flex items-center space-x-3.5 min-w-0 pr-2">
-                            <input
-                              type="radio"
-                              name="paymentMethod"
-                              checked={isSelected}
-                              onChange={() => setSelectedMethodId(method.id)}
-                              className="w-4 h-4 accent-forest shrink-0 cursor-pointer"
-                            />
-                            <div className="min-w-0">
-                              <span className="text-sm font-bold text-forest block truncate">
-                                {method.name}
-                              </span>
-                              {method.subtitle && (
-                                <span className="text-xs text-charcoal-muted block truncate mt-0.5">
-                                  {method.subtitle}
-                                </span>
-                              )}
-                            </div>
-                          </div>
-
-                          {/* Badges / Logos on right */}
-                          {method.badgeIcons && method.badgeIcons.length > 0 && (
-                            <div className="flex items-center space-x-1 shrink-0">
-                              {method.badgeIcons.map((b) => renderBadge(b))}
-                            </div>
-                          )}
-                        </label>
-
-                        {/* Expanded Content Subcard when selected */}
-                        {isSelected && (
-                          <div className="p-4 sm:p-6 bg-[#FAF7F2]/60 border-t border-[#D5CEC2] space-y-4">
-                            {/* CASE 1: Credit / Debit Card inline fields */}
-                            {method.providerType === 'credit_card' && (
-                              <div className="space-y-3.5 max-w-lg mx-auto">
-                                <div className="space-y-1.5">
-                                  <label className="text-xs font-semibold text-forest block">
-                                    Nombor Kad Kredit / Debit
-                                  </label>
-                                  <div className="relative">
-                                    <input
-                                      type="text"
-                                      maxLength={19}
-                                      value={cardNumber}
-                                      onChange={handleCardNumberChange}
-                                      placeholder="4532 •••• •••• 8921"
-                                      className="w-full px-4 py-3 rounded-xl border border-[#D5CEC2] text-sm text-[#222] placeholder-neutral-400 outline-none focus:border-forest bg-white font-mono shadow-2xs"
-                                    />
-                                    <Lock className="w-4 h-4 text-neutral-400 absolute right-4 top-1/2 -translate-y-1/2" />
-                                  </div>
-                                </div>
-
-                                <div className="grid grid-cols-2 gap-3">
-                                  <div className="space-y-1.5">
-                                    <label className="text-xs font-semibold text-forest block">
-                                      Tarikh Luput (MM / YY)
-                                    </label>
-                                    <input
-                                      type="text"
-                                      maxLength={7}
-                                      value={cardExpiry}
-                                      onChange={handleCardExpiryChange}
-                                      placeholder="MM / YY"
-                                      className="w-full px-4 py-3 rounded-xl border border-[#D5CEC2] text-sm text-[#222] placeholder-neutral-400 outline-none focus:border-forest bg-white font-mono shadow-2xs"
-                                    />
-                                  </div>
-
-                                  <div className="space-y-1.5">
-                                    <label className="text-xs font-semibold text-forest block">
-                                      Kod Keselamatan (CVV)
-                                    </label>
-                                    <div className="relative">
-                                      <input
-                                        type="password"
-                                        maxLength={4}
-                                        value={cardCvc}
-                                        onChange={(e) => setCardCvc(e.target.value.replace(/\D/g, ''))}
-                                        placeholder="123"
-                                        className="w-full px-4 py-3 rounded-xl border border-[#D5CEC2] text-sm text-[#222] placeholder-neutral-400 outline-none focus:border-forest bg-white font-mono shadow-2xs"
-                                      />
-                                      <span
-                                        title="3 atau 4 digit nombor di belakang kad anda"
-                                        className="absolute right-4 top-1/2 -translate-y-1/2 cursor-help inline-flex"
-                                      >
-                                        <HelpCircle className="w-4 h-4 text-neutral-400" />
-                                      </span>
-                                    </div>
-                                  </div>
-                                </div>
-
-                                <div className="space-y-1.5">
-                                  <label className="text-xs font-semibold text-forest block">
-                                    Nama Pemegang Kad (seperti pada kad)
-                                  </label>
-                                  <input
-                                    type="text"
-                                    value={cardName}
-                                    onChange={(e) => setCardName(e.target.value)}
-                                    placeholder="cth: AHMAD DANIAL"
-                                    className="w-full px-4 py-3 rounded-xl border border-[#D5CEC2] text-sm text-[#222] placeholder-neutral-400 outline-none focus:border-forest bg-white shadow-2xs"
-                                  />
-                                </div>
-
-                                <label className="flex items-center space-x-2.5 cursor-pointer text-xs text-charcoal-muted pt-1 select-none">
-                                  <input
-                                    type="checkbox"
-                                    checked={useShippingAsBilling}
-                                    onChange={(e) => setUseShippingAsBilling(e.target.checked)}
-                                    className="w-4 h-4 rounded accent-forest"
-                                  />
-                                  <span>Gunakan alamat penghantaran sebagai alamat bil</span>
-                                </label>
-                              </div>
-                            )}
-
-                            {/* CASE 2: Atome BNPL 3x Installment Calculator */}
-                            {method.providerType === 'atome_bnpl' && (
-                              <div className="p-4 sm:p-5 bg-white rounded-2xl border border-[#D5CEC2] space-y-4">
-                                <div className="flex items-center justify-between border-b border-neutral-100 pb-3">
-                                  <span className="text-xs font-bold text-forest flex items-center gap-1.5">
-                                    <Sparkles className="w-3.5 h-3.5 text-gold" />
-                                    Pelan Ansuran Atome 3x Bulan (0% Interest)
-                                  </span>
-                                  <span className="text-[10px] font-black px-2 py-0.5 rounded bg-[#E2F700] text-black">
-                                    0% FAEDAH
-                                  </span>
-                                </div>
-
-                                <div className="grid grid-cols-3 gap-2 text-center">
-                                  <div className="p-3 rounded-xl bg-[#FAF7F2] border border-[#E8E2D8]">
-                                    <span className="text-[10px] text-charcoal-muted block">Hari Ini</span>
-                                    <span className="text-xs sm:text-sm font-extrabold text-forest block mt-0.5">
-                                      {formatMYR(Math.round(finalTotalSen / 3))}
-                                    </span>
-                                  </div>
-                                  <div className="p-3 rounded-xl bg-[#FAF7F2] border border-[#E8E2D8]">
-                                    <span className="text-[10px] text-charcoal-muted block">Bulan 2 (30 Hari)</span>
-                                    <span className="text-xs sm:text-sm font-extrabold text-forest block mt-0.5">
-                                      {formatMYR(Math.round(finalTotalSen / 3))}
-                                    </span>
-                                  </div>
-                                  <div className="p-3 rounded-xl bg-[#FAF7F2] border border-[#E8E2D8]">
-                                    <span className="text-[10px] text-charcoal-muted block">Bulan 3 (60 Hari)</span>
-                                    <span className="text-xs sm:text-sm font-extrabold text-forest block mt-0.5">
-                                      {formatMYR(finalTotalSen - 2 * Math.round(finalTotalSen / 3))}
-                                    </span>
-                                  </div>
-                                </div>
-
-                                <p className="text-[11px] text-charcoal-muted leading-relaxed">
-                                  {method.instructions ||
-                                    'Anda akan dibawa ke portal selamat Atome untuk melengkapkan pengesahan identiti dan memulakan pelan ansuran 3 bulan 0% anda serta-merta.'}
-                                </p>
-                              </div>
-                            )}
-
-                            {/* CASE 3: FPX Online Banking Bank Selector */}
-                            {(method.providerType === 'payex' ||
-                              method.providerType === 'eghl' ||
-                              method.providerType === 'fpx') && (
-                              <div className="space-y-3">
-                                <span className="text-xs font-bold text-forest block">
-                                  Pilih Perbankan Internet (FPX) Anda:
-                                </span>
-
-                                <div className="grid grid-cols-2 sm:grid-cols-3 gap-2">
-                                  {MALAYSIAN_BANKS.map((bank) => (
-                                    <button
-                                      key={bank.id}
-                                      type="button"
-                                      onClick={() => setSelectedBank(bank.id)}
-                                      className={`p-3 rounded-xl border text-left text-xs font-semibold transition-all cursor-pointer flex items-center justify-between ${
-                                        selectedBank === bank.id
-                                          ? 'bg-forest text-warmwhite border-forest shadow-xs'
-                                          : 'bg-white text-forest border-[#D5CEC2] hover:bg-stone-50'
-                                      }`}
-                                    >
-                                      <span className="truncate">{bank.name}</span>
-                                      {selectedBank === bank.id && (
-                                        <Check className="w-3.5 h-3.5 text-gold shrink-0 ml-1" />
-                                      )}
-                                    </button>
-                                  ))}
-                                </div>
-
-                                <p className="text-[11px] text-charcoal-muted leading-relaxed pt-1">
-                                  {method.instructions ||
-                                    'Selepas menekan butang "Bayar Sekarang", anda akan dialihkan terus ke portal rasmi bank pilihan anda secara selamat.'}
-                                </p>
-                              </div>
-                            )}
-
-                            {/* CASE 4: DuitNow QR & Manual Bank Transfer */}
-                            {method.providerType === 'duitnow_qr' && (
-                              <div className="p-4 sm:p-5 bg-white rounded-2xl border border-[#D5CEC2] space-y-3.5">
-                                <div className="flex items-center justify-between border-b border-neutral-100 pb-2.5">
-                                  <div className="flex items-center space-x-2 text-forest font-bold text-xs">
-                                    <Building className="w-4 h-4 text-gold" />
-                                    <span>Akaun Rasmi KAMAAR BEDDINGS SDN BHD</span>
-                                  </div>
-                                  <span className="text-[10px] font-bold px-2 py-0.5 rounded bg-emerald-100 text-emerald-800">
-                                    Disahkan
-                                  </span>
-                                </div>
-
-                                <div className="bg-[#FAF7F2] p-4 rounded-xl border border-[#E8E2D8] text-xs space-y-2 font-mono">
-                                  <div className="flex justify-between items-center">
-                                    <span className="text-charcoal-muted">Bank:</span>
-                                    <strong className="text-forest">Maybank Berhad</strong>
-                                  </div>
-                                  <div className="flex justify-between items-center">
-                                    <span className="text-charcoal-muted">No. Akaun:</span>
-                                    <div className="flex items-center space-x-2">
-                                      <strong className="text-forest tracking-wider font-bold">5123 4567 8901</strong>
-                                      <button
-                                        type="button"
-                                        onClick={handleCopyBankAccount}
-                                        className="text-forest hover:text-gold transition-colors cursor-pointer"
-                                        title="Salin Nombor Akaun"
-                                      >
-                                        {copiedBank ? (
-                                          <Check className="w-3.5 h-3.5 text-emerald-600" />
-                                        ) : (
-                                          <Copy className="w-3.5 h-3.5" />
-                                        )}
-                                      </button>
-                                    </div>
-                                  </div>
-                                  <div className="flex justify-between items-center">
-                                    <span className="text-charcoal-muted">Penerima:</span>
-                                    <strong className="text-forest text-right">KAMAAR BEDDINGS SDN BHD</strong>
-                                  </div>
-                                </div>
-
-                                <p className="text-[11px] text-charcoal-muted leading-relaxed">
-                                  {method.instructions ||
-                                    'Sila buat pindahan dana melalui aplikasi perbankan anda. Resit bayaran boleh dihantar terus kepada Concierge KAMAAR melalui WhatsApp untuk pengesahan segera.'}
-                                </p>
-                              </div>
-                            )}
-
-                            {/* CASE 5: Custom Instructions */}
-                            {method.providerType === 'cod' && (
-                              <div className="p-4 sm:p-5 bg-white rounded-2xl border border-[#D5CEC2] space-y-2 text-xs">
-                                <span className="font-bold text-forest block">
-                                  💵 Pembayaran Semasa Penghantaran (COD / White-Glove Delivery)
-                                </span>
-                                <p className="text-[11px] text-charcoal-muted leading-relaxed">
-                                  {method.description ||
-                                    'Anda boleh membayar baki pesanan secara tunai atau pindahan bank DuitNow terus kepada kru pemasangan KAMAAR selepas tilam diletakkan di bilik tidur anda.'}
-                                </p>
-                              </div>
-                            )}
-                          </div>
-                        )}
+                  {/* OPTION 1: FPX Online Banking */}
+                  <div className="transition-colors">
+                    <label
+                      className={`flex items-center justify-between p-4 sm:p-4.5 cursor-pointer select-none transition-colors ${
+                        selectedMethodId === 'pay-fpx' ? 'bg-[#FAF7F2]' : 'hover:bg-stone-50/60'
+                      }`}
+                    >
+                      <div className="flex items-center space-x-3.5 min-w-0 pr-2">
+                        <input
+                          type="radio"
+                          name="paymentMethod"
+                          checked={selectedMethodId === 'pay-fpx'}
+                          onChange={() => setSelectedMethodId('pay-fpx')}
+                          className="w-4 h-4 accent-forest shrink-0 cursor-pointer"
+                        />
+                        <div className="min-w-0">
+                          <span className="text-sm font-bold text-forest block truncate">
+                            FPX Perbankan Dalam Talian (Online Banking)
+                          </span>
+                          <span className="text-xs text-charcoal-muted block truncate mt-0.5">
+                            Maybank2u, CIMB, Bank Islam, RHB, Public Bank, Hong Leong &amp; lain-lain
+                          </span>
+                        </div>
                       </div>
-                    )
-                  })}
+
+                      <div className="flex items-center space-x-1 shrink-0">
+                        <span className="px-2.5 py-1 rounded text-xs font-black bg-[#00529C] text-white tracking-wider border border-[#00529C] shadow-2xs">
+                          FPX
+                        </span>
+                      </div>
+                    </label>
+
+                    {selectedMethodId === 'pay-fpx' && (
+                      <div className="p-4 sm:p-6 bg-[#FAF7F2]/60 border-t border-[#D5CEC2] space-y-4">
+                        <div className="space-y-3">
+                          <span className="text-xs font-bold text-forest block">
+                            Pilih Bank Tempatan Anda:
+                          </span>
+
+                          <div className="grid grid-cols-2 sm:grid-cols-3 gap-2">
+                            {MALAYSIAN_BANKS.map((bank) => (
+                              <button
+                                key={bank.id}
+                                type="button"
+                                onClick={() => setSelectedBank(bank.id)}
+                                className={`p-3 rounded-xl border text-left text-xs font-semibold transition-all cursor-pointer flex items-center justify-between ${
+                                  selectedBank === bank.id
+                                    ? 'bg-forest text-warmwhite border-forest shadow-xs'
+                                    : 'bg-white text-forest border-[#D5CEC2] hover:bg-stone-50'
+                                }`}
+                              >
+                                <span className="truncate">{bank.name}</span>
+                                {selectedBank === bank.id && (
+                                  <Check className="w-3.5 h-3.5 text-gold shrink-0 ml-1" />
+                                )}
+                              </button>
+                            ))}
+                          </div>
+
+                          <div className="p-3 bg-white rounded-xl border border-[#D5CEC2] text-xs text-charcoal-muted leading-relaxed flex items-center space-x-2">
+                            <Info className="w-4 h-4 text-forest shrink-0" />
+                            <span>
+                              Selepas menekan butang <strong>&quot;Bayar Sekarang&quot;</strong>, anda akan dibawa ke gerbang pembayaran selamat FPX bagi mengesahkan transaksi secara terus dengan bank anda.
+                            </span>
+                          </div>
+                        </div>
+                      </div>
+                    )}
+                  </div>
+
+                  {/* OPTION 2: Touch 'n Go (TNG) eWallet */}
+                  <div className="transition-colors">
+                    <label
+                      className={`flex items-center justify-between p-4 sm:p-4.5 cursor-pointer select-none transition-colors ${
+                        selectedMethodId === 'pay-tng' ? 'bg-[#FAF7F2]' : 'hover:bg-stone-50/60'
+                      }`}
+                    >
+                      <div className="flex items-center space-x-3.5 min-w-0 pr-2">
+                        <input
+                          type="radio"
+                          name="paymentMethod"
+                          checked={selectedMethodId === 'pay-tng'}
+                          onChange={() => setSelectedMethodId('pay-tng')}
+                          className="w-4 h-4 accent-forest shrink-0 cursor-pointer"
+                        />
+                        <div className="min-w-0">
+                          <span className="text-sm font-bold text-forest block truncate">
+                            Touch &apos;n Go eWallet (TNG)
+                          </span>
+                          <span className="text-xs text-charcoal-muted block truncate mt-0.5">
+                            Bayaran terus imbas QR Kod atau aplikasi Touch &apos;n Go
+                          </span>
+                        </div>
+                      </div>
+
+                      <div className="flex items-center space-x-1 shrink-0">
+                        <span className="px-2.5 py-1 rounded text-xs font-bold bg-[#015CA9] text-white border border-[#015CA9] shadow-2xs">
+                          TNG eWallet
+                        </span>
+                      </div>
+                    </label>
+
+                    {selectedMethodId === 'pay-tng' && (
+                      <div className="p-4 sm:p-6 bg-[#FAF7F2]/60 border-t border-[#D5CEC2] space-y-4">
+                        <div className="p-4 sm:p-5 bg-white rounded-2xl border border-[#D5CEC2] space-y-3.5">
+                          <div className="flex items-center justify-between border-b border-neutral-100 pb-2.5">
+                            <div className="flex items-center space-x-2 text-forest font-bold text-xs">
+                              <Building className="w-4 h-4 text-gold" />
+                              <span>Akaun Rasmi: TUNAS SINAR JAYA ENTERPRISE</span>
+                            </div>
+                            <span className="text-[10px] font-bold px-2 py-0.5 rounded bg-sky-100 text-[#015CA9]">
+                              TNG Terverifikasi
+                            </span>
+                          </div>
+
+                          <div className="bg-[#FAF7F2] p-4 rounded-xl border border-[#E8E2D8] text-xs space-y-2.5">
+                            <div className="flex justify-between items-center">
+                              <span className="text-charcoal-muted">Nama Peniaga:</span>
+                              <strong className="text-forest">TUNAS SINAR JAYA ENTERPRISE</strong>
+                            </div>
+                            <div className="flex justify-between items-center">
+                              <span className="text-charcoal-muted">Jenama:</span>
+                              <strong className="text-forest">KAMAAR BEDDINGS</strong>
+                            </div>
+                            <div className="flex justify-between items-center">
+                              <span className="text-charcoal-muted">No. TNG / WhatsApp Rasmi:</span>
+                              <div className="flex items-center space-x-2">
+                                <strong className="text-forest font-mono tracking-wider font-bold">011-6444 7908</strong>
+                                <button
+                                  type="button"
+                                  onClick={() => {
+                                    if (typeof navigator !== 'undefined' && navigator.clipboard) {
+                                      navigator.clipboard.writeText('01164447908')
+                                      setCopiedBank(true)
+                                      setTimeout(() => setCopiedBank(false), 2000)
+                                    }
+                                  }}
+                                  className="text-forest hover:text-gold transition-colors cursor-pointer"
+                                  title="Salin Nombor TNG"
+                                >
+                                  {copiedBank ? (
+                                    <Check className="w-3.5 h-3.5 text-emerald-600" />
+                                  ) : (
+                                    <Copy className="w-3.5 h-3.5" />
+                                  )}
+                                </button>
+                              </div>
+                            </div>
+                            <div className="flex justify-between items-center">
+                              <span className="text-charcoal-muted">Lokasi Kilang:</span>
+                              <strong className="text-forest text-right">Tasek Gelugor, Pulau Pinang</strong>
+                            </div>
+                          </div>
+
+                          <div className="p-3 bg-sky-50 rounded-xl border border-sky-200 text-xs text-sky-950 leading-relaxed flex items-center space-x-2">
+                            <Info className="w-4 h-4 text-[#015CA9] shrink-0" />
+                            <span>
+                              Buka aplikasi <strong>Touch &apos;n Go eWallet</strong> anda untuk menyelesaikan bayaran. Resit pengesahan akan dihantar secara automatik.
+                            </span>
+                          </div>
+                        </div>
+                      </div>
+                    )}
+                  </div>
                 </div>
               </div>
 
@@ -1457,24 +1364,24 @@ export function CheckoutClient({ initialPaymentSettings }: CheckoutClientProps) 
                 </div>
               </div>
 
-              {/* KAMAAR Atelier Guarantees Card */}
+              {/* KAMAAR Factory Guarantees Card */}
               <div className="p-4 sm:p-5 rounded-2xl bg-white border border-[#E8E2D8] space-y-3 text-xs shadow-2xs">
                 <div className="flex items-center space-x-2 text-forest font-bold">
                   <Sparkles className="w-4 h-4 text-gold shrink-0" />
-                  <span>Jaminan Kualiti Eksklusif KAMAAR</span>
+                  <span>Jaminan Kualiti Kilang KAMAAR BEDDINGS</span>
                 </div>
                 <ul className="space-y-2 text-[11px] text-charcoal-muted leading-relaxed">
                   <li className="flex items-start space-x-2">
                     <ShieldCheck className="w-4 h-4 text-emerald-600 shrink-0 mt-0.5" />
-                    <span><strong>Jaminan Pengilang 10-Tahun:</strong> Perlindungan kualiti struktur tilam.</span>
+                    <span><strong>Terus Dari Kilang:</strong> Pengeluaran oleh Tunas Sinar Jaya Enterprise, Tasek Gelugor.</span>
                   </li>
                   <li className="flex items-start space-x-2">
                     <RotateCcw className="w-4 h-4 text-emerald-600 shrink-0 mt-0.5" />
-                    <span><strong>Percubaan Tidur 100-Malam:</strong> Jaminan kepuasan tidur di rumah anda.</span>
+                    <span><strong>Kualiti Jahitan &amp; Isian:</strong> Isian Asian Polyester Fibre gebu &amp; jahitan quilting kukuh.</span>
                   </li>
                   <li className="flex items-start space-x-2">
                     <Truck className="w-4 h-4 text-emerald-600 shrink-0 mt-0.5" />
-                    <span><strong>White-Glove Setup:</strong> Pasukan profesional KAMAAR pasang terus ke bilik.</span>
+                    <span><strong>Penghantaran Pantas:</strong> Pembungkusan rapi terus dihantar ke seluruh Semenanjung.</span>
                   </li>
                 </ul>
               </div>

@@ -1,1416 +1,212 @@
 {
   "categories": [
     {
-      "id": "cat-mattresses",
-      "name": "Mattresses",
-      "slug": "mattress",
-      "description": "100% natural organic latex and premium hybrid pocket spring mattresses crafted for tropical Malaysian sleep.",
-      "imageUrl": "https://images.unsplash.com/photo-1631049307264-da0ec9d70304?auto=format&fit=crop&w=800&q=80",
+      "id": "cat-tilam-toto",
+      "name": "Tilam Toto",
+      "slug": "tilam-toto",
+      "description": "Tilam Toto Asian Polyester Fibre tebal, empuk dan berkualiti tinggi keluaran kilang Tunas Sinar Jaya. Paling laris untuk seisi keluarga.",
+      "imageUrl": "/images/company/profil-syarikat-cover.jpg",
       "displayOrder": 1,
       "showInNav": true,
       "hasMegaMenu": true,
+      "badge": "PALING LARISS",
       "isActive": true
     },
     {
-      "id": "cat-pillows",
-      "name": "Pillows",
-      "slug": "pillows",
-      "description": "Ergonomic natural latex pillows contoured for cervical spinal alignment and cool comfort.",
-      "imageUrl": "/images/products/pillow-contour-latex.jpg",
+      "id": "cat-tilam-lipat",
+      "name": "Tilam Lipat & Bujang",
+      "slug": "tilam-lipat",
+      "description": "Tilam lipat 3 berzip mudah alih dan tilam bujang asrama yang praktikal, jimat ruang dan tahan lasak.",
+      "imageUrl": "/images/company/aktiviti-pengilangan.jpg",
       "displayOrder": 2,
       "showInNav": true,
       "hasMegaMenu": false,
       "isActive": true
     },
     {
-      "id": "cat-toppers",
-      "name": "Toppers & Protectors",
-      "slug": "toppers-protectors",
-      "description": "Transform any bed with pure natural latex toppers and breathable waterproof bamboo protectors.",
-      "imageUrl": "/images/products/topper-latex-5cm.jpg",
+      "id": "cat-bantal",
+      "name": "Bantal & Bantal Peluk",
+      "slug": "bantal",
+      "description": "Bantal tidur gebu dan bantal peluk isian Asian Polyester Fibre dari Unit Bantal & Tilam KAMAAR.",
+      "imageUrl": "/images/products/pillow-classic-latex.jpg",
       "displayOrder": 3,
       "showInNav": true,
       "hasMegaMenu": false,
       "isActive": true
     },
     {
-      "id": "cat-bedframes",
-      "name": "Bedframes",
-      "slug": "bedframes",
-      "description": "Solid Malaysian hardwood and handcrafted tufted headboards engineered for optimal mattress support.",
-      "imageUrl": "https://images.unsplash.com/photo-1505693416388-ac5ce068fe85?auto=format&fit=crop&w=800&q=80",
+      "id": "cat-cadang-comforter",
+      "name": "Cadar & Comforter",
+      "slug": "cadang-comforter",
+      "description": "Set comforter tebal jahitan quilting kemas, cadar tilam toto dan sarung tilam berzip pelbagai corak menarik.",
+      "imageUrl": "/images/company/profil-syarikat-cover.jpg",
       "displayOrder": 4,
       "showInNav": true,
       "hasMegaMenu": false,
       "isActive": true
     },
     {
-      "id": "cat-bedding",
-      "name": "Bed Linen",
-      "slug": "bedding",
-      "description": "1,000 thread-count organic bamboo cotton duvet covers, fitted sheets, and silk pillowcases.",
-      "imageUrl": "https://images.unsplash.com/photo-1522771739844-6a9f6d5f14af?auto=format&fit=crop&w=800&q=80",
+      "id": "cat-borong-gudang",
+      "name": "Jualan Gudang & Borong",
+      "slug": "borong-gudang",
+      "description": "Harga kilang terus dari Tasek Gelugor untuk asrama, homestay, tahfiz, kontraktor dan pembeli borong.",
+      "imageUrl": "/images/company/misi-visi-jualan-gudang.jpg",
       "displayOrder": 5,
       "showInNav": true,
       "hasMegaMenu": false,
+      "badge": "HARGA KILANG",
       "isActive": true
     },
     {
-      "id": "cat-offers",
-      "name": "Offers & Bundles",
-      "slug": "offers",
-      "description": "Exclusive bundle packages and limited-time bedroom luxury vouchers.",
-      "imageUrl": "/images/banners/offers-banner.jpg",
+      "id": "cat-profil",
+      "name": "Profil Syarikat",
+      "slug": "profil",
+      "description": "Maklumat syarikat Tunas Sinar Jaya Enterprise, carta organisasi, visi misi dan aktiviti pengilangan tekstil.",
+      "imageUrl": "/images/company/carta-organisasi-kilang.jpg",
       "displayOrder": 6,
       "showInNav": true,
       "hasMegaMenu": false,
-      "badge": "SALE",
-      "customUrl": "/offers",
-      "isActive": true
-    },
-    {
-      "id": "cat-guide",
-      "name": "Sleep Guide",
-      "slug": "guide",
-      "description": "Expert sleep science and ergonomics guide to enhance natural rest.",
-      "imageUrl": "/images/banners/blog-sleep-guide.jpg",
-      "displayOrder": 7,
-      "showInNav": true,
-      "hasMegaMenu": false,
-      "customUrl": "/blog",
+      "customUrl": "/profil",
       "isActive": true
     }
   ],
   "collections": [
     {
-      "id": "col-latex",
-      "name": "100% Pure Natural Latex",
-      "slug": "natural-latex",
-      "description": "Harvested from certified sustainable Malaysian rubber plantations. Zero synthetic fillers, zero off-gassing.",
-      "bannerUrl": "https://images.unsplash.com/photo-1582582621959-48d27397dc69?auto=format&fit=crop&w=1400&q=80",
+      "id": "col-toto",
+      "name": "Koleksi Tilam Toto Paling Laris",
+      "slug": "koleksi-toto",
+      "description": "Tilam toto tebal isian Asian Polyester Fibre pelbagai corak floral dan moden terus dari kilang.",
+      "bannerUrl": "/images/company/profil-syarikat-cover.jpg",
       "displayOrder": 1,
       "isFeatured": true
     },
     {
-      "id": "col-hybrid",
-      "name": "Cool Night Hybrid Series",
-      "slug": "cool-night-hybrid",
-      "description": "Combines resilient natural latex with Japanese Ice-Silk fabric and 7-zone pocket springs for heat dissipation.",
-      "bannerUrl": "https://images.unsplash.com/photo-1616046229478-9901c5536a45?auto=format&fit=crop&w=1400&q=80",
+      "id": "col-lipat-bujang",
+      "name": "Tilam Lipat 3 & Bujang Asrama",
+      "slug": "tilam-lipat-asrama",
+      "description": "Tilam mudah alih berzip dan tilam bujang tahan lasak untuk kegunaan asrama, homestay & ruang tamu.",
+      "bannerUrl": "/images/company/aktiviti-pengilangan.jpg",
       "displayOrder": 2,
       "isFeatured": true
     },
     {
-      "id": "col-ortho",
-      "name": "Spinal Orthopaedic Collection",
-      "slug": "orthopaedic-support",
-      "description": "Engineered in consultation with Malaysian physiotherapists for maximum lumbar support and posture relief.",
-      "bannerUrl": "https://images.unsplash.com/photo-1598928506311-c55ded91a20c?auto=format&fit=crop&w=1400&q=80",
+      "id": "col-bantal-peluk",
+      "name": "Bantal Tidur Gebu & Bantal Peluk",
+      "slug": "bantal-gebu-kamaar",
+      "description": "Isian fiber berkualiti tinggi yang anjal, menyokong kepala dan leher dengan selesa.",
+      "bannerUrl": "/images/products/pillow-contour-latex.jpg",
       "displayOrder": 3,
       "isFeatured": true
     },
     {
-      "id": "col-hotel",
-      "name": "Sovereign Hotel Collection",
-      "slug": "hotel-collection",
-      "description": "Bespoke 34cm multi-tiered plush comfort experienced in 5-star presidential suites.",
-      "bannerUrl": "https://images.unsplash.com/photo-1578683010236-d716f9a3f461?auto=format&fit=crop&w=1400&q=80",
+      "id": "col-borong-pukal",
+      "name": "Pakej Jualan Gudang & Borong",
+      "slug": "jualan-gudang-borong",
+      "description": "Pakej penjimatan besar untuk pengusaha homestay, asrama sekolah, tahfiz dan jualan gudang.",
+      "bannerUrl": "/images/company/misi-visi-jualan-gudang.jpg",
       "displayOrder": 4,
       "isFeatured": true
     }
   ],
   "products": [
     {
-      "id": "prod-royal-heritage",
-      "name": "Kamaar Royal Heritage 100% Natural Latex Mattress",
-      "slug": "lena-royal-heritage-latex-mattress",
-      "subtitle": "100% Pure Organic Dunlop Latex with Belgian Tencel Cover",
-      "description": "The epitome of handcrafted Malaysian sleep luxury. Made from 100% sustainably harvested organic latex with no toxic polyurethane foam, chemical adhesives, or metal coils. Featuring dual-density micro-zones that contour effortlessly to your spine while providing buoyant, zero-pressure support.",
-      "shortDescription": "Signature 100% organic natural latex mattress with dual-density ergonomic zoning and natural cooling.",
-      "categoryId": "cat-mattresses",
+      "id": "prod-toto-asian-fibre",
+      "name": "Tilam Toto Asian Polyester Fibre (Tebal & Gebu)",
+      "slug": "tilam-toto-asian-polyester-fibre",
+      "subtitle": "Paling Lariss!! Tebal, Gebu & Jahitan Quilting Tahan Lasak",
+      "description": "Produk terlaris keluaran Tunas Sinar Jaya Enterprise! Tilam toto tebal dan empuk dengan isian Asian Polyester Fibre bermutu tinggi. Jahitan quilting kemas yang mengunci fiber agar tidak berganjak atau bergumpal. Sesuai untuk tidur santai seisi keluarga di ruang tamu, tilam tambahan untuk tetamu, homestay, atau aktiviti luar.",
+      "shortDescription": "Tilam toto paling laris keluaran Tunas Sinar Jaya Enterprise. Tebal, gebu, corak menarik dan tahan lasak.",
+      "categoryId": "cat-tilam-toto",
       "productType": "mattress",
-      "material": "100% Natural Latex",
-      "firmness": "Medium Firm",
-      "firmnessScale": 6,
-      "thicknessCm": 30,
-      "warrantyYears": 12,
-      "trialNights": 100,
-      "features": [
-        "100% Organic Malaysian Natural Latex",
-        "Zero synthetic foam, zero VOC emissions & hypoallergenic",
-        "Naturally dust-mite, fungal & antibacterial resistant",
-        "Belgian Organic Tencel zip-off washable cover",
-        "7-Zone ergonomic spinal weight distribution",
-        "Made in Malaysia with 12-Year Core Warranty"
-      ],
-      "layers": [
-        {
-          "number": 1,
-          "name": "Belgian Organic Tencel Cover",
-          "description": "Silky smooth, moisture-wicking natural fabric quilted with pure organic wool."
-        },
-        {
-          "number": 2,
-          "name": "Ultra-Comfort Talalay Latex Pillow Top (5cm)",
-          "description": "Plush pressure-relieving layer that cushions shoulders and hips."
-        },
-        {
-          "number": 3,
-          "name": "7-Zone High-Density Dunlop Latex Core (20cm)",
-          "description": "Targeted ergonomic density zones supporting natural spinal curve."
-        },
-        {
-          "number": 4,
-          "name": "Reinforced Breathable Base (5cm)",
-          "description": "Ventilated pin-hole latex base allowing 360-degree ambient airflow."
-        }
-      ],
-      "specifications": {
-        "Core Material": "100% Pure Malaysian Natural Latex",
-        "Fabric": "Belgian Organic Tencel with Anti-Dustmite Sanitized Treatment",
-        "Height / Thickness": "30 cm (approx. 12 inches)",
-        "Firmness Level": "Medium Firm (6 / 10)",
-        "Motion Isolation": "Superior Zero Partner Disturbance",
-        "Country of Origin": "Malaysia"
-      },
-      "faq": [
-        {
-          "question": "Does natural latex smell or off-gas?",
-          "answer": "No. Unlike memory foam made from petrochemicals, our 100% natural latex has a mild, soothing natural rubber scent that dissipates in 24 hours, with zero toxic off-gassing."
-        },
-        {
-          "question": "How does the 100-night trial work?",
-          "answer": "We deliver your mattress directly to your bedroom. Sleep on it for at least 30 nights to let your body adjust. If you are not completely satisfied within 100 nights, contact us for a hassle-free return and refund."
-        }
-      ],
-      "status": "published",
-      "isFeatured": true,
-      "variants": [
-        {
-          "id": "var-rh-single",
-          "productId": "prod-royal-heritage",
-          "sku": "KAMAAR-RH-SGL",
-          "sizeName": "Single",
-          "dimensions": "91cm x 190cm x 30cm",
-          "priceSen": 289900,
-          "compareAtPriceSen": 349900,
-          "stockQuantity": 8,
-          "leadTimeDays": 3,
-          "isActive": true
-        },
-        {
-          "id": "var-rh-supersingle",
-          "productId": "prod-royal-heritage",
-          "sku": "KAMAAR-RH-SSG",
-          "sizeName": "Super Single",
-          "dimensions": "107cm x 190cm x 30cm",
-          "priceSen": 339900,
-          "compareAtPriceSen": 399900,
-          "stockQuantity": 5,
-          "leadTimeDays": 3,
-          "isActive": true
-        },
-        {
-          "id": "var-rh-queen",
-          "productId": "prod-royal-heritage",
-          "sku": "KAMAAR-RH-QEN",
-          "sizeName": "Queen",
-          "dimensions": "152cm x 190cm x 30cm",
-          "priceSen": 449900,
-          "compareAtPriceSen": 529900,
-          "stockQuantity": 12,
-          "leadTimeDays": 3,
-          "isActive": true
-        },
-        {
-          "id": "var-rh-king",
-          "productId": "prod-royal-heritage",
-          "sku": "KAMAAR-RH-KNG",
-          "sizeName": "King",
-          "dimensions": "183cm x 190cm x 30cm",
-          "priceSen": 539900,
-          "compareAtPriceSen": 629900,
-          "stockQuantity": 9,
-          "leadTimeDays": 3,
-          "isActive": true
-        }
-      ],
-      "images": [
-        {
-          "id": "img-rh-1",
-          "productId": "prod-royal-heritage",
-          "imageUrl": "https://images.unsplash.com/photo-1631049307264-da0ec9d70304?auto=format&fit=crop&w=1000&q=80",
-          "altText": "Kamaar Royal Heritage 100% Natural Latex Mattress in luxury master bedroom",
-          "displayOrder": 1,
-          "isPrimary": true
-        },
-        {
-          "id": "img-rh-2",
-          "productId": "prod-royal-heritage",
-          "imageUrl": "/images/products/topper-latex-75cm.jpg",
-          "altText": "Close up of organic tencel fabric quilting and embroidery",
-          "displayOrder": 2,
-          "isPrimary": false
-        },
-        {
-          "id": "img-rh-3",
-          "productId": "prod-royal-heritage",
-          "imageUrl": "https://images.unsplash.com/photo-1582582621959-48d27397dc69?auto=format&fit=crop&w=1000&q=80",
-          "altText": "Natural latex pinhole cross section ventilation demonstration",
-          "displayOrder": 3,
-          "isPrimary": false
-        }
-      ],
-      "createdAt": "2026-09-01T00:00:00Z",
-      "updatedAt": "2026-09-30T00:00:00Z"
-    },
-    {
-      "id": "prod-cool-night",
-      "name": "Kamaar Cool Night Ice-Silk Hybrid Mattress",
-      "slug": "lena-cool-night-hybrid-mattress",
-      "subtitle": "Japanese Ice-Cool Fabric + Natural Latex + 7-Zone Independent Pocket Springs",
-      "description": "Designed specifically for hot, humid tropical nights. The Cool Night Hybrid weaves Japanese high-density cooling filaments into the quilt, providing an instant 2°C temperature drop upon contact. Paired with aerated organic latex and thousands of barrel pocket coils that disperse body heat continuously.",
-      "shortDescription": "Active cooling hybrid with ice-fiber surface, buoyant natural latex, and zero motion transfer pocket coils.",
-      "categoryId": "cat-mattresses",
-      "productType": "mattress",
-      "material": "Hybrid Pocket Spring",
-      "firmness": "Medium",
-      "firmnessScale": 5,
-      "thicknessCm": 28,
-      "warrantyYears": 10,
-      "trialNights": 100,
-      "features": [
-        "Sub-Zero Japanese Ice-Silk fabric (Instant cooling effect)",
-        "100% Natural Latex responsive comfort layer",
-        "Individually encased 7-Zone pocket coils for zero motion disturbance",
-        "High-density foam encasement for reinforced edge seating",
-        "Antimicrobial & Dust Mite barrier"
-      ],
-      "layers": [
-        {
-          "number": 1,
-          "name": "Cool-Touch Ice-Silk Fabric",
-          "description": "Thermally conductive yarn dissipates heat 3x faster than cotton."
-        },
-        {
-          "number": 2,
-          "name": "Aerated Natural Latex Cushion (4cm)",
-          "description": "Breathable pinhole latex offering buoyant lumbar support."
-        },
-        {
-          "number": 3,
-          "name": "Transition High-Resilience Foam (3cm)",
-          "description": "Dampens vibrations and provides progressive firmness transition."
-        },
-        {
-          "number": 4,
-          "name": "7-Zone Independent Pocket Springs (19cm)",
-          "description": "Individually wrapped steel coils respond precisely to body contours."
-        },
-        {
-          "number": 5,
-          "name": "Anti-Slip Foundation Base (2cm)",
-          "description": "Ensures absolute grip on any bedframe or divan base."
-        }
-      ],
-      "specifications": {
-        "Core Structure": "Independent Barrel Pocket Springs with Latex Top",
-        "Fabric": "High Q-Max Japanese Ice-Silk Cooling Jacquard",
-        "Height / Thickness": "28 cm (approx. 11 inches)",
-        "Firmness Level": "Medium (5 / 10)",
-        "Spring Gauge": "1.8mm / 2.0mm Multi-Zone Coils",
-        "Country of Origin": "Malaysia"
-      },
-      "faq": [
-        {
-          "question": "Will the cooling effect wear out after washing?",
-          "answer": "No. The cooling properties are permanently embedded into the cross-section structure of the ice fibers, lasting the entire lifespan of the mattress."
-        }
-      ],
-      "status": "published",
-      "isFeatured": true,
-      "variants": [
-        {
-          "id": "var-cn-single",
-          "productId": "prod-cool-night",
-          "sku": "KAMAAR-CN-SGL",
-          "sizeName": "Single",
-          "dimensions": "91cm x 190cm x 28cm",
-          "priceSen": 189900,
-          "compareAtPriceSen": 229900,
-          "stockQuantity": 10,
-          "leadTimeDays": 2,
-          "isActive": true
-        },
-        {
-          "id": "var-cn-supersingle",
-          "productId": "prod-cool-night",
-          "sku": "KAMAAR-CN-SSG",
-          "sizeName": "Super Single",
-          "dimensions": "107cm x 190cm x 28cm",
-          "priceSen": 229900,
-          "compareAtPriceSen": 269900,
-          "stockQuantity": 7,
-          "leadTimeDays": 2,
-          "isActive": true
-        },
-        {
-          "id": "var-cn-queen",
-          "productId": "prod-cool-night",
-          "sku": "KAMAAR-CN-QEN",
-          "sizeName": "Queen",
-          "dimensions": "152cm x 190cm x 28cm",
-          "priceSen": 299900,
-          "compareAtPriceSen": 369900,
-          "stockQuantity": 15,
-          "leadTimeDays": 2,
-          "isActive": true
-        },
-        {
-          "id": "var-cn-king",
-          "productId": "prod-cool-night",
-          "sku": "KAMAAR-CN-KNG",
-          "sizeName": "King",
-          "dimensions": "183cm x 190cm x 28cm",
-          "priceSen": 359900,
-          "compareAtPriceSen": 439900,
-          "stockQuantity": 12,
-          "leadTimeDays": 2,
-          "isActive": true
-        }
-      ],
-      "images": [
-        {
-          "id": "img-cn-1",
-          "productId": "prod-cool-night",
-          "imageUrl": "https://images.unsplash.com/photo-1616046229478-9901c5536a45?auto=format&fit=crop&w=1000&q=80",
-          "altText": "Kamaar Cool Night Hybrid Mattress in airy bedroom with blue linen",
-          "displayOrder": 1,
-          "isPrimary": true
-        },
-        {
-          "id": "img-cn-2",
-          "productId": "prod-cool-night",
-          "imageUrl": "https://images.unsplash.com/photo-1505693416388-ac5ce068fe85?auto=format&fit=crop&w=1000&q=80",
-          "altText": "Cooling fabric pattern close up with subtle icy woven details",
-          "displayOrder": 2,
-          "isPrimary": false
-        }
-      ],
-      "createdAt": "2026-09-02T00:00:00Z",
-      "updatedAt": "2026-09-30T00:00:00Z"
-    },
-    {
-      "id": "prod-ortho-rest",
-      "name": "Kamaar Ortho Rest Spinal Firm Mattress",
-      "slug": "lena-ortho-rest-spinal-firm-mattress",
-      "subtitle": "Physiotherapist-Approved Spinal Alignment & High-Density Posture Core",
-      "description": "Designed specifically for those suffering from chronic back stiffness or seniors needing solid edge-to-edge pushback. Combines firm vulcanized natural latex with a high-density posture foam core, preventing hip sagging and promoting natural lordotic spinal curvature throughout the night.",
-      "shortDescription": "Firm orthopaedic mattress engineered for back support, lumbar protection, and zero spinal sag.",
-      "categoryId": "cat-mattresses",
-      "productType": "mattress",
-      "material": "Orthopaedic Support",
-      "firmness": "Firm",
-      "firmnessScale": 8,
-      "thicknessCm": 25,
-      "warrantyYears": 10,
-      "trialNights": 100,
-      "features": [
-        "Ergonomic Posture Foundation recommended for lower back relief",
-        "Vulcanized firm natural latex layer for resilient cushioning",
-        "Reinforced perimeter edge system for effortless getting in and out of bed",
-        "Antibacterial Bamboo knitted fabric cover"
-      ],
-      "layers": [
-        {
-          "number": 1,
-          "name": "Bamboo Charcoal Knitted Cover",
-          "description": "Deodorizing, moisture-wicking and naturally hypoallergenic."
-        },
-        {
-          "number": 2,
-          "name": "Firm Natural Latex Layer (4cm)",
-          "description": "Elastic pressure cushion that avoids sinking or feeling stuck."
-        },
-        {
-          "number": 3,
-          "name": "High-Density Ortho Posture Core (18cm)",
-          "description": "Engineered high-load foam core tested to withstand 250kg weight."
-        },
-        {
-          "number": 4,
-          "name": "Non-Slip Heavy Duty Base (3cm)",
-          "description": "Solid steady grip for slatted and solid divan bed bases."
-        }
-      ],
-      "specifications": {
-        "Core Structure": "High-Density Orthopaedic Foam Core with Natural Latex",
-        "Fabric": "Antimicrobial Bamboo Knitted Jacquard",
-        "Height / Thickness": "25 cm (approx. 10 inches)",
-        "Firmness Level": "Firm (8 / 10)",
-        "Recommended For": "Back and stomach sleepers, elderly, chronic back pain sufferers",
-        "Country of Origin": "Malaysia"
-      },
-      "faq": [
-        {
-          "question": "Is this mattress too hard?",
-          "answer": "It is firm (8/10) with an initial 4cm natural latex cushion so you feel comfortable without pain in your shoulder and hip joints."
-        }
-      ],
-      "status": "published",
-      "isFeatured": true,
-      "variants": [
-        {
-          "id": "var-or-single",
-          "productId": "prod-ortho-rest",
-          "sku": "KAMAAR-OR-SGL",
-          "sizeName": "Single",
-          "dimensions": "91cm x 190cm x 25cm",
-          "priceSen": 159900,
-          "compareAtPriceSen": 199900,
-          "stockQuantity": 9,
-          "leadTimeDays": 2,
-          "isActive": true
-        },
-        {
-          "id": "var-or-supersingle",
-          "productId": "prod-ortho-rest",
-          "sku": "KAMAAR-OR-SSG",
-          "sizeName": "Super Single",
-          "dimensions": "107cm x 190cm x 25cm",
-          "priceSen": 189900,
-          "compareAtPriceSen": 229900,
-          "stockQuantity": 5,
-          "leadTimeDays": 2,
-          "isActive": true
-        },
-        {
-          "id": "var-or-queen",
-          "productId": "prod-ortho-rest",
-          "sku": "KAMAAR-OR-QEN",
-          "sizeName": "Queen",
-          "dimensions": "152cm x 190cm x 25cm",
-          "priceSen": 249900,
-          "compareAtPriceSen": 299900,
-          "stockQuantity": 14,
-          "leadTimeDays": 2,
-          "isActive": true
-        },
-        {
-          "id": "var-or-king",
-          "productId": "prod-ortho-rest",
-          "sku": "KAMAAR-OR-KNG",
-          "sizeName": "King",
-          "dimensions": "183cm x 190cm x 25cm",
-          "priceSen": 299900,
-          "compareAtPriceSen": 359900,
-          "stockQuantity": 8,
-          "leadTimeDays": 2,
-          "isActive": true
-        }
-      ],
-      "images": [
-        {
-          "id": "img-or-1",
-          "productId": "prod-ortho-rest",
-          "imageUrl": "https://images.unsplash.com/photo-1598928506311-c55ded91a20c?auto=format&fit=crop&w=1000&q=80",
-          "altText": "Kamaar Ortho Rest Spinal Firm Mattress on solid wood frame",
-          "displayOrder": 1,
-          "isPrimary": true
-        }
-      ],
-      "createdAt": "2026-09-03T00:00:00Z",
-      "updatedAt": "2026-09-30T00:00:00Z"
-    },
-    {
-      "id": "prod-everyday-comfort",
-      "name": "Kamaar Everyday Comfort Natural Latex Mattress",
-      "slug": "lena-everyday-comfort-natural-latex-mattress",
-      "subtitle": "Accessible Luxury with 100% Pure Natural Latex Core",
-      "description": "Our most popular essential natural latex mattress. Engineered with a pure 20cm single-block natural latex core, providing natural bouncy support, effortless turning, and peaceful motion isolation for modern urban bedrooms.",
-      "shortDescription": "20cm solid natural latex mattress delivering unbeatable value, clean ergonomics, and 100% chemical-free sleep.",
-      "categoryId": "cat-mattresses",
-      "productType": "mattress",
-      "material": "100% Natural Latex",
-      "firmness": "Medium Firm",
-      "firmnessScale": 6,
-      "thicknessCm": 20,
-      "warrantyYears": 10,
-      "trialNights": 100,
-      "features": [
-        "100% Pure Malaysian Natural Latex Core (20cm)",
-        "Washable soft organic cotton zipper cover",
-        "No metal springs, no creaking, no electromagnetic interference",
-        "Lightweight and easy to rotate"
-      ],
-      "layers": [
-        {
-          "number": 1,
-          "name": "Soft Organic Knitted Cotton Cover",
-          "description": "Removable and machine washable zipper outer sleeve."
-        },
-        {
-          "number": 2,
-          "name": "Pure Dunlop Natural Latex Monoblock (20cm)",
-          "description": "Evenly balanced medium-firm density for all sleep styles."
-        }
-      ],
-      "specifications": {
-        "Core Structure": "Monoblock 100% Natural Latex",
-        "Fabric": "100% Organic Knitted Cotton",
-        "Height / Thickness": "20 cm (approx. 8 inches)",
-        "Firmness Level": "Medium Firm (6 / 10)",
-        "Country of Origin": "Malaysia"
-      },
-      "faq": [
-        {
-          "question": "Can I flip this mattress?",
-          "answer": "Yes! It is double-sided and can be rotated or flipped every 6 months for even wear."
-        }
-      ],
-      "status": "published",
-      "isFeatured": true,
-      "variants": [
-        {
-          "id": "var-ec-single",
-          "productId": "prod-everyday-comfort",
-          "sku": "KAMAAR-EC-SGL",
-          "sizeName": "Single",
-          "dimensions": "91cm x 190cm x 20cm",
-          "priceSen": 129900,
-          "compareAtPriceSen": 159900,
-          "stockQuantity": 11,
-          "leadTimeDays": 2,
-          "isActive": true
-        },
-        {
-          "id": "var-ec-supersingle",
-          "productId": "prod-everyday-comfort",
-          "sku": "KAMAAR-EC-SSG",
-          "sizeName": "Super Single",
-          "dimensions": "107cm x 190cm x 20cm",
-          "priceSen": 159900,
-          "compareAtPriceSen": 189900,
-          "stockQuantity": 8,
-          "leadTimeDays": 2,
-          "isActive": true
-        },
-        {
-          "id": "var-ec-queen",
-          "productId": "prod-everyday-comfort",
-          "sku": "KAMAAR-EC-QEN",
-          "sizeName": "Queen",
-          "dimensions": "152cm x 190cm x 20cm",
-          "priceSen": 219900,
-          "compareAtPriceSen": 259900,
-          "stockQuantity": 16,
-          "leadTimeDays": 2,
-          "isActive": true
-        },
-        {
-          "id": "var-ec-king",
-          "productId": "prod-everyday-comfort",
-          "sku": "KAMAAR-EC-KNG",
-          "sizeName": "King",
-          "dimensions": "183cm x 190cm x 20cm",
-          "priceSen": 269900,
-          "compareAtPriceSen": 319900,
-          "stockQuantity": 9,
-          "leadTimeDays": 2,
-          "isActive": true
-        }
-      ],
-      "images": [
-        {
-          "id": "img-ec-1",
-          "productId": "prod-everyday-comfort",
-          "imageUrl": "/images/products/mattress-everyday-comfort.jpg",
-          "altText": "Kamaar Everyday Comfort Natural Latex Mattress in clean Scandinavian bedroom",
-          "displayOrder": 1,
-          "isPrimary": true
-        }
-      ],
-      "createdAt": "2026-09-04T00:00:00Z",
-      "updatedAt": "2026-09-30T00:00:00Z"
-    },
-    {
-      "id": "prod-sovereign-luxe",
-      "name": "Kamaar Sovereign Luxe Grand Presidential Mattress",
-      "slug": "lena-sovereign-luxe-mattress",
-      "subtitle": "Bespoke 34cm Dual-Spring & Natural Latex Masterpiece",
-      "description": "Created for the most discerning bedroom connoisseur. The Sovereign Luxe pairs a floating micro-pocket spring cushion with an underlying 7-zone barrel spring core, wrapped in 8cm of certified organic Talalay latex and Belgian Damascus silk quilt.",
-      "shortDescription": "Ultimate 34cm hotel presidential luxury with dual pocket spring coils and thick Talalay latex pillowtop.",
-      "categoryId": "cat-mattresses",
-      "productType": "mattress",
-      "material": "Hybrid Pocket Spring",
+      "material": "Asian Polyester Fibre & Fabrik Jahitan Berkualiti",
       "firmness": "Medium Soft",
       "firmnessScale": 4,
-      "thicknessCm": 34,
-      "warrantyYears": 15,
-      "trialNights": 100,
+      "thicknessCm": 8,
+      "warrantyYears": 1,
+      "trialNights": 14,
       "features": [
-        "Dual Spring Architecture: 1,800 micro-coils + 7-zone base springs",
-        "8cm Ultra-Plush Talalay Latex Pillowtop",
-        "Hand-tufted Belgian Silk & Cashmere blend upholstery",
-        "Reinforced steel rod perimeter for rock-solid stability",
-        "15-Year Master Artisan Warranty"
+        "Isian 100% Asian Polyester Fibre berkualiti & padat",
+        "Jahitan quilting mesin industri kilang sendiri di Tasek Gelugor",
+        "Corak menarik pelbagai pilihan (Random Floral Design & Geometrik)",
+        "Fabrik sejuk, tidak memerangkap haba, lembut pada kulit",
+        "Senang digulung, disimpan, dan dibawa ke mana-mana",
+        "Harga terus dari kilang tanpa orang tengah"
       ],
       "layers": [
         {
           "number": 1,
-          "name": "Belgian Silk & Cashmere Damask",
-          "description": "Sumptuous, temperature-regulating natural woven fabric."
+          "name": "Fabrik Luar Corak Bunga / Moden",
+          "description": "Fabrik mikrofiber sejuk, tahan luntur dan lembut bila disentuh."
         },
         {
           "number": 2,
-          "name": "Pure Organic Talalay Latex Pillowtop (8cm)",
-          "description": "Cloud-like enveloping softness with buoyant instantaneous response."
+          "name": "Lapisan Quilting Mesin Jahit Industri",
+          "description": "Jahitan corak berlian/ombak yang mengukuhkan struktur tilam toto."
         },
         {
           "number": 3,
-          "name": "Micro-Pocket Coil Layer (6cm)",
-          "description": "Contouring micro-springs that isolate fine micro-movements."
+          "name": "Teras Asian Polyester Fibre Padat",
+          "description": "Fiber sintetik terpilih yang anjal, gebu dan memberikan keselesaan maksimum."
         },
         {
           "number": 4,
-          "name": "7-Zone Heavy Gauge Barrel Springs (18cm)",
-          "description": "Individually heat-tempered coils engineered for decades of support."
-        },
-        {
-          "number": 5,
-          "name": "High-Density Wool Insulation Pad (2cm)",
-          "description": "Prevents friction and dampens structural sound."
+          "name": "Lapisan Bawah Tahan Geseran",
+          "description": "Kain lapik bawah yang tahan lasak dan kemas jahitannya."
         }
       ],
       "specifications": {
-        "Core Structure": "Dual-Spring Micro-Coil + Barrel Pocket Spring with Talalay Latex",
-        "Fabric": "Hand-Tufted Belgian Silk & Cashmere Damask",
-        "Height / Thickness": "34 cm (approx. 13.5 inches)",
-        "Firmness Level": "Plush Luxury / Medium Soft (4 / 10)",
-        "Total Coil Count": "Up to 2,400 coils (King size)",
-        "Country of Origin": "Malaysia"
+        "Bahan Isian": "100% Asian Polyester Fibre Gred A",
+        "Fabrik Luaran": "Mikrofiber Lembut Sejuk (Corak Bunga & Moden)",
+        "Ketebalan": "Kira-kira 7cm - 10cm (Gebu & Empuk)",
+        "Kaedah Jahitan": "Quilting Mesin Industri Berketumpatan Tinggi",
+        "Kebolehbasuhan": "Boleh dijemur & lap bersih / sarung boleh basuh",
+        "Pengeluar": "Tunas Sinar Jaya Enterprise (Tasek Gelugor, Pulau Pinang)"
       },
       "faq": [
         {
-          "question": "Will my existing bedsheet fit a 34cm mattress?",
-          "answer": "We recommend deep-pocket bedsheets (38cm to 45cm drop depth). Our KAMAAR 1000TC Bamboo Sheets are crafted with a generous 40cm pocket to fit seamlessly."
+          "question": "Apakah corak tilam toto yang akan saya terima?",
+          "answer": "Kami menyediakan corak menarik (Random Design) berasaskan corak floral bunga dan geometrik yang popular dan kemas. Anda juga boleh nyatakan pilihan warna di bahagian nota pesanan."
+        },
+        {
+          "question": "Bolehkah tilam toto ini digulung untuk disimpan?",
+          "answer": "Ya, tilam toto ini sangat fleksibel dan mudah digulung atau dilipat untuk disimpan di dalam almari atau dibawa dalam kereta."
         }
       ],
       "status": "published",
       "isFeatured": true,
       "variants": [
         {
-          "id": "var-sl-queen",
-          "productId": "prod-sovereign-luxe",
-          "sku": "KAMAAR-SL-QEN",
-          "sizeName": "Queen",
-          "dimensions": "152cm x 190cm x 34cm",
-          "priceSen": 599900,
-          "compareAtPriceSen": 699900,
-          "stockQuantity": 5,
-          "leadTimeDays": 5,
-          "isActive": true
-        },
-        {
-          "id": "var-sl-king",
-          "productId": "prod-sovereign-luxe",
-          "sku": "KAMAAR-SL-KNG",
-          "sizeName": "King",
-          "dimensions": "183cm x 190cm x 34cm",
-          "priceSen": 699900,
-          "compareAtPriceSen": 819900,
-          "stockQuantity": 4,
-          "leadTimeDays": 5,
-          "isActive": true
-        }
-      ],
-      "images": [
-        {
-          "id": "img-sl-1",
-          "productId": "prod-sovereign-luxe",
-          "imageUrl": "https://images.unsplash.com/photo-1578683010236-d716f9a3f461?auto=format&fit=crop&w=1000&q=80",
-          "altText": "Kamaar Sovereign Luxe Grand Presidential Mattress in 5-star hotel suite",
-          "displayOrder": 1,
-          "isPrimary": true
-        }
-      ],
-      "createdAt": "2026-09-05T00:00:00Z",
-      "updatedAt": "2026-09-30T00:00:00Z"
-    },
-    {
-      "id": "prod-cloud-serenity",
-      "name": "Kamaar Cloud Serenity Memory & Latex Mattress",
-      "slug": "lena-cloud-serenity-mattress",
-      "subtitle": "Zero-Gravity Gel Memory Foam with Natural Latex Support Core",
-      "description": "For those who love the gentle contour of memory foam combined with the bouncy pushback of organic natural latex. Features open-cell cooling gel memory foam that cradles your pressure points without trapping body heat.",
-      "shortDescription": "Gel memory foam and organic latex fusion delivering weightless zero-gravity contouring.",
-      "categoryId": "cat-mattresses",
-      "productType": "mattress",
-      "material": "Memory Foam",
-      "firmness": "Medium Soft",
-      "firmnessScale": 4,
-      "thicknessCm": 26,
-      "warrantyYears": 10,
-      "trialNights": 100,
-      "features": [
-        "Zero-Gravity open cell cooling gel memory foam",
-        "Responsive organic latex core preventing body impressions",
-        "Breathable jacquard cover with honeycomb ventilation border"
-      ],
-      "layers": [
-        {
-          "number": 1,
-          "name": "Cooling Knitted Cover",
-          "description": "Soft-touch breathable knit with anti-static treatment."
-        },
-        {
-          "number": 2,
-          "name": "Cooling Gel Memory Foam (5cm)",
-          "description": "Dissolves pressure at shoulders, hips, and lower back."
-        },
-        {
-          "number": 3,
-          "name": "Natural Latex Transition Layer (5cm)",
-          "description": "Adds uplifting bounce so you never feel sunken."
-        },
-        {
-          "number": 4,
-          "name": "High-Density Supportive Base Foam (16cm)",
-          "description": "Durable foundation ensuring lifetime shape retention."
-        }
-      ],
-      "specifications": {
-        "Core Structure": "Gel Memory Foam + Natural Latex + Base Foam",
-        "Height / Thickness": "26 cm (approx. 10.5 inches)",
-        "Firmness Level": "Medium Soft (4 / 10)",
-        "Country of Origin": "Malaysia"
-      },
-      "faq": [
-        {
-          "question": "Does it sleep warm?",
-          "answer": "Our gel memory foam uses open-cell structure combined with a natural latex transition layer to ensure airflow."
-        }
-      ],
-      "status": "published",
-      "isFeatured": false,
-      "variants": [
-        {
-          "id": "var-cs-single",
-          "productId": "prod-cloud-serenity",
-          "sku": "KAMAAR-CS-SGL",
-          "sizeName": "Single",
-          "dimensions": "91cm x 190cm x 26cm",
-          "priceSen": 149900,
-          "compareAtPriceSen": 179900,
-          "stockQuantity": 7,
-          "leadTimeDays": 2,
-          "isActive": true
-        },
-        {
-          "id": "var-cs-queen",
-          "productId": "prod-cloud-serenity",
-          "sku": "KAMAAR-CS-QEN",
-          "sizeName": "Queen",
-          "dimensions": "152cm x 190cm x 26cm",
-          "priceSen": 239900,
-          "compareAtPriceSen": 279900,
-          "stockQuantity": 11,
-          "leadTimeDays": 2,
-          "isActive": true
-        },
-        {
-          "id": "var-cs-king",
-          "productId": "prod-cloud-serenity",
-          "sku": "KAMAAR-CS-KNG",
-          "sizeName": "King",
-          "dimensions": "183cm x 190cm x 26cm",
-          "priceSen": 289900,
-          "compareAtPriceSen": 339900,
-          "stockQuantity": 6,
-          "leadTimeDays": 2,
-          "isActive": true
-        }
-      ],
-      "images": [
-        {
-          "id": "img-cs-1",
-          "productId": "prod-cloud-serenity",
-          "imageUrl": "https://images.unsplash.com/photo-1584100936595-c0654b55a2e2?auto=format&fit=crop&w=1000&q=80",
-          "altText": "Kamaar Cloud Serenity Mattress in light modern bedroom",
-          "displayOrder": 1,
-          "isPrimary": true
-        }
-      ],
-      "createdAt": "2026-09-06T00:00:00Z",
-      "updatedAt": "2026-09-30T00:00:00Z"
-    },
-    {
-      "id": "prod-nature-first",
-      "name": "Kamaar Nature First Pure 100% Latex Mattress",
-      "slug": "lena-nature-first-latex-mattress",
-      "subtitle": "GOLS-Certified Organic Latex with Raw Unbleached Cotton",
-      "description": "Strictly zero petroleum products, zero chemical fire retardants, and zero metal components. Raw, unbleached GOTS-certified organic cotton encasing 100% natural tree-tapped latex.",
-      "shortDescription": "Pure eco-conscious certified organic latex mattress with unbleached organic cotton cover.",
-      "categoryId": "cat-mattresses",
-      "productType": "mattress",
-      "material": "100% Natural Latex",
-      "firmness": "Medium",
-      "firmnessScale": 5,
-      "thicknessCm": 23,
-      "warrantyYears": 10,
-      "trialNights": 100,
-      "features": [
-        "GOLS Certified 100% Organic Latex",
-        "GOTS Certified Organic Unbleached Cotton",
-        "100% Biodegradable & Eco-Conscious"
-      ],
-      "layers": [
-        {
-          "number": 1,
-          "name": "GOTS Organic Unbleached Cotton Quilt",
-          "description": "Pure natural cotton unbleached and chemical-free."
-        },
-        {
-          "number": 2,
-          "name": "Medium Natural Latex Core (23cm)",
-          "description": "Naturally temperature neutral with self-ventilating pinhole design."
-        }
-      ],
-      "specifications": {
-        "Core Material": "100% Organic Natural Latex",
-        "Thickness": "23cm",
-        "Firmness": "Medium (5/10)"
-      },
-      "faq": [
-        {
-          "question": "Is this suitable for babies and allergy sufferers?",
-          "answer": "Yes! It is completely hypoallergenic, free of toxic off-gassing and ideal for sensitive skin."
-        }
-      ],
-      "status": "published",
-      "isFeatured": false,
-      "variants": [
-        {
-          "id": "var-nf-queen",
-          "productId": "prod-nature-first",
-          "sku": "KAMAAR-NF-QEN",
-          "sizeName": "Queen",
-          "dimensions": "152cm x 190cm x 23cm",
-          "priceSen": 369900,
-          "compareAtPriceSen": 429900,
-          "stockQuantity": 8,
-          "leadTimeDays": 3,
-          "isActive": true
-        },
-        {
-          "id": "var-nf-king",
-          "productId": "prod-nature-first",
-          "sku": "KAMAAR-NF-KNG",
-          "sizeName": "King",
-          "dimensions": "183cm x 190cm x 23cm",
-          "priceSen": 439900,
-          "compareAtPriceSen": 509900,
-          "stockQuantity": 5,
-          "leadTimeDays": 3,
-          "isActive": true
-        }
-      ],
-      "images": [
-        {
-          "id": "img-nf-1",
-          "productId": "prod-nature-first",
-          "imageUrl": "https://images.unsplash.com/photo-1582582621959-48d27397dc69?auto=format&fit=crop&w=1000&q=80",
-          "altText": "Nature First Eco Latex Mattress",
-          "displayOrder": 1,
-          "isPrimary": true
-        }
-      ],
-      "createdAt": "2026-09-07T00:00:00Z",
-      "updatedAt": "2026-09-30T00:00:00Z"
-    },
-    {
-      "id": "prod-lumbar-care",
-      "name": "Kamaar Lumbar Care Spinal Pro Mattress",
-      "slug": "lena-lumbar-care-spinal-pro",
-      "subtitle": "Extra Firm Spinal Correction with Dynamic Sacral Pad",
-      "description": "Engineered for sleepers requiring maximum spinal firmness and rigid sacral stability. Features a triple-zoned high tensile steel coil unit topped with vulcanized firm latex.",
-      "shortDescription": "Extra firm orthopaedic mattress specifically targeted for chronic lower back and spinal recovery.",
-      "categoryId": "cat-mattresses",
-      "productType": "mattress",
-      "material": "Orthopaedic Support",
-      "firmness": "Firm",
-      "firmnessScale": 9,
-      "thicknessCm": 26,
-      "warrantyYears": 10,
-      "trialNights": 100,
-      "features": [
-        "High-tensile orthopaedic coil core",
-        "Firm latex sacral alignment zone",
-        "Reinforced perimeter edge support"
-      ],
-      "layers": [
-        {
-          "number": 1,
-          "name": "Anti-Static Silver Woven Fabric",
-          "description": "Discharges body static electricity for relaxed muscular tension."
-        },
-        {
-          "number": 2,
-          "name": "Extra-Firm Vulcanized Latex (5cm)",
-          "description": "Firm pushback preventing lower spine sagging."
-        },
-        {
-          "number": 3,
-          "name": "Heavy Gauge Spinal Spring System (21cm)",
-          "description": "Reinforced 2.4mm steel coils for non-sag support."
-        }
-      ],
-      "specifications": {
-        "Structure": "Reinforced Coil + Firm Latex",
-        "Thickness": "26cm",
-        "Firmness": "Firm (9/10)"
-      },
-      "faq": [
-        {
-          "question": "Will this cure back pain?",
-          "answer": "While not a medical device, its proper spinal alignment helps relieve muscular strain caused by sagging mattresses."
-        }
-      ],
-      "status": "published",
-      "isFeatured": false,
-      "variants": [
-        {
-          "id": "var-lc-queen",
-          "productId": "prod-lumbar-care",
-          "sku": "KAMAAR-LC-QEN",
-          "sizeName": "Queen",
-          "dimensions": "152cm x 190cm x 26cm",
-          "priceSen": 279900,
-          "compareAtPriceSen": 329900,
-          "stockQuantity": 9,
-          "leadTimeDays": 2,
-          "isActive": true
-        },
-        {
-          "id": "var-lc-king",
-          "productId": "prod-lumbar-care",
-          "sku": "KAMAAR-LC-KNG",
-          "sizeName": "King",
-          "dimensions": "183cm x 190cm x 26cm",
-          "priceSen": 339900,
-          "compareAtPriceSen": 399900,
-          "stockQuantity": 4,
-          "leadTimeDays": 2,
-          "isActive": true
-        }
-      ],
-      "images": [
-        {
-          "id": "img-lc-1",
-          "productId": "prod-lumbar-care",
-          "imageUrl": "https://images.unsplash.com/photo-1598928506311-c55ded91a20c?auto=format&fit=crop&w=1000&q=80",
-          "altText": "Kamaar Lumbar Care Mattress",
-          "displayOrder": 1,
-          "isPrimary": true
-        }
-      ],
-      "createdAt": "2026-09-08T00:00:00Z",
-      "updatedAt": "2026-09-30T00:00:00Z"
-    },
-    {
-      "id": "prod-celestial-plush",
-      "name": "Kamaar Celestial Plush Euro-Top Mattress",
-      "slug": "lena-celestial-plush-euro-top",
-      "subtitle": "Ultra-Comfort Cloud-Cushioned Euro-Top with 7-Zone Support",
-      "description": "Envelop yourself in pure luxury. Designed for side sleepers who need gentle cradling at the shoulders and hips while maintaining core stability.",
-      "shortDescription": "Plush cloud euro-top mattress offering luxurious surface softness with firm underlying spring foundation.",
-      "categoryId": "cat-mattresses",
-      "productType": "mattress",
-      "material": "Hybrid Pocket Spring",
-      "firmness": "Soft",
-      "firmnessScale": 3,
-      "thicknessCm": 32,
-      "warrantyYears": 10,
-      "trialNights": 100,
-      "features": [
-        "Thick Euro-Top cushioned pillow layer",
-        "7-Zone individual pocket spring foundation",
-        "Breathable organic bamboo knit"
-      ],
-      "layers": [
-        {
-          "number": 1,
-          "name": "Quilted Cloud Euro-Top (8cm)",
-          "description": "Super-soft aerated foam and plush latex batting."
-        },
-        {
-          "number": 2,
-          "name": "7-Zone Pocket Coils (24cm)",
-          "description": "Independent contouring for zero partner disturbance."
-        }
-      ],
-      "specifications": {
-        "Structure": "Euro-top + Pocket Springs",
-        "Thickness": "32cm",
-        "Firmness": "Soft (3/10)"
-      },
-      "faq": [
-        {
-          "question": "Is it good for side sleepers?",
-          "answer": "Yes! The plush euro-top cushions your hips and shoulders, eliminating pressure numbness."
-        }
-      ],
-      "status": "published",
-      "isFeatured": false,
-      "variants": [
-        {
-          "id": "var-cp-queen",
-          "productId": "prod-celestial-plush",
-          "sku": "KAMAAR-CP-QEN",
-          "sizeName": "Queen",
-          "dimensions": "152cm x 190cm x 32cm",
-          "priceSen": 389900,
-          "compareAtPriceSen": 459900,
-          "stockQuantity": 6,
-          "leadTimeDays": 3,
-          "isActive": true
-        },
-        {
-          "id": "var-cp-king",
-          "productId": "prod-celestial-plush",
-          "sku": "KAMAAR-CP-KNG",
-          "sizeName": "King",
-          "dimensions": "183cm x 190cm x 32cm",
-          "priceSen": 459900,
-          "compareAtPriceSen": 539900,
-          "stockQuantity": 5,
-          "leadTimeDays": 3,
-          "isActive": true
-        }
-      ],
-      "images": [
-        {
-          "id": "img-cp-1",
-          "productId": "prod-celestial-plush",
-          "imageUrl": "https://images.unsplash.com/photo-1631049307264-da0ec9d70304?auto=format&fit=crop&w=1000&q=80",
-          "altText": "Celestial Plush Euro-Top",
-          "displayOrder": 1,
-          "isPrimary": true
-        }
-      ],
-      "createdAt": "2026-09-09T00:00:00Z",
-      "updatedAt": "2026-09-30T00:00:00Z"
-    },
-    {
-      "id": "prod-miracle-sleep",
-      "name": "Kamaar Miracle Sleep Multi-Zone Latex Mattress",
-      "slug": "lena-miracle-sleep-multi-zone",
-      "subtitle": "Precision Multi-Density Latex Matrix for Active Pressure Relief",
-      "description": "Inspired by world-class latex engineering, the Miracle Sleep mattress features 5 differential density pin-hole zones that adapt dynamically whether you sleep on your back, side, or stomach.",
-      "shortDescription": "Advanced 5-zone natural latex mattress engineered for ergonomic spinal alignment.",
-      "categoryId": "cat-mattresses",
-      "productType": "mattress",
-      "material": "100% Natural Latex",
-      "firmness": "Medium",
-      "firmnessScale": 5,
-      "thicknessCm": 25,
-      "warrantyYears": 10,
-      "trialNights": 100,
-      "features": [
-        "5-Zone variable density natural latex",
-        "Zero synthetic additives",
-        "Tencel moisture-wicking cover"
-      ],
-      "layers": [
-        {
-          "number": 1,
-          "name": "Belgian Tencel Cover",
-          "description": "Naturally breathable cooling knit."
-        },
-        {
-          "number": 2,
-          "name": "5-Zone Latex Monoblock (25cm)",
-          "description": "Dynamic body weight distribution."
-        }
-      ],
-      "specifications": {
-        "Material": "100% Natural Latex",
-        "Thickness": "25cm",
-        "Firmness": "Medium (5/10)"
-      },
-      "faq": [
-        {
-          "question": "How long will this latex mattress last?",
-          "answer": "High-density natural latex retains its elasticity for 15+ years without permanent sagging."
-        }
-      ],
-      "status": "published",
-      "isFeatured": false,
-      "variants": [
-        {
-          "id": "var-ms-queen",
-          "productId": "prod-miracle-sleep",
-          "sku": "KAMAAR-MS-QEN",
-          "sizeName": "Queen",
-          "dimensions": "152cm x 190cm x 25cm",
-          "priceSen": 329900,
-          "compareAtPriceSen": 389900,
-          "stockQuantity": 10,
-          "leadTimeDays": 2,
-          "isActive": true
-        },
-        {
-          "id": "var-ms-king",
-          "productId": "prod-miracle-sleep",
-          "sku": "KAMAAR-MS-KNG",
-          "sizeName": "King",
-          "dimensions": "183cm x 190cm x 25cm",
-          "priceSen": 389900,
-          "compareAtPriceSen": 459900,
-          "stockQuantity": 7,
-          "leadTimeDays": 2,
-          "isActive": true
-        }
-      ],
-      "images": [
-        {
-          "id": "img-ms-1",
-          "productId": "prod-miracle-sleep",
-          "imageUrl": "/images/products/mattress-miracle-sleep.jpg",
-          "altText": "Miracle Sleep Latex Mattress",
-          "displayOrder": 1,
-          "isPrimary": true
-        }
-      ],
-      "createdAt": "2026-09-10T00:00:00Z",
-      "updatedAt": "2026-09-30T00:00:00Z"
-    },
-    {
-      "id": "prod-dream-sanctuary",
-      "name": "Kamaar Dream Sanctuary Pocket Spring Mattress",
-      "slug": "lena-dream-sanctuary-pocket-spring",
-      "subtitle": "Classic Independent Pocket Coils with Natural Latex Padding",
-      "description": "An enduring classic that pairs individual pocket springs with dual layers of breathable Malaysian natural latex for balanced bounce and zero partner disruption.",
-      "shortDescription": "Classic balanced hybrid with pocket springs and natural latex comfort layers.",
-      "categoryId": "cat-mattresses",
-      "productType": "mattress",
-      "material": "Hybrid Pocket Spring",
-      "firmness": "Medium Firm",
-      "firmnessScale": 6,
-      "thicknessCm": 27,
-      "warrantyYears": 10,
-      "trialNights": 100,
-      "features": [
-        "Independent pocket coils",
-        "Dual natural latex comfort padding",
-        "Breathable damask outer"
-      ],
-      "layers": [
-        {
-          "number": 1,
-          "name": "Soft Jacquard Quilt",
-          "description": "Plush surface cushioning."
-        },
-        {
-          "number": 2,
-          "name": "Natural Latex Pad (3cm)",
-          "description": "Resilient comfort response."
-        },
-        {
-          "number": 3,
-          "name": "Pocket Spring Core (22cm)",
-          "description": "Silent, isolated spring support."
-        },
-        {
-          "number": 4,
-          "name": "Base Stabilizing Pad (2cm)",
-          "description": "Provides foundation support."
-        }
-      ],
-      "specifications": {
-        "Structure": "Pocket Coils + Latex",
-        "Thickness": "27cm",
-        "Firmness": "Medium Firm (6/10)"
-      },
-      "faq": [
-        {
-          "question": "Does it squeak?",
-          "answer": "No. Every spring is individually wrapped in non-woven fabric sleeves, eliminating all metal-on-metal friction and squeaking."
-        }
-      ],
-      "status": "published",
-      "isFeatured": false,
-      "variants": [
-        {
-          "id": "var-ds-single",
-          "productId": "prod-dream-sanctuary",
-          "sku": "KAMAAR-DS-SGL",
-          "sizeName": "Single",
-          "dimensions": "91cm x 190cm x 27cm",
-          "priceSen": 139900,
-          "compareAtPriceSen": 169900,
-          "stockQuantity": 9,
-          "leadTimeDays": 2,
-          "isActive": true
-        },
-        {
-          "id": "var-ds-queen",
-          "productId": "prod-dream-sanctuary",
-          "sku": "KAMAAR-DS-QEN",
-          "sizeName": "Queen",
-          "dimensions": "152cm x 190cm x 27cm",
-          "priceSen": 229900,
-          "compareAtPriceSen": 269900,
-          "stockQuantity": 12,
-          "leadTimeDays": 2,
-          "isActive": true
-        },
-        {
-          "id": "var-ds-king",
-          "productId": "prod-dream-sanctuary",
-          "sku": "KAMAAR-DS-KNG",
-          "sizeName": "King",
-          "dimensions": "183cm x 190cm x 27cm",
-          "priceSen": 279900,
-          "compareAtPriceSen": 329900,
-          "stockQuantity": 8,
-          "leadTimeDays": 2,
-          "isActive": true
-        }
-      ],
-      "images": [
-        {
-          "id": "img-ds-1",
-          "productId": "prod-dream-sanctuary",
-          "imageUrl": "https://images.unsplash.com/photo-1616046229478-9901c5536a45?auto=format&fit=crop&w=1000&q=80",
-          "altText": "Dream Sanctuary Mattress",
-          "displayOrder": 1,
-          "isPrimary": true
-        }
-      ],
-      "createdAt": "2026-09-11T00:00:00Z",
-      "updatedAt": "2026-09-30T00:00:00Z"
-    },
-    {
-      "id": "prod-compact-foldaway",
-      "name": "Kamaar Foldaway Pure Latex Guest Mattress (10cm)",
-      "slug": "lena-foldaway-pure-latex-guest-mattress",
-      "subtitle": "Tri-Fold High-Resilience Natural Latex for Guests & Multi-Purpose Living",
-      "description": "Never compromise on guest comfort. Made with 10cm of high-density pure natural latex that easily folds into three compact segments with an integrated carry handle and washable travel cover.",
-      "shortDescription": "10cm portable tri-fold natural latex mattress with washable cover and carry bag.",
-      "categoryId": "cat-mattresses",
-      "productType": "mattress",
-      "material": "100% Natural Latex",
-      "firmness": "Medium Firm",
-      "firmnessScale": 6,
-      "thicknessCm": 10,
-      "warrantyYears": 5,
-      "trialNights": 30,
-      "features": [
-        "Tri-fold space saving design",
-        "100% Natural latex block",
-        "Washable outer cover with handle"
-      ],
-      "layers": [
-        {
-          "number": 1,
-          "name": "Tri-Fold Latex Core (10cm)",
-          "description": "Portable comfort without feeling the floor beneath."
-        }
-      ],
-      "specifications": {
-        "Material": "100% Natural Latex",
-        "Thickness": "10cm",
-        "Portability": "Tri-Foldable"
-      },
-      "faq": [
-        {
-          "question": "Can this be used on the floor?",
-          "answer": "Yes! The 10cm pure natural latex provides sufficient density so your body never touches the hard floor."
-        }
-      ],
-      "status": "published",
-      "isFeatured": false,
-      "variants": [
-        {
-          "id": "var-cf-single",
-          "productId": "prod-compact-foldaway",
-          "sku": "KAMAAR-CF-SGL",
-          "sizeName": "Single",
-          "dimensions": "91cm x 190cm x 10cm",
-          "priceSen": 79900,
-          "compareAtPriceSen": 99900,
-          "stockQuantity": 15,
+          "id": "var-toto-single",
+          "productId": "prod-toto-asian-fibre",
+          "sku": "TSJ-TOTO-SGL",
+          "sizeName": "Single (Bujang)",
+          "dimensions": "90cm x 190cm x 8cm",
+          "priceSen": 5900,
+          "compareAtPriceSen": 7900,
+          "stockQuantity": 50,
           "leadTimeDays": 1,
           "isActive": true
         },
         {
-          "id": "var-cf-supersingle",
-          "productId": "prod-compact-foldaway",
-          "sku": "KAMAAR-CF-SSG",
-          "sizeName": "Super Single",
-          "dimensions": "107cm x 190cm x 10cm",
-          "priceSen": 99900,
-          "compareAtPriceSen": 119900,
-          "stockQuantity": 10,
+          "id": "var-toto-queen",
+          "productId": "prod-toto-asian-fibre",
+          "sku": "TSJ-TOTO-QEN",
+          "sizeName": "Queen (Standard)",
+          "dimensions": "150cm x 190cm x 8cm",
+          "priceSen": 8900,
+          "compareAtPriceSen": 11900,
+          "stockQuantity": 65,
           "leadTimeDays": 1,
           "isActive": true
-        }
-      ],
-      "images": [
+        },
         {
-          "id": "img-cf-1",
-          "productId": "prod-compact-foldaway",
-          "imageUrl": "/images/products/mattress-foldaway.jpg",
-          "altText": "Kamaar Foldaway Guest Mattress",
-          "displayOrder": 1,
-          "isPrimary": true
-        }
-      ],
-      "createdAt": "2026-09-12T00:00:00Z",
-      "updatedAt": "2026-09-30T00:00:00Z"
-    },
-    {
-      "id": "prod-pillow-contour",
-      "name": "Kamaar Ergonomic Cervical Contour Natural Latex Pillow",
-      "slug": "lena-ergonomic-contour-natural-latex-pillow",
-      "subtitle": "Dual-Wave Cervical Support for Neck Pain & Snore Reduction",
-      "description": "Specially curved to cradle the head and support the natural cervical lordosis of the neck. Made from 100% pure natural latex with pinhole ventilation that prevents trapped heat and eliminates neck stiffness.",
-      "shortDescription": "Dual-wave contoured 100% natural latex pillow engineered for neck and shoulder pain relief.",
-      "categoryId": "cat-pillows",
-      "productType": "pillow",
-      "material": "100% Natural Latex",
-      "firmness": "Medium",
-      "thicknessCm": 11,
-      "warrantyYears": 3,
-      "trialNights": 30,
-      "features": [
-        "100% Natural Organic Latex",
-        "Dual-height contour (10cm / 12cm)",
-        "Anti-dustmite & hypoallergenic"
-      ],
-      "layers": [],
-      "specifications": {
-        "Dimensions": "60cm x 40cm x 10/12cm",
-        "Material": "100% Natural Latex"
-      },
-      "faq": [
-        {
-          "question": "How do I clean this pillow?",
-          "answer": "The organic tencel cover is removable and machine washable. Spot-clean the latex core with a damp cloth if needed."
-        }
-      ],
-      "status": "published",
-      "isFeatured": true,
-      "variants": [
-        {
-          "id": "var-pc-std",
-          "productId": "prod-pillow-contour",
-          "sku": "KAMAAR-PIL-CTR",
-          "sizeName": "Standard",
-          "dimensions": "60cm x 40cm x 10/12cm",
-          "priceSen": 26900,
-          "compareAtPriceSen": 32900,
+          "id": "var-toto-king",
+          "productId": "prod-toto-asian-fibre",
+          "sku": "TSJ-TOTO-KNG",
+          "sizeName": "King (Besar)",
+          "dimensions": "180cm x 190cm x 10cm",
+          "priceSen": 11900,
+          "compareAtPriceSen": 14900,
           "stockQuantity": 40,
           "leadTimeDays": 1,
           "isActive": true
@@ -1418,107 +214,93 @@
       ],
       "images": [
         {
-          "id": "img-pc-1",
-          "productId": "prod-pillow-contour",
-          "imageUrl": "/images/products/pillow-contour-latex.jpg",
-          "altText": "Kamaar Ergonomic Contour Latex Pillow",
+          "id": "img-toto-1",
+          "productId": "prod-toto-asian-fibre",
+          "imageUrl": "/images/company/profil-syarikat-cover.jpg",
+          "altText": "Tilam Toto Asian Polyester Fibre Paling Lariss Tunas Sinar Jaya",
           "displayOrder": 1,
           "isPrimary": true
+        },
+        {
+          "id": "img-toto-2",
+          "productId": "prod-toto-asian-fibre",
+          "imageUrl": "/images/company/aktiviti-pengilangan.jpg",
+          "altText": "Aktiviti jahitan dan stor produk siap tilam toto",
+          "displayOrder": 2,
+          "isPrimary": false
         }
       ],
-      "createdAt": "2026-09-13T00:00:00Z",
-      "updatedAt": "2026-09-30T00:00:00Z"
+      "createdAt": "2026-09-01T00:00:00Z",
+      "updatedAt": "2026-10-07T00:00:00Z"
     },
     {
-      "id": "prod-pillow-classic",
-      "name": "Kamaar Classic Plush Natural Latex Pillow",
-      "slug": "lena-classic-plush-natural-latex-pillow",
-      "subtitle": "Traditional Rounded Shape with Buoyant Latex Rebound",
-      "description": "The familiarity of a traditional pillow with the superior buoyant, non-flattening resilience of pure Malaysian natural latex. Never needs fluffing and stays cool all night.",
-      "shortDescription": "Traditional shape pillow crafted from 100% aerated natural latex.",
-      "categoryId": "cat-pillows",
-      "productType": "pillow",
-      "material": "100% Natural Latex",
-      "firmness": "Medium Soft",
-      "thicknessCm": 13,
-      "warrantyYears": 3,
-      "trialNights": 30,
+      "id": "prod-toto-gulung",
+      "name": "Tilam Toto Gulung Mudah Alih (Travel & Santai)",
+      "slug": "tilam-toto-gulung-mudah-alih",
+      "subtitle": "Siap Tali Pengikat • Mudah Gulung & Bawa Berkelah / Homestay",
+      "description": "Tilam toto jenis gulung kompak yang dilengkapi tali pengikat khas. Sangat praktikal untuk aktiviti luar, berkelah, asrama sekolah, ataupun tilam santai anak-anak di depan TV.",
+      "shortDescription": "Tilam toto gulung mudah alih dengan tali pengikat siap. Praktikal untuk travel dan ruang tamu.",
+      "categoryId": "cat-tilam-toto",
+      "productType": "mattress",
+      "material": "Asian Polyester Fibre Padat",
+      "firmness": "Medium",
+      "firmnessScale": 5,
+      "thicknessCm": 6,
+      "warrantyYears": 1,
+      "trialNights": 14,
       "features": [
-        "Non-flattening resilience",
-        "Continuous airflow micro-holes",
-        "Tencel zip cover"
+        "Dilengkapi tali pengikat terbina untuk mudah gulung",
+        "Ringan dan mudah dibawa masuk bonet kereta",
+        "Isian fiber mampat yang tahan lasak",
+        "Sesuai untuk camping, homestay, asrama & ruang santai"
       ],
-      "layers": [],
+      "layers": [
+        {
+          "number": 1,
+          "name": "Kain Sarung Lembut",
+          "description": "Fabrik kapas mikrofiber yang selesa dan tidak panas."
+        },
+        {
+          "number": 2,
+          "name": "Teras Fiber Kompak",
+          "description": "Isian fiber sintetik yang mampat dan tidak mudah penyek."
+        }
+      ],
       "specifications": {
-        "Dimensions": "65cm x 40cm x 13cm",
-        "Material": "100% Natural Latex"
+        "Bahan": "Polyester Fibre Padat",
+        "Ketebalan": "Kira-kira 6 cm",
+        "Ciri Khas": "Tali Pengikat Terbina Dalam",
+        "Pengeluar": "Tunas Sinar Jaya Enterprise"
       },
-      "faq": [],
+      "faq": [
+        {
+          "question": "Berapakah berat tilam gulung ini?",
+          "answer": "Kira-kira 2kg hingga 3.5kg mengikut saiz, sangat ringan untuk diangkat oleh sesiapa sahaja."
+        }
+      ],
       "status": "published",
-      "isFeatured": false,
+      "isFeatured": true,
       "variants": [
         {
-          "id": "var-pcl-std",
-          "productId": "prod-pillow-classic",
-          "sku": "KAMAAR-PIL-CLS",
-          "sizeName": "Standard",
-          "dimensions": "65cm x 40cm x 13cm",
-          "priceSen": 24900,
-          "compareAtPriceSen": 29900,
-          "stockQuantity": 35,
+          "id": "var-gulung-sgl",
+          "productId": "prod-toto-gulung",
+          "sku": "TSJ-GULUNG-SGL",
+          "sizeName": "Single (90x180cm)",
+          "dimensions": "90cm x 180cm x 6cm",
+          "priceSen": 4900,
+          "compareAtPriceSen": 6500,
+          "stockQuantity": 30,
           "leadTimeDays": 1,
           "isActive": true
-        }
-      ],
-      "images": [
+        },
         {
-          "id": "img-pcl-1",
-          "productId": "prod-pillow-classic",
-          "imageUrl": "/images/products/pillow-classic-latex.jpg",
-          "altText": "Kamaar Classic Plush Pillow",
-          "displayOrder": 1,
-          "isPrimary": true
-        }
-      ],
-      "createdAt": "2026-09-14T00:00:00Z",
-      "updatedAt": "2026-09-30T00:00:00Z"
-    },
-    {
-      "id": "prod-pillow-silk",
-      "name": "Kamaar Mulberry Silk & Micro-Down Hotel Pillow",
-      "slug": "lena-mulberry-silk-down-pillow",
-      "subtitle": "5-Star Hotel Indulgence with 100% Grade 6A Mulberry Silk",
-      "description": "Plump micro-down alternative encased in pure Grade 6A Mulberry Silk. Fluffy, cloud-like luxury for sleepers who love to sink gently into their pillow.",
-      "shortDescription": "Ultra-plush hotel pillow with Grade 6A Mulberry silk and hypoallergenic micro-down.",
-      "categoryId": "cat-pillows",
-      "productType": "pillow",
-      "material": "Memory Foam",
-      "firmness": "Soft",
-      "thicknessCm": 15,
-      "warrantyYears": 2,
-      "trialNights": 30,
-      "features": [
-        "Grade 6A Mulberry Silk shell",
-        "Hypoallergenic micro-down filling",
-        "Machine washable outer"
-      ],
-      "layers": [],
-      "specifications": {
-        "Dimensions": "70cm x 48cm",
-        "Shell": "Mulberry Silk"
-      },
-      "faq": [],
-      "status": "published",
-      "isFeatured": false,
-      "variants": [
-        {
-          "id": "var-psk-std",
-          "productId": "prod-pillow-silk",
-          "sku": "KAMAAR-PIL-SLK",
-          "sizeName": "Standard",
-          "dimensions": "70cm x 48cm",
-          "priceSen": 29900,
-          "compareAtPriceSen": 36900,
+          "id": "var-gulung-qen",
+          "productId": "prod-toto-gulung",
+          "sku": "TSJ-GULUNG-QEN",
+          "sizeName": "Queen (140x190cm)",
+          "dimensions": "140cm x 190cm x 6cm",
+          "priceSen": 7900,
+          "compareAtPriceSen": 9900,
           "stockQuantity": 25,
           "leadTimeDays": 1,
           "isActive": true
@@ -1526,55 +308,405 @@
       ],
       "images": [
         {
-          "id": "img-psk-1",
-          "productId": "prod-pillow-silk",
-          "imageUrl": "/images/products/pillow-mulberry-silk.jpg",
-          "altText": "Silk and Down Pillow",
+          "id": "img-gulung-1",
+          "productId": "prod-toto-gulung",
+          "imageUrl": "/images/company/profil-syarikat-cover.jpg",
+          "altText": "Tilam toto gulung mudah alih KAMAAR",
           "displayOrder": 1,
           "isPrimary": true
         }
       ],
-      "createdAt": "2026-09-15T00:00:00Z",
-      "updatedAt": "2026-09-30T00:00:00Z"
+      "createdAt": "2026-09-01T00:00:00Z",
+      "updatedAt": "2026-10-07T00:00:00Z"
     },
     {
-      "id": "prod-pillow-ice-silk",
-      "name": "Kamaar CoolSilk Ice-Fiber Cooling Latex Pillow",
-      "slug": "kamaar-coolsilk-ice-fiber-cooling-latex-pillow",
-      "subtitle": "Instant Cool-Touch Japanese Ice-Silk with Natural Aerated Latex Core",
-      "description": "Engineered for deep restorative sleep in warm climates. Combines instant chill Japanese Ice-Silk fabric with a buoyant, pinpoint-ventilated natural organic latex core for relentless cool comfort.",
-      "shortDescription": "Active cooling pillow with Ice-Silk thermal dissipation and buoyant latex core.",
-      "categoryId": "cat-pillows",
-      "productType": "pillow",
-      "material": "Cool Night Hybrid",
-      "firmness": "Balanced Medium",
-      "thicknessCm": 13,
-      "warrantyYears": 3,
-      "trialNights": 30,
+      "id": "prod-tilam-lipat-3",
+      "name": "Tilam Lipat 3 Berzip Fabrik Tahan Lasak",
+      "slug": "tilam-lipat-3-berzip",
+      "subtitle": "Sarung Berzip Boleh Buka Cuci • Jimat Ruang & Praktikal",
+      "description": "Tilam lipat 3 bahagian yang menjimatkan ruang penyimpanan. Isian busa/fiber mampat yang tahan lasak dan tidak mudah penyek. Sarung berzip mudah ditanggalkan untuk dicuci. Pilihan terbaik untuk rumah sewa, asrama, dan tilam tetamu.",
+      "shortDescription": "Tilam lipat 3 bahagian berzip yang boleh dicuci sarungnya. Jimat ruang dan selesa.",
+      "categoryId": "cat-tilam-lipat",
+      "productType": "mattress",
+      "material": "Fiber / Busa Mampat Berketumpatan Tinggi",
+      "firmness": "Medium Firm",
+      "firmnessScale": 6,
+      "thicknessCm": 7,
+      "warrantyYears": 1,
+      "trialNights": 14,
       "features": [
-        "Q-Max > 0.45 Japanese Ice-Silk cooling fabric",
-        "100% Organic aerated latex core",
-        "Relieves cervical neck tension & promotes airflow",
-        "Machine-washable cooling zippered case"
+        "Rekaan 3 lipatan mudah simpan dalam almari atau sudut bilik",
+        "Sarung kain tebal dilengkapi zip penuh untuk mudah dicuci",
+        "Isian mampat yang menyokong tulang belakang dengan baik",
+        "Jahitan piping kemas di Unit Jahitan Tunas Sinar Jaya"
+      ],
+      "layers": [
+        {
+          "number": 1,
+          "name": "Sarung Berzip Boleh Cuci",
+          "description": "Kain bercorak kemas dengan bukaan zip panjang."
+        },
+        {
+          "number": 2,
+          "name": "Teras Busa/Fiber Mampat 3 Bahagian",
+          "description": "Blok isian tahan lasak yang mengekalkan bentuk rata."
+        }
+      ],
+      "specifications": {
+        "Jenis": "Tilam Lipat 3 Segi Empat",
+        "Saiz Buka": "Single (90cm x 190cm)",
+        "Saiz Lipat": "90cm x 63cm x 22cm",
+        "Sarung": "Fabrik Berzip Boleh Dicuci",
+        "Pengeluar": "Tunas Sinar Jaya Enterprise"
+      },
+      "faq": [
+        {
+          "question": "Bolehkah sarung tilam ini dibasuh mesin?",
+          "answer": "Ya, buka zip dan masukkan sarung ke dalam mesin basuh dengan cucian biasa."
+        }
+      ],
+      "status": "published",
+      "isFeatured": true,
+      "variants": [
+        {
+          "id": "var-lipat-2in",
+          "productId": "prod-tilam-lipat-3",
+          "sku": "TSJ-LIPAT-2IN",
+          "sizeName": "Single 2 Inci Tebal",
+          "dimensions": "90cm x 190cm x 5cm",
+          "priceSen": 6900,
+          "compareAtPriceSen": 8900,
+          "stockQuantity": 40,
+          "leadTimeDays": 1,
+          "isActive": true
+        },
+        {
+          "id": "var-lipat-3in",
+          "productId": "prod-tilam-lipat-3",
+          "sku": "TSJ-LIPAT-3IN",
+          "sizeName": "Single 3 Inci Extra Tebal",
+          "dimensions": "90cm x 190cm x 8cm",
+          "priceSen": 8900,
+          "compareAtPriceSen": 11000,
+          "stockQuantity": 35,
+          "leadTimeDays": 1,
+          "isActive": true
+        }
+      ],
+      "images": [
+        {
+          "id": "img-lipat-1",
+          "productId": "prod-tilam-lipat-3",
+          "imageUrl": "/images/company/aktiviti-pengilangan.jpg",
+          "altText": "Tilam Lipat 3 Berzip Tunas Sinar Jaya",
+          "displayOrder": 1,
+          "isPrimary": true
+        }
+      ],
+      "createdAt": "2026-09-01T00:00:00Z",
+      "updatedAt": "2026-10-07T00:00:00Z"
+    },
+    {
+      "id": "prod-tilam-single-asrama",
+      "name": "Tilam Single 3 Kaki Asrama & Homestay (Heavy Duty)",
+      "slug": "tilam-single-3-kaki-asrama",
+      "subtitle": "Pilihan Utama Asrama Sekolah, Pusat Tahfiz & Homestay Bajet",
+      "description": "Tilam bujang saiz standard 3 kaki x 6 kaki keluaran Unit Bantal & Tilam Tunas Sinar Jaya. Jahitan tepi tebal dan fabrik berkualiti tinggi yang tahan penggunaan harian lasak. Sesuai untuk asrama sekolah harian, universiti, maahad tahfiz, dan rumah sewa.",
+      "shortDescription": "Tilam bujang 3 kaki heavy duty untuk asrama, tahfiz dan homestay. Tahan kemek.",
+      "categoryId": "cat-tilam-lipat",
+      "productType": "mattress",
+      "material": "Rebonded Padat & Asian Polyester Fibre",
+      "firmness": "Firm",
+      "firmnessScale": 7,
+      "thicknessCm": 10,
+      "warrantyYears": 2,
+      "trialNights": 14,
+      "features": [
+        "Ketumpatan tinggi tidak mudah melendut atau kemek",
+        "Fabrik jacquard/damask tahan geseran dan lasak",
+        "Jahitan tepi piping bertetulang untuk ketahanan bertahun",
+        "Saiz tepat untuk katil bujang asrama (Single 3x6 kaki)",
+        "Harga kilang untuk belian individu mahupun pukal"
+      ],
+      "layers": [
+        {
+          "number": 1,
+          "name": "Fabrik Luar Tahan Lasak",
+          "description": "Kain tebal kalis geseran jahitan kilang."
+        },
+        {
+          "number": 2,
+          "name": "Lapisan Pelapik Fiber",
+          "description": "Kusyen empuk di bahagian atas dan bawah."
+        },
+        {
+          "number": 3,
+          "name": "Teras Padat Rebonded / Fiber",
+          "description": "Teras sokongan teguh untuk ketahanan jangka panjang."
+        }
+      ],
+      "specifications": {
+        "Saiz": "Single Standard (90cm x 190cm)",
+        "Tinggi / Ketebalan": "4 Inci atau 5 Inci",
+        "Sesuai Untuk": "Asrama, Homestay, Bilik Pekerja, Pusat Tahfiz",
+        "Pengeluar": "Tunas Sinar Jaya Enterprise"
+      },
+      "faq": [
+        {
+          "question": "Bolehkah beli dalam kuantiti banyak untuk asrama?",
+          "answer": "Boleh, sila hubungi kami terus melalui WhatsApp 011-6444 7908 untuk sebut harga pukal dan jadual penghantaran lori kilang."
+        }
+      ],
+      "status": "published",
+      "isFeatured": true,
+      "variants": [
+        {
+          "id": "var-asrama-4in",
+          "productId": "prod-tilam-single-asrama",
+          "sku": "TSJ-ASRAMA-4IN",
+          "sizeName": "Single 4 Inci Standard",
+          "dimensions": "90cm x 190cm x 10cm",
+          "priceSen": 9900,
+          "compareAtPriceSen": 13000,
+          "stockQuantity": 50,
+          "leadTimeDays": 2,
+          "isActive": true
+        },
+        {
+          "id": "var-asrama-5in",
+          "productId": "prod-tilam-single-asrama",
+          "sku": "TSJ-ASRAMA-5IN",
+          "sizeName": "Single 5 Inci Extra Padat",
+          "dimensions": "90cm x 190cm x 13cm",
+          "priceSen": 12900,
+          "compareAtPriceSen": 16900,
+          "stockQuantity": 40,
+          "leadTimeDays": 2,
+          "isActive": true
+        }
+      ],
+      "images": [
+        {
+          "id": "img-asrama-1",
+          "productId": "prod-tilam-single-asrama",
+          "imageUrl": "/images/company/aktiviti-pengilangan.jpg",
+          "altText": "Tilam Single Asrama Tunas Sinar Jaya",
+          "displayOrder": 1,
+          "isPrimary": true
+        }
+      ],
+      "createdAt": "2026-09-01T00:00:00Z",
+      "updatedAt": "2026-10-07T00:00:00Z"
+    },
+    {
+      "id": "prod-bantal-gebu-asian",
+      "name": "Bantal Tidur Gebu Asian Polyester Fibre",
+      "slug": "bantal-tidur-gebu-asian-fibre",
+      "subtitle": "Isian Fiber Anjal & Sejuk • Sokongan Leher Maksimum",
+      "description": "Bantal tidur empuk dan anjal diisi terus di Unit Bantal & Tilam kilang kami. Menggunakan Asian Polyester Fibre bermutu tinggi yang gebu, tidak mudah berketul, dan memberikan sokongan leher yang selesa untuk tidur yang lena.",
+      "shortDescription": "Bantal tidur gebu berkualiti tinggi dari Unit Bantal & Tilam KAMAAR. Lembut dan anjal.",
+      "categoryId": "cat-bantal",
+      "productType": "pillow",
+      "material": "100% Asian Polyester Virgin Fibre",
+      "firmness": "Medium Soft",
+      "firmnessScale": 4,
+      "warrantyYears": 1,
+      "trialNights": 14,
+      "features": [
+        "Isian Asian Polyester Virgin Fibre gred A yang gebu & anjal",
+        "Kain sarung kapas mikrofiber yang sejuk dan lembut",
+        "Boleh dibasuh dan cepat kering",
+        "Hypoallergenic dan bebas habuk fabrik",
+        "Harga jimat terus dari kilang"
       ],
       "layers": [],
       "specifications": {
-        "Dimensions": "65cm x 40cm x 13cm",
-        "Cover": "Japanese Cool-Touch Ice-Silk Fabric",
-        "Core": "100% Aerated Malaysian Natural Latex"
+        "Saiz Bantal": "Standard (48cm x 74cm)",
+        "Berat": "Kira-kira 850g (Padat & Gebu)",
+        "Bahan Isian": "Asian Polyester Fibre",
+        "Pengeluar": "Tunas Sinar Jaya Enterprise"
+      },
+      "faq": [
+        {
+          "question": "Bolehkah bantal ini dibasuh?",
+          "answer": "Ya, bantal ini boleh dicuci secara cucian lembut dalam mesin basuh dan dijemur kering di bawah matahari."
+        }
+      ],
+      "status": "published",
+      "isFeatured": true,
+      "variants": [
+        {
+          "id": "var-bantal-1pc",
+          "productId": "prod-bantal-gebu-asian",
+          "sku": "TSJ-BANTAL-1PC",
+          "sizeName": "1 Biji Bantal Standard",
+          "dimensions": "48cm x 74cm",
+          "priceSen": 1800,
+          "compareAtPriceSen": 2500,
+          "stockQuantity": 150,
+          "leadTimeDays": 1,
+          "isActive": true
+        },
+        {
+          "id": "var-bantal-2pc",
+          "productId": "prod-bantal-gebu-asian",
+          "sku": "TSJ-BANTAL-2PC",
+          "sizeName": "Pakej Kombo 2 Biji",
+          "dimensions": "48cm x 74cm",
+          "priceSen": 3200,
+          "compareAtPriceSen": 5000,
+          "stockQuantity": 100,
+          "leadTimeDays": 1,
+          "isActive": true
+        },
+        {
+          "id": "var-bantal-4pc",
+          "productId": "prod-bantal-gebu-asian",
+          "sku": "TSJ-BANTAL-4PC",
+          "sizeName": "Pakej Keluarga 4 Biji (Jimat)",
+          "dimensions": "48cm x 74cm",
+          "priceSen": 5900,
+          "compareAtPriceSen": 10000,
+          "stockQuantity": 80,
+          "leadTimeDays": 1,
+          "isActive": true
+        }
+      ],
+      "images": [
+        {
+          "id": "img-bantal-1",
+          "productId": "prod-bantal-gebu-asian",
+          "imageUrl": "/images/products/pillow-classic-latex.jpg",
+          "altText": "Bantal Tidur Gebu Asian Polyester Fibre",
+          "displayOrder": 1,
+          "isPrimary": true
+        },
+        {
+          "id": "img-bantal-2",
+          "productId": "prod-bantal-gebu-asian",
+          "imageUrl": "/images/company/aktiviti-pengilangan.jpg",
+          "altText": "Unit Bantal & Tilam Tunas Sinar Jaya",
+          "displayOrder": 2,
+          "isPrimary": false
+        }
+      ],
+      "createdAt": "2026-09-01T00:00:00Z",
+      "updatedAt": "2026-10-07T00:00:00Z"
+    },
+    {
+      "id": "prod-bantal-peluk-gebu",
+      "name": "Bantal Peluk (Bolster) Gebu Jahitan Kemas",
+      "slug": "bantal-peluk-bolster-gebu",
+      "subtitle": "Panjang & Gemuk • Isian Padat Tidak Mudah Leper",
+      "description": "Bantal peluk panjang dengan isian fiber padat gebu. Jahitan kemas dan fabrik lembut yang memberikan pelukan empuk setiap malam untuk tidur yang lebih selesa.",
+      "shortDescription": "Bantal peluk gebu panjang keluaran kilang KAMAAR. Isian padat dan sedap dipeluk.",
+      "categoryId": "cat-bantal",
+      "productType": "pillow",
+      "material": "Asian Polyester Fibre Padat",
+      "firmness": "Medium Soft",
+      "firmnessScale": 4,
+      "warrantyYears": 1,
+      "trialNights": 14,
+      "features": [
+        "Isian padat dan tidak mudah penyek bila dipeluk",
+        "Jahitan piping keliling yang kukuh",
+        "Saiz panjang standard muat semua sarung bantal peluk pasaran"
+      ],
+      "layers": [],
+      "specifications": {
+        "Saiz": "Standard Dewasa (22cm x 92cm)",
+        "Berat": "Kira-kira 950g",
+        "Pengeluar": "Tunas Sinar Jaya Enterprise"
       },
       "faq": [],
       "status": "published",
       "isFeatured": true,
       "variants": [
         {
-          "id": "var-pice-std",
-          "productId": "prod-pillow-ice-silk",
-          "sku": "KAMAAR-PIL-ICE",
-          "sizeName": "Standard",
-          "dimensions": "65cm x 40cm x 13cm",
-          "priceSen": 28900,
-          "compareAtPriceSen": 34900,
+          "id": "var-peluk-1pc",
+          "productId": "prod-bantal-peluk-gebu",
+          "sku": "TSJ-PELUK-1PC",
+          "sizeName": "1 Unit Bantal Peluk",
+          "dimensions": "22cm x 92cm",
+          "priceSen": 2400,
+          "compareAtPriceSen": 3500,
+          "stockQuantity": 80,
+          "leadTimeDays": 1,
+          "isActive": true
+        },
+        {
+          "id": "var-peluk-2pc",
+          "productId": "prod-bantal-peluk-gebu",
+          "sku": "TSJ-PELUK-2PC",
+          "sizeName": "Kombo 2 Unit Bantal Peluk",
+          "dimensions": "22cm x 92cm",
+          "priceSen": 4500,
+          "compareAtPriceSen": 7000,
+          "stockQuantity": 50,
+          "leadTimeDays": 1,
+          "isActive": true
+        }
+      ],
+      "images": [
+        {
+          "id": "img-peluk-1",
+          "productId": "prod-bantal-peluk-gebu",
+          "imageUrl": "/images/company/aktiviti-pengilangan.jpg",
+          "altText": "Bantal Peluk Gebu Tunas Sinar Jaya",
+          "displayOrder": 1,
+          "isPrimary": true
+        }
+      ],
+      "createdAt": "2026-09-01T00:00:00Z",
+      "updatedAt": "2026-10-07T00:00:00Z"
+    },
+    {
+      "id": "prod-comforter-tebal-quilting",
+      "name": "Set Comforter Tebal Quilting Corak Menarik",
+      "slug": "set-comforter-tebal-quilting",
+      "subtitle": "Jahitan Quilting Kilang Sendiri • Lembut & Sejuk Dipakai",
+      "description": "Comforter tebal dijahit dengan mesin quilting khas Unit Jahitan Tunas Sinar Jaya. Fabrik mikrofiber sejuk dengan isian fiber lembut dan kemas. Pilihan pelbagai corak menarik untuk menceriakan bilik tidur anda.",
+      "shortDescription": "Set comforter tebal jahitan quilting kilang sendiri. Lembut, sejuk dan tahan basuh.",
+      "categoryId": "cat-cadang-comforter",
+      "productType": "bedding",
+      "material": "Mikrofiber Sejuk & Isian Fiber Quilting",
+      "warrantyYears": 1,
+      "trialNights": 14,
+      "features": [
+        "Jahitan quilting kemas mengelakkan fiber bergumpal",
+        "Kain sejuk lembut, tidak berbulu selepas dibasuh",
+        "Pakej lengkap comforter tebal bersama 2 sarung bantal"
+      ],
+      "layers": [],
+      "specifications": {
+        "Kandungan Set": "1 Comforter Tebal + 2 Sarung Bantal",
+        "Material": "Mikrofiber Lembut Berquilting",
+        "Pengeluar": "Tunas Sinar Jaya Enterprise"
+      },
+      "faq": [],
+      "status": "published",
+      "isFeatured": true,
+      "variants": [
+        {
+          "id": "var-comf-queen",
+          "productId": "prod-comforter-tebal-quilting",
+          "sku": "TSJ-COMF-QEN",
+          "sizeName": "Queen (200cm x 230cm)",
+          "dimensions": "200cm x 230cm",
+          "priceSen": 7900,
+          "compareAtPriceSen": 11000,
+          "stockQuantity": 40,
+          "leadTimeDays": 1,
+          "isActive": true
+        },
+        {
+          "id": "var-comf-king",
+          "productId": "prod-comforter-tebal-quilting",
+          "sku": "TSJ-COMF-KNG",
+          "sizeName": "King (220cm x 240cm)",
+          "dimensions": "220cm x 240cm",
+          "priceSen": 9900,
+          "compareAtPriceSen": 13900,
           "stockQuantity": 30,
           "leadTimeDays": 1,
           "isActive": true
@@ -1582,747 +714,238 @@
       ],
       "images": [
         {
-          "id": "img-pice-1",
-          "productId": "prod-pillow-ice-silk",
-          "imageUrl": "/images/products/pillow-cooling-ice.jpg",
-          "altText": "Kamaar CoolSilk Ice-Fiber Cooling Latex Pillow",
+          "id": "img-comf-1",
+          "productId": "prod-comforter-tebal-quilting",
+          "imageUrl": "/images/company/profil-syarikat-cover.jpg",
+          "altText": "Set Comforter Quilting KAMAAR",
           "displayOrder": 1,
           "isPrimary": true
         }
       ],
-      "createdAt": "2026-09-25T00:00:00Z",
-      "updatedAt": "2026-09-30T00:00:00Z"
+      "createdAt": "2026-09-01T00:00:00Z",
+      "updatedAt": "2026-10-07T00:00:00Z"
     },
     {
-      "id": "prod-topper-5cm",
-      "name": "Kamaar 100% Natural Latex Mattress Topper (5cm)",
-      "slug": "lena-natural-latex-mattress-topper-5cm",
-      "subtitle": "Instantly Rejuvenate Any Existing Mattress with 5cm of Pure Latex",
-      "description": "Transform an overly firm or aging mattress. Made with a 5cm solid slab of pure Malaysian natural latex with elastic corner straps that secure snugly to your mattress.",
-      "shortDescription": "5cm pure natural latex topper with organic tencel cover and secure anchor bands.",
-      "categoryId": "cat-toppers",
-      "productType": "topper",
-      "material": "100% Natural Latex",
-      "firmness": "Medium",
-      "thicknessCm": 5,
-      "warrantyYears": 5,
-      "trialNights": 30,
+      "id": "prod-sarung-toto-berzip",
+      "name": "Cadar & Sarung Tilam Toto Berzip Pelbagai Corak",
+      "slug": "cadar-sarung-tilam-toto-berzip",
+      "subtitle": "Zip Penuh Tahan Karat • Kain Sejuk Tidak Luntur",
+      "description": "Sarung gantian berzip penuh untuk tilam toto anda. Senang dibuka untuk dibasuh, kain tebal tidak mudah koyak dan corak tidak luntur.",
+      "shortDescription": "Sarung ganti berzip penuh untuk tilam toto. Senang buka basuh dan kain berkualiti.",
+      "categoryId": "cat-cadang-comforter",
+      "productType": "bedding",
+      "material": "Kapas Mikrofiber Sejuk Berzip",
+      "warrantyYears": 1,
+      "trialNights": 14,
       "features": [
-        "5cm Solid 100% Natural Latex slab",
-        "Elastic anchor corner bands",
-        "Removable organic bamboo cover"
+        "Zip panjang memudahkan proses memasukkan dan mengeluarkan tilam toto",
+        "Kain sejuk lembut yang selesa bila berbaring",
+        "Corak moden dan floral bunga ceria"
       ],
       "layers": [],
       "specifications": {
-        "Core": "100% Natural Latex",
-        "Thickness": "5 cm"
+        "Jenis": "Sarung Berzip Tilam Toto",
+        "Pengeluar": "Tunas Sinar Jaya Enterprise"
       },
       "faq": [],
       "status": "published",
       "isFeatured": true,
       "variants": [
         {
-          "id": "var-top5-single",
-          "productId": "prod-topper-5cm",
-          "sku": "KAMAAR-TOP5-SGL",
-          "sizeName": "Single",
-          "dimensions": "91cm x 190cm x 5cm",
-          "priceSen": 59900,
-          "compareAtPriceSen": 74900,
-          "stockQuantity": 18,
-          "leadTimeDays": 1,
-          "isActive": true
-        },
-        {
-          "id": "var-top5-queen",
-          "productId": "prod-topper-5cm",
-          "sku": "KAMAAR-TOP5-QEN",
-          "sizeName": "Queen",
-          "dimensions": "152cm x 190cm x 5cm",
-          "priceSen": 89900,
-          "compareAtPriceSen": 109900,
-          "stockQuantity": 20,
-          "leadTimeDays": 1,
-          "isActive": true
-        },
-        {
-          "id": "var-top5-king",
-          "productId": "prod-topper-5cm",
-          "sku": "KAMAAR-TOP5-KNG",
-          "sizeName": "King",
-          "dimensions": "183cm x 190cm x 5cm",
-          "priceSen": 109900,
-          "compareAtPriceSen": 129900,
-          "stockQuantity": 15,
-          "leadTimeDays": 1,
-          "isActive": true
-        }
-      ],
-      "images": [
-        {
-          "id": "img-top5-1",
-          "productId": "prod-topper-5cm",
-          "imageUrl": "/images/products/topper-latex-5cm.jpg",
-          "altText": "Kamaar 100% Natural Latex Mattress Topper (5cm)",
-          "displayOrder": 1,
-          "isPrimary": true
-        }
-      ],
-      "createdAt": "2026-09-16T00:00:00Z",
-      "updatedAt": "2026-09-30T00:00:00Z",
-      "firmnessScale": 5
-    },
-    {
-      "id": "prod-topper-75cm",
-      "name": "Kamaar Deep Cushion Natural Latex Topper (7.5cm)",
-      "slug": "lena-natural-latex-mattress-topper-7-5cm",
-      "subtitle": "Extra-Thick 7.5cm Luxury Latex Cushioning",
-      "description": "For those seeking significant pressure relief and plush comfort. The 7.5cm depth completely absorbs body weight and eliminates partner movement.",
-      "shortDescription": "Extra-thick 7.5cm organic natural latex topper for deep pressure relief.",
-      "categoryId": "cat-toppers",
-      "productType": "topper",
-      "material": "100% Natural Latex",
-      "firmness": "Medium Soft",
-      "thicknessCm": 7.5,
-      "warrantyYears": 5,
-      "trialNights": 30,
-      "features": [
-        "7.5cm Thick Natural Latex",
-        "Heavy duty corner anchor straps",
-        "Zero synthetic foam"
-      ],
-      "layers": [],
-      "specifications": {
-        "Thickness": "7.5 cm",
-        "Material": "100% Natural Latex"
-      },
-      "faq": [],
-      "status": "published",
-      "isFeatured": false,
-      "variants": [
-        {
-          "id": "var-top75-queen",
-          "productId": "prod-topper-75cm",
-          "sku": "KAMAAR-TOP7-QEN",
-          "sizeName": "Queen",
-          "dimensions": "152cm x 190cm x 7.5cm",
-          "priceSen": 119900,
-          "compareAtPriceSen": 144900,
-          "stockQuantity": 12,
-          "leadTimeDays": 1,
-          "isActive": true
-        },
-        {
-          "id": "var-top75-king",
-          "productId": "prod-topper-75cm",
-          "sku": "KAMAAR-TOP7-KNG",
-          "sizeName": "King",
-          "dimensions": "183cm x 190cm x 7.5cm",
-          "priceSen": 144900,
-          "compareAtPriceSen": 174900,
-          "stockQuantity": 9,
-          "leadTimeDays": 1,
-          "isActive": true
-        }
-      ],
-      "images": [
-        {
-          "id": "img-top75-1",
-          "productId": "prod-topper-75cm",
-          "imageUrl": "/images/products/topper-latex-75cm.jpg",
-          "altText": "Kamaar Deep Cushion Natural Latex Topper (7.5cm)",
-          "displayOrder": 1,
-          "isPrimary": true
-        }
-      ],
-      "createdAt": "2026-09-17T00:00:00Z",
-      "updatedAt": "2026-09-30T00:00:00Z",
-      "firmnessScale": 4
-    },
-    {
-      "id": "prod-protector-bamboo",
-      "name": "Kamaar Breathable Waterproof Bamboo Mattress Protector",
-      "slug": "lena-waterproof-bamboo-mattress-protector",
-      "subtitle": "100% Waterproof Membrane with Silky Bamboo Terry Surface",
-      "description": "Protect your mattress warranty from spills, perspiration, and dust mites. Features a noiseless polyurethane membrane that blocks liquids completely while allowing air to breathe.",
-      "shortDescription": "Silky noiseless waterproof mattress protector with deep 40cm fitted skirt.",
-      "categoryId": "cat-toppers",
-      "productType": "topper",
-      "material": "100% Bamboo Fabric",
-      "warrantyYears": 2,
-      "trialNights": 30,
-      "features": [
-        "100% Waterproof barrier",
-        "Silky, noiseless bamboo terry",
-        "Deep 40cm fitted skirt with full elastic"
-      ],
-      "layers": [],
-      "specifications": {
-        "Fabric": "70% Bamboo, 30% Cotton Terry with TPU Backing",
-        "Pocket Depth": "40 cm"
-      },
-      "faq": [],
-      "status": "published",
-      "isFeatured": true,
-      "variants": [
-        {
-          "id": "var-prot-single",
-          "productId": "prod-protector-bamboo",
-          "sku": "KAMAAR-PROT-SGL",
-          "sizeName": "Single",
-          "dimensions": "91cm x 190cm x 40cm",
-          "priceSen": 14900,
-          "compareAtPriceSen": 19900,
-          "stockQuantity": 50,
-          "leadTimeDays": 1,
-          "isActive": true
-        },
-        {
-          "id": "var-prot-queen",
-          "productId": "prod-protector-bamboo",
-          "sku": "KAMAAR-PROT-QEN",
-          "sizeName": "Queen",
-          "dimensions": "152cm x 190cm x 40cm",
-          "priceSen": 18900,
-          "compareAtPriceSen": 24900,
+          "id": "var-sarung-sgl",
+          "productId": "prod-sarung-toto-berzip",
+          "sku": "TSJ-SRG-SGL",
+          "sizeName": "Single (90x190cm)",
+          "dimensions": "90cm x 190cm",
+          "priceSen": 2500,
+          "compareAtPriceSen": 3500,
           "stockQuantity": 60,
           "leadTimeDays": 1,
           "isActive": true
         },
         {
-          "id": "var-prot-king",
-          "productId": "prod-protector-bamboo",
-          "sku": "KAMAAR-PROT-KNG",
-          "sizeName": "King",
-          "dimensions": "183cm x 190cm x 40cm",
-          "priceSen": 21900,
-          "compareAtPriceSen": 28900,
-          "stockQuantity": 45,
-          "leadTimeDays": 1,
-          "isActive": true
-        }
-      ],
-      "images": [
-        {
-          "id": "img-prot-1",
-          "productId": "prod-protector-bamboo",
-          "imageUrl": "/images/products/protector-bamboo.jpg",
-          "altText": "Kamaar Breathable Waterproof Bamboo Mattress Protector",
-          "displayOrder": 1,
-          "isPrimary": true
-        }
-      ],
-      "createdAt": "2026-09-18T00:00:00Z",
-      "updatedAt": "2026-09-30T00:00:00Z"
-    },
-    {
-      "id": "prod-topper-ice-silk",
-      "name": "Kamaar CoolSilk Zero-Heat Cooling Topper (5cm)",
-      "slug": "kamaar-coolsilk-zero-heat-cooling-topper",
-      "subtitle": "Japanese Cool-Fiber & Responsive Air-Gel Foam Topper",
-      "description": "Designed specifically for Malaysian tropical nights. Combines instant cool-touch Japanese Ice-Silk fabric with breathable open-cell gel foam to drop surface temperature by up to 2.5°C.",
-      "shortDescription": "Instant cool-to-touch Ice-Silk fabric with heat-dissipating gel-foam core.",
-      "categoryId": "cat-toppers",
-      "productType": "topper",
-      "material": "Cool Night Hybrid",
-      "firmness": "Balanced Medium",
-      "firmnessScale": 5,
-      "thicknessCm": 5,
-      "warrantyYears": 5,
-      "trialNights": 30,
-      "features": [
-        "Japanese Ice-Silk cooling surface (Q-Max > 0.45)",
-        "Open-cell thermo-gel comfort foam",
-        "Anti-slip silicon backing with 4 heavy-duty corner elastic bands",
-        "Removable & washable cooling cover"
-      ],
-      "layers": [],
-      "specifications": {
-        "Surface Fabric": "Japanese Ice-Silk (Cooling Nylon & Spandex)",
-        "Core Material": "Thermoregulating Gel-Infused Foam",
-        "Thickness": "5 cm",
-        "Elastic Bands": "Reinforced 4-corner anchor straps"
-      },
-      "faq": [],
-      "status": "published",
-      "isFeatured": true,
-      "variants": [
-        {
-          "id": "var-topice-single",
-          "productId": "prod-topper-ice-silk",
-          "sku": "KAMAAR-TOPICE-SGL",
-          "sizeName": "Single",
-          "dimensions": "91cm x 190cm x 5cm",
-          "priceSen": 49900,
-          "compareAtPriceSen": 69900,
-          "stockQuantity": 25,
+          "id": "var-sarung-qen",
+          "productId": "prod-sarung-toto-berzip",
+          "sku": "TSJ-SRG-QEN",
+          "sizeName": "Queen (150x190cm)",
+          "dimensions": "150cm x 190cm",
+          "priceSen": 3500,
+          "compareAtPriceSen": 4500,
+          "stockQuantity": 70,
           "leadTimeDays": 1,
           "isActive": true
         },
         {
-          "id": "var-topice-supersingle",
-          "productId": "prod-topper-ice-silk",
-          "sku": "KAMAAR-TOPICE-SSGL",
-          "sizeName": "Super Single",
-          "dimensions": "107cm x 190cm x 5cm",
-          "priceSen": 59900,
-          "compareAtPriceSen": 79900,
-          "stockQuantity": 20,
-          "leadTimeDays": 1,
-          "isActive": true
-        },
-        {
-          "id": "var-topice-queen",
-          "productId": "prod-topper-ice-silk",
-          "sku": "KAMAAR-TOPICE-QEN",
-          "sizeName": "Queen",
-          "dimensions": "152cm x 190cm x 5cm",
-          "priceSen": 79900,
-          "compareAtPriceSen": 109900,
-          "stockQuantity": 30,
-          "leadTimeDays": 1,
-          "isActive": true
-        },
-        {
-          "id": "var-topice-king",
-          "productId": "prod-topper-ice-silk",
-          "sku": "KAMAAR-TOPICE-KNG",
-          "sizeName": "King",
-          "dimensions": "183cm x 190cm x 5cm",
-          "priceSen": 99900,
-          "compareAtPriceSen": 139900,
-          "stockQuantity": 18,
-          "leadTimeDays": 1,
-          "isActive": true
-        }
-      ],
-      "images": [
-        {
-          "id": "img-topice-1",
-          "productId": "prod-topper-ice-silk",
-          "imageUrl": "/images/products/topper-ice-cooling.jpg",
-          "altText": "Kamaar CoolSilk Zero-Heat Cooling Topper (5cm)",
-          "displayOrder": 1,
-          "isPrimary": true
-        }
-      ],
-      "createdAt": "2026-09-20T00:00:00Z",
-      "updatedAt": "2026-09-30T00:00:00Z"
-    },
-    {
-      "id": "prod-protector-copper",
-      "name": "Kamaar Copper Shield Anti-Bacterial Mattress Protector",
-      "slug": "kamaar-copper-shield-mattress-protector",
-      "subtitle": "Natural Copper-Ion Infusion for 99.9% Dust Mite & Bacterial Defense",
-      "description": "Permanent copper-infused threads eliminate odour-causing bacteria and allergen build-up while offering 100% breathable waterproof fluid protection.",
-      "shortDescription": "Hypoallergenic copper-infused fabric with 100% waterproof barrier and 40cm skirt.",
-      "categoryId": "cat-toppers",
-      "productType": "topper",
-      "material": "Hypoallergenic Copper",
-      "thicknessCm": 1,
-      "warrantyYears": 3,
-      "trialNights": 30,
-      "features": [
-        "Permanent copper-ion antimicrobial threading",
-        "100% Breathable TPU liquid waterproof barrier",
-        "Extra-deep 40cm elastic skirt for mattresses up to 16 inches",
-        "Hypoallergenic & anti-dustmite certified"
-      ],
-      "layers": [],
-      "specifications": {
-        "Top Surface": "Natural Copper-Infused Knit Fabric",
-        "Underlayer": "Medical-Grade Breathable TPU",
-        "Skirt": "Full 360-degree Elastic Fitted Skirt (40cm)"
-      },
-      "faq": [],
-      "status": "published",
-      "isFeatured": false,
-      "variants": [
-        {
-          "id": "var-protcop-single",
-          "productId": "prod-protector-copper",
-          "sku": "KAMAAR-PROTCOP-SGL",
-          "sizeName": "Single",
-          "dimensions": "91cm x 190cm x 40cm",
-          "priceSen": 17900,
-          "compareAtPriceSen": 24900,
-          "stockQuantity": 40,
-          "leadTimeDays": 1,
-          "isActive": true
-        },
-        {
-          "id": "var-protcop-supersingle",
-          "productId": "prod-protector-copper",
-          "sku": "KAMAAR-PROTCOP-SSGL",
-          "sizeName": "Super Single",
-          "dimensions": "107cm x 190cm x 40cm",
-          "priceSen": 19900,
-          "compareAtPriceSen": 27900,
-          "stockQuantity": 35,
-          "leadTimeDays": 1,
-          "isActive": true
-        },
-        {
-          "id": "var-protcop-queen",
-          "productId": "prod-protector-copper",
-          "sku": "KAMAAR-PROTCOP-QEN",
-          "sizeName": "Queen",
-          "dimensions": "152cm x 190cm x 40cm",
-          "priceSen": 22900,
-          "compareAtPriceSen": 31900,
+          "id": "var-sarung-kng",
+          "productId": "prod-sarung-toto-berzip",
+          "sku": "TSJ-SRG-KNG",
+          "sizeName": "King (180x190cm)",
+          "dimensions": "180cm x 190cm",
+          "priceSen": 4200,
+          "compareAtPriceSen": 5500,
           "stockQuantity": 50,
           "leadTimeDays": 1,
           "isActive": true
-        },
-        {
-          "id": "var-protcop-king",
-          "productId": "prod-protector-copper",
-          "sku": "KAMAAR-PROTCOP-KNG",
-          "sizeName": "King",
-          "dimensions": "183cm x 190cm x 40cm",
-          "priceSen": 26900,
-          "compareAtPriceSen": 36900,
-          "stockQuantity": 40,
-          "leadTimeDays": 1,
-          "isActive": true
         }
       ],
       "images": [
         {
-          "id": "img-protcop-1",
-          "productId": "prod-protector-copper",
-          "imageUrl": "/images/products/protector-copper-hypo.jpg",
-          "altText": "Kamaar Copper Shield Anti-Bacterial Mattress Protector",
+          "id": "img-sarung-1",
+          "productId": "prod-sarung-toto-berzip",
+          "imageUrl": "/images/company/profil-syarikat-cover.jpg",
+          "altText": "Sarung Tilam Toto Berzip KAMAAR",
           "displayOrder": 1,
           "isPrimary": true
         }
       ],
-      "createdAt": "2026-09-22T00:00:00Z",
-      "updatedAt": "2026-09-30T00:00:00Z"
+      "createdAt": "2026-09-01T00:00:00Z",
+      "updatedAt": "2026-10-07T00:00:00Z"
     },
     {
-      "id": "prod-topper-hybrid-micro",
-      "name": "Kamaar CloudRest Hybrid Micro-Pocket Spring Topper (8cm)",
-      "slug": "kamaar-cloudrest-hybrid-micro-spring-topper",
-      "subtitle": "Dual-Tier Comfort: 1,200 Micro Pocket Springs & 100% Natural Latex",
-      "description": "The pinnacle of topper luxury. An 8cm grand profile combining 1,200 responsive micro-springs for zero partner disturbance with a plush layer of 100% organic Malaysian latex.",
-      "shortDescription": "8cm dual-tier topper with 1,200 micro-springs and 100% pure organic latex.",
-      "categoryId": "cat-toppers",
-      "productType": "topper",
-      "material": "Hybrid Pocket Spring",
-      "firmness": "Plush Medium",
-      "firmnessScale": 4,
-      "thicknessCm": 8,
-      "warrantyYears": 5,
-      "trialNights": 30,
-      "features": [
-        "1,200 Pocket Micro-Springs for dynamic contouring",
-        "4cm 100% Pure Malaysian Natural Latex top comfort slab",
-        "Double gold-piped tailored border with luxury embroidery",
-        "Zero partner disturbance & total pressure relief"
-      ],
-      "layers": [],
-      "specifications": {
-        "Profile Height": "8 cm Grand Depth",
-        "Comfort Layer": "4cm 100% Pure Natural Latex",
-        "Support Layer": "4cm High-Tensile Micro Pocket Springs",
-        "Outer Cover": "Organic Belgian Jacquard Cotton"
-      },
-      "faq": [],
-      "status": "published",
-      "isFeatured": true,
-      "variants": [
-        {
-          "id": "var-tophyb-queen",
-          "productId": "prod-topper-hybrid-micro",
-          "sku": "KAMAAR-TOPHYB-QEN",
-          "sizeName": "Queen",
-          "dimensions": "152cm x 190cm x 8cm",
-          "priceSen": 129900,
-          "compareAtPriceSen": 169900,
-          "stockQuantity": 15,
-          "leadTimeDays": 1,
-          "isActive": true
-        },
-        {
-          "id": "var-tophyb-king",
-          "productId": "prod-topper-hybrid-micro",
-          "sku": "KAMAAR-TOPHYB-KNG",
-          "sizeName": "King",
-          "dimensions": "183cm x 190cm x 8cm",
-          "priceSen": 159900,
-          "compareAtPriceSen": 199900,
-          "stockQuantity": 12,
-          "leadTimeDays": 1,
-          "isActive": true
-        }
-      ],
-      "images": [
-        {
-          "id": "img-tophyb-1",
-          "productId": "prod-topper-hybrid-micro",
-          "imageUrl": "/images/products/topper-hybrid-micro.jpg",
-          "altText": "Kamaar CloudRest Hybrid Micro-Pocket Spring Topper (8cm)",
-          "displayOrder": 1,
-          "isPrimary": true
-        }
-      ],
-      "createdAt": "2026-09-24T00:00:00Z",
-      "updatedAt": "2026-09-30T00:00:00Z"
-    },
-    {
-      "id": "prod-bedframe-grand",
-      "name": "Kamaar Grand Tufted Upholstered Bedframe",
-      "slug": "lena-grand-tufted-upholstered-bedframe",
-      "subtitle": "Kiln-Dried Malaysian Hardwood with Belgian Linen Upholstery",
-      "description": "Built with solid kiln-dried Malaysian tropical hardwood for zero creaking and reinforced load capacity. Featuring a handcrafted deep-tufted headboard upholstered in water-repellent Belgian linen fabric.",
-      "shortDescription": "Solid Malaysian hardwood upholstered bedframe with luxury tufted wingback headboard.",
-      "categoryId": "cat-bedframes",
-      "productType": "bedframe",
-      "material": "Orthopaedic Support",
-      "warrantyYears": 10,
-      "trialNights": 30,
-      "features": [
-        "Solid Kiln-Dried Tropical Hardwood frame",
-        "Water & stain-resistant Belgian linen",
-        "Solid plywood flat divan support (ideal for latex mattresses)"
-      ],
-      "layers": [],
-      "specifications": {
-        "Frame Material": "Kiln-Dried Solid Hardwood",
-        "Upholstery": "Belgian Linen Fabric",
-        "Warranty": "10 Years on Frame"
-      },
-      "faq": [
-        {
-          "question": "Is this bedframe suitable for heavy latex mattresses?",
-          "answer": "Yes. It features reinforced center support legs and a solid flat divan base designed specifically for heavy latex mattresses."
-        }
-      ],
-      "status": "published",
-      "isFeatured": true,
-      "variants": [
-        {
-          "id": "var-bf-queen",
-          "productId": "prod-bedframe-grand",
-          "sku": "KAMAAR-BF-QEN",
-          "sizeName": "Queen",
-          "dimensions": "162cm x 215cm x 125cm",
-          "priceSen": 269900,
-          "compareAtPriceSen": 329900,
-          "stockQuantity": 7,
-          "leadTimeDays": 7,
-          "isActive": true
-        },
-        {
-          "id": "var-bf-king",
-          "productId": "prod-bedframe-grand",
-          "sku": "KAMAAR-BF-KNG",
-          "sizeName": "King",
-          "dimensions": "193cm x 215cm x 125cm",
-          "priceSen": 319900,
-          "compareAtPriceSen": 389900,
-          "stockQuantity": 5,
-          "leadTimeDays": 7,
-          "isActive": true
-        }
-      ],
-      "images": [
-        {
-          "id": "img-bf-1",
-          "productId": "prod-bedframe-grand",
-          "imageUrl": "https://images.unsplash.com/photo-1505693416388-ac5ce068fe85?auto=format&fit=crop&w=1000&q=80",
-          "altText": "Kamaar Grand Tufted Upholstered Bedframe",
-          "displayOrder": 1,
-          "isPrimary": true
-        }
-      ],
-      "createdAt": "2026-09-19T00:00:00Z",
-      "updatedAt": "2026-09-30T00:00:00Z"
-    },
-    {
-      "id": "prod-linen-1000tc",
-      "name": "Kamaar 1000TC Organic Bamboo Cotton Sheet Set",
-      "slug": "lena-1000tc-organic-bamboo-sheet-set",
-      "subtitle": "Silky Sateen Weave with Fitted Sheet, Duvet Cover & 2 Pillowcases",
-      "description": "Experience silky softness cooler than Egyptian cotton. Spun from organic bamboo viscose and long-staple cotton with a 1,000 thread count sateen weave.",
-      "shortDescription": "1,000 thread count organic bamboo cotton bedding set with 40cm extra-deep fitted pocket.",
-      "categoryId": "cat-bedding",
-      "productType": "bedding",
-      "material": "100% Natural Latex",
+      "id": "prod-pakej-borong-10set",
+      "name": "Pakej Tempahan Pukal Asrama & Homestay (Jualan Gudang)",
+      "slug": "pakej-pukal-asrama-homestay",
+      "subtitle": "Harga Borong Terus Kilang • Termasuk Tilam + Bantal Gebu",
+      "description": "Pakej jualan gudang paling jimat untuk pengusaha asrama sekolah, tahfiz, homestay, atau kem latihan. Jimat sehingga ratusan ringgit bila membeli terus dari kilang pengeluar Tunas Sinar Jaya di Tasek Gelugor.",
+      "shortDescription": "Pakej borong jualan gudang terus dari kilang untuk homestay dan asrama.",
+      "categoryId": "cat-borong-gudang",
+      "productType": "mattress",
+      "material": "Tilam & Bantal Lengkap Terus Kilang",
       "warrantyYears": 1,
-      "trialNights": 30,
+      "trialNights": 14,
       "features": [
-        "1,000 Thread Count Organic Bamboo Viscose & Cotton",
-        "Naturally thermal regulating & hypoallergenic",
-        "40cm extra deep mattress pocket"
+        "Harga borong jimat gila terus dari kilang",
+        "Termasuk pakej tilam bujang/toto dan bantal tidur gebu",
+        "Boleh runding penghantaran lori terus ke lokasi anda",
+        "Sokongan invois rasmi syarikat untuk tuntutan pentadbiran"
       ],
       "layers": [],
       "specifications": {
-        "Thread Count": "1,000 TC",
-        "Composition": "60% Bamboo Viscose, 40% Long-Staple Cotton",
-        "Includes": "1 Fitted Sheet, 1 Duvet Cover, 2 Pillowcases"
+        "Pakej": "10 Set Lengkap (10 Tilam + 10 Bantal Gebu)",
+        "Pengeluar": "Tunas Sinar Jaya Enterprise (Tasek Gelugor)",
+        "Pesanan Khas": "WhatsApp 011-6444 7908"
       },
       "faq": [],
       "status": "published",
       "isFeatured": true,
       "variants": [
         {
-          "id": "var-lin-queen",
-          "productId": "prod-linen-1000tc",
-          "sku": "KAMAAR-LIN-QEN",
-          "sizeName": "Queen",
-          "dimensions": "152cm x 190cm x 40cm",
-          "priceSen": 38900,
-          "compareAtPriceSen": 48900,
-          "stockQuantity": 25,
-          "leadTimeDays": 1,
+          "id": "var-borong-10set",
+          "productId": "prod-pakej-borong-10set",
+          "sku": "TSJ-BORONG-10",
+          "sizeName": "Pakej 10 Set Lengkap",
+          "dimensions": "10 Tilam + 10 Bantal",
+          "priceSen": 65000,
+          "compareAtPriceSen": 85000,
+          "stockQuantity": 20,
+          "leadTimeDays": 3,
           "isActive": true
         },
         {
-          "id": "var-lin-king",
-          "productId": "prod-linen-1000tc",
-          "sku": "KAMAAR-LIN-KNG",
-          "sizeName": "King",
-          "dimensions": "183cm x 190cm x 40cm",
-          "priceSen": 42900,
-          "compareAtPriceSen": 52900,
-          "stockQuantity": 20,
-          "leadTimeDays": 1,
+          "id": "var-borong-20set",
+          "productId": "prod-pakej-borong-10set",
+          "sku": "TSJ-BORONG-20",
+          "sizeName": "Pakej 20 Set Lengkap (Super Jimat)",
+          "dimensions": "20 Tilam + 20 Bantal",
+          "priceSen": 120000,
+          "compareAtPriceSen": 170000,
+          "stockQuantity": 10,
+          "leadTimeDays": 3,
           "isActive": true
         }
       ],
       "images": [
         {
-          "id": "img-lin-1",
-          "productId": "prod-linen-1000tc",
-          "imageUrl": "https://images.unsplash.com/photo-1522771739844-6a9f6d5f14af?auto=format&fit=crop&w=1000&q=80",
-          "altText": "1000TC Organic Bamboo Cotton Sheet Set",
+          "id": "img-borong-1",
+          "productId": "prod-pakej-borong-10set",
+          "imageUrl": "/images/company/misi-visi-jualan-gudang.jpg",
+          "altText": "Jualan Gudang Tekstil Tunas Sinar Jaya",
           "displayOrder": 1,
           "isPrimary": true
         }
       ],
-      "createdAt": "2026-09-20T00:00:00Z",
-      "updatedAt": "2026-09-30T00:00:00Z"
+      "createdAt": "2026-09-01T00:00:00Z",
+      "updatedAt": "2026-10-07T00:00:00Z"
     }
   ],
   "coupons": [
     {
-      "id": "coup-kamaarwelcome",
-      "code": "KAMAARWELCOME",
-      "description": "10% Welcome Discount for new customers on orders over RM1,000",
-      "discountType": "percentage",
-      "discountValue": 10,
-      "minSpendSen": 100000,
-      "maxDiscountSen": 50000,
-      "usageLimit": 500,
-      "usageCount": 14,
-      "perCustomerLimit": 1,
+      "id": "coup-kamaar5",
+      "code": "KAMAAR5",
+      "description": "Baucar diskaun RM5 untuk pembelian tilam toto & bantal",
+      "discountType": "fixed_amount",
+      "discountValue": 500,
+      "minSpendSen": 5000,
+      "usageLimit": 1000,
+      "usageCount": 15,
+      "perCustomerLimit": 2,
       "startsAt": "2026-01-01T00:00:00Z",
       "endsAt": "2026-12-31T23:59:59Z",
       "isActive": true,
       "showOnHomepage": true,
       "featuredOrder": 1,
-      "customTitle": "10% Mattress Privilege",
-      "customBadge": "10% OFF",
-      "customerRestriction": "first_time",
-      "applicableCategory": "mattress"
-    },
-    {
-      "id": "coup-kamaar100",
-      "code": "KAMAAR100",
-      "description": "RM100 Grand Atelier Launch Privileges on mattress orders above RM1,000",
-      "discountType": "fixed_amount",
-      "discountValue": 10000,
-      "minSpendSen": 100000,
-      "usageLimit": 1000,
-      "usageCount": 5,
-      "perCustomerLimit": 1,
-      "startsAt": "2026-01-01T00:00:00Z",
-      "endsAt": "2026-12-31T23:59:59Z",
-      "isActive": true,
-      "showOnHomepage": true,
-      "featuredOrder": 2,
-      "customTitle": "Instant RM100.00 Voucher",
-      "customBadge": "RM100.00 OFF",
+      "customTitle": "Diskaun Pelanggan Baharu RM5",
+      "customBadge": "RM5 OFF",
       "customerRestriction": "all",
-      "applicableCategory": "mattress"
+      "applicableCategory": "all"
     },
     {
-      "id": "coup-welcome",
-      "code": "LENAWELCOME",
-      "description": "10% Welcome Discount for new customers on orders over RM1,000",
-      "discountType": "percentage",
-      "discountValue": 10,
-      "minSpendSen": 100000,
-      "maxDiscountSen": 50000,
-      "usageLimit": 500,
-      "usageCount": 15,
-      "perCustomerLimit": 1,
-      "startsAt": "2026-01-01T00:00:00Z",
-      "endsAt": "2026-12-31T23:59:59Z",
-      "isActive": true,
-      "showOnHomepage": true,
-      "featuredOrder": 3,
-      "customTitle": "10% Mattress Privilege",
-      "customBadge": "10% OFF",
-      "customerRestriction": "first_time",
-      "applicableCategory": "mattress"
-    },
-    {
-      "id": "coup-tier100",
-      "code": "TIER100",
-      "description": "RM100 Instant Cash Voucher on mattress purchases above RM1,500",
+      "id": "coup-kamaar10",
+      "code": "KAMAAR10",
+      "description": "Potongan RM10 untuk pesanan melebihi RM100",
       "discountType": "fixed_amount",
-      "discountValue": 10000,
-      "minSpendSen": 150000,
-      "usageLimit": 300,
+      "discountValue": 1000,
+      "minSpendSen": 10000,
+      "usageLimit": 500,
       "usageCount": 22,
       "perCustomerLimit": 1,
       "startsAt": "2026-01-01T00:00:00Z",
       "endsAt": "2026-12-31T23:59:59Z",
       "isActive": true,
       "showOnHomepage": true,
-      "featuredOrder": 4,
-      "customTitle": "Instant RM100.00 Voucher",
-      "customBadge": "RM100.00 OFF",
-      "customerRestriction": "all",
-      "applicableCategory": "mattress"
-    },
-    {
-      "id": "coup-freeship",
-      "code": "FREESHIP",
-      "description": "Complimentary Shipping Voucher on any order across Malaysia",
-      "discountType": "free_shipping",
-      "discountValue": 0,
-      "minSpendSen": 0,
-      "usageLimit": 1000,
-      "usageCount": 37,
-      "perCustomerLimit": 2,
-      "startsAt": "2026-01-01T00:00:00Z",
-      "endsAt": "2026-12-31T23:59:59Z",
-      "isActive": true,
-      "showOnHomepage": false,
-      "featuredOrder": 99,
+      "featuredOrder": 2,
+      "customTitle": "Baucar Istimewa RM10",
+      "customBadge": "RM10 OFF",
       "customerRestriction": "all",
       "applicableCategory": "all"
     },
     {
-      "id": "coup-vip15",
-      "code": "SLEEPVIP",
-      "description": "15% Privilege Discount for premium mattress purchases above RM3,000",
-      "discountType": "percentage",
-      "discountValue": 15,
-      "minSpendSen": 300000,
-      "maxDiscountSen": 80000,
-      "usageLimit": 100,
+      "id": "coup-borong50",
+      "code": "BORONGVIP",
+      "description": "Diskaun borong khas RM50 untuk tempahan melebihi RM500",
+      "discountType": "fixed_amount",
+      "discountValue": 5000,
+      "minSpendSen": 50000,
+      "usageLimit": 200,
       "usageCount": 8,
       "perCustomerLimit": 1,
       "startsAt": "2026-01-01T00:00:00Z",
       "endsAt": "2026-12-31T23:59:59Z",
       "isActive": true,
-      "showOnHomepage": false,
-      "featuredOrder": 99,
+      "showOnHomepage": true,
+      "featuredOrder": 3,
+      "customTitle": "Diskaun Borong Kilang RM50",
+      "customBadge": "RM50 OFF",
+      "customerRestriction": "all",
+      "applicableCategory": "all"
+    },
+    {
+      "id": "coup-freeship",
+      "code": "FREESHIP",
+      "description": "Penghantaran Percuma Semenanjung Malaysia",
+      "discountType": "free_shipping",
+      "discountValue": 0,
+      "minSpendSen": 0,
+      "usageLimit": 1000,
+      "usageCount": 45,
+      "perCustomerLimit": 3,
+      "startsAt": "2026-01-01T00:00:00Z",
+      "endsAt": "2026-12-31T23:59:59Z",
+      "isActive": true,
+      "showOnHomepage": true,
+      "featuredOrder": 4,
+      "customTitle": "Penghantaran Percuma",
+      "customBadge": "FREE POSTAGE",
       "customerRestriction": "all",
       "applicableCategory": "all"
     }
@@ -2445,150 +1068,110 @@
   "reviews": [
     {
       "id": "rev-1",
-      "productId": "prod-royal-heritage",
-      "customerName": "Dato’ Farhan & Datin Azira",
+      "productId": "prod-toto-asian-fibre",
+      "customerName": "Kak Siti Noraini (Bertam, Kepala Batas)",
       "rating": 5,
-      "title": "The Best Sleep Investment in 20 Years",
-      "content": "We replaced our imported Italian mattress with the Kamaar Royal Heritage Queen. The difference in temperature regulation in our KL apartment is astonishing. No more waking up with back stiffness.",
+      "title": "Tilam toto sangat gebu dan tebal!",
+      "content": "Beli saiz Queen corak bunga biru. Memang tebal betul, anak-anak suka baring depan TV. Jahitan quilting kemas sangat, tak rugi beli terus dari kilang Tasek Gelugor.",
       "isVerifiedPurchase": true,
       "status": "approved",
       "createdAt": "2026-09-10T14:30:00Z"
     },
     {
       "id": "rev-2",
-      "productId": "prod-royal-heritage",
-      "customerName": "Dr. Jason Lee (Orthopaedic Surgeon)",
+      "productId": "prod-toto-asian-fibre",
+      "customerName": "En. Azman (Pengusaha Homestay Butterworth)",
       "rating": 5,
-      "title": "Unrivalled Spinal Alignment",
-      "content": "As someone who stands 8 hours daily in surgery, lumbar decompression during sleep is critical. The dual-density latex core provides immediate pushback without feeling hard.",
+      "title": "Pilihan terbaik untuk homestay!",
+      "content": "Saya order 5 set tilam toto untuk homestay saya. Tetamu puji selesa bila tidur. Harga memang berpatutan berbanding kedai luar. Servis Tunas Sinar Jaya sangat mesra.",
       "isVerifiedPurchase": true,
       "status": "approved",
-      "createdAt": "2026-09-14T09:15:00Z"
+      "createdAt": "2026-09-15T11:20:00Z"
     },
     {
       "id": "rev-3",
-      "productId": "prod-cool-night",
-      "customerName": "Sarah Chew, Petaling Jaya",
+      "productId": "prod-tilam-lipat-3",
+      "customerName": "Adib Danial (Pelajar USM Pulau Pinang)",
       "rating": 5,
-      "title": "Genuinely cool to the touch!",
-      "content": "My husband is a very hot sleeper. We normally have to blast the air conditioning at 20°C. With this Ice-Silk hybrid, 24°C is comfortably cool. Zero motion transfer when he moves.",
+      "title": "Senang lipat dan jimat ruang bilik sewa",
+      "content": "Beli tilam lipat 3 inci tebal. Memang sedap baring dan sarung berzip senang dibuka bila nak cuci. Penghantaran pun laju.",
       "isVerifiedPurchase": true,
       "status": "approved",
-      "createdAt": "2026-09-18T16:45:00Z"
+      "createdAt": "2026-09-20T16:45:00Z"
     },
     {
       "id": "rev-4",
-      "productId": "prod-ortho-rest",
-      "customerName": "Hj. Zulkifli bin Ismail, Shah Alam",
+      "productId": "prod-bantal-gebu-asian",
+      "customerName": "Puan Halimah (Sungai Petani, Kedah)",
       "rating": 5,
-      "title": "Sangat selesa untuk tulang belakang",
-      "content": "Tilam ini sangat kukuh dan tidak mendap. Selepas 2 minggu tidur, rasa sakit di bahagian pinggang waktu bangun pagi hilang sama sekali. Servis penghantaran sangat memuaskan.",
+      "title": "Bantal empuk tak sakit leher",
+      "content": "Order pakej kombo 4 biji bantal gebu. Sangat puas hati! Fiber penuh tapi tak keras. Bangun pagi rasa segar.",
       "isVerifiedPurchase": true,
       "status": "approved",
-      "createdAt": "2026-09-22T11:20:00Z"
+      "createdAt": "2026-09-24T09:10:00Z"
     }
   ],
   "showrooms": [
     {
-      "id": "sr-bangsar",
-      "name": "Bangsar Flagship Sleep Gallery",
-      "address": "No. 88, Jalan Maarof, Bangsar",
-      "city": "Kuala Lumpur",
-      "state": "WP Kuala Lumpur",
-      "postcode": "59100",
-      "phone": "+603 2284 8899",
-      "openingHours": "Mon - Sun: 10:00 AM - 8:00 PM",
-      "mapUrl": "https://maps.google.com/?q=Jalan+Maarof+Bangsar+Kuala+Lumpur",
-      "imageUrl": "https://images.unsplash.com/photo-1618221195710-dd6b41faaea6?auto=format&fit=crop&w=800&q=80",
-      "displayOrder": 1,
-      "isActive": true
-    },
-    {
-      "id": "sr-damansara",
-      "name": "Damansara Sleep Studio & Sanctuary",
-      "address": "Lot G-22, The Curve, Mutiara Damansara",
-      "city": "Petaling Jaya",
-      "state": "Selangor",
-      "postcode": "47800",
-      "phone": "+603 7722 3344",
-      "openingHours": "Mon - Sun: 10:00 AM - 10:00 PM",
-      "mapUrl": "https://maps.google.com/?q=The+Curve+Mutiara+Damansara",
-      "imageUrl": "https://images.unsplash.com/photo-1616486338812-3dadae4b4ace?auto=format&fit=crop&w=800&q=80",
-      "displayOrder": 2,
-      "isActive": true
-    },
-    {
-      "id": "sr-penang",
-      "name": "Gurney Walk Experience Boutique",
-      "address": "Gurney Walk, 18A Gurney Drive",
-      "city": "George Town",
+      "id": "sr-tasek-gelugor",
+      "name": "Kilang & Stor Jualan Gudang Utama Tunas Sinar Jaya",
+      "address": "7878B Jalan Permatang Berangan",
+      "city": "Tasek Gelugor",
       "state": "Pulau Pinang",
-      "postcode": "10250",
-      "phone": "+604 228 1122",
-      "openingHours": "Mon - Sun: 10:30 AM - 8:30 PM",
-      "mapUrl": "https://maps.google.com/?q=Gurney+Drive+Penang",
-      "imageUrl": "https://images.unsplash.com/photo-1616486338812-3dadae4b4ace?auto=format&fit=crop&w=800&q=80",
-      "displayOrder": 3,
-      "isActive": true
-    },
-    {
-      "id": "sr-jb",
-      "name": "Southkey Megamall Boutique",
-      "address": "Level 2, Mid Valley Southkey, Persiaran Southkey 1",
-      "city": "Johor Bahru",
-      "state": "Johor",
-      "postcode": "80150",
-      "phone": "+607 338 9988",
-      "openingHours": "Mon - Sun: 10:00 AM - 10:00 PM",
-      "mapUrl": "https://maps.google.com/?q=Mid+Valley+Southkey+Johor+Bahru",
-      "imageUrl": "https://images.unsplash.com/photo-1505693416388-ac5ce068fe85?auto=format&fit=crop&w=800&q=80",
-      "displayOrder": 4,
+      "postcode": "13300",
+      "phone": "011-6444 7908",
+      "openingHours": "Isnin - Sabtu: 9:00 AM - 6:00 PM (Ahad: Temujanji Jualan Gudang)",
+      "mapUrl": "https://maps.google.com/?q=7878B+Jalan+Permatang+Berangan+13300+Tasek+Gelugor+Pulau+Pinang",
+      "imageUrl": "/images/company/carta-organisasi-kilang.jpg",
+      "displayOrder": 1,
       "isActive": true
     }
   ],
   "blogPosts": [
     {
       "id": "blog-1",
-      "slug": "natural-latex-vs-memory-foam-malaysia-climate",
-      "title": "100% Natural Latex vs. Memory Foam: Why Natural Latex Thrives in Malaysia",
-      "excerpt": "Understanding thermal conductivity, open-cell airflow, and chemical off-gassing when choosing the ideal mattress for humid tropical climates.",
-      "content": "Malaysia’s tropical warmth presents a unique challenge for restorative sleep: ambient humidity and elevated nocturnal temperatures frequently disrupt deep delta-wave sleep. Traditional memory foam consists of petroleum-derived polyurethane with closed cell structures that inherently trap radiant body heat, creating uncomfortable 'sweat pockets'.\n\nIn contrast, 100% pure organic latex harvested from Malaysian Hevea brasiliensis trees features millions of microscopic interconnected pinholes. This cellular matrix breathes continuously, allowing convection currents to draw excess heat away from your skin. Furthermore, pure natural latex requires zero toxic chemical foaming agents, ensuring that your bedroom sanctuary remains completely free of volatile organic compounds (VOCs).",
-      "author": "Dr. Aaron Lim (Sleep Ergonomics Consultant)",
-      "imageUrl": "https://images.unsplash.com/photo-1582582621959-48d27397dc69?auto=format&fit=crop&w=1000&q=80",
+      "slug": "panduan-penjagaan-tilam-toto-dan-bantal-fiber",
+      "title": "Panduan Penjagaan Tilam Toto & Bantal Fiber Agar Kekal Gebu",
+      "excerpt": "Petua mudah daripada tukang jahit kilang kami untuk mengekalkan keempukan dan kebersihan tilam toto seisi keluarga.",
+      "content": "Tilam toto Asian Polyester Fibre keluaran Tunas Sinar Jaya direka untuk ketahanan maksimum. Untuk memastikan ia sentiasa empuk dan bersih:\n1. Jemur di bawah cahaya matahari pagi setiap 2 minggu untuk mematikan hama dan mengembalikan kegebuan fiber.\n2. Gunakan sarung berzip gantian untuk memudahkan cucian sarung luar.\n3. Elakkan melipat tilam toto secara kasar; lebih baik digulung secara kemas bagi menjaga struktur jahitan quilting.",
+      "author": "Tunas Sinar Jaya Enterprise",
+      "imageUrl": "/images/company/profil-syarikat-cover.jpg",
       "tags": [
-        "Sleep Science",
-        "Natural Latex",
-        "Health"
+        "Panduan",
+        "Tilam Toto",
+        "Tips"
       ],
       "publishedAt": "2026-09-15T09:00:00Z",
       "isPublished": true
     },
     {
       "id": "blog-2",
-      "slug": "the-orthopaedic-guide-to-cervical-and-lumbar-support",
-      "title": "The Orthopaedic Guide: How Mattress Firmness Influences Spinal Curvature",
-      "excerpt": "A clinical examination of lordotic and kyphotic spine angles during lateral and supine sleeping postures.",
-      "content": "A common misconception among mattress shoppers is that 'firmer is always better for back pain'. In reality, an excessively rigid surface forces the shoulders and hips to push the thoracic and lumbar spine into unnatural lateral deviation.\n\nOptimal spinal health requires progressive resistance: a responsive upper comfort cushion that gently accommodates the natural curvature of the hips, paired with an immovable dense core that prevents lumbar collapse. KAMAAR SLEEP mattresses achieve this harmony through multi-density zonal latex cores tested to maintain the neutral S-curve of your spine whether you sleep on your back, side, or stomach.",
-      "author": "Clara Wong (Physiotherapist & Ergonomist)",
-      "imageUrl": "https://images.unsplash.com/photo-1598928506311-c55ded91a20c?auto=format&fit=crop&w=1000&q=80",
+      "slug": "kenapa-tilam-lipat-3-pilihan-terbaik-asrama-homestay",
+      "title": "Kelebihan Tilam Lipat 3 Berzip Untuk Asrama & Homestay",
+      "excerpt": "Mengapa pengusaha homestay dan warden asrama lebih gemar memilih tilam lipat berbanding tilam span biasa.",
+      "content": "Tilam lipat 3 bahagian memberikan fleksibiliti tinggi kepada pemilik homestay dan asrama. Bila tidak digunakan, ia boleh dilipat dan disusun rapi, menjimatkan ruang bilik. Tambahan pula, dengan sarung berzip, kebersihan tilam lebih terjamin kerana sarung boleh dicuci mesin.",
+      "author": "Hazizi Md Rashid (Pengurus Operasi)",
+      "imageUrl": "/images/company/aktiviti-pengilangan.jpg",
       "tags": [
-        "Back Health",
-        "Ergonomics"
+        "Asrama",
+        "Homestay",
+        "Tilam Lipat"
       ],
       "publishedAt": "2026-09-20T10:00:00Z",
       "isPublished": true
     },
     {
       "id": "blog-3",
-      "slug": "maintaining-your-natural-latex-mattress-12-year-guide",
-      "title": "The 12-Year Guide: Caring for Your Natural Latex Mattress",
-      "excerpt": "Simple maintenance rituals, rotation schedules, and bedframe foundation guidelines to maximize your mattress longevity.",
-      "content": "Pure organic natural latex is naturally resilient against dust-mites, mildew, and structural deformation. With sensible care, a genuine natural latex mattress can comfortably last 15 to 20 years.\n\nKey maintenance principles:\n1. Foundation: Use a solid flat divan base or slatted bedframe with slat spacing no wider than 7.5cm.\n2. Rotation: Rotate your mattress 180 degrees head-to-toe every 3 to 6 months for the first year to ensure symmetrical settling.\n3. Sunlight: Never expose raw latex cores to direct outdoor UV radiation, which oxidizes natural rubber. Clean with gentle spot damp-wiping only.\n4. Protection: Always use a breathable waterproof bamboo protector to shield against moisture ingress.",
-      "author": "KAMAAR Sleep Atelier Master Craftsman",
-      "imageUrl": "https://images.unsplash.com/photo-1631049307264-da0ec9d70304?auto=format&fit=crop&w=1000&q=80",
+      "slug": "profil-pengilang-tekstil-bumiputera-tasek-gelugor",
+      "title": "Menjahit Kepercayaan, Menyulam Masa Depan di Tasek Gelugor",
+      "excerpt": "Perjalanan Tunas Sinar Jaya Enterprise dalam menghasilkan produk jahitan tekstil berkualiti tinggi dengan harga berpatutan.",
+      "content": "Bermula dari bengkel jahitan tempatan, Tunas Sinar Jaya Enterprise kini berkembang dengan unit pengeluaran yang sistematik merangkumi Unit Potong Kain, Unit Jahitan, Unit Bantal & Tilam, serta Stor Produk Siap. Komitmen kami adalah menghasilkan produk tekstil Bumiputera yang berkualiti tinggi dan berpatutan untuk seluruh rakyat Malaysia.",
+      "author": "Hezwan Md Rashid (Bahagian Pentadbiran)",
+      "imageUrl": "/images/company/carta-organisasi-kilang.jpg",
       "tags": [
-        "Care Guide",
-        "Longevity"
+        "Profil Syarikat",
+        "Tasek Gelugor",
+        "Tekstil"
       ],
       "publishedAt": "2026-09-25T11:00:00Z",
       "isPublished": true
@@ -2600,20 +1183,23 @@
   "appointments": [],
   "siteSettings": {
     "brandName": "KAMAAR Beddings",
-    "logoText": "KAMAAR Beddings",
-    "tagline": "Luxury Handcrafted Organic Latex & Hybrid Beddings Atelier",
+    "logoText": "TUNAS SINAR JAYA ENTERPRISE (KAMAAR BEDDINGS)",
+    "tagline": "Kualiti Jahitan, Kepuasan Terjamin • Menjahit Kepercayaan, Menyulam Masa Depan",
     "currency": "MYR",
-    "contactEmail": "care@kamaarbeddings.com.my",
-    "contactPhone": "+603 7722 1199",
-    "whatsappNumber": "+60123456789",
-    "announcementText": "Complimentary White-Glove Mattress Delivery & Room Setup Across Peninsular Malaysia",
-    "announcementUrl": "/collections/mattress",
+    "currencySymbol": "RM",
+    "contactEmail": "tunassinar@gmail.com",
+    "contactPhone": "011-6444 7908",
+    "whatsappNumber": "+601164447908",
+    "address": "7878B Jalan Permatang Berangan, 13300 Tasek Gelugor SPU, Pulau Pinang",
+    "announcementText": "Jualan Gudang Terus Dari Kilang • Penghantaran ke Seluruh Semenanjung Malaysia",
+    "announcementUrl": "/collections/tilam-toto",
     "isAnnouncementActive": true,
-    "freeShippingThresholdSen": 50000,
-    "peninsularShippingSen": 3500,
-    "eastMalaysiaShippingSen": 28000,
-    "warrantyDefaultYears": 10,
-    "trialDefaultNights": 100
+    "announcementActive": true,
+    "freeShippingThresholdSen": 20000,
+    "peninsularShippingSen": 1500,
+    "eastMalaysiaShippingSen": 4500,
+    "warrantyDefaultYears": 1,
+    "trialDefaultNights": 14
   },
   "staffMembers": [
     {
@@ -2625,66 +1211,50 @@
       "createdAt": "2026-09-01T00:00:00Z"
     },
     {
-      "id": "staff-1",
-      "email": "owner@kamaarbeddings.com",
-      "name": "Kamaar Admin",
+      "id": "staff-hazizi",
+      "email": "hazizi@kamaar.my",
+      "name": "Hazizi Md Rashid",
       "role": "owner",
       "isActive": true,
       "createdAt": "2026-09-01T00:00:00Z"
     },
     {
-      "id": "staff-1-legacy",
-      "email": "owner@kamaarbeddings.com",
-      "name": "Kamaar Admin",
+      "id": "staff-hezwan",
+      "email": "hezwan@kamaar.my",
+      "name": "Hezwan Md Rashid",
       "role": "owner",
       "isActive": true,
       "createdAt": "2026-09-01T00:00:00Z"
     },
     {
-      "id": "staff-2",
-      "email": "catalog@kamaarbeddings.com",
-      "name": "Kamaar Catalog Manager",
+      "id": "staff-elias",
+      "email": "elias@kamaar.my",
+      "name": "Elias Mat Rashid",
       "role": "catalog_manager",
       "isActive": true,
       "createdAt": "2026-09-01T00:00:00Z"
     },
     {
-      "id": "staff-2-legacy",
-      "email": "catalog@kamaarbeddings.com",
-      "name": "Kamaar Catalog Manager",
-      "role": "catalog_manager",
-      "isActive": true,
-      "createdAt": "2026-09-01T00:00:00Z"
-    },
-    {
-      "id": "staff-3",
-      "email": "orders@kamaarbeddings.com",
-      "name": "Kamaar Order Manager",
+      "id": "staff-chejam",
+      "email": "chejam@kamaar.my",
+      "name": "Che Jam Darus",
       "role": "order_manager",
       "isActive": true,
       "createdAt": "2026-09-01T00:00:00Z"
     },
     {
-      "id": "staff-3-legacy",
-      "email": "orders@kamaarbeddings.com",
-      "name": "Kamaar Order Manager",
+      "id": "staff-yahya",
+      "email": "yahya@kamaar.my",
+      "name": "Yahya Bin Ishak",
+      "role": "content_editor",
+      "isActive": true,
+      "createdAt": "2026-09-01T00:00:00Z"
+    },
+    {
+      "id": "staff-zuki",
+      "email": "zuki@kamaar.my",
+      "name": "Zuki Musa",
       "role": "order_manager",
-      "isActive": true,
-      "createdAt": "2026-09-01T00:00:00Z"
-    },
-    {
-      "id": "staff-4",
-      "email": "editor@kamaarbeddings.com",
-      "name": "Kamaar Content Editor",
-      "role": "content_editor",
-      "isActive": true,
-      "createdAt": "2026-09-01T00:00:00Z"
-    },
-    {
-      "id": "staff-4-legacy",
-      "email": "editor@kamaarbeddings.com",
-      "name": "Kamaar Content Editor",
-      "role": "content_editor",
       "isActive": true,
       "createdAt": "2026-09-01T00:00:00Z"
     }
@@ -3356,113 +1926,88 @@
       "code": "AFF-DANIAL",
       "name": "Ahmad Danial",
       "email": "danial@kamaar.my",
-      "phone": "+60 12-345 6789",
+      "phone": "011-6444 7908",
       "bankName": "Maybank",
       "bankAccountNumber": "164012345678",
       "commissionType": "percentage",
       "commissionRate": 10,
-      "totalSalesCount": 4,
-      "totalSalesRevenueSen": 1319600,
-      "totalCommissionSen": 131960,
+      "totalSalesCount": 15,
+      "totalSalesRevenueSen": 125000,
+      "totalCommissionSen": 12500,
       "isActive": true,
       "createdAt": "2026-08-01T10:00:00Z",
-      "passwordResetMethod": "email",
-      "passwordResetRequestedAt": "2026-10-01T12:03:29.763Z",
-      "passwordResetVerified": false,
-      "passwordResetRequested": false,
-      "accessKey": "kamaar123",
-      "adminNotes": "Kata laluan anda telah diset semula oleh pihak pentadbir KAMAAR berikutan permohonan anda."
-    },
-    {
-      "id": "aff-izzah",
-      "code": "AFF-IZZAH",
-      "name": "Nurul Izzah",
-      "email": "izzah.aff@gmail.com",
-      "phone": "+60 17-889 1234",
-      "bankName": "CIMB Bank",
-      "bankAccountNumber": "7012345678",
-      "commissionType": "percentage",
-      "commissionRate": 8,
-      "totalSalesCount": 2,
-      "totalSalesRevenueSen": 599800,
-      "totalCommissionSen": 47984,
-      "isActive": true,
-      "createdAt": "2026-08-15T14:30:00Z"
-    },
-    {
-      "id": "aff-hafiz",
-      "code": "AFF-HAFIZ",
-      "name": "Hafiz Rozlan",
-      "email": "hafiz.rozlan@yahoo.com",
-      "phone": "+60 19-223 9988",
-      "bankName": "Bank Islam",
-      "bankAccountNumber": "12038010045678",
-      "commissionType": "percentage",
-      "commissionRate": 10,
-      "totalSalesCount": 1,
-      "totalSalesRevenueSen": 289900,
-      "totalCommissionSen": 28990,
-      "isActive": true,
-      "createdAt": "2026-09-01T09:00:00Z"
+      "adminNotes": "Ejen aktif kawasan Seberang Perai & Kedah.",
+      "accessKey": "kamaar123"
     }
   ],
   "websiteConfig": {
     "theme": {
-      "primaryColor": "#1B4D3E",
-      "primaryDarkColor": "#0D2A20",
-      "accentGoldColor": "#C2A649",
+      "primaryColor": "#1E4E8C",
+      "primaryDarkColor": "#13325B",
+      "accentGoldColor": "#B49A58",
       "backgroundColor": "#FFFFFF",
-      "creamColor": "#F3F7F4",
+      "creamColor": "#F4F7FB",
       "textColor": "#0F172A",
-      "saleColor": "#A13D40",
-      "activePreset": "emerald-botanic"
+      "saleColor": "#A13D40"
     },
     "announcement": {
       "enabled": true,
-      "leftBenefit": "Complimentary White-Glove In-Home Setup Across Peninsular Malaysia",
-      "centerText": "Grand Launch Privileges: Enjoy RM100 Off with code",
-      "highlightCode": "KAMAAR100",
-      "url": "/collections/mattress",
-      "rightGuarantee": "10-Year Local Warranty • 100-Night Trial",
-      "bgColor": "#0D2A20",
+      "leftBenefit": "Penghantaran Terus Semenanjung",
+      "centerText": "Jualan Gudang Terus Dari Kilang • Gunakan Kod",
+      "highlightCode": "KAMAAR10",
+      "url": "/collections/tilam-toto",
+      "rightGuarantee": "Kualiti Jahitan Terjamin",
+      "bgColor": "#0D2818",
       "textColor": "#FFFFFF"
+    },
+    "megaMenu": {
+      "enabled": true,
+      "columns": [],
+      "promoCard": {
+        "enabled": true,
+        "badge": "PALING LARISS",
+        "title": "Tilam Toto Kilang",
+        "description": "Asian Polyester Fibre tebal & empuk terus dari kilang Tasek Gelugor.",
+        "buttonText": "Beli Sekarang",
+        "buttonUrl": "/collections/tilam-toto"
+      }
     },
     "hero": {
       "slides": [
         {
           "id": "slide-1",
-          "badge": "100% Malaysian Organic Latex",
-          "title": "Better nights begin with the right mattress.",
-          "subtitle": "Handcrafted with certified organic latex, zero synthetic fillers, and micro-zoned spinal alignment for deep, uninterrupted sleep.",
-          "ctaText": "Explore Mattresses",
-          "ctaLink": "/collections/mattress",
-          "secondaryCtaText": "Take Mattress Finder Quiz",
-          "secondaryCtaLink": "/finder",
-          "imageUrl": "https://images.unsplash.com/photo-1631049307264-da0ec9d70304?auto=format&fit=crop&w=1800&q=85",
+          "badge": "PALING LARISS!!",
+          "title": "Tilam Toto Asian Polyester Fibre Gebu & Tebal",
+          "subtitle": "Mengilang dan memasar produk jahitan tekstil berkualiti tinggi terus dari kilang Tasek Gelugor. Keselesaan anda keutamaan kami.",
+          "ctaText": "Beli Tilam Toto Sekarang",
+          "ctaLink": "/collections/tilam-toto",
+          "secondaryCtaText": "Lihat Profil Syarikat",
+          "secondaryCtaLink": "/profil",
+          "imageUrl": "/images/company/profil-syarikat-cover.jpg",
           "isActive": true
         },
         {
           "id": "slide-2",
-          "badge": "Sub-Zero Active Cooling",
-          "title": "Engineered for tropical Malaysian nights.",
-          "subtitle": "Combining Japanese Ice-Silk filaments with aerated pinhole natural latex and 7-zone pocket springs for continuous cooling rest.",
-          "ctaText": "Discover Cool Night Hybrid",
-          "ctaLink": "/products/lena-cool-night-hybrid-mattress",
-          "secondaryCtaText": "View All Collections",
-          "secondaryCtaLink": "/collections/mattress",
-          "imageUrl": "https://images.unsplash.com/photo-1616046229478-9901c5536a45?auto=format&fit=crop&w=1800&q=85",
+          "badge": "PENGILANG BUMIPUTERA",
+          "title": "Kualiti Jahitan, Kepuasan Pelanggan Terjamin",
+          "subtitle": "Proses pengeluaran sistematik merangkumi Unit Potong Kain, Unit Jahitan, Unit Bantal & Tilam, serta Stor Produk Siap.",
+          "ctaText": "Lihat Aktiviti Kilang",
+          "ctaLink": "/profil",
+          "secondaryCtaText": "Hubungi Kami",
+          "secondaryCtaLink": "/contact",
+          "imageUrl": "/images/company/aktiviti-pengilangan.jpg",
           "isActive": true
         },
         {
           "id": "slide-3",
-          "badge": "5-Star Presidential Suite Comfort",
-          "title": "The Sovereign Luxe Grand Masterpiece.",
-          "subtitle": "Multi-tiered 34cm dual-spring architecture, plush Talalay latex pillowtop, and Belgian silk upholstery built for lifetime indulgence.",
-          "ctaText": "Experience Sovereign Luxe",
-          "ctaLink": "/products/lena-sovereign-luxe-mattress",
-          "secondaryCtaText": "Book Showroom Trial",
-          "secondaryCtaLink": "/showrooms",
-          "imageUrl": "https://images.unsplash.com/photo-1578683010236-d716f9a3f461?auto=format&fit=crop&w=1800&q=85",
+          "badge": "HARGA BORONG GUDANG",
+          "title": "Jualan Gudang & Tempahan Pukal Asrama / Homestay",
+          "subtitle": "Dapatkan harga kilang paling berpatutan untuk tilam bujang asrama, tilam lipat, bantal tidur gebu, dan comforter berkualiti.",
+          "ctaText": "Terokai Pakej Borong",
+          "ctaLink": "/collections/borong-gudang",
+          "secondaryCtaText": "WhatsApp 011-6444 7908",
+          "secondaryCtaLink": "https://wa.me/601164447908",
+          "imageUrl": "/images/company/misi-visi-jualan-gudang.jpg",
           "isActive": true
         }
       ]
@@ -3472,262 +2017,98 @@
         {
           "id": "reassure-1",
           "icon": "sparkles",
-          "title": "100% Pure Natural Latex",
-          "subtitle": "Sustainably harvested certified Malaysian rubber sap with zero chemical off-gassing."
+          "title": "Kualiti Terjamin",
+          "subtitle": "Kawalan mutu ketat, jahitan kemas dan isian Asian Polyester Fibre berkualiti."
         },
         {
           "id": "reassure-2",
           "icon": "trial",
-          "title": "100-Night In-Home Trial",
-          "subtitle": "Experience true spinal rest in your bedroom. 100% money-back guarantee with zero restocking fee."
+          "title": "Pengeluaran Cekap",
+          "subtitle": "Tenaga kerja mahir dengan fasiliti jahitan dan quilting kilang sendiri."
         },
         {
           "id": "reassure-3",
           "icon": "shield",
-          "title": "10-Year Local Warranty",
-          "subtitle": "Comprehensive structural sag and spring resilience protection backed directly by our Malaysian atelier."
+          "title": "Harga Berpatutan",
+          "subtitle": "Harga terus dari kilang tanpa orang tengah untuk penjimatan maksimum."
         },
         {
           "id": "reassure-4",
           "icon": "truck",
-          "title": "White-Glove Delivery & Setup",
-          "subtitle": "Carefully unpacked, assembled in your bedroom of choice, with old mattress removal available."
+          "title": "Komitmen Pelanggan",
+          "subtitle": "Penghantaran pantas, perkhidmatan mesra dan jaminan kepuasan pelanggan."
         }
       ]
     },
     "promotionsBanner": {
       "enabled": true,
-      "badge": "TAWARAN EKSKLUSIF ATELIER",
-      "headline": "Tingkatkan Mutu Tidur Anda dengan Baucar Bernilai RM100",
-      "description": "Nikmati diskaun istimewa untuk setiap pembelian tilam siri KAMAAR Ortho Rest, Nature First, dan Sovereign Luxe bulan ini.",
-      "couponCode": "KAMAAR100",
-      "imageUrl": "https://images.unsplash.com/photo-1505693416388-ac5ce068fe85?auto=format&fit=crop&w=1200&q=80",
-      "ctaText": "Tebus Baucar Sekarang",
-      "ctaLink": "/collections/mattress"
+      "badge": "PROMOSI JUALAN GUDANG",
+      "headline": "Dapatkan Tilam Toto & Bantal Gebu Terus Dari Kilang",
+      "description": "Nikmati harga istimewa dan baucar diskaun KAMAAR10 untuk pesanan dalam talian minggu ini.",
+      "couponCode": "KAMAAR10",
+      "imageUrl": "/images/company/profil-syarikat-cover.jpg",
+      "ctaText": "Beli Sekarang",
+      "ctaLink": "/collections/tilam-toto"
     },
     "storySection": {
-      "badge": "KAMAAR SLEEP ATELIER",
-      "headline": "Seni Pembuatan Tilam Mewah Semula Jadi Malaysia",
-      "paragraph1": "Di KAMAAR, kami mempercayai bahawa tidur yang lena adalah asas kepada kehidupan yang bertenaga. Setiap tilam direka dengan teliti menggunakan 100% susu getah asli organik dari ladang terpilih di Malaysia.",
-      "paragraph2": "Digabungkan dengan teknologi 7-Zon Poket Spring dan fabrik Ice-Silk Jepun, kami membawakan keselesaan bertaraf suite hotel 5-bintang terus ke kamar tidur anda.",
-      "imageUrl": "https://images.unsplash.com/photo-1540518614846-7ede433c4ef0?auto=format&fit=crop&w=1000&q=80",
-      "signatureTitle": "Tukang Mahir Atelier",
-      "signatureSub": "KAMAAR Sleep Sanctuary Malaysia"
+      "badge": "TUNAS SINAR JAYA ENTERPRISE",
+      "headline": "Mengilang & Memasar Produk Jahitan Tekstil Berkualiti",
+      "paragraph1": "TUNAS SINAR JAYA ENTERPRISE merupakan sebuah syarikat tempatan yang terlibat dalam pengilangan dan pemasaran produk jahitan tekstil di Tasek Gelugor, Pulau Pinang. Berbekalkan pengalaman, tenaga kerja mahir serta komitmen terhadap kualiti, kami menghasilkan Tilam Toto, tilam lipat, bantal gebu dan cadar pada harga kompetitif.",
+      "paragraph2": "Kami memberi penekanan kepada penggunaan bahan berkualiti, proses pengeluaran yang sistematik serta kawalan mutu yang ketat bagi memastikan setiap produk mencapai standard yang tinggi. Moto kami: \"Kualiti Jahitan, Kepuasan Terjamin\" — Menjahit Kepercayaan, Menyulam Masa Depan.",
+      "imageUrl": "/images/company/aktiviti-pengilangan.jpg",
+      "signatureTitle": "Hazizi Md Rashid",
+      "signatureSub": "Pengurus Operasi, Tunas Sinar Jaya Enterprise"
     },
     "socialAndContact": {
-      "whatsappNumber": "+60123456789",
-      "phoneDisplay": "+603 7722 1199",
-      "emailDisplay": "care@kamaarbeddings.com.my",
-      "addressDisplay": "KAMAAR Sleep Atelier, Bangsar, 59100 Kuala Lumpur",
-      "instagramUrl": "https://instagram.com",
-      "tiktokUrl": "https://tiktok.com",
-      "facebookUrl": "https://facebook.com"
+      "whatsappNumber": "+601164447908",
+      "phoneDisplay": "011-6444 7908",
+      "emailDisplay": "tunassinar@gmail.com",
+      "addressDisplay": "7878B Jalan Permatang Berangan, 13300 Tasek Gelugor SPU, Pulau Pinang",
+      "instagramUrl": "",
+      "tiktokUrl": "https://www.tiktok.com/@kamaar_shop",
+      "facebookUrl": "https://www.facebook.com"
     },
     "appearance": {
       "enableEntranceAnimations": true,
       "enableFloatingBadges": true,
       "cardBorderRadius": "rounded-2xl"
-    },
-    "megaMenu": {
-      "enabled": true,
-      "columns": [
-        {
-          "id": "col-material",
-          "title": "Shop by Material",
-          "titleBm": "Pilihan Bahan",
-          "items": [
-            {
-              "id": "item-mat-1",
-              "label": "100% Natural Latex",
-              "labelBm": "100% Lateks Semula Jadi",
-              "href": "/collections/mattress?material=latex"
-            },
-            {
-              "id": "item-mat-2",
-              "label": "Pocket Spring Hybrid",
-              "labelBm": "Hibrid Pegas Poket Bebas",
-              "href": "/collections/mattress?material=hybrid"
-            },
-            {
-              "id": "item-mat-3",
-              "label": "High Density Memory Foam",
-              "labelBm": "Busa Memori Berketumpatan Tinggi",
-              "href": "/collections/mattress?material=memory"
-            },
-            {
-              "id": "item-mat-4",
-              "label": "Orthopaedic Spinal Support",
-              "labelBm": "Sokongan Ortopedik Tulang Belakang",
-              "href": "/collections/mattress?material=ortho"
-            }
-          ]
-        },
-        {
-          "id": "col-size",
-          "title": "Shop by Size",
-          "titleBm": "Pilihan Saiz",
-          "items": [
-            {
-              "id": "item-size-1",
-              "label": "Single (91×190cm)",
-              "labelBm": "Bujang / Single (91×190cm)",
-              "href": "/collections/mattress?size=single"
-            },
-            {
-              "id": "item-size-2",
-              "label": "Super Single (107×190cm)",
-              "labelBm": "Super Single (107×190cm)",
-              "href": "/collections/mattress?size=supersingle"
-            },
-            {
-              "id": "item-size-3",
-              "label": "Queen (152×190cm)",
-              "labelBm": "Permaisuri / Queen (152×190cm)",
-              "href": "/collections/mattress?size=queen"
-            },
-            {
-              "id": "item-size-4",
-              "label": "King (183×190cm)",
-              "labelBm": "Raja / King (183×190cm)",
-              "href": "/collections/mattress?size=king"
-            }
-          ]
-        },
-        {
-          "id": "col-firmness",
-          "title": "Shop by Firmness",
-          "titleBm": "Pilihan Ketegasan & Keselesaan",
-          "items": [
-            {
-              "id": "item-firm-1",
-              "label": "Plush & Soft (1-3)",
-              "labelBm": "Lembut Selesa (1-3)",
-              "href": "/collections/mattress?firmness=soft"
-            },
-            {
-              "id": "item-firm-2",
-              "label": "Medium Balanced (4-6)",
-              "labelBm": "Sederhana Seimbang (4-6)",
-              "href": "/collections/mattress?firmness=medium"
-            },
-            {
-              "id": "item-firm-3",
-              "label": "Firm Orthopaedic (7-10)",
-              "labelBm": "Tegas Ortopedik (7-10)",
-              "href": "/collections/mattress?firmness=firm"
-            }
-          ]
-        }
-      ],
-      "promoCard": {
-        "enabled": true,
-        "badge": "Personalized Fit",
-        "title": "Unsure which mattress suits your body?",
-        "description": "Take our 60-second Mattress Finder quiz for personalized firmness recommendations.",
-        "buttonText": "Start Mattress Quiz",
-        "buttonUrl": "/finder"
-      }
     }
   },
   "paymentSettings": {
     "expressCheckoutEnabled": true,
-    "enableGooglePay": true,
+    "enableGooglePay": false,
     "enableApplePay": false,
-    "defaultMethodId": "pay-credit-card",
+    "defaultMethodId": "pay-fpx",
     "methods": [
       {
-        "id": "pay-credit-card",
-        "name": "Credit card",
-        "subtitle": "Visa, Mastercard & American Express",
-        "providerType": "credit_card",
+        "id": "pay-fpx",
+        "name": "FPX Online Banking",
+        "subtitle": "Maybank2u, CIMB Clicks, Public Bank, RHB, Hong Leong & semua bank Malaysia",
+        "providerType": "fpx",
         "enabled": true,
         "isDefault": true,
-        "testMode": true,
+        "testMode": false,
         "sortOrder": 1,
         "badgeIcons": [
-          "visa",
-          "mastercard",
-          "amex"
-        ],
-        "description": "All transactions are secure and encrypted. Dilindungi dengan protokol penyulitan 256-bit SSL.",
-        "instructions": "Masukkan butiran kad kredit atau debit anda untuk proses pembayaran segera yang selamat."
-      },
-      {
-        "id": "pay-atome-bnpl",
-        "name": "Atome PayLater - 3 easy payments, 0% interest",
-        "subtitle": "Bayar 3 kali ansuran bulanan tanpa sebarang caj faedah (0% APR)",
-        "providerType": "atome_bnpl",
-        "enabled": true,
-        "isDefault": false,
-        "testMode": true,
-        "sortOrder": 2,
-        "badgeIcons": [
-          "atome",
-          "visa",
-          "mastercard",
-          "amex"
-        ],
-        "installmentMonths": 3,
-        "description": "Pecahkan jumlah bil anda kepada 3 ansuran bulanan mudah tanpa caj faedah tersembunyi. Bayaran pertama ditolak hari ini.",
-        "instructions": "Pelan ansuran 0% faedah. Pengesahan segera tanpa kad kredit diperlukan."
-      },
-      {
-        "id": "pay-payex",
-        "name": "Payex",
-        "subtitle": "FPX Online Banking, Kad Kredit & DuitNow",
-        "providerType": "payex",
-        "enabled": true,
-        "isDefault": false,
-        "testMode": true,
-        "sortOrder": 3,
-        "badgeIcons": [
-          "visa",
-          "mastercard",
           "fpx"
         ],
-        "description": "Gerbang pembayaran rasmi yang menyokong FPX Perbankan Internet Malaysia dan kad kredit/debit.",
-        "instructions": "Pilih bank tempatan anda di skrin seterusnya untuk log masuk ke perbankan internet anda."
+        "description": "Bayar terus melalui perbankan internet rasmi Malaysia (FPX). Selamat, pantas dan disahkan serta-merta.",
+        "instructions": "Pilih bank pilihan anda di bawah untuk log masuk ke perbankan internet dan sahkan bayaran."
       },
       {
-        "id": "pay-eghl-adaptis",
-        "name": "ADAPTIS Payment Gateway (formerly eGHL)",
-        "subtitle": "FPX Malaysia, Touch n Go, GrabPay, Boost",
-        "providerType": "eghl",
-        "enabled": true,
-        "isDefault": false,
-        "testMode": true,
-        "sortOrder": 4,
-        "badgeIcons": [
-          "visa",
-          "mastercard",
-          "fpx",
-          "tng",
-          "grabpay",
-          "boost"
-        ],
-        "description": "Bayar melalui FPX Maybank2u, CIMB Clicks, Public Bank, RHB, Hong Leong atau e-Wallet pilihan anda.",
-        "instructions": "Pilih e-Wallet atau perbankan internet anda melalui gerbang ADAPTIS (eGHL) yang selamat."
-      },
-      {
-        "id": "pay-duitnow-qr",
-        "name": "DuitNow QR & Pindahan Bank Manual",
-        "subtitle": "Imbas Kod QR DuitNow atau pindahan akaun Maybank rasmi KAMAAR",
-        "providerType": "duitnow_qr",
+        "id": "pay-tng",
+        "name": "Touch 'n Go eWallet (TNG)",
+        "subtitle": "Imbas kod QR TNG eWallet atau bayar terus melalui aplikasi Touch 'n Go",
+        "providerType": "tng",
         "enabled": true,
         "isDefault": false,
         "testMode": false,
-        "sortOrder": 5,
+        "sortOrder": 2,
         "badgeIcons": [
-          "duitnow",
-          "fpx"
+          "tng"
         ],
-        "description": "Pindahan dana terus ke akaun bank korporat KAMAAR Beddings tanpa sebarang caj tambahan.",
-        "instructions": "Maybank KAMAAR BEDDINGS SDN BHD: 5123 4567 8901. Sila simpan resit transaksi untuk pengesahan concierge.",
-        "config": {
-          "bankName": "Maybank Berhad",
-          "accountName": "KAMAAR BEDDINGS SDN BHD",
-          "accountNumber": "5123 4567 8901"
-        }
+        "description": "Pembayaran mudah melalui aplikasi Touch 'n Go eWallet terus ke akaun jualan Tunas Sinar Jaya Enterprise.",
+        "instructions": "Buka aplikasi TNG eWallet anda dan imbas kod QR rasmi Tunas Sinar Jaya Enterprise / KAMAAR Beddings."
       }
     ]
   }

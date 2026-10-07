@@ -355,6 +355,7 @@ export interface SiteSettings {
   contactEmail: string
   contactPhone: string
   whatsappNumber: string
+  address?: string
   announcementText: string
   announcementUrl?: string
   isAnnouncementActive: boolean
@@ -503,6 +504,7 @@ export type PaymentProviderType =
   | 'credit_card'
   | 'atome_bnpl'
   | 'fpx'
+  | 'tng'
   | 'payex'
   | 'eghl'
   | 'duitnow_qr'

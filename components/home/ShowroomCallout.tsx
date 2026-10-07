@@ -18,23 +18,33 @@ export function ShowroomCallout({ showrooms }: ShowroomCalloutProps) {
           <div>
             <span className="text-xs uppercase tracking-[0.2em] font-semibold text-gold-dark flex items-center space-x-1.5 mb-2">
               <Sparkles className="w-3.5 h-3.5 text-gold" />
-              <span>Sensory Touch & Comfort Trial</span>
+              <span>Lokasi Kilang &amp; Stor Jualan Gudang</span>
             </span>
             <h2 className="font-serif text-3xl sm:text-4xl lg:text-5xl font-bold text-forest">
-              Experience Pure Comfort in Person
+              Kunjungi Premis Kilang Kami di Pulau Pinang
             </h2>
             <p className="text-sm sm:text-base text-charcoal-muted mt-2 max-w-xl">
-              Nothing compares to experiencing the buoyant resilience of pure organic latex firsthand. Visit our private sleep studios in Kuala Lumpur, Selangor, Penang, and Johor.
+              Sedia melayan pembelian terus di kilang serta perbincangan tempahan borong untuk asrama, institusi, homestay dan pembekal tekstil.
             </p>
           </div>
 
-          <Link
-            href="/showrooms"
-            className="mt-4 md:mt-0 px-6 py-3 bg-forest hover:bg-forest-dark text-warmwhite text-xs font-bold uppercase tracking-wider rounded-lg shadow-subtle flex items-center space-x-2 transition-colors"
-          >
-            <span>Book Private Consultation</span>
-            <ArrowRight className="w-4 h-4 text-gold" />
-          </Link>
+          <div className="mt-4 md:mt-0 flex flex-wrap gap-2">
+            <Link
+              href="/profil"
+              className="px-5 py-3 bg-forest hover:bg-forest-dark text-warmwhite text-xs font-bold uppercase tracking-wider rounded-lg shadow-subtle flex items-center space-x-2 transition-colors"
+            >
+              <span>Profil Syarikat</span>
+              <ArrowRight className="w-4 h-4 text-gold" />
+            </Link>
+            <a
+              href="https://wa.me/601164447908"
+              target="_blank"
+              rel="noopener noreferrer"
+              className="px-5 py-3 bg-emerald-700 hover:bg-emerald-800 text-white text-xs font-bold uppercase tracking-wider rounded-lg shadow-subtle flex items-center space-x-2 transition-colors"
+            >
+              <span>WhatsApp 011-6444 7908</span>
+            </a>
+          </div>
         </div>
 
         {/* Showrooms Grid */}

@@ -11,59 +11,59 @@ export function CategoryGrid() {
 
   const mattressTypes = [
     {
-      title: '100% Pure Natural Latex',
-      subtitle: 'Zero synthetic foam, zero springs. Pure Malaysian natural latex for buoyant, hypoallergenic sleep.',
-      tag: 'Flagship Collection',
-      link: '/collections/mattress?material=latex',
-      imageUrl: 'https://images.unsplash.com/photo-1582582621959-48d27397dc69?auto=format&fit=crop&w=800&q=80',
+      title: 'Tilam Toto Asian Polyester Fibre (Paling Lariss!!)',
+      subtitle: 'Isian fiber berkualiti tinggi dengan Random Design pelbagai corak bunga & geometri. Empuk, tebal dan selesa untuk seisi keluarga.',
+      tag: 'Paling Lariss!!',
+      link: '/collections/tilam-toto',
+      imageUrl: '/images/company/profil-syarikat-cover.jpg',
     },
     {
-      title: 'Cool Night Hybrid Pocket Spring',
-      subtitle: 'Sub-zero Japanese Ice-Silk fabric with aerated latex & 7-zone pocket springs for active heat dissipation.',
-      tag: 'Tropical Cooling',
-      link: '/collections/mattress?material=hybrid',
-      imageUrl: 'https://images.unsplash.com/photo-1616046229478-9901c5536a45?auto=format&fit=crop&w=800&q=80',
+      title: 'Tilam Lipat 3 & Bujang Asrama',
+      subtitle: 'Tilam lipat mudah alih berzip dan tilam single 3 kaki asrama tahan lasak. Sangat praktikal, jimat ruang dan mudah disimpan.',
+      tag: 'Jimat Ruang & Asrama',
+      link: '/collections/tilam-lipat',
+      imageUrl: '/images/company/aktiviti-pengilangan.jpg',
     },
     {
-      title: 'Orthopaedic Spinal Alignment',
-      subtitle: 'Physiotherapist-approved high-density posture foundation preventing lumbar sag and morning back pain.',
-      tag: 'Back Health',
-      link: '/collections/mattress?material=ortho',
-      imageUrl: 'https://images.unsplash.com/photo-1598928506311-c55ded91a20c?auto=format&fit=crop&w=800&q=80',
+      title: 'Bantal Tidur Gebu & Bantal Peluk',
+      subtitle: 'Isian Asian Polyester Fibre yang gebu, lembut dan tidak mudah kempis dari Unit Bantal & Tilam KAMAAR Beddings.',
+      tag: 'Isian Fiber Berkualiti',
+      link: '/collections/bantal',
+      imageUrl: '/images/products/pillow-classic-latex.jpg',
     },
     {
-      title: 'Sovereign Presidential Suite',
-      subtitle: 'Bespoke 34cm dual pocket spring architecture with hand-tufted Belgian silk and Talalay latex pillowtop.',
-      tag: '5-Star Luxury',
-      link: '/collections/mattress?material=hotel',
-      imageUrl: 'https://images.unsplash.com/photo-1578683010236-d716f9a3f461?auto=format&fit=crop&w=800&q=80',
+      title: 'Jualan Gudang & Pakej Borong Asrama',
+      subtitle: 'Harga pengeluar terus dari kilang Tasek Gelugor untuk pembekal asrama, pusat tahfiz, homestay dan kontraktor.',
+      tag: 'Harga Terus Dari Kilang',
+      link: '/collections/borong-gudang',
+      imageUrl: '/images/company/misi-visi-jualan-gudang.jpg',
     },
   ]
 
   const supportingCategories = [
     {
-      name: 'Contour Latex Pillows',
-      description: 'Cervical spinal support',
-      link: '/collections/pillows',
-      imageUrl: 'https://images.unsplash.com/photo-1584100936595-c0654b55a2e2?auto=format&fit=crop&w=600&q=80',
+      name: 'Set Comforter Tebal Quilting',
+      description: 'Jahitan quilting kemas & rapi',
+      link: '/collections/cadang-comforter',
+      imageUrl: '/images/company/profil-syarikat-cover.jpg',
     },
     {
-      name: 'Mattress Toppers',
-      description: '5cm & 7.5cm natural latex slabs',
-      link: '/collections/toppers-protectors',
-      imageUrl: '/images/products/topper-latex-5cm.jpg',
+      name: 'Sarung Tilam Toto Berzip',
+      description: 'Kain kapas sejuk mudah dibasuh',
+      link: '/collections/cadang-comforter',
+      imageUrl: '/images/company/aktiviti-pengilangan.jpg',
     },
     {
-      name: 'Hardwood Bedframes',
-      description: 'Kiln-dried solid tropical wood',
-      link: '/collections/bedframes',
-      imageUrl: 'https://images.unsplash.com/photo-1505693416388-ac5ce068fe85?auto=format&fit=crop&w=600&q=80',
+      name: 'Pakej 10 Set Lengkap Asrama',
+      description: 'Tilam, bantal & cadar sedondon',
+      link: '/collections/borong-gudang',
+      imageUrl: '/images/company/misi-visi-jualan-gudang.jpg',
     },
     {
-      name: '1000TC Bamboo Bedding',
-      description: 'Silky breathable sheet sets',
-      link: '/collections/bedding',
-      imageUrl: 'https://images.unsplash.com/photo-1522771739844-6a9f6d5f14af?auto=format&fit=crop&w=600&q=80',
+      name: 'Profil Syarikat & 4 Unit Kilang',
+      description: 'Tunas Sinar Jaya Enterprise',
+      link: '/profil',
+      imageUrl: '/images/company/carta-organisasi-kilang.jpg',
     },
   ]
 
@@ -74,13 +74,13 @@ export function CategoryGrid() {
         <div className="text-center max-w-3xl mx-auto mb-12 sm:mb-16">
           <span className="text-xs uppercase tracking-[0.2em] font-semibold text-gold-dark flex items-center justify-center space-x-1.5 mb-2">
             <Sparkles className="w-3.5 h-3.5 text-gold" />
-            <span>Curated Sleep Technologies</span>
+            <span>Koleksi Pengeluaran Kilang Tekstil</span>
           </span>
           <h2 className="font-serif text-3xl sm:text-4xl lg:text-5xl font-bold text-forest">
-            {t.shopByTypeTitle}
+            Produk Paling Laris &amp; Pilihan Ramai
           </h2>
           <p className="text-sm sm:text-base text-charcoal-muted mt-3 leading-relaxed">
-            {t.shopByTypeSubtitle}
+            Dihasilkan sendiri oleh tenaga kerja mahir tempatan Tunas Sinar Jaya Enterprise di Tasek Gelugor dengan mutu jahitan kemas dan harga terus kilang.
           </p>
         </div>
 

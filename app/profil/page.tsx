@@ -1,0 +1,669 @@
+import React from 'react'
+import Image from 'next/image'
+import Link from 'next/link'
+import {
+  Building2,
+  Target,
+  Eye,
+  Users,
+  Scissors,
+  Package,
+  Layers,
+  Truck,
+  Phone,
+  Mail,
+  MapPin,
+  Clock,
+  ShieldCheck,
+  Award,
+  Sparkles,
+  ChevronRight,
+  ExternalLink,
+  ShoppingBag,
+  CheckCircle2,
+  Store,
+} from 'lucide-react'
+import { Header } from '@/components/layout/Header'
+import { Footer } from '@/components/layout/Footer'
+import { AnnouncementBar } from '@/components/layout/AnnouncementBar'
+
+export const metadata = {
+  title: 'Profil Syarikat | TUNAS SINAR JAYA ENTERPRISE (KAMAAR BEDDINGS)',
+  description:
+    'Profil rasmi Tunas Sinar Jaya Enterprise (Kamaar Beddings) - Pengeluar tekstil Bumiputera terkemuka di Tasek Gelugor, Pulau Pinang. Menghasilkan Tilam Toto, Tilam Lipat, Bantal dan Kelengkapan Bilik Tidur berkualiti tinggi.',
+}
+
+const factoryUnits = [
+  {
+    name: 'Unit Potong Kain',
+    description: 'Proses pemotongan fabrik tekstil dengan mesin berketepatan tinggi untuk memastikan ukuran seragam dan jimat bahan.',
+    badge: 'Fasa 1: Penyediaan Fabrik',
+    icon: Scissors,
+  },
+  {
+    name: 'Unit Jahitan',
+    description: 'Barisan mesin jahit industri yang dikendalikan tenaga kerja mahir tempatan bagi menghasilkan jahitan yang kemas, kukuh dan rapi.',
+    badge: 'Fasa 2: Jahitan & Kemasan',
+    icon: Layers,
+  },
+  {
+    name: 'Unit Bantal & Tilam',
+    description: 'Pemasangan isian Asian Polyester Fibre bermutu tinggi, pembentukan tilam toto empuk, tilam lipat serta bantal tidur gebu.',
+    badge: 'Fasa 3: Isian & Quilting',
+    icon: Sparkles,
+  },
+  {
+    name: 'Stor Produk Siap',
+    description: 'Gudang penyimpanan sistematik dengan kawalan kualiti (QC) ketat sebelum pembungkusan dan pengedaran ke seluruh Malaysia.',
+    badge: 'Fasa 4: QC & Logistik',
+    icon: Package,
+  },
+]
+
+const orgStructure = {
+  leader: {
+    title: 'Pengurus Operasi',
+    name: 'HAZIZI MD RASHID',
+    role: 'Menerajui pengurusan keseluruhan operasi kilang dan perancangan strategik syarikat.',
+  },
+  departments: [
+    {
+      dept: 'Bahagian Pentadbiran',
+      head: 'HEZWAN MD RASHID',
+      scopes: ['Pengurusan Pejabat', 'Kewangan & Perakaunan', 'Sumber Manusia (HR)'],
+      color: 'bg-emerald-50 text-emerald-800 border-emerald-200',
+    },
+    {
+      dept: 'Bahagian Pembelian',
+      head: 'ELIAS MAT RASHID',
+      scopes: ['Pembelian Bahan Mentah', 'Pengurusan Pembekal Tekstil', 'Kawalan Kos Bahan'],
+      color: 'bg-amber-50 text-amber-800 border-amber-200',
+    },
+    {
+      dept: 'Bahagian Pengeluaran',
+      head: 'CHE JAM DARUS',
+      scopes: ['Pemotongan', 'Jahitan Industri', 'Quilting', 'Pembungkusan', 'Kawalan Mutu (QC)'],
+      color: 'bg-blue-50 text-blue-800 border-blue-200',
+    },
+    {
+      dept: 'Bahagian Pemasaran',
+      head: 'YAHYA BIN ISHAK',
+      scopes: ['Pemasaran & Promosi', 'Jualan Gudang & Runcit', 'Khidmat Pelanggan'],
+      color: 'bg-purple-50 text-purple-800 border-purple-200',
+    },
+    {
+      dept: 'Bahagian Logistik',
+      head: 'ZUKI MUSA',
+      scopes: ['Stor & Inventori', 'Kawalan Stok Siap', 'Penghantaran & Logistik'],
+      color: 'bg-orange-50 text-orange-800 border-orange-200',
+    },
+  ],
+}
+
+const companyPillars = [
+  {
+    num: '01',
+    title: 'Kualiti Terjamin',
+    desc: 'Penggunaan bahan mentah bermutu tinggi dan pemantauan kualiti ketat di setiap stesen.',
+  },
+  {
+    num: '02',
+    title: 'Pengeluaran Cekap',
+    desc: 'Operasi kilang sistematik yang mampu memenuhi tempahan pukal mahupun individu dengan pantas.',
+  },
+  {
+    num: '03',
+    title: 'Harga Berpatutan',
+    desc: 'Harga terus dari kilang tanpa orang tengah untuk penjimatan maksimum setiap pelanggan.',
+  },
+  {
+    num: '04',
+    title: 'Komitmen Pelanggan',
+    desc: 'Khidmat layanan mesra dan jaminan kepuasan pelanggan adalah tunjang perniagaan kami.',
+  },
+]
+
+export default function ProfilPage() {
+  return (
+    <div className="min-h-screen bg-[#FDFBF7] text-[#2D2A26] font-sans antialiased selection:bg-gold/20 selection:text-forest">
+      <AnnouncementBar />
+      <Header />
+
+      {/* Hero Section */}
+      <section className="relative bg-gradient-to-br from-[#0D2818] via-[#163824] to-[#0D2818] text-white py-16 sm:py-24 overflow-hidden border-b border-gold/20">
+        <div className="absolute inset-0 opacity-10 bg-[radial-gradient(#D4AF37_1px,transparent_1px)] [background-size:24px_24px]" />
+        
+        <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 relative z-10">
+          <div className="grid grid-cols-1 lg:grid-cols-12 gap-10 items-center">
+            <div className="lg:col-span-7 space-y-6">
+              <div className="inline-flex items-center space-x-2 px-3 py-1.5 rounded-full bg-gold/15 border border-gold/30 text-gold-light text-xs font-semibold tracking-wide uppercase">
+                <Building2 className="w-4 h-4 text-gold" />
+                <span>Pengeluar Tekstil Bumiputera</span>
+              </div>
+
+              <div className="space-y-2">
+                <span className="text-sm font-bold tracking-[0.2em] uppercase text-emerald-300 block">
+                  TUNAS SINAR JAYA ENTERPRISE
+                </span>
+                <h1 className="font-serif text-3xl sm:text-5xl font-bold tracking-tight text-warmwhite leading-tight">
+                  KAMAAR BEDDINGS
+                </h1>
+                <p className="text-gold italic text-lg sm:text-xl font-serif">
+                  &ldquo;Keselesaan anda keutamaan kami&rdquo;
+                </p>
+              </div>
+
+              <p className="text-warmwhite/80 text-sm sm:text-base leading-relaxed max-w-2xl">
+                Tunas Sinar Jaya Enterprise komited dalam menghasilkan produk jahitan tekstil berkualiti tinggi dengan harga berpatutan bagi memenuhi keperluan dan kepuasan pelanggan di seluruh Malaysia.
+              </p>
+
+              <div className="flex flex-wrap gap-3 pt-2">
+                <a
+                  href="#tentang-kami"
+                  className="px-6 py-3 rounded-xl bg-gold hover:bg-gold-light text-forest font-bold text-xs uppercase tracking-wider transition-all shadow-md"
+                >
+                  Tentang Kilang Kami
+                </a>
+                <a
+                  href="#carta-organisasi"
+                  className="px-6 py-3 rounded-xl bg-white/10 hover:bg-white/15 text-warmwhite border border-white/20 font-bold text-xs uppercase tracking-wider transition-all"
+                >
+                  Carta Organisasi
+                </a>
+                <Link
+                  href="/collections/tilam-toto"
+                  className="px-6 py-3 rounded-xl bg-emerald-700/80 hover:bg-emerald-700 text-warmwhite font-bold text-xs uppercase tracking-wider transition-all flex items-center gap-1.5"
+                >
+                  <ShoppingBag className="w-4 h-4" />
+                  <span>Lihat Produk Kilang</span>
+                </Link>
+              </div>
+
+              {/* Slogan Banner */}
+              <div className="pt-4 border-t border-white/10 flex flex-wrap items-center gap-6 text-xs text-warmwhite/70">
+                <span className="flex items-center gap-1.5 font-medium">
+                  <ShieldCheck className="w-4 h-4 text-gold" />
+                  Kualiti Jahitan, Kepuasan Terjamin
+                </span>
+                <span className="flex items-center gap-1.5 font-medium">
+                  <Sparkles className="w-4 h-4 text-gold" />
+                  Menjahit Kepercayaan, Menyulam Masa Depan
+                </span>
+              </div>
+            </div>
+
+            {/* Right: Featured Banner Image */}
+            <div className="lg:col-span-5">
+              <div className="relative rounded-3xl overflow-hidden border-2 border-gold/30 shadow-2xl bg-white/5 backdrop-blur-sm group">
+                <div className="relative aspect-[3/4] w-full">
+                  <Image
+                    src="/images/company/profil-syarikat-cover.jpg"
+                    alt="Profil Syarikat Tunas Sinar Jaya Enterprise - Tilam Toto Asian Polyester Fibre"
+                    fill
+                    sizes="(max-width: 1024px) 100vw, 40vw"
+                    className="object-cover transition-transform duration-700 group-hover:scale-105"
+                    priority
+                  />
+                </div>
+                <div className="absolute inset-0 bg-gradient-to-t from-black/80 via-transparent to-transparent flex flex-col justify-end p-6 text-white">
+                  <span className="text-[11px] font-bold tracking-widest uppercase text-gold">
+                    Paling Lariss!!
+                  </span>
+                  <h3 className="font-serif text-xl font-bold text-warmwhite">
+                    Tilam Toto Asian Polyester Fibre
+                  </h3>
+                  <p className="text-xs text-warmwhite/80 mt-1">
+                    Random Design corak floral &amp; geometri terus dari lantai pengeluaran kilang.
+                  </p>
+                </div>
+              </div>
+            </div>
+          </div>
+        </div>
+      </section>
+
+      {/* 4 Pillars Section */}
+      <section className="py-12 bg-white border-b border-[#E8E2D8]">
+        <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
+          <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-4 gap-6">
+            {companyPillars.map((p) => (
+              <div
+                key={p.num}
+                className="p-6 rounded-2xl bg-[#FAF7F2] border border-[#E8E2D8] hover:border-gold/60 transition-all space-y-2 group"
+              >
+                <div className="flex items-center justify-between">
+                  <span className="font-serif text-2xl font-bold text-gold group-hover:scale-110 transition-transform">
+                    {p.num}
+                  </span>
+                  <Award className="w-5 h-5 text-forest/40 group-hover:text-forest transition-colors" />
+                </div>
+                <h4 className="font-bold text-forest text-base">{p.title}</h4>
+                <p className="text-xs text-charcoal-muted leading-relaxed">{p.desc}</p>
+              </div>
+            ))}
+          </div>
+        </div>
+      </section>
+
+      {/* Tentang Kami & Aktiviti Pengilangan */}
+      <section id="tentang-kami" className="py-16 sm:py-20 max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
+        <div className="grid grid-cols-1 lg:grid-cols-12 gap-12 items-start">
+          {/* Left Text */}
+          <div className="lg:col-span-6 space-y-6">
+            <div className="space-y-2">
+              <span className="text-xs font-bold uppercase tracking-wider text-gold-dark block">
+                Pengenalan Korporat
+              </span>
+              <h2 className="font-serif text-3xl sm:text-4xl font-bold text-forest leading-tight">
+                Tentang Kami
+              </h2>
+              <div className="w-16 h-1 bg-gold rounded-full" />
+            </div>
+
+            <div className="prose prose-sm text-charcoal-muted leading-relaxed space-y-4">
+              <p>
+                <strong className="text-forest">TUNAS SINAR JAYA ENTERPRISE</strong> merupakan sebuah syarikat tempatan yang terlibat secara komited dalam <strong>pengilangan dan pemasaran produk jahitan tekstil</strong>.
+              </p>
+              <p>
+                Berbekalkan pengalaman yang kukuh, tenaga kerja mahir tempatan serta komitmen mendalam terhadap kualiti, syarikat kami sentiasa berusaha menghasilkan produk bilik tidur dan tilam yang memenuhi kehendak pelanggan pada <strong>harga yang amat kompetitif</strong>.
+              </p>
+              <p>
+                Kami memberi penekanan tegas kepada penggunaan <strong>bahan berkualiti</strong> (termasuk isian <em>Asian Polyester Fibre</em>), proses pengeluaran yang sistematik serta kawalan mutu (QC) yang ketat bagi memastikan setiap produk mencapai standard piawaian tertinggi.
+              </p>
+              <p className="font-semibold text-forest">
+                Syarikat komited untuk terus menjadi pengeluar tekstil Bumiputera yang dipercayai serta mampu bersaing di peringkat pasaran tempatan dan serantau.
+              </p>
+            </div>
+
+            {/* Moto Box */}
+            <div className="p-5 rounded-2xl bg-forest text-warmwhite border border-gold/30 space-y-1 shadow-md">
+              <span className="text-[11px] font-bold uppercase tracking-widest text-gold block">
+                Moto Syarikat
+              </span>
+              <blockquote className="font-serif text-lg font-bold italic text-gold-light">
+                &ldquo;Kualiti Terjamin, Kepuasan Pelanggan Keutamaan.&rdquo;
+              </blockquote>
+            </div>
+          </div>
+
+          {/* Right Image Feature */}
+          <div className="lg:col-span-6 space-y-4">
+            <div className="relative rounded-3xl overflow-hidden border border-[#E8E2D8] shadow-lg bg-white">
+              <div className="relative aspect-[4/3] w-full">
+                <Image
+                  src="/images/company/aktiviti-pengilangan.jpg"
+                  alt="Aktiviti Pengilangan Produk Tunas Sinar Jaya Enterprise"
+                  fill
+                  sizes="(max-width: 1024px) 100vw, 50vw"
+                  className="object-cover"
+                />
+              </div>
+              <div className="p-5 bg-white border-t border-[#E8E2D8]">
+                <span className="text-xs font-bold uppercase tracking-wider text-gold-dark block">
+                  Dokumentasi Kilang
+                </span>
+                <h4 className="font-serif text-base font-bold text-forest">
+                  Aktiviti Pengilangan di Tasek Gelugor, Pulau Pinang
+                </h4>
+                <p className="text-xs text-charcoal-muted mt-1">
+                  Merangkumi Unit Potong Kain, Unit Jahitan Industri, Unit Bantal &amp; Tilam, serta Stor Produk Siap.
+                </p>
+              </div>
+            </div>
+          </div>
+        </div>
+
+        {/* 4 Factory Units Grid */}
+        <div className="mt-16 space-y-8">
+          <div className="text-center max-w-2xl mx-auto space-y-2">
+            <span className="text-xs font-bold uppercase tracking-widest text-gold-dark">
+              Infrastruktur Pengeluaran
+            </span>
+            <h3 className="font-serif text-2xl sm:text-3xl font-bold text-forest">
+              4 Unit Pengilangan Produk Tekstil
+            </h3>
+            <p className="text-xs text-charcoal-muted">
+              Setiap proses pengeluaran dijalankan mengikut piawaian ketat dari fabrik asas hingga produk siap dibungkus.
+            </p>
+          </div>
+
+          <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-4 gap-6">
+            {factoryUnits.map((u, i) => {
+              const Icon = u.icon
+              return (
+                <div
+                  key={u.name}
+                  className="bg-white rounded-2xl p-6 border border-[#E8E2D8] hover:border-forest/40 hover:shadow-md transition-all space-y-3"
+                >
+                  <div className="w-12 h-12 rounded-xl bg-forest/5 text-forest flex items-center justify-center border border-forest/10">
+                    <Icon className="w-6 h-6 text-gold" />
+                  </div>
+                  <span className="text-[10px] font-bold px-2.5 py-0.5 rounded-full bg-cream text-forest border border-borderLight inline-block">
+                    {u.badge}
+                  </span>
+                  <h4 className="font-bold text-forest text-base">{u.name}</h4>
+                  <p className="text-xs text-charcoal-muted leading-relaxed">{u.description}</p>
+                </div>
+              )
+            })}
+          </div>
+        </div>
+      </section>
+
+      {/* Visi & Misi Section */}
+      <section className="py-16 sm:py-20 bg-[#0D2818] text-white border-y border-gold/20 relative overflow-hidden">
+        <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 relative z-10">
+          <div className="grid grid-cols-1 lg:grid-cols-12 gap-12 items-center">
+            {/* Left: Mission & Vision */}
+            <div className="lg:col-span-7 space-y-8">
+              <div className="space-y-4">
+                <div className="inline-flex items-center space-x-2 px-3 py-1 rounded-full bg-gold/15 text-gold-light text-xs font-semibold uppercase">
+                  <Target className="w-4 h-4 text-gold" />
+                  <span>Hala Tuju Syarikat</span>
+                </div>
+                <h2 className="font-serif text-3xl sm:text-4xl font-bold text-warmwhite">
+                  Misi &amp; Visi Kami
+                </h2>
+              </div>
+
+              {/* Misi Box */}
+              <div className="p-6 rounded-2xl bg-white/5 border border-white/10 space-y-2">
+                <div className="flex items-center space-x-2 text-gold font-bold text-sm uppercase tracking-wider">
+                  <Target className="w-5 h-5 text-gold" />
+                  <span>MISI SYARIKAT</span>
+                </div>
+                <p className="font-serif text-lg sm:text-xl text-warmwhite leading-relaxed">
+                  &ldquo;Menjadi syarikat pengilangan tekstil yang unggul, inovatif dan diyakini dalam menghasilkan produk berkualiti tinggi.&rdquo;
+                </p>
+              </div>
+
+              {/* Visi 5 Teras */}
+              <div className="space-y-3">
+                <div className="flex items-center space-x-2 text-gold font-bold text-sm uppercase tracking-wider">
+                  <Eye className="w-5 h-5 text-gold" />
+                  <span>VISI KAMI (5 TERAS UTAMA)</span>
+                </div>
+
+                <div className="space-y-2.5">
+                  {[
+                    'Menghasilkan produk tekstil yang berkualiti tinggi.',
+                    'Memberikan perkhidmatan terbaik kepada pelanggan.',
+                    'Mengamalkan proses pengeluaran yang cekap dan sistematik.',
+                    'Menawarkan harga yang kompetitif.',
+                    'Menjalinkan hubungan perniagaan yang kukuh bersama pelanggan dan rakan strategik.',
+                  ].map((visi, idx) => (
+                    <div
+                      key={idx}
+                      className="flex items-start space-x-3 p-3 rounded-xl bg-white/5 border border-white/5"
+                    >
+                      <CheckCircle2 className="w-4 h-4 text-gold shrink-0 mt-0.5" />
+                      <span className="text-xs sm:text-sm text-warmwhite/90 leading-relaxed">
+                        {visi}
+                      </span>
+                    </div>
+                  ))}
+                </div>
+              </div>
+            </div>
+
+            {/* Right: Jualan Gudang Photo */}
+            <div className="lg:col-span-5">
+              <div className="relative rounded-3xl overflow-hidden border-2 border-gold/40 shadow-2xl bg-black/40">
+                <div className="relative aspect-[4/5] w-full">
+                  <Image
+                    src="/images/company/misi-visi-jualan-gudang.jpg"
+                    alt="Sambutan Pengunjung di Program Jualan Gudang KAMAAR Beddings"
+                    fill
+                    sizes="(max-width: 1024px) 100vw, 40vw"
+                    className="object-cover"
+                  />
+                </div>
+                <div className="p-5 bg-gradient-to-t from-black via-black/80 to-transparent absolute bottom-0 inset-x-0">
+                  <span className="text-[10px] font-bold text-gold uppercase tracking-widest block">
+                    Komuniti &amp; Sambutan Hangat
+                  </span>
+                  <h4 className="font-serif text-base font-bold text-warmwhite">
+                    Program Jualan Gudang Terus ke Pengguna
+                  </h4>
+                  <p className="text-xs text-warmwhite/70 mt-1">
+                    Sambutan luar biasa masyarakat setempat yang memilih tilam toto, cadar dan bantal KAMAAR dengan harga borong.
+                  </p>
+                </div>
+              </div>
+            </div>
+          </div>
+        </div>
+      </section>
+
+      {/* Carta Organisasi Section */}
+      <section id="carta-organisasi" className="py-16 sm:py-24 max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
+        <div className="text-center max-w-3xl mx-auto space-y-3 mb-14">
+          <div className="inline-flex items-center space-x-2 px-3 py-1 rounded-full bg-cream text-forest text-xs font-semibold uppercase border border-borderLight">
+            <Users className="w-4 h-4 text-gold" />
+            <span>Kepimpinan &amp; Pengurusan</span>
+          </div>
+          <h2 className="font-serif text-3xl sm:text-4xl font-bold text-forest">
+            Carta Organisasi Kilang
+          </h2>
+          <p className="text-xs sm:text-sm text-charcoal-muted leading-relaxed">
+            Struktur pengurusan profesional dan bahagian operasi kilang Tunas Sinar Jaya Enterprise yang memastikan setiap pesanan disiapkan dengan mutu terbaik.
+          </p>
+        </div>
+
+        {/* Team Photo Banner */}
+        <div className="mb-12 relative rounded-3xl overflow-hidden border border-[#E8E2D8] shadow-md bg-white">
+          <div className="relative aspect-[16/9] sm:aspect-[21/9] w-full max-h-[420px]">
+            <Image
+              src="/images/company/carta-organisasi-kilang.jpg"
+              alt="Pasukan Pengurusan dan Kakitangan Tunas Sinar Jaya Enterprise / Kamaar Beddings"
+              fill
+              sizes="100vw"
+              className="object-cover"
+            />
+          </div>
+          <div className="p-4 sm:p-5 bg-white border-t border-[#E8E2D8] flex flex-col sm:flex-row sm:items-center justify-between gap-2">
+            <div>
+              <h4 className="font-bold text-forest text-sm sm:text-base">
+                Warga Kerja Tunas Sinar Jaya Enterprise (KAMAAR BEDDINGS)
+              </h4>
+              <p className="text-xs text-charcoal-muted">
+                Bergambar di hadapan premis kilang &amp; stor simpanan utama di Tasek Gelugor, Pulau Pinang.
+              </p>
+            </div>
+            <span className="text-xs font-bold text-gold-dark shrink-0">
+              Tenaga Mahir Bumiputera 100%
+            </span>
+          </div>
+        </div>
+
+        {/* Organogram Chart */}
+        <div className="space-y-8">
+          {/* Top Leader */}
+          <div className="flex justify-center">
+            <div className="w-full max-w-md p-6 rounded-2xl bg-forest text-warmwhite border-2 border-gold text-center shadow-lg space-y-1">
+              <span className="text-[11px] font-bold uppercase tracking-widest text-gold block">
+                {orgStructure.leader.title}
+              </span>
+              <h3 className="font-serif text-2xl font-bold tracking-wide text-warmwhite">
+                {orgStructure.leader.name}
+              </h3>
+              <p className="text-xs text-warmwhite/80 pt-1 leading-relaxed">
+                {orgStructure.leader.role}
+              </p>
+            </div>
+          </div>
+
+          {/* Connecting Line */}
+          <div className="flex justify-center">
+            <div className="w-0.5 h-8 bg-forest/30" />
+          </div>
+
+          {/* 5 Departments Grid */}
+          <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-5 gap-4">
+            {orgStructure.departments.map((d) => (
+              <div
+                key={d.dept}
+                className="p-5 rounded-2xl bg-white border border-[#E8E2D8] shadow-2xs hover:shadow-md transition-all flex flex-col justify-between space-y-4"
+              >
+                <div className="space-y-1.5">
+                  <span className="text-[10px] font-bold uppercase tracking-wider text-charcoal-muted block">
+                    Bahagian
+                  </span>
+                  <h4 className="font-bold text-forest text-sm">{d.dept}</h4>
+                  <div className="pt-2 border-t border-neutral-100">
+                    <span className="text-[10px] text-charcoal-muted block">Ketua Bahagian:</span>
+                    <strong className="text-xs text-forest block font-serif tracking-wide">
+                      {d.head}
+                    </strong>
+                  </div>
+                </div>
+
+                <div className="pt-2 border-t border-neutral-100 space-y-1.5">
+                  <span className="text-[10px] font-bold text-charcoal-muted uppercase block">
+                    Skop Tanggungjawab:
+                  </span>
+                  <ul className="space-y-1">
+                    {d.scopes.map((s, idx) => (
+                      <li key={idx} className="text-[11px] text-charcoal-muted flex items-start space-x-1.5">
+                        <span className="text-gold font-bold">•</span>
+                        <span>{s}</span>
+                      </li>
+                    ))}
+                  </ul>
+                </div>
+              </div>
+            ))}
+          </div>
+        </div>
+      </section>
+
+      {/* Maklumat Hubungi & Lokasi Kilang */}
+      <section className="py-16 sm:py-20 bg-white border-t border-[#E8E2D8]">
+        <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
+          <div className="bg-[#FAF7F2] rounded-3xl p-8 sm:p-12 border border-[#E8E2D8] shadow-sm">
+            <div className="grid grid-cols-1 lg:grid-cols-12 gap-10">
+              <div className="lg:col-span-5 space-y-6">
+                <div className="space-y-2">
+                  <span className="text-xs font-bold uppercase tracking-widest text-gold-dark block">
+                    Hubungi Kilang
+                  </span>
+                  <h3 className="font-serif text-2xl sm:text-3xl font-bold text-forest">
+                    TUNAS SINAR JAYA ENTERPRISE
+                  </h3>
+                  <p className="text-xs text-charcoal-muted">
+                    Sedia melayani pertanyaan pembelian runcit, tempahan jualan gudang, mahupun tender borong asrama &amp; institusi.
+                  </p>
+                </div>
+
+                <div className="space-y-4 text-xs">
+                  <div className="flex items-start space-x-3">
+                    <MapPin className="w-5 h-5 text-gold shrink-0 mt-0.5" />
+                    <div>
+                      <strong className="text-forest block">Alamat Kilang &amp; Stor:</strong>
+                      <span className="text-charcoal-muted leading-relaxed">
+                        7878B Jalan Permatang Berangan, 13300 Tasek Gelugor SPU, Pulau Pinang
+                      </span>
+                    </div>
+                  </div>
+
+                  <div className="flex items-center space-x-3">
+                    <Phone className="w-5 h-5 text-gold shrink-0" />
+                    <div>
+                      <strong className="text-forest block">Telefon / WhatsApp:</strong>
+                      <a href="tel:01164447908" className="text-forest hover:text-gold font-bold">
+                        011-6444 7908
+                      </a>
+                    </div>
+                  </div>
+
+                  <div className="flex items-center space-x-3">
+                    <Mail className="w-5 h-5 text-gold shrink-0" />
+                    <div>
+                      <strong className="text-forest block">Alamat Emel:</strong>
+                      <a href="mailto:tunassinar@gmail.com" className="text-forest hover:text-gold">
+                        tunassinar@gmail.com
+                      </a>
+                    </div>
+                  </div>
+                </div>
+
+                {/* Social media */}
+                <div className="pt-4 border-t border-[#E8E2D8] space-y-2">
+                  <span className="text-[11px] font-bold uppercase tracking-wider text-charcoal-muted block">
+                    Saluran Media Sosial Rasmi
+                  </span>
+                  <div className="flex flex-wrap gap-2 text-xs">
+                    <a
+                      href="https://facebook.com"
+                      target="_blank"
+                      rel="noopener noreferrer"
+                      className="px-3 py-1.5 rounded-lg bg-white border border-[#D5CEC2] hover:border-forest text-forest font-semibold"
+                    >
+                      Facebook: Jualan Gudang
+                    </a>
+                    <a
+                      href="https://tiktok.com"
+                      target="_blank"
+                      rel="noopener noreferrer"
+                      className="px-3 py-1.5 rounded-lg bg-white border border-[#D5CEC2] hover:border-forest text-forest font-semibold"
+                    >
+                      TikTok: @KAMAAR_SHOP
+                    </a>
+                  </div>
+                </div>
+              </div>
+
+              {/* Payment & Order CTA */}
+              <div className="lg:col-span-7 bg-white rounded-2xl p-6 sm:p-8 border border-[#E8E2D8] flex flex-col justify-between space-y-6">
+                <div className="space-y-4">
+                  <div className="inline-flex items-center space-x-2 px-3 py-1 rounded-full bg-emerald-50 text-emerald-800 border border-emerald-200 text-xs font-semibold">
+                    <ShieldCheck className="w-4 h-4 text-emerald-600" />
+                    <span>Kaedah Pembayaran Sahaja: FPX &amp; Touch &apos;n Go</span>
+                  </div>
+
+                  <h4 className="font-serif text-xl font-bold text-forest">
+                    Urus Niaga Selamat Melalui Perbankan Tempatan
+                  </h4>
+
+                  <p className="text-xs text-charcoal-muted leading-relaxed">
+                    Bagi memastikan keselamatan setiap transaksi dan kemudahan pelanggan, jualan rasmi KAMAAR Beddings hanya menerima transaksi secara <strong>FPX (Online Banking semua bank Malaysia)</strong> dan <strong>Touch &apos;n Go (TNG) eWallet</strong>.
+                  </p>
+
+                  <div className="flex items-center gap-3 pt-2">
+                    <span className="px-3 py-1 rounded bg-[#00529C] text-white text-xs font-mono font-black tracking-wider">
+                      FPX
+                    </span>
+                    <span className="px-3 py-1 rounded bg-[#015CA9] text-white text-xs font-bold">
+                      Touch &apos;n Go eWallet
+                    </span>
+                  </div>
+                </div>
+
+                <div className="pt-6 border-t border-neutral-100 flex flex-wrap gap-3">
+                  <Link
+                    href="/collections/tilam-toto"
+                    className="px-6 py-3.5 rounded-xl bg-forest hover:bg-forest-dark text-warmwhite text-xs font-bold uppercase tracking-wider transition-all shadow-md inline-flex items-center gap-2"
+                  >
+                    <span>Tempah Tilam Toto Sekarang</span>
+                    <ChevronRight className="w-4 h-4" />
+                  </Link>
+                  <a
+                    href="https://wa.me/601164447908?text=Salam%20Tunas%20Sinar%20Jaya%2C%20saya%20berminat%20dengan%20produk%20Kamaar%20Beddings"
+                    target="_blank"
+                    rel="noopener noreferrer"
+                    className="px-6 py-3.5 rounded-xl bg-emerald-700 hover:bg-emerald-800 text-white text-xs font-bold uppercase tracking-wider transition-all shadow-md inline-flex items-center gap-2"
+                  >
+                    <span>WhatsApp Concierge (011-6444 7908)</span>
+                    <ExternalLink className="w-4 h-4" />
+                  </a>
+                </div>
+              </div>
+            </div>
+          </div>
+        </div>
+      </section>
+
+      <Footer />
+    </div>
+  )
+}
