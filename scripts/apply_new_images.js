@@ -11,7 +11,7 @@ const categoryImageMap = {
   'cat-bantal': '/images/products/bantal-gebu-asian-fibre.jpg',
   'cat-cadang-comforter': '/images/hero/hero-tilam-toto-lifestyle.jpg',
   'cat-borong-gudang': '/images/products/bantal-peluk-roll-pack.jpg',
-  'cat-profil': '/images/company/carta-organisasi-kilang.jpg'
+  'cat-profil': '/images/company/kilang-tekstil-jahitan.jpg'
 };
 
 db.categories = db.categories.map(c => {
@@ -210,15 +210,25 @@ db.products = db.products.map(p => {
 });
 
 // 4. Update Blog
-if (db.blogPosts && db.blogPosts[0]) {
-  db.blogPosts[0].imageUrl = '/images/hero/hero-tilam-toto-lifestyle.jpg';
+if (db.blogPosts) {
+  if (db.blogPosts[0]) db.blogPosts[0].imageUrl = '/images/hero/hero-tilam-toto-lifestyle.jpg';
+  if (db.blogPosts[1]) db.blogPosts[1].imageUrl = '/images/products/tilam-lipat-bujang.jpg';
+  if (db.blogPosts[2]) db.blogPosts[2].imageUrl = '/images/company/kilang-tekstil-jahitan.jpg';
 }
 
-// 5. Update WebsiteConfig
+// 5. Update Showrooms
+if (db.showrooms && db.showrooms[0]) {
+  db.showrooms[0].imageUrl = '/images/company/kilang-tekstil-jahitan.jpg';
+}
+
+// 6. Update WebsiteConfig
 if (db.websiteConfig) {
   if (db.websiteConfig.hero && Array.isArray(db.websiteConfig.hero.slides)) {
     if (db.websiteConfig.hero.slides[0]) {
       db.websiteConfig.hero.slides[0].imageUrl = '/images/hero/hero-tilam-toto-lifestyle.jpg';
+    }
+    if (db.websiteConfig.hero.slides[1]) {
+      db.websiteConfig.hero.slides[1].imageUrl = '/images/hero/hero-kilang-tekstil.jpg';
     }
     if (db.websiteConfig.hero.slides[2]) {
       db.websiteConfig.hero.slides[2].imageUrl = '/images/products/bantal-peluk-roll-pack.jpg';
@@ -226,6 +236,9 @@ if (db.websiteConfig) {
   }
   if (db.websiteConfig.promotionsBanner) {
     db.websiteConfig.promotionsBanner.imageUrl = '/images/products/tilam-toto-queen.jpg';
+  }
+  if (db.websiteConfig.storySection) {
+    db.websiteConfig.storySection.imageUrl = '/images/company/kilang-tekstil-jahitan.jpg';
   }
 }
 

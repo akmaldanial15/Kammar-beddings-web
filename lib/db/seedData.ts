@@ -77,7 +77,7 @@ export const initialCategories: Category[] = [
     "name": "Profil Syarikat",
     "slug": "profil",
     "description": "Maklumat syarikat Tunas Sinar Jaya Enterprise, carta organisasi, visi misi dan aktiviti pengilangan tekstil.",
-    "imageUrl": "/images/company/carta-organisasi-kilang.jpg",
+    "imageUrl": "/images/company/kilang-tekstil-jahitan.jpg",
     "displayOrder": 6,
     "showInNav": true,
     "hasMegaMenu": false,
@@ -1036,7 +1036,7 @@ export const initialShowrooms: Showroom[] = [
     "phone": "011-6444 7908",
     "openingHours": "Isnin - Sabtu: 9:00 AM - 6:00 PM (Ahad: Temujanji Jualan Gudang)",
     "mapUrl": "https://maps.google.com/?q=7878B+Jalan+Permatang+Berangan+13300+Tasek+Gelugor+Pulau+Pinang",
-    "imageUrl": "/images/company/carta-organisasi-kilang.jpg",
+    "imageUrl": "/images/company/kilang-tekstil-jahitan.jpg",
     "displayOrder": 1,
     "isActive": true
   }
@@ -1066,7 +1066,7 @@ export const initialBlogPosts: BlogPost[] = [
     "excerpt": "Mengapa pengusaha homestay dan warden asrama lebih gemar memilih tilam lipat berbanding tilam span biasa.",
     "content": "Tilam lipat 3 bahagian memberikan fleksibiliti tinggi kepada pemilik homestay dan asrama. Bila tidak digunakan, ia boleh dilipat dan disusun rapi, menjimatkan ruang bilik. Tambahan pula, dengan sarung berzip, kebersihan tilam lebih terjamin kerana sarung boleh dicuci mesin.",
     "author": "Hazizi Md Rashid (Pengurus Operasi)",
-    "imageUrl": "/images/company/aktiviti-pengilangan.jpg",
+    "imageUrl": "/images/products/tilam-lipat-bujang.jpg",
     "tags": [
       "Asrama",
       "Homestay",
@@ -1082,7 +1082,7 @@ export const initialBlogPosts: BlogPost[] = [
     "excerpt": "Perjalanan Tunas Sinar Jaya Enterprise dalam menghasilkan produk jahitan tekstil berkualiti tinggi dengan harga berpatutan.",
     "content": "Bermula dari bengkel jahitan tempatan, Tunas Sinar Jaya Enterprise kini berkembang dengan unit pengeluaran yang sistematik merangkumi Unit Potong Kain, Unit Jahitan, Unit Bantal & Tilam, serta Stor Produk Siap. Komitmen kami adalah menghasilkan produk tekstil Bumiputera yang berkualiti tinggi dan berpatutan untuk seluruh rakyat Malaysia.",
     "author": "Hezwan Md Rashid (Bahagian Pentadbiran)",
-    "imageUrl": "/images/company/carta-organisasi-kilang.jpg",
+    "imageUrl": "/images/company/kilang-tekstil-jahitan.jpg",
     "tags": [
       "Profil Syarikat",
       "Tasek Gelugor",
@@ -1390,7 +1390,7 @@ export const initialWebsiteConfig: WebsiteConfig = {
         "ctaLink": "/profil",
         "secondaryCtaText": "Hubungi Kami",
         "secondaryCtaLink": "/contact",
-        "imageUrl": "/images/company/aktiviti-pengilangan.jpg",
+        "imageUrl": "/images/hero/hero-kilang-tekstil.jpg",
         "isActive": true
       },
       {
@@ -1450,7 +1450,7 @@ export const initialWebsiteConfig: WebsiteConfig = {
     "headline": "Mengilang & Memasar Produk Jahitan Tekstil Berkualiti",
     "paragraph1": "TUNAS SINAR JAYA ENTERPRISE merupakan sebuah syarikat tempatan yang terlibat dalam pengilangan dan pemasaran produk jahitan tekstil di Tasek Gelugor, Pulau Pinang. Berbekalkan pengalaman, tenaga kerja mahir serta komitmen terhadap kualiti, kami menghasilkan Tilam Toto, tilam lipat, bantal gebu dan cadar pada harga kompetitif.",
     "paragraph2": "Kami memberi penekanan kepada penggunaan bahan berkualiti, proses pengeluaran yang sistematik serta kawalan mutu yang ketat bagi memastikan setiap produk mencapai standard yang tinggi. Moto kami: \"Kualiti Jahitan, Kepuasan Terjamin\" — Menjahit Kepercayaan, Menyulam Masa Depan.",
-    "imageUrl": "/images/company/aktiviti-pengilangan.jpg",
+    "imageUrl": "/images/company/kilang-tekstil-jahitan.jpg",
     "signatureTitle": "Hazizi Md Rashid",
     "signatureSub": "Pengurus Operasi, Tunas Sinar Jaya Enterprise"
   },

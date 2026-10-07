@@ -39,7 +39,7 @@ const slides: Slide[] = [
     ctaLink: '/profil#tentang-kami',
     secondaryCtaText: 'Carta Organisasi',
     secondaryCtaLink: '/profil#carta-organisasi',
-    imageUrl: '/images/company/aktiviti-pengilangan.jpg',
+    imageUrl: '/images/hero/hero-kilang-tekstil.jpg',
   },
   {
     id: 'slide-3',

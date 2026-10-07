@@ -63,7 +63,7 @@ export function CategoryGrid() {
       name: 'Profil Syarikat & 4 Unit Kilang',
       description: 'Tunas Sinar Jaya Enterprise',
       link: '/profil',
-      imageUrl: '/images/company/carta-organisasi-kilang.jpg',
+      imageUrl: '/images/company/kilang-tekstil-jahitan.jpg',
     },
   ]
 

@@ -106,7 +106,7 @@ export function MaterialAnatomy() {
           <div className="lg:col-span-7 bg-cream-light rounded-2xl border border-borderLight p-6 sm:p-8 flex flex-col justify-between shadow-card">
             <div className="relative aspect-[16/10] w-full rounded-xl overflow-hidden bg-cream border border-borderLight mb-6">
               <Image
-                src="/images/company/aktiviti-pengilangan.jpg"
+                src="/images/company/kilang-tekstil-jahitan.jpg"
                 alt={units[activeUnit].title}
                 fill
                 className="object-cover"
