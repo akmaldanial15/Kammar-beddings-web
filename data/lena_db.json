@@ -5,7 +5,7 @@
       "name": "Tilam Toto",
       "slug": "tilam-toto",
       "description": "Tilam Toto Asian Polyester Fibre tebal, empuk dan berkualiti tinggi keluaran kilang Tunas Sinar Jaya. Paling laris untuk seisi keluarga.",
-      "imageUrl": "/images/company/profil-syarikat-cover.jpg",
+      "imageUrl": "/images/products/tilam-toto-queen.jpg",
       "displayOrder": 1,
       "showInNav": true,
       "hasMegaMenu": true,
@@ -17,7 +17,7 @@
       "name": "Tilam Lipat & Bujang",
       "slug": "tilam-lipat",
       "description": "Tilam lipat 3 berzip mudah alih dan tilam bujang asrama yang praktikal, jimat ruang dan tahan lasak.",
-      "imageUrl": "/images/company/aktiviti-pengilangan.jpg",
+      "imageUrl": "/images/products/tilam-lipat-bujang.jpg",
       "displayOrder": 2,
       "showInNav": true,
       "hasMegaMenu": false,
@@ -28,7 +28,7 @@
       "name": "Bantal & Bantal Peluk",
       "slug": "bantal",
       "description": "Bantal tidur gebu dan bantal peluk isian Asian Polyester Fibre dari Unit Bantal & Tilam KAMAAR.",
-      "imageUrl": "/images/products/pillow-classic-latex.jpg",
+      "imageUrl": "/images/products/bantal-gebu-asian-fibre.jpg",
       "displayOrder": 3,
       "showInNav": true,
       "hasMegaMenu": false,
@@ -39,7 +39,7 @@
       "name": "Cadar & Comforter",
       "slug": "cadang-comforter",
       "description": "Set comforter tebal jahitan quilting kemas, cadar tilam toto dan sarung tilam berzip pelbagai corak menarik.",
-      "imageUrl": "/images/company/profil-syarikat-cover.jpg",
+      "imageUrl": "/images/hero/hero-tilam-toto-lifestyle.jpg",
       "displayOrder": 4,
       "showInNav": true,
       "hasMegaMenu": false,
@@ -50,7 +50,7 @@
       "name": "Jualan Gudang & Borong",
       "slug": "borong-gudang",
       "description": "Harga kilang terus dari Tasek Gelugor untuk asrama, homestay, tahfiz, kontraktor dan pembeli borong.",
-      "imageUrl": "/images/company/misi-visi-jualan-gudang.jpg",
+      "imageUrl": "/images/products/bantal-peluk-roll-pack.jpg",
       "displayOrder": 5,
       "showInNav": true,
       "hasMegaMenu": false,
@@ -76,7 +76,7 @@
       "name": "Koleksi Tilam Toto Paling Laris",
       "slug": "koleksi-toto",
       "description": "Tilam toto tebal isian Asian Polyester Fibre pelbagai corak floral dan moden terus dari kilang.",
-      "bannerUrl": "/images/company/profil-syarikat-cover.jpg",
+      "bannerUrl": "/images/hero/hero-tilam-toto-lifestyle.jpg",
       "displayOrder": 1,
       "isFeatured": true
     },
@@ -85,7 +85,7 @@
       "name": "Tilam Lipat 3 & Bujang Asrama",
       "slug": "tilam-lipat-asrama",
       "description": "Tilam mudah alih berzip dan tilam bujang tahan lasak untuk kegunaan asrama, homestay & ruang tamu.",
-      "bannerUrl": "/images/company/aktiviti-pengilangan.jpg",
+      "bannerUrl": "/images/products/tilam-lipat-bujang.jpg",
       "displayOrder": 2,
       "isFeatured": true
     },
@@ -94,7 +94,7 @@
       "name": "Bantal Tidur Gebu & Bantal Peluk",
       "slug": "bantal-gebu-kamaar",
       "description": "Isian fiber berkualiti tinggi yang anjal, menyokong kepala dan leher dengan selesa.",
-      "bannerUrl": "/images/products/pillow-contour-latex.jpg",
+      "bannerUrl": "/images/products/bantal-gebu-asian-fibre.jpg",
       "displayOrder": 3,
       "isFeatured": true
     },
@@ -103,7 +103,7 @@
       "name": "Pakej Jualan Gudang & Borong",
       "slug": "jualan-gudang-borong",
       "description": "Pakej penjimatan besar untuk pengusaha homestay, asrama sekolah, tahfiz dan jualan gudang.",
-      "bannerUrl": "/images/company/misi-visi-jualan-gudang.jpg",
+      "bannerUrl": "/images/products/bantal-peluk-roll-pack.jpg",
       "displayOrder": 4,
       "isFeatured": true
     }
@@ -216,7 +216,7 @@
         {
           "id": "img-toto-1",
           "productId": "prod-toto-asian-fibre",
-          "imageUrl": "/images/company/profil-syarikat-cover.jpg",
+          "imageUrl": "/images/products/tilam-toto-queen.jpg",
           "altText": "Tilam Toto Asian Polyester Fibre Paling Lariss Tunas Sinar Jaya",
           "displayOrder": 1,
           "isPrimary": true
@@ -224,8 +224,8 @@
         {
           "id": "img-toto-2",
           "productId": "prod-toto-asian-fibre",
-          "imageUrl": "/images/company/aktiviti-pengilangan.jpg",
-          "altText": "Aktiviti jahitan dan stor produk siap tilam toto",
+          "imageUrl": "/images/hero/hero-tilam-toto-lifestyle.jpg",
+          "altText": "Tilam Toto Gebu Asian Fibre Rekaan Ruang Tamu Kontemporari",
           "displayOrder": 2,
           "isPrimary": false
         }
@@ -310,10 +310,18 @@
         {
           "id": "img-gulung-1",
           "productId": "prod-toto-gulung",
-          "imageUrl": "/images/company/profil-syarikat-cover.jpg",
-          "altText": "Tilam toto gulung mudah alih KAMAAR",
+          "imageUrl": "/images/products/bantal-peluk-roll-pack.jpg",
+          "altText": "Tilam Toto Gulung Mudah Alih KAMAAR Beddings",
           "displayOrder": 1,
           "isPrimary": true
+        },
+        {
+          "id": "img-gulung-2",
+          "productId": "prod-toto-gulung",
+          "imageUrl": "/images/products/tilam-lipat-bujang.jpg",
+          "altText": "Tilam Toto Lipat & Gulung Praktikal",
+          "displayOrder": 2,
+          "isPrimary": false
         }
       ],
       "createdAt": "2026-09-01T00:00:00Z",
@@ -397,10 +405,18 @@
         {
           "id": "img-lipat-1",
           "productId": "prod-tilam-lipat-3",
-          "imageUrl": "/images/company/aktiviti-pengilangan.jpg",
+          "imageUrl": "/images/products/tilam-lipat-bujang.jpg",
           "altText": "Tilam Lipat 3 Berzip Tunas Sinar Jaya",
           "displayOrder": 1,
           "isPrimary": true
+        },
+        {
+          "id": "img-lipat-2",
+          "productId": "prod-tilam-lipat-3",
+          "imageUrl": "/images/products/tilam-toto-queen.jpg",
+          "altText": "Tilam Kusyen Empuk Tufted Berkualiti",
+          "displayOrder": 2,
+          "isPrimary": false
         }
       ],
       "createdAt": "2026-09-01T00:00:00Z",
@@ -489,10 +505,18 @@
         {
           "id": "img-asrama-1",
           "productId": "prod-tilam-single-asrama",
-          "imageUrl": "/images/company/aktiviti-pengilangan.jpg",
-          "altText": "Tilam Single Asrama Tunas Sinar Jaya",
+          "imageUrl": "/images/products/tilam-lipat-bujang.jpg",
+          "altText": "Tilam Single Asrama Heavy Duty Tunas Sinar Jaya",
           "displayOrder": 1,
           "isPrimary": true
+        },
+        {
+          "id": "img-asrama-2",
+          "productId": "prod-tilam-single-asrama",
+          "imageUrl": "/images/products/bantal-peluk-roll-pack.jpg",
+          "altText": "Bekalan Tilam & Bantal Peluk Asrama",
+          "displayOrder": 2,
+          "isPrimary": false
         }
       ],
       "createdAt": "2026-09-01T00:00:00Z",
@@ -576,7 +600,7 @@
         {
           "id": "img-bantal-1",
           "productId": "prod-bantal-gebu-asian",
-          "imageUrl": "/images/products/pillow-classic-latex.jpg",
+          "imageUrl": "/images/products/bantal-gebu-asian-fibre.jpg",
           "altText": "Bantal Tidur Gebu Asian Polyester Fibre",
           "displayOrder": 1,
           "isPrimary": true
@@ -584,8 +608,8 @@
         {
           "id": "img-bantal-2",
           "productId": "prod-bantal-gebu-asian",
-          "imageUrl": "/images/company/aktiviti-pengilangan.jpg",
-          "altText": "Unit Bantal & Tilam Tunas Sinar Jaya",
+          "imageUrl": "/images/products/bantal-peluk-roll-pack.jpg",
+          "altText": "Stok Bantal & Bantal Peluk Terus Dari Kilang",
           "displayOrder": 2,
           "isPrimary": false
         }
@@ -651,10 +675,18 @@
         {
           "id": "img-peluk-1",
           "productId": "prod-bantal-peluk-gebu",
-          "imageUrl": "/images/company/aktiviti-pengilangan.jpg",
-          "altText": "Bantal Peluk Gebu Tunas Sinar Jaya",
+          "imageUrl": "/images/products/bantal-peluk-roll-pack.jpg",
+          "altText": "Bantal Peluk Gebu Roll-Pack Tunas Sinar Jaya",
           "displayOrder": 1,
           "isPrimary": true
+        },
+        {
+          "id": "img-peluk-2",
+          "productId": "prod-bantal-peluk-gebu",
+          "imageUrl": "/images/products/bantal-gebu-asian-fibre.jpg",
+          "altText": "Bantal Peluk & Bantal Tidur Gebu KAMAAR",
+          "displayOrder": 2,
+          "isPrimary": false
         }
       ],
       "createdAt": "2026-09-01T00:00:00Z",
@@ -716,10 +748,18 @@
         {
           "id": "img-comf-1",
           "productId": "prod-comforter-tebal-quilting",
-          "imageUrl": "/images/company/profil-syarikat-cover.jpg",
-          "altText": "Set Comforter Quilting KAMAAR",
+          "imageUrl": "/images/hero/hero-tilam-toto-lifestyle.jpg",
+          "altText": "Set Comforter Tebal Quilting Corak Menarik KAMAAR",
           "displayOrder": 1,
           "isPrimary": true
+        },
+        {
+          "id": "img-comf-2",
+          "productId": "prod-comforter-tebal-quilting",
+          "imageUrl": "/images/products/tilam-toto-queen.jpg",
+          "altText": "Jahitan Quilting dan Corak Tekstil Berkualiti",
+          "displayOrder": 2,
+          "isPrimary": false
         }
       ],
       "createdAt": "2026-09-01T00:00:00Z",
@@ -792,10 +832,18 @@
         {
           "id": "img-sarung-1",
           "productId": "prod-sarung-toto-berzip",
-          "imageUrl": "/images/company/profil-syarikat-cover.jpg",
-          "altText": "Sarung Tilam Toto Berzip KAMAAR",
+          "imageUrl": "/images/products/tilam-toto-queen.jpg",
+          "altText": "Cadar & Sarung Tilam Toto Berzip KAMAAR",
           "displayOrder": 1,
           "isPrimary": true
+        },
+        {
+          "id": "img-sarung-2",
+          "productId": "prod-sarung-toto-berzip",
+          "imageUrl": "/images/hero/hero-tilam-toto-lifestyle.jpg",
+          "altText": "Sarung Tilam Toto Pelbagai Corak",
+          "displayOrder": 2,
+          "isPrimary": false
         }
       ],
       "createdAt": "2026-09-01T00:00:00Z",
@@ -858,10 +906,18 @@
         {
           "id": "img-borong-1",
           "productId": "prod-pakej-borong-10set",
-          "imageUrl": "/images/company/misi-visi-jualan-gudang.jpg",
-          "altText": "Jualan Gudang Tekstil Tunas Sinar Jaya",
+          "imageUrl": "/images/products/bantal-peluk-roll-pack.jpg",
+          "altText": "Pakej Jualan Gudang & Borong Asrama Roll-Packed",
           "displayOrder": 1,
           "isPrimary": true
+        },
+        {
+          "id": "img-borong-2",
+          "productId": "prod-pakej-borong-10set",
+          "imageUrl": "/images/products/tilam-lipat-bujang.jpg",
+          "altText": "Tilam Bujang Asrama & Bantal Gebu Lengkap",
+          "displayOrder": 2,
+          "isPrimary": false
         }
       ],
       "createdAt": "2026-09-01T00:00:00Z",
@@ -1135,7 +1191,7 @@
       "excerpt": "Petua mudah daripada tukang jahit kilang kami untuk mengekalkan keempukan dan kebersihan tilam toto seisi keluarga.",
       "content": "Tilam toto Asian Polyester Fibre keluaran Tunas Sinar Jaya direka untuk ketahanan maksimum. Untuk memastikan ia sentiasa empuk dan bersih:\n1. Jemur di bawah cahaya matahari pagi setiap 2 minggu untuk mematikan hama dan mengembalikan kegebuan fiber.\n2. Gunakan sarung berzip gantian untuk memudahkan cucian sarung luar.\n3. Elakkan melipat tilam toto secara kasar; lebih baik digulung secara kemas bagi menjaga struktur jahitan quilting.",
       "author": "Tunas Sinar Jaya Enterprise",
-      "imageUrl": "/images/company/profil-syarikat-cover.jpg",
+      "imageUrl": "/images/hero/hero-tilam-toto-lifestyle.jpg",
       "tags": [
         "Panduan",
         "Tilam Toto",
@@ -2077,7 +2133,7 @@
           "ctaLink": "/collections/tilam-toto",
           "secondaryCtaText": "Lihat Profil Syarikat",
           "secondaryCtaLink": "/profil",
-          "imageUrl": "/images/company/profil-syarikat-cover.jpg",
+          "imageUrl": "/images/hero/hero-tilam-toto-lifestyle.jpg",
           "isActive": true
         },
         {
@@ -2101,7 +2157,7 @@
           "ctaLink": "/collections/borong-gudang",
           "secondaryCtaText": "WhatsApp 011-6444 7908",
           "secondaryCtaLink": "https://wa.me/601164447908",
-          "imageUrl": "/images/company/misi-visi-jualan-gudang.jpg",
+          "imageUrl": "/images/products/bantal-peluk-roll-pack.jpg",
           "isActive": true
         }
       ]
@@ -2140,7 +2196,7 @@
       "headline": "Dapatkan Tilam Toto & Bantal Gebu Terus Dari Kilang",
       "description": "Nikmati harga istimewa dan baucar diskaun KAMAAR10 untuk pesanan dalam talian minggu ini.",
       "couponCode": "KAMAAR10",
-      "imageUrl": "/images/company/profil-syarikat-cover.jpg",
+      "imageUrl": "/images/products/tilam-toto-queen.jpg",
       "ctaText": "Beli Sekarang",
       "ctaLink": "/collections/tilam-toto"
     },

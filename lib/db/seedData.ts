@@ -20,7 +20,7 @@ export const initialCategories: Category[] = [
     "name": "Tilam Toto",
     "slug": "tilam-toto",
     "description": "Tilam Toto Asian Polyester Fibre tebal, empuk dan berkualiti tinggi keluaran kilang Tunas Sinar Jaya. Paling laris untuk seisi keluarga.",
-    "imageUrl": "/images/company/profil-syarikat-cover.jpg",
+    "imageUrl": "/images/products/tilam-toto-queen.jpg",
     "displayOrder": 1,
     "showInNav": true,
     "hasMegaMenu": true,
@@ -32,7 +32,7 @@ export const initialCategories: Category[] = [
     "name": "Tilam Lipat & Bujang",
     "slug": "tilam-lipat",
     "description": "Tilam lipat 3 berzip mudah alih dan tilam bujang asrama yang praktikal, jimat ruang dan tahan lasak.",
-    "imageUrl": "/images/company/aktiviti-pengilangan.jpg",
+    "imageUrl": "/images/products/tilam-lipat-bujang.jpg",
     "displayOrder": 2,
     "showInNav": true,
     "hasMegaMenu": false,
@@ -43,7 +43,7 @@ export const initialCategories: Category[] = [
     "name": "Bantal & Bantal Peluk",
     "slug": "bantal",
     "description": "Bantal tidur gebu dan bantal peluk isian Asian Polyester Fibre dari Unit Bantal & Tilam KAMAAR.",
-    "imageUrl": "/images/products/pillow-classic-latex.jpg",
+    "imageUrl": "/images/products/bantal-gebu-asian-fibre.jpg",
     "displayOrder": 3,
     "showInNav": true,
     "hasMegaMenu": false,
@@ -54,7 +54,7 @@ export const initialCategories: Category[] = [
     "name": "Cadar & Comforter",
     "slug": "cadang-comforter",
     "description": "Set comforter tebal jahitan quilting kemas, cadar tilam toto dan sarung tilam berzip pelbagai corak menarik.",
-    "imageUrl": "/images/company/profil-syarikat-cover.jpg",
+    "imageUrl": "/images/hero/hero-tilam-toto-lifestyle.jpg",
     "displayOrder": 4,
     "showInNav": true,
     "hasMegaMenu": false,
@@ -65,7 +65,7 @@ export const initialCategories: Category[] = [
     "name": "Jualan Gudang & Borong",
     "slug": "borong-gudang",
     "description": "Harga kilang terus dari Tasek Gelugor untuk asrama, homestay, tahfiz, kontraktor dan pembeli borong.",
-    "imageUrl": "/images/company/misi-visi-jualan-gudang.jpg",
+    "imageUrl": "/images/products/bantal-peluk-roll-pack.jpg",
     "displayOrder": 5,
     "showInNav": true,
     "hasMegaMenu": false,
@@ -92,7 +92,7 @@ export const initialCollections: Collection[] = [
     "name": "Koleksi Tilam Toto Paling Laris",
     "slug": "koleksi-toto",
     "description": "Tilam toto tebal isian Asian Polyester Fibre pelbagai corak floral dan moden terus dari kilang.",
-    "bannerUrl": "/images/company/profil-syarikat-cover.jpg",
+    "bannerUrl": "/images/hero/hero-tilam-toto-lifestyle.jpg",
     "displayOrder": 1,
     "isFeatured": true
   },
@@ -101,7 +101,7 @@ export const initialCollections: Collection[] = [
     "name": "Tilam Lipat 3 & Bujang Asrama",
     "slug": "tilam-lipat-asrama",
     "description": "Tilam mudah alih berzip dan tilam bujang tahan lasak untuk kegunaan asrama, homestay & ruang tamu.",
-    "bannerUrl": "/images/company/aktiviti-pengilangan.jpg",
+    "bannerUrl": "/images/products/tilam-lipat-bujang.jpg",
     "displayOrder": 2,
     "isFeatured": true
   },
@@ -110,7 +110,7 @@ export const initialCollections: Collection[] = [
     "name": "Bantal Tidur Gebu & Bantal Peluk",
     "slug": "bantal-gebu-kamaar",
     "description": "Isian fiber berkualiti tinggi yang anjal, menyokong kepala dan leher dengan selesa.",
-    "bannerUrl": "/images/products/pillow-contour-latex.jpg",
+    "bannerUrl": "/images/products/bantal-gebu-asian-fibre.jpg",
     "displayOrder": 3,
     "isFeatured": true
   },
@@ -119,7 +119,7 @@ export const initialCollections: Collection[] = [
     "name": "Pakej Jualan Gudang & Borong",
     "slug": "jualan-gudang-borong",
     "description": "Pakej penjimatan besar untuk pengusaha homestay, asrama sekolah, tahfiz dan jualan gudang.",
-    "bannerUrl": "/images/company/misi-visi-jualan-gudang.jpg",
+    "bannerUrl": "/images/products/bantal-peluk-roll-pack.jpg",
     "displayOrder": 4,
     "isFeatured": true
   }
@@ -233,7 +233,7 @@ export const initialProducts: Product[] = [
       {
         "id": "img-toto-1",
         "productId": "prod-toto-asian-fibre",
-        "imageUrl": "/images/company/profil-syarikat-cover.jpg",
+        "imageUrl": "/images/products/tilam-toto-queen.jpg",
         "altText": "Tilam Toto Asian Polyester Fibre Paling Lariss Tunas Sinar Jaya",
         "displayOrder": 1,
         "isPrimary": true
@@ -241,8 +241,8 @@ export const initialProducts: Product[] = [
       {
         "id": "img-toto-2",
         "productId": "prod-toto-asian-fibre",
-        "imageUrl": "/images/company/aktiviti-pengilangan.jpg",
-        "altText": "Aktiviti jahitan dan stor produk siap tilam toto",
+        "imageUrl": "/images/hero/hero-tilam-toto-lifestyle.jpg",
+        "altText": "Tilam Toto Gebu Asian Fibre Rekaan Ruang Tamu Kontemporari",
         "displayOrder": 2,
         "isPrimary": false
       }
@@ -327,10 +327,18 @@ export const initialProducts: Product[] = [
       {
         "id": "img-gulung-1",
         "productId": "prod-toto-gulung",
-        "imageUrl": "/images/company/profil-syarikat-cover.jpg",
-        "altText": "Tilam toto gulung mudah alih KAMAAR",
+        "imageUrl": "/images/products/bantal-peluk-roll-pack.jpg",
+        "altText": "Tilam Toto Gulung Mudah Alih KAMAAR Beddings",
         "displayOrder": 1,
         "isPrimary": true
+      },
+      {
+        "id": "img-gulung-2",
+        "productId": "prod-toto-gulung",
+        "imageUrl": "/images/products/tilam-lipat-bujang.jpg",
+        "altText": "Tilam Toto Lipat & Gulung Praktikal",
+        "displayOrder": 2,
+        "isPrimary": false
       }
     ],
     "createdAt": "2026-09-01T00:00:00Z",
@@ -414,10 +422,18 @@ export const initialProducts: Product[] = [
       {
         "id": "img-lipat-1",
         "productId": "prod-tilam-lipat-3",
-        "imageUrl": "/images/company/aktiviti-pengilangan.jpg",
+        "imageUrl": "/images/products/tilam-lipat-bujang.jpg",
         "altText": "Tilam Lipat 3 Berzip Tunas Sinar Jaya",
         "displayOrder": 1,
         "isPrimary": true
+      },
+      {
+        "id": "img-lipat-2",
+        "productId": "prod-tilam-lipat-3",
+        "imageUrl": "/images/products/tilam-toto-queen.jpg",
+        "altText": "Tilam Kusyen Empuk Tufted Berkualiti",
+        "displayOrder": 2,
+        "isPrimary": false
       }
     ],
     "createdAt": "2026-09-01T00:00:00Z",
@@ -506,10 +522,18 @@ export const initialProducts: Product[] = [
       {
         "id": "img-asrama-1",
         "productId": "prod-tilam-single-asrama",
-        "imageUrl": "/images/company/aktiviti-pengilangan.jpg",
-        "altText": "Tilam Single Asrama Tunas Sinar Jaya",
+        "imageUrl": "/images/products/tilam-lipat-bujang.jpg",
+        "altText": "Tilam Single Asrama Heavy Duty Tunas Sinar Jaya",
         "displayOrder": 1,
         "isPrimary": true
+      },
+      {
+        "id": "img-asrama-2",
+        "productId": "prod-tilam-single-asrama",
+        "imageUrl": "/images/products/bantal-peluk-roll-pack.jpg",
+        "altText": "Bekalan Tilam & Bantal Peluk Asrama",
+        "displayOrder": 2,
+        "isPrimary": false
       }
     ],
     "createdAt": "2026-09-01T00:00:00Z",
@@ -593,7 +617,7 @@ export const initialProducts: Product[] = [
       {
         "id": "img-bantal-1",
         "productId": "prod-bantal-gebu-asian",
-        "imageUrl": "/images/products/pillow-classic-latex.jpg",
+        "imageUrl": "/images/products/bantal-gebu-asian-fibre.jpg",
         "altText": "Bantal Tidur Gebu Asian Polyester Fibre",
         "displayOrder": 1,
         "isPrimary": true
@@ -601,8 +625,8 @@ export const initialProducts: Product[] = [
       {
         "id": "img-bantal-2",
         "productId": "prod-bantal-gebu-asian",
-        "imageUrl": "/images/company/aktiviti-pengilangan.jpg",
-        "altText": "Unit Bantal & Tilam Tunas Sinar Jaya",
+        "imageUrl": "/images/products/bantal-peluk-roll-pack.jpg",
+        "altText": "Stok Bantal & Bantal Peluk Terus Dari Kilang",
         "displayOrder": 2,
         "isPrimary": false
       }
@@ -668,10 +692,18 @@ export const initialProducts: Product[] = [
       {
         "id": "img-peluk-1",
         "productId": "prod-bantal-peluk-gebu",
-        "imageUrl": "/images/company/aktiviti-pengilangan.jpg",
-        "altText": "Bantal Peluk Gebu Tunas Sinar Jaya",
+        "imageUrl": "/images/products/bantal-peluk-roll-pack.jpg",
+        "altText": "Bantal Peluk Gebu Roll-Pack Tunas Sinar Jaya",
         "displayOrder": 1,
         "isPrimary": true
+      },
+      {
+        "id": "img-peluk-2",
+        "productId": "prod-bantal-peluk-gebu",
+        "imageUrl": "/images/products/bantal-gebu-asian-fibre.jpg",
+        "altText": "Bantal Peluk & Bantal Tidur Gebu KAMAAR",
+        "displayOrder": 2,
+        "isPrimary": false
       }
     ],
     "createdAt": "2026-09-01T00:00:00Z",
@@ -733,10 +765,18 @@ export const initialProducts: Product[] = [
       {
         "id": "img-comf-1",
         "productId": "prod-comforter-tebal-quilting",
-        "imageUrl": "/images/company/profil-syarikat-cover.jpg",
-        "altText": "Set Comforter Quilting KAMAAR",
+        "imageUrl": "/images/hero/hero-tilam-toto-lifestyle.jpg",
+        "altText": "Set Comforter Tebal Quilting Corak Menarik KAMAAR",
         "displayOrder": 1,
         "isPrimary": true
+      },
+      {
+        "id": "img-comf-2",
+        "productId": "prod-comforter-tebal-quilting",
+        "imageUrl": "/images/products/tilam-toto-queen.jpg",
+        "altText": "Jahitan Quilting dan Corak Tekstil Berkualiti",
+        "displayOrder": 2,
+        "isPrimary": false
       }
     ],
     "createdAt": "2026-09-01T00:00:00Z",
@@ -809,10 +849,18 @@ export const initialProducts: Product[] = [
       {
         "id": "img-sarung-1",
         "productId": "prod-sarung-toto-berzip",
-        "imageUrl": "/images/company/profil-syarikat-cover.jpg",
-        "altText": "Sarung Tilam Toto Berzip KAMAAR",
+        "imageUrl": "/images/products/tilam-toto-queen.jpg",
+        "altText": "Cadar & Sarung Tilam Toto Berzip KAMAAR",
         "displayOrder": 1,
         "isPrimary": true
+      },
+      {
+        "id": "img-sarung-2",
+        "productId": "prod-sarung-toto-berzip",
+        "imageUrl": "/images/hero/hero-tilam-toto-lifestyle.jpg",
+        "altText": "Sarung Tilam Toto Pelbagai Corak",
+        "displayOrder": 2,
+        "isPrimary": false
       }
     ],
     "createdAt": "2026-09-01T00:00:00Z",
@@ -875,10 +923,18 @@ export const initialProducts: Product[] = [
       {
         "id": "img-borong-1",
         "productId": "prod-pakej-borong-10set",
-        "imageUrl": "/images/company/misi-visi-jualan-gudang.jpg",
-        "altText": "Jualan Gudang Tekstil Tunas Sinar Jaya",
+        "imageUrl": "/images/products/bantal-peluk-roll-pack.jpg",
+        "altText": "Pakej Jualan Gudang & Borong Asrama Roll-Packed",
         "displayOrder": 1,
         "isPrimary": true
+      },
+      {
+        "id": "img-borong-2",
+        "productId": "prod-pakej-borong-10set",
+        "imageUrl": "/images/products/tilam-lipat-bujang.jpg",
+        "altText": "Tilam Bujang Asrama & Bantal Gebu Lengkap",
+        "displayOrder": 2,
+        "isPrimary": false
       }
     ],
     "createdAt": "2026-09-01T00:00:00Z",
@@ -994,7 +1050,7 @@ export const initialBlogPosts: BlogPost[] = [
     "excerpt": "Petua mudah daripada tukang jahit kilang kami untuk mengekalkan keempukan dan kebersihan tilam toto seisi keluarga.",
     "content": "Tilam toto Asian Polyester Fibre keluaran Tunas Sinar Jaya direka untuk ketahanan maksimum. Untuk memastikan ia sentiasa empuk dan bersih:\n1. Jemur di bawah cahaya matahari pagi setiap 2 minggu untuk mematikan hama dan mengembalikan kegebuan fiber.\n2. Gunakan sarung berzip gantian untuk memudahkan cucian sarung luar.\n3. Elakkan melipat tilam toto secara kasar; lebih baik digulung secara kemas bagi menjaga struktur jahitan quilting.",
     "author": "Tunas Sinar Jaya Enterprise",
-    "imageUrl": "/images/company/profil-syarikat-cover.jpg",
+    "imageUrl": "/images/hero/hero-tilam-toto-lifestyle.jpg",
     "tags": [
       "Panduan",
       "Tilam Toto",
@@ -1059,6 +1115,14 @@ export const initialSiteSettings: SiteSettings = {
 }
 
 export const initialStaffMembers: StaffMember[] = [
+  {
+    "id": "staff-admin-main",
+    "email": "admin@kamaarbeddings.com",
+    "name": "Kamaar Admin",
+    "role": "owner",
+    "isActive": true,
+    "createdAt": "2026-09-01T00:00:00Z"
+  },
   {
     "id": "staff-hazizi",
     "email": "hazizi@kamaar.my",
@@ -1205,10 +1269,30 @@ export const initialWebsiteConfig: WebsiteConfig = {
         "title": "Tilam Toto & Lipat",
         "titleBm": "Tilam Toto & Lipat",
         "items": [
-          { "id": "m-1", "label": "Tilam Toto Queen Tebal", "labelBm": "Tilam Toto Queen Tebal", "href": "/products/tilam-toto-queen" },
-          { "id": "m-2", "label": "Tilam Toto Single Gebu", "labelBm": "Tilam Toto Single Gebu", "href": "/products/tilam-toto-single" },
-          { "id": "m-3", "label": "Tilam Lipat 3 Tebal Bujang", "labelBm": "Tilam Lipat 3 Tebal Bujang", "href": "/products/tilam-lipat-3" },
-          { "id": "m-4", "label": "Tilam Bujang Asrama Foam", "labelBm": "Tilam Bujang Asrama Foam", "href": "/products/tilam-bujang-asrama" }
+          {
+            "id": "m-1",
+            "label": "Tilam Toto Queen Tebal",
+            "labelBm": "Tilam Toto Queen Tebal",
+            "href": "/products/tilam-toto-queen"
+          },
+          {
+            "id": "m-2",
+            "label": "Tilam Toto Single Gebu",
+            "labelBm": "Tilam Toto Single Gebu",
+            "href": "/products/tilam-toto-single"
+          },
+          {
+            "id": "m-3",
+            "label": "Tilam Lipat 3 Tebal Bujang",
+            "labelBm": "Tilam Lipat 3 Tebal Bujang",
+            "href": "/products/tilam-lipat-3"
+          },
+          {
+            "id": "m-4",
+            "label": "Tilam Bujang Asrama Foam",
+            "labelBm": "Tilam Bujang Asrama Foam",
+            "href": "/products/tilam-bujang-asrama"
+          }
         ]
       },
       {
@@ -1216,10 +1300,30 @@ export const initialWebsiteConfig: WebsiteConfig = {
         "title": "Bantal & Cadar",
         "titleBm": "Bantal & Cadar",
         "items": [
-          { "id": "m-5", "label": "Bantal Tidur Gebu Asian Fibre", "labelBm": "Bantal Tidur Gebu Asian Fibre", "href": "/products/bantal-gebu-asian-fibre" },
-          { "id": "m-6", "label": "Bantal Peluk Asian Polyester", "labelBm": "Bantal Peluk Asian Polyester", "href": "/products/bantal-peluk-polyester" },
-          { "id": "m-7", "label": "Set Comforter & Cadar Queen", "labelBm": "Set Comforter & Cadar Queen", "href": "/products/set-comforter-queen" },
-          { "id": "m-8", "label": "Sarung Tilam Toto Berzip", "labelBm": "Sarung Tilam Toto Berzip", "href": "/products/sarung-tilam-toto" }
+          {
+            "id": "m-5",
+            "label": "Bantal Tidur Gebu Asian Fibre",
+            "labelBm": "Bantal Tidur Gebu Asian Fibre",
+            "href": "/products/bantal-gebu-asian-fibre"
+          },
+          {
+            "id": "m-6",
+            "label": "Bantal Peluk Asian Polyester",
+            "labelBm": "Bantal Peluk Asian Polyester",
+            "href": "/products/bantal-peluk-polyester"
+          },
+          {
+            "id": "m-7",
+            "label": "Set Comforter & Cadar Queen",
+            "labelBm": "Set Comforter & Cadar Queen",
+            "href": "/products/set-comforter-queen"
+          },
+          {
+            "id": "m-8",
+            "label": "Sarung Tilam Toto Berzip",
+            "labelBm": "Sarung Tilam Toto Berzip",
+            "href": "/products/sarung-tilam-toto"
+          }
         ]
       },
       {
@@ -1227,10 +1331,30 @@ export const initialWebsiteConfig: WebsiteConfig = {
         "title": "Kilang & Borong",
         "titleBm": "Kilang & Borong",
         "items": [
-          { "id": "m-9", "label": "Profil Syarikat & 4 Unit Kilang", "labelBm": "Profil Syarikat & 4 Unit Kilang", "href": "/profil" },
-          { "id": "m-10", "label": "Carta Organisasi Pengurusan", "labelBm": "Carta Organisasi Pengurusan", "href": "/profil#carta-organisasi" },
-          { "id": "m-11", "label": "Pakej Borong Asrama (10 Set)", "labelBm": "Pakej Borong Asrama (10 Set)", "href": "/products/pakej-borong-asrama" },
-          { "id": "m-12", "label": "Jualan Gudang Tasek Gelugor", "labelBm": "Jualan Gudang Tasek Gelugor", "href": "/collections/borong-gudang" }
+          {
+            "id": "m-9",
+            "label": "Profil Syarikat & 4 Unit Kilang",
+            "labelBm": "Profil Syarikat & 4 Unit Kilang",
+            "href": "/profil"
+          },
+          {
+            "id": "m-10",
+            "label": "Carta Organisasi Pengurusan",
+            "labelBm": "Carta Organisasi Pengurusan",
+            "href": "/profil#carta-organisasi"
+          },
+          {
+            "id": "m-11",
+            "label": "Pakej Borong Asrama (10 Set)",
+            "labelBm": "Pakej Borong Asrama (10 Set)",
+            "href": "/products/pakej-borong-asrama"
+          },
+          {
+            "id": "m-12",
+            "label": "Jualan Gudang Tasek Gelugor",
+            "labelBm": "Jualan Gudang Tasek Gelugor",
+            "href": "/collections/borong-gudang"
+          }
         ]
       }
     ],
@@ -1254,7 +1378,7 @@ export const initialWebsiteConfig: WebsiteConfig = {
         "ctaLink": "/collections/tilam-toto",
         "secondaryCtaText": "Lihat Profil Syarikat",
         "secondaryCtaLink": "/profil",
-        "imageUrl": "/images/company/profil-syarikat-cover.jpg",
+        "imageUrl": "/images/hero/hero-tilam-toto-lifestyle.jpg",
         "isActive": true
       },
       {
@@ -1278,7 +1402,7 @@ export const initialWebsiteConfig: WebsiteConfig = {
         "ctaLink": "/collections/borong-gudang",
         "secondaryCtaText": "WhatsApp 011-6444 7908",
         "secondaryCtaLink": "https://wa.me/601164447908",
-        "imageUrl": "/images/company/misi-visi-jualan-gudang.jpg",
+        "imageUrl": "/images/products/bantal-peluk-roll-pack.jpg",
         "isActive": true
       }
     ]
@@ -1317,7 +1441,7 @@ export const initialWebsiteConfig: WebsiteConfig = {
     "headline": "Dapatkan Tilam Toto & Bantal Gebu Terus Dari Kilang",
     "description": "Nikmati harga istimewa dan baucar diskaun KAMAAR10 untuk pesanan dalam talian minggu ini.",
     "couponCode": "KAMAAR10",
-    "imageUrl": "/images/company/profil-syarikat-cover.jpg",
+    "imageUrl": "/images/products/tilam-toto-queen.jpg",
     "ctaText": "Beli Sekarang",
     "ctaLink": "/collections/tilam-toto"
   },

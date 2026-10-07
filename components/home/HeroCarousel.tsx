@@ -28,7 +28,7 @@ const slides: Slide[] = [
     ctaLink: '/collections/tilam-toto',
     secondaryCtaText: 'Profil Kilang Kami',
     secondaryCtaLink: '/profil',
-    imageUrl: '/images/company/profil-syarikat-cover.jpg',
+    imageUrl: '/images/hero/hero-tilam-toto-lifestyle.jpg',
   },
   {
     id: 'slide-2',
@@ -50,7 +50,7 @@ const slides: Slide[] = [
     ctaLink: '/collections/borong-gudang',
     secondaryCtaText: 'WhatsApp 011-6444 7908',
     secondaryCtaLink: 'https://wa.me/601164447908',
-    imageUrl: '/images/company/misi-visi-jualan-gudang.jpg',
+    imageUrl: '/images/products/bantal-peluk-roll-pack.jpg',
   },
 ]
 

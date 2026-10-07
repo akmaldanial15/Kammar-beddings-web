@@ -437,7 +437,7 @@ export function CheckoutClient({ initialPaymentSettings }: CheckoutClientProps) 
   }
 
   // Fallback product image if missing or empty
-  const defaultProductImage = '/images/products/mattress-miracle-sleep.jpg'
+  const defaultProductImage = '/images/products/tilam-toto-queen.jpg'
 
   if (items.length === 0 && !isSubmitting) {
     return (
