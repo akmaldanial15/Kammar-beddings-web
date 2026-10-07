@@ -16,6 +16,7 @@ export function MaterialAnatomy() {
       description: 'Tenaga kerja membentang gulungan fabrik tekstil dan memotong mengikut pola piawaian menggunakan mesin pemotong industri untuk menjamin ketepatan saiz tilam toto dan cadar.',
       icon: Scissors,
       stats: '100% Ukuran Tepat',
+      imageUrl: '/images/company/unit-potong-kain.jpg',
     },
     {
       title: 'Unit Jahitan Industri',
@@ -24,6 +25,7 @@ export function MaterialAnatomy() {
       description: 'Barisan mesin jahit industri yang dikendalikan tukang jahit mahir tempatan bagi menjahit sarung, tepi piping kukuh serta sulaman quilting corak yang teguh dan kemas.',
       icon: Layers,
       stats: 'Jahitan Gred Industri',
+      imageUrl: '/images/company/unit-jahitan.jpg',
     },
     {
       title: 'Unit Bantal & Tilam',
@@ -32,6 +34,7 @@ export function MaterialAnatomy() {
       description: 'Pemasangan isian Asian Polyester Fibre bermutu tinggi ke dalam tilam toto dan bantal. Serat berketumpatan optimum yang memberikan keempukan selesa tanpa mudah mendap.',
       icon: Sparkles,
       stats: 'Asian Polyester Fibre',
+      imageUrl: '/images/company/unit-bantal-tilam.jpg',
     },
     {
       title: 'Stor Produk Siap & QC',
@@ -40,6 +43,7 @@ export function MaterialAnatomy() {
       description: 'Setiap produk melalui pemeriksaan kawalan kualiti (QC) rapi sebelum dimasukkan ke dalam pembungkusan kedap udara/plastik tahan debu untuk edaran terus ke pelanggan dan pemborong.',
       icon: Package,
       stats: 'QC 100% Lulus',
+      imageUrl: '/images/company/unit-stor-siap.jpg',
     },
   ]
 
@@ -106,10 +110,10 @@ export function MaterialAnatomy() {
           <div className="lg:col-span-7 bg-cream-light rounded-2xl border border-borderLight p-6 sm:p-8 flex flex-col justify-between shadow-card">
             <div className="relative aspect-[16/10] w-full rounded-xl overflow-hidden bg-cream border border-borderLight mb-6">
               <Image
-                src="/images/company/kilang-tekstil-jahitan.jpg"
+                src={units[activeUnit].imageUrl}
                 alt={units[activeUnit].title}
                 fill
-                className="object-cover"
+                className="object-cover transition-opacity duration-300"
               />
               <div className="absolute inset-0 bg-gradient-to-t from-forest-dark/85 via-black/20 to-transparent" />
               <div className="absolute bottom-4 left-4 right-4 text-warmwhite">

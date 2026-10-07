@@ -36,7 +36,7 @@ export function CategoryGrid() {
       subtitle: 'Harga pengeluar terus dari kilang Tasek Gelugor untuk pembekal asrama, pusat tahfiz, homestay dan kontraktor.',
       tag: 'Harga Terus Dari Kilang',
       link: '/collections/borong-gudang',
-      imageUrl: '/images/products/bantal-peluk-roll-pack.jpg',
+      imageUrl: '/images/hero/hero-jualan-gudang-crowd.jpg',
     },
   ]
 
@@ -69,7 +69,7 @@ export function CategoryGrid() {
       name: 'Profil Kilang & 4 Unit Operasi',
       description: 'Tunas Sinar Jaya Enterprise',
       link: '/profil',
-      imageUrl: '/images/company/kilang-tekstil-jahitan.jpg',
+      imageUrl: '/images/company/team-kamaar-factory.jpg',
     },
     {
       name: 'Tempahan Pukal (OEM) & Kerajaan',

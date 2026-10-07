@@ -95,7 +95,7 @@
       "name": "Jualan Gudang & Borong",
       "slug": "borong-gudang",
       "description": "Harga kilang terus dari Tasek Gelugor untuk pembekal asrama, homestay, tahfiz, kontraktor dan pembeli borong pukal.",
-      "imageUrl": "/images/products/bantal-peluk-roll-pack.jpg",
+      "imageUrl": "/images/hero/hero-jualan-gudang-crowd.jpg",
       "displayOrder": 9,
       "showInNav": true,
       "hasMegaMenu": false,
@@ -963,7 +963,7 @@
       "specifications": {
         "Pakej": "10 Set Lengkap (10 Tilam + 10 Bantal Gebu)",
         "Pengeluar": "Tunas Sinar Jaya Enterprise (Tasek Gelugor)",
-        "Pesanan Khas": "WhatsApp 011-6444 7908"
+        "Pesanan Khas": "WhatsApp 019-478 6991"
       },
       "faq": [],
       "status": "published",
@@ -998,7 +998,7 @@
         {
           "id": "img-borong-1",
           "productId": "prod-pakej-borong-10set",
-          "imageUrl": "/images/products/bantal-peluk-roll-pack.jpg",
+          "imageUrl": "/images/hero/hero-jualan-gudang-crowd.jpg",
           "altText": "Jualan Gudang Tekstil Tunas Sinar Jaya",
           "displayOrder": 1,
           "isPrimary": true
@@ -1259,7 +1259,7 @@
       "address": "7878B Jalan Permatang Berangan",
       "state": "Pulau Pinang",
       "postcode": "13300",
-      "phone": "011-6444 7908",
+      "phone": "019-478 6991",
       "openingHours": "Isnin - Sabtu: 9:00 AM - 6:00 PM (Ahad: Jualan Gudang & Temujanji)",
       "mapUrl": "https://maps.google.com/?q=7878B+Jalan+Permatang+Berangan+13300+Tasek+Gelugor+Pulau+Pinang",
       "imageUrl": "/images/company/kilang-tekstil-jahitan.jpg",
@@ -1307,7 +1307,7 @@
       "excerpt": "Bagaimana pakej jualan gudang dan tilam bujang heavy duty kilang menjimatkan kos operasi pengusaha asrama dan homestay.",
       "content": "Bagi pengusaha asrama, tahfiz dan homestay, ketahanan tilam adalah kunci penjimatan. Tilam bujang dengan jahitan bertetulang dan teras padat rebonded memastikan tilam tidak mudah melendut walau digunakan setiap hari oleh penghuni berbeza.",
       "author": "Tunas Sinar Jaya Enterprise",
-      "imageUrl": "/images/products/bantal-peluk-roll-pack.jpg",
+      "imageUrl": "/images/hero/hero-jualan-gudang-crowd.jpg",
       "tags": [
         "Asrama",
         "Borong",
@@ -1328,8 +1328,8 @@
     "currency": "MYR",
     "currencySymbol": "RM",
     "contactEmail": "tunassinar@gmail.com",
-    "contactPhone": "011-6444 7908",
-    "whatsappNumber": "+601164447908",
+    "contactPhone": "019-478 6991",
+    "whatsappNumber": "+60194786991",
     "address": "7878B Jalan Permatang Berangan, 13300 Tasek Gelugor SPU, Pulau Pinang",
     "announcementText": "Jualan Gudang Terus Dari Kilang • Penghantaran ke Seluruh Semenanjung Malaysia",
     "announcementUrl": "/collections/tilam-toto",
@@ -2066,7 +2066,7 @@
       "code": "AFF-DANIAL",
       "name": "Ahmad Danial",
       "email": "danial@kamaar.my",
-      "phone": "011-6444 7908",
+      "phone": "019-478 6991",
       "bankName": "Maybank",
       "bankAccountNumber": "164012345678",
       "commissionType": "percentage",
@@ -2263,9 +2263,9 @@
           "subtitle": "Pakej lengkap tilam bujang, bantal tidur gebu dan cadar berzip untuk asrama sekolah, tahfiz, homestay dan kemudahan kontraktor.",
           "ctaText": "Pakej Jualan Gudang",
           "ctaLink": "/collections/borong-gudang",
-          "secondaryCtaText": "WhatsApp 011-6444 7908",
-          "secondaryCtaLink": "https://wa.me/601164447908",
-          "imageUrl": "/images/products/bantal-peluk-roll-pack.jpg",
+          "secondaryCtaText": "WhatsApp 019-478 6991",
+          "secondaryCtaLink": "https://wa.me/60194786991",
+          "imageUrl": "/images/hero/hero-jualan-gudang-crowd.jpg",
           "isActive": true
         }
       ]
@@ -2318,8 +2318,8 @@
       "signatureSub": "Pengurus Operasi, Tunas Sinar Jaya Enterprise"
     },
     "socialAndContact": {
-      "whatsappNumber": "+601164447908",
-      "phoneDisplay": "011-6444 7908",
+      "whatsappNumber": "+60194786991",
+      "phoneDisplay": "019-478 6991",
       "emailDisplay": "tunassinar@gmail.com",
       "addressDisplay": "7878B Jalan Permatang Berangan, 13300 Tasek Gelugor SPU, Pulau Pinang",
       "instagramUrl": "",

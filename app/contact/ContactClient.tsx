@@ -56,8 +56,8 @@ export function ContactClient() {
               <Phone className="w-4 h-4 text-gold flex-shrink-0 mt-0.5" />
               <div>
                 <span className="font-bold text-warmwhite block">Telefon / WhatsApp</span>
-                <a href="https://wa.me/601164447908" target="_blank" rel="noopener noreferrer" className="hover:text-gold transition-colors">
-                  011-6444 7908
+                <a href="https://wa.me/60194786991" target="_blank" rel="noopener noreferrer" className="hover:text-gold transition-colors">
+                  019-478 6991 / 04-573 6991
                 </a>
               </div>
             </div>

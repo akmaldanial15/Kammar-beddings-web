@@ -9,7 +9,7 @@ export const translations = {
     findShowroom: 'Premis Kilang & Gudang',
     customerCare: 'Khidmat Pelanggan',
     businessEnquiries: 'Tender & Borong Asrama',
-    phone: '011-6444 7908',
+    phone: '019-478 6991',
 
     // Nav
     navMattresses: 'Tilam Toto',
@@ -174,7 +174,7 @@ export const translations = {
     findShowroom: 'Premis Kilang & Gudang',
     customerCare: 'Pusat Khidmat Pelanggan',
     businessEnquiries: 'Tender & Borong Asrama',
-    phone: '011-6444 7908',
+    phone: '019-478 6991',
 
     // Nav
     navMattresses: 'Tilam Toto',

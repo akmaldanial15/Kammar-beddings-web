@@ -858,13 +858,13 @@ export function Header() {
 
               {/* WhatsApp Concierge Button */}
               <a
-                href="https://wa.me/601164447908?text=Salam%20Tunas%20Sinar%20Jaya%20Kamaar%20Beddings,%20saya%20ingin%20bertanya%20tentang%20produk%20dan%20borong."
+                href="https://wa.me/60194786991?text=Salam%20Tunas%20Sinar%20Jaya%20Kamaar%20Beddings,%20saya%20ingin%20bertanya%20tentang%20produk%20dan%20borong."
                 target="_blank"
                 rel="noopener noreferrer"
                 className="w-full py-2.5 px-4 bg-gradient-to-r from-emerald-600 to-teal-700 hover:from-emerald-700 hover:to-teal-800 text-white text-xs font-bold rounded-xl flex items-center justify-center space-x-2 transition-all shadow-sm"
               >
                 <Phone className="w-3.5 h-3.5 text-emerald-200" />
-                <span>{locale === 'bm' ? 'WhatsApp Kilang (011-6444 7908)' : 'Official WhatsApp (011-6444 7908)'}</span>
+                <span>{locale === 'bm' ? 'WhatsApp Kilang (019-478 6991)' : 'Official WhatsApp (019-478 6991)'}</span>
               </a>
             </div>
           </div>

@@ -56,12 +56,12 @@ const slides: Slide[] = [
     id: 'slide-4',
     badge: 'HARGA BORONG GUDANG',
     title: 'Jualan Gudang & Tempahan Borong Asrama / Homestay',
-    subtitle: 'Harga pengeluar terus dari Tasek Gelugor, Pulau Pinang. Pakej lengkap tilam, bantal tidur gebu dan cadar berzip berkualiti tinggi.',
+    subtitle: 'Harga pengeluar terus dari Tasek Gelugor, Pulau Pinang. Pakej lengkap tilam bujang asrama, bantal tidur gebu dan cadar berzip berkualiti tinggi.',
     ctaText: 'Pakej Jualan Gudang',
     ctaLink: '/collections/borong-gudang',
-    secondaryCtaText: 'WhatsApp 011-6444 7908',
-    secondaryCtaLink: 'https://wa.me/601164447908',
-    imageUrl: '/images/products/bantal-peluk-roll-pack.jpg',
+    secondaryCtaText: 'WhatsApp 019-478 6991',
+    secondaryCtaLink: 'https://wa.me/60194786991',
+    imageUrl: '/images/hero/hero-jualan-gudang-crowd.jpg',
   },
 ]
 

@@ -36,24 +36,28 @@ const factoryUnits = [
     description: 'Proses pemotongan fabrik tekstil dengan mesin berketepatan tinggi untuk memastikan ukuran seragam dan jimat bahan.',
     badge: 'Fasa 1: Penyediaan Fabrik',
     icon: Scissors,
+    image: '/images/company/unit-potong-kain.jpg',
   },
   {
     name: 'Unit Jahitan',
     description: 'Barisan mesin jahit industri yang dikendalikan tenaga kerja mahir tempatan bagi menghasilkan jahitan yang kemas, kukuh dan rapi.',
     badge: 'Fasa 2: Jahitan & Kemasan',
     icon: Layers,
+    image: '/images/company/unit-jahitan.jpg',
   },
   {
     name: 'Unit Bantal & Tilam',
     description: 'Pemasangan isian Asian Polyester Fibre bermutu tinggi, pembentukan tilam toto empuk, tilam lipat serta bantal tidur gebu.',
     badge: 'Fasa 3: Isian & Quilting',
     icon: Sparkles,
+    image: '/images/company/unit-bantal-tilam.jpg',
   },
   {
     name: 'Stor Produk Siap',
     description: 'Gudang penyimpanan sistematik dengan kawalan kualiti (QC) ketat sebelum pembungkusan dan pengedaran ke seluruh Malaysia.',
     badge: 'Fasa 4: QC & Logistik',
     icon: Package,
+    image: '/images/company/unit-stor-siap.jpg',
   },
 ]
 
@@ -191,8 +195,8 @@ export default function ProfilPage() {
               <div className="relative rounded-3xl overflow-hidden border-2 border-gold/30 shadow-2xl bg-white/5 backdrop-blur-sm group">
                 <div className="relative aspect-[3/4] w-full">
                   <Image
-                    src="/images/company/profil-syarikat-cover.jpg"
-                    alt="Profil Syarikat Tunas Sinar Jaya Enterprise - Tilam Toto Asian Polyester Fibre"
+                    src="/images/hero/hero-tilam-toto-lifestyle.jpg"
+                    alt="Tilam Toto Asian Polyester Fibre - Tunas Sinar Jaya Enterprise"
                     fill
                     sizes="(max-width: 1024px) 100vw, 40vw"
                     className="object-cover transition-transform duration-700 group-hover:scale-105"
@@ -285,8 +289,8 @@ export default function ProfilPage() {
             <div className="relative rounded-3xl overflow-hidden border border-[#E8E2D8] shadow-lg bg-white">
               <div className="relative aspect-[4/3] w-full">
                 <Image
-                  src="/images/company/aktiviti-pengilangan.jpg"
-                  alt="Aktiviti Pengilangan Produk Tunas Sinar Jaya Enterprise"
+                  src="/images/company/hadapan-kilang.jpg"
+                  alt="Premis Kilang Tunas Sinar Jaya Enterprise di Tasek Gelugor"
                   fill
                   sizes="(max-width: 1024px) 100vw, 50vw"
                   className="object-cover"
@@ -294,13 +298,13 @@ export default function ProfilPage() {
               </div>
               <div className="p-5 bg-white border-t border-[#E8E2D8]">
                 <span className="text-xs font-bold uppercase tracking-wider text-gold-dark block">
-                  Dokumentasi Kilang
+                  Premis &amp; Operasi Kilang
                 </span>
                 <h4 className="font-serif text-base font-bold text-forest">
-                  Aktiviti Pengilangan di Tasek Gelugor, Pulau Pinang
+                  Premis Utama di 7878B Jalan Permatang Berangan, Tasek Gelugor
                 </h4>
                 <p className="text-xs text-charcoal-muted mt-1">
-                  Merangkumi Unit Potong Kain, Unit Jahitan Industri, Unit Bantal &amp; Tilam, serta Stor Produk Siap.
+                  Kompleks pembuatan dan stor seluas ribuan kaki persegi yang menempatkan barisan mesin potong, unit jahitan dan stor produk siap.
                 </p>
               </div>
             </div>
@@ -327,16 +331,29 @@ export default function ProfilPage() {
               return (
                 <div
                   key={u.name}
-                  className="bg-white rounded-2xl p-6 border border-[#E8E2D8] hover:border-forest/40 hover:shadow-md transition-all space-y-3"
+                  className="bg-white rounded-2xl overflow-hidden border border-[#E8E2D8] hover:border-forest/40 hover:shadow-lg transition-all space-y-0 group flex flex-col"
                 >
-                  <div className="w-12 h-12 rounded-xl bg-forest/5 text-forest flex items-center justify-center border border-forest/10">
-                    <Icon className="w-6 h-6 text-gold" />
+                  <div className="relative aspect-[4/3] w-full bg-cream overflow-hidden">
+                    <Image
+                      src={u.image}
+                      alt={u.name}
+                      fill
+                      sizes="(max-width: 640px) 100vw, (max-width: 1024px) 50vw, 25vw"
+                      className="object-cover group-hover:scale-105 transition-transform duration-500"
+                    />
+                    <div className="absolute top-3 left-3 w-8 h-8 rounded-lg bg-forest/85 backdrop-blur-xs text-gold flex items-center justify-center shadow">
+                      <Icon className="w-4 h-4 text-gold" />
+                    </div>
                   </div>
-                  <span className="text-[10px] font-bold px-2.5 py-0.5 rounded-full bg-cream text-forest border border-borderLight inline-block">
-                    {u.badge}
-                  </span>
-                  <h4 className="font-bold text-forest text-base">{u.name}</h4>
-                  <p className="text-xs text-charcoal-muted leading-relaxed">{u.description}</p>
+                  <div className="p-5 space-y-2 flex-1 flex flex-col justify-between">
+                    <div>
+                      <span className="text-[10px] font-bold px-2 py-0.5 rounded-full bg-cream text-forest border border-borderLight inline-block mb-1.5">
+                        {u.badge}
+                      </span>
+                      <h4 className="font-bold text-forest text-base">{u.name}</h4>
+                    </div>
+                    <p className="text-xs text-charcoal-muted leading-relaxed">{u.description}</p>
+                  </div>
                 </div>
               )
             })}
@@ -531,6 +548,97 @@ export default function ProfilPage() {
         </div>
       </section>
 
+      {/* Galeri Fasiliti Kilang & Stor Bahan Mentah */}
+      <section className="py-16 sm:py-20 bg-[#FAF7F2] border-t border-[#E8E2D8]">
+        <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 space-y-10">
+          <div className="text-center max-w-2xl mx-auto space-y-2">
+            <span className="text-xs font-bold uppercase tracking-widest text-gold-dark">
+              Gambar Sebenar Kilang
+            </span>
+            <h3 className="font-serif text-2xl sm:text-3xl font-bold text-forest">
+              Fasiliti Pengilangan &amp; Stor Bahan Mentah
+            </h3>
+            <p className="text-xs text-charcoal-muted">
+              Gambar sebenar dari lantai operasi kilang Tunas Sinar Jaya Enterprise di Tasek Gelugor, Pulau Pinang.
+            </p>
+          </div>
+
+          <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-4 gap-5">
+            {/* 1. Hadapan Kilang */}
+            <div className="bg-white rounded-2xl overflow-hidden border border-[#E8E2D8] shadow-2xs group">
+              <div className="relative aspect-[4/3] w-full">
+                <Image
+                  src="/images/company/hadapan-kilang.jpg"
+                  alt="Hadapan Kilang Tasek Gelugor"
+                  fill
+                  sizes="(max-width: 640px) 100vw, 25vw"
+                  className="object-cover group-hover:scale-105 transition-transform duration-500"
+                />
+              </div>
+              <div className="p-4 space-y-1">
+                <span className="text-[10px] font-bold uppercase tracking-wider text-gold-dark block">Premis Kilang</span>
+                <h5 className="font-bold text-forest text-sm">Hadapan Kilang &amp; Stor</h5>
+                <p className="text-[11px] text-charcoal-muted">Premis operasi di Permatang Berangan, Tasek Gelugor.</p>
+              </div>
+            </div>
+
+            {/* 2. Ruang Dalam Kilang */}
+            <div className="bg-white rounded-2xl overflow-hidden border border-[#E8E2D8] shadow-2xs group">
+              <div className="relative aspect-[4/3] w-full">
+                <Image
+                  src="/images/company/dalam-kilang-1.jpg"
+                  alt="Ruang Pengeluaran Dalam Kilang"
+                  fill
+                  sizes="(max-width: 640px) 100vw, 25vw"
+                  className="object-cover group-hover:scale-105 transition-transform duration-500"
+                />
+              </div>
+              <div className="p-4 space-y-1">
+                <span className="text-[10px] font-bold uppercase tracking-wider text-gold-dark block">Pengeluaran</span>
+                <h5 className="font-bold text-forest text-sm">Stesen Jahitan Industri</h5>
+                <p className="text-[11px] text-charcoal-muted">Ruang jahitan kemas berhawa sejuk &amp; tersusun rapi.</p>
+              </div>
+            </div>
+
+            {/* 3. Stor Kain & Fabrik */}
+            <div className="bg-white rounded-2xl overflow-hidden border border-[#E8E2D8] shadow-2xs group">
+              <div className="relative aspect-[4/3] w-full">
+                <Image
+                  src="/images/company/stor-kain.jpg"
+                  alt="Stor Gulungan Kain & Fabrik"
+                  fill
+                  sizes="(max-width: 640px) 100vw, 25vw"
+                  className="object-cover group-hover:scale-105 transition-transform duration-500"
+                />
+              </div>
+              <div className="p-4 space-y-1">
+                <span className="text-[10px] font-bold uppercase tracking-wider text-gold-dark block">Bahan Mentah</span>
+                <h5 className="font-bold text-forest text-sm">Stor Gulungan Fabrik</h5>
+                <p className="text-[11px] text-charcoal-muted">Stok fabrik pelbagai corak menarik Random &amp; Floral.</p>
+              </div>
+            </div>
+
+            {/* 4. Stor Isian Batting */}
+            <div className="bg-white rounded-2xl overflow-hidden border border-[#E8E2D8] shadow-2xs group">
+              <div className="relative aspect-[4/3] w-full">
+                <Image
+                  src="/images/company/stor-polyester.jpg"
+                  alt="Stor Isian Batting Polyester & Kekabu"
+                  fill
+                  sizes="(max-width: 640px) 100vw, 25vw"
+                  className="object-cover group-hover:scale-105 transition-transform duration-500"
+                />
+              </div>
+              <div className="p-4 space-y-1">
+                <span className="text-[10px] font-bold uppercase tracking-wider text-gold-dark block">Isian Bermutu</span>
+                <h5 className="font-bold text-forest text-sm">Isian Polyester Fibre</h5>
+                <p className="text-[11px] text-charcoal-muted">Bungkusan batting poliester gebu Gred A untuk tilam toto.</p>
+              </div>
+            </div>
+          </div>
+        </div>
+      </section>
+
       {/* Maklumat Hubungi & Lokasi Kilang */}
       <section className="py-16 sm:py-20 bg-white border-t border-[#E8E2D8]">
         <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
@@ -564,8 +672,8 @@ export default function ProfilPage() {
                     <Phone className="w-5 h-5 text-gold shrink-0" />
                     <div>
                       <strong className="text-forest block">Telefon / WhatsApp:</strong>
-                      <a href="tel:01164447908" className="text-forest hover:text-gold font-bold">
-                        011-6444 7908
+                      <a href="tel:0194786991" className="text-forest hover:text-gold font-bold">
+                        019-478 6991 / 04-573 6991
                       </a>
                     </div>
                   </div>
@@ -642,12 +750,12 @@ export default function ProfilPage() {
                     <ChevronRight className="w-4 h-4" />
                   </Link>
                   <a
-                    href="https://wa.me/601164447908?text=Salam%20Tunas%20Sinar%20Jaya%2C%20saya%20berminat%20dengan%20produk%20Kamaar%20Beddings"
+                    href="https://wa.me/60194786991?text=Salam%20Tunas%20Sinar%20Jaya%2C%20saya%20berminat%20dengan%20produk%20Kamaar%20Beddings"
                     target="_blank"
                     rel="noopener noreferrer"
                     className="px-6 py-3.5 rounded-xl bg-emerald-700 hover:bg-emerald-800 text-white text-xs font-bold uppercase tracking-wider transition-all shadow-md inline-flex items-center gap-2"
                   >
-                    <span>WhatsApp Concierge (011-6444 7908)</span>
+                    <span>WhatsApp Concierge (019-478 6991)</span>
                     <ExternalLink className="w-4 h-4" />
                   </a>
                 </div>

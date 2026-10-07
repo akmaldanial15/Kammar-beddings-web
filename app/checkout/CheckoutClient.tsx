@@ -1089,12 +1089,12 @@ export function CheckoutClient({ initialPaymentSettings }: CheckoutClientProps) 
                             <div className="flex justify-between items-center">
                               <span className="text-charcoal-muted">No. TNG / WhatsApp Rasmi:</span>
                               <div className="flex items-center space-x-2">
-                                <strong className="text-forest font-mono tracking-wider font-bold">011-6444 7908</strong>
+                                <strong className="text-forest font-mono tracking-wider font-bold">019-478 6991</strong>
                                 <button
                                   type="button"
                                   onClick={() => {
                                     if (typeof navigator !== 'undefined' && navigator.clipboard) {
-                                      navigator.clipboard.writeText('01164447908')
+                                      navigator.clipboard.writeText('0194786991')
                                       setCopiedBank(true)
                                       setTimeout(() => setCopiedBank(false), 2000)
                                     }
