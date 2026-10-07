@@ -23,9 +23,6 @@ import {
   CheckCircle2,
   Store,
 } from 'lucide-react'
-import { Header } from '@/components/layout/Header'
-import { Footer } from '@/components/layout/Footer'
-import { AnnouncementBar } from '@/components/layout/AnnouncementBar'
 
 export const metadata = {
   title: 'Profil Syarikat | TUNAS SINAR JAYA ENTERPRISE (KAMAAR BEDDINGS)',
@@ -126,9 +123,6 @@ const companyPillars = [
 export default function ProfilPage() {
   return (
     <div className="min-h-screen bg-[#FDFBF7] text-[#2D2A26] font-sans antialiased selection:bg-gold/20 selection:text-forest">
-      <AnnouncementBar />
-      <Header />
-
       {/* Hero Section */}
       <section className="relative bg-gradient-to-br from-[#0D2818] via-[#163824] to-[#0D2818] text-white py-16 sm:py-24 overflow-hidden border-b border-gold/20">
         <div className="absolute inset-0 opacity-10 bg-[radial-gradient(#D4AF37_1px,transparent_1px)] [background-size:24px_24px]" />
@@ -662,8 +656,6 @@ export default function ProfilPage() {
           </div>
         </div>
       </section>
-
-      <Footer />
     </div>
   )
 }

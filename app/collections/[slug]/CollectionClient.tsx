@@ -280,11 +280,11 @@ export function CollectionClient({
               </label>
               <div className="space-y-1.5 text-xs text-charcoal-muted">
                 {[
-                  { id: '', label: 'All Materials' },
-                  { id: 'latex', label: '100% Natural Latex' },
-                  { id: 'hybrid', label: 'Hybrid Pocket Spring' },
-                  { id: 'ortho', label: 'Orthopaedic Spinal' },
-                  { id: 'memory', label: 'Memory Foam' },
+                  { id: '', label: 'Semua Bahan / Isian' },
+                  { id: 'polyester', label: 'Asian Polyester Fibre' },
+                  { id: 'foam', label: 'High Density Foam' },
+                  { id: 'microfibre', label: 'Microfibre & Kapas' },
+                  { id: 'quilted', label: 'Quilted Fabrik Sejuk' },
                 ].map((item) => (
                   <button
                     key={item.id}
@@ -433,10 +433,10 @@ export function CollectionClient({
                 </h4>
                 <div className="space-y-1 text-xs text-charcoal-muted">
                   {[
-                    { id: '', label: 'All' },
-                    { id: 'latex', label: '100% Natural Latex' },
-                    { id: 'hybrid', label: 'Hybrid Pocket Spring' },
-                    { id: 'ortho', label: 'Orthopaedic Spinal' },
+                    { id: '', label: 'Semua Bahan' },
+                    { id: 'polyester', label: 'Asian Polyester Fibre' },
+                    { id: 'foam', label: 'High Density Foam' },
+                    { id: 'microfibre', label: 'Microfibre & Kapas' },
                   ].map((m) => (
                     <button
                       key={m.id}

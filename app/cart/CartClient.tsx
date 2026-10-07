@@ -404,8 +404,8 @@ export function CartClient() {
               </button>
 
               <div className="pt-2 text-[11px] text-charcoal-muted text-center space-y-1">
-                <p>🔒 256-bit encrypted checkout via Stripe</p>
-                <p>Supported: Visa, Mastercard, FPX Malaysian Banking</p>
+                <p>🔒 Bayaran Selamat Melalui Gerbang Pembayaran Sah</p>
+                <p className="font-semibold text-forest">Kaedah Pembayaran: FPX Perbankan Dalam Talian & Touch &apos;n Go (TNG) eWallet Sahaja</p>
               </div>
             </div>
           </div>

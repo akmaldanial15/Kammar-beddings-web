@@ -35,7 +35,7 @@ export function StorefrontShell({ children }: { children: React.ReactNode }) {
       <Header />
       <CartDrawer />
       <main className="flex-1">{children}</main>
-      <WhatsAppButton phoneNumber="+60123456789" />
+      <WhatsAppButton phoneNumber="+601164447908" />
       <Footer />
     </div>
   )

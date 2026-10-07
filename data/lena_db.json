@@ -1962,7 +1962,101 @@
     },
     "megaMenu": {
       "enabled": true,
-      "columns": [],
+      "columns": [
+        {
+          "id": "col-1",
+          "title": "Tilam Toto & Lipat",
+          "titleBm": "Tilam Toto & Lipat",
+          "items": [
+            {
+              "id": "m-1",
+              "label": "Tilam Toto Queen Tebal",
+              "labelBm": "Tilam Toto Queen Tebal",
+              "href": "/products/tilam-toto-queen"
+            },
+            {
+              "id": "m-2",
+              "label": "Tilam Toto Single Gebu",
+              "labelBm": "Tilam Toto Single Gebu",
+              "href": "/products/tilam-toto-single"
+            },
+            {
+              "id": "m-3",
+              "label": "Tilam Lipat 3 Tebal Bujang",
+              "labelBm": "Tilam Lipat 3 Tebal Bujang",
+              "href": "/products/tilam-lipat-3"
+            },
+            {
+              "id": "m-4",
+              "label": "Tilam Bujang Asrama Foam",
+              "labelBm": "Tilam Bujang Asrama Foam",
+              "href": "/products/tilam-bujang-asrama"
+            }
+          ]
+        },
+        {
+          "id": "col-2",
+          "title": "Bantal & Cadar",
+          "titleBm": "Bantal & Cadar",
+          "items": [
+            {
+              "id": "m-5",
+              "label": "Bantal Tidur Gebu Asian Fibre",
+              "labelBm": "Bantal Tidur Gebu Asian Fibre",
+              "href": "/products/bantal-gebu-asian-fibre"
+            },
+            {
+              "id": "m-6",
+              "label": "Bantal Peluk Asian Polyester",
+              "labelBm": "Bantal Peluk Asian Polyester",
+              "href": "/products/bantal-peluk-polyester"
+            },
+            {
+              "id": "m-7",
+              "label": "Set Comforter & Cadar Queen",
+              "labelBm": "Set Comforter & Cadar Queen",
+              "href": "/products/set-comforter-queen"
+            },
+            {
+              "id": "m-8",
+              "label": "Sarung Tilam Toto Berzip",
+              "labelBm": "Sarung Tilam Toto Berzip",
+              "href": "/products/sarung-tilam-toto"
+            }
+          ]
+        },
+        {
+          "id": "col-3",
+          "title": "Kilang & Borong",
+          "titleBm": "Kilang & Borong",
+          "items": [
+            {
+              "id": "m-9",
+              "label": "Profil Syarikat & 4 Unit Kilang",
+              "labelBm": "Profil Syarikat & 4 Unit Kilang",
+              "href": "/profil"
+            },
+            {
+              "id": "m-10",
+              "label": "Carta Organisasi Pengurusan",
+              "labelBm": "Carta Organisasi Pengurusan",
+              "href": "/profil#carta-organisasi"
+            },
+            {
+              "id": "m-11",
+              "label": "Pakej Borong Asrama (10 Set)",
+              "labelBm": "Pakej Borong Asrama (10 Set)",
+              "href": "/products/pakej-borong-asrama"
+            },
+            {
+              "id": "m-12",
+              "label": "Jualan Gudang Tasek Gelugor",
+              "labelBm": "Jualan Gudang Tasek Gelugor",
+              "href": "/collections/borong-gudang"
+            }
+          ]
+        }
+      ],
       "promoCard": {
         "enabled": true,
         "badge": "PALING LARISS",

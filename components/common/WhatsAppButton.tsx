@@ -7,14 +7,14 @@ interface WhatsAppButtonProps {
   phoneNumber?: string
 }
 
-export function WhatsAppButton({ phoneNumber = '+60123456789' }: WhatsAppButtonProps) {
+export function WhatsAppButton({ phoneNumber = '+601164447908' }: WhatsAppButtonProps) {
   const [isOpen, setIsOpen] = useState(false)
 
   if (!phoneNumber) return null
 
   const cleanNumber = phoneNumber.replace(/[^0-9]/g, '')
   const defaultMessage = encodeURIComponent(
-    'Hello KAMAAR Beddings! I am inquiring about your 100% natural latex mattresses and sleep trial.'
+    'Salam Tunas Sinar Jaya (Kamaar Beddings), saya berminat untuk bertanya tentang tilam toto, tilam lipat, bantal atau tempahan borong kilang.'
   )
   const whatsappUrl = `https://wa.me/${cleanNumber}?text=${defaultMessage}`
 
@@ -25,7 +25,7 @@ export function WhatsAppButton({ phoneNumber = '+60123456789' }: WhatsAppButtonP
           <div className="flex items-center justify-between pb-2 border-b border-borderLight">
             <div className="flex items-center space-x-2">
               <div className="w-2 h-2 rounded-full bg-emerald-500 animate-ping" />
-              <span className="text-xs font-bold text-forest">KAMAAR Sleep Concierge</span>
+              <span className="text-xs font-bold text-forest">Tunas Sinar Jaya (Kamaar)</span>
             </div>
             <button
               onClick={() => setIsOpen(false)}
@@ -35,7 +35,7 @@ export function WhatsAppButton({ phoneNumber = '+60123456789' }: WhatsAppButtonP
             </button>
           </div>
           <p className="text-xs text-charcoal-muted mt-2 leading-relaxed">
-            Need guidance on mattress firmness, custom sizes, or bedroom delivery? Chat directly with our Bangsar sleep specialists on WhatsApp.
+            Perlukan bantuan tempahan tilam toto, tilam lipat, bantal gebu atau belian borong asrama? Hubungi pengurusan kilang kami di Tasek Gelugor terus via WhatsApp.
           </p>
           <a
             href={whatsappUrl}
@@ -44,7 +44,7 @@ export function WhatsAppButton({ phoneNumber = '+60123456789' }: WhatsAppButtonP
             className="mt-3 w-full py-2 bg-emerald-600 hover:bg-emerald-700 text-white rounded-lg text-xs font-bold flex items-center justify-center space-x-1.5 transition-colors shadow-sm"
           >
             <MessageCircle className="w-3.5 h-3.5" />
-            <span>Open WhatsApp Chat</span>
+            <span>Chat WhatsApp Kilang</span>
           </a>
         </div>
       )}
@@ -52,8 +52,8 @@ export function WhatsAppButton({ phoneNumber = '+60123456789' }: WhatsAppButtonP
       <button
         onClick={() => setIsOpen(!isOpen)}
         className="w-13 h-13 p-3.5 bg-emerald-600 hover:bg-emerald-700 text-white rounded-full shadow-lg flex items-center justify-center transition-all hover:scale-105 group"
-        aria-label="Contact via WhatsApp"
-        title="Chat with LENA Sleep Concierge"
+        aria-label="Hubungi via WhatsApp"
+        title="WhatsApp Tunas Sinar Jaya Kilang"
       >
         <MessageCircle className="w-6 h-6" />
       </button>

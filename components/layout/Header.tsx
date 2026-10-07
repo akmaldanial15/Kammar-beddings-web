@@ -547,12 +547,12 @@ export function Header() {
                 </button>
               </div>
 
-              {/* 2-COLUMN LUXURY DISCOVERY CARDS */}
+              {/* 2-COLUMN FACTORY DISCOVERY CARDS */}
               <div className="p-3 bg-gradient-to-b from-cream/20 to-warmwhite border-b border-borderLight/60">
                 <div className="grid grid-cols-2 gap-2">
-                  {/* Finder Quiz Card */}
+                  {/* Profil Kilang Card */}
                   <Link
-                    href="/finder"
+                    href="/profil"
                     onClick={() => setIsMobileMenuOpen(false)}
                     className="p-3 rounded-2xl bg-gradient-to-br from-warmwhite to-cream border border-[#B49A58]/35 shadow-2xs hover:border-[#1E4E8C] transition-all group flex flex-col justify-between"
                   >
@@ -564,17 +564,17 @@ export function Header() {
                     </div>
                     <div>
                       <span className="text-xs font-bold text-forest-dark block leading-snug">
-                        {locale === 'bm' ? 'Kuiz Cari Tilam' : 'Mattress Finder'}
+                        {locale === 'bm' ? 'Profil Kilang' : 'Factory Profile'}
                       </span>
                       <span className="text-[10px] text-secondary">
-                        {locale === 'bm' ? '60 saat padanan ideal' : '60-sec sleep quiz'}
+                        {locale === 'bm' ? '4 Unit & Pengurusan' : '4 Units & Org'}
                       </span>
                     </div>
                   </Link>
 
-                  {/* Showroom Card */}
+                  {/* Jualan Gudang Card */}
                   <Link
-                    href="/showrooms"
+                    href="/collections/borong-gudang"
                     onClick={() => setIsMobileMenuOpen(false)}
                     className="p-3 rounded-2xl bg-gradient-to-br from-warmwhite to-cream border border-[#B49A58]/35 shadow-2xs hover:border-[#1E4E8C] transition-all group flex flex-col justify-between"
                   >
@@ -586,10 +586,10 @@ export function Header() {
                     </div>
                     <div>
                       <span className="text-xs font-bold text-forest-dark block leading-snug">
-                        {locale === 'bm' ? 'Bilik Pameran' : 'Showrooms'}
+                        {locale === 'bm' ? 'Jualan Gudang' : 'Warehouse Sale'}
                       </span>
                       <span className="text-[10px] text-secondary">
-                        {locale === 'bm' ? 'Cuba tilam di butik' : 'Book VIP visit'}
+                        {locale === 'bm' ? 'Tasek Gelugor Penang' : 'Tasek Gelugor'}
                       </span>
                     </div>
                   </Link>
@@ -603,7 +603,7 @@ export function Header() {
                     {locale === 'bm' ? 'Koleksi Utama' : 'Store Collections'}
                   </span>
                   <span className="text-[10px] font-semibold text-gold-dark">
-                    100% Organik
+                    100% Terus Dari Kilang
                   </span>
                 </div>
 
@@ -611,8 +611,8 @@ export function Header() {
                   {navCategories.map((cat) => {
                     const targetUrl = cat.customUrl || `/collections/${cat.slug}`
                     const label = getCategoryLabel(cat)
-                    const isSaleCategory = cat.badge?.toUpperCase() === 'SALE' || cat.slug === 'offers'
-                    const isMattress = cat.slug === 'mattress'
+                    const isSaleCategory = cat.badge?.toUpperCase() === 'SALE' || cat.slug === 'offers' || cat.badge?.toUpperCase() === 'HARGA KILANG'
+                    const isMattress = cat.slug === 'tilam-toto' || cat.slug === 'mattress'
 
                     if (cat.hasMegaMenu) {
                       const isExpanded = mobileExpandedSection === cat.id || (mobileExpandedSection === 'mattresses' && isMattress)
@@ -637,7 +637,7 @@ export function Header() {
                               <div>
                                 <span className="block">{label}</span>
                                 <span className={`text-[10px] font-normal ${isExpanded ? 'text-white/80' : 'text-secondary'}`}>
-                                  {locale === 'bm' ? 'Lateks Semula Jadi & Hibrid' : 'Organic Latex & Hybrid'}
+                                  {locale === 'bm' ? 'Asian Polyester Fibre Gebu & Tebal' : 'Thick Asian Polyester Fibre Toto'}
                                 </span>
                               </div>
                             </div>
@@ -709,6 +709,12 @@ export function Header() {
 
                     // Standard category item
                     const categoryIcons: Record<string, string> = {
+                      'tilam-toto': '🛏️',
+                      'tilam-lipat': '🛋️',
+                      bantal: '🪶',
+                      'cadang-comforter': '🧵',
+                      'borong-gudang': '🏭',
+                      profil: '🏢',
                       pillows: '🪶',
                       'toppers-protectors': '☁️',
                       bedframes: '🪵',
@@ -806,7 +812,7 @@ export function Header() {
                       <span className="w-7 h-7 rounded-xl bg-cream flex items-center justify-center text-xs">
                         <ShieldCheck className="w-3.5 h-3.5 text-gold-dark" />
                       </span>
-                      <span>{locale === 'bm' ? '10-Tahun Jaminan & 100-Malam Trial' : '10-Yr Warranty & 100-Night Trial'}</span>
+                      <span>{locale === 'bm' ? 'Jaminan Kualiti Kilang & QC' : 'Factory Quality & QC Warranty'}</span>
                     </div>
                     <span className="text-secondary text-sm">&rsaquo;</span>
                   </Link>
@@ -852,13 +858,13 @@ export function Header() {
 
               {/* WhatsApp Concierge Button */}
               <a
-                href="https://wa.me/60123456789?text=Hello%20KAMAAR%20Beddings,%20I%20would%20like%20to%20enquire%20about%20your%20mattresses."
+                href="https://wa.me/601164447908?text=Salam%20Tunas%20Sinar%20Jaya%20Kamaar%20Beddings,%20saya%20ingin%20bertanya%20tentang%20produk%20dan%20borong."
                 target="_blank"
                 rel="noopener noreferrer"
                 className="w-full py-2.5 px-4 bg-gradient-to-r from-emerald-600 to-teal-700 hover:from-emerald-700 hover:to-teal-800 text-white text-xs font-bold rounded-xl flex items-center justify-center space-x-2 transition-all shadow-sm"
               >
                 <Phone className="w-3.5 h-3.5 text-emerald-200" />
-                <span>{locale === 'bm' ? 'WhatsApp Concierge (Bantuan Pantas)' : 'Official WhatsApp Concierge'}</span>
+                <span>{locale === 'bm' ? 'WhatsApp Kilang (011-6444 7908)' : 'Official WhatsApp (011-6444 7908)'}</span>
               </a>
             </div>
           </div>

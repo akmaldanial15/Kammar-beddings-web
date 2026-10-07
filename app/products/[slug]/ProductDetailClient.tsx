@@ -395,7 +395,7 @@ export function ProductDetailClient({
                 </button>
 
                 <a
-                  href={`https://wa.me/60123456789?text=${whatsappMessage}`}
+                  href={`https://wa.me/601164447908?text=${whatsappMessage}`}
                   target="_blank"
                   rel="noopener noreferrer"
                   className="py-2 px-2 rounded-lg border border-emerald-300 bg-emerald-50 text-emerald-800 hover:bg-emerald-100 flex items-center justify-center space-x-1 font-semibold transition-colors"
@@ -409,16 +409,20 @@ export function ProductDetailClient({
             {/* Reassurance points */}
             <div className="pt-4 border-t border-borderLight space-y-2 text-xs text-charcoal-muted">
               <div className="flex items-center space-x-2">
-                <RotateCcw className="w-4 h-4 text-gold-dark flex-shrink-0" />
-                <span>100-Night Sleep Trial with Free Home Pickup</span>
-              </div>
-              <div className="flex items-center space-x-2">
-                <ShieldCheck className="w-4 h-4 text-gold-dark flex-shrink-0" />
-                <span>{product.warrantyYears}-Year Manufacturer Core Sagging Guarantee</span>
+                <ShieldCheck className="w-4 h-4 text-emerald-600 flex-shrink-0" />
+                <span className="font-medium text-charcoal">Terus Dari Kilang Tunas Sinar Jaya (Tasek Gelugor)</span>
               </div>
               <div className="flex items-center space-x-2">
                 <Sparkles className="w-4 h-4 text-gold-dark flex-shrink-0" />
-                <span>100% Certified Eco-Friendly Malaysian Organic Latex</span>
+                <span>Isian Asian Polyester Fibre Berkualiti & Jahitan Kemas</span>
+              </div>
+              <div className="flex items-center space-x-2">
+                <RotateCcw className="w-4 h-4 text-forest flex-shrink-0" />
+                <span>Kawalan Mutu (QC) Ketat & Pembungkusan Rapi</span>
+              </div>
+              <div className="flex items-center space-x-2">
+                <Check className="w-4 h-4 text-emerald-700 flex-shrink-0" />
+                <span>Bayaran Sah: FPX Perbankan Dalam Talian & Touch &apos;n Go Sahaja</span>
               </div>
             </div>
           </div>
@@ -563,16 +567,19 @@ export function ProductDetailClient({
             {activeTab === 'delivery' && (
               <div className="max-w-3xl space-y-4 text-xs text-charcoal-muted leading-relaxed">
                 <h3 className="font-serif text-2xl font-bold text-forest mb-2">
-                  White-Glove Delivery & Installation
+                  Penghantaran Terus Dari Kilang Tunas Sinar Jaya
                 </h3>
                 <p>
-                  <strong>Peninsular Malaysia:</strong> Enjoy complimentary 2-person white-glove delivery on all mattresses. Our logistics specialists carry the mattress directly to your bedroom, unbox it, set it onto your bedframe, and remove all protective plastic wrap upon request.
+                  <strong>Semenanjung Malaysia:</strong> Penghantaran pantas terus dari kilang dan stor kami di Tasek Gelugor, Pulau Pinang. Setiap produk tilam toto, tilam lipat, bantal dan comforter dibungkus rapi dengan lapisan pelindung kalis air sebelum dihantar melalui kurier atau lori kilang.
                 </p>
                 <p>
-                  <strong>East Malaysia (Sabah & Sarawak):</strong> Sea freight logistics are quoted transparently at RM280.00 per bulky mattress. Delivery lead times range from 10 to 14 working days.
+                  <strong>Tempahan Borong / Pukal Asrama:</strong> Bagi tempahan kuantiti banyak (asrama, tahfiz, homestay, atau institusi), penghantaran lori khas disediakan terus ke alamat premis anda dengan jadual masa yang dipersetujui.
                 </p>
                 <p>
-                  <strong>High-Rise Premises:</strong> Delivery to premises with lift access is 100% free of charge. For walk-up apartments without elevator access, our delivery concierge assists up to the 3rd floor at no additional charge.
+                  <strong>Jualan Gudang & Ambil Sendiri (Self-Pickup):</strong> Pelanggan juga dialu-alukan untuk mengambil sendiri pesanan terus di Kilang Tunas Sinar Jaya, 7878B Jalan Permatang Berangan, 13300 Tasek Gelugor, Pulau Pinang.
+                </p>
+                <p>
+                  <strong>Kaedah Pembayaran Diterima:</strong> Hanya FPX Perbankan Dalam Talian dan Touch &apos;n Go (TNG) eWallet sahaja.
                 </p>
               </div>
             )}

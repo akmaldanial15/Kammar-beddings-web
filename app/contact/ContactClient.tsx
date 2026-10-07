@@ -39,39 +39,43 @@ export function ContactClient() {
       <div className="bg-forest-dark text-warmwhite p-8 rounded-3xl space-y-6 shadow-xl flex flex-col justify-between">
         <div className="space-y-6">
           <h3 className="font-serif text-2xl font-bold text-warmwhite">
-            Concierge Channels
+            Saluran Hubungan Kilang
           </h3>
 
           <div className="space-y-4 text-xs text-warmwhite/80">
             <div className="flex items-start space-x-3">
-              <Phone className="w-4 h-4 text-gold flex-shrink-0 mt-0.5" />
+              <MapPin className="w-4 h-4 text-gold flex-shrink-0 mt-0.5" />
               <div>
-                <span className="font-bold text-warmwhite block">Telephone Concierge</span>
-                <span>+60 3-7890 1234</span>
+                <span className="font-bold text-warmwhite block">Alamat Kilang & Stor</span>
+                <span>TUNAS SINAR JAYA ENTERPRISE</span>
+                <span className="block text-warmwhite/70">7878B Jalan Permatang Berangan, 13300 Tasek Gelugor, Pulau Pinang</span>
               </div>
             </div>
 
             <div className="flex items-start space-x-3">
-              <MessageSquare className="w-4 h-4 text-gold flex-shrink-0 mt-0.5" />
+              <Phone className="w-4 h-4 text-gold flex-shrink-0 mt-0.5" />
               <div>
-                <span className="font-bold text-warmwhite block">WhatsApp Direct</span>
-                <span>+60 12-345 6789</span>
+                <span className="font-bold text-warmwhite block">Telefon / WhatsApp</span>
+                <a href="https://wa.me/601164447908" target="_blank" rel="noopener noreferrer" className="hover:text-gold transition-colors">
+                  011-6444 7908
+                </a>
               </div>
             </div>
 
             <div className="flex items-start space-x-3">
               <Mail className="w-4 h-4 text-gold flex-shrink-0 mt-0.5" />
               <div>
-                <span className="font-bold text-warmwhite block">Email Enquiries</span>
-                <span>concierge@kamaarbeddings.com</span>
+                <span className="font-bold text-warmwhite block">Emel Rasmi</span>
+                <span>tunassinar@gmail.com</span>
               </div>
             </div>
 
             <div className="flex items-start space-x-3">
               <Clock className="w-4 h-4 text-gold flex-shrink-0 mt-0.5" />
               <div>
-                <span className="font-bold text-warmwhite block">Concierge Hours</span>
-                <span>Daily: 9:00 AM – 9:00 PM (MYT)</span>
+                <span className="font-bold text-warmwhite block">Waktu Operasi Kilang</span>
+                <span>Isnin – Sabtu: 8:30 AM – 6:00 PM</span>
+                <span className="block text-warmwhite/70">Ahad: Jualan Gudang & Temujanji Borong</span>
               </div>
             </div>
           </div>
@@ -79,7 +83,7 @@ export function ContactClient() {
 
         <div className="pt-6 border-t border-warmwhite/10 text-xs text-warmwhite/70">
           <p>
-            Operating nationwide across Peninsular and East Malaysia with localized customer support.
+            Pengeluar tekstil Bumiputera dengan penghantaran pantas ke seluruh Semenanjung Malaysia.
           </p>
         </div>
       </div>

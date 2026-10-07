@@ -4,9 +4,9 @@ import { ShowroomsClient } from './ShowroomsClient'
 import { Metadata } from 'next'
 
 export const metadata: Metadata = {
-  title: 'Showroom Studios & Sleep Testing | KAMAAR Beddings Malaysia',
+  title: 'Kilang & Jualan Gudang | TUNAS SINAR JAYA ENTERPRISE (KAMAAR BEDDINGS)',
   description:
-    'Visit KAMAAR Beddings galleries in Bangsar, Damansara, Penang, and Johor Bahru. Book a private 1-on-1 mattress consultation with our certified sleep ergonomists.',
+    'Kunjungi kilang dan gudang simpanan utama kami di Tasek Gelugor, Pulau Pinang. Cuba sendiri tilam toto empuk, tilam lipat, dan bantal gebu pada harga jualan terus dari kilang.',
 }
 
 export const dynamic = 'force-dynamic'
@@ -20,13 +20,13 @@ export default async function ShowroomsPage() {
         {/* Header */}
         <div className="text-center space-y-3 max-w-3xl mx-auto">
           <span className="text-xs uppercase tracking-[0.25em] text-gold font-bold">
-            Physical Experience
+            Jualan Gudang & Pengilangan
           </span>
           <h1 className="font-serif text-3xl md:text-5xl font-bold text-forest-dark">
-            Our Sleep Studios & Experiential Galleries
+            Kilang & Stor Utama Kami
           </h1>
           <p className="text-sm md:text-base text-secondary">
-            Feel the natural cooling of organic Malaysian latex, test individual pocket spring responsiveness, and discover your ideal spine alignment with a private fitting.
+            Alami sendiri kualiti tekstil buatan anak tempatan di tapak operasi kami di Tasek Gelugor. Dapatkan tilam toto, tilam lipat, bantal gebu dan set comforter terus dari lantai pengeluaran kilang tanpa orang tengah.
           </p>
         </div>
 
