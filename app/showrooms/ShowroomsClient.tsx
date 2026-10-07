@@ -254,7 +254,7 @@ export function ShowroomsClient({ showrooms }: ShowroomsClientProps) {
                     rows={2}
                     value={notes}
                     onChange={(e) => setNotes(e.target.value)}
-                    placeholder="e.g. Back pain after waking, comparing Natural Latex vs Hybrid..."
+                    placeholder="cth: Pertanyaan tempahan borong asrama, pilihan corak tilam toto, atau saiz kekabu..."
                     className="w-full px-3 py-2 rounded-xl border border-borderLight focus:border-forest"
                   />
                 </div>

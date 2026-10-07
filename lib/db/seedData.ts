@@ -19,43 +19,88 @@ export const initialCategories: Category[] = [
     "id": "cat-tilam-toto",
     "name": "Tilam Toto",
     "slug": "tilam-toto",
-    "description": "Tilam Toto Asian Polyester Fibre tebal, empuk dan berkualiti tinggi keluaran kilang Tunas Sinar Jaya. Paling laris untuk seisi keluarga.",
+    "description": "Tilam Toto Asian Polyester Fibre tebal, empuk dan berkualiti tinggi keluaran kilang Tunas Sinar Jaya. Paling laris dengan Random Floral Design.",
     "imageUrl": "/images/products/tilam-toto-queen.jpg",
     "displayOrder": 1,
     "showInNav": true,
     "hasMegaMenu": true,
-    "badge": "PALING LARISS",
+    "badge": "PALING LARISS!!",
+    "isActive": true
+  },
+  {
+    "id": "cat-tilam-kekabu",
+    "name": "Tilam & Bantal Kekabu",
+    "slug": "tilam-kekabu",
+    "description": "Tilam dan bantal isian kekabu asli tradisi yang padat, sejuk dan empuk dengan jahitan butang tufting tahan lasak.",
+    "imageUrl": "/images/products/tilam-kekabu-asli.jpg",
+    "displayOrder": 2,
+    "showInNav": true,
+    "hasMegaMenu": true,
+    "badge": "100% KEKABU ASLI",
     "isActive": true
   },
   {
     "id": "cat-tilam-lipat",
     "name": "Tilam Lipat & Bujang",
     "slug": "tilam-lipat",
-    "description": "Tilam lipat 3 berzip mudah alih dan tilam bujang asrama yang praktikal, jimat ruang dan tahan lasak.",
+    "description": "Tilam lipat 3 berzip mudah alih dan tilam bujang asrama standard 3 kaki yang praktikal, jimat ruang dan tahan lasak.",
     "imageUrl": "/images/products/tilam-lipat-bujang.jpg",
-    "displayOrder": 2,
+    "displayOrder": 3,
     "showInNav": true,
-    "hasMegaMenu": false,
+    "hasMegaMenu": true,
     "isActive": true
   },
   {
     "id": "cat-bantal",
     "name": "Bantal & Bantal Peluk",
     "slug": "bantal",
-    "description": "Bantal tidur gebu dan bantal peluk isian Asian Polyester Fibre dari Unit Bantal & Tilam KAMAAR.",
+    "description": "Bantal tidur gebu dan bantal peluk isian Asian Polyester Fibre padat dari Unit Bantal & Tilam KAMAAR.",
     "imageUrl": "/images/products/bantal-gebu-asian-fibre.jpg",
-    "displayOrder": 3,
+    "displayOrder": 4,
     "showInNav": true,
-    "hasMegaMenu": false,
+    "hasMegaMenu": true,
     "isActive": true
   },
   {
     "id": "cat-cadang-comforter",
     "name": "Cadar & Comforter",
     "slug": "cadang-comforter",
-    "description": "Set comforter tebal jahitan quilting kemas, cadar tilam toto dan sarung tilam berzip pelbagai corak menarik.",
+    "description": "Set comforter tebal berjahit quilting kemas kilang, sarung tilam toto berzip dan cadar pelbagai corak menarik.",
     "imageUrl": "/images/hero/hero-tilam-toto-lifestyle.jpg",
-    "displayOrder": 4,
+    "displayOrder": 5,
+    "showInNav": true,
+    "hasMegaMenu": true,
+    "isActive": true
+  },
+  {
+    "id": "cat-selimut-patchwork",
+    "name": "Selimut Patchwork",
+    "slug": "selimut-patchwork",
+    "description": "Selimut patchwork cantuman corak geometri dan floral berquilting kemas yang selesa dan sejuk dipakai.",
+    "imageUrl": "/images/products/selimut-patchwork.jpg",
+    "displayOrder": 6,
+    "showInNav": true,
+    "hasMegaMenu": false,
+    "isActive": true
+  },
+  {
+    "id": "cat-set-bayi",
+    "name": "Set Bayi",
+    "slug": "set-bayi",
+    "description": "Set tilam bayi empuk bersama bantal kepala lekuk dan 2 bantal peluk comel untuk keselesaan si manja.",
+    "imageUrl": "/images/products/set-tilam-bayi.jpg",
+    "displayOrder": 7,
+    "showInNav": true,
+    "hasMegaMenu": false,
+    "isActive": true
+  },
+  {
+    "id": "cat-kusyen-sofa",
+    "name": "Kusyen Sofa",
+    "slug": "kusyen-sofa",
+    "description": "Sarung kusyen sofa eksklusif pelbagai tema termasuk corak perayaan Aidilfitri, piping tebal dan fabrik mewah.",
+    "imageUrl": "/images/products/kusyen-sofa-eksklusif.jpg",
+    "displayOrder": 8,
     "showInNav": true,
     "hasMegaMenu": false,
     "isActive": true
@@ -64,21 +109,33 @@ export const initialCategories: Category[] = [
     "id": "cat-borong-gudang",
     "name": "Jualan Gudang & Borong",
     "slug": "borong-gudang",
-    "description": "Harga kilang terus dari Tasek Gelugor untuk asrama, homestay, tahfiz, kontraktor dan pembeli borong.",
+    "description": "Harga kilang terus dari Tasek Gelugor untuk pembekal asrama, homestay, tahfiz, kontraktor dan pembeli borong pukal.",
     "imageUrl": "/images/products/bantal-peluk-roll-pack.jpg",
-    "displayOrder": 5,
+    "displayOrder": 9,
     "showInNav": true,
     "hasMegaMenu": false,
-    "badge": "HARGA KILANG",
+    "badge": "HARGA GUDANG",
+    "isActive": true
+  },
+  {
+    "id": "cat-oem",
+    "name": "Tempahan Pukal (OEM)",
+    "slug": "tempahan-oem",
+    "description": "Perkhidmatan jahitan tekstil jenama sendiri (OEM), pembekalan agensi kerajaan, sektor swasta dan projek tender.",
+    "imageUrl": "/images/company/oem-tekstil-pukal.jpg",
+    "displayOrder": 10,
+    "showInNav": true,
+    "hasMegaMenu": false,
+    "customUrl": "/business",
     "isActive": true
   },
   {
     "id": "cat-profil",
     "name": "Profil Syarikat",
     "slug": "profil",
-    "description": "Maklumat syarikat Tunas Sinar Jaya Enterprise, carta organisasi, visi misi dan aktiviti pengilangan tekstil.",
+    "description": "Maklumat syarikat Tunas Sinar Jaya Enterprise, carta organisasi, visi misi dan 4 unit operasi kilang tekstil.",
     "imageUrl": "/images/company/kilang-tekstil-jahitan.jpg",
-    "displayOrder": 6,
+    "displayOrder": 11,
     "showInNav": true,
     "hasMegaMenu": false,
     "customUrl": "/profil",
@@ -91,36 +148,54 @@ export const initialCollections: Collection[] = [
     "id": "col-toto",
     "name": "Koleksi Tilam Toto Paling Laris",
     "slug": "koleksi-toto",
-    "description": "Tilam toto tebal isian Asian Polyester Fibre pelbagai corak floral dan moden terus dari kilang.",
+    "description": "Tilam toto tebal isian Asian Polyester Fibre pelbagai corak floral dan geometrik terus dari kilang.",
     "bannerUrl": "/images/hero/hero-tilam-toto-lifestyle.jpg",
     "displayOrder": 1,
     "isFeatured": true
   },
   {
-    "id": "col-lipat-bujang",
-    "name": "Tilam Lipat 3 & Bujang Asrama",
-    "slug": "tilam-lipat-asrama",
-    "description": "Tilam mudah alih berzip dan tilam bujang tahan lasak untuk kegunaan asrama, homestay & ruang tamu.",
-    "bannerUrl": "/images/products/tilam-lipat-bujang.jpg",
+    "id": "col-kekabu",
+    "name": "Koleksi Kekabu Asli Tradisi",
+    "slug": "koleksi-kekabu",
+    "description": "Tilam kekabu dan bantal kekabu tradisi dengan kelembutan semulajadi yang sejuk dan padat.",
+    "bannerUrl": "/images/products/tilam-kekabu-asli.jpg",
     "displayOrder": 2,
+    "isFeatured": true
+  },
+  {
+    "id": "col-lipat-bujang",
+    "name": "Tilam Lipat & Bujang Asrama",
+    "slug": "tilam-lipat-asrama",
+    "description": "Tilam mudah alih berzip dan tilam bujang tahan lasak untuk kegunaan asrama, homestay & rumah sewa.",
+    "bannerUrl": "/images/products/tilam-lipat-bujang.jpg",
+    "displayOrder": 3,
     "isFeatured": true
   },
   {
     "id": "col-bantal-peluk",
     "name": "Bantal Tidur Gebu & Bantal Peluk",
     "slug": "bantal-gebu-kamaar",
-    "description": "Isian fiber berkualiti tinggi yang anjal, menyokong kepala dan leher dengan selesa.",
+    "description": "Isian Asian Polyester Fibre bermutu tinggi yang anjal, menyokong kepala dan leher dengan selesa.",
     "bannerUrl": "/images/products/bantal-gebu-asian-fibre.jpg",
-    "displayOrder": 3,
+    "displayOrder": 4,
+    "isFeatured": true
+  },
+  {
+    "id": "col-comforter-patchwork",
+    "name": "Comforter & Selimut Patchwork",
+    "slug": "comforter-patchwork",
+    "description": "Set comforter tebal dan selimut patchwork berquilting kemas hasil tangan Unit Jahitan Kilang.",
+    "bannerUrl": "/images/products/selimut-patchwork.jpg",
+    "displayOrder": 5,
     "isFeatured": true
   },
   {
     "id": "col-borong-pukal",
-    "name": "Pakej Jualan Gudang & Borong",
+    "name": "Pakej Jualan Gudang & Borong Asrama",
     "slug": "jualan-gudang-borong",
-    "description": "Pakej penjimatan besar untuk pengusaha homestay, asrama sekolah, tahfiz dan jualan gudang.",
+    "description": "Pakej penjimatan besar terus dari kilang pengeluar Tunas Sinar Jaya di Tasek Gelugor.",
     "bannerUrl": "/images/products/bantal-peluk-roll-pack.jpg",
-    "displayOrder": 4,
+    "displayOrder": 6,
     "isFeatured": true
   }
 ]
@@ -128,99 +203,87 @@ export const initialCollections: Collection[] = [
 export const initialProducts: Product[] = [
   {
     "id": "prod-toto-asian-fibre",
-    "name": "Tilam Toto Asian Polyester Fibre (Tebal & Gebu)",
+    "name": "Tilam Toto Asian Polyester Fibre (Paling Lariss!!)",
     "slug": "tilam-toto-asian-polyester-fibre",
-    "subtitle": "Paling Lariss!! Tebal, Gebu & Jahitan Quilting Tahan Lasak",
-    "description": "Produk terlaris keluaran Tunas Sinar Jaya Enterprise! Tilam toto tebal dan empuk dengan isian Asian Polyester Fibre bermutu tinggi. Jahitan quilting kemas yang mengunci fiber agar tidak berganjak atau bergumpal. Sesuai untuk tidur santai seisi keluarga di ruang tamu, tilam tambahan untuk tetamu, homestay, atau aktiviti luar.",
-    "shortDescription": "Tilam toto paling laris keluaran Tunas Sinar Jaya Enterprise. Tebal, gebu, corak menarik dan tahan lasak.",
+    "subtitle": "Paling Lariss!! Tebal, Gebu & Isian Asian Fibre Padat",
+    "description": "Produk terlaris nombor satu keluaran Tunas Sinar Jaya Enterprise! Tilam toto tebal dan empuk dengan isian Asian Polyester Fibre bermutu tinggi. Jahitan quilting kemas yang mengunci fiber agar tidak berganjak atau bergumpal. Sesuai untuk tidur santai seisi keluarga di ruang tamu, tilam tambahan untuk tetamu, homestay, atau balik kampung.",
+    "shortDescription": "Tilam toto paling laris keluaran kilang Tunas Sinar Jaya Enterprise. Tebal, gebu, corak menarik dan tahan lasak.",
     "categoryId": "cat-tilam-toto",
     "productType": "mattress",
-    "material": "Asian Polyester Fibre & Fabrik Jahitan Berkualiti",
+    "material": "100% Asian Polyester Virgin Fibre & Fabrik Jahitan Berkualiti",
     "firmness": "Medium Soft",
     "firmnessScale": 4,
     "thicknessCm": 8,
     "warrantyYears": 1,
-    "trialNights": 14,
+    "trialNights": 0,
     "features": [
-      "Isian 100% Asian Polyester Fibre berkualiti & padat",
+      "Isian 100% Asian Polyester Fibre berkualiti tinggi & padat",
       "Jahitan quilting mesin industri kilang sendiri di Tasek Gelugor",
       "Corak menarik pelbagai pilihan (Random Floral Design & Geometrik)",
-      "Fabrik sejuk, tidak memerangkap haba, lembut pada kulit",
-      "Senang digulung, disimpan, dan dibawa ke mana-mana",
-      "Harga terus dari kilang tanpa orang tengah"
+      "Empuk, gebu dan tidak mudah kempis",
+      "Sesuai untuk seisi keluarga, homestay, dan tilam santai ruang tamu"
     ],
     "layers": [
       {
         "number": 1,
-        "name": "Fabrik Luar Corak Bunga / Moden",
-        "description": "Fabrik mikrofiber sejuk, tahan luntur dan lembut bila disentuh."
+        "name": "Fabrik Cotton Bercorak",
+        "description": "Kain sejuk lembut pelbagai corak floral yang ceria dan tahan lasak."
       },
       {
         "number": 2,
-        "name": "Lapisan Quilting Mesin Jahit Industri",
-        "description": "Jahitan corak berlian/ombak yang mengukuhkan struktur tilam toto."
-      },
-      {
-        "number": 3,
-        "name": "Teras Asian Polyester Fibre Padat",
-        "description": "Fiber sintetik terpilih yang anjal, gebu dan memberikan keselesaan maksimum."
-      },
-      {
-        "number": 4,
-        "name": "Lapisan Bawah Tahan Geseran",
-        "description": "Kain lapik bawah yang tahan lasak dan kemas jahitannya."
+        "name": "Teras Isian Asian Polyester Fibre",
+        "description": "Lapisan fiber mampat gebu berkualiti yang mengekalkan ketebalan dan keselesaan."
       }
     ],
     "specifications": {
-      "Bahan Isian": "100% Asian Polyester Fibre Gred A",
-      "Fabrik Luaran": "Mikrofiber Lembut Sejuk (Corak Bunga & Moden)",
-      "Ketebalan": "Kira-kira 7cm - 10cm (Gebu & Empuk)",
-      "Kaedah Jahitan": "Quilting Mesin Industri Berketumpatan Tinggi",
-      "Kebolehbasuhan": "Boleh dijemur & lap bersih / sarung boleh basuh",
-      "Pengeluar": "Tunas Sinar Jaya Enterprise (Tasek Gelugor, Pulau Pinang)"
+      "Isian": "Asian Polyester Fibre Berkualiti",
+      "Ketebalan": "Kira-kira 7cm - 10cm",
+      "Corak": "Random Floral & Geometric Design",
+      "Asal Kilang": "Tasek Gelugor, Pulau Pinang",
+      "Pengeluar": "Tunas Sinar Jaya Enterprise"
     },
     "faq": [
       {
-        "question": "Apakah corak tilam toto yang akan saya terima?",
-        "answer": "Kami menyediakan corak menarik (Random Design) berasaskan corak floral bunga dan geometrik yang popular dan kemas. Anda juga boleh nyatakan pilihan warna di bahagian nota pesanan."
+        "question": "Apakah maksud Random Design?",
+        "answer": "Kilang kami menghasilkan pelbagai corak bunga moden dan geometri yang sentiasa diperbaharui mengikut stok fabrik terbaik semasa."
       },
       {
         "question": "Bolehkah tilam toto ini digulung untuk disimpan?",
-        "answer": "Ya, tilam toto ini sangat fleksibel dan mudah digulung atau dilipat untuk disimpan di dalam almari atau dibawa dalam kereta."
+        "answer": "Ya, tilam toto ini sangat fleksibel dan boleh digulung atau dilipat dengan mudah untuk disimpan dalam almari atau bonet kereta."
       }
     ],
     "status": "published",
     "isFeatured": true,
     "variants": [
       {
-        "id": "var-toto-single",
+        "id": "var-toto-sgl",
         "productId": "prod-toto-asian-fibre",
         "sku": "TSJ-TOTO-SGL",
-        "sizeName": "Single (Bujang)",
-        "dimensions": "90cm x 190cm x 8cm",
+        "sizeName": "Single (100cm x 190cm)",
+        "dimensions": "100cm x 190cm x 7cm",
         "priceSen": 5900,
         "compareAtPriceSen": 7900,
-        "stockQuantity": 50,
+        "stockQuantity": 80,
         "leadTimeDays": 1,
         "isActive": true
       },
       {
-        "id": "var-toto-queen",
+        "id": "var-toto-qen",
         "productId": "prod-toto-asian-fibre",
         "sku": "TSJ-TOTO-QEN",
-        "sizeName": "Queen (Standard)",
+        "sizeName": "Queen (150cm x 190cm)",
         "dimensions": "150cm x 190cm x 8cm",
         "priceSen": 8900,
         "compareAtPriceSen": 11900,
-        "stockQuantity": 65,
+        "stockQuantity": 60,
         "leadTimeDays": 1,
         "isActive": true
       },
       {
-        "id": "var-toto-king",
+        "id": "var-toto-kng",
         "productId": "prod-toto-asian-fibre",
         "sku": "TSJ-TOTO-KNG",
-        "sizeName": "King (Besar)",
+        "sizeName": "King (180cm x 190cm)",
         "dimensions": "180cm x 190cm x 10cm",
         "priceSen": 11900,
         "compareAtPriceSen": 14900,
@@ -242,7 +305,7 @@ export const initialProducts: Product[] = [
         "id": "img-toto-2",
         "productId": "prod-toto-asian-fibre",
         "imageUrl": "/images/hero/hero-tilam-toto-lifestyle.jpg",
-        "altText": "Tilam Toto Gebu Asian Fibre Rekaan Ruang Tamu Kontemporari",
+        "altText": "Tilam Toto Ruang Tamu Kontemporari",
         "displayOrder": 2,
         "isPrimary": false
       }
@@ -251,94 +314,76 @@ export const initialProducts: Product[] = [
     "updatedAt": "2026-10-07T00:00:00Z"
   },
   {
-    "id": "prod-toto-gulung",
-    "name": "Tilam Toto Gulung Mudah Alih (Travel & Santai)",
-    "slug": "tilam-toto-gulung-mudah-alih",
-    "subtitle": "Siap Tali Pengikat • Mudah Gulung & Bawa Berkelah / Homestay",
-    "description": "Tilam toto jenis gulung kompak yang dilengkapi tali pengikat khas. Sangat praktikal untuk aktiviti luar, berkelah, asrama sekolah, ataupun tilam santai anak-anak di depan TV.",
-    "shortDescription": "Tilam toto gulung mudah alih dengan tali pengikat siap. Praktikal untuk travel dan ruang tamu.",
-    "categoryId": "cat-tilam-toto",
+    "id": "prod-tilam-kekabu-asli",
+    "name": "Tilam Kekabu Asli Tradisi (Jahitan Tufted Butang)",
+    "slug": "tilam-kekabu-asli-tradisi",
+    "subtitle": "100% Isian Kekabu Tulen • Sejuk, Padat & Tradisi",
+    "description": "Tilam kekabu buatan tempatan dengan isian 100% kekabu asli terpilih. Dijahit secara manual dengan teknik tufted berbutang khas untuk memastikan kekabu mampat sekata dan memberi sokongan ortopedik semulajadi yang sangat sejuk untuk cuaca tropika Malaysia.",
+    "shortDescription": "Tilam kekabu asli tradisi buatan kilang Tunas Sinar Jaya. Sejuk, empuk dan padat.",
+    "categoryId": "cat-tilam-kekabu",
     "productType": "mattress",
-    "material": "Asian Polyester Fibre Padat",
-    "firmness": "Medium",
-    "firmnessScale": 5,
-    "thicknessCm": 6,
-    "warrantyYears": 1,
-    "trialNights": 14,
+    "material": "100% Kekabu Asli Semulajadi & Fabrik Cotton Tebal",
+    "firmness": "Medium Firm",
+    "firmnessScale": 6,
+    "thicknessCm": 10,
+    "warrantyYears": 2,
+    "trialNights": 0,
     "features": [
-      "Dilengkapi tali pengikat terbina untuk mudah gulung",
-      "Ringan dan mudah dibawa masuk bonet kereta",
-      "Isian fiber mampat yang tahan lasak",
-      "Sesuai untuk camping, homestay, asrama & ruang santai"
+      "100% Kekabu asli gred A bebas habuk & bahan kimia",
+      "Sangat sejuk dan tidak menyerap haba panas bilik",
+      "Jahitan butang tufted kemas untuk ketahanan bentuk",
+      "Boleh dijemur di bawah matahari untuk kesegaran berpanjangan",
+      "Kualiti pertukangan tekstil Bumiputera warisan turun-temurun"
     ],
-    "layers": [
-      {
-        "number": 1,
-        "name": "Kain Sarung Lembut",
-        "description": "Fabrik kapas mikrofiber yang selesa dan tidak panas."
-      },
-      {
-        "number": 2,
-        "name": "Teras Fiber Kompak",
-        "description": "Isian fiber sintetik yang mampat dan tidak mudah penyek."
-      }
-    ],
+    "layers": [],
     "specifications": {
-      "Bahan": "Polyester Fibre Padat",
-      "Ketebalan": "Kira-kira 6 cm",
-      "Ciri Khas": "Tali Pengikat Terbina Dalam",
-      "Pengeluar": "Tunas Sinar Jaya Enterprise"
+      "Isian": "100% Kekabu Asli Tulen",
+      "Jahitan": "Tufting Butang Kemas",
+      "Fabrik": "Kapas Tahan Lasak",
+      "Pengeluar": "Tunas Sinar Jaya Enterprise (Tasek Gelugor)"
     },
     "faq": [
       {
-        "question": "Berapakah berat tilam gulung ini?",
-        "answer": "Kira-kira 2kg hingga 3.5kg mengikut saiz, sangat ringan untuk diangkat oleh sesiapa sahaja."
+        "question": "Bagaimanakah cara penjagaan tilam kekabu?",
+        "answer": "Jemur di bawah cahaya matahari sekurang-kurangnya sekali sebulan untuk memastikan kekabu sentiasa mekar, gebu dan bebas lembapan."
       }
     ],
     "status": "published",
     "isFeatured": true,
     "variants": [
       {
-        "id": "var-gulung-sgl",
-        "productId": "prod-toto-gulung",
-        "sku": "TSJ-GULUNG-SGL",
-        "sizeName": "Single (90x180cm)",
-        "dimensions": "90cm x 180cm x 6cm",
-        "priceSen": 4900,
-        "compareAtPriceSen": 6500,
+        "id": "var-kekabu-sgl",
+        "productId": "prod-tilam-kekabu-asli",
+        "sku": "TSJ-KB-SGL",
+        "sizeName": "Single (90cm x 190cm)",
+        "dimensions": "90cm x 190cm x 10cm",
+        "priceSen": 9500,
+        "compareAtPriceSen": 13500,
         "stockQuantity": 30,
-        "leadTimeDays": 1,
+        "leadTimeDays": 2,
         "isActive": true
       },
       {
-        "id": "var-gulung-qen",
-        "productId": "prod-toto-gulung",
-        "sku": "TSJ-GULUNG-QEN",
-        "sizeName": "Queen (140x190cm)",
-        "dimensions": "140cm x 190cm x 6cm",
-        "priceSen": 7900,
-        "compareAtPriceSen": 9900,
+        "id": "var-kekabu-qen",
+        "productId": "prod-tilam-kekabu-asli",
+        "sku": "TSJ-KB-QEN",
+        "sizeName": "Queen (150cm x 190cm)",
+        "dimensions": "150cm x 190cm x 12cm",
+        "priceSen": 15900,
+        "compareAtPriceSen": 19900,
         "stockQuantity": 25,
-        "leadTimeDays": 1,
+        "leadTimeDays": 2,
         "isActive": true
       }
     ],
     "images": [
       {
-        "id": "img-gulung-1",
-        "productId": "prod-toto-gulung",
-        "imageUrl": "/images/products/bantal-peluk-roll-pack.jpg",
-        "altText": "Tilam Toto Gulung Mudah Alih KAMAAR Beddings",
+        "id": "img-kb-1",
+        "productId": "prod-tilam-kekabu-asli",
+        "imageUrl": "/images/products/tilam-kekabu-asli.jpg",
+        "altText": "Tilam Kekabu Asli Tradisi Tunas Sinar Jaya",
         "displayOrder": 1,
         "isPrimary": true
-      },
-      {
-        "id": "img-gulung-2",
-        "productId": "prod-toto-gulung",
-        "imageUrl": "/images/products/tilam-lipat-bujang.jpg",
-        "altText": "Tilam Toto Lipat & Gulung Praktikal",
-        "displayOrder": 2,
-        "isPrimary": false
       }
     ],
     "createdAt": "2026-09-01T00:00:00Z",
@@ -358,38 +403,21 @@ export const initialProducts: Product[] = [
     "firmnessScale": 6,
     "thicknessCm": 7,
     "warrantyYears": 1,
-    "trialNights": 14,
+    "trialNights": 0,
     "features": [
       "Rekaan 3 lipatan mudah simpan dalam almari atau sudut bilik",
       "Sarung kain tebal dilengkapi zip penuh untuk mudah dicuci",
       "Isian mampat yang menyokong tulang belakang dengan baik",
       "Jahitan piping kemas di Unit Jahitan Tunas Sinar Jaya"
     ],
-    "layers": [
-      {
-        "number": 1,
-        "name": "Sarung Berzip Boleh Cuci",
-        "description": "Kain bercorak kemas dengan bukaan zip panjang."
-      },
-      {
-        "number": 2,
-        "name": "Teras Busa/Fiber Mampat 3 Bahagian",
-        "description": "Blok isian tahan lasak yang mengekalkan bentuk rata."
-      }
-    ],
+    "layers": [],
     "specifications": {
-      "Jenis": "Tilam Lipat 3 Segi Empat",
+      "Jenis": "Tilam Lipat 3 Bahagian",
       "Saiz Buka": "Single (90cm x 190cm)",
-      "Saiz Lipat": "90cm x 63cm x 22cm",
       "Sarung": "Fabrik Berzip Boleh Dicuci",
       "Pengeluar": "Tunas Sinar Jaya Enterprise"
     },
-    "faq": [
-      {
-        "question": "Bolehkah sarung tilam ini dibasuh mesin?",
-        "answer": "Ya, buka zip dan masukkan sarung ke dalam mesin basuh dengan cucian biasa."
-      }
-    ],
+    "faq": [],
     "status": "published",
     "isFeatured": true,
     "variants": [
@@ -426,14 +454,6 @@ export const initialProducts: Product[] = [
         "altText": "Tilam Lipat 3 Berzip Tunas Sinar Jaya",
         "displayOrder": 1,
         "isPrimary": true
-      },
-      {
-        "id": "img-lipat-2",
-        "productId": "prod-tilam-lipat-3",
-        "imageUrl": "/images/products/tilam-toto-queen.jpg",
-        "altText": "Tilam Kusyen Empuk Tufted Berkualiti",
-        "displayOrder": 2,
-        "isPrimary": false
       }
     ],
     "createdAt": "2026-09-01T00:00:00Z",
@@ -453,7 +473,7 @@ export const initialProducts: Product[] = [
     "firmnessScale": 7,
     "thicknessCm": 10,
     "warrantyYears": 2,
-    "trialNights": 14,
+    "trialNights": 0,
     "features": [
       "Ketumpatan tinggi tidak mudah melendut atau kemek",
       "Fabrik jacquard/damask tahan geseran dan lasak",
@@ -461,35 +481,14 @@ export const initialProducts: Product[] = [
       "Saiz tepat untuk katil bujang asrama (Single 3x6 kaki)",
       "Harga kilang untuk belian individu mahupun pukal"
     ],
-    "layers": [
-      {
-        "number": 1,
-        "name": "Fabrik Luar Tahan Lasak",
-        "description": "Kain tebal kalis geseran jahitan kilang."
-      },
-      {
-        "number": 2,
-        "name": "Lapisan Pelapik Fiber",
-        "description": "Kusyen empuk di bahagian atas dan bawah."
-      },
-      {
-        "number": 3,
-        "name": "Teras Padat Rebonded / Fiber",
-        "description": "Teras sokongan teguh untuk ketahanan jangka panjang."
-      }
-    ],
+    "layers": [],
     "specifications": {
       "Saiz": "Single Standard (90cm x 190cm)",
       "Tinggi / Ketebalan": "4 Inci atau 5 Inci",
       "Sesuai Untuk": "Asrama, Homestay, Bilik Pekerja, Pusat Tahfiz",
       "Pengeluar": "Tunas Sinar Jaya Enterprise"
     },
-    "faq": [
-      {
-        "question": "Bolehkah beli dalam kuantiti banyak untuk asrama?",
-        "answer": "Boleh, sila hubungi kami terus melalui WhatsApp 011-6444 7908 untuk sebut harga pukal dan jadual penghantaran lori kilang."
-      }
-    ],
+    "faq": [],
     "status": "published",
     "isFeatured": true,
     "variants": [
@@ -523,17 +522,9 @@ export const initialProducts: Product[] = [
         "id": "img-asrama-1",
         "productId": "prod-tilam-single-asrama",
         "imageUrl": "/images/products/tilam-lipat-bujang.jpg",
-        "altText": "Tilam Single Asrama Heavy Duty Tunas Sinar Jaya",
+        "altText": "Tilam Single Asrama Tunas Sinar Jaya",
         "displayOrder": 1,
         "isPrimary": true
-      },
-      {
-        "id": "img-asrama-2",
-        "productId": "prod-tilam-single-asrama",
-        "imageUrl": "/images/products/bantal-peluk-roll-pack.jpg",
-        "altText": "Bekalan Tilam & Bantal Peluk Asrama",
-        "displayOrder": 2,
-        "isPrimary": false
       }
     ],
     "createdAt": "2026-09-01T00:00:00Z",
@@ -552,7 +543,7 @@ export const initialProducts: Product[] = [
     "firmness": "Medium Soft",
     "firmnessScale": 4,
     "warrantyYears": 1,
-    "trialNights": 14,
+    "trialNights": 0,
     "features": [
       "Isian Asian Polyester Virgin Fibre gred A yang gebu & anjal",
       "Kain sarung kapas mikrofiber yang sejuk dan lembut",
@@ -562,32 +553,14 @@ export const initialProducts: Product[] = [
     ],
     "layers": [],
     "specifications": {
-      "Saiz Bantal": "Standard (48cm x 74cm)",
-      "Berat": "Kira-kira 850g (Padat & Gebu)",
-      "Bahan Isian": "Asian Polyester Fibre",
+      "Saiz": "Standard Dewasa (48cm x 74cm)",
+      "Isian": "Asian Polyester Fibre Gred A",
       "Pengeluar": "Tunas Sinar Jaya Enterprise"
     },
-    "faq": [
-      {
-        "question": "Bolehkah bantal ini dibasuh?",
-        "answer": "Ya, bantal ini boleh dicuci secara cucian lembut dalam mesin basuh dan dijemur kering di bawah matahari."
-      }
-    ],
+    "faq": [],
     "status": "published",
     "isFeatured": true,
     "variants": [
-      {
-        "id": "var-bantal-1pc",
-        "productId": "prod-bantal-gebu-asian",
-        "sku": "TSJ-BANTAL-1PC",
-        "sizeName": "1 Biji Bantal Standard",
-        "dimensions": "48cm x 74cm",
-        "priceSen": 1800,
-        "compareAtPriceSen": 2500,
-        "stockQuantity": 150,
-        "leadTimeDays": 1,
-        "isActive": true
-      },
       {
         "id": "var-bantal-2pc",
         "productId": "prod-bantal-gebu-asian",
@@ -604,7 +577,7 @@ export const initialProducts: Product[] = [
         "id": "var-bantal-4pc",
         "productId": "prod-bantal-gebu-asian",
         "sku": "TSJ-BANTAL-4PC",
-        "sizeName": "Pakej Keluarga 4 Biji (Jimat)",
+        "sizeName": "Pakej Keluarga 4 Biji (Super Jimat)",
         "dimensions": "48cm x 74cm",
         "priceSen": 5900,
         "compareAtPriceSen": 10000,
@@ -621,14 +594,6 @@ export const initialProducts: Product[] = [
         "altText": "Bantal Tidur Gebu Asian Polyester Fibre",
         "displayOrder": 1,
         "isPrimary": true
-      },
-      {
-        "id": "img-bantal-2",
-        "productId": "prod-bantal-gebu-asian",
-        "imageUrl": "/images/products/bantal-peluk-roll-pack.jpg",
-        "altText": "Stok Bantal & Bantal Peluk Terus Dari Kilang",
-        "displayOrder": 2,
-        "isPrimary": false
       }
     ],
     "createdAt": "2026-09-01T00:00:00Z",
@@ -647,7 +612,7 @@ export const initialProducts: Product[] = [
     "firmness": "Medium Soft",
     "firmnessScale": 4,
     "warrantyYears": 1,
-    "trialNights": 14,
+    "trialNights": 0,
     "features": [
       "Isian padat dan tidak mudah penyek bila dipeluk",
       "Jahitan piping keliling yang kukuh",
@@ -693,17 +658,9 @@ export const initialProducts: Product[] = [
         "id": "img-peluk-1",
         "productId": "prod-bantal-peluk-gebu",
         "imageUrl": "/images/products/bantal-peluk-roll-pack.jpg",
-        "altText": "Bantal Peluk Gebu Roll-Pack Tunas Sinar Jaya",
+        "altText": "Bantal Peluk Gebu Tunas Sinar Jaya",
         "displayOrder": 1,
         "isPrimary": true
-      },
-      {
-        "id": "img-peluk-2",
-        "productId": "prod-bantal-peluk-gebu",
-        "imageUrl": "/images/products/bantal-gebu-asian-fibre.jpg",
-        "altText": "Bantal Peluk & Bantal Tidur Gebu KAMAAR",
-        "displayOrder": 2,
-        "isPrimary": false
       }
     ],
     "createdAt": "2026-09-01T00:00:00Z",
@@ -720,7 +677,7 @@ export const initialProducts: Product[] = [
     "productType": "bedding",
     "material": "Mikrofiber Sejuk & Isian Fiber Quilting",
     "warrantyYears": 1,
-    "trialNights": 14,
+    "trialNights": 0,
     "features": [
       "Jahitan quilting kemas mengelakkan fiber bergumpal",
       "Kain sejuk lembut, tidak berbulu selepas dibasuh",
@@ -766,17 +723,172 @@ export const initialProducts: Product[] = [
         "id": "img-comf-1",
         "productId": "prod-comforter-tebal-quilting",
         "imageUrl": "/images/hero/hero-tilam-toto-lifestyle.jpg",
-        "altText": "Set Comforter Tebal Quilting Corak Menarik KAMAAR",
+        "altText": "Set Comforter Quilting KAMAAR",
         "displayOrder": 1,
         "isPrimary": true
-      },
+      }
+    ],
+    "createdAt": "2026-09-01T00:00:00Z",
+    "updatedAt": "2026-10-07T00:00:00Z"
+  },
+  {
+    "id": "prod-selimut-patchwork",
+    "name": "Selimut Patchwork Eksklusif Berquilting",
+    "slug": "selimut-patchwork-eksklusif",
+    "subtitle": "Cantuman Corak Klasik & Moden • Sejuk & Lembut",
+    "description": "Selimut patchwork istimewa hasil seni jahitan cantuman fabrik berkualiti Unit Jahitan Tunas Sinar Jaya. Setiap helaian diquilting rapi dengan isian fiber nipis yang sejuk dan menyelesakan, sesuai untuk cuaca berhawa dingin mahupun kipas biasa.",
+    "shortDescription": "Selimut patchwork berquilting kemas keluaran Tunas Sinar Jaya. Sejuk dan bergaya.",
+    "categoryId": "cat-selimut-patchwork",
+    "productType": "bedding",
+    "material": "Kapas Mikrofiber Cantuman & Fiber Quilting",
+    "warrantyYears": 1,
+    "trialNights": 0,
+    "features": [
+      "Jahitan patchwork seni kemas dan teliti",
+      "Lapisan berquilting yang tidak panas dipakai",
+      "Kain tidak berbulu dan warna tidak luntur",
+      "Mudah dibasuh dalam mesin basuh"
+    ],
+    "layers": [],
+    "specifications": {
+      "Saiz": "Queen / King Standard",
+      "Teknik": "Machine Patchwork Quilting",
+      "Pengeluar": "Tunas Sinar Jaya Enterprise"
+    },
+    "faq": [],
+    "status": "published",
+    "isFeatured": true,
+    "variants": [
       {
-        "id": "img-comf-2",
-        "productId": "prod-comforter-tebal-quilting",
-        "imageUrl": "/images/products/tilam-toto-queen.jpg",
-        "altText": "Jahitan Quilting dan Corak Tekstil Berkualiti",
-        "displayOrder": 2,
-        "isPrimary": false
+        "id": "var-patch-qen",
+        "productId": "prod-selimut-patchwork",
+        "sku": "TSJ-PATCH-QEN",
+        "sizeName": "Queen (200cm x 230cm)",
+        "dimensions": "200cm x 230cm",
+        "priceSen": 6900,
+        "compareAtPriceSen": 9500,
+        "stockQuantity": 35,
+        "leadTimeDays": 1,
+        "isActive": true
+      }
+    ],
+    "images": [
+      {
+        "id": "img-patch-1",
+        "productId": "prod-selimut-patchwork",
+        "imageUrl": "/images/products/selimut-patchwork.jpg",
+        "altText": "Selimut Patchwork Eksklusif KAMAAR Beddings",
+        "displayOrder": 1,
+        "isPrimary": true
+      }
+    ],
+    "createdAt": "2026-09-01T00:00:00Z",
+    "updatedAt": "2026-10-07T00:00:00Z"
+  },
+  {
+    "id": "prod-set-bayi-gebu",
+    "name": "Set Tilam Bayi Gebu (Tilam + Bantal Lekuk + 2 Bantal Peluk)",
+    "slug": "set-tilam-bayi-gebu",
+    "subtitle": "Pakej Lengkap Si Manja • Lembut, Selamat & Hypoallergenic",
+    "description": "Set tilam bayi comel lengkap dengan tilam empuk berquilting lembut, bantal lekuk kepala bayi ergonomik, serta dua biji bantal peluk mini bertali comel. Menggunakan fabrik kapas lembut yang selamat untuk kulit bayi yang sensitif.",
+    "shortDescription": "Set tilam bayi lengkap buatan kilang KAMAAR. Lembut, sejuk dan selamat untuk si manja.",
+    "categoryId": "cat-set-bayi",
+    "productType": "bedding",
+    "material": "100% Kapas Lembut & Isian Fiber Bayi Hypoallergenic",
+    "warrantyYears": 1,
+    "trialNights": 0,
+    "features": [
+      "Pakej 4 Dalam 1: 1 Tilam + 1 Bantal Lekuk + 2 Bantal Peluk Mini",
+      "Fabrik kapas lembut tidak panas dan tidak memerangkap haba",
+      "Bantal lekuk membantu bentuk kepala bayi yang cantik",
+      "Mudah dicuci dan cepat kering",
+      "Pilihan hadiah terbaik untuk kelahiran bayi (Newborn Gift)"
+    ],
+    "layers": [],
+    "specifications": {
+      "Kandungan": "1 Tilam (60x90cm) + 1 Bantal Lekuk + 2 Bolster",
+      "Material": "Kapas Halus Hypoallergenic",
+      "Pengeluar": "Tunas Sinar Jaya Enterprise"
+    },
+    "faq": [],
+    "status": "published",
+    "isFeatured": true,
+    "variants": [
+      {
+        "id": "var-bayi-set",
+        "productId": "prod-set-bayi-gebu",
+        "sku": "TSJ-BAYI-SET",
+        "sizeName": "Set Lengkap 4-in-1",
+        "dimensions": "Tilam 60cm x 90cm",
+        "priceSen": 5500,
+        "compareAtPriceSen": 7900,
+        "stockQuantity": 40,
+        "leadTimeDays": 1,
+        "isActive": true
+      }
+    ],
+    "images": [
+      {
+        "id": "img-bayi-1",
+        "productId": "prod-set-bayi-gebu",
+        "imageUrl": "/images/products/set-tilam-bayi.jpg",
+        "altText": "Set Tilam Bayi Gebu Tunas Sinar Jaya",
+        "displayOrder": 1,
+        "isPrimary": true
+      }
+    ],
+    "createdAt": "2026-09-01T00:00:00Z",
+    "updatedAt": "2026-10-07T00:00:00Z"
+  },
+  {
+    "id": "prod-kusyen-sofa-eksklusif",
+    "name": "Set Sarung Kusyen Sofa Eksklusif (Termasuk Corak Aidilfitri)",
+    "slug": "set-sarung-kusyen-sofa-eksklusif",
+    "subtitle": "Fabrik Tebal Berkilat • Piping Tepi & Zip Sorok Tahan Karat",
+    "description": "Set sarung kusyen sofa ruang tamu dengan rekaan eksklusif keluaran Unit Jahitan kilang kami. Menampilkan pelbagai pilihan corak songket tenun, geometrik moden, dan rekaan khas Aidilfitri untuk menyerlahkan keanggunan ruang tamu anda.",
+    "shortDescription": "Sarung kusyen sofa eksklusif jahitan kilang. Fabrik berkualiti tinggi pelbagai corak mewah.",
+    "categoryId": "cat-kusyen-sofa",
+    "productType": "bedding",
+    "material": "Jacquard Songket & Baldu Mikrofiber",
+    "warrantyYears": 1,
+    "trialNights": 0,
+    "features": [
+      "Jahitan piping keliling tebal dan kemas",
+      "Zip sorok (invisible zipper) tahan karat",
+      "Fabrik mewah tidak luntur dan tahan basuhan mesin",
+      "Sesuai untuk semua kusyen sofa standard (45cm x 45cm)"
+    ],
+    "layers": [],
+    "specifications": {
+      "Saiz": "Standard Kusyen (45cm x 45cm)",
+      "Pakej": "Pilihan 5 Keping Sedondon",
+      "Pengeluar": "Tunas Sinar Jaya Enterprise"
+    },
+    "faq": [],
+    "status": "published",
+    "isFeatured": true,
+    "variants": [
+      {
+        "id": "var-kusyen-5pc",
+        "productId": "prod-kusyen-sofa-eksklusif",
+        "sku": "TSJ-KSYN-5PC",
+        "sizeName": "Set Kombo 5 Keping Sedondon",
+        "dimensions": "45cm x 45cm",
+        "priceSen": 4900,
+        "compareAtPriceSen": 7500,
+        "stockQuantity": 50,
+        "leadTimeDays": 1,
+        "isActive": true
+      }
+    ],
+    "images": [
+      {
+        "id": "img-kusyen-1",
+        "productId": "prod-kusyen-sofa-eksklusif",
+        "imageUrl": "/images/products/kusyen-sofa-eksklusif.jpg",
+        "altText": "Sarung Kusyen Sofa Eksklusif KAMAAR",
+        "displayOrder": 1,
+        "isPrimary": true
       }
     ],
     "createdAt": "2026-09-01T00:00:00Z",
@@ -793,7 +905,7 @@ export const initialProducts: Product[] = [
     "productType": "bedding",
     "material": "Kapas Mikrofiber Sejuk Berzip",
     "warrantyYears": 1,
-    "trialNights": 14,
+    "trialNights": 0,
     "features": [
       "Zip panjang memudahkan proses memasukkan dan mengeluarkan tilam toto",
       "Kain sejuk lembut yang selesa bila berbaring",
@@ -831,18 +943,6 @@ export const initialProducts: Product[] = [
         "stockQuantity": 70,
         "leadTimeDays": 1,
         "isActive": true
-      },
-      {
-        "id": "var-sarung-kng",
-        "productId": "prod-sarung-toto-berzip",
-        "sku": "TSJ-SRG-KNG",
-        "sizeName": "King (180x190cm)",
-        "dimensions": "180cm x 190cm",
-        "priceSen": 4200,
-        "compareAtPriceSen": 5500,
-        "stockQuantity": 50,
-        "leadTimeDays": 1,
-        "isActive": true
       }
     ],
     "images": [
@@ -850,17 +950,9 @@ export const initialProducts: Product[] = [
         "id": "img-sarung-1",
         "productId": "prod-sarung-toto-berzip",
         "imageUrl": "/images/products/tilam-toto-queen.jpg",
-        "altText": "Cadar & Sarung Tilam Toto Berzip KAMAAR",
+        "altText": "Sarung Tilam Toto Berzip KAMAAR",
         "displayOrder": 1,
         "isPrimary": true
-      },
-      {
-        "id": "img-sarung-2",
-        "productId": "prod-sarung-toto-berzip",
-        "imageUrl": "/images/hero/hero-tilam-toto-lifestyle.jpg",
-        "altText": "Sarung Tilam Toto Pelbagai Corak",
-        "displayOrder": 2,
-        "isPrimary": false
       }
     ],
     "createdAt": "2026-09-01T00:00:00Z",
@@ -877,7 +969,7 @@ export const initialProducts: Product[] = [
     "productType": "mattress",
     "material": "Tilam & Bantal Lengkap Terus Kilang",
     "warrantyYears": 1,
-    "trialNights": 14,
+    "trialNights": 0,
     "features": [
       "Harga borong jimat gila terus dari kilang",
       "Termasuk pakej tilam bujang/toto dan bantal tidur gebu",
@@ -924,17 +1016,9 @@ export const initialProducts: Product[] = [
         "id": "img-borong-1",
         "productId": "prod-pakej-borong-10set",
         "imageUrl": "/images/products/bantal-peluk-roll-pack.jpg",
-        "altText": "Pakej Jualan Gudang & Borong Asrama Roll-Packed",
+        "altText": "Jualan Gudang Tekstil Tunas Sinar Jaya",
         "displayOrder": 1,
         "isPrimary": true
-      },
-      {
-        "id": "img-borong-2",
-        "productId": "prod-pakej-borong-10set",
-        "imageUrl": "/images/products/tilam-lipat-bujang.jpg",
-        "altText": "Tilam Bujang Asrama & Bantal Gebu Lengkap",
-        "displayOrder": 2,
-        "isPrimary": false
       }
     ],
     "createdAt": "2026-09-01T00:00:00Z",
@@ -1027,14 +1111,14 @@ export const initialCoupons: Coupon[] = [
 
 export const initialShowrooms: Showroom[] = [
   {
-    "id": "sr-tasek-gelugor",
-    "name": "Kilang & Stor Jualan Gudang Utama Tunas Sinar Jaya",
-    "address": "7878B Jalan Permatang Berangan",
+    "id": "show-tasek-gelugor",
+    "name": "Kilang & Galeri Jualan Gudang Tasek Gelugor",
     "city": "Tasek Gelugor",
+    "address": "7878B Jalan Permatang Berangan",
     "state": "Pulau Pinang",
     "postcode": "13300",
     "phone": "011-6444 7908",
-    "openingHours": "Isnin - Sabtu: 9:00 AM - 6:00 PM (Ahad: Temujanji Jualan Gudang)",
+    "openingHours": "Isnin - Sabtu: 9:00 AM - 6:00 PM (Ahad: Jualan Gudang & Temujanji)",
     "mapUrl": "https://maps.google.com/?q=7878B+Jalan+Permatang+Berangan+13300+Tasek+Gelugor+Pulau+Pinang",
     "imageUrl": "/images/company/kilang-tekstil-jahitan.jpg",
     "displayOrder": 1,
@@ -1061,34 +1145,34 @@ export const initialBlogPosts: BlogPost[] = [
   },
   {
     "id": "blog-2",
-    "slug": "kenapa-tilam-lipat-3-pilihan-terbaik-asrama-homestay",
-    "title": "Kelebihan Tilam Lipat 3 Berzip Untuk Asrama & Homestay",
-    "excerpt": "Mengapa pengusaha homestay dan warden asrama lebih gemar memilih tilam lipat berbanding tilam span biasa.",
-    "content": "Tilam lipat 3 bahagian memberikan fleksibiliti tinggi kepada pemilik homestay dan asrama. Bila tidak digunakan, ia boleh dilipat dan disusun rapi, menjimatkan ruang bilik. Tambahan pula, dengan sarung berzip, kebersihan tilam lebih terjamin kerana sarung boleh dicuci mesin.",
-    "author": "Hazizi Md Rashid (Pengurus Operasi)",
-    "imageUrl": "/images/products/tilam-lipat-bujang.jpg",
+    "slug": "kelebihan-tilam-kekabu-asli-untuk-kesihatan-tulang-belakang",
+    "title": "Kenapa Tilam Kekabu Asli Kekal Menjadi Pilihan Turun-Temurun",
+    "excerpt": "Ketahui kelebihan gentian kekabu semulajadi yang sejuk, bebas kimia dan memberikan sokongan terbaik untuk rehat anda.",
+    "content": "Kekabu asli terkenal dengan sifat semulajadinya yang sejuk dan tidak memerangkap haba, menjadikannya pilihan ideal untuk iklim Malaysia. Ditambah dengan jahitan butang tufted kemas dari kilang Tunas Sinar Jaya, tilam kekabu memberikan sokongan sekata yang melegakan ketegangan otot belakang.",
+    "author": "Tunas Sinar Jaya Enterprise",
+    "imageUrl": "/images/products/tilam-kekabu-asli.jpg",
     "tags": [
-      "Asrama",
-      "Homestay",
-      "Tilam Lipat"
+      "Kekabu",
+      "Tradisi",
+      "Kesihatan"
     ],
-    "publishedAt": "2026-09-20T10:00:00Z",
+    "publishedAt": "2026-09-20T09:00:00Z",
     "isPublished": true
   },
   {
     "id": "blog-3",
-    "slug": "profil-pengilang-tekstil-bumiputera-tasek-gelugor",
-    "title": "Menjahit Kepercayaan, Menyulam Masa Depan di Tasek Gelugor",
-    "excerpt": "Perjalanan Tunas Sinar Jaya Enterprise dalam menghasilkan produk jahitan tekstil berkualiti tinggi dengan harga berpatutan.",
-    "content": "Bermula dari bengkel jahitan tempatan, Tunas Sinar Jaya Enterprise kini berkembang dengan unit pengeluaran yang sistematik merangkumi Unit Potong Kain, Unit Jahitan, Unit Bantal & Tilam, serta Stor Produk Siap. Komitmen kami adalah menghasilkan produk tekstil Bumiputera yang berkualiti tinggi dan berpatutan untuk seluruh rakyat Malaysia.",
-    "author": "Hezwan Md Rashid (Bahagian Pentadbiran)",
-    "imageUrl": "/images/company/kilang-tekstil-jahitan.jpg",
+    "slug": "tips-memilih-tilam-asrama-dan-pakej-jualan-gudang",
+    "title": "Panduan Pengusaha Homestay & Asrama Memilih Tilam Yang Tahan Lasak",
+    "excerpt": "Bagaimana pakej jualan gudang dan tilam bujang heavy duty kilang menjimatkan kos operasi pengusaha asrama dan homestay.",
+    "content": "Bagi pengusaha asrama, tahfiz dan homestay, ketahanan tilam adalah kunci penjimatan. Tilam bujang dengan jahitan bertetulang dan teras padat rebonded memastikan tilam tidak mudah melendut walau digunakan setiap hari oleh penghuni berbeza.",
+    "author": "Tunas Sinar Jaya Enterprise",
+    "imageUrl": "/images/products/bantal-peluk-roll-pack.jpg",
     "tags": [
-      "Profil Syarikat",
-      "Tasek Gelugor",
-      "Tekstil"
+      "Asrama",
+      "Borong",
+      "Homestay"
     ],
-    "publishedAt": "2026-09-25T11:00:00Z",
+    "publishedAt": "2026-09-28T09:00:00Z",
     "isPublished": true
   }
 ]
@@ -1243,18 +1327,18 @@ export const initialAffiliates: Affiliate[] = [
 
 export const initialWebsiteConfig: WebsiteConfig = {
   "theme": {
-    "primaryColor": "#1E4E8C",
-    "primaryDarkColor": "#13325B",
-    "accentGoldColor": "#B49A58",
+    "primaryColor": "#0D2818",
+    "primaryDarkColor": "#081C10",
+    "accentGoldColor": "#C5A880",
     "backgroundColor": "#FFFFFF",
-    "creamColor": "#F4F7FB",
+    "creamColor": "#FAF8F5",
     "textColor": "#0F172A",
-    "saleColor": "#A13D40"
+    "saleColor": "#991B1B"
   },
   "announcement": {
     "enabled": true,
     "leftBenefit": "Penghantaran Terus Semenanjung",
-    "centerText": "Jualan Gudang Terus Dari Kilang • Gunakan Kod",
+    "centerText": "Jualan Gudang Terus Dari Kilang Tasek Gelugor • Kod Baucar",
     "highlightCode": "KAMAAR10",
     "url": "/collections/tilam-toto",
     "rightGuarantee": "Kualiti Jahitan Terjamin",
@@ -1266,139 +1350,163 @@ export const initialWebsiteConfig: WebsiteConfig = {
     "columns": [
       {
         "id": "col-1",
-        "title": "Tilam Toto & Lipat",
-        "titleBm": "Tilam Toto & Lipat",
+        "title": "Tilam Toto & Kekabu",
+        "titleBm": "Tilam Toto & Kekabu",
         "items": [
           {
             "id": "m-1",
-            "label": "Tilam Toto Queen Tebal",
-            "labelBm": "Tilam Toto Queen Tebal",
-            "href": "/products/tilam-toto-queen"
+            "label": "Tilam Toto Asian Fibre (Paling Lariss)",
+            "labelBm": "Tilam Toto Asian Fibre (Paling Lariss)",
+            "href": "/products/tilam-toto-asian-polyester-fibre"
           },
           {
             "id": "m-2",
-            "label": "Tilam Toto Single Gebu",
-            "labelBm": "Tilam Toto Single Gebu",
-            "href": "/products/tilam-toto-single"
+            "label": "Tilam Kekabu Asli Tradisi",
+            "labelBm": "Tilam Kekabu Asli Tradisi",
+            "href": "/products/tilam-kekabu-asli-tradisi"
           },
           {
             "id": "m-3",
-            "label": "Tilam Lipat 3 Tebal Bujang",
-            "labelBm": "Tilam Lipat 3 Tebal Bujang",
-            "href": "/products/tilam-lipat-3"
+            "label": "Tilam Lipat 3 Berzip Boleh Cuci",
+            "labelBm": "Tilam Lipat 3 Berzip Boleh Cuci",
+            "href": "/products/tilam-lipat-3-berzip"
           },
           {
             "id": "m-4",
-            "label": "Tilam Bujang Asrama Foam",
-            "labelBm": "Tilam Bujang Asrama Foam",
-            "href": "/products/tilam-bujang-asrama"
+            "label": "Tilam Single 3 Kaki Asrama",
+            "labelBm": "Tilam Single 3 Kaki Asrama",
+            "href": "/products/tilam-single-3-kaki-asrama"
           }
         ]
       },
       {
         "id": "col-2",
-        "title": "Bantal & Cadar",
-        "titleBm": "Bantal & Cadar",
+        "title": "Bantal, Cadar & Bayi",
+        "titleBm": "Bantal, Cadar & Bayi",
         "items": [
           {
             "id": "m-5",
             "label": "Bantal Tidur Gebu Asian Fibre",
             "labelBm": "Bantal Tidur Gebu Asian Fibre",
-            "href": "/products/bantal-gebu-asian-fibre"
+            "href": "/products/bantal-tidur-gebu-asian-fibre"
           },
           {
             "id": "m-6",
-            "label": "Bantal Peluk Asian Polyester",
-            "labelBm": "Bantal Peluk Asian Polyester",
-            "href": "/products/bantal-peluk-polyester"
+            "label": "Bantal Peluk (Bolster) Gebu",
+            "labelBm": "Bantal Peluk (Bolster) Gebu",
+            "href": "/products/bantal-peluk-bolster-gebu"
           },
           {
             "id": "m-7",
-            "label": "Set Comforter & Cadar Queen",
-            "labelBm": "Set Comforter & Cadar Queen",
-            "href": "/products/set-comforter-queen"
+            "label": "Set Comforter Tebal Quilting",
+            "labelBm": "Set Comforter Tebal Quilting",
+            "href": "/products/set-comforter-tebal-quilting"
           },
           {
             "id": "m-8",
-            "label": "Sarung Tilam Toto Berzip",
-            "labelBm": "Sarung Tilam Toto Berzip",
-            "href": "/products/sarung-tilam-toto"
+            "label": "Selimut Patchwork Eksklusif",
+            "labelBm": "Selimut Patchwork Eksklusif",
+            "href": "/products/selimut-patchwork-eksklusif"
+          },
+          {
+            "id": "m-9",
+            "label": "Set Tilam Bayi Gebu (4-in-1)",
+            "labelBm": "Set Tilam Bayi Gebu (4-in-1)",
+            "href": "/products/set-tilam-bayi-gebu"
+          },
+          {
+            "id": "m-10",
+            "label": "Sarung Kusyen Sofa & Aidilfitri",
+            "labelBm": "Sarung Kusyen Sofa & Aidilfitri",
+            "href": "/products/set-sarung-kusyen-sofa-eksklusif"
           }
         ]
       },
       {
         "id": "col-3",
-        "title": "Kilang & Borong",
-        "titleBm": "Kilang & Borong",
+        "title": "Kilang, Borong & OEM",
+        "titleBm": "Kilang, Borong & OEM",
         "items": [
           {
-            "id": "m-9",
+            "id": "m-11",
             "label": "Profil Syarikat & 4 Unit Kilang",
             "labelBm": "Profil Syarikat & 4 Unit Kilang",
             "href": "/profil"
           },
           {
-            "id": "m-10",
-            "label": "Carta Organisasi Pengurusan",
-            "labelBm": "Carta Organisasi Pengurusan",
-            "href": "/profil#carta-organisasi"
-          },
-          {
-            "id": "m-11",
+            "id": "m-12",
             "label": "Pakej Borong Asrama (10 Set)",
             "labelBm": "Pakej Borong Asrama (10 Set)",
-            "href": "/products/pakej-borong-asrama"
+            "href": "/products/pakej-pukal-asrama-homestay"
           },
           {
-            "id": "m-12",
+            "id": "m-13",
             "label": "Jualan Gudang Tasek Gelugor",
             "labelBm": "Jualan Gudang Tasek Gelugor",
             "href": "/collections/borong-gudang"
+          },
+          {
+            "id": "m-14",
+            "label": "Tempahan OEM & Agensi Kerajaan",
+            "labelBm": "Tempahan OEM & Agensi Kerajaan",
+            "href": "/business"
           }
         ]
       }
     ],
     "promoCard": {
       "enabled": true,
-      "badge": "PALING LARISS",
-      "title": "Tilam Toto Kilang",
-      "description": "Asian Polyester Fibre tebal & empuk terus dari kilang Tasek Gelugor.",
+      "badge": "PALING LARISS!!",
+      "title": "Tilam Toto Asian Fibre",
+      "description": "Empuk, tebal dan selesa terus dari kilang Tasek Gelugor.",
       "buttonText": "Beli Sekarang",
-      "buttonUrl": "/collections/tilam-toto"
+      "buttonUrl": "/products/tilam-toto-asian-polyester-fibre"
     }
   },
   "hero": {
     "slides": [
       {
         "id": "slide-1",
-        "badge": "PALING LARISS!!",
-        "title": "Tilam Toto Asian Polyester Fibre Gebu & Tebal",
-        "subtitle": "Mengilang dan memasar produk jahitan tekstil berkualiti tinggi terus dari kilang Tasek Gelugor. Keselesaan anda keutamaan kami.",
+        "badge": "PALING LARISS!! ASIAN POLYESTER FIBRE",
+        "title": "Tilam Toto Tebal & Empuk Terus Dari Kilang",
+        "subtitle": "Isian Asian Polyester Fibre berkualiti tinggi, jahitan quilting kemas pelbagai corak floral & moden. Selesa, empuk, dan jimat terus dari pengeluar.",
         "ctaText": "Beli Tilam Toto Sekarang",
-        "ctaLink": "/collections/tilam-toto",
-        "secondaryCtaText": "Lihat Profil Syarikat",
+        "ctaLink": "/products/tilam-toto-asian-polyester-fibre",
+        "secondaryCtaText": "Profil Kilang Kami",
         "secondaryCtaLink": "/profil",
         "imageUrl": "/images/hero/hero-tilam-toto-lifestyle.jpg",
         "isActive": true
       },
       {
         "id": "slide-2",
-        "badge": "PENGILANG BUMIPUTERA",
-        "title": "Kualiti Jahitan, Kepuasan Pelanggan Terjamin",
-        "subtitle": "Proses pengeluaran sistematik merangkumi Unit Potong Kain, Unit Jahitan, Unit Bantal & Tilam, serta Stor Produk Siap.",
-        "ctaText": "Lihat Aktiviti Kilang",
-        "ctaLink": "/profil",
-        "secondaryCtaText": "Hubungi Kami",
-        "secondaryCtaLink": "/contact",
+        "badge": "PENGILANG TEKSTIL BUMIPUTERA",
+        "title": "Kualiti Jahitan, Kepuasan Terjamin",
+        "subtitle": "Menjahit Kepercayaan, Menyulam Masa Depan. Operasi sistematik 4 unit: Unit Potong Kain, Unit Jahitan, Unit Bantal & Tilam, dan Stor Produk Siap.",
+        "ctaText": "Lihat Operasi Kilang",
+        "ctaLink": "/profil#tentang-kami",
+        "secondaryCtaText": "Carta Organisasi",
+        "secondaryCtaLink": "/profil#carta-organisasi",
         "imageUrl": "/images/hero/hero-kilang-tekstil.jpg",
         "isActive": true
       },
       {
         "id": "slide-3",
+        "badge": "100% KEKABU ASLI TRADISI",
+        "title": "Tilam & Bantal Kekabu Asli Buatan Tempatan",
+        "subtitle": "Kelembutan semulajadi yang sejuk, padat dan selesa dengan teknik jahitan butang tufting tradisi yang tahan lasak turun-temurun.",
+        "ctaText": "Koleksi Kekabu Asli",
+        "ctaLink": "/products/tilam-kekabu-asli-tradisi",
+        "secondaryCtaText": "Tempah Sekarang",
+        "secondaryCtaLink": "/collections/tilam-kekabu",
+        "imageUrl": "/images/products/tilam-kekabu-asli.jpg",
+        "isActive": true
+      },
+      {
+        "id": "slide-4",
         "badge": "HARGA BORONG GUDANG",
         "title": "Jualan Gudang & Tempahan Pukal Asrama / Homestay",
-        "subtitle": "Dapatkan harga kilang paling berpatutan untuk tilam bujang asrama, tilam lipat, bantal tidur gebu, dan comforter berkualiti.",
-        "ctaText": "Terokai Pakej Borong",
+        "subtitle": "Pakej lengkap tilam bujang, bantal tidur gebu dan cadar berzip untuk asrama sekolah, tahfiz, homestay dan kemudahan kontraktor.",
+        "ctaText": "Pakej Jualan Gudang",
         "ctaLink": "/collections/borong-gudang",
         "secondaryCtaText": "WhatsApp 011-6444 7908",
         "secondaryCtaLink": "https://wa.me/601164447908",
@@ -1413,25 +1521,25 @@ export const initialWebsiteConfig: WebsiteConfig = {
         "id": "reassure-1",
         "icon": "sparkles",
         "title": "Kualiti Terjamin",
-        "subtitle": "Kawalan mutu ketat, jahitan kemas dan isian Asian Polyester Fibre berkualiti."
+        "subtitle": "Kawalan mutu ketat, jahitan kemas dan isian Asian Polyester Fibre & Kekabu berkualiti."
       },
       {
         "id": "reassure-2",
         "icon": "trial",
         "title": "Pengeluaran Cekap",
-        "subtitle": "Tenaga kerja mahir dengan fasiliti jahitan dan quilting kilang sendiri."
+        "subtitle": "Operasi teratur merangkumi Unit Potong Kain, Unit Jahitan & Unit Bantal Tilam."
       },
       {
         "id": "reassure-3",
         "icon": "shield",
         "title": "Harga Berpatutan",
-        "subtitle": "Harga terus dari kilang tanpa orang tengah untuk penjimatan maksimum."
+        "subtitle": "Harga terus dari kilang Tasek Gelugor tanpa orang tengah untuk penjimatan maksimum."
       },
       {
         "id": "reassure-4",
         "icon": "truck",
         "title": "Komitmen Pelanggan",
-        "subtitle": "Penghantaran pantas, perkhidmatan mesra dan jaminan kepuasan pelanggan."
+        "subtitle": "Penghantaran lori terus Semenanjung, perkhidmatan mesra dan jaminan kepuasan."
       }
     ]
   },
@@ -1439,7 +1547,7 @@ export const initialWebsiteConfig: WebsiteConfig = {
     "enabled": true,
     "badge": "PROMOSI JUALAN GUDANG",
     "headline": "Dapatkan Tilam Toto & Bantal Gebu Terus Dari Kilang",
-    "description": "Nikmati harga istimewa dan baucar diskaun KAMAAR10 untuk pesanan dalam talian minggu ini.",
+    "description": "Nikmati harga kilang istimewa dan baucar diskaun KAMAAR10 untuk pesanan dalam talian minggu ini.",
     "couponCode": "KAMAAR10",
     "imageUrl": "/images/products/tilam-toto-queen.jpg",
     "ctaText": "Beli Sekarang",
@@ -1448,15 +1556,15 @@ export const initialWebsiteConfig: WebsiteConfig = {
   "storySection": {
     "badge": "TUNAS SINAR JAYA ENTERPRISE",
     "headline": "Mengilang & Memasar Produk Jahitan Tekstil Berkualiti",
-    "paragraph1": "TUNAS SINAR JAYA ENTERPRISE merupakan sebuah syarikat tempatan yang terlibat dalam pengilangan dan pemasaran produk jahitan tekstil di Tasek Gelugor, Pulau Pinang. Berbekalkan pengalaman, tenaga kerja mahir serta komitmen terhadap kualiti, kami menghasilkan Tilam Toto, tilam lipat, bantal gebu dan cadar pada harga kompetitif.",
+    "paragraph1": "TUNAS SINAR JAYA ENTERPRISE merupakan sebuah syarikat tempatan yang terlibat dalam pengilangan dan pemasaran produk jahitan tekstil di Tasek Gelugor, Pulau Pinang. Berbekalkan pengalaman, tenaga kerja mahir serta komitmen terhadap kualiti, kami menghasilkan Tilam Toto, tilam kekabu, tilam lipat, bantal gebu, comforter dan cadar pada harga paling kompetitif.",
     "paragraph2": "Kami memberi penekanan kepada penggunaan bahan berkualiti, proses pengeluaran yang sistematik serta kawalan mutu yang ketat bagi memastikan setiap produk mencapai standard yang tinggi. Moto kami: \"Kualiti Jahitan, Kepuasan Terjamin\" — Menjahit Kepercayaan, Menyulam Masa Depan.",
     "imageUrl": "/images/company/kilang-tekstil-jahitan.jpg",
     "signatureTitle": "Hazizi Md Rashid",
     "signatureSub": "Pengurus Operasi, Tunas Sinar Jaya Enterprise"
   },
   "socialAndContact": {
-    "whatsappNumber": "+601164447908",
-    "phoneDisplay": "011-6444 7908",
+    "whatsappNumber": "+60194786991",
+    "phoneDisplay": "019-478 6991",
     "emailDisplay": "tunassinar@gmail.com",
     "addressDisplay": "7878B Jalan Permatang Berangan, 13300 Tasek Gelugor SPU, Pulau Pinang",
     "instagramUrl": "",

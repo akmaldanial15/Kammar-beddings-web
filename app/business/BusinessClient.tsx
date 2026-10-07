@@ -45,17 +45,17 @@ export function BusinessClient() {
 
   return (
     <div className="space-y-12">
-      {/* Hospitality Perks */}
+      {/* Factory Procurement Perks */}
       <div className="grid grid-cols-1 md:grid-cols-3 gap-6">
         <div className="bg-warmwhite p-6 rounded-2xl border border-borderLight shadow-sm space-y-3">
           <div className="w-10 h-10 rounded-xl bg-forest/10 text-forest flex items-center justify-center">
-            <Hotel className="w-5 h-5" />
+            <Building2 className="w-5 h-5" />
           </div>
           <h4 className="font-serif font-bold text-forest-dark text-lg">
-            Commercial Fire-Retardant & Anti-Bacterial
+            Pengilangan Sendiri di Tasek Gelugor
           </h4>
           <p className="text-xs text-secondary leading-relaxed">
-            Meets Malaysian and international hotel safety certifications with certified natural latex cores and sanitized damask covers.
+            Fasiliti pengeluaran berstruktur 4 unit: Unit Potong Kain, Unit Jahitan, Unit Bantal &amp; Tilam, serta Stor Produk Siap memastikan kawalan mutu dan kapasiti pengeluaran pukal yang pantas.
           </p>
         </div>
 
@@ -64,10 +64,10 @@ export function BusinessClient() {
             <Award className="w-5 h-5 text-gold" />
           </div>
           <h4 className="font-serif font-bold text-forest-dark text-lg">
-            Custom Sizing & Dual Firmness
+            Khidmat Jenama Sendiri (OEM) &amp; Saiz Khas
           </h4>
           <p className="text-xs text-secondary leading-relaxed">
-            Tailored bespoke dimensions for luxury resort villas, custom upholstered bedframes, and zip-and-link twin/super king configurations.
+            Membantu syarikat dan usahawan menghasilkan tilam toto, tilam bujang, comforter dan bantal dengan penjenamaan sendiri, pilihan fabrik kustom, serta spesifikasi tender kerajaan.
           </p>
         </div>
 
@@ -76,10 +76,10 @@ export function BusinessClient() {
             <ShieldCheck className="w-5 h-5" />
           </div>
           <h4 className="font-serif font-bold text-forest-dark text-lg">
-            Volume Pricing & Dedicated Account Director
+            Harga Borong Terus Kilang &amp; Invois Rasmi
           </h4>
           <p className="text-xs text-secondary leading-relaxed">
-            Tiered commercial contract pricing, scheduled staggered site deliveries, and direct factory warranty guarantees.
+            Penjimatan harga pengeluar terus tanpa orang tengah untuk asrama, maahad tahfiz, homestay dan kontraktor dengan sokongan sebut harga rasmi serta penghantaran lori ke lokasi.
           </p>
         </div>
       </div>
@@ -92,30 +92,30 @@ export function BusinessClient() {
               <CheckCircle2 className="w-7 h-7" />
             </div>
             <h4 className="font-serif text-2xl font-bold text-forest-dark">
-              Hospitality RFP Received
+              Permohonan Sebut Harga Diterima
             </h4>
             <p className="text-xs text-secondary max-w-md mx-auto leading-relaxed">
-              Our Commercial Accounts Director will review your project requirements and prepare a formal quotation and sample swatch kit within 24 hours.
+              Pengurusan Tunas Sinar Jaya Enterprise akan menyemak keperluan projek anda dan menyediakan sebut harga rasmi serta jadual penghantaran dalam tempoh 24 jam.
             </p>
           </div>
         ) : (
           <form onSubmit={handleSubmit} className="space-y-4 text-xs">
             <div className="border-b border-borderLight pb-4 mb-4">
               <h3 className="font-serif text-xl font-bold text-forest-dark">
-                Request a Commercial Bedding Proposal
+                Borang Permohonan Sebut Harga Borong / OEM
               </h3>
               <p className="text-secondary text-xs mt-1">
-                Fill in your project specifications to receive contract pricing and sample units.
+                Sila lengkapkan maklumat organisasi anda untuk menerima sebut harga rasmi terus dari kilang.
               </p>
             </div>
 
             <div className="grid grid-cols-1 sm:grid-cols-2 gap-4">
               <div>
-                <label className="block font-bold text-forest-dark mb-1">Company / Organization *</label>
+                <label className="block font-bold text-forest-dark mb-1">Nama Organisasi / Syarikat *</label>
                 <input
                   type="text"
                   required
-                  placeholder="e.g. The Banjaran Hotsprings Retreat"
+                  placeholder="cth. Maahad Tahfiz Al-Quran / Homestay Sejahtera"
                   value={companyName}
                   onChange={(e) => setCompanyName(e.target.value)}
                   className="w-full px-3 py-2.5 rounded-xl border border-borderLight focus:border-forest"
@@ -123,11 +123,11 @@ export function BusinessClient() {
               </div>
 
               <div>
-                <label className="block font-bold text-forest-dark mb-1">Contact Person *</label>
+                <label className="block font-bold text-forest-dark mb-1">Pegawai Untuk Dihubungi *</label>
                 <input
                   type="text"
                   required
-                  placeholder="e.g. Encik Farhan (Procurement Director)"
+                  placeholder="cth. Ustaz Ridzuan / En. Razif (Pegawai Perolehan)"
                   value={contactName}
                   onChange={(e) => setContactName(e.target.value)}
                   className="w-full px-3 py-2.5 rounded-xl border border-borderLight focus:border-forest"
@@ -137,11 +137,11 @@ export function BusinessClient() {
 
             <div className="grid grid-cols-1 sm:grid-cols-2 gap-4">
               <div>
-                <label className="block font-bold text-forest-dark mb-1">Business Email *</label>
+                <label className="block font-bold text-forest-dark mb-1">Emel Organisasi *</label>
                 <input
                   type="email"
                   required
-                  placeholder="procurement@hotel.com"
+                  placeholder="pengurusan@asrama.edu.my"
                   value={email}
                   onChange={(e) => setEmail(e.target.value)}
                   className="w-full px-3 py-2.5 rounded-xl border border-borderLight focus:border-forest"
@@ -149,11 +149,11 @@ export function BusinessClient() {
               </div>
 
               <div>
-                <label className="block font-bold text-forest-dark mb-1">Direct Phone *</label>
+                <label className="block font-bold text-forest-dark mb-1">Nombor Telefon / WhatsApp *</label>
                 <input
                   type="tel"
                   required
-                  placeholder="03-1234 5678"
+                  placeholder="011-xxxx xxxx"
                   value={phone}
                   onChange={(e) => setPhone(e.target.value)}
                   className="w-full px-3 py-2.5 rounded-xl border border-borderLight focus:border-forest"
@@ -163,41 +163,42 @@ export function BusinessClient() {
 
             <div className="grid grid-cols-1 sm:grid-cols-2 gap-4">
               <div>
-                <label className="block font-bold text-forest-dark mb-1">Project Classification</label>
+                <label className="block font-bold text-forest-dark mb-1">Kategori Pesanan</label>
                 <select
                   value={businessType}
                   onChange={(e) => setBusinessType(e.target.value)}
                   className="w-full px-3 py-2.5 rounded-xl border border-borderLight focus:border-forest bg-warmwhite"
                 >
-                  <option value="Boutique Hotel / Luxury Villa">Boutique Hotel / Luxury Villa</option>
-                  <option value="5-Star Commercial Hotel">5-Star Commercial Hotel</option>
-                  <option value="Serviced Residence / AirBnB Host">Serviced Residence / AirBnB Host</option>
-                  <option value="Interior Design / Architecture Firm">Interior Design / Architecture Firm</option>
-                  <option value="Corporate / Healthcare">Corporate / Healthcare</option>
+                  <option value="Asrama Sekolah / Institusi Pendidikan">Asrama Sekolah / Institusi Pendidikan</option>
+                  <option value="Maahad Tahfiz / Pusat Pengajian">Maahad Tahfiz / Pusat Pengajian</option>
+                  <option value="Homestay / Hotel Bajet / Chalet">Homestay / Hotel Bajet / Chalet</option>
+                  <option value="Agensi Kerajaan / Kem Latihan / Kuarters">Agensi Kerajaan / Kem Latihan / Kuarters</option>
+                  <option value="Pemborong Tekstil / Peniaga Pasar">Pemborong Tekstil / Peniaga Pasar</option>
+                  <option value="Projek OEM / Jenama Sendiri">Projek OEM / Jenama Sendiri</option>
                 </select>
               </div>
 
               <div>
-                <label className="block font-bold text-forest-dark mb-1">Estimated Unit Requirement</label>
+                <label className="block font-bold text-forest-dark mb-1">Anggaran Kuantiti</label>
                 <select
                   value={estimatedQuantity}
                   onChange={(e) => setEstimatedQuantity(e.target.value)}
                   className="w-full px-3 py-2.5 rounded-xl border border-borderLight focus:border-forest bg-warmwhite"
                 >
-                  <option value="5–15 units">5–15 units</option>
-                  <option value="20–50 units">20–50 units</option>
-                  <option value="50–100 units">50–100 units</option>
-                  <option value="100+ units">100+ units</option>
+                  <option value="10–25 set">10–25 set</option>
+                  <option value="26–50 set">26–50 set</option>
+                  <option value="51–100 set">51–100 set</option>
+                  <option value="100+ set (Pukal Lori)">100+ set (Pukal Lori)</option>
                 </select>
               </div>
             </div>
 
             <div>
-              <label className="block font-bold text-forest-dark mb-1">Project Details & Delivery Timeline *</label>
+              <label className="block font-bold text-forest-dark mb-1">Butiran Produk &amp; Lokasi Penghantaran *</label>
               <textarea
                 rows={3}
                 required
-                placeholder="Mention required sizes (King, Queen, Single), desired delivery date, and site location..."
+                placeholder="Nyatakan produk diperlukan (contoh: 30 Tilam Bujang Asrama 4 Inci + 30 Bantal Gebu), lokasi tapak, dan anggaran tarikh penghantaran..."
                 value={message}
                 onChange={(e) => setMessage(e.target.value)}
                 className="w-full px-3 py-2.5 rounded-xl border border-borderLight focus:border-forest"
@@ -210,7 +211,7 @@ export function BusinessClient() {
                 disabled={isSubmitting}
                 className="px-8 py-3 bg-forest text-warmwhite font-bold text-xs rounded-xl hover:bg-forest-dark transition-colors shadow-sm disabled:opacity-50"
               >
-                {isSubmitting ? 'Submitting...' : 'Request Contract Quotation'}
+                {isSubmitting ? 'Menghantar...' : 'Dapatkan Sebut Harga Rasmi Kilang'}
               </button>
             </div>
           </form>

@@ -74,25 +74,25 @@ export function LookbookSection() {
         <div className="text-center max-w-2xl mx-auto mb-12">
           <span className="text-xs uppercase tracking-[0.2em] font-semibold text-gold-dark flex items-center justify-center space-x-1.5 mb-2">
             <Sparkles className="w-3.5 h-3.5 text-gold" />
-            <span>Interactive Bedroom Suite</span>
+            <span>Ruang Santai &amp; Bilik Tidur Keluarga</span>
           </span>
           <h2 className="font-serif text-3xl sm:text-4xl lg:text-5xl font-bold text-forest">
-            Shoppable Sanctuary
+            Koleksi Produk Selesa Terus Dari Kilang
           </h2>
           <p className="text-sm sm:text-base text-charcoal-muted mt-2">
-            Click any pin to inspect the artisanal mattress, contour pillows, and organic bedding styled in this master bedroom.
+            Tekan sebarang nombor pin untuk melihat butiran Tilam Toto gebu, Bantal Asian Fibre, Comforter Quilting, dan Tilam Lipat buatan kilang kami.
           </p>
         </div>
 
         {/* Lookbook Bedroom Scene Container */}
         <div className="relative rounded-2xl overflow-hidden shadow-2xl border border-borderLight aspect-[16/10] sm:aspect-[16/9] w-full bg-forest-dark">
           <Image
-            src="https://images.unsplash.com/photo-1616486338812-3dadae4b4ace?auto=format&fit=crop&w=1800&q=85"
-            alt="Shoppable KAMAAR Beddings Master Bedroom Suite"
+            src="/images/hero/hero-tilam-toto-lifestyle.jpg"
+            alt="Koleksi Tilam Toto & Tekstil KAMAAR Beddings Tunas Sinar Jaya"
             fill
             className="object-cover"
           />
-          <div className="absolute inset-0 bg-charcoal/20" />
+          <div className="absolute inset-0 bg-forest-dark/25" />
 
           {/* Interactive Hotspot Pins */}
           {hotspots.map((hs) => (

@@ -47,7 +47,7 @@ export default function TermsPage() {
             </h2>
             <ul className="list-disc pl-5 space-y-1.5 text-secondary">
               <li>All prices displayed on this website are denominated in <strong>Malaysian Ringgit (MYR)</strong> and inclusive of applicable statutory sales taxes unless explicitly stated otherwise.</li>
-              <li>We strive to ensure complete accuracy in product representations, photography, dimensions (e.g. Single, Super Single, Queen, King), and firmness ratings. Minor handcrafted variances (&plusmn;1-2cm) inherent in natural organic latex tailoring are customary and accepted.</li>
+              <li>We strive to ensure complete accuracy in product representations, photography, dimensions (e.g. Single, Super Single, Queen, King), and materials. Minor handcrafted variances (&plusmn;1-2cm) inherent in textile sewing and fibre tufting craftsmanship are customary and accepted.</li>
               <li>We reserve the right to correct pricing typographical errors and adjust promotional vouchers prior to final order dispatch.</li>
             </ul>
           </section>

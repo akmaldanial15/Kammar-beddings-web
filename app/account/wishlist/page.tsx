@@ -4,9 +4,9 @@ import { getProducts } from '@/lib/db'
 import { WishlistClient } from './WishlistClient'
 
 export const metadata: Metadata = {
-  title: 'My Wishlist & Saved Sleep Essentials | KAMAAR Beddings Malaysia',
+  title: 'Senarai Hajat Saya | KAMAAR Beddings Malaysia',
   description:
-    'Review your curated bedroom wish list, compare handcrafted natural latex mattresses, and easily transfer items into your shopping bag.',
+    'Semak senarai pilihan tilam toto, kekabu asli, bantal gebu dan tekstil kegemaran anda sebelum membuat pesanan terus dari kilang.',
 }
 
 export default async function WishlistPage() {
@@ -18,13 +18,13 @@ export default async function WishlistPage() {
         {/* Editorial Heading */}
         <div className="text-center space-y-2 max-w-xl mx-auto">
           <span className="text-xs uppercase tracking-[0.25em] text-gold font-bold">
-            Curated Bedroom Sanctuary
+            Pilihan Simpanan Peribadi
           </span>
           <h1 className="font-serif text-3xl md:text-5xl font-bold text-forest-dark">
-            My Saved Wishlist
+            Senarai Hajat Saya
           </h1>
           <p className="text-xs sm:text-sm text-secondary">
-            Your personal selection of luxury handcrafted mattresses, ergonomic pillows, and organic bedding essentials.
+            Simpanan produk tilam toto, kekabu asli tradisi, bantal gebu, dan tekstil pilihan anda dari kilang Tunas Sinar Jaya.
           </p>
         </div>
 

@@ -3,9 +3,9 @@ import { FaqClient } from './FaqClient'
 import { Metadata } from 'next'
 
 export const metadata: Metadata = {
-  title: 'Frequently Asked Questions & Care Guides | KAMAAR Beddings Malaysia',
+  title: 'Soalan Lazim (FAQ) & Maklumat Kilang | KAMAAR Beddings Malaysia',
   description:
-    'Answers regarding Malaysian white-glove mattress delivery, 100-night trial, organic latex care, dimensions, and structural warranty terms.',
+    'Jawapan lengkap mengenai tempahan tilam toto, kekabu asli, tilam bujang asrama, penghantaran lori kilang, tempahan pukal dan jualan gudang Tunas Sinar Jaya Enterprise.',
 }
 
 export default function FaqPage() {
@@ -14,13 +14,13 @@ export default function FaqPage() {
       <div className="max-w-4xl mx-auto px-4 sm:px-6 space-y-10">
         <div className="text-center space-y-3">
           <span className="text-xs uppercase tracking-[0.25em] text-gold font-bold">
-            Concierge Knowledge Base
+            Pusat Maklumat Kilang & Pembeli
           </span>
           <h1 className="font-serif text-3xl md:text-5xl font-bold text-forest-dark">
-            Frequently Asked Questions
+            Soalan Lazim (FAQ)
           </h1>
           <p className="text-sm md:text-base text-secondary max-w-xl mx-auto">
-            Everything you need to know about our handcrafted sleep systems, Malaysian delivery timelines, trial guarantees, and organic latex longevity.
+            Ketahui lebih lanjut mengenai keistimewaan tilam toto Asian fibre, kekabu tradisi, tempahan borong asrama, dan penghantaran terus dari kilang kami di Tasek Gelugor.
           </p>
         </div>
 

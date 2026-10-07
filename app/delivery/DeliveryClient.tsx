@@ -254,8 +254,8 @@ export function DeliveryClient() {
           </h3>
           <p className="text-xs sm:text-sm text-secondary">
             {isBM
-              ? 'Tilam lateks asli dan hibrid berkualiti mempunyai berat padu. Kru kami sedia membantu dari lori sehingga ke bilik tidur anda.'
-              : 'Pure natural latex is naturally dense and heavy. Our trained team handles all heavy lifting and setup for you.'}
+              ? 'Kelengkapan tidur terus dari kilang Tunas Sinar Jaya dibungkus kemas dan dihantar selamat dengan lori kilang atau kurier rasmi ke pintu rumah anda.'
+              : 'Factory direct bedding and mattresses packed securely and delivered safely via factory transport or certified courier right to your doorstep.'}
           </p>
         </div>
 

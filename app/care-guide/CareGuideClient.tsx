@@ -5,7 +5,7 @@ import Link from 'next/link'
 import {
   Sun,
   RotateCw,
-  BedDouble,
+  FolderArchive,
   Droplets,
   Wind,
   ShieldCheck,
@@ -52,44 +52,44 @@ export function CareGuideClient() {
 
   const careRules = [
     {
-      title: isBM ? 'JANGAN Jemur di Bawah Terik Matahari' : 'NEVER Expose to Direct Sunlight',
-      badge: isBM ? 'Kritikal' : 'Critical',
-      badgeClass: 'bg-rose-100 text-rose-800 border-rose-200',
+      title: isBM ? 'Jemur di Bawah Cahaya Matahari Berkala' : 'Sun-Air Regularly Under Sunlight',
+      badge: isBM ? 'Disyorkan' : 'Recommended',
+      badgeClass: 'bg-amber-100 text-amber-800 border-amber-200',
       icon: Sun,
       iconColor: 'text-amber-500',
       desc: isBM
-        ? 'Sinar UV matahari akan merosakkan dan mengeraskan sel getah lateks semulajadi. Anginkan tilam di dalam bilik yang berventilasi baik atau pasang kipas/aircond.'
-        : 'Ultraviolet rays break down and harden the cellular bonds of natural organic latex rubber. Always air dry your mattress in a well-ventilated, shaded bedroom.',
+        ? 'Jemur tilam toto Asian fibre dan tilam kekabu anda selama 1-2 jam di bawah matahari pagi atau petang. Ini membantu menggebukan kembali serat isian, membunuh kuman/hama, dan menyegarkan fabrik.'
+        : 'Sun-dry your Asian fibre Toto and Kekabu mattress for 1-2 hours under morning sunlight. This revitalizes fibre plumpness, naturally eliminates allergens and dust mites, and refreshes the fabrics.',
     },
     {
-      title: isBM ? 'Pusingkan Kepala ke Kaki (Rotate 180°)' : 'Rotate Head-to-Toe Every 3-6 Months',
-      badge: isBM ? 'Wajib' : 'Essential',
+      title: isBM ? 'Buka Sarung Berzip & Basuh Mesin' : 'Wash Removable Zipper Covers',
+      badge: isBM ? 'Mudah Basuh' : 'Machine Washable',
       badgeClass: 'bg-emerald-100 text-emerald-800 border-emerald-200',
-      icon: RotateCw,
+      icon: Droplets,
       iconColor: 'text-forest',
       desc: isBM
-        ? 'Pusingkan tilam 180 darjah (bahagian kepala beralih ke kaki) setiap 3 bulan untuk tahun pertama bagi memastikan tekanan badan diagihkan secara sekata. Jangan terbalikkan muka (jangan flip).'
-        : 'Rotate your mattress 180 degrees every 3 months for the first year, then every 6 months. Do NOT flip upside down, as our mattresses feature a dedicated multi-zone top comfort layer.',
+        ? 'Semua tilam toto KAMAAR dilengkapi sarung berzip keliling. Buka zip, tanggalkan sarung dan basuh menggunakan mesin basuh (kitaran lembut). Jangan basuh teras isian dalam mesin basuh.'
+        : 'Our Toto mattresses feature sturdy circumferential zippers. Unzip and wash the outer cotton cover in standard gentle laundry cycles. Keep the inner core dry.',
     },
     {
-      title: isBM ? 'Gunakan Rangka Katil yang Rata & Kukuh' : 'Pair with a Flat, Supportive Bed Base',
-      badge: isBM ? 'Sokongan' : 'Support',
+      title: isBM ? 'Simpan Kemas Dalam Beg Bertali Kilang' : 'Store in Included Zipper Carrier Bags',
+      badge: isBM ? 'Jimat Ruang' : 'Storage Bag',
       badgeClass: 'bg-blue-100 text-blue-800 border-blue-200',
-      icon: BedDouble,
+      icon: FolderArchive,
       iconColor: 'text-blue-600',
       desc: isBM
-        ? 'Gunakan rangka katil divan padu atau bilah kayu (slats) dengan jarak tidak melebihi 7cm. Rangka yang melengkung atau bilah terlalu jauh akan menyebabkan tilam kendur.'
-        : 'Ensure bedframe slats are spaced no wider than 7 cm (2.8 inches) apart. Solid divans or hardwood slatted frames preserve the internal core warranty integrity.',
+        ? 'Apabila tidak digunakan selepas santai keluarga atau tetamu bertandang, gulung atau lipat kemas dan simpan di dalam beg lutsinar berpemegang percuma yang dibekalkan daripada kilang.'
+        : 'When not in active use, neatly roll or fold your mattress and pack it inside the complimentary factory heavy-duty zipper tote bag to prevent dust buildup.',
     },
     {
-      title: isBM ? 'Gunakan Pelindung Tilam Kalis Air' : 'Always Use a Breathable Mattress Protector',
-      badge: isBM ? 'Perlindungan' : 'Protection',
+      title: isBM ? 'Tepuk & Pusingkan Tilam Secara Berkala' : 'Fluff & Rotate Periodically',
+      badge: isBM ? 'Kekal Gebu' : 'Fluffing',
       badgeClass: 'bg-gold/20 text-forest-dark border-gold/30',
-      icon: Droplets,
+      icon: RotateCw,
       iconColor: 'text-gold-dark',
       desc: isBM
-        ? 'Pelindung tilam kalis air buluh/tencel kami menghalang peluh tropika dan tumpahan cecair daripada meresap ke dalam teras lateks, sambil mengekalkan pengudaraan sejuk.'
-        : 'A breathable organic bamboo protector shields your latex core from sweat, dead skin, and liquid spills while preserving airflow and valid warranty coverage.',
+        ? 'Untuk tilam bujang asrama, tilam lipat 3 dan bantal peluk, pusingkan kedudukan kepala-ke-kaki setiap beberapa bulan dan tepuk lembut bagi memastikan pengagihan isian kekal sekata.'
+        : 'For hostel single mattresses, tri-fold beds, and bolsters, rotate head-to-toe and gently pat down to distribute internal cushioning fibres uniformly.',
     },
   ]
 
@@ -129,7 +129,7 @@ export function CareGuideClient() {
           <div className="space-y-1">
             <div className="inline-flex items-center gap-2 px-3 py-0.5 rounded-full bg-gold/20 text-gold text-xs font-bold uppercase tracking-wider">
               <Calendar className="w-3.5 h-3.5" />
-              <span>{isBM ? 'Jadual Pusingan Tilam' : 'Quarterly Rotation Scheduler'}</span>
+              <span>{isBM ? 'Jadual Pusingan Tilam Asrama & Bilik' : 'Mattress Rotation Scheduler'}</span>
             </div>
             <h3 className="font-serif text-2xl font-bold text-warmwhite">
               {isBM ? 'Kira Tarikh Pusingan 180° Tilam Anda' : 'Calculate Your 4 Annual Rotation Milestones'}
@@ -177,7 +177,7 @@ export function CareGuideClient() {
       {/* Cleaning and Spill Management */}
       <div className="bg-warmwhite rounded-3xl p-6 sm:p-10 border border-borderLight shadow-sm space-y-6">
         <h3 className="font-serif text-2xl font-bold text-forest-dark">
-          {isBM ? 'Cara Menangani Tumpahan Cecair & Pembersihan' : 'Spill Management & Stain Cleaning'}
+          {isBM ? 'Cara Menangani Tumpahan Cecair & Pembersihan Tilam' : 'Spill Management & Stain Cleaning'}
         </h3>
 
         <div className="grid grid-cols-1 md:grid-cols-3 gap-6 text-xs text-secondary leading-relaxed">
@@ -190,7 +190,7 @@ export function CareGuideClient() {
             </h4>
             <p>
               {isBM
-                ? 'Gunakan kain mikrofiber atau tuala kering bersih untuk menyerap sebanyak mungkin cecair. Jangan gosok kerana ini boleh menolak cecair lebih dalam.'
+                ? 'Gunakan kain mikrofiber atau tuala kering bersih untuk menyerap sebanyak mungkin cecair. Jangan gosok kerana ini boleh menolak cecair lebih dalam ke serat isian.'
                 : 'Press a clean dry towel firmly onto the affected area to absorb excess moisture immediately. Avoid vigorous scrubbing to protect the surface fibres.'}
             </p>
           </div>
@@ -200,12 +200,12 @@ export function CareGuideClient() {
               2
             </span>
             <h4 className="font-bold text-forest-dark text-sm">
-              {isBM ? 'Lap dengan Sabun Lembut' : 'Spot Clean with Mild Detergent'}
+              {isBM ? 'Tanggalkan Sarung & Basuh' : 'Unzip Cover & Wash Separately'}
             </h4>
             <p>
               {isBM
-                ? 'Campurkan sedikit sabun mesra fabrik dengan air suam. Celup kain bersih, perah sehingga lembap dan tekap perlahan pada kesan kotoran.'
-                : 'Mix a small droplet of gentle organic detergent with lukewarm water. Dampen a cloth and gently dab the stain without soaking the inner core.'}
+                ? 'Jika tumpahan banyak, buka zip sarung segera dan basuh sarung luar secara berasingan menggunakan sabun basuh biasa.'
+                : 'If a major liquid spill occurs, unzip the outer cover immediately and wash separately using standard gentle laundry detergent.'}
             </p>
           </div>
 
@@ -214,12 +214,12 @@ export function CareGuideClient() {
               3
             </span>
             <h4 className="font-bold text-forest-dark text-sm">
-              {isBM ? 'Keringkan dengan Kipas Angin' : 'Air Dry in Fan-Cooled Shade'}
+              {isBM ? 'Anginkan atau Jemur Panas' : 'Air Dry or Sun-Dry Completely'}
             </h4>
             <p>
               {isBM
-                ? 'Pasang kipas angin atau penyahlembap (dehumidifier) menghadap tilam sehingga benar-benar kering sebelum memasang kembali cadar.'
-                : 'Direct a standing fan or room dehumidifier directly at the spot until 100% dry before reapplying your bedding sheets.'}
+                ? 'Jemur bahagian teras di tempat redup atau panas matahari berventilasi baik sehingga 100% kering sebelum sarung dipasang semula.'
+                : 'Sun-dry or air out the inner core in a well-ventilated area until 100% dry before zipping the outer cover back on.'}
             </p>
           </div>
         </div>
@@ -229,19 +229,19 @@ export function CareGuideClient() {
       <div className="bg-cream rounded-3xl p-8 border border-borderLight text-center space-y-4 max-w-2xl mx-auto shadow-sm">
         <ShieldCheck className="w-10 h-10 text-gold-dark mx-auto" />
         <h3 className="font-serif text-2xl font-bold text-forest-dark">
-          {isBM ? 'Pastikan Waranti 10-Tahun Anda Diaktifkan' : 'Keep Your 10-Year Warranty Protected'}
+          {isBM ? 'Jaminan Mutu Kilang Tunas Sinar Jaya' : 'Factory Quality Assurance'}
         </h3>
         <p className="text-xs sm:text-sm text-secondary">
           {isBM
-            ? 'Penjagaan mengikut panduan ini memastikan keselesaan maksimum selama bertahun-tahun dan melayakkan jaminan struktur rasmi.'
-            : 'Adhering to these simple practices ensures decade-long resilience and upholds your official structural guarantee.'}
+            ? 'Setiap produk jahitan tilam toto, kekabu dan bantal kami dijamin kualiti jahitan kilang dan ketahanan isian yang memuaskan.'
+            : 'Every stitched bedding item produced at our Tasek Gelugor manufacturing workshop carries factory quality assurance.'}
         </p>
         <div className="pt-2">
           <Link
             href="/warranty"
             className="inline-flex items-center gap-2 px-6 py-3 bg-forest hover:bg-forest-dark text-warmwhite text-xs font-bold uppercase tracking-wider rounded-xl transition-all shadow-sm"
           >
-            <span>{isBM ? 'Daftar Waranti Tilam Anda' : 'Register Your Warranty'}</span>
+            <span>{isBM ? 'Daftar Jaminan Produk Anda' : 'Register Your Product Guarantee'}</span>
             <ArrowRight className="w-4 h-4 text-gold" />
           </Link>
         </div>

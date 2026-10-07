@@ -29,13 +29,13 @@ export function OffersClient({ coupons, eligibleProducts }: OffersClientProps) {
           <div className="relative z-10 max-w-2xl space-y-4">
             <span className="inline-flex items-center space-x-1.5 px-3 py-1 rounded-full bg-gold/20 text-gold text-xs font-bold uppercase tracking-wider">
               <Sparkles className="w-3.5 h-3.5" />
-              <span>Official Bedroom Privileges</span>
+              <span>Tawaran Terus Dari Kilang</span>
             </span>
             <h1 className="font-serif text-3xl sm:text-5xl font-bold tracking-tight text-warmwhite leading-tight">
-              Exclusive Mattress Privileges & Vouchers
+              Tawaran Istimewa & Baucar Diskaun Kilang
             </h1>
             <p className="text-sm sm:text-base text-warmwhite/80 leading-relaxed">
-              Elevate your master bedroom with handcrafted Malaysian natural latex. Apply verified vouchers at checkout for instant cash savings, bundle rewards, and free white-glove delivery.
+              Nikmati harga jimat terus dari kilang pengeluar Tunas Sinar Jaya Enterprise di Tasek Gelugor. Masukkan kod baucar semasa checkout untuk potongan harga segera, pakej borong, dan hadiah percuma bantal gebu.
             </p>
           </div>
         </div>
@@ -48,22 +48,22 @@ export function OffersClient({ coupons, eligibleProducts }: OffersClientProps) {
             </div>
             <div>
               <span className="text-xs font-bold uppercase tracking-wider text-forest bg-gold/20 px-2.5 py-0.5 rounded">
-                Automatic Gift Promotion
+                Hadiah Percuma Kilang
               </span>
               <h3 className="font-serif text-xl sm:text-2xl font-bold text-forest mt-1.5">
-                Complimentary Natural Latex Pillow (Worth RM269.00)
+                Percuma 1x Bantal Gebu Asian Fibre (Bernilai RM45.00)
               </h3>
               <p className="text-xs sm:text-sm text-charcoal-muted mt-1 leading-relaxed max-w-xl">
-                Purchase any Queen or King size mattress and receive our signature Ergonomic Cervical Contour Natural Latex Pillow automatically included in your delivery.
+                Setiap pembelian Tilam Toto atau Tilam Kekabu saiz Queen atau King melayakkan anda menerima Bantal Tidur Gebu Asian Polyester Fibre secara percuma bersama pesanan anda.
               </p>
             </div>
           </div>
 
           <Link
-            href="/collections/mattress"
+            href="/collections/tilam-toto"
             className="w-full md:w-auto px-6 py-3 bg-forest hover:bg-forest-dark text-warmwhite text-xs font-bold uppercase tracking-wider rounded-lg shadow-sm whitespace-nowrap text-center transition-colors"
           >
-            Shop Qualifying Mattresses &rarr;
+            Pilih Tilam Toto & Kekabu &rarr;
           </Link>
         </div>
 
@@ -151,17 +151,17 @@ export function OffersClient({ coupons, eligibleProducts }: OffersClientProps) {
           <div className="flex items-center justify-between mb-6">
             <div>
               <h2 className="font-serif text-2xl sm:text-3xl font-bold text-forest">
-                Featured Mattresses Eligible for Voucher Discounts
+                Produk Pilihan Layak Diskaun Baucar
               </h2>
               <p className="text-xs sm:text-sm text-charcoal-muted mt-1">
-                Handcrafted with 100% natural latex and backed by our 100-night trial.
+                Dihasilkan dengan ketelitian jahitan industri Tunas Sinar Jaya Enterprise di Tasek Gelugor.
               </p>
             </div>
             <Link
-              href="/collections/mattress"
+              href="/collections/tilam-toto"
               className="text-xs font-semibold text-gold-dark hover:text-forest flex items-center space-x-1"
             >
-              <span>View All 12 Mattresses</span>
+              <span>Lihat Semua Tilam Toto & Kekabu</span>
               <ArrowRight className="w-3.5 h-3.5" />
             </Link>
           </div>

@@ -23,7 +23,7 @@ export function TrialClient() {
 
   const [deliveryDateInput, setDeliveryDateInput] = useState('')
   const [calculatedDates, setCalculatedDates] = useState<{
-    adjustmentEnd: string
+    inspectionEnd: string
     trialEnd: string
   } | null>(null)
 
@@ -34,11 +34,11 @@ export function TrialClient() {
     const start = new Date(deliveryDateInput)
     if (isNaN(start.getTime())) return
 
-    const adjustmentDate = new Date(start)
-    adjustmentDate.setDate(adjustmentDate.getDate() + 30)
+    const inspectionDate = new Date(start)
+    inspectionDate.setDate(inspectionDate.getDate() + 7)
 
     const trialEndDate = new Date(start)
-    trialEndDate.setDate(trialEndDate.getDate() + 100)
+    trialEndDate.setDate(trialEndDate.getDate() + 14)
 
     const options: Intl.DateTimeFormatOptions = {
       day: 'numeric',
@@ -47,7 +47,7 @@ export function TrialClient() {
     }
 
     setCalculatedDates({
-      adjustmentEnd: adjustmentDate.toLocaleDateString(isBM ? 'ms-MY' : 'en-MY', options),
+      inspectionEnd: inspectionDate.toLocaleDateString(isBM ? 'ms-MY' : 'en-MY', options),
       trialEnd: trialEndDate.toLocaleDateString(isBM ? 'ms-MY' : 'en-MY', options),
     })
   }
@@ -55,62 +55,62 @@ export function TrialClient() {
   const steps = [
     {
       step: '01',
-      title: isBM ? 'Hantar & Pasang Percuma' : 'Free In-Home Delivery & Setup',
+      title: isBM ? 'Penerimaan & Pemeriksaan Awal' : 'Delivery & Initial Inspection',
       desc: isBM
-        ? 'Tilam baharu dihantar terus ke bilik tidur anda dengan perkhidmatan white-glove setup percuma di seluruh Semenanjung Malaysia.'
-        : 'Your handcrafted mattress is delivered straight to your bedroom with free white-glove setup anywhere across Peninsular Malaysia.',
+        ? 'Pesanan tilam toto atau kelengkapan tekstil tiba dari kilang Tunas Sinar Jaya. Buka bungkusan plastik lutsinar dan periksa keadaan tilam serta corak fabrik.'
+        : 'Your order arrives securely packed from Tunas Sinar Jaya factory. Unpack and inspect the fabric stitching and pattern accuracy.',
       icon: Truck,
     },
     {
       step: '02',
-      title: isBM ? 'Tempoh Penyesuaian 30 Hari' : 'The 30-Night Adjustment Period',
+      title: isBM ? 'Uji Keempukan & Keselesaan' : 'Test Comfort in Your Home',
       desc: isBM
-        ? 'Badan anda memerlukan sekurang-kurangnya 3-4 minggu untuk membiasakan postur tulang belakang dengan sokongan lateks semulajadi.'
-        : 'Your body needs 3 to 4 weeks to adjust to ergonomic spinal alignment after years of sleeping on depleted traditional mattresses.',
-      icon: MoonIcon,
-    },
-    {
-      step: '03',
-      title: isBM ? 'Tidur Lena Sehingga 100 Malam' : 'Sleep Deeply for up to 100 Nights',
-      desc: isBM
-        ? 'Nikmati keselesaan sejuk dan kelegaan tekanan di rumah anda. Rasai perbezaan tidur tanpa toksik dan sokongan ergonomik.'
-        : 'Enjoy cool, pressure-relieving sleep in your real bedroom setting. Truly experience what non-toxic organic latex feels like.',
+        ? 'Bentangkan tilam toto atau tilam kekabu di ruang santai keluarga, bilik tidur, atau asrama. Rasai kegebuan isian Asian Polyester Fibre atau kekabu asli tradisi.'
+        : 'Lay out your mattress in your living area or hostel bedroom. Experience the plump Asian Polyester Fibre or traditional Kekabu cushioning.',
       icon: Sparkles,
     },
     {
-      step: '04',
-      title: isBM ? 'Puas Hati atau 100% Pulangan Wang' : 'Love It or 100% Full Refund',
+      step: '03',
+      title: isBM ? 'Jaminan Mutu Kilang 14 Hari' : '14-Day Factory Quality Guarantee',
       desc: isBM
-        ? 'Jika anda tidak jatuh cinta sepenuhnya antara hari ke-31 hingga hari ke-100, pasukan kami akan kutip semula dan pulangkan wang anda sepenuhnya.'
-        : 'If you are not deeply rested between Day 31 and Day 100, we will arrange a complimentary return pickup and issue a 100% refund.',
+        ? 'Sekiranya terdapat sebarang kecacatan jahitan kilang, kerosakan zip keliling, atau salah saiz, maklumkan kepada pihak kilang kami dalam tempoh 14 hari.'
+        : 'If there is any factory seam fault, zip defect, or size discrepancy, simply notify our customer care within 14 days of receipt.',
+      icon: ShieldCheck,
+    },
+    {
+      step: '04',
+      title: isBM ? 'Pertukaran 1-ke-1 Pantas' : 'Swift 1-to-1 Exchange',
+      desc: isBM
+        ? 'Pihak kilang akan mengaturkan penggantian unit baharu tanpa birokrasi rumit untuk memastikan anda sentiasa berpuas hati 100%.'
+        : 'Our factory will arrange a swift 1-to-1 product replacement to ensure you are completely satisfied with your purchase.',
       icon: RotateCcw,
     },
   ]
 
   const faqs = [
     {
-      q: isBM ? 'Mengapa ada tempoh bertenang minimum 30 malam?' : 'Why is there a minimum 30-night break-in period?',
+      q: isBM ? 'Apakah yang dilindungi di bawah jaminan 14 hari ini?' : 'What is covered under the 14-day factory guarantee?',
       a: isBM
-        ? 'Sama seperti kasut kulit berkualiti atau postur kerusi ergonomik baharu, otot dan tulang belakang anda mengambil masa 21 hingga 30 hari untuk menyesuaikan diri dengan penjajaran ergonomik lateks semulajadi.'
-        : 'Just like breaking into bespoke ergonomic footwear, your spinal column and muscles require 21 to 30 nights to reset posture from previous sagging beds to proper orthopaedic latex support.',
+        ? 'Jaminan ini merangkumi kecacatan jahitan fabrik, zip yang rosak sewaktu penghantaran, salah hantar saiz/corak, dan kerosakan teras isian daripada pengilangan.'
+        : 'Covers factory sewing tears, broken zippers on delivery, wrong size or pattern dispatch, and manufacturing core defects.',
     },
     {
-      q: isBM ? 'Adakah kos penghantaran balik ditanggung oleh saya?' : 'Do I need to pay for return shipping?',
+      q: isBM ? 'Bagaimanakah cara membuat tuntutan pertukaran?' : 'How do I request an exchange or replacement?',
       a: isBM
-        ? 'Tidak sama sekali untuk Semenanjung Malaysia! Pasukan logistik KAMAAR akan datang terus ke rumah anda untuk mengambil tilam tanpa sebarang caj tambahan atau potongan yuran restock.'
-        : 'Zero return fees across Peninsular Malaysia! Our dedicated logistics team will pick up the mattress directly from your bedroom with zero restocking fees.',
+        ? 'Ambil gambar bahagian yang bermasalah berserta resit/invois pesanan anda, dan hantar WhatsApp terus kepada khidmat pelanggan kilang kami di 019-478 6991.'
+        : 'Simply take a clear photo of the issue along with your order invoice number and WhatsApp our factory team directly at +6019-478 6991.',
     },
     {
-      q: isBM ? 'Apa yang KAMAAR lakukan pada tilam yang dipulangkan?' : 'What happens to returned mattresses?',
+      q: isBM ? 'Bolehkah saya menukar tilam jika tersalah pilih saiz?' : 'Can I exchange if I chose the wrong size?',
       a: isBM
-        ? 'Kami TIDAK PERNAH menjual semula tilam yang dipulangkan. Setiap unit dibersihkan secara kebersihan hospital dan disumbangkan kepada rumah kebajikan rakan kongsi atau dikitar semula secara mampan.'
-        : 'We never resell returned trial mattresses. Every unit is industrially sanitized and donated to registered Malaysian charity homes or recycled sustainably.',
+        ? 'Boleh, asalkan tilam masih belum digunakan secara melampau dan sarung asal masih dalam keadaan baik. Pertukaran saiz boleh dilakukan di gudang Tasek Gelugor atau melalui kurier.'
+        : 'Yes, provided the mattress remains clean and unsoiled. Size adjustments can be arranged via courier or at our Tasek Gelugor factory.',
     },
     {
-      q: isBM ? 'Apakah syarat untuk melayakkan pulangan wang 100%?' : 'What are the conditions for a 100% refund?',
+      q: isBM ? 'Bolehkah saya datang terus ke kilang di Tasek Gelugor?' : 'Can I visit the factory in Tasek Gelugor directly?',
       a: isBM
-        ? 'Tilam mestilah digunakan dengan pelapik tilam kalis air (mattress protector) dan bebas daripada koyakan buatan, kotoran cecair melampau, atau kerosakan struktur fizikal yang disengajakan.'
-        : 'The mattress must have been used with a mattress protector and be free from deliberate damage, severe stains, biological spills, or smoke damage.',
+        ? 'Sangat dialu-alukan! Anda boleh melawat premis dan kilang kami di 7878B Jalan Permatang Berangan, 13300 Tasek Gelugor, Pulau Pinang pada waktu operasi pejabat.'
+        : 'You are very welcome! Visit our factory at 7878B Jalan Permatang Berangan, 13300 Tasek Gelugor, Penang during operating hours.',
     },
   ]
 
@@ -119,10 +119,10 @@ export function TrialClient() {
       {/* 4 Value Pillars Strip */}
       <div className="grid grid-cols-2 md:grid-cols-4 gap-4">
         {[
-          { label: isBM ? '100 Malam Percubaan' : '100-Night Home Trial', sub: isBM ? 'Bebas Risiko 100%' : '100% Risk-Free Guarantee', icon: RotateCcw },
-          { label: isBM ? 'Kutipan Percuma' : 'Free In-Home Pickup', sub: isBM ? 'Semenanjung Malaysia' : 'Peninsular Malaysia', icon: Truck },
-          { label: isBM ? '100% Pulangan Wang' : '100% Full Refund', sub: isBM ? 'Tiada caj tersembunyi' : 'Zero Restocking Fees', icon: ShieldCheck },
-          { label: isBM ? 'Sumbangan Amal' : 'Ethical Donation', sub: isBM ? 'Tidak dijual semula' : 'Never Resold to Others', icon: Heart },
+          { label: isBM ? 'Jaminan Kilang 14 Hari' : '14-Day Factory Guarantee', sub: isBM ? 'Pertukaran 1-ke-1' : '1-to-1 Replacement', icon: RotateCcw },
+          { label: isBM ? 'Penghantaran Terus' : 'Direct Dispatch', sub: isBM ? 'Kilang Tasek Gelugor' : 'Penang Factory Direct', icon: Truck },
+          { label: isBM ? 'Jahitan Industri' : 'Industrial Stitching', sub: isBM ? 'Unit Jahitan Berkemahiran' : 'Skilled Tailoring Unit', icon: ShieldCheck },
+          { label: isBM ? '100% Milikan Bumiputera' : '100% Malaysian Owned', sub: isBM ? 'Tunas Sinar Jaya Enterprise' : 'Tunas Sinar Jaya Enterprise', icon: Heart },
         ].map((item, i) => {
           const Icon = item.icon
           return (
@@ -140,124 +140,96 @@ export function TrialClient() {
         })}
       </div>
 
-      {/* Step by Step Timeline */}
-      <div className="bg-warmwhite rounded-3xl p-6 sm:p-10 border border-borderLight shadow-md space-y-8">
-        <div className="text-center max-w-xl mx-auto space-y-2">
+      {/* 4 Step Process */}
+      <div className="space-y-6">
+        <div className="text-center space-y-2 max-w-md mx-auto">
           <span className="text-xs uppercase tracking-widest text-gold font-bold">
-            {isBM ? 'Proses Percubaan Mudah' : 'Simple, Transparent Process'}
+            {isBM ? 'Proses Mudah' : 'Simple Process'}
           </span>
-          <h2 className="font-serif text-2xl sm:text-3xl font-bold text-forest-dark">
-            {isBM ? 'Cara Percubaan 100 Malam Berfungsi' : 'How Your 100-Night Sleep Trial Works'}
-          </h2>
-          <p className="text-xs sm:text-sm text-secondary">
-            {isBM
-              ? 'Kami ingin memastikan anda benar-benar menyukai tilam anda, tanpa sebarang tekanan membeli-belah di kedai.'
-              : 'Take your time. Sleep through rainy monsoons and humid afternoons to truly experience the difference.'}
-          </p>
+          <h3 className="font-serif text-2xl font-bold text-forest-dark">
+            {isBM ? 'Cara Jaminan Kualiti Kilang Berfungsi' : 'How the Factory Guarantee Works'}
+          </h3>
         </div>
 
-        <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-4 gap-6">
-          {steps.map((s, idx) => {
-            const Icon = s.icon
+        <div className="grid grid-cols-1 md:grid-cols-4 gap-6">
+          {steps.map((st, i) => {
+            const Icon = st.icon
             return (
               <div
-                key={idx}
-                className="relative bg-cream/40 rounded-2xl p-5 border border-borderLight/80 flex flex-col justify-between space-y-4 hover:border-gold/50 transition-colors"
+                key={i}
+                className="bg-warmwhite rounded-2xl p-6 border border-borderLight shadow-sm space-y-3 relative overflow-hidden"
               >
-                <div className="flex items-center justify-between">
-                  <span className="font-serif text-2xl font-bold text-gold/60">{s.step}</span>
-                  <div className="w-9 h-9 rounded-xl bg-forest/10 text-forest flex items-center justify-center">
-                    <Icon className="w-4 h-4" />
-                  </div>
+                <span className="text-3xl font-serif font-black text-gold/30 absolute right-4 top-4">
+                  {st.step}
+                </span>
+                <div className="w-10 h-10 rounded-xl bg-forest/10 text-forest flex items-center justify-center">
+                  <Icon className="w-5 h-5" />
                 </div>
-                <div className="space-y-1.5">
-                  <h4 className="font-bold text-forest-dark text-sm sm:text-base leading-snug">
-                    {s.title}
-                  </h4>
-                  <p className="text-xs text-secondary leading-relaxed">{s.desc}</p>
-                </div>
+                <h4 className="font-bold text-forest-dark text-base">{st.title}</h4>
+                <p className="text-xs text-secondary leading-relaxed">{st.desc}</p>
               </div>
             )
           })}
         </div>
       </div>
 
-      {/* Interactive Trial Window Calculator */}
-      <div className="bg-forest-dark text-warmwhite rounded-3xl p-6 sm:p-10 shadow-xl grid grid-cols-1 lg:grid-cols-2 gap-8 items-center">
-        <div className="space-y-4">
+      {/* Date Calculator Card */}
+      <div className="bg-forest-dark text-warmwhite rounded-3xl p-6 sm:p-10 shadow-xl grid grid-cols-1 lg:grid-cols-12 gap-8 items-center">
+        <div className="lg:col-span-6 space-y-4">
           <div className="inline-flex items-center gap-2 px-3 py-1 rounded-full bg-gold/20 text-gold text-xs font-bold uppercase tracking-wider">
             <Calendar className="w-3.5 h-3.5" />
-            <span>{isBM ? 'Kalkulator Tempoh Percubaan' : 'Trial Window Calculator'}</span>
+            <span>{isBM ? 'Kalkulator Garis Masa Jaminan' : 'Guarantee Window Calculator'}</span>
           </div>
-          <h3 className="font-serif text-2xl sm:text-3xl font-bold text-warmwhite leading-snug">
-            {isBM
-              ? 'Semak Tarikh Akhir Percubaan 100 Malam Anda'
-              : 'Calculate Your Exact 100-Night Sleep Window'}
+          <h3 className="font-serif text-2xl sm:text-3xl font-bold text-warmwhite leading-tight">
+            {isBM ? 'Semak Tempoh Jaminan 14 Hari Pesanan Anda' : 'Check Your 14-Day Guarantee Window'}
           </h3>
           <p className="text-xs sm:text-sm text-warmwhite/80 leading-relaxed">
             {isBM
-              ? 'Masukkan tarikh penghantaran tilam anda untuk mengetahui tarikh tamat penyesuaian 30 hari serta hari ke-100 jaminan pulangan.'
-              : 'Enter the date your KAMAAR mattress was (or will be) delivered into your home to view your key milestones.'}
+              ? 'Masukkan tarikh anda menerima barangan untuk melihat tarikh semakan dan tarikh tamat tempoh jaminan gantian kilang.'
+              : 'Enter the date your order arrived to view your full 14-day factory inspection and replacement coverage.'}
           </p>
 
           <form onSubmit={handleCalculateTrial} className="space-y-3 pt-2">
-            <div>
-              <label className="block text-xs font-bold text-gold uppercase tracking-wider mb-1">
-                {isBM ? 'Tarikh Penghantaran Tilam:' : 'Mattress Delivery Date:'}
-              </label>
-              <div className="flex gap-2">
-                <input
-                  type="date"
-                  required
-                  value={deliveryDateInput}
-                  onChange={(e) => setDeliveryDateInput(e.target.value)}
-                  className="flex-1 px-4 py-2.5 rounded-xl bg-warmwhite/10 border border-warmwhite/20 text-warmwhite text-xs focus:outline-none focus:border-gold"
-                />
-                <button
-                  type="submit"
-                  className="px-5 py-2.5 bg-gold hover:bg-gold-light text-forest-dark font-bold text-xs rounded-xl transition-all flex items-center gap-1.5 cursor-pointer"
-                >
-                  <span>{isBM ? 'Kira Tarikh' : 'Calculate'}</span>
-                  <ArrowRight className="w-3.5 h-3.5" />
-                </button>
-              </div>
+            <div className="flex flex-col sm:flex-row gap-3">
+              <input
+                type="date"
+                value={deliveryDateInput}
+                onChange={(e) => setDeliveryDateInput(e.target.value)}
+                className="flex-1 px-4 py-2.5 rounded-xl bg-warmwhite/10 border border-warmwhite/20 text-warmwhite text-xs focus:outline-none focus:border-gold"
+                required
+              />
+              <button
+                type="submit"
+                className="px-6 py-2.5 bg-gold hover:bg-gold-light text-forest-dark font-bold text-xs uppercase tracking-wider rounded-xl transition-all shadow-md whitespace-nowrap"
+              >
+                {isBM ? 'Kira Tarikh' : 'Calculate Window'}
+              </button>
             </div>
           </form>
         </div>
 
-        {/* Calculation Result Card */}
-        <div className="bg-warmwhite/10 backdrop-blur-md rounded-2xl p-6 border border-warmwhite/15 space-y-4">
-          <h4 className="text-xs uppercase tracking-widest text-gold font-bold">
-            {isBM ? 'Garis Masa Percubaan Anda' : 'Your Personalized Timeline'}
-          </h4>
-
+        <div className="lg:col-span-6 bg-warmwhite/10 rounded-2xl p-6 border border-warmwhite/15">
           {calculatedDates ? (
-            <div className="space-y-4">
-              <div className="p-4 rounded-xl bg-forest/40 border border-forest/60 space-y-1">
-                <span className="text-[11px] text-warmwhite/70 block uppercase font-semibold">
-                  {isBM ? 'Tamat Tempoh Penyesuaian (Hari ke-30):' : 'Adjustment Period Ends (Day 30):'}
+            <div className="space-y-4 animate-fade-in">
+              <div className="p-4 rounded-xl bg-forest/40 border border-warmwhite/20 space-y-1">
+                <span className="text-[11px] text-warmwhite/70 block uppercase font-bold">
+                  {isBM ? 'Tempoh Semakan Awal (Hari ke-7):' : 'Initial Review Period (Day 7):'}
                 </span>
-                <span className="text-lg font-serif font-bold text-gold">
-                  {calculatedDates.adjustmentEnd}
+                <span className="text-lg font-bold text-warmwhite">
+                  {calculatedDates.inspectionEnd}
                 </span>
-                <p className="text-[10px] text-warmwhite/70">
-                  {isBM
-                    ? 'Badan anda telah selesai menyesuaikan postur dengan sokongan ergonomik.'
-                    : 'Your body has fully calibrated to optimal spinal pressure relief.'}
-                </p>
               </div>
-
               <div className="p-4 rounded-xl bg-gold/15 border border-gold/30 space-y-1">
                 <span className="text-[11px] text-gold block uppercase font-bold">
-                  {isBM ? 'Tarikh Akhir Percubaan (Hari ke-100):' : 'Last Day to Request Return (Day 100):'}
+                  {isBM ? 'Tarikh Akhir Jaminan (Hari ke-14):' : 'End of 14-Day Guarantee (Day 14):'}
                 </span>
                 <span className="text-xl font-serif font-bold text-white">
                   {calculatedDates.trialEnd}
                 </span>
                 <p className="text-[10px] text-warmwhite/80">
                   {isBM
-                    ? 'Hubungi concierge kami sebelum atau pada tarikh ini untuk memulakan pemulangan 100% percuma.'
-                    : 'Contact our concierge on or before this date for a zero-hassle complimentary return.'}
+                    ? 'Hubungi WhatsApp kilang kami sebelum atau pada tarikh ini sekiranya memerlukan sebarang pertukaran.'
+                    : 'Contact our factory WhatsApp on or before this date if you require any replacement assistance.'}
                 </p>
               </div>
             </div>
@@ -267,7 +239,7 @@ export function TrialClient() {
               <p className="text-xs">
                 {isBM
                   ? 'Pilih tarikh di sebelah dan tekan "Kira Tarikh" untuk melihat garis masa.'
-                  : 'Select your delivery date on the left to see your sleep milestones.'}
+                  : 'Select your delivery date on the left to see your guarantee milestones.'}
               </p>
             </div>
           )}
@@ -281,7 +253,7 @@ export function TrialClient() {
             {isBM ? 'Soalan Lazim' : 'Clear & Honest Answers'}
           </span>
           <h3 className="font-serif text-2xl font-bold text-forest-dark">
-            {isBM ? 'Pertanyaan Mengenai Percubaan 100 Malam' : '100-Night Sleep Trial FAQ'}
+            {isBM ? 'Pertanyaan Mengenai Jaminan Kilang' : 'Factory Guarantee FAQ'}
           </h3>
         </div>
 
@@ -305,49 +277,31 @@ export function TrialClient() {
       <div className="bg-cream rounded-3xl p-8 border border-borderLight text-center space-y-4 max-w-2xl mx-auto shadow-sm">
         <Award className="w-10 h-10 text-gold-dark mx-auto" />
         <h3 className="font-serif text-2xl font-bold text-forest-dark">
-          {isBM ? 'Sedia Untuk Tidur Lebih Nyenyak?' : 'Ready to Experience Restorative Sleep?'}
+          {isBM ? 'Kualiti Terjamin Terus Dari Kilang' : 'Factory Direct Quality Assurance'}
         </h3>
         <p className="text-xs sm:text-sm text-secondary">
           {isBM
-            ? 'Semua tilam KAMAAR Beddings layak untuk Percubaan 100 Malam tanpa sebarang risiko.'
-            : 'Every handcrafted organic latex and hybrid mattress is protected by our 100-Night Risk-Free Trial.'}
+            ? 'Tunas Sinar Jaya Enterprise komited membekalkan tilam toto, kekabu, dan kelengkapan asrama berkualiti tinggi sejak 2000-an.'
+            : 'Tunas Sinar Jaya Enterprise has been delivering premium Malaysian bedding and textile manufacturing excellence since the 2000s.'}
         </p>
         <div className="flex flex-wrap items-center justify-center gap-3 pt-2">
           <Link
-            href="/collections/mattress"
+            href="/collections/tilam-toto"
             className="px-6 py-3 bg-forest hover:bg-forest-dark text-warmwhite text-xs font-bold uppercase tracking-wider rounded-xl shadow-sm transition-all"
           >
-            {isBM ? 'Terokai Koleksi Tilam' : 'Explore All Mattresses'}
+            {isBM ? 'Koleksi Tilam Toto' : 'Explore Tilam Toto'}
           </Link>
           <a
-            href="https://wa.me/60123456789?text=Hello%20KAMAAR,%20I%20have%20questions%20about%20the%20100-night%20sleep%20trial."
+            href="https://wa.me/60194786991?text=Salam%20KAMAAR,%20saya%20ingin%20bertanya%20tentang%20produk%20dan%20jaminan%20kilang."
             target="_blank"
             rel="noreferrer"
             className="px-6 py-3 bg-warmwhite hover:bg-cream-light text-forest text-xs font-bold uppercase tracking-wider rounded-xl border border-borderLight transition-all flex items-center gap-2"
           >
             <Phone className="w-3.5 h-3.5 text-gold-dark" />
-            <span>WhatsApp Concierge</span>
+            <span>WhatsApp 019-478 6991</span>
           </a>
         </div>
       </div>
     </div>
-  )
-}
-
-function MoonIcon(props: React.SVGProps<SVGSVGElement>) {
-  return (
-    <svg
-      viewBox="0 0 24 24"
-      width="24"
-      height="24"
-      fill="none"
-      stroke="currentColor"
-      strokeWidth="2"
-      strokeLinecap="round"
-      strokeLinejoin="round"
-      {...props}
-    >
-      <path d="M12 3a6 6 0 0 0 9 9 9 9 0 1 1-9-9Z" />
-    </svg>
   )
 }

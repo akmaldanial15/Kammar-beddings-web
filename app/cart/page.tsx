@@ -3,8 +3,8 @@ import { Metadata } from 'next'
 import { CartClient } from './CartClient'
 
 export const metadata: Metadata = {
-  title: 'Shopping Cart | KAMAAR Beddings Malaysia',
-  description: 'Review your selected luxury organic natural latex mattresses, pillows, and bedding before checkout.',
+  title: 'Troli Pembelian | KAMAAR Beddings Malaysia',
+  description: 'Semak pilihan tilam toto, tilam kekabu, tilam asrama dan bantal gebu anda sebelum membuat pesanan terus dari kilang.',
 }
 
 export default function CartPage() {

@@ -52,12 +52,12 @@ export default function RefundsPage() {
           {/* Section 1 */}
           <section className="space-y-3">
             <h2 className="font-serif text-xl font-bold text-forest-dark">
-              1. 100-Night Trial Eligibility & 30-Night Adjustment Period
+              1. Jaminan Kepuasan Kilang 14 Hari & Pertukaran Produk
             </h2>
             <ul className="list-disc pl-5 space-y-1.5 text-secondary">
-              <li>Our 100-Night Trial applies to all standard-sized KAMAAR mattresses purchased directly through our website or authorized flagship atelier.</li>
-              <li><strong>Mandatory 30-Night Break-in:</strong> Because your spinal column and muscles require time to reset from old sagging beds to ergonomic natural latex support, return requests can be initiated from <strong>Day 31 through Day 100</strong> post-delivery.</li>
-              <li>Limit of one mattress return per household or Malaysian residential address.</li>
+              <li>Jaminan Kepuasan & Pertukaran Kilang terpakai untuk semua pembelian produk tilam toto, tilam kekabu, tilam asrama dan tekstil KAMAAR buatan Tunas Sinar Jaya Enterprise.</li>
+              <li><strong>Pemeriksaan 14 Hari:</strong> Pelanggan diberikan tempoh 14 hari selepas penerimaan untuk memeriksa mutu jahitan kilang, zip keliling dan keadaan tilam. Sebarang kecacatan pengilangan layak untuk pertukaran 1-ke-1 secara pantas.</li>
+              <li>Pertukaran boleh diaturkan melalui kurier atau secara terus di gudang kilang kami di Tasek Gelugor, Pulau Pinang.</li>
             </ul>
           </section>
 
@@ -95,8 +95,8 @@ export default function RefundsPage() {
               Due to strict health and personal hygiene regulations:
             </p>
             <ul className="list-disc pl-5 space-y-1.5 text-secondary">
-              <li>Natural latex pillows, bamboo duvet covers, bed sheets, and mattress protectors that have been unsealed from their sterile vacuum packaging are <strong>non-returnable and non-refundable</strong> once opened, unless there is a verifiable manufacturing defect upon initial delivery.</li>
-              <li>Unopened, sealed accessories in their original presentation packaging may be returned within 14 days of delivery.</li>
+              <li>Bantal gebu, sarung bantal peluk, cadar berzip dan comforter yang telah dibuka daripada bungkusan plastik lutsinar kilang adalah <strong>tidak boleh dikembalikan</strong> atas faktor kebersihan, melainkan terdapat kecacatan jahitan kilang yang nyata semasa mula diterima.</li>
+              <li>Barangan yang belum dibuka dan masih dalam bungkusan asal kilang boleh ditukar dalam tempoh 14 hari selepas penerimaan.</li>
             </ul>
           </section>
 

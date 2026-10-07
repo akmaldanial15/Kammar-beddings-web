@@ -6,9 +6,9 @@ import { Clock, ArrowRight, BookOpen } from 'lucide-react'
 import { Metadata } from 'next'
 
 export const metadata: Metadata = {
-  title: 'Sleep Science Journal & Bedding Guides | KAMAAR Beddings Malaysia',
+  title: 'Jurnal & Panduan Penjagaan Tekstil | KAMAAR Beddings Malaysia',
   description:
-    'Expert advice on spinal ergonomics, Malaysian climate sleep optimization, organic latex care, and mattress comparisons.',
+    'Petua penjagaan tilam toto, keistimewaan kekabu asli tradisi, dan panduan memilih tilam asrama daripada Tunas Sinar Jaya Enterprise.',
 }
 
 export const dynamic = 'force-dynamic'
@@ -21,13 +21,13 @@ export default async function BlogPage() {
       <div className="max-w-6xl mx-auto px-4 sm:px-6 space-y-12">
         <div className="text-center space-y-3 max-w-2xl mx-auto">
           <span className="text-xs uppercase tracking-[0.25em] text-gold font-bold">
-            Sleep Science & Living
+            Panduan & Artikel Kilang
           </span>
           <h1 className="font-serif text-3xl md:text-5xl font-bold text-forest-dark">
-            The KAMAAR Sleep Journal
+            Jurnal & Panduan Tekstil KAMAAR
           </h1>
           <p className="text-sm md:text-base text-secondary">
-            Thoughtful essays and technical guides on spinal health, bedroom ergonomics, and regenerative deep sleep in Malaysia.
+            Perkongsian ilmu daripada pengeluar tilam dan tekstil Tunas Sinar Jaya Enterprise mengenai penjagaan tilam toto, kekabu asli tradisi dan kelengkapan tidur keluarga.
           </p>
         </div>
 

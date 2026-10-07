@@ -3,9 +3,9 @@ import { Metadata } from 'next'
 import { CareGuideClient } from './CareGuideClient'
 
 export const metadata: Metadata = {
-  title: 'Latex & Hybrid Mattress Care Guide | KAMAAR Beddings Malaysia',
+  title: 'Panduan Penjagaan Tilam Toto & Tekstil Kilang | KAMAAR Beddings',
   description:
-    'Comprehensive care guidelines for 100% natural organic latex and hybrid mattresses. Essential sunlight precautions, rotation schedules, and cleaning tips.',
+    'Panduan lengkap penjagaan tilam toto Asian fibre, tilam kekabu asli tradisi, tilam lipat berzip, dan bantal gebu keluaran kilang Tunas Sinar Jaya Enterprise Tasek Gelugor.',
 }
 
 export default function CareGuidePage() {
@@ -15,13 +15,13 @@ export default function CareGuidePage() {
         {/* Editorial Heading */}
         <div className="text-center space-y-3 max-w-3xl mx-auto">
           <span className="text-xs uppercase tracking-[0.25em] text-gold font-bold">
-            Longevity & Craft Preservation
+            Ketahanan & Kualiti Fabrik Kilang
           </span>
           <h1 className="font-serif text-3xl md:text-5xl font-bold text-forest-dark tracking-tight">
-            Natural Latex Mattress Care Guide
+            Panduan Penjagaan Tilam Toto & Tekstil Rumah
           </h1>
           <p className="text-sm md:text-base text-secondary leading-relaxed">
-            Crafted from 100% pure organic Malaysian Hevea latex and luxury pocket springs, your KAMAAR mattress is built to last over a decade. Follow our essential care guidelines to preserve peak elasticity, cooling hygiene, and warranty integrity.
+            Dihasilkan dengan kepakaran Unit Jahitan & Isian Tunas Sinar Jaya Enterprise di Tasek Gelugor. Ikuti panduan penjagaan praktikal ini agar tilam toto, kekabu asli dan bantal anda kekal gebu, anjal, bersih dan tahan bertahun-tahun.
           </p>
         </div>
 

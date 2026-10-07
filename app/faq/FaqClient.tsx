@@ -1,7 +1,7 @@
 'use client'
 
 import React, { useState } from 'react'
-import { Search, ChevronDown, MessageSquare, Phone } from 'lucide-react'
+import { Search, ChevronDown, MessageSquare, Phone, Factory, Package, Truck, ShieldCheck, CreditCard } from 'lucide-react'
 import Link from 'next/link'
 
 interface FaqItem {
@@ -14,64 +14,72 @@ interface FaqItem {
 const FAQ_LIST: FaqItem[] = [
   {
     id: 'f-1',
-    category: 'Delivery & Setup',
-    question: 'How does complimentary white-glove mattress delivery work in Peninsular Malaysia?',
+    category: 'Produk & Bahan',
+    question: 'Apakah kelebihan Tilam Toto berisian Asian Polyester Fibre?',
     answer:
-      'All mattress orders include complimentary two-man delivery directly into your bedroom of choice, unboxing, proper bedframe placement, and complete removal of all protective packaging. For condos and landed residences, our delivery fleet will call ahead 24 hours prior to confirm elevator access and time windows.',
+      'Isian 100% Asian Polyester Fibre keluaran kilang kami sangat padat, anjal (high resilience), empuk dan tidak mudah kemek atau leper walau digulung berulang kali. Sarung luarnya diperbuat daripada kain kapas mikrofiber sejuk dengan pelbagai corak floral menarik, dilengkapi zip keliling tahan lasak agar mudah ditanggalkan untuk dibasuh mesin.',
   },
   {
     id: 'f-2',
-    category: 'Delivery & Setup',
-    question: 'Do you deliver to Sabah, Sarawak, and Labuan?',
+    category: 'Produk & Bahan',
+    question: 'Adakah tilam dan bantal kekabu KAMAAR menggunakan 100% kekabu asli?',
     answer:
-      'Yes, we ship nationwide across East Malaysia via specialized sea-freight logistics. Bulky mattresses incur a flat rate of RM280 per piece, and parcel accessories (pillows, bed linen, protectors) are charged at RM65 per shipment.',
+      'Ya! Kami menggunakan 100% serat kekabu asli gred terpilih yang diproses bersih tanpa campuran habuk. Tilam kekabu tradisi dijahit sulam butang (tufted) kemas untuk mengekalkan bentuk gebu dan sejuk semulajadi, sangat selesa untuk mereka yang menghargai tilam tradisi Melayu.',
   },
   {
     id: 'f-3',
-    category: '100-Night Trial',
-    question: 'How does the 100-Night Risk-Free Sleep Trial work?',
+    category: 'Tempahan Borong & Asrama',
+    question: 'Bolehkah saya membuat tempahan borong untuk asrama sekolah atau kolej?',
     answer:
-      'We understand that your body needs 3 to 4 weeks to adjust to proper orthopedic alignment. Sleep on your LENA mattress for at least 30 nights. If you are not thoroughly satisfied within 100 nights, contact our concierge for a hassle-free return and 100% full refund.',
+      'Boleh dan dialu-alukan! Tunas Sinar Jaya Enterprise berpengalaman luas membekalkan tilam bujang asrama standard (saiz 3 kaki x 6 kaki / 90cm x 190cm) dengan ketebalan 4 hingga 6 inci untuk sekolah berasrama penuh, MRSM, SBP, pusat tahfiz, dan kolej latihan di seluruh Malaysia.',
   },
   {
     id: 'f-4',
-    category: '10-Year Warranty',
-    question: 'What is covered under the 10-Year Comprehensive Structural Warranty?',
+    category: 'Penghantaran & Pengambilan',
+    question: 'Bagaimanakah penghantaran dilakukan? Bolehkah ambil sendiri di kilang?',
     answer:
-      'Our warranty protects against permanent indentations greater than 2.0 cm, coil spring deformation or breakage, and latex degradation under proper foundation support. Register your invoice on our website within 30 days of delivery to activate your digital certificate.',
+      'Untuk pesanan runcit online, kami menghantar ke seluruh Semenanjung dan Sabah/Sarawak menggunakan kurier pantas berinsurans. Untuk tempahan pukal/borong, kami menggunakan khidmat lori kilang Tunas Sinar Jaya. Anda juga boleh datang sendiri (Self-Pickup) di gudang kilang kami di Tasek Gelugor, Pulau Pinang.',
   },
   {
     id: 'f-5',
-    category: 'Materials & Care',
-    question: 'Why choose 100% natural Malaysian latex over synthetic memory foam?',
+    category: 'OEM & Tender Kerajaan',
+    question: 'Adakah Tunas Sinar Jaya menerima tempahan tender kerajaan atau OEM jenama sendiri?',
     answer:
-      'Malaysian natural latex is harvested sustainably from local Hevea brasiliensis rubber trees. It features an open-cell breathable structure that prevents heat retention in Malaysia’s tropical humidity, provides instantaneous buoyant pushback without sinking, and is naturally hypoallergenic and anti-dust mite.',
+      'Ya! Tunas Sinar Jaya Enterprise (No. Pendaftaran: PG 0244795-A) memiliki 4 unit operasi lengkap termasuk Unit Jahitan Industri dan Unit Tilam & Bantal. Kami menerima tender kerajaan (ePerolehan), pesanan tempatan (LO), serta jahitan pukal OEM untuk pemilik jenama tekstil.',
   },
   {
     id: 'f-6',
-    category: 'Materials & Care',
-    question: 'Do I need to flip my LENA mattress?',
+    category: 'Penjagaan & Jaminan',
+    question: 'Bagaimanakah cara menjaga dan membasuh Tilam Toto KAMAAR?',
     answer:
-      'No. LENA mattresses are engineered with a dedicated multi-layer comfort core on top and a high-density foundation base at the bottom. We simply recommend rotating the mattress 180 degrees head-to-toe once every 3 to 6 months to ensure even wear.',
+      'Sangat mudah! Buka zip keliling dan tanggalkan sarung fabrik cotton untuk dibasuh menggunakan mesin basuh dengan kitaran lembut. Bahagian teras isian fibre boleh dijemur di bawah cahaya matahari pagi selama 1-2 jam untuk menggebukan kembali serat dan menyahbau secara semulajadi.',
   },
   {
     id: 'f-7',
-    category: 'Payments & Instalments',
-    question: 'What payment methods do you accept online?',
+    category: 'Pembayaran',
+    question: 'Apakah kaedah pembayaran yang disokong di laman web ini?',
     answer:
-      'We accept Visa, Mastercard, and FPX Online Banking via Stripe’s bank-grade encrypted checkout gateway. All transactions are securely processed in Malaysian Ringgit (MYR).',
+      'Kami menyokong pembayaran dalam talian melalui FPX Online Banking (Maybank, CIMB, Bank Islam, RHB, Public Bank, dll.), Touch \'n Go eWallet, dan kad debit/kredit melalui gerbang pembayaran selamat.',
   },
 ]
 
 export function FaqClient() {
   const [search, setSearch] = useState('')
-  const [selectedCat, setSelectedCat] = useState('All')
+  const [selectedCat, setSelectedCat] = useState('Semua')
   const [openId, setOpenId] = useState<string | null>('f-1')
 
-  const categories = ['All', 'Delivery & Setup', '100-Night Trial', '10-Year Warranty', 'Materials & Care', 'Payments & Instalments']
+  const categories = [
+    'Semua',
+    'Produk & Bahan',
+    'Tempahan Borong & Asrama',
+    'Penghantaran & Pengambilan',
+    'OEM & Tender Kerajaan',
+    'Penjagaan & Jaminan',
+    'Pembayaran',
+  ]
 
   const filtered = FAQ_LIST.filter((item) => {
-    const matchesCat = selectedCat === 'All' || item.category === selectedCat
+    const matchesCat = selectedCat === 'Semua' || item.category === selectedCat
     const matchesSearch =
       item.question.toLowerCase().includes(search.toLowerCase()) ||
       item.answer.toLowerCase().includes(search.toLowerCase())
@@ -85,35 +93,35 @@ export function FaqClient() {
         <Search className="w-5 h-5 text-secondary absolute left-4 top-1/2 -translate-y-1/2" />
         <input
           type="text"
-          placeholder="Search question, keyword, or topic..."
+          placeholder="Cari soalan, produk toto, kekabu, asrama..."
           value={search}
           onChange={(e) => setSearch(e.target.value)}
-          className="w-full pl-12 pr-4 py-3.5 text-sm rounded-2xl bg-warmwhite border border-borderLight focus:outline-none focus:border-forest shadow-sm"
+          className="w-full pl-12 pr-4 py-3 rounded-2xl bg-warmwhite border border-borderLight text-xs md:text-sm focus:outline-none focus:border-forest text-forest-dark placeholder-charcoal-muted shadow-xs"
         />
       </div>
 
-      {/* Category Pills */}
-      <div className="flex items-center justify-center flex-wrap gap-2">
-        {categories.map((cat) => (
+      {/* Categories Filter */}
+      <div className="flex flex-wrap gap-2 justify-center">
+        {categories.map((c) => (
           <button
-            key={cat}
-            onClick={() => setSelectedCat(cat)}
-            className={`px-4 py-2 rounded-full text-xs font-bold transition-all ${
-              selectedCat === cat
+            key={c}
+            onClick={() => setSelectedCat(c)}
+            className={`px-4 py-2 rounded-xl text-xs font-bold transition-all ${
+              selectedCat === c
                 ? 'bg-forest text-warmwhite shadow-sm'
-                : 'bg-warmwhite border border-borderLight text-secondary hover:text-charcoal'
+                : 'bg-warmwhite text-secondary hover:bg-cream border border-borderLight'
             }`}
           >
-            {cat}
+            {c}
           </button>
         ))}
       </div>
 
       {/* Accordion List */}
-      <div className="space-y-4 max-w-3xl mx-auto">
+      <div className="space-y-3">
         {filtered.length === 0 ? (
-          <div className="p-8 text-center bg-warmwhite rounded-2xl border border-borderLight text-secondary text-sm">
-            No questions matched your search query. Please contact our concierge below.
+          <div className="text-center py-12 text-secondary text-xs">
+            Tiada soalan ditemui untuk carian &ldquo;{search}&rdquo;. Sila hubungi kami terus.
           </div>
         ) : (
           filtered.map((item) => {
@@ -121,28 +129,25 @@ export function FaqClient() {
             return (
               <div
                 key={item.id}
-                className="bg-warmwhite rounded-2xl border border-borderLight overflow-hidden transition-all shadow-sm"
+                className="bg-warmwhite rounded-2xl border border-borderLight overflow-hidden transition-colors hover:border-gold/40 shadow-xs"
               >
                 <button
                   onClick={() => setOpenId(isOpen ? null : item.id)}
-                  className="w-full p-5 text-left flex items-center justify-between gap-4 hover:bg-cream/20 transition-colors"
+                  className="w-full p-5 text-left flex items-center justify-between gap-4"
                 >
-                  <span className="font-serif font-bold text-forest-dark text-base md:text-lg">
+                  <span className="font-serif font-bold text-base sm:text-lg text-forest-dark">
                     {item.question}
                   </span>
                   <ChevronDown
-                    className={`w-5 h-5 text-gold flex-shrink-0 transition-transform duration-300 ${
-                      isOpen ? 'rotate-180' : ''
+                    className={`w-5 h-5 text-gold-dark flex-shrink-0 transition-transform duration-200 ${
+                      isOpen ? 'rotate-180 text-forest' : ''
                     }`}
                   />
                 </button>
 
                 {isOpen && (
-                  <div className="p-5 pt-0 text-xs md:text-sm text-secondary leading-relaxed border-t border-borderLight/40 bg-cream/20">
-                    <p className="mt-3">{item.answer}</p>
-                    <div className="mt-3 text-[10px] uppercase tracking-wider text-gold font-bold">
-                      Category: {item.category}
-                    </div>
+                  <div className="px-5 pb-5 pt-1 text-xs sm:text-sm text-secondary leading-relaxed border-t border-borderLight/60 bg-cream/20">
+                    {item.answer}
                   </div>
                 )}
               </div>
@@ -151,29 +156,29 @@ export function FaqClient() {
         )}
       </div>
 
-      {/* Concierge Support CTA */}
-      <div className="bg-forest-dark text-warmwhite p-8 rounded-3xl max-w-3xl mx-auto text-center space-y-4 shadow-xl">
-        <h3 className="font-serif text-2xl font-bold text-warmwhite">
-          Still Have Questions About Our Sleep Systems?
-        </h3>
-        <p className="text-xs md:text-sm text-warmwhite/80 max-w-lg mx-auto">
-          Our certified Malaysian sleep ergonomists are on standby via WhatsApp and phone to assist with firmness selection and delivery scheduling.
+      {/* Direct Contact Prompt */}
+      <div className="bg-forest-dark text-warmwhite p-8 rounded-3xl text-center space-y-4 shadow-md max-w-2xl mx-auto">
+        <Factory className="w-10 h-10 text-gold mx-auto" />
+        <h3 className="font-serif text-2xl font-bold">Ada Pertanyaan Lain Mengenai Kilang Kami?</h3>
+        <p className="text-xs sm:text-sm text-warmwhite/80 max-w-lg mx-auto">
+          Hubungi terus Pengurus Kilang Tunas Sinar Jaya Enterprise atau kunjungi premis kami di Tasek Gelugor, Pulau Pinang.
         </p>
-        <div className="flex flex-wrap items-center justify-center gap-4 pt-2">
-          <Link
-            href="/contact"
-            className="px-6 py-2.5 bg-gold text-forest-dark text-xs font-bold rounded-xl hover:bg-gold/90 transition-colors shadow-sm"
-          >
-            Contact Customer Concierge
-          </Link>
+        <div className="flex flex-wrap justify-center gap-4 pt-2">
           <a
-            href="https://wa.me/60123456789"
+            href="https://wa.me/60194786991?text=Salam%20Tunas%20Sinar%20Jaya,%20saya%20ada%20pertanyaan%20mengenai%20produk%20dan%20tempahan."
             target="_blank"
             rel="noreferrer"
-            className="px-6 py-2.5 bg-warmwhite/10 border border-warmwhite/20 text-warmwhite text-xs font-bold rounded-xl hover:bg-warmwhite/20 transition-colors"
+            className="px-6 py-2.5 bg-gold text-forest-dark rounded-xl text-xs font-bold uppercase tracking-wider hover:bg-gold-light transition-colors flex items-center gap-2 shadow-sm"
           >
-            Chat on WhatsApp
+            <Phone className="w-4 h-4" />
+            <span>WhatsApp 019-478 6991</span>
           </a>
+          <Link
+            href="/profil"
+            className="px-6 py-2.5 bg-warmwhite/10 hover:bg-warmwhite/20 text-warmwhite rounded-xl text-xs font-bold uppercase tracking-wider border border-warmwhite/20 transition-colors"
+          >
+            Lihat Profil Syarikat &rarr;
+          </Link>
         </div>
       </div>
     </div>

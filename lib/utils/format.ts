@@ -127,21 +127,21 @@ export function calculateShippingFee({
     }
   }
 
-  // Peninsular Malaysia: Free for mattresses or orders over RM500 (50000 sen)
-  if (hasBulkyItem || subtotalSen >= 50000) {
+  // Peninsular Malaysia: Free for orders over RM200 (20000 sen)
+  if (hasBulkyItem || subtotalSen >= 20000) {
     return {
       shippingSen: 0,
       isFreeShipping: true,
       isComplimentary: true,
-      label: hasBulkyItem ? 'Free White-Glove Mattress Delivery (Peninsular Malaysia)' : 'Free Shipping (Orders above RM500)',
+      label: hasBulkyItem ? 'Penghantaran Percuma Lori Kilang / Kurier' : 'Penghantaran Percuma (Pesanan RM200 ke atas)',
     }
   }
 
   // Minor accessory delivery
   return {
-    shippingSen: 3500, // RM35.00 standard courier
+    shippingSen: 1500, // RM15.00 standard courier
     isFreeShipping: false,
     isComplimentary: false,
-    label: 'Standard Peninsular Courier (RM35.00)',
+    label: 'Kurier Standard Semenanjung (RM15.00)',
   }
 }

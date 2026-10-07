@@ -15,10 +15,10 @@ export function WarrantyClient({ mattressOptions }: WarrantyClientProps) {
   const [name, setName] = useState('')
   const [email, setEmail] = useState('')
   const [phone, setPhone] = useState('')
-  const [productName, setProductName] = useState(mattressOptions[0] || 'Natural Latex Plus')
+  const [productName, setProductName] = useState(mattressOptions[0] || 'Tilam Toto Asian Fibre Premium')
   const [purchaseDate, setPurchaseDate] = useState('')
   const [deliveryDate, setDeliveryDate] = useState('')
-  const [retailer, setRetailer] = useState('LENA Official Online Atelier')
+  const [retailer, setRetailer] = useState('KAMAAR Beddings / Kilang Tunas Sinar Jaya')
   const [invoiceNumber, setInvoiceNumber] = useState('')
   const [isSubmitting, setIsSubmitting] = useState(false)
   const [registeredResult, setRegisteredResult] = useState<any>(null)
@@ -265,8 +265,8 @@ export function WarrantyClient({ mattressOptions }: WarrantyClientProps) {
                 </div>
 
                 <div className="p-4 bg-cream/40 rounded-2xl border border-borderLight text-xs text-secondary leading-relaxed">
-                  <span className="font-bold text-forest-dark block mb-1">Warranty Coverage Terms:</span>
-                  Covers sagging deeper than 2.0 cm, coil spring structural faults, and latex core degradation under normal domestic usage. Pillows and protectors carry standard 1-year manufacturing defect warranties.
+                  <span className="font-bold text-forest-dark block mb-1">Syarat & Liputan Jaminan:</span>
+                  Merangkumi kecacatan jahitan fabrik kilang, kerosakan zip keliling, dan penurunan mendadak keanjalan isian di bawah penggunaan domestik atau asrama yang wajar. Bantal dan kelengkapan lain dilindungi jaminan kilang standard.
                 </div>
 
                 <div className="flex justify-end">
@@ -276,7 +276,7 @@ export function WarrantyClient({ mattressOptions }: WarrantyClientProps) {
                     className="px-8 py-3 bg-forest text-warmwhite font-bold text-xs rounded-xl hover:bg-forest-dark transition-colors shadow-md disabled:opacity-50 flex items-center space-x-2"
                   >
                     <ShieldCheck className="w-4 h-4 text-gold" />
-                    <span>{isSubmitting ? 'Registering...' : 'Activate 10-Year Warranty'}</span>
+                    <span>{isSubmitting ? 'Mendaftar...' : 'Aktifkan Jaminan Kilang'}</span>
                   </button>
                 </div>
               </form>
@@ -287,7 +287,7 @@ export function WarrantyClient({ mattressOptions }: WarrantyClientProps) {
             <form onSubmit={handleLookup} className="flex gap-3 max-w-md">
               <input
                 type="text"
-                placeholder="Enter Invoice / Order # (e.g. LENA-2026-1001)"
+                placeholder="No. Invois / Pesanan (cth: TSJ-2026-1001)"
                 value={searchInvoice}
                 onChange={(e) => setSearchInvoice(e.target.value)}
                 className="flex-1 px-4 py-2.5 text-xs rounded-xl border border-borderLight focus:border-forest font-mono"
@@ -297,7 +297,7 @@ export function WarrantyClient({ mattressOptions }: WarrantyClientProps) {
                 disabled={isLookingUp}
                 className="px-5 py-2.5 bg-forest text-warmwhite text-xs font-bold rounded-xl hover:bg-forest-dark disabled:opacity-50"
               >
-                {isLookingUp ? 'Searching...' : 'Search'}
+                {isLookingUp ? 'Mencari...' : 'Semak'}
               </button>
             </form>
 

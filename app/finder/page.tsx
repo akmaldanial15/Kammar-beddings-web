@@ -4,8 +4,8 @@ import { getProducts } from '@/lib/db'
 import { FinderClient } from './FinderClient'
 
 export const metadata: Metadata = {
-  title: 'Mattress Finder Quiz | KAMAAR Beddings Malaysia',
-  description: 'Take our 60-second interactive sleep assessment to find the ideal organic natural latex or hybrid mattress for your body and sleeping style.',
+  title: 'Kuis Pemilihan Tilam & Kelengkapan Tidur | KAMAAR Beddings',
+  description: 'Jawab soalan 60 saat untuk mencari tilam toto, tilam kekabu tradisi, tilam bujang asrama atau tilam lipat yang paling sesuai dengan keperluan dan ruang anda.',
 }
 
 export default async function FinderPage() {

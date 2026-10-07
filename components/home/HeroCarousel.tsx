@@ -43,6 +43,17 @@ const slides: Slide[] = [
   },
   {
     id: 'slide-3',
+    badge: '100% KEKABU ASLI TRADISI',
+    title: 'Tilam & Bantal Kekabu Asli Buatan Tempatan',
+    subtitle: 'Kelembutan semulajadi yang sejuk, padat dan selesa dengan teknik jahitan butang tufting tradisi yang tahan lasak turun-temurun.',
+    ctaText: 'Koleksi Kekabu Asli',
+    ctaLink: '/collections/tilam-kekabu',
+    secondaryCtaText: 'Tempah Sekarang',
+    secondaryCtaLink: '/products/tilam-kekabu-asli-tradisi',
+    imageUrl: '/images/products/tilam-kekabu-asli.jpg',
+  },
+  {
+    id: 'slide-4',
     badge: 'HARGA BORONG GUDANG',
     title: 'Jualan Gudang & Tempahan Borong Asrama / Homestay',
     subtitle: 'Harga pengeluar terus dari Tasek Gelugor, Pulau Pinang. Pakej lengkap tilam, bantal tidur gebu dan cadar berzip berkualiti tinggi.',

@@ -4,8 +4,8 @@ import { getCoupons, getProducts } from '@/lib/db'
 import { OffersClient } from './OffersClient'
 
 export const metadata: Metadata = {
-  title: 'Vouchers & Mattress Offers | KAMAAR Beddings Malaysia',
-  description: 'Discover active promotional vouchers, bundle discounts, and complimentary natural latex gifts on luxury mattresses.',
+  title: 'Tawaran Istimewa & Baucar Kilang | KAMAAR Beddings Malaysia',
+  description: 'Dapatkan promosi harga kilang, diskaun baucar dan hadiah percuma bantal gebu untuk pembelian tilam toto, kekabu asli dan tekstil Tunas Sinar Jaya Enterprise.',
 }
 
 export default async function OffersPage() {

@@ -16,10 +16,10 @@ export async function generateMetadata({ params }: Props): Promise<Metadata> {
   const cat = categories.find((c) => c.slug === slug)
   const col = collections.find((c) => c.slug === slug)
 
-  const title = cat?.name || col?.name || (slug === 'mattress' || slug === 'mattresses' ? 'Luxury Mattresses Collection' : 'Catalog Collection')
+  const title = cat?.name || col?.name || (slug === 'mattress' || slug === 'mattresses' ? 'Koleksi Tilam Keluaran Kilang' : 'Katalog Produk Kilang')
   return {
-    title: `${title} | KAMAAR Beddings Malaysia`,
-    description: cat?.description || col?.description || 'Browse handcrafted organic natural latex and ergonomic hybrid sleep products.',
+    title: `${title} | KAMAAR Beddings - Tunas Sinar Jaya Enterprise`,
+    description: cat?.description || col?.description || 'Koleksi tilam toto Asian fibre, kekabu tradisi, tilam asrama, bantal gebu, dan tekstil buatan Tunas Sinar Jaya Enterprise Tasek Gelugor.',
   }
 }
 
@@ -35,29 +35,33 @@ export default async function CollectionPage({ params }: Props) {
   const collection = collections.find((c) => c.slug === slug)
 
   let relevantProducts = allProducts
-  let pageTitle = 'Luxury Bedding Collection'
-  let pageDescription = 'Explore our certified organic natural latex mattresses, cervical contour pillows, and bedding essentials.'
+  let pageTitle = 'Koleksi Produk Kilang Tunas Sinar Jaya'
+  let pageDescription = 'Pengeluar dan pembekal kelengkapan tilam toto, kekabu asli, tilam asrama, bantal gebu, dan tekstil rumah terus dari kilang Tasek Gelugor, Pulau Pinang.'
 
   if (category) {
     relevantProducts = allProducts.filter((p) => p.categoryId === category.id)
-    pageTitle = `${category.name} Collection`
+    pageTitle = `${category.name}`
     pageDescription = category.description || ''
   } else if (collection) {
-    if (slug === 'natural-latex') {
-      relevantProducts = allProducts.filter((p) => p.material?.toLowerCase().includes('latex'))
-    } else if (slug === 'cool-night-hybrid') {
-      relevantProducts = allProducts.filter((p) => p.material?.toLowerCase().includes('hybrid'))
-    } else if (slug === 'orthopaedic-support') {
-      relevantProducts = allProducts.filter((p) => p.material?.toLowerCase().includes('ortho'))
-    } else if (slug === 'hotel-collection') {
-      relevantProducts = allProducts.filter((p) => p.name.includes('Sovereign') || p.name.includes('Heritage'))
+    if (slug === 'koleksi-toto') {
+      relevantProducts = allProducts.filter((p) => p.categoryId === 'cat-tilam-toto' || p.name.toLowerCase().includes('toto'))
+    } else if (slug === 'koleksi-kekabu') {
+      relevantProducts = allProducts.filter((p) => p.categoryId === 'cat-tilam-kekabu' || p.name.toLowerCase().includes('kekabu'))
+    } else if (slug === 'tilam-lipat-asrama') {
+      relevantProducts = allProducts.filter((p) => p.categoryId === 'cat-tilam-lipat' || p.name.toLowerCase().includes('lipat') || p.name.toLowerCase().includes('asrama'))
+    } else if (slug === 'bantal-gebu-kamaar') {
+      relevantProducts = allProducts.filter((p) => p.categoryId === 'cat-bantal' || p.name.toLowerCase().includes('bantal'))
+    } else if (slug === 'comforter-patchwork') {
+      relevantProducts = allProducts.filter((p) => p.categoryId === 'cat-cadang-comforter' || p.categoryId === 'cat-selimut-patchwork')
+    } else if (slug === 'jualan-gudang-borong') {
+      relevantProducts = allProducts.filter((p) => p.categoryId === 'cat-jualan-gudang' || p.name.toLowerCase().includes('pakej') || p.name.toLowerCase().includes('borong'))
     }
     pageTitle = collection.name
     pageDescription = collection.description
   } else if (slug === 'mattress' || slug === 'mattresses') {
-    relevantProducts = allProducts.filter((p) => p.productType === 'mattress')
-    pageTitle = 'Luxury Natural Latex & Hybrid Mattresses'
-    pageDescription = 'Handcrafted in Malaysia with 100% pure organic latex, zero synthetic fillers, and micro-zoned spinal alignment for deep, restorative sleep.'
+    relevantProducts = allProducts.filter((p) => p.productType === 'mattress' || p.categoryId?.includes('tilam'))
+    pageTitle = 'Koleksi Tilam Keluaran Kilang'
+    pageDescription = 'Tilam Toto Asian Polyester Fibre tebal, tilam kekabu asli tradisi, tilam lipat 3 berzip, dan tilam bujang asrama standard 3 kaki terus dari kilang pengeluar Tasek Gelugor.'
   }
 
   return (

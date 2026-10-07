@@ -128,8 +128,8 @@ export function SearchModal({ isOpen, onClose }: SearchModalProps) {
 
           {/* Quick tags */}
           <div className="mt-4 flex flex-wrap items-center gap-2">
-            <span className="text-xs text-charcoal-muted">Suggested:</span>
-            {['100% Natural Latex', 'Cool Night Hybrid', 'Ortho Firm', 'Contour Pillow', 'Topper'].map((tag) => (
+            <span className="text-xs text-charcoal-muted">Cadangan Carian:</span>
+            {['Tilam Toto Queen', 'Tilam Kekabu Asli', 'Tilam Lipat 3 Berzip', 'Bantal Gebu', 'Tilam Asrama 3 Kaki', 'Selimut Patchwork'].map((tag) => (
               <button
                 key={tag}
                 type="button"
@@ -145,14 +145,14 @@ export function SearchModal({ isOpen, onClose }: SearchModalProps) {
           <div className="mt-6 max-h-[60vh] overflow-y-auto divide-y divide-borderLight">
             {isLoading && (
               <div className="py-8 text-center text-charcoal-muted text-sm animate-pulse">
-                Searching handcrafted mattresses and accessories...
+                Mencari produk kilang Tunas Sinar Jaya...
               </div>
             )}
 
             {!isLoading && query && results.length === 0 && (
               <div className="py-10 text-center">
-                <p className="text-charcoal font-medium">No mattresses found for &ldquo;{query}&rdquo;</p>
-                <p className="text-xs text-charcoal-muted mt-1">Try searching by material (Latex, Hybrid) or comfort level (Medium, Firm).</p>
+                <p className="text-charcoal font-medium">Tiada produk ditemui untuk &ldquo;{query}&rdquo;</p>
+                <p className="text-xs text-charcoal-muted mt-1">Cuba cari mengikut kategori (Toto, Kekabu, Asrama, Bantal, Comforter).</p>
               </div>
             )}
 

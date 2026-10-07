@@ -8,32 +8,35 @@ import { AffiliateTracker } from '@/components/common/AffiliateTracker'
 import { StorefrontShell } from '@/components/layout/StorefrontShell'
 
 export const metadata: Metadata = {
-  title: 'KAMAAR Beddings | 100% Pure Natural Latex & Luxury Hybrid Mattresses Malaysia',
+  title: 'KAMAAR Beddings | Pengilang Tilam Toto, Tilam Kekabu & Tekstil Berkualiti (Tunas Sinar Jaya Enterprise)',
   description:
-    'Handcrafted in Malaysia with 100% organic natural latex and micro-zoned pocket springs. Experience 100-night sleep trials, 10-year warranties, and complimentary white-glove bedroom setup across Peninsular Malaysia.',
+    'Pengilang dan pemborong produk jahitan tekstil berkualiti tinggi terus dari kilang Tasek Gelugor, Pulau Pinang. Menghasilkan Tilam Toto Asian Polyester Fibre, Tilam Kekabu Tradisi, Tilam Bujang Asrama, Bantal Gebu, Comforter Quilting & Tempahan Pukal OEM.',
   keywords: [
     'KAMAAR Beddings',
-    'natural latex mattress Malaysia',
-    'luxury hybrid mattress',
-    'orthopaedic mattress Kuala Lumpur',
-    'latex pillow Malaysia',
-    'mattress trial Malaysia',
-    'KAMAAR',
+    'Tunas Sinar Jaya Enterprise',
+    'tilam toto tebal Malaysia',
+    'tilam toto asian polyester fibre',
+    'tilam kekabu asli Tasek Gelugor',
+    'tilam lipat 3 berzip',
+    'tilam bujang asrama',
+    'jualan gudang tekstil Pulau Pinang',
+    'kilang tilam toto',
+    'bantal gebu asian fibre',
   ],
   openGraph: {
-    title: 'KAMAAR Beddings | Organic Latex & Luxury Hybrid Mattresses',
-    description: 'Transform your sleep with certified organic natural latex and ergonomic spinal alignment.',
+    title: 'KAMAAR Beddings | Pengilang Tilam Toto & Tekstil Berkualiti Tunas Sinar Jaya',
+    description: 'Keselesaan anda keutamaan kami. Mengilang dan memasar Tilam Toto, Tilam Kekabu, Tilam Asrama, Bantal Gebu & Jualan Gudang Terus Dari Kilang.',
     url: 'https://kamaarbeddings.com.my',
-    siteName: 'KAMAAR Beddings Malaysia',
+    siteName: 'KAMAAR Beddings (Tunas Sinar Jaya Enterprise)',
     images: [
       {
-        url: 'https://images.unsplash.com/photo-1631049307264-da0ec9d70304?auto=format&fit=crop&w=1200&q=80',
+        url: '/images/hero/hero-tilam-toto-lifestyle.jpg',
         width: 1200,
         height: 630,
-        alt: 'KAMAAR Beddings Luxury Bedroom Sanctuary',
+        alt: 'KAMAAR Beddings Tilam Toto Asian Polyester Fibre Tunas Sinar Jaya',
       },
     ],
-    locale: 'en_MY',
+    locale: 'ms_MY',
     type: 'website',
   },
 }

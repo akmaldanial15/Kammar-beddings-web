@@ -4,8 +4,8 @@ import { getProducts } from '@/lib/db'
 import { CompareClient } from './CompareClient'
 
 export const metadata: Metadata = {
-  title: 'Compare Mattresses | KAMAAR Beddings Malaysia',
-  description: 'Compare up to 3 handcrafted natural latex and hybrid mattresses side by side. Compare firmness, thickness, Malaysian dimensions, and warranties.',
+  title: 'Bandingkan Tilam & Kelengkapan Tidur | KAMAAR Beddings',
+  description: 'Bandingkan spesifikasi tilam toto, kekabu asli tradisi, tilam asrama dan tilam lipat bersebelahan. Bandingkan jenis isian, ketebalan, saiz dan harga kilang.',
 }
 
 export default async function ComparePage() {

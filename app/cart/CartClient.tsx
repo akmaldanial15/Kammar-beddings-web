@@ -59,12 +59,12 @@ export function CartClient() {
       i.sku.includes('CF')
   )
 
-  // Automatic Gift Qualification: Free Latex Contour Pillow if Queen or King mattress in cart
+  // Automatic Gift Qualification: Free Asian Fibre Pillow if Queen/King Toto or order >= RM150
   const hasQueenOrKingMattress = items.some(
     (i) =>
-      hasBulkyMattress &&
-      (i.sizeName.toLowerCase().includes('queen') || i.sizeName.toLowerCase().includes('king'))
-  )
+      (i.sizeName.toLowerCase().includes('queen') || i.sizeName.toLowerCase().includes('king')) ||
+      (i.productName.toLowerCase().includes('toto') && (i.sizeName.toLowerCase().includes('queen') || i.sizeName.toLowerCase().includes('king')))
+  ) || subtotalSen >= 15000
 
   // Calculate Shipping fee
   const shippingInfo = calculateShippingFee({
@@ -76,12 +76,14 @@ export function CartClient() {
 
   // Calculate discount if coupon applied
   let discountSen = 0
-  if (couponCode === 'LENAWELCOME' && subtotalSen >= 100000) {
-    discountSen = Math.min(50000, Math.round(subtotalSen * 0.1))
-  } else if (couponCode === 'TIER100' && subtotalSen >= 150000) {
-    discountSen = 10000
-  } else if (couponCode === 'SLEEPVIP' && subtotalSen >= 300000) {
-    discountSen = Math.min(80000, Math.round(subtotalSen * 0.15))
+  if (couponCode === 'KAMAAR10' && subtotalSen >= 10000) {
+    discountSen = 1000 // RM10 off
+  } else if (couponCode === 'BORONGVIP' && subtotalSen >= 50000) {
+    discountSen = 5000 // RM50 off
+  } else if ((couponCode === 'LENAWELCOME' || couponCode === 'KAMAARWELCOME') && subtotalSen >= 10000) {
+    discountSen = Math.min(5000, Math.round(subtotalSen * 0.1))
+  } else if (couponCode === 'TIER100' && subtotalSen >= 15000) {
+    discountSen = 1000
   }
 
   const finalTotalSen = Math.max(0, subtotalSen - discountSen + shippingInfo.shippingSen)
@@ -171,12 +173,12 @@ export function CartClient() {
 
         {/* Free Gift Notification if Qualified */}
         {hasQueenOrKingMattress && (
-          <div className="mb-8 p-4 bg-blue-50/80 rounded-2xl border border-blue-200 flex items-center space-x-3 text-blue-950">
-            <Gift className="w-6 h-6 text-blue-600 flex-shrink-0" />
+          <div className="mb-8 p-4 bg-emerald-50/90 rounded-2xl border border-emerald-200 flex items-center space-x-3 text-emerald-950">
+            <Gift className="w-6 h-6 text-emerald-600 flex-shrink-0" />
             <div className="text-xs">
-              <span className="font-bold">Gift with Purchase Qualified!</span>
-              <p className="text-blue-900 mt-0.5">
-                Your Queen/King mattress purchase automatically qualifies for a free Ergonomic Cervical Contour Natural Latex Pillow (worth RM269.00), included with delivery.
+              <span className="font-bold">Layak Menerima Hadiah Percuma Dari Kilang!</span>
+              <p className="text-emerald-900 mt-0.5">
+                Pesanan anda layak menerima 1x Bantal Gebu Asian Polyester Fibre (Bernilai RM45.00) secara percuma terus bersama bungkusan penghantaran anda.
               </p>
             </div>
           </div>

@@ -27,13 +27,13 @@ export function ReviewsSection({ reviews }: ReviewsSectionProps) {
         <div className="text-center max-w-2xl mx-auto mb-14">
           <span className="text-xs uppercase tracking-[0.2em] font-semibold text-gold-dark flex items-center justify-center space-x-1.5 mb-2">
             <Sparkles className="w-3.5 h-3.5 text-gold" />
-            <span>Verified Malaysian Testimonials</span>
+            <span>Maklum Balas Pelanggan Kami</span>
           </span>
           <h2 className="font-serif text-3xl sm:text-4xl lg:text-5xl font-bold text-forest">
-            Ache-Free Mornings, Guaranteed
+            Kepuasan Terjamin, Pilihan Seisi Keluarga
           </h2>
           <p className="text-sm sm:text-base text-charcoal-muted mt-2">
-            Over 15,000 Malaysian households have elevated their sleep quality with KAMAAR Beddings’ pure natural latex and ergonomic hybrid mattresses.
+            Ribuan keluarga, pengusaha homestay dan pengurusan asrama di seluruh Semenanjung mempercayai mutu jahitan Tilam Toto &amp; tekstil keluaran Tunas Sinar Jaya Enterprise.
           </p>
         </div>
 

@@ -3,9 +3,9 @@ import { Metadata } from 'next'
 import { TrialClient } from './TrialClient'
 
 export const metadata: Metadata = {
-  title: '100-Night Risk-Free Sleep Trial | KAMAAR Beddings Malaysia',
+  title: 'Jaminan Kepuasan Kilang 14 Hari | KAMAAR Beddings Malaysia',
   description:
-    'Experience 100 nights of pure organic latex and hybrid sleep in the comfort of your home. Free delivery, zero-risk returns, and 100% full refunds across Malaysia.',
+    'Jaminan kepuasan pelanggan terus dari kilang Tunas Sinar Jaya Enterprise. Pertukaran 1-ke-1 jika terdapat sebarang kecacatan jahitan atau kerosakan fabrik.',
 }
 
 export default function TrialPage() {
@@ -15,13 +15,13 @@ export default function TrialPage() {
         {/* Editorial Heading */}
         <div className="text-center space-y-3 max-w-3xl mx-auto">
           <span className="text-xs uppercase tracking-[0.25em] text-gold font-bold">
-            Zero-Risk Sleep Guarantee
+            Jaminan Mutu & Ketulenan Kilang
           </span>
           <h1 className="font-serif text-3xl md:text-5xl font-bold text-forest-dark tracking-tight">
-            100-Night Risk-Free Sleep Trial
+            Jaminan Kepuasan & Pertukaran 14 Hari
           </h1>
           <p className="text-sm md:text-base text-secondary leading-relaxed">
-            A 10-minute showroom test cannot compare to sleeping in your own bedroom. Test our 100% natural organic latex and luxury hybrid mattresses in your real daily routine for 100 nights. If your body isn&apos;t completely revitalized, we&apos;ll pick it up and refund every ringgit.
+            Kepuasan anda keutamaan kami. Setiap tilam toto, kekabu asli dan tekstil KAMAAR diperiksa ketat sebelum keluar dari kilang kami di Tasek Gelugor. Nikmati jaminan pertukaran tanpa rungutan sekiranya terdapat sebarang kecacatan jahitan kilang.
           </p>
         </div>
 

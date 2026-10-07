@@ -70,13 +70,13 @@ export function AdminNav({ session }: AdminNavProps) {
   const [isQuickSettingsOpen, setIsQuickSettingsOpen] = useState(false)
   const [quickSettings, setQuickSettings] = useState<Partial<SiteSettings> & { adminName?: string }>({
     brandName: 'KAMAAR Beddings',
-    tagline: '100% Pure Natural Latex & Luxury Hybrid Mattresses',
-    announcementText: 'Complimentary White-Glove In-Home Setup Across Peninsular Malaysia.',
+    tagline: 'Pengeluar Tilam Toto, Kekabu & Tekstil Asrama Tunas Sinar Jaya',
+    announcementText: 'Jualan Gudang Terus Dari Kilang • Penghantaran ke Seluruh Semenanjung Malaysia',
     isAnnouncementActive: true,
-    contactPhone: '+60 3-2141 8900',
-    contactEmail: 'concierge@kamaarbeddings.com',
-    whatsappNumber: '+60123456789',
-    freeShippingThresholdSen: 30000,
+    contactPhone: '019-478 6991',
+    contactEmail: 'tunassinar@gmail.com',
+    whatsappNumber: '+60194786991',
+    freeShippingThresholdSen: 20000,
     adminName: session?.name || 'Kamaar Admin',
   })
   const [isQuickSaving, setIsQuickSaving] = useState(false)

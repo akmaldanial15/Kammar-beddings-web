@@ -60,10 +60,10 @@ export function CompareClient({ allProducts }: CompareClientProps) {
               <span>Side-by-Side Analysis</span>
             </span>
             <h1 className="font-serif text-3xl sm:text-4xl font-bold text-forest">
-              Compare Mattresses
+              Bandingkan Pilihan Tilam Kilang
             </h1>
             <p className="text-xs sm:text-sm text-charcoal-muted mt-1">
-              Compare ergonomic specifications, natural latex density, firmness scale, and Malaysian sizes.
+              Bandingkan jenis isian (Asian Polyester Fibre / Kekabu Asli / Foam Asrama), ketebalan, saiz dan jaminan mutu kilang.
             </p>
           </div>
 

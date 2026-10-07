@@ -37,7 +37,7 @@ export default function NotFound() {
         {/* 4 Recommended Discovery Destinations */}
         <div className="grid grid-cols-1 sm:grid-cols-2 md:grid-cols-4 gap-3 text-left">
           <Link
-            href="/collections/mattress"
+            href="/collections/tilam-toto"
             className="p-4 rounded-2xl bg-warmwhite border border-borderLight shadow-xs hover:border-gold/60 transition-all group flex flex-col justify-between"
           >
             <div className="w-8 h-8 rounded-xl bg-forest/10 text-forest flex items-center justify-center mb-2">
@@ -45,10 +45,10 @@ export default function NotFound() {
             </div>
             <div>
               <span className="text-xs font-bold text-forest-dark block group-hover:text-forest">
-                Mattress Catalog
+                Tilam Toto & Kekabu
               </span>
               <span className="text-[10px] text-secondary">
-                100% pure natural latex & hybrids
+                Asian Fibre tebal & kekabu asli
               </span>
             </div>
           </Link>

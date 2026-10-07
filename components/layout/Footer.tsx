@@ -215,6 +215,11 @@ export function Footer() {
                 </Link>
               </li>
               <li>
+                <Link href="/collections/tilam-kekabu" className="hover:text-gold transition-colors py-0.5 inline-block text-gold">
+                  {isBM ? 'Tilam & Bantal Kekabu Asli' : 'Traditional Kapok Mattress & Pillows'}
+                </Link>
+              </li>
+              <li>
                 <Link href="/collections/tilam-lipat" className="hover:text-gold transition-colors py-0.5 inline-block">
                   {isBM ? 'Tilam Lipat 3 & Bujang Asrama' : 'Foldable 3-Fold & Single Mattress'}
                 </Link>
@@ -226,7 +231,7 @@ export function Footer() {
               </li>
               <li>
                 <Link href="/collections/cadang-comforter" className="hover:text-gold transition-colors py-0.5 inline-block">
-                  {isBM ? 'Cadar & Set Comforter Quilting' : 'Bedsheets & Quilting Comforter'}
+                  {isBM ? 'Cadar, Comforter & Patchwork' : 'Quilted Comforter & Patchwork'}
                 </Link>
               </li>
               <li>
@@ -235,8 +240,8 @@ export function Footer() {
                 </Link>
               </li>
               <li>
-                <Link href="/profil" className="hover:text-gold transition-colors py-0.5 inline-block">
-                  {isBM ? 'Profil Syarikat & 4 Unit Kilang' : 'Company Profile & Factory Units'}
+                <Link href="/business" className="hover:text-gold transition-colors py-0.5 inline-block">
+                  {isBM ? 'Tempahan Pukal (OEM) & Kerajaan' : 'OEM Custom & Government Supply'}
                 </Link>
               </li>
             </ul>

@@ -12,10 +12,17 @@ export function CategoryGrid() {
   const mattressTypes = [
     {
       title: 'Tilam Toto Asian Polyester Fibre (Paling Lariss!!)',
-      subtitle: 'Isian fiber berkualiti tinggi dengan Random Design pelbagai corak bunga & geometri. Empuk, tebal dan selesa untuk seisi keluarga.',
+      subtitle: 'Isian fiber bermutu tinggi dengan Random Floral & Geometric Design. Empuk, tebal dan selesa untuk seisi keluarga.',
       tag: 'Paling Lariss!!',
-      link: '/collections/tilam-toto',
+      link: '/products/tilam-toto-asian-polyester-fibre',
       imageUrl: '/images/products/tilam-toto-queen.jpg',
+    },
+    {
+      title: 'Tilam & Bantal Kekabu Asli Tradisi',
+      subtitle: '100% Isian kekabu asli tradisi dengan jahitan tufted butang yang sejuk, padat dan melegakan otot belakang.',
+      tag: '100% Kekabu Asli',
+      link: '/products/tilam-kekabu-asli-tradisi',
+      imageUrl: '/images/products/tilam-kekabu-asli.jpg',
     },
     {
       title: 'Tilam Lipat 3 & Bujang Asrama',
@@ -23,13 +30,6 @@ export function CategoryGrid() {
       tag: 'Jimat Ruang & Asrama',
       link: '/collections/tilam-lipat',
       imageUrl: '/images/products/tilam-lipat-bujang.jpg',
-    },
-    {
-      title: 'Bantal Tidur Gebu & Bantal Peluk',
-      subtitle: 'Isian Asian Polyester Fibre yang gebu, lembut dan tidak mudah kempis dari Unit Bantal & Tilam KAMAAR Beddings.',
-      tag: 'Isian Fiber Berkualiti',
-      link: '/collections/bantal',
-      imageUrl: '/images/products/bantal-gebu-asian-fibre.jpg',
     },
     {
       title: 'Jualan Gudang & Pakej Borong Asrama',
@@ -42,28 +42,40 @@ export function CategoryGrid() {
 
   const supportingCategories = [
     {
-      name: 'Set Comforter Tebal Quilting',
+      name: 'Bantal Tidur & Bantal Peluk',
+      description: 'Isian Asian Fibre gebu padat',
+      link: '/collections/bantal',
+      imageUrl: '/images/products/bantal-gebu-asian-fibre.jpg',
+    },
+    {
+      name: 'Comforter & Selimut Patchwork',
       description: 'Jahitan quilting kemas & rapi',
       link: '/collections/cadang-comforter',
-      imageUrl: '/images/hero/hero-tilam-toto-lifestyle.jpg',
+      imageUrl: '/images/products/selimut-patchwork.jpg',
     },
     {
-      name: 'Sarung Tilam Toto Berzip',
-      description: 'Kain kapas sejuk mudah dibasuh',
-      link: '/collections/cadang-comforter',
-      imageUrl: '/images/products/tilam-toto-queen.jpg',
+      name: 'Set Tilam Bayi Gebu (4-in-1)',
+      description: 'Tilam, bantal lekuk & bolster comel',
+      link: '/products/set-tilam-bayi-gebu',
+      imageUrl: '/images/products/set-tilam-bayi.jpg',
     },
     {
-      name: 'Pakej 10 Set Lengkap Asrama',
-      description: 'Tilam, bantal & cadar sedondon',
-      link: '/collections/borong-gudang',
-      imageUrl: '/images/products/bantal-peluk-roll-pack.jpg',
+      name: 'Sarung Kusyen Sofa Eksklusif',
+      description: 'Rekaan mewah & tema Aidilfitri',
+      link: '/products/set-sarung-kusyen-sofa-eksklusif',
+      imageUrl: '/images/products/kusyen-sofa-eksklusif.jpg',
     },
     {
-      name: 'Profil Syarikat & 4 Unit Kilang',
+      name: 'Profil Kilang & 4 Unit Operasi',
       description: 'Tunas Sinar Jaya Enterprise',
       link: '/profil',
       imageUrl: '/images/company/kilang-tekstil-jahitan.jpg',
+    },
+    {
+      name: 'Tempahan Pukal (OEM) & Kerajaan',
+      description: 'Pengilangan jenama sendiri & tender',
+      link: '/business',
+      imageUrl: '/images/company/oem-tekstil-pukal.jpg',
     },
   ]
 
@@ -113,7 +125,7 @@ export function CategoryGrid() {
                   {type.subtitle}
                 </p>
                 <div className="pt-2 flex items-center space-x-2 text-xs font-bold text-gold uppercase tracking-wider">
-                  <span>Explore Series</span>
+                  <span>Lihat Produk</span>
                   <ArrowRight className="w-4 h-4 transition-transform group-hover:translate-x-1" />
                 </div>
               </div>
@@ -124,19 +136,24 @@ export function CategoryGrid() {
         {/* Supporting Categories Strip */}
         <div className="pt-6 border-t border-borderLight">
           <div className="flex items-center justify-between mb-6">
-            <h4 className="font-serif text-xl sm:text-2xl font-bold text-forest">
-              Complete Your Bedroom Sanctuary
-            </h4>
+            <div>
+              <h4 className="font-serif text-xl sm:text-2xl font-bold text-forest">
+                Koleksi Lengkap Jahitan Tekstil Kilang
+              </h4>
+              <p className="text-xs sm:text-sm text-charcoal-muted mt-0.5">
+                Pilihan bantal gebu, selimut patchwork, set bayi, sarung kusyen &amp; tempahan pukal
+              </p>
+            </div>
             <Link
-              href="/collections/mattress"
+              href="/collections/tilam-toto"
               className="text-xs font-semibold text-gold-dark hover:text-forest flex items-center space-x-1 transition-colors"
             >
-              <span>View All Accessories</span>
+              <span>Semua Produk</span>
               <ArrowRight className="w-3.5 h-3.5" />
             </Link>
           </div>
 
-          <div className="grid grid-cols-2 lg:grid-cols-4 gap-4 sm:gap-6">
+          <div className="grid grid-cols-2 sm:grid-cols-3 lg:grid-cols-6 gap-3 sm:gap-4">
             {supportingCategories.map((cat, idx) => (
               <Link
                 key={idx}
@@ -154,11 +171,11 @@ export function CategoryGrid() {
                   />
                   <div className="absolute inset-0 bg-gradient-to-t from-forest-dark/80 via-transparent to-transparent" />
                 </div>
-                <div className="p-3.5 sm:p-4 bg-warmwhite">
-                  <h5 className="font-serif text-sm sm:text-base font-bold text-charcoal group-hover:text-forest transition-colors truncate">
+                <div className="p-3 bg-warmwhite">
+                  <h5 className="font-serif text-xs sm:text-sm font-bold text-charcoal group-hover:text-forest transition-colors truncate">
                     {cat.name}
                   </h5>
-                  <p className="text-[11px] text-charcoal-muted mt-0.5 truncate">
+                  <p className="text-[10px] text-charcoal-muted mt-0.5 truncate">
                     {cat.description}
                   </p>
                 </div>
