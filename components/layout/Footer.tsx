@@ -17,6 +17,7 @@ import {
   ChevronRight,
   Shield,
   Award,
+  ArrowUpRight,
 } from 'lucide-react'
 import { useLanguage } from '@/lib/i18n/LanguageContext'
 import { KamaarLogo } from '@/components/brand/KamaarLogo'
@@ -39,39 +40,39 @@ export function Footer() {
   const reassuranceItems = [
     {
       icon: Sparkles,
-      badge: isBM ? 'Terus Dari Kilang' : 'Factory Direct',
-      badgeClass: 'bg-emerald-500/20 text-emerald-300 border-emerald-500/30',
-      title: isBM ? 'Harga Kilang Tanpa Orang Tengah' : 'Factory Direct Pricing',
-      subtitle: isBM ? 'Pengeluaran sendiri di Tasek Gelugor, Pulau Pinang' : 'In-house production in Tasek Gelugor',
+      badge: isBM ? 'Terus Kilang' : 'Direct',
+      title: isBM ? 'Harga Terus Kilang' : 'Factory Direct Price',
+      subtitle: isBM
+        ? 'Tanpa orang tengah, pengeluaran sendiri di Tasek Gelugor, Pulau Pinang.'
+        : 'Zero middlemen, produced directly in Tasek Gelugor.',
       href: '/profil',
-      iconGradient: 'from-amber-400/25 via-emerald-400/15 to-transparent text-gold-light border-gold/30',
     },
     {
       icon: Award,
       badge: isBM ? 'Paling Lariss' : 'Best Seller',
-      badgeClass: 'bg-amber-500/20 text-amber-300 border-amber-500/30',
       title: isBM ? 'Asian Polyester Fibre' : 'Asian Polyester Fibre',
-      subtitle: isBM ? 'Isian serat lembut, empuk dan tahan leper' : 'High-density resilient soft fibre fill',
+      subtitle: isBM
+        ? 'Isian serat lembut berkualiti, empuk, gebu dan tahan leper jangka panjang.'
+        : 'High-density resilient soft fibre fill, plush and durable.',
       href: '/collections/tilam-toto',
-      iconGradient: 'from-amber-400/25 via-amber-600/15 to-transparent text-amber-300 border-amber-400/30',
     },
     {
       icon: ShieldCheck,
-      badge: isBM ? 'Mutu Terjamin' : 'Quality Assured',
-      badgeClass: 'bg-blue-500/20 text-blue-300 border-blue-500/30',
-      title: isBM ? 'Kualiti Jahitan & QC Ketat' : 'Strict Sewing & QC Standards',
-      subtitle: isBM ? 'Jahitan quilting kemas dan kain tahan lasak' : 'Durable quilting stitching and tough fabrics',
+      badge: isBM ? 'Mutu Terjamin' : 'QC Assured',
+      title: isBM ? 'Kualiti Jahitan & QC' : 'Strict Sewing & QC',
+      subtitle: isBM
+        ? 'Jahitan quilting kemas, kain berkualiti tinggi dan kawalan mutu teliti.'
+        : 'Durable quilting stitching and strict quality standards.',
       href: '/profil#tentang-kami',
-      iconGradient: 'from-blue-400/25 via-indigo-600/15 to-transparent text-sky-300 border-blue-400/30',
     },
     {
       icon: Truck,
       badge: isBM ? 'Pantas & Jimat' : 'Fast Shipping',
-      badgeClass: 'bg-teal-500/20 text-teal-300 border-teal-500/30',
-      title: isBM ? 'Penghantaran & Pakej Borong' : 'Bulk Delivery & Retail Shipping',
-      subtitle: isBM ? 'Sedia kirim ke seluruh Malaysia untuk asrama & rumah' : 'Shipping available nationwide for hostels & homes',
+      title: isBM ? 'Penghantaran & Borong' : 'Fast Delivery & Bulk',
+      subtitle: isBM
+        ? 'Sedia kirim ke seluruh Malaysia untuk kediaman, asrama & pembekal.'
+        : 'Nationwide delivery for homes, hostels & wholesalers.',
       href: '/collections/borong-gudang',
-      iconGradient: 'from-teal-400/25 via-emerald-600/15 to-transparent text-teal-300 border-teal-400/30',
     },
   ]
 
@@ -79,59 +80,63 @@ export function Footer() {
     <footer className="bg-forest-dark text-warmwhite pt-12 sm:pt-16 pb-8 border-t border-borderLight/20 font-sans">
       <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
         {/* Reassurance Header */}
-        <div className="flex flex-col sm:flex-row sm:items-end justify-between gap-2 mb-6 pb-3 border-b border-warmwhite/10">
-          <div>
-            <div className="flex items-center space-x-2">
-              <span className="w-2 h-2 rounded-full bg-gold animate-pulse" />
-              <span className="text-[11px] font-bold uppercase tracking-widest text-gold font-sans">
-                {isBM ? 'Jaminan Kualiti KAMAAR' : 'KAMAAR Assurance & Guarantee'}
-              </span>
+        <div className="flex flex-col md:flex-row md:items-end justify-between gap-4 mb-8 pb-5 border-b border-white/10">
+          <div className="space-y-1.5">
+            <div className="inline-flex items-center gap-2 px-3 py-1 rounded-full bg-gold/10 border border-gold/25 text-gold text-[10px] font-bold tracking-widest uppercase">
+              <span className="w-1.5 h-1.5 rounded-full bg-gold animate-pulse" />
+              <span>{isBM ? 'Jaminan Kualiti KAMAAR' : 'KAMAAR Assurance & Guarantee'}</span>
             </div>
-            <h3 className="font-sans text-lg sm:text-2xl font-bold text-white mt-1 tracking-tight">
+            <h3 className="font-serif text-2xl sm:text-3xl font-bold text-white tracking-tight">
               {isBM ? 'Ketenangan Tidur Sepenuhnya Untuk Anda' : 'Sleep With Total Peace of Mind'}
             </h3>
           </div>
-          <span className="text-xs text-slate-300/80 font-sans sm:text-right">
-            {isBM ? 'Dipercayai oleh 15,000+ Keluarga Malaysia' : 'Trusted by 15,000+ Malaysian Homes'}
-          </span>
+          <div className="flex items-center gap-2 text-xs text-slate-300/90 bg-white/5 px-3.5 py-1.5 rounded-full border border-white/10 self-start md:self-auto">
+            <CheckCircle2 className="w-3.5 h-3.5 text-gold flex-shrink-0" />
+            <span>{isBM ? 'Dipercayai oleh 15,000+ Keluarga Malaysia' : 'Trusted by 15,000+ Malaysian Homes'}</span>
+          </div>
         </div>
 
-        {/* Reassurance Grid - High Legibility Luxury Cards */}
-        <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-4 gap-3.5 sm:gap-4 lg:gap-5 pb-12 sm:pb-14 border-b border-warmwhite/10">
+        {/* Reassurance Grid - Simplified Modern Luxury Cards */}
+        <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-4 gap-4 lg:gap-5 pb-12 sm:pb-14 border-b border-white/10">
           {reassuranceItems.map((item, idx) => {
             const Icon = item.icon
             return (
               <Link
                 key={idx}
                 href={item.href}
-                className="group relative flex items-start space-x-3.5 p-4 rounded-2xl bg-white/[0.04] hover:bg-white/[0.08] active:bg-white/[0.1] border border-white/10 hover:border-gold/50 transition-all duration-200 shadow-sm"
+                className="group relative flex flex-col justify-between p-5 sm:p-6 rounded-2xl bg-white/[0.03] hover:bg-white/[0.08] border border-white/10 hover:border-gold/50 transition-all duration-300 hover:-translate-y-1 shadow-xs hover:shadow-xl hover:shadow-black/25 overflow-hidden"
               >
-                {/* Icon Container with luxury glow */}
-                <div
-                  className={`w-12 h-12 rounded-xl bg-gradient-to-br ${item.iconGradient} flex items-center justify-center flex-shrink-0 border shadow-inner group-hover:scale-105 transition-transform duration-200`}
-                >
-                  <Icon className="w-6 h-6" />
-                </div>
+                {/* Subtle top golden accent bar on hover */}
+                <div className="absolute top-0 left-0 right-0 h-1 bg-gradient-to-r from-transparent via-gold/50 to-transparent opacity-0 group-hover:opacity-100 transition-opacity duration-300" />
+                <div className="absolute -top-10 -right-10 w-24 h-24 bg-gold/5 rounded-full blur-xl group-hover:bg-gold/15 transition-all duration-300 pointer-events-none" />
 
-                {/* Content with high contrast readable typography */}
-                <div className="flex-1 min-w-0">
-                  <div className="flex items-center justify-between gap-1 mb-1">
-                    <span className="font-sans font-bold text-sm sm:text-base text-white tracking-tight group-hover:text-gold transition-colors leading-snug">
-                      {item.title}
-                    </span>
-                    <span
-                      className={`inline-flex items-center px-1.5 py-0.5 rounded-md text-[10px] font-bold uppercase tracking-wider border flex-shrink-0 ${item.badgeClass}`}
-                    >
+                <div>
+                  {/* Top Row: Icon + Badge */}
+                  <div className="flex items-center justify-between gap-2 mb-4">
+                    <div className="w-12 h-12 rounded-xl bg-gold/10 border border-gold/25 flex items-center justify-center text-gold group-hover:scale-105 group-hover:bg-gold group-hover:text-forest-dark transition-all duration-300 shadow-xs flex-shrink-0">
+                      <Icon className="w-5 h-5 transition-transform" />
+                    </div>
+                    <span className="inline-flex items-center px-2.5 py-0.5 rounded-full text-[10px] font-bold uppercase tracking-wider bg-white/5 text-gold-light border border-white/10 group-hover:border-gold/30 group-hover:bg-gold/10 transition-colors">
                       {item.badge}
                     </span>
                   </div>
-                  <p className="font-sans text-xs text-slate-300 leading-relaxed font-normal">
+
+                  {/* Title */}
+                  <h4 className="font-serif text-base sm:text-lg font-bold text-white group-hover:text-gold transition-colors tracking-tight mb-2 leading-snug">
+                    {item.title}
+                  </h4>
+
+                  {/* Subtitle */}
+                  <p className="font-sans text-xs text-slate-300/85 leading-relaxed font-normal">
                     {item.subtitle}
                   </p>
                 </div>
 
-                {/* Mobile tap arrow indicator */}
-                <ChevronRight className="w-4 h-4 text-warmwhite/30 group-hover:text-gold group-hover:translate-x-0.5 transition-all flex-shrink-0 self-center sm:hidden" />
+                {/* Bottom Interactive Footnote */}
+                <div className="mt-5 pt-3.5 border-t border-white/[0.06] flex items-center justify-between text-[11px] font-medium text-slate-400 group-hover:text-gold transition-colors">
+                  <span>{isBM ? 'Ketahui Lebih Lanjut' : 'Learn More'}</span>
+                  <ArrowUpRight className="w-3.5 h-3.5 group-hover:translate-x-0.5 group-hover:-translate-y-0.5 transition-transform text-gold/70 group-hover:text-gold" />
+                </div>
               </Link>
             )
           })}
