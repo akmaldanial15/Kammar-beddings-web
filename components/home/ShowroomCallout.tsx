@@ -40,7 +40,7 @@ export function ShowroomCallout({ showrooms }: ShowroomCalloutProps) {
               href="https://wa.me/60194786991"
               target="_blank"
               rel="noopener noreferrer"
-              className="px-5 py-3 bg-emerald-700 hover:bg-emerald-800 text-white text-xs font-bold uppercase tracking-wider rounded-lg shadow-subtle flex items-center space-x-2 transition-colors"
+              className="px-5 py-3 bg-[#25D366] hover:bg-[#20ba59] text-white text-xs font-bold uppercase tracking-wider rounded-lg shadow-subtle flex items-center space-x-2 transition-colors"
             >
               <span>WhatsApp 019-478 6991</span>
             </a>

@@ -335,7 +335,7 @@ export function Header() {
           </div>
 
           {/* TIER 2: DEDICATED CATEGORY NAVIGATION ROW (ORGANIZED, BALANCED & CENTERED) */}
-          <div className="bg-[#FCFAF7]/98 backdrop-blur-md border-b border-[#E8E1D5] shadow-[0_2px_12px_rgba(13,40,24,0.03)]">
+          <div className="bg-[#FCFAF7]/98 backdrop-blur-md border-b border-[#E8E1D5] shadow-[0_2px_12px_rgba(19,50,91,0.03)]">
             <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 relative">
               <nav className="flex items-center justify-center gap-1.5 xl:gap-2.5 py-2 text-[13px] font-medium text-charcoal">
                 
@@ -375,7 +375,7 @@ export function Header() {
                       onMouseEnter={() => handleKeepMega('toto')}
                       onMouseLeave={handleCloseMega}
                     >
-                      <div className="w-[820px] bg-warmwhite rounded-2xl shadow-[0_25px_50px_-12px_rgba(13,40,24,0.18)] border border-borderLight p-5 grid grid-cols-12 gap-5 animate-[fadeIn_0.15s_ease-out]">
+                      <div className="w-[820px] bg-warmwhite rounded-2xl shadow-[0_25px_50px_-12px_rgba(19,50,91,0.18)] border border-borderLight p-5 grid grid-cols-12 gap-5 animate-[fadeIn_0.15s_ease-out]">
                         {/* Col 1: Pilihan Saiz & Corak (4 cols) */}
                         <div className="col-span-4 border-r border-borderLight/80 pr-3">
                           <h4 className="text-[11px] font-bold uppercase tracking-wider text-gold-dark pb-2 border-b border-borderLight mb-2.5 flex items-center justify-between">
@@ -511,10 +511,10 @@ export function Header() {
                     }`}
                   >
                     <Award className={`w-3.5 h-3.5 transition-transform group-hover:scale-110 ${
-                      pathname.startsWith('/collections/tilam-kekabu') ? 'text-gold' : 'text-emerald-600'
+                      pathname.startsWith('/collections/tilam-kekabu') ? 'text-gold' : 'text-forest'
                     }`} />
                     <span>Tilam & Kekabu</span>
-                    <span className="px-1.5 py-0.2 rounded-full text-[9px] font-black uppercase tracking-wider bg-emerald-500/15 text-emerald-800 border border-emerald-200">
+                    <span className="px-1.5 py-0.2 rounded-full text-[9px] font-black uppercase tracking-wider bg-blue-500/15 text-blue-800 border border-blue-200">
                       100% ASLI
                     </span>
                     <ChevronDown
@@ -531,7 +531,7 @@ export function Header() {
                       onMouseEnter={() => handleKeepMega('kekabu')}
                       onMouseLeave={handleCloseMega}
                     >
-                      <div className="w-[760px] bg-warmwhite rounded-2xl shadow-[0_25px_50px_-12px_rgba(13,40,24,0.18)] border border-borderLight p-5 grid grid-cols-12 gap-5 animate-[fadeIn_0.15s_ease-out]">
+                      <div className="w-[760px] bg-warmwhite rounded-2xl shadow-[0_25px_50px_-12px_rgba(19,50,91,0.18)] border border-borderLight p-5 grid grid-cols-12 gap-5 animate-[fadeIn_0.15s_ease-out]">
                         <div className="col-span-7">
                           <h4 className="text-[11px] font-bold uppercase tracking-wider text-gold-dark pb-2 border-b border-borderLight mb-2.5">
                             Koleksi Kekabu Asli Tradisi Tempatan
@@ -571,7 +571,7 @@ export function Header() {
                             </Link>
                           </div>
                           <div className="mt-3 pt-2.5 border-t border-borderLight text-[11px] text-forest flex items-center gap-1.5 font-medium">
-                            <ShieldCheck className="w-4 h-4 text-emerald-600" />
+                            <ShieldCheck className="w-4 h-4 text-forest" />
                             <span>100% serat kekabu semulajadi, bukan habuk sintetik.</span>
                           </div>
                         </div>
@@ -585,7 +585,7 @@ export function Header() {
                               className="object-cover"
                               sizes="240px"
                             />
-                            <div className="absolute top-2 left-2 bg-emerald-800 text-warmwhite text-[9px] font-bold px-2 py-0.5 rounded shadow">
+                            <div className="absolute top-2 left-2 bg-forest text-warmwhite text-[9px] font-bold px-2 py-0.5 rounded shadow">
                               100% KEKABU POKOK
                             </div>
                           </div>
@@ -647,7 +647,7 @@ export function Header() {
                       onMouseEnter={() => handleKeepMega('lipat')}
                       onMouseLeave={handleCloseMega}
                     >
-                      <div className="w-[740px] bg-warmwhite rounded-2xl shadow-[0_25px_50px_-12px_rgba(13,40,24,0.18)] border border-borderLight p-5 grid grid-cols-12 gap-5 animate-[fadeIn_0.15s_ease-out]">
+                      <div className="w-[740px] bg-warmwhite rounded-2xl shadow-[0_25px_50px_-12px_rgba(19,50,91,0.18)] border border-borderLight p-5 grid grid-cols-12 gap-5 animate-[fadeIn_0.15s_ease-out]">
                         <div className="col-span-7">
                           <h4 className="text-[11px] font-bold uppercase tracking-wider text-gold-dark pb-2 border-b border-borderLight mb-2.5">
                             Pilihan Tilam Lipat & Bujang Asrama
@@ -748,7 +748,7 @@ export function Header() {
                       onMouseEnter={() => handleKeepMega('bantal-cadar')}
                       onMouseLeave={handleCloseMega}
                     >
-                      <div className="w-[500px] bg-warmwhite rounded-2xl shadow-[0_20px_45px_-10px_rgba(13,40,24,0.18)] border border-borderLight p-5 grid grid-cols-2 gap-5 animate-[fadeIn_0.15s_ease-out]">
+                      <div className="w-[500px] bg-warmwhite rounded-2xl shadow-[0_20px_45px_-10px_rgba(19,50,91,0.18)] border border-borderLight p-5 grid grid-cols-2 gap-5 animate-[fadeIn_0.15s_ease-out]">
                         {/* Col 1: Bantal */}
                         <div className="border-r border-borderLight/80 pr-4">
                           <h4 className="text-[11px] font-bold uppercase tracking-wider text-gold-dark pb-1.5 border-b border-borderLight mb-2.5">
@@ -872,7 +872,7 @@ export function Header() {
                       onMouseEnter={() => handleKeepMega('khas')}
                       onMouseLeave={handleCloseMega}
                     >
-                      <div className="w-[620px] bg-warmwhite rounded-2xl shadow-[0_20px_45px_-10px_rgba(13,40,24,0.18)] border border-borderLight p-4 animate-[fadeIn_0.15s_ease-out]">
+                      <div className="w-[620px] bg-warmwhite rounded-2xl shadow-[0_20px_45px_-10px_rgba(19,50,91,0.18)] border border-borderLight p-4 animate-[fadeIn_0.15s_ease-out]">
                         <h4 className="text-[11px] font-bold uppercase tracking-wider text-gold-dark pb-1.5 border-b border-borderLight mb-3">
                           Koleksi Jahitan Khas & Eksklusif Kilang
                         </h4>
@@ -975,7 +975,7 @@ export function Header() {
                       onMouseEnter={() => handleKeepMega('borong')}
                       onMouseLeave={handleCloseMega}
                     >
-                      <div className="w-[660px] bg-warmwhite rounded-2xl shadow-[0_25px_50px_-12px_rgba(13,40,24,0.22)] border border-amber-200 p-5 grid grid-cols-12 gap-5 animate-[fadeIn_0.15s_ease-out]">
+                      <div className="w-[660px] bg-warmwhite rounded-2xl shadow-[0_25px_50px_-12px_rgba(19,50,91,0.22)] border border-amber-200 p-5 grid grid-cols-12 gap-5 animate-[fadeIn_0.15s_ease-out]">
                         <div className="col-span-6 border-r border-borderLight pr-4">
                           <div className="inline-flex items-center gap-1.5 text-[10px] font-black uppercase tracking-wider text-amber-800 bg-amber-100 px-2 py-0.5 rounded mb-2">
                             <Flame className="w-3 h-3 text-amber-600" />
@@ -998,7 +998,7 @@ export function Header() {
                             </div>
                             <div className="flex items-center justify-between p-1.5 rounded bg-amber-50/60 border border-amber-100">
                               <span className="font-medium text-charcoal">100+ Unit (Tender Pukal)</span>
-                              <span className="font-bold text-emerald-800">Harga Kontrak Kilang</span>
+                              <span className="font-bold text-forest">Harga Kontrak Kilang</span>
                             </div>
                           </div>
                         </div>
@@ -1062,7 +1062,7 @@ export function Header() {
                         : 'text-forest/80'
                     }`} />
                     <span>Kilang & OEM</span>
-                    <span className="text-[10px] font-semibold text-emerald-800 bg-emerald-100/80 px-1.5 py-0.2 rounded">
+                    <span className="text-[10px] font-semibold text-forest bg-forest/10 border border-forest/20 px-1.5 py-0.2 rounded">
                       4 Unit
                     </span>
                     <ChevronDown
@@ -1079,7 +1079,7 @@ export function Header() {
                       onMouseEnter={() => handleKeepMega('kilang')}
                       onMouseLeave={handleCloseMega}
                     >
-                      <div className="w-[360px] bg-warmwhite rounded-2xl shadow-[0_20px_45px_-10px_rgba(13,40,24,0.18)] border border-borderLight p-4 animate-[fadeIn_0.15s_ease-out]">
+                      <div className="w-[360px] bg-warmwhite rounded-2xl shadow-[0_20px_45px_-10px_rgba(19,50,91,0.18)] border border-borderLight p-4 animate-[fadeIn_0.15s_ease-out]">
                         <h4 className="text-[11px] font-bold uppercase tracking-wider text-gold-dark pb-1.5 border-b border-borderLight mb-2.5">
                           Tunas Sinar Jaya Enterprise
                         </h4>
@@ -1090,7 +1090,7 @@ export function Header() {
                             className="block p-2 rounded-lg hover:bg-cream border border-transparent hover:border-borderLight transition-all group"
                           >
                             <div className="flex items-center gap-2">
-                              <ShieldCheck className="w-4 h-4 text-emerald-600" />
+                              <ShieldCheck className="w-4 h-4 text-forest" />
                               <div className="font-semibold text-xs text-charcoal group-hover:text-forest">Profil Syarikat & 4 Unit Kilang</div>
                             </div>
                             <div className="text-[11px] text-charcoal-muted mt-0.5 pl-6">
@@ -1117,10 +1117,10 @@ export function Header() {
                               href="https://wa.me/60194786991?text=Salam%20KAMAAR%20Beddings,%20saya%20nak%20tanya%20produk%20kilang"
                               target="_blank"
                               rel="noopener noreferrer"
-                              className="w-full flex items-center justify-between p-2 rounded-lg bg-emerald-50 hover:bg-emerald-100 text-emerald-900 border border-emerald-200/80 transition-colors"
+                              className="w-full flex items-center justify-between p-2 rounded-lg bg-blue-50 hover:bg-blue-100 text-forest border border-blue-200/80 transition-colors"
                             >
                               <div className="flex items-center gap-2 text-xs font-semibold">
-                                <span className="w-2 h-2 rounded-full bg-emerald-500 animate-pulse" />
+                                <span className="w-2 h-2 rounded-full bg-forest animate-pulse" />
                                 <span>Hotline Kilang (WhatsApp)</span>
                               </div>
                               <span className="text-xs font-mono font-bold">019-478 6991</span>
@@ -1560,9 +1560,9 @@ export function Header() {
                 href="https://wa.me/60194786991?text=Salam%20Tunas%20Sinar%20Jaya%20Kamaar%20Beddings,%20saya%20ingin%20bertanya%20tentang%20produk%20dan%20borong."
                 target="_blank"
                 rel="noopener noreferrer"
-                className="w-full py-2.5 px-4 bg-gradient-to-r from-emerald-600 to-teal-700 hover:from-emerald-700 hover:to-teal-800 text-white text-xs font-bold rounded-xl flex items-center justify-center space-x-2 transition-all shadow-sm"
+                className="w-full py-2.5 px-4 bg-gradient-to-r from-forest to-forest-light hover:from-forest-dark hover:to-forest text-white text-xs font-bold rounded-xl flex items-center justify-center space-x-2 transition-all shadow-sm"
               >
-                <Phone className="w-3.5 h-3.5 text-emerald-200" />
+                <Phone className="w-3.5 h-3.5 text-sky-200" />
                 <span>{locale === 'bm' ? 'WhatsApp Kilang (019-478 6991)' : 'Official WhatsApp (019-478 6991)'}</span>
               </a>
             </div>

@@ -76,7 +76,7 @@ const orgStructure = {
       dept: 'Bahagian Pentadbiran',
       head: 'HEZWAN MD RASHID',
       scopes: ['Pengurusan Pejabat', 'Kewangan & Perakaunan', 'Sumber Manusia (HR)'],
-      color: 'bg-emerald-50 text-emerald-800 border-emerald-200',
+      color: 'bg-blue-50 text-blue-800 border-blue-200',
     },
     {
       dept: 'Bahagian Pembelian',
@@ -113,8 +113,8 @@ const companyPillars = [
     badge: '100% Kawalan QC',
     highlight: 'Bahan Premium & Tahan Lasak',
     icon: ShieldCheck,
-    iconBg: 'bg-emerald-50 text-emerald-700 border-emerald-200/80',
-    accentGradient: 'from-emerald-600 via-teal-500 to-emerald-700',
+    iconBg: 'bg-blue-50 text-blue-700 border-blue-200/80',
+    accentGradient: 'from-blue-600 via-sky-500 to-blue-700',
   },
   {
     num: '02',
@@ -124,7 +124,7 @@ const companyPillars = [
     highlight: 'Kapasiti Harian Tinggi',
     icon: Factory,
     iconBg: 'bg-forest/10 text-forest border-forest/20',
-    accentGradient: 'from-[#0D2818] via-emerald-800 to-[#163824]',
+    accentGradient: 'from-[#0B1E36] via-[#1E4E8C] to-[#13325B]',
   },
   {
     num: '03',
@@ -152,7 +152,7 @@ export default function ProfilPage() {
   return (
     <div className="min-h-screen bg-[#FDFBF7] text-[#2D2A26] font-sans antialiased selection:bg-gold/20 selection:text-forest">
       {/* Hero Section */}
-      <section className="relative bg-gradient-to-br from-[#0D2818] via-[#163824] to-[#0D2818] text-white pt-16 sm:pt-20 pb-24 sm:pb-32 overflow-hidden">
+      <section className="relative bg-gradient-to-br from-[#0B1E36] via-[#13325B] to-[#0A1A2F] text-white pt-16 sm:pt-20 pb-24 sm:pb-32 overflow-hidden">
         <div className="absolute inset-0 opacity-10 bg-[radial-gradient(#D4AF37_1px,transparent_1px)] [background-size:24px_24px]" />
         
         <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 relative z-10">
@@ -164,7 +164,7 @@ export default function ProfilPage() {
               </div>
 
               <div className="space-y-2">
-                <span className="text-sm font-bold tracking-[0.2em] uppercase text-emerald-300 block">
+                <span className="text-sm font-bold tracking-[0.2em] uppercase text-sky-300 block">
                   TUNAS SINAR JAYA ENTERPRISE
                 </span>
                 <h1 className="font-serif text-3xl sm:text-5xl font-bold tracking-tight text-warmwhite leading-tight">
@@ -194,7 +194,7 @@ export default function ProfilPage() {
                 </a>
                 <Link
                   href="/collections/tilam-toto"
-                  className="px-6 py-3 rounded-xl bg-emerald-700/80 hover:bg-emerald-700 text-warmwhite font-bold text-xs uppercase tracking-wider transition-all flex items-center gap-1.5"
+                  className="px-6 py-3 rounded-xl bg-forest hover:bg-forest-light text-warmwhite font-bold text-xs uppercase tracking-wider transition-all flex items-center gap-1.5"
                 >
                   <ShoppingBag className="w-4 h-4" />
                   <span>Lihat Produk Kilang</span>
@@ -252,7 +252,7 @@ export default function ProfilPage() {
             return (
               <div
                 key={p.num}
-                className="group relative bg-white/95 backdrop-blur-md rounded-2xl p-6 sm:p-7 border border-[#E8E2D8]/90 hover:border-gold/60 shadow-[0_12px_30px_-8px_rgba(13,40,24,0.1),0_4px_6px_-2px_rgba(13,40,24,0.03)] hover:shadow-[0_22px_45px_-10px_rgba(212,175,55,0.25)] hover:-translate-y-2 transition-all duration-300 flex flex-col justify-between overflow-hidden"
+                className="group relative bg-white/95 backdrop-blur-md rounded-2xl p-6 sm:p-7 border border-[#E8E2D8]/90 hover:border-gold/60 shadow-[0_12px_30px_-8px_rgba(19,50,91,0.1),0_4px_6px_-2px_rgba(19,50,91,0.03)] hover:shadow-[0_22px_45px_-10px_rgba(212,175,55,0.25)] hover:-translate-y-2 transition-all duration-300 flex flex-col justify-between overflow-hidden"
               >
                 {/* Top Glowing Gradient Accent Bar */}
                 <div
@@ -297,7 +297,7 @@ export default function ProfilPage() {
                 {/* Bottom Highlight Feature / Trust Footnote */}
                 <div className="mt-5 pt-3.5 border-t border-[#F2ECE1] flex items-center justify-between text-[11px] font-semibold text-forest/80 group-hover:text-forest transition-colors">
                   <span className="flex items-center gap-1.5">
-                    <CheckCircle2 className="w-3.5 h-3.5 text-emerald-600 group-hover:scale-110 transition-transform flex-shrink-0" />
+                    <CheckCircle2 className="w-3.5 h-3.5 text-forest group-hover:scale-110 transition-transform flex-shrink-0" />
                     <span>{p.highlight}</span>
                   </span>
                   <ArrowUpRight className="w-3.5 h-3.5 text-gold opacity-60 group-hover:opacity-100 group-hover:translate-x-0.5 group-hover:-translate-y-0.5 transition-all flex-shrink-0" />
@@ -427,7 +427,7 @@ export default function ProfilPage() {
       </section>
 
       {/* Visi & Misi Section */}
-      <section className="py-16 sm:py-20 bg-[#0D2818] text-white border-y border-gold/20 relative overflow-hidden">
+      <section className="py-16 sm:py-20 bg-gradient-to-br from-[#0B1E36] via-[#13325B] to-[#0A1A2F] text-white border-y border-gold/20 relative overflow-hidden">
         <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 relative z-10">
           <div className="grid grid-cols-1 lg:grid-cols-12 gap-12 items-center">
             {/* Left: Mission & Vision */}
@@ -783,8 +783,8 @@ export default function ProfilPage() {
               {/* Payment & Order CTA */}
               <div className="lg:col-span-7 bg-white rounded-2xl p-6 sm:p-8 border border-[#E8E2D8] flex flex-col justify-between space-y-6">
                 <div className="space-y-4">
-                  <div className="inline-flex items-center space-x-2 px-3 py-1 rounded-full bg-emerald-50 text-emerald-800 border border-emerald-200 text-xs font-semibold">
-                    <ShieldCheck className="w-4 h-4 text-emerald-600" />
+                  <div className="inline-flex items-center space-x-2 px-3 py-1 rounded-full bg-blue-50 text-blue-800 border border-blue-200 text-xs font-semibold">
+                    <ShieldCheck className="w-4 h-4 text-forest" />
                     <span>Kaedah Pembayaran Sahaja: FPX &amp; Touch &apos;n Go</span>
                   </div>
 
@@ -842,7 +842,7 @@ export default function ProfilPage() {
                     href="https://wa.me/60194786991?text=Salam%20Tunas%20Sinar%20Jaya%2C%20saya%20berminat%20dengan%20produk%20Kamaar%20Beddings"
                     target="_blank"
                     rel="noopener noreferrer"
-                    className="px-6 py-3.5 rounded-xl bg-emerald-700 hover:bg-emerald-800 text-white text-xs font-bold uppercase tracking-wider transition-all shadow-md inline-flex items-center gap-2"
+                    className="px-6 py-3.5 rounded-xl bg-[#25D366] hover:bg-[#20ba59] text-white text-xs font-bold uppercase tracking-wider transition-all shadow-md inline-flex items-center gap-2"
                   >
                     <span>WhatsApp Concierge (019-478 6991)</span>
                     <ExternalLink className="w-4 h-4" />

@@ -1401,6 +1401,278 @@
   ],
   "auditLogs": [
     {
+      "id": "aud-1791381762770-ujmz",
+      "actorEmail": "admin@kamaarbeddings.com",
+      "action": "website_config_updated",
+      "entityType": "website_config",
+      "entityId": "websiteConfig",
+      "details": {
+        "theme": {
+          "primaryColor": "#1E4E8C",
+          "primaryDarkColor": "#13325B",
+          "accentGoldColor": "#B49A58",
+          "backgroundColor": "#FFFFFF",
+          "creamColor": "#F4F7FB",
+          "textColor": "#0F172A",
+          "saleColor": "#991B1B",
+          "activePreset": "sapphire-gold"
+        },
+        "announcement": {
+          "enabled": true,
+          "leftBenefit": "Penghantaran Terus Semenanjung",
+          "centerText": "Jualan Gudang Terus Dari Kilang Tasek Gelugor • Kod Baucar",
+          "highlightCode": "KAMAAR10",
+          "url": "/collections/tilam-toto",
+          "rightGuarantee": "Kualiti Jahitan Terjamin",
+          "bgColor": "#13325B",
+          "textColor": "#FFFFFF"
+        },
+        "megaMenu": {
+          "enabled": true,
+          "columns": [
+            {
+              "id": "col-1",
+              "title": "Tilam Toto & Kekabu",
+              "titleBm": "Tilam Toto & Kekabu",
+              "items": [
+                {
+                  "id": "m-1",
+                  "label": "Tilam Toto Asian Fibre (Paling Lariss)",
+                  "labelBm": "Tilam Toto Asian Fibre (Paling Lariss)",
+                  "href": "/products/tilam-toto-asian-polyester-fibre"
+                },
+                {
+                  "id": "m-2",
+                  "label": "Tilam Kekabu Asli Tradisi",
+                  "labelBm": "Tilam Kekabu Asli Tradisi",
+                  "href": "/products/tilam-kekabu-asli-tradisi"
+                },
+                {
+                  "id": "m-3",
+                  "label": "Tilam Lipat 3 Berzip Boleh Cuci",
+                  "labelBm": "Tilam Lipat 3 Berzip Boleh Cuci",
+                  "href": "/products/tilam-lipat-3-berzip"
+                },
+                {
+                  "id": "m-4",
+                  "label": "Tilam Single 3 Kaki Asrama",
+                  "labelBm": "Tilam Single 3 Kaki Asrama",
+                  "href": "/products/tilam-single-3-kaki-asrama"
+                }
+              ]
+            },
+            {
+              "id": "col-2",
+              "title": "Bantal, Cadar & Bayi",
+              "titleBm": "Bantal, Cadar & Bayi",
+              "items": [
+                {
+                  "id": "m-5",
+                  "label": "Bantal Tidur Gebu Asian Fibre",
+                  "labelBm": "Bantal Tidur Gebu Asian Fibre",
+                  "href": "/products/bantal-tidur-gebu-asian-fibre"
+                },
+                {
+                  "id": "m-6",
+                  "label": "Bantal Peluk (Bolster) Gebu",
+                  "labelBm": "Bantal Peluk (Bolster) Gebu",
+                  "href": "/products/bantal-peluk-bolster-gebu"
+                },
+                {
+                  "id": "m-7",
+                  "label": "Set Comforter Tebal Quilting",
+                  "labelBm": "Set Comforter Tebal Quilting",
+                  "href": "/products/set-comforter-tebal-quilting"
+                },
+                {
+                  "id": "m-8",
+                  "label": "Selimut Patchwork Eksklusif",
+                  "labelBm": "Selimut Patchwork Eksklusif",
+                  "href": "/products/selimut-patchwork-eksklusif"
+                },
+                {
+                  "id": "m-9",
+                  "label": "Set Tilam Bayi Gebu (4-in-1)",
+                  "labelBm": "Set Tilam Bayi Gebu (4-in-1)",
+                  "href": "/products/set-tilam-bayi-gebu"
+                },
+                {
+                  "id": "m-10",
+                  "label": "Sarung Kusyen Sofa & Aidilfitri",
+                  "labelBm": "Sarung Kusyen Sofa & Aidilfitri",
+                  "href": "/products/set-sarung-kusyen-sofa-eksklusif"
+                }
+              ]
+            },
+            {
+              "id": "col-3",
+              "title": "Kilang, Borong & OEM",
+              "titleBm": "Kilang, Borong & OEM",
+              "items": [
+                {
+                  "id": "m-11",
+                  "label": "Profil Syarikat & 4 Unit Kilang",
+                  "labelBm": "Profil Syarikat & 4 Unit Kilang",
+                  "href": "/profil"
+                },
+                {
+                  "id": "m-12",
+                  "label": "Pakej Borong Asrama (10 Set)",
+                  "labelBm": "Pakej Borong Asrama (10 Set)",
+                  "href": "/products/pakej-pukal-asrama-homestay"
+                },
+                {
+                  "id": "m-13",
+                  "label": "Jualan Gudang Tasek Gelugor",
+                  "labelBm": "Jualan Gudang Tasek Gelugor",
+                  "href": "/collections/borong-gudang"
+                },
+                {
+                  "id": "m-14",
+                  "label": "Tempahan OEM & Agensi Kerajaan",
+                  "labelBm": "Tempahan OEM & Agensi Kerajaan",
+                  "href": "/business"
+                }
+              ]
+            }
+          ],
+          "promoCard": {
+            "enabled": true,
+            "badge": "PALING LARISS!!",
+            "title": "Tilam Toto Asian Fibre",
+            "description": "Empuk, tebal dan selesa terus dari kilang Tasek Gelugor.",
+            "buttonText": "Beli Sekarang",
+            "buttonUrl": "/products/tilam-toto-asian-polyester-fibre"
+          }
+        },
+        "hero": {
+          "slides": [
+            {
+              "id": "slide-1",
+              "badge": "PALING LARISS!! ASIAN POLYESTER FIBRE",
+              "title": "Tilam Toto Tebal & Empuk Terus Dari Kilang",
+              "subtitle": "Isian Asian Polyester Fibre berkualiti tinggi, jahitan quilting kemas pelbagai corak floral & moden. Selesa, empuk, dan jimat terus dari pengeluar.",
+              "ctaText": "Beli Tilam Toto Sekarang",
+              "ctaLink": "/products/tilam-toto-asian-polyester-fibre",
+              "secondaryCtaText": "Profil Kilang Kami",
+              "secondaryCtaLink": "/profil",
+              "imageUrl": "/images/hero/hero-tilam-toto-lifestyle.jpg",
+              "isActive": true
+            },
+            {
+              "id": "slide-2",
+              "badge": "PENGILANG TEKSTIL BUMIPUTERA",
+              "title": "Kualiti Jahitan, Kepuasan Terjamin",
+              "subtitle": "Menjahit Kepercayaan, Menyulam Masa Depan. Operasi sistematik 4 unit: Unit Potong Kain, Unit Jahitan, Unit Bantal & Tilam, dan Stor Produk Siap.",
+              "ctaText": "Lihat Operasi Kilang",
+              "ctaLink": "/profil#tentang-kami",
+              "secondaryCtaText": "Carta Organisasi",
+              "secondaryCtaLink": "/profil#carta-organisasi",
+              "imageUrl": "/images/hero/hero-kilang-tekstil.jpg",
+              "isActive": true
+            },
+            {
+              "id": "slide-3",
+              "badge": "100% KEKABU ASLI TRADISI",
+              "title": "Tilam & Bantal Kekabu Asli Buatan Tempatan",
+              "subtitle": "Kelembutan semulajadi yang sejuk, padat dan selesa dengan teknik jahitan butang tufting tradisi yang tahan lasak turun-temurun.",
+              "ctaText": "Koleksi Kekabu Asli",
+              "ctaLink": "/products/tilam-kekabu-asli-tradisi",
+              "secondaryCtaText": "Tempah Sekarang",
+              "secondaryCtaLink": "/collections/tilam-kekabu",
+              "imageUrl": "/images/products/tilam-kekabu-asli.jpg",
+              "isActive": true
+            },
+            {
+              "id": "slide-4",
+              "badge": "HARGA BORONG GUDANG",
+              "title": "Jualan Gudang & Tempahan Pukal Asrama / Homestay",
+              "subtitle": "Pakej lengkap tilam bujang, bantal tidur gebu dan cadar berzip untuk asrama sekolah, tahfiz, homestay dan kemudahan kontraktor.",
+              "ctaText": "Pakej Jualan Gudang",
+              "ctaLink": "/collections/borong-gudang",
+              "secondaryCtaText": "WhatsApp 019-478 6991",
+              "secondaryCtaLink": "https://wa.me/60194786991",
+              "imageUrl": "/images/hero/hero-jualan-gudang-crowd.jpg",
+              "isActive": true
+            }
+          ]
+        },
+        "reassurance": {
+          "items": [
+            {
+              "id": "reassure-1",
+              "icon": "sparkles",
+              "title": "Kualiti Terjamin",
+              "subtitle": "Kawalan mutu ketat, jahitan kemas dan isian Asian Polyester Fibre & Kekabu berkualiti."
+            },
+            {
+              "id": "reassure-2",
+              "icon": "trial",
+              "title": "Pengeluaran Cekap",
+              "subtitle": "Operasi teratur merangkumi Unit Potong Kain, Unit Jahitan & Unit Bantal Tilam."
+            },
+            {
+              "id": "reassure-3",
+              "icon": "shield",
+              "title": "Harga Berpatutan",
+              "subtitle": "Harga terus dari kilang Tasek Gelugor tanpa orang tengah untuk penjimatan maksimum."
+            },
+            {
+              "id": "reassure-4",
+              "icon": "truck",
+              "title": "Komitmen Pelanggan",
+              "subtitle": "Penghantaran lori terus Semenanjung, perkhidmatan mesra dan jaminan kepuasan."
+            }
+          ]
+        },
+        "promotionsBanner": {
+          "enabled": true,
+          "badge": "PROMOSI JUALAN GUDANG",
+          "headline": "Dapatkan Tilam Toto & Bantal Gebu Terus Dari Kilang",
+          "description": "Nikmati harga kilang istimewa dan baucar diskaun KAMAAR10 untuk pesanan dalam talian minggu ini.",
+          "couponCode": "KAMAAR10",
+          "imageUrl": "/images/products/tilam-toto-queen.jpg",
+          "ctaText": "Beli Sekarang",
+          "ctaLink": "/collections/tilam-toto"
+        },
+        "storySection": {
+          "badge": "TUNAS SINAR JAYA ENTERPRISE",
+          "headline": "Mengilang & Memasar Produk Jahitan Tekstil Berkualiti",
+          "paragraph1": "TUNAS SINAR JAYA ENTERPRISE merupakan sebuah syarikat tempatan yang terlibat dalam pengilangan dan pemasaran produk jahitan tekstil di Tasek Gelugor, Pulau Pinang. Berbekalkan pengalaman, tenaga kerja mahir serta komitmen terhadap kualiti, kami menghasilkan Tilam Toto, tilam kekabu, tilam lipat, bantal gebu, comforter dan cadar pada harga paling kompetitif.",
+          "paragraph2": "Kami memberi penekanan kepada penggunaan bahan berkualiti, proses pengeluaran yang sistematik serta kawalan mutu yang ketat bagi memastikan setiap produk mencapai standard yang tinggi. Moto kami: \"Kualiti Jahitan, Kepuasan Terjamin\" — Menjahit Kepercayaan, Menyulam Masa Depan.",
+          "imageUrl": "/images/company/kilang-tekstil-jahitan.jpg",
+          "signatureTitle": "Hazizi Md Rashid",
+          "signatureSub": "Pengurus Operasi, Tunas Sinar Jaya Enterprise"
+        },
+        "socialAndContact": {
+          "whatsappNumber": "+60194786991",
+          "phoneDisplay": "019-478 6991",
+          "emailDisplay": "tunassinar@gmail.com",
+          "addressDisplay": "7878B Jalan Permatang Berangan, 13300 Tasek Gelugor SPU, Pulau Pinang",
+          "instagramUrl": "",
+          "tiktokUrl": "https://www.tiktok.com/@kamaar_shop",
+          "facebookUrl": "https://www.facebook.com"
+        },
+        "appearance": {
+          "enableEntranceAnimations": true,
+          "enableFloatingBadges": true,
+          "cardBorderRadius": "rounded-2xl"
+        }
+      },
+      "createdAt": "2026-10-07T14:02:42.770Z"
+    },
+    {
+      "id": "aud-1791376811766-t9ht",
+      "actorEmail": "admin@kamaarbeddings.com",
+      "action": "coupon_updated",
+      "entityType": "coupon",
+      "entityId": "coup-kamaar5",
+      "details": {
+        "code": "KAMAAR5"
+      },
+      "createdAt": "2026-10-07T12:40:11.766Z"
+    },
+    {
       "id": "aud-1791375804808-8qek",
       "actorEmail": "stripe_webhook",
       "action": "order_status_updated",
@@ -2106,13 +2378,14 @@
   ],
   "websiteConfig": {
     "theme": {
-      "primaryColor": "#0D2818",
-      "primaryDarkColor": "#081C10",
-      "accentGoldColor": "#C5A880",
+      "primaryColor": "#1E4E8C",
+      "primaryDarkColor": "#13325B",
+      "accentGoldColor": "#B49A58",
       "backgroundColor": "#FFFFFF",
-      "creamColor": "#FAF8F5",
+      "creamColor": "#F4F7FB",
       "textColor": "#0F172A",
-      "saleColor": "#991B1B"
+      "saleColor": "#991B1B",
+      "activePreset": "sapphire-gold"
     },
     "announcement": {
       "enabled": true,
@@ -2121,7 +2394,7 @@
       "highlightCode": "KAMAAR10",
       "url": "/collections/tilam-toto",
       "rightGuarantee": "Kualiti Jahitan Terjamin",
-      "bgColor": "#0D2818",
+      "bgColor": "#13325B",
       "textColor": "#FFFFFF"
     },
     "megaMenu": {

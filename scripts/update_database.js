@@ -799,7 +799,7 @@ const initialWebsiteConfig = {
     highlightCode: 'KAMAAR10',
     url: '/collections/tilam-toto',
     rightGuarantee: 'Kualiti Jahitan Terjamin',
-    bgColor: '#0D2818',
+    bgColor: '#13325B',
     textColor: '#FFFFFF',
   },
   megaMenu: {

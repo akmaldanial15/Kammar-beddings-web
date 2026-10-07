@@ -1327,11 +1327,11 @@ export const initialAffiliates: Affiliate[] = [
 
 export const initialWebsiteConfig: WebsiteConfig = {
   "theme": {
-    "primaryColor": "#0D2818",
-    "primaryDarkColor": "#081C10",
-    "accentGoldColor": "#C5A880",
+    "primaryColor": "#1E4E8C",
+    "primaryDarkColor": "#13325B",
+    "accentGoldColor": "#B49A58",
     "backgroundColor": "#FFFFFF",
-    "creamColor": "#FAF8F5",
+    "creamColor": "#F4F7FB",
     "textColor": "#0F172A",
     "saleColor": "#991B1B"
   },
@@ -1342,7 +1342,7 @@ export const initialWebsiteConfig: WebsiteConfig = {
     "highlightCode": "KAMAAR10",
     "url": "/collections/tilam-toto",
     "rightGuarantee": "Kualiti Jahitan Terjamin",
-    "bgColor": "#0D2818",
+    "bgColor": "#13325B",
     "textColor": "#FFFFFF"
   },
   "megaMenu": {
