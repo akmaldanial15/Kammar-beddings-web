@@ -851,8 +851,8 @@ export function AffiliatesClient({ initialAffiliates }: Props) {
 
       {/* Modal 1: Register New Affiliate */}
       {isModalOpen && mounted && createPortal(
-        <div className="fixed inset-0 z-[100] bg-forest-dark/60 backdrop-blur-sm flex items-center justify-center p-3 sm:p-4 overscroll-contain">
-          <div className="bg-warmwhite w-full max-w-lg max-h-[92vh] sm:max-h-[88vh] rounded-2xl sm:rounded-3xl border border-borderLight shadow-2xl flex flex-col overflow-hidden animate-in fade-in zoom-in-95 duration-200">
+        <div className="fixed inset-0 z-[100] bg-forest-dark/60 backdrop-blur-sm flex items-center justify-center p-2 sm:p-4 overscroll-contain">
+          <div className="bg-warmwhite w-full max-w-lg max-h-[92dvh] sm:max-h-[88dvh] rounded-2xl sm:rounded-3xl border border-borderLight shadow-2xl flex flex-col overflow-hidden animate-in fade-in zoom-in-95 duration-200">
             {/* Sticky Header */}
             <div className="p-4 sm:p-6 bg-forest text-warmwhite flex items-center justify-between flex-shrink-0">
               <div>
@@ -1031,7 +1031,7 @@ export function AffiliatesClient({ initialAffiliates }: Props) {
               </div>
 
               {/* Sticky Footer */}
-              <div className="p-3.5 sm:px-6 sm:py-4 bg-cream/30 border-t border-borderLight flex items-center justify-end space-x-3 flex-shrink-0">
+              <div className="p-3.5 sm:px-6 sm:py-4 pb-[max(0.875rem,env(safe-area-inset-bottom))] bg-cream/30 border-t border-borderLight flex items-center justify-end space-x-3 flex-shrink-0 z-20">
                 <button
                   type="button"
                   onClick={() => setIsModalOpen(false)}
@@ -1055,8 +1055,8 @@ export function AffiliatesClient({ initialAffiliates }: Props) {
 
       {/* Modal 2: Write / Edit Admin Notes to Affiliate */}
       {isNoteModalOpen && selectedAffiliate && mounted && createPortal(
-        <div className="fixed inset-0 z-[100] bg-forest-dark/60 backdrop-blur-sm flex items-center justify-center p-3 sm:p-4 overscroll-contain">
-          <div className="bg-warmwhite w-full max-w-lg max-h-[92vh] sm:max-h-[88vh] rounded-2xl sm:rounded-3xl border border-borderLight shadow-2xl flex flex-col overflow-hidden animate-in fade-in zoom-in-95 duration-200">
+        <div className="fixed inset-0 z-[100] bg-forest-dark/60 backdrop-blur-sm flex items-center justify-center p-2 sm:p-4 overscroll-contain">
+          <div className="bg-warmwhite w-full max-w-lg max-h-[92dvh] sm:max-h-[88dvh] rounded-2xl sm:rounded-3xl border border-borderLight shadow-2xl flex flex-col overflow-hidden animate-in fade-in zoom-in-95 duration-200">
             {/* Sticky Header */}
             <div className="p-4 sm:p-6 bg-[#1E4E8C] text-white flex items-center justify-between flex-shrink-0">
               <div className="flex items-center space-x-3">
@@ -1161,8 +1161,8 @@ export function AffiliatesClient({ initialAffiliates }: Props) {
 
       {/* Modal 3: Admin Direct Reset Password for Affiliate */}
       {isResetModalOpen && resetTargetAffiliate && mounted && createPortal(
-        <div className="fixed inset-0 z-[100] bg-forest-dark/60 backdrop-blur-sm flex items-center justify-center p-3 sm:p-4 overscroll-contain">
-          <div className="bg-warmwhite w-full max-w-lg max-h-[92vh] sm:max-h-[88vh] rounded-2xl sm:rounded-3xl border border-borderLight shadow-2xl flex flex-col overflow-hidden animate-in fade-in zoom-in-95 duration-200">
+        <div className="fixed inset-0 z-[100] bg-forest-dark/60 backdrop-blur-sm flex items-center justify-center p-2 sm:p-4 overscroll-contain">
+          <div className="bg-warmwhite w-full max-w-lg max-h-[92dvh] sm:max-h-[88dvh] rounded-2xl sm:rounded-3xl border border-borderLight shadow-2xl flex flex-col overflow-hidden animate-in fade-in zoom-in-95 duration-200">
             {/* Sticky Header */}
             <div className="p-4 sm:p-6 bg-[#1E4E8C] text-white flex items-center justify-between flex-shrink-0">
               <div className="flex items-center space-x-3">
@@ -1279,7 +1279,7 @@ export function AffiliatesClient({ initialAffiliates }: Props) {
               </div>
 
               {/* Sticky Footer */}
-              <div className="p-3.5 sm:px-6 sm:py-4 bg-cream/30 border-t border-borderLight flex items-center justify-between flex-shrink-0">
+              <div className="p-3.5 sm:px-6 sm:py-4 pb-[max(0.875rem,env(safe-area-inset-bottom))] bg-cream/30 border-t border-borderLight flex items-center justify-between flex-shrink-0 z-20">
                 <Link
                   href="/affiliate/login"
                   target="_blank"

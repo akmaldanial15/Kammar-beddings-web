@@ -1391,8 +1391,8 @@ export function ProductsClient({ initialProducts, categories }: ProductsClientPr
       {/* REDESIGNED LUXURY PRODUCT EDIT MODAL                                      */}
       {/* ========================================================================= */}
       {editingProduct && mounted && createPortal(
-        <div className="fixed inset-0 z-[9999] bg-forest-dark/85 backdrop-blur-md flex items-center justify-center p-2 sm:p-4 md:p-6 overflow-hidden animate-fade-in">
-          <div className="bg-warmwhite w-full max-w-5xl rounded-2xl sm:rounded-3xl border border-borderLight shadow-2xl overflow-hidden flex flex-col max-h-[96vh] sm:max-h-[92vh] my-auto animate-scale-in">
+        <div className="fixed inset-0 z-[9999] bg-forest-dark/85 backdrop-blur-md flex items-center justify-center p-0 sm:p-4 md:p-6 overflow-hidden animate-fade-in">
+          <div className="bg-warmwhite w-full max-w-5xl rounded-none sm:rounded-3xl border-0 sm:border border-borderLight shadow-2xl overflow-hidden flex flex-col h-[100dvh] sm:h-auto max-h-[100dvh] sm:max-h-[92vh] my-auto animate-scale-in">
             {/* Modal Header: Royal Midnight Navy & Warm Gold */}
             <div className="px-4 py-3 sm:px-6 sm:py-4 bg-forest-dark text-warmwhite flex items-center justify-between border-b border-warmwhite/10 flex-shrink-0">
               <div className="flex items-center space-x-3.5 min-w-0">
@@ -1569,7 +1569,7 @@ export function ProductsClient({ initialProducts, categories }: ProductsClientPr
             </div>
 
             {/* Scrollable Form Body */}
-            <form onSubmit={handleSaveProduct} className="flex-1 overflow-y-auto p-4 sm:p-6 md:p-8 space-y-6">
+            <form onSubmit={handleSaveProduct} className="flex-1 min-h-0 overflow-y-auto overscroll-contain p-4 sm:p-6 md:p-8 space-y-6">
               {/* ============================================================= */}
               {/* TAB 1: MAKLUMAT ASAS & PAPARAN                                */}
               {/* ============================================================= */}
@@ -3051,7 +3051,7 @@ export function ProductsClient({ initialProducts, categories }: ProductsClientPr
             </form>
 
             {/* Fixed Sticky Footer */}
-            <div className="px-4 py-3 sm:px-6 sm:py-4 bg-warmwhite border-t border-borderLight flex items-center justify-between flex-shrink-0 shadow-lg">
+            <div className="px-4 py-3 sm:px-6 sm:py-4 pb-[max(0.75rem,env(safe-area-inset-bottom))] bg-warmwhite border-t border-borderLight flex items-center justify-between flex-shrink-0 shadow-lg z-20">
               <div className="hidden sm:flex items-center space-x-2 text-xs text-charcoal-muted">
                 <span className="w-2 h-2 rounded-full bg-emerald-500 animate-pulse" />
                 <span>
@@ -3064,11 +3064,11 @@ export function ProductsClient({ initialProducts, categories }: ProductsClientPr
                 </span>
               </div>
 
-              <div className="flex items-center space-x-3 w-full sm:w-auto justify-end">
+              <div className="flex items-center gap-2 sm:gap-3 w-full sm:w-auto justify-end">
                 <button
                   type="button"
                   onClick={() => setEditingProduct(null)}
-                  className="px-4 py-2 text-xs font-bold text-charcoal-muted hover:text-charcoal rounded-xl hover:bg-cream transition-colors"
+                  className="px-4 py-2.5 text-xs font-bold text-charcoal-muted hover:text-charcoal rounded-xl hover:bg-cream transition-colors flex-shrink-0 cursor-pointer"
                 >
                   Batal
                 </button>
@@ -3077,7 +3077,7 @@ export function ProductsClient({ initialProducts, categories }: ProductsClientPr
                   type="button"
                   onClick={() => handleSaveProduct()}
                   disabled={isSaving}
-                  className="inline-flex items-center space-x-2 px-5 sm:px-6 py-2.5 bg-forest hover:bg-forest-dark text-warmwhite text-xs font-bold rounded-xl transition-all shadow-sm hover:shadow disabled:opacity-50 cursor-pointer"
+                  className="flex-1 sm:flex-initial inline-flex items-center justify-center space-x-2 px-5 sm:px-6 py-2.5 bg-forest hover:bg-forest-dark text-warmwhite text-xs font-bold rounded-xl transition-all shadow-sm hover:shadow active:scale-[0.98] disabled:opacity-50 cursor-pointer"
                 >
                   {isSaving ? (
                     <>
@@ -3108,7 +3108,7 @@ export function ProductsClient({ initialProducts, categories }: ProductsClientPr
             if (e.target === e.currentTarget) setPreviewImageModal(null)
           }}
         >
-          <div className="relative max-w-4xl w-full bg-slate-900/95 text-warmwhite rounded-2xl sm:rounded-3xl border border-white/15 shadow-2xl overflow-hidden flex flex-col max-h-[94vh] animate-scale-in">
+          <div className="relative max-w-4xl w-full bg-slate-900/95 text-warmwhite rounded-2xl sm:rounded-3xl border border-white/15 shadow-2xl overflow-hidden flex flex-col max-h-[94dvh] animate-scale-in">
             {/* Header */}
             <div className="px-5 py-4 bg-slate-950/80 border-b border-white/10 flex items-center justify-between flex-shrink-0">
               <div className="flex items-center space-x-3 min-w-0 pr-4">

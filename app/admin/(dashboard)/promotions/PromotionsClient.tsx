@@ -644,8 +644,8 @@ export function PromotionsClient({ initialCoupons }: PromotionsClientProps) {
       {/* COMPREHENSIVE CONFIGURE COUPON VOUCHER MODAL (IMAGE 2 ENHANCED)           */}
       {/* ========================================================================= */}
       {editingCoupon && mounted && createPortal(
-        <div className="fixed inset-0 z-[9999] bg-[#13325B]/70 backdrop-blur-md flex items-center justify-center p-3 sm:p-4 overflow-y-auto animate-fade-in">
-          <div className="bg-warmwhite w-full max-w-2xl rounded-2xl sm:rounded-3xl border border-borderLight shadow-2xl overflow-hidden my-auto max-h-[94vh] flex flex-col animate-scale-in">
+        <div className="fixed inset-0 z-[9999] bg-[#13325B]/70 backdrop-blur-md flex items-center justify-center p-2 sm:p-4 overflow-y-auto animate-fade-in">
+          <div className="bg-warmwhite w-full max-w-2xl rounded-2xl sm:rounded-3xl border border-borderLight shadow-2xl overflow-hidden my-auto max-h-[94dvh] flex flex-col animate-scale-in">
             {/* Modal Header */}
             <div className="p-6 bg-[#13325B] text-white flex items-center justify-between border-b border-[#B49A58]/20 flex-shrink-0">
               <div className="flex items-center space-x-3">
@@ -1135,7 +1135,7 @@ export function PromotionsClient({ initialCoupons }: PromotionsClientProps) {
             </div>
 
             {/* Fixed Sticky Modal Buttons Footer */}
-            <div className="flex items-center justify-between p-3.5 sm:px-6 sm:py-4 border-t border-borderLight bg-neutral-50/95 backdrop-blur-sm flex-shrink-0">
+            <div className="flex items-center justify-between p-3.5 sm:px-6 sm:py-4 pb-[max(0.875rem,env(safe-area-inset-bottom))] border-t border-borderLight bg-neutral-50/95 backdrop-blur-sm flex-shrink-0 z-20">
               <div className="text-[11px] text-secondary">
                 Status: <strong>{editingCoupon.isActive ? 'Aktif' : 'Nyahaktif'}</strong> •{' '}
                 Homepage:{' '}

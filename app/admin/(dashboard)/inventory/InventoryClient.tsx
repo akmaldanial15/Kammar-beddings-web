@@ -522,8 +522,8 @@ export function InventoryClient({ initialItems }: InventoryClientProps) {
       {/* ADJUST STOCK MODAL (PORTALED & MOBILE-OPTIMIZED)                          */}
       {/* ========================================================================= */}
       {adjustingItem && mounted && createPortal(
-        <div className="fixed inset-0 z-[9999] bg-forest-dark/70 backdrop-blur-sm flex items-center justify-center p-3 sm:p-4 animate-fade-in">
-          <div className="bg-warmwhite w-full max-w-md rounded-2xl sm:rounded-3xl border border-borderLight shadow-2xl overflow-hidden flex flex-col max-h-[92vh] sm:max-h-[88vh] my-auto animate-scale-in">
+        <div className="fixed inset-0 z-[9999] bg-forest-dark/70 backdrop-blur-sm flex items-center justify-center p-2 sm:p-4 animate-fade-in">
+          <div className="bg-warmwhite w-full max-w-md rounded-2xl sm:rounded-3xl border border-borderLight shadow-2xl overflow-hidden flex flex-col max-h-[92dvh] sm:max-h-[88dvh] my-auto animate-scale-in">
             {/* Modal Header */}
             <div className="p-4 sm:p-5 bg-forest-dark text-warmwhite flex items-center justify-between border-b border-warmwhite/10 flex-shrink-0">
               <div className="min-w-0 pr-2">
@@ -666,7 +666,7 @@ export function InventoryClient({ initialItems }: InventoryClientProps) {
               </div>
 
               {/* Fixed Sticky Footer */}
-              <div className="flex items-center justify-end space-x-3 p-3.5 sm:px-6 sm:py-4 border-t border-borderLight bg-warmwhite flex-shrink-0 shadow-xs">
+              <div className="flex items-center justify-end space-x-3 p-3.5 sm:px-6 sm:py-4 pb-[max(0.875rem,env(safe-area-inset-bottom))] border-t border-borderLight bg-warmwhite flex-shrink-0 shadow-xs z-20">
                 <button
                   type="button"
                   onClick={() => setAdjustingItem(null)}

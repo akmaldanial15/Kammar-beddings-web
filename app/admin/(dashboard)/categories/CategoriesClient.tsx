@@ -739,8 +739,8 @@ export function CategoriesClient({ initialCategories }: CategoriesClientProps) {
 
       {/* Add / Edit Category Modal */}
       {editingCategory && mounted && createPortal(
-        <div className="fixed inset-0 z-[9999] flex items-center justify-center p-3 sm:p-4 bg-forest-dark/70 backdrop-blur-sm animate-fade-in">
-          <div className="bg-warmwhite w-full max-w-lg rounded-2xl shadow-2xl border border-borderLight overflow-hidden animate-scale-in my-auto max-h-[90vh] sm:max-h-[88vh] flex flex-col">
+        <div className="fixed inset-0 z-[9999] flex items-center justify-center p-2 sm:p-4 bg-forest-dark/70 backdrop-blur-sm animate-fade-in">
+          <div className="bg-warmwhite w-full max-w-lg rounded-2xl shadow-2xl border border-borderLight overflow-hidden animate-scale-in my-auto max-h-[90dvh] sm:max-h-[88dvh] flex flex-col">
             {/* Header: Fixed top */}
             <div className="p-4 sm:p-5 border-b border-borderLight bg-cream/40 flex items-center justify-between flex-shrink-0">
               <div>
@@ -948,7 +948,7 @@ export function CategoriesClient({ initialCategories }: CategoriesClientProps) {
               </div>
 
               {/* Sticky Form Action Buttons Footer */}
-              <div className="flex items-center justify-end space-x-3 p-3.5 sm:px-6 sm:py-4 border-t border-borderLight bg-warmwhite flex-shrink-0 shadow-xs">
+              <div className="flex items-center justify-end space-x-3 p-3.5 sm:px-6 sm:py-4 pb-[max(0.875rem,env(safe-area-inset-bottom))] border-t border-borderLight bg-warmwhite flex-shrink-0 shadow-xs z-20">
                 <button
                   type="button"
                   onClick={() => setEditingCategory(null)}
