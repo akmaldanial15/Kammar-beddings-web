@@ -69,7 +69,11 @@ export async function POST(request: NextRequest) {
       const product = await getProductById(clientItem.productId)
       if (!product || product.status !== 'published') {
         return NextResponse.json(
-          { error: `Product is no longer available.` },
+          {
+            error: `Produk tidak lagi tersedia dalam katalog. Sila buang item ini daripada pesanan anda untuk meneruskan pembayaran.`,
+            invalidVariantId: clientItem.variantId,
+            invalidProductId: clientItem.productId,
+          },
           { status: 400 }
         )
       }
@@ -77,7 +81,11 @@ export async function POST(request: NextRequest) {
       const variant = product.variants.find((v) => v.id === clientItem.variantId)
       if (!variant || !variant.isActive) {
         return NextResponse.json(
-          { error: `Selected variant for ${product.name} is no longer available.` },
+          {
+            error: `Pilihan saiz untuk "${product.name}" tidak lagi tersedia. Sila tukar saiz atau buang item ini.`,
+            invalidVariantId: clientItem.variantId,
+            invalidProductId: product.id,
+          },
           { status: 400 }
         )
       }

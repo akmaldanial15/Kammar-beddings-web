@@ -30,6 +30,10 @@ import {
   Navigation,
   Clock,
   Phone,
+  Minus,
+  Plus,
+  Trash2,
+  SlidersHorizontal,
 } from 'lucide-react'
 import { useCart } from '@/lib/context/CartContext'
 import { useLanguage } from '@/lib/i18n/LanguageContext'
@@ -41,11 +45,12 @@ import {
   validateMalaysianPostcode,
   validateMalaysianPhone,
 } from '@/lib/utils/format'
-import { PaymentSettings, PaymentMethodConfig, SiteSettings } from '@/types'
+import { PaymentSettings, PaymentMethodConfig, SiteSettings, Product, ProductVariant } from '@/types'
 
 interface CheckoutClientProps {
   initialPaymentSettings?: PaymentSettings
   initialSiteSettings?: SiteSettings
+  availableProducts?: Product[]
 }
 
 const MALAYSIAN_BANKS = [
@@ -66,8 +71,19 @@ const MALAYSIAN_BANKS = [
   { id: 'bankrakyat', name: 'Bank Rakyat' },
 ]
 
-export function CheckoutClient({ initialPaymentSettings, initialSiteSettings }: CheckoutClientProps) {
-  const { items, subtotalSen, couponCode, applyCoupon, removeCoupon, notes, clearCart } = useCart()
+export function CheckoutClient({ initialPaymentSettings, initialSiteSettings, availableProducts }: CheckoutClientProps) {
+  const {
+    items,
+    subtotalSen,
+    couponCode,
+    applyCoupon,
+    removeCoupon,
+    notes,
+    clearCart,
+    removeItem,
+    updateQuantity,
+    updateItemVariant,
+  } = useCart()
   const { t } = useLanguage()
   const router = useRouter()
   const searchParams = useSearchParams()
@@ -78,6 +94,10 @@ export function CheckoutClient({ initialPaymentSettings, initialSiteSettings }: 
   const [paymentSettings, setPaymentSettings] = useState<PaymentSettings | undefined>(initialPaymentSettings)
   const [siteSettings, setSiteSettings] = useState<SiteSettings | undefined>(initialSiteSettings)
   const [fulfillmentType, setFulfillmentType] = useState<'delivery' | 'pickup'>('delivery')
+
+  // Products catalog for in-checkout variant choices
+  const [catalogProducts, setCatalogProducts] = useState<Product[]>(availableProducts || [])
+  const [editingVariantFor, setEditingVariantFor] = useState<string | null>(null)
 
   const [activeMethods, setActiveMethods] = useState<PaymentMethodConfig[]>(
     initialPaymentSettings?.methods?.filter((m) => m.enabled) || []
@@ -95,6 +115,16 @@ export function CheckoutClient({ initialPaymentSettings, initialSiteSettings }: 
           if (sRes.ok) {
             const sData = await sRes.json()
             if (sData.settings) setSiteSettings(sData.settings)
+          }
+        }
+
+        if (!availableProducts || availableProducts.length === 0) {
+          const pRes = await fetch('/api/products')
+          if (pRes.ok) {
+            const pData = await pRes.json()
+            if (pData.products && Array.isArray(pData.products)) {
+              setCatalogProducts(pData.products)
+            }
           }
         }
 
@@ -479,10 +509,10 @@ export function CheckoutClient({ initialPaymentSettings, initialSiteSettings }: 
             </p>
           </div>
           <Link
-            href="/collections/mattress"
+            href="/collections/tilam-toto"
             className="w-full inline-flex items-center justify-center py-3.5 px-6 bg-forest hover:bg-forest-dark text-warmwhite text-sm font-bold rounded-xl transition-all shadow-md group"
           >
-            <span>Terokai Koleksi Tilam KAMAAR</span>
+            <span>Terokai Produk Kilang KAMAAR</span>
             <ArrowRight className="w-4 h-4 ml-2 group-hover:translate-x-1 transition-transform" />
           </Link>
         </div>
@@ -627,9 +657,39 @@ export function CheckoutClient({ initialPaymentSettings, initialSiteSettings }: 
             )}
 
             {errorMessage && (
-              <div className="p-4 bg-red-50 rounded-2xl border border-red-200 text-red-900 text-xs flex items-center space-x-3">
-                <AlertCircle className="w-5 h-5 shrink-0 text-red-600" />
-                <span className="font-medium">{errorMessage}</span>
+              <div className="p-4 bg-red-50 rounded-2xl border border-red-200 text-red-900 text-xs flex flex-wrap items-center justify-between gap-3 shadow-2xs">
+                <div className="flex items-center space-x-3 min-w-0 flex-1">
+                  <AlertCircle className="w-5 h-5 shrink-0 text-red-600" />
+                  <span className="font-medium leading-relaxed">{errorMessage}</span>
+                </div>
+                {(errorMessage.toLowerCase().includes('available') ||
+                  errorMessage.toLowerCase().includes('tersedia') ||
+                  errorMessage.toLowerCase().includes('katalog') ||
+                  errorMessage.toLowerCase().includes('tiada')) && (
+                  <button
+                    type="button"
+                    onClick={() => {
+                      if (catalogProducts.length > 0) {
+                        const validVariantIds = new Set(
+                          catalogProducts.flatMap((p) => p.variants.map((v) => v.id))
+                        )
+                        const invalidItems = items.filter((i) => !validVariantIds.has(i.variantId))
+                        if (invalidItems.length > 0) {
+                          invalidItems.forEach((inv) => removeItem(inv.variantId))
+                        } else if (items.length > 0) {
+                          removeItem(items[0].variantId)
+                        }
+                      } else if (items.length > 0) {
+                        removeItem(items[0].variantId)
+                      }
+                      setErrorMessage('')
+                    }}
+                    className="px-3.5 py-1.5 bg-red-600 hover:bg-red-700 text-white rounded-xl text-xs font-bold transition-all shadow-xs cursor-pointer shrink-0 inline-flex items-center gap-1.5"
+                  >
+                    <Trash2 className="w-3.5 h-3.5" />
+                    <span>Buang Item Tidak Sah</span>
+                  </button>
+                )}
               </div>
             )}
 
@@ -1420,6 +1480,21 @@ export function CheckoutClient({ initialPaymentSettings, initialSiteSettings }: 
                   <h3 className="font-serif text-lg font-bold text-forest">Ringkasan Pesanan</h3>
                 </div>
                 <div className="flex items-center gap-2">
+                  {items.length > 1 && (
+                    <button
+                      type="button"
+                      onClick={() => {
+                        if (confirm('Adakah anda pasti mahu mengosongkan semua item dalam troli anda?')) {
+                          clearCart()
+                          setErrorMessage('')
+                        }
+                      }}
+                      className="text-[11px] font-semibold text-charcoal-muted hover:text-red-600 transition-colors cursor-pointer mr-1"
+                      title="Kosongkan troli"
+                    >
+                      Kosongkan
+                    </button>
+                  )}
                   {items.length > 2 && (
                     <span className="hidden sm:inline-flex items-center gap-1 text-[10px] font-semibold text-forest/80 bg-forest/5 px-2 py-0.5 rounded-full border border-forest/10">
                       <ChevronDown className="w-3 h-3 text-gold animate-bounce" />
@@ -1432,60 +1507,202 @@ export function CheckoutClient({ initialPaymentSettings, initialSiteSettings }: 
                 </div>
               </div>
 
-              {/* Product Line Items (Zero Overlap Guaranteed!) */}
-              <div className="max-h-[260px] sm:max-h-[290px] overflow-y-auto overscroll-contain pr-1.5 space-y-2.5 [&::-webkit-scrollbar]:w-1.5 [&::-webkit-scrollbar-track]:bg-transparent [&::-webkit-scrollbar-thumb]:bg-forest/20 [&::-webkit-scrollbar-thumb]:rounded-full hover:[&::-webkit-scrollbar-thumb]:bg-forest/40">
+              {/* Product Line Items (Zero Overlap, Full Flexibility with Edit & Remove) */}
+              <div className="max-h-[360px] sm:max-h-[420px] overflow-y-auto overscroll-contain pr-1.5 space-y-3 [&::-webkit-scrollbar]:w-1.5 [&::-webkit-scrollbar-track]:bg-transparent [&::-webkit-scrollbar-thumb]:bg-forest/20 [&::-webkit-scrollbar-thumb]:rounded-full hover:[&::-webkit-scrollbar-thumb]:bg-forest/40">
                 {items.map((item) => {
                   const resolvedImg = item.imageUrl || item.image || defaultProductImage
                   const resolvedTitle = item.productName || item.title || 'KAMAAR Luxury Mattress'
                   const resolvedVariant = item.sizeName || item.variantName || item.dimensions || 'Single (90×190cm)'
 
+                  // Find product in catalog
+                  const matchedProduct = catalogProducts.find(
+                    (p) => p.id === item.productId || p.variants?.some((v) => v.id === item.variantId)
+                  )
+                  const isUnavailable = catalogProducts.length > 0 && !matchedProduct
+                  const otherVariants = matchedProduct?.variants?.filter((v) => v.isActive) || []
+                  const hasAlternativeVariants = otherVariants.length > 1
+
                   return (
                     <div
                       key={item.variantId}
-                      className="group relative flex items-center justify-between gap-3 p-3 rounded-2xl bg-white border border-[#E8E2D8] hover:border-forest/20 shadow-2xs transition-all"
+                      className={`group relative p-3 sm:p-3.5 rounded-2xl bg-white border shadow-2xs transition-all ${
+                        isUnavailable
+                          ? 'border-red-300 bg-red-50/20 ring-1 ring-red-200'
+                          : 'border-[#E8E2D8] hover:border-forest/30'
+                      }`}
                     >
-                      {/* Left: Thumbnail & Quantity Badge */}
-                      <div className="relative shrink-0">
-                        <div className="w-14 h-14 sm:w-16 sm:h-16 rounded-xl border border-[#E8E2D8] bg-cream/30 overflow-hidden relative shadow-2xs">
-                          <Image
-                            src={resolvedImg}
-                            alt={resolvedTitle}
-                            fill
-                            sizes="64px"
-                            className="object-cover"
-                          />
+                      <div className="flex items-start justify-between gap-3">
+                        {/* Left: Thumbnail */}
+                        <div className="relative shrink-0">
+                          <div className="w-16 h-16 sm:w-18 sm:h-18 rounded-xl border border-[#E8E2D8] bg-cream/30 overflow-hidden relative shadow-2xs">
+                            <Image
+                              src={resolvedImg}
+                              alt={resolvedTitle}
+                              fill
+                              sizes="72px"
+                              className="object-cover"
+                            />
+                          </div>
                         </div>
-                        {/* Quantity Badge */}
-                        <span className="absolute -top-1.5 -right-1.5 z-10 w-5 h-5 rounded-full bg-forest text-warmwhite text-[10px] font-bold flex items-center justify-center shadow-md border-2 border-white ring-1 ring-forest/20">
-                          {item.quantity}
-                        </span>
-                      </div>
 
-                      {/* Middle: Product Title & Variant Details */}
-                      <div className="min-w-0 flex-1 flex flex-col justify-center gap-0.5">
-                        <h4 className="text-xs sm:text-sm font-bold text-forest leading-snug line-clamp-1" title={resolvedTitle}>
-                          {resolvedTitle}
-                        </h4>
-                        <p className="text-[11px] text-charcoal-muted leading-tight truncate">
-                          {resolvedVariant}
-                        </p>
-                        {item.sku && (
-                          <span className="text-[9.5px] text-charcoal-muted/70 font-mono tracking-tight truncate">
-                            SKU: {item.sku}
-                          </span>
-                        )}
-                      </div>
+                        {/* Middle: Product Title, Variant & Actions */}
+                        <div className="min-w-0 flex-1 flex flex-col justify-start gap-1">
+                          <div className="flex items-start justify-between gap-2">
+                            <h4 className="text-xs sm:text-sm font-bold text-forest leading-snug line-clamp-2" title={resolvedTitle}>
+                              {resolvedTitle}
+                            </h4>
+                            {/* Delete / Remove Item Button */}
+                            <button
+                              type="button"
+                              onClick={() => {
+                                removeItem(item.variantId)
+                                setErrorMessage('')
+                              }}
+                              className="p-1 text-neutral-400 hover:text-red-600 hover:bg-red-50 rounded-lg transition-colors cursor-pointer shrink-0"
+                              title="Buang item daripada pesanan"
+                              aria-label="Buang item"
+                            >
+                              <Trash2 className="w-4 h-4" />
+                            </button>
+                          </div>
 
-                      {/* Right: Line Total */}
-                      <div className="shrink-0 text-right flex flex-col items-end justify-center">
-                        <span className="text-xs sm:text-sm font-bold text-forest font-serif whitespace-nowrap">
-                          {formatMYR(item.priceSen * item.quantity)}
-                        </span>
-                        {item.compareAtPriceSen && item.compareAtPriceSen > item.priceSen && (
-                          <span className="text-[10px] text-charcoal-muted/60 line-through block whitespace-nowrap">
-                            {formatMYR(item.compareAtPriceSen * item.quantity)}
-                          </span>
-                        )}
+                          {/* Variant badge & change button */}
+                          <div className="flex flex-wrap items-center gap-1.5 pt-0.5">
+                            <span className="text-[11px] font-semibold text-charcoal bg-neutral-100 px-2 py-0.5 rounded-md border border-neutral-200 truncate max-w-[180px]">
+                              {resolvedVariant}
+                            </span>
+
+                            {hasAlternativeVariants && (
+                              <button
+                                type="button"
+                                onClick={() => setEditingVariantFor(editingVariantFor === item.variantId ? null : item.variantId)}
+                                className="inline-flex items-center gap-1 text-[10.5px] font-bold text-forest hover:text-gold-dark bg-gold/15 hover:bg-gold/25 px-2 py-0.5 rounded-md border border-gold/40 transition-all cursor-pointer shadow-2xs"
+                                title="Tukar pilihan saiz atau variasi"
+                              >
+                                <SlidersHorizontal className="w-3 h-3 text-gold-dark" />
+                                <span>Tukar Pilihan</span>
+                                <ChevronDown className={`w-3 h-3 transition-transform ${editingVariantFor === item.variantId ? 'rotate-180' : ''}`} />
+                              </button>
+                            )}
+                          </div>
+
+                          {item.sku && (
+                            <span className="text-[9.5px] text-charcoal-muted/70 font-mono tracking-tight truncate">
+                              SKU: {item.sku}
+                            </span>
+                          )}
+
+                          {isUnavailable && (
+                            <div className="mt-1 flex items-center justify-between gap-2 p-1.5 rounded-lg bg-red-100/90 border border-red-300 text-red-900 text-[10.5px] font-medium">
+                              <span>⚠️ Tidak lagi dalam katalog</span>
+                              <button
+                                type="button"
+                                onClick={() => {
+                                  removeItem(item.variantId)
+                                  setErrorMessage('')
+                                }}
+                                className="text-[10px] font-bold bg-red-600 hover:bg-red-700 text-white px-2 py-0.5 rounded shadow-2xs shrink-0 cursor-pointer"
+                              >
+                                Buang Sekarang
+                              </button>
+                            </div>
+                          )}
+
+                          {/* Bottom row: Quantity Stepper & Price */}
+                          <div className="flex items-center justify-between pt-2 mt-1 border-t border-[#F0EBE1]">
+                            {/* Quantity Stepper */}
+                            <div className="flex items-center border border-[#D5CEC2] rounded-lg bg-cream/40 overflow-hidden shadow-2xs">
+                              <button
+                                type="button"
+                                onClick={() => updateQuantity(item.variantId, item.quantity - 1)}
+                                className="w-6 h-6 flex items-center justify-center text-forest hover:bg-cream transition-colors cursor-pointer"
+                                title="Kurangkan kuantiti"
+                              >
+                                <Minus className="w-3 h-3" />
+                              </button>
+                              <span className="px-2 text-xs font-bold text-forest min-w-[22px] text-center font-mono">
+                                {item.quantity}
+                              </span>
+                              <button
+                                type="button"
+                                onClick={() => updateQuantity(item.variantId, item.quantity + 1)}
+                                className="w-6 h-6 flex items-center justify-center text-forest hover:bg-cream transition-colors cursor-pointer"
+                                title="Tambah kuantiti"
+                              >
+                                <Plus className="w-3 h-3" />
+                              </button>
+                            </div>
+
+                            {/* Price */}
+                            <div className="text-right">
+                              <span className="text-xs sm:text-sm font-bold text-forest font-serif whitespace-nowrap">
+                                {formatMYR(item.priceSen * item.quantity)}
+                              </span>
+                              {item.compareAtPriceSen && item.compareAtPriceSen > item.priceSen && (
+                                <span className="text-[10px] text-charcoal-muted/60 line-through block whitespace-nowrap">
+                                  {formatMYR(item.compareAtPriceSen * item.quantity)}
+                                </span>
+                              )}
+                            </div>
+                          </div>
+
+                          {/* Inline Variant Chooser Accordion */}
+                          {editingVariantFor === item.variantId && hasAlternativeVariants && (
+                            <div className="mt-2.5 p-2.5 bg-[#FAF7F2] rounded-xl border border-gold/50 shadow-sm space-y-1.5 animate-in fade-in zoom-in-95 duration-150">
+                              <div className="flex items-center justify-between text-[11px] font-bold text-forest border-b border-[#E8E2D8] pb-1">
+                                <span>Pilih Saiz / Variasi:</span>
+                                <button
+                                  type="button"
+                                  onClick={() => setEditingVariantFor(null)}
+                                  className="text-neutral-400 hover:text-neutral-700 text-[10px] font-semibold cursor-pointer"
+                                >
+                                  ✕ Batal
+                                </button>
+                              </div>
+                              <div className="space-y-1 max-h-44 overflow-y-auto pr-0.5">
+                                {otherVariants.map((v) => {
+                                  const isCurrent = v.id === item.variantId
+                                  return (
+                                    <button
+                                      key={v.id}
+                                      type="button"
+                                      disabled={isCurrent}
+                                      onClick={() => {
+                                        updateItemVariant(item.variantId, {
+                                          variantId: v.id,
+                                          sizeName: v.sizeName,
+                                          sku: v.sku,
+                                          dimensions: v.dimensions,
+                                          priceSen: v.priceSen,
+                                          compareAtPriceSen: v.compareAtPriceSen,
+                                          stockAvailable: v.stockQuantity,
+                                        })
+                                        setEditingVariantFor(null)
+                                        setErrorMessage('')
+                                      }}
+                                      className={`w-full text-left p-2 rounded-lg text-xs flex items-center justify-between transition-all ${
+                                        isCurrent
+                                          ? 'bg-forest text-warmwhite font-bold cursor-default shadow-xs'
+                                          : 'bg-white hover:bg-gold/15 border border-[#E8E2D8] text-forest cursor-pointer'
+                                      }`}
+                                    >
+                                      <div className="min-w-0 pr-2">
+                                        <div className="font-semibold text-xs leading-tight">{v.sizeName}</div>
+                                        <div className={`text-[10px] leading-tight ${isCurrent ? 'text-warmwhite/80' : 'text-neutral-500'}`}>
+                                          {v.dimensions}
+                                        </div>
+                                      </div>
+                                      <div className="text-right shrink-0 font-bold font-serif whitespace-nowrap">
+                                        {formatMYR(v.priceSen)}
+                                        {isCurrent && <span className="text-[9px] block font-sans opacity-90">(Pilihan Semasa)</span>}
+                                      </div>
+                                    </button>
+                                  )
+                                })}
+                              </div>
+                            </div>
+                          )}
+                        </div>
                       </div>
                     </div>
                   )

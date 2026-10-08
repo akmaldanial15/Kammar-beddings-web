@@ -11,6 +11,18 @@ interface CartContextType {
   addItem: (item: Omit<CartItem, 'quantity'> & { quantity?: number }) => void
   removeItem: (variantId: string) => void
   updateQuantity: (variantId: string, quantity: number) => void
+  updateItemVariant: (
+    oldVariantId: string,
+    newVariant: {
+      variantId: string
+      sizeName: string
+      sku: string
+      dimensions: string
+      priceSen: number
+      compareAtPriceSen?: number
+      stockAvailable?: number
+    }
+  ) => void
   clearCart: () => void
   couponCode: string
   setCouponCode: (code: string) => void
@@ -106,6 +118,55 @@ export function CartProvider({ children }: { children: React.ReactNode }) {
     )
   }
 
+  const updateItemVariant = (
+    oldVariantId: string,
+    newVariant: {
+      variantId: string
+      sizeName: string
+      sku: string
+      dimensions: string
+      priceSen: number
+      compareAtPriceSen?: number
+      stockAvailable?: number
+    }
+  ) => {
+    setItems((prev) => {
+      // If new variant already exists in cart and is different from old one, merge them
+      const exists = prev.find((item) => item.variantId === newVariant.variantId)
+      if (exists && newVariant.variantId !== oldVariantId) {
+        const oldItem = prev.find((item) => item.variantId === oldVariantId)
+        const oldQty = oldItem ? oldItem.quantity : 1
+        return prev
+          .filter((item) => item.variantId !== oldVariantId)
+          .map((item) =>
+            item.variantId === newVariant.variantId
+              ? {
+                  ...item,
+                  quantity: Math.min(item.quantity + oldQty, newVariant.stockAvailable || 99),
+                }
+              : item
+          )
+      }
+
+      return prev.map((item) => {
+        if (item.variantId === oldVariantId) {
+          return {
+            ...item,
+            variantId: newVariant.variantId,
+            sizeName: newVariant.sizeName,
+            sku: newVariant.sku,
+            dimensions: newVariant.dimensions,
+            priceSen: newVariant.priceSen,
+            compareAtPriceSen: newVariant.compareAtPriceSen,
+            stockAvailable: newVariant.stockAvailable ?? item.stockAvailable,
+            variantName: newVariant.sizeName,
+          }
+        }
+        return item
+      })
+    })
+  }
+
   const clearCart = () => {
     setItems([])
     setCouponCode('')
@@ -131,6 +192,7 @@ export function CartProvider({ children }: { children: React.ReactNode }) {
         addItem,
         removeItem,
         updateQuantity,
+        updateItemVariant,
         clearCart,
         couponCode,
         setCouponCode,
