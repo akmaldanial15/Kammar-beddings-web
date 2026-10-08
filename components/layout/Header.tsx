@@ -200,7 +200,7 @@ export function Header() {
 
   return (
     <>
-      <header className="sticky top-0 z-40 w-full transition-all duration-300">
+      <header className="sticky top-0 z-40 w-full bg-[#FAF7F2] transition-all duration-300 shadow-xs">
         {/* ========================================================================= */}
         {/* DESKTOP VIEW: 2-TIER LUXURY ARCHITECTURE (ZERO OVERLAP GUARANTEED)        */}
         {/* ========================================================================= */}
@@ -209,8 +209,8 @@ export function Header() {
           <div
             className={`transition-all duration-300 ${
               isScrolled
-                ? 'py-2 bg-warmwhite/95 backdrop-blur-md border-b border-borderLight/60 shadow-xs'
-                : 'py-3.5 bg-warmwhite border-b border-borderLight/40'
+                ? 'py-2 bg-[#FAF7F2] border-b border-borderLight/60 shadow-xs'
+                : 'py-3.5 bg-[#FAF7F2] border-b border-borderLight/40'
             }`}
           >
             <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
@@ -335,7 +335,7 @@ export function Header() {
           </div>
 
           {/* TIER 2: DEDICATED CATEGORY NAVIGATION ROW (ORGANIZED, BALANCED & CENTERED) */}
-          <div className="bg-[#FCFAF7]/98 backdrop-blur-md border-b border-[#E8E1D5] shadow-[0_2px_12px_rgba(19,50,91,0.03)]">
+          <div className="bg-[#FAF7F2] border-b border-[#E8E1D5] shadow-xs">
             <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 relative">
               <nav className="flex items-center justify-center gap-1.5 xl:gap-2.5 py-2 text-[13px] font-medium text-charcoal">
                 
@@ -1140,7 +1140,7 @@ export function Header() {
         {/* ========================================================================= */}
         {/* MOBILE VIEW (< 1024px): COMPACT & BALANCED TOP BAR                        */}
         {/* ========================================================================= */}
-        <div className="lg:hidden bg-warmwhite/95 backdrop-blur-md border-b border-borderLight py-3 px-4 shadow-xs">
+        <div className="lg:hidden bg-[#FAF7F2] border-b border-borderLight py-3 px-4 shadow-xs">
           <div className="flex items-center justify-between">
             {/* Left: Hamburger + Search */}
             <div className="flex items-center space-x-2">
