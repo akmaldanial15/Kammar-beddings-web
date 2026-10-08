@@ -9,6 +9,8 @@ export interface CreatePaymentSessionParams {
   currency?: string
   successUrl: string
   cancelUrl: string
+  customerPhone?: string
+  preferredMethod?: string
   items: {
     name: string
     quantity: number

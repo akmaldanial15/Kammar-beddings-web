@@ -9,6 +9,7 @@ import {
 } from '@/lib/db'
 import { calculateShippingFee, validateMalaysianPostcode, validateMalaysianPhone } from '@/lib/utils/format'
 import { stripeProvider } from '@/lib/payment/stripe'
+import { chipProvider } from '@/lib/payment/chip'
 
 const CheckoutRequestSchema = z.object({
   items: z.array(
@@ -39,6 +40,8 @@ const CheckoutRequestSchema = z.object({
   }).optional(),
   couponCode: z.string().optional(),
   affiliateCode: z.string().optional(),
+  paymentMethodId: z.string().optional(),
+  paymentProvider: z.string().optional(),
 })
 
 export async function POST(request: NextRequest) {
@@ -53,7 +56,7 @@ export async function POST(request: NextRequest) {
       )
     }
 
-    const { items, customer, shippingAddress, deliveryDetails, couponCode, affiliateCode } = parseResult.data
+    const { items, customer, shippingAddress, deliveryDetails, couponCode, affiliateCode, paymentMethodId, paymentProvider: reqProvider } = parseResult.data
 
     // 1. Re-validate each item price and stock against server database (Never trust client)
     let subtotalSen = 0
@@ -200,7 +203,7 @@ export async function POST(request: NextRequest) {
       appliedCoupon,
       paymentStatus: 'unpaid',
       fulfillmentStatus: 'unfulfilled',
-      paymentProvider: 'stripe',
+      paymentProvider: paymentMethodId === 'pay-fpx' || paymentMethodId === 'pay-tng' || reqProvider === 'chip' || reqProvider === 'fpx' || reqProvider === 'tng' ? 'chip' : 'stripe',
       items: validatedOrderItems.map((item, idx) => ({
         ...item,
         id: `item-${Date.now()}-${idx}`,
@@ -208,15 +211,27 @@ export async function POST(request: NextRequest) {
       })),
     })
 
-    // 6. Create Stripe Checkout Session
+    // 6. Create Payment Session via CHIP (FPX / TNG) or Stripe (Cards)
     const appUrl = process.env.NEXT_PUBLIC_APP_URL || 'http://localhost:3000'
-    const session = await stripeProvider.createCheckoutSession({
+    const isChipPayment =
+      reqProvider === 'chip' ||
+      paymentMethodId === 'pay-fpx' ||
+      paymentMethodId === 'pay-tng' ||
+      reqProvider === 'fpx' ||
+      reqProvider === 'tng'
+
+    const activeProvider = isChipPayment ? chipProvider : stripeProvider
+    const preferredMethod = paymentMethodId === 'pay-tng' || reqProvider === 'tng' ? 'tng' : 'fpx'
+
+    const session = await activeProvider.createCheckoutSession({
       orderId: order.id,
       orderNumber: order.orderNumber,
       customerEmail: customer.email,
       customerName: customer.fullName,
+      customerPhone: customer.phone,
       amountSen: totalSen,
       currency: 'MYR',
+      preferredMethod,
       successUrl: `${appUrl}/order/confirmed/${order.id}`,
       cancelUrl: `${appUrl}/checkout?cancelled=true`,
       items: validatedOrderItems.map((i) => ({

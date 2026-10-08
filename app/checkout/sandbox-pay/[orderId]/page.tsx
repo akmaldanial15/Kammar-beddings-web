@@ -38,24 +38,38 @@ export default function SandboxPaymentPage({ params }: Props) {
   const handleSimulatePayment = async (status: 'success' | 'fail') => {
     setSimulating(true)
     try {
-      const res = await fetch('/api/webhooks/stripe', {
-        method: 'POST',
-        headers: { 'Content-Type': 'application/json' },
-        body: JSON.stringify({
-          type: status === 'success' ? 'checkout.session.completed' : 'payment_intent.payment_failed',
-          id: `evt_sim_${Date.now()}`,
-          orderId,
-          data: {
-            object: {
-              id: `pi_sim_${Date.now()}`,
-              metadata: { orderId },
-              client_reference_id: orderId,
-              amount_received: order?.totalSen,
-              currency: 'myr',
+      if (order?.paymentProvider === 'chip') {
+        await fetch('/api/webhooks/chip', {
+          method: 'POST',
+          headers: { 'Content-Type': 'application/json' },
+          body: JSON.stringify({
+            event_type: status === 'success' ? 'purchase.paid' : 'purchase.failed',
+            status: status === 'success' ? 'paid' : 'failed',
+            id: `chip_sim_${Date.now()}`,
+            reference: orderId,
+            order_id: orderId,
+          }),
+        })
+      } else {
+        await fetch('/api/webhooks/stripe', {
+          method: 'POST',
+          headers: { 'Content-Type': 'application/json' },
+          body: JSON.stringify({
+            type: status === 'success' ? 'checkout.session.completed' : 'payment_intent.payment_failed',
+            id: `evt_sim_${Date.now()}`,
+            orderId,
+            data: {
+              object: {
+                id: `pi_sim_${Date.now()}`,
+                metadata: { orderId },
+                client_reference_id: orderId,
+                amount_received: order?.totalSen,
+                currency: 'myr',
+              },
             },
-          },
-        }),
-      })
+          }),
+        })
+      }
 
       if (status === 'success') {
         router.push(`/order/confirmed/${orderId}`)

@@ -541,6 +541,7 @@ export interface CompanyProfileConfig {
 }
 
 export type PaymentProviderType =
+  | 'chip'
   | 'credit_card'
   | 'atome_bnpl'
   | 'fpx'

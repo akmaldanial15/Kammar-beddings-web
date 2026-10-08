@@ -322,8 +322,11 @@ export function CheckoutClient({ initialPaymentSettings }: CheckoutClientProps) 
           },
           couponCode: couponCode || undefined,
           affiliateCode: affiliateCode.trim() || undefined,
-          paymentMethodId: selectedMethod?.id,
-          paymentProvider: selectedMethod?.providerType || 'credit_card',
+          paymentMethodId: selectedMethodId || selectedMethod?.id,
+          paymentProvider:
+            selectedMethodId === 'pay-fpx' || selectedMethodId === 'pay-tng'
+              ? 'chip'
+              : selectedMethod?.providerType || 'chip',
         }),
       })
 
@@ -390,21 +393,16 @@ export function CheckoutClient({ initialPaymentSettings }: CheckoutClientProps) 
         )
       case 'fpx':
         return (
-          <span
-            key={type}
-            className="px-2 py-0.5 rounded text-[10px] font-extrabold bg-[#00529C] text-white tracking-wider border border-[#00529C] shadow-2xs"
-          >
-            FPX
-          </span>
+          <div key={type} className="h-6 px-2 bg-white rounded border border-[#D5CEC2] flex items-center justify-center shadow-2xs">
+            <Image src="/images/payments/fpx.svg" alt="FPX" width={40} height={14} className="h-3.5 w-auto object-contain" />
+          </div>
         )
       case 'tng':
         return (
-          <span
-            key={type}
-            className="px-2 py-0.5 rounded text-[10px] font-bold bg-[#015CA9] text-white border border-[#015CA9]"
-          >
-            TNG eWallet
-          </span>
+          <div key={type} className="h-6 px-1.5 bg-white rounded border border-[#D5CEC2] flex items-center justify-center gap-1 shadow-2xs">
+            <Image src="/images/payments/tng-ewallet.svg" alt="TNG" width={16} height={16} className="h-4 w-4 object-contain" />
+            <span className="text-[9px] font-bold text-[#015CA9]">TNG</span>
+          </div>
         )
       case 'grabpay':
         return (
@@ -557,10 +555,14 @@ export function CheckoutClient({ initialPaymentSettings }: CheckoutClientProps) 
                     <Sparkles className="w-3.5 h-3.5 text-gold" />
                     Express Checkout
                   </span>
-                  <span className="text-[11px] text-charcoal-muted">Pembayaran Pantas 1-Klik</span>
+                  <span className="text-[10.5px] font-semibold text-emerald-800 bg-emerald-50 px-2.5 py-0.5 rounded-full border border-emerald-200 flex items-center gap-1">
+                    <ShieldCheck className="w-3 h-3 text-emerald-600" />
+                    <span>Dikuasakan oleh CHIP</span>
+                  </span>
                 </div>
 
                 <div className="grid grid-cols-1 sm:grid-cols-2 gap-3">
+                  {/* FPX Button with Official Logo */}
                   <button
                     type="button"
                     onClick={() => {
@@ -568,12 +570,28 @@ export function CheckoutClient({ initialPaymentSettings }: CheckoutClientProps) 
                       const el = document.getElementById('payment-section')
                       el?.scrollIntoView({ behavior: 'smooth' })
                     }}
-                    className="w-full py-3.5 px-4 bg-[#00529C] hover:bg-[#00417C] active:scale-[0.99] text-white rounded-xl font-bold flex items-center justify-center space-x-2 transition-all shadow-xs cursor-pointer"
+                    className="w-full py-3 px-4 bg-[#00529C] hover:bg-[#00417C] active:scale-[0.99] text-white rounded-xl font-bold flex items-center justify-center gap-3 transition-all shadow-xs hover:shadow-md cursor-pointer border border-[#00417C]"
                   >
-                    <span className="font-mono font-black text-sm tracking-wider">FPX</span>
-                    <span className="text-[11px] text-sky-100 font-normal">| Perbankan Internet</span>
+                    <div className="h-7 px-2.5 bg-white rounded-lg flex items-center justify-center shadow-2xs shrink-0">
+                      <Image
+                        src="/images/payments/fpx.svg"
+                        alt="FPX Online Banking"
+                        width={60}
+                        height={20}
+                        className="h-4 w-auto object-contain"
+                      />
+                    </div>
+                    <div className="text-left flex flex-col justify-center min-w-0">
+                      <span className="text-xs sm:text-sm font-bold text-white tracking-tight leading-tight">
+                        FPX Perbankan Internet
+                      </span>
+                      <span className="text-[10px] text-sky-200/90 leading-tight truncate">
+                        Maybank2u, CIMB, RHB &amp; 18+ Bank
+                      </span>
+                    </div>
                   </button>
 
+                  {/* Touch 'n Go Button with Official Logo */}
                   <button
                     type="button"
                     onClick={() => {
@@ -581,10 +599,25 @@ export function CheckoutClient({ initialPaymentSettings }: CheckoutClientProps) 
                       const el = document.getElementById('payment-section')
                       el?.scrollIntoView({ behavior: 'smooth' })
                     }}
-                    className="w-full py-3.5 px-4 bg-[#015CA9] hover:bg-[#004c8c] active:scale-[0.99] text-white rounded-xl font-bold flex items-center justify-center space-x-2 transition-all shadow-xs cursor-pointer"
+                    className="w-full py-3 px-4 bg-[#015CA9] hover:bg-[#004c8c] active:scale-[0.99] text-white rounded-xl font-bold flex items-center justify-center gap-3 transition-all shadow-xs hover:shadow-md cursor-pointer border border-[#004c8c]"
                   >
-                    <span className="font-sans font-black text-sm tracking-tight text-white">TNG</span>
-                    <span className="text-[11px] text-sky-100 font-normal">| Touch &apos;n Go eWallet</span>
+                    <div className="h-7 w-7 bg-white rounded-lg p-0.5 flex items-center justify-center shadow-2xs shrink-0">
+                      <Image
+                        src="/images/payments/tng-ewallet.svg"
+                        alt="Touch 'n Go eWallet"
+                        width={24}
+                        height={24}
+                        className="h-5.5 w-5.5 object-contain rounded-xs"
+                      />
+                    </div>
+                    <div className="text-left flex flex-col justify-center min-w-0">
+                      <span className="text-xs sm:text-sm font-bold text-white tracking-tight leading-tight">
+                        Touch &apos;n Go eWallet
+                      </span>
+                      <span className="text-[10px] text-sky-200/90 leading-tight truncate">
+                        DuitNow QR &amp; Aplikasi Rasmi TNG
+                      </span>
+                    </div>
                   </button>
                 </div>
 
@@ -956,7 +989,7 @@ export function CheckoutClient({ initialPaymentSettings }: CheckoutClientProps) 
                 <div className="bg-emerald-50/70 border border-emerald-200 p-3.5 rounded-xl text-xs text-emerald-950 flex items-start gap-2.5">
                   <ShieldCheck className="w-4 h-4 text-emerald-700 shrink-0 mt-0.5" />
                   <p className="leading-relaxed">
-                    Syarikat kami <strong>TUNAS SINAR JAYA ENTERPRISE</strong> menerima bayaran rasmi melalui <strong>FPX Perbankan Dalam Talian</strong> dan <strong>Touch &apos;n Go (TNG) eWallet</strong> sahaja bagi memastikan transaksi selamat dan pantas.
+                    Syarikat kami <strong>TUNAS SINAR JAYA ENTERPRISE</strong> menerima bayaran rasmi melalui <strong>FPX Perbankan Dalam Talian</strong> dan <strong>Touch &apos;n Go (TNG) eWallet</strong> yang diproses terus melalui gerbang pembayaran rasmi <strong>CHIP In Asia</strong> (Patuh Bank Negara Malaysia &amp; PayNet).
                   </p>
                 </div>
 
