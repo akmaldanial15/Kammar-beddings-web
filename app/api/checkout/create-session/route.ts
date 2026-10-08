@@ -33,6 +33,8 @@ const CheckoutRequestSchema = z.object({
     country: z.string().default('Malaysia'),
   }),
   deliveryDetails: z.object({
+    method: z.enum(['delivery', 'pickup']).default('delivery').optional(),
+    pickupLocation: z.string().optional(),
     notes: z.string().optional(),
     hasLiftAccess: z.boolean().default(true),
     floorLevel: z.string().optional(),
@@ -120,6 +122,7 @@ export async function POST(request: NextRequest) {
     }
 
     // 3. Authoritative server calculation for Malaysian Shipping
+    const isSelfPickup = deliveryDetails?.method === 'pickup'
     const shippingCalc = calculateShippingFee({
       subtotalSen,
       state: shippingAddress.state,
@@ -127,7 +130,8 @@ export async function POST(request: NextRequest) {
       freeShippingPromo: couponCode === 'FREESHIP',
     })
 
-    const totalSen = Math.max(0, subtotalSen - discountSen + shippingCalc.shippingSen)
+    const finalShippingSen = isSelfPickup ? 0 : shippingCalc.shippingSen
+    const totalSen = Math.max(0, subtotalSen - discountSen + finalShippingSen)
 
     // 4. Resolve Affiliate & Referral attribution (if any)
     let affiliateAttribution: {
@@ -163,6 +167,11 @@ export async function POST(request: NextRequest) {
     }
 
     // 6. Persist order in database with immutable snapshot
+    const pickupNotePrefix = isSelfPickup
+      ? `[AMBIL SENDIRI DI KILANG - SELF PICKUP] ${deliveryDetails?.pickupLocation ? `Lokasi: ${deliveryDetails.pickupLocation}. ` : ''}`
+      : ''
+    const fullDeliveryNotes = [pickupNotePrefix, deliveryDetails?.notes].filter(Boolean).join(' ') || undefined
+
     const order = await createOrder({
       customerEmail: customer.email,
       customerName: customer.fullName,
@@ -191,13 +200,13 @@ export async function POST(request: NextRequest) {
         postcode: shippingAddress.postcode,
         country: shippingAddress.country,
       },
-      deliveryNotes: deliveryDetails?.notes,
+      deliveryNotes: fullDeliveryNotes,
       preferredDeliveryDate: deliveryDetails?.preferredDeliveryDate,
-      hasLiftAccess: deliveryDetails?.hasLiftAccess,
-      floorLevel: deliveryDetails?.floorLevel,
+      hasLiftAccess: isSelfPickup ? false : deliveryDetails?.hasLiftAccess,
+      floorLevel: isSelfPickup ? 'Self-Pickup @ Kilang' : deliveryDetails?.floorLevel,
       subtotalSen,
       discountSen,
-      shippingSen: shippingCalc.shippingSen,
+      shippingSen: finalShippingSen,
       taxSen: 0,
       totalSen,
       appliedCoupon,

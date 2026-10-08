@@ -1,6 +1,6 @@
 import React, { Suspense } from 'react'
 import { Metadata } from 'next'
-import { getPaymentSettings } from '@/lib/db'
+import { getPaymentSettings, getSiteSettings } from '@/lib/db'
 import { CheckoutClient } from './CheckoutClient'
 
 export const dynamic = 'force-dynamic'
@@ -11,7 +11,10 @@ export const metadata: Metadata = {
 }
 
 export default async function CheckoutPage() {
-  const paymentSettings = await getPaymentSettings()
+  const [paymentSettings, siteSettings] = await Promise.all([
+    getPaymentSettings(),
+    getSiteSettings(),
+  ])
 
   return (
     <Suspense
@@ -23,7 +26,10 @@ export default async function CheckoutPage() {
         </div>
       }
     >
-      <CheckoutClient initialPaymentSettings={paymentSettings} />
+      <CheckoutClient
+        initialPaymentSettings={paymentSettings}
+        initialSiteSettings={siteSettings}
+      />
     </Suspense>
   )
 }

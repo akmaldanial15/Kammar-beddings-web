@@ -1195,7 +1195,17 @@ export const initialSiteSettings: SiteSettings = {
   "peninsularShippingSen": 1500,
   "eastMalaysiaShippingSen": 4500,
   "warrantyDefaultYears": 1,
-  "trialDefaultNights": 14
+  "trialDefaultNights": 14,
+  "selfPickupEnabled": true,
+  "pickupLocationName": "Kilang KAMAAR Beddings (Tunas Sinar Jaya Enterprise)",
+  "pickupAddress": "7878B Jalan Permatang Berangan",
+  "pickupCityState": "Tasek Gelugor, Seberang Perai Utara, Pulau Pinang",
+  "pickupPostcode": "13300",
+  "pickupOperatingHours": "Isnin – Sabtu: 9:00 AM – 6:00 PM (Ahad & Cuti Umum Tutup)",
+  "pickupContactPhone": "019-478 6991",
+  "pickupGoogleMapsUrl": "https://maps.google.com/?q=7878B+Jalan+Permatang+Berangan,+13300+Tasek+Gelugor+Pulau+Pinang",
+  "pickupWazeUrl": "https://waze.com/ul?q=7878B%20Jalan%20Permatang%20Berangan%20Tasek%20Gelugor",
+  "pickupInstructions": "Sila bawa No. Pesanan / Resit semasa hadir di kilang untuk penyerahan pesanan."
 }
 
 export const initialStaffMembers: StaffMember[] = [

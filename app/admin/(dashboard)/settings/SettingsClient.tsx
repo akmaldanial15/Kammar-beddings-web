@@ -17,6 +17,8 @@ import {
   Sparkles,
   RefreshCw,
   Sliders,
+  MapPin,
+  ExternalLink,
 } from 'lucide-react'
 
 interface SettingsClientProps {
@@ -626,6 +628,178 @@ export function SettingsClient({
                   <span className="text-[10px] text-secondary mt-1 block">
                     Ditetapkan piawai kepada Ringgit Malaysia (MYR - RM).
                   </span>
+                </div>
+
+                {/* Factory Self-Pickup Section */}
+                <div className="md:col-span-2 pt-4 border-t border-slate-100 space-y-4">
+                  <div className="flex items-center justify-between p-4 rounded-xl bg-amber-50/60 border border-amber-200/80">
+                    <div className="flex items-start space-x-3">
+                      <div className="w-8 h-8 rounded-lg bg-amber-100 text-amber-800 flex items-center justify-center shrink-0 mt-0.5">
+                        <MapPin className="w-4 h-4" />
+                      </div>
+                      <div>
+                        <span className="font-bold text-forest-dark block text-xs sm:text-sm">
+                          Pilihan Ambil Sendiri di Kilang (Factory Self-Pickup)
+                        </span>
+                        <p className="text-[11px] text-slate-500 mt-0.5">
+                          Aktifkan pilihan untuk membenarkan pelanggan mengambil tilam atau tempahan terus di kilang Tasek Gelugor (percuma kos penghantaran).
+                        </p>
+                      </div>
+                    </div>
+
+                    <label className="relative inline-flex items-center cursor-pointer shrink-0">
+                      <input
+                        type="checkbox"
+                        checked={Boolean(settings.selfPickupEnabled ?? true)}
+                        onChange={(e) =>
+                          setSettings({ ...settings, selfPickupEnabled: e.target.checked })
+                        }
+                        className="sr-only peer"
+                      />
+                      <div className="w-11 h-6 bg-slate-200 peer-focus:outline-none rounded-full peer peer-checked:after:translate-x-full peer-checked:after:border-white after:content-[''] after:absolute after:top-[2px] after:left-[2px] after:bg-white after:border-slate-300 after:border after:rounded-full after:h-5 after:w-5 after:transition-all peer-checked:bg-forest"></div>
+                    </label>
+                  </div>
+
+                  {Boolean(settings.selfPickupEnabled ?? true) && (
+                    <div className="p-4 sm:p-5 rounded-xl border border-slate-200 bg-slate-50/50 space-y-4 text-xs">
+                      <div className="grid grid-cols-1 md:grid-cols-2 gap-4">
+                        <div>
+                          <label className="block font-bold text-forest-dark mb-1">
+                            Nama Lokasi Pengambilan (Kilang)
+                          </label>
+                          <input
+                            type="text"
+                            value={settings.pickupLocationName || ''}
+                            onChange={(e) =>
+                              setSettings({ ...settings, pickupLocationName: e.target.value })
+                            }
+                            placeholder="cth: Kilang KAMAAR Beddings (Tunas Sinar Jaya Enterprise)"
+                            className="w-full px-3 py-2.5 rounded-xl border border-slate-200 focus:border-gold focus:ring-1 focus:ring-gold bg-white"
+                          />
+                        </div>
+
+                        <div>
+                          <label className="block font-bold text-forest-dark mb-1">
+                            No. Telefon / WhatsApp Hubungan Kilang
+                          </label>
+                          <input
+                            type="text"
+                            value={settings.pickupContactPhone || ''}
+                            onChange={(e) =>
+                              setSettings({ ...settings, pickupContactPhone: e.target.value })
+                            }
+                            placeholder="cth: 019-478 6991"
+                            className="w-full px-3 py-2.5 rounded-xl border border-slate-200 focus:border-gold focus:ring-1 focus:ring-gold bg-white"
+                          />
+                        </div>
+                      </div>
+
+                      <div className="grid grid-cols-1 md:grid-cols-3 gap-4">
+                        <div className="md:col-span-2">
+                          <label className="block font-bold text-forest-dark mb-1">
+                            Alamat Penuh Kilang
+                          </label>
+                          <input
+                            type="text"
+                            value={settings.pickupAddress || ''}
+                            onChange={(e) =>
+                              setSettings({ ...settings, pickupAddress: e.target.value })
+                            }
+                            placeholder="cth: 7878B Jalan Permatang Berangan"
+                            className="w-full px-3 py-2.5 rounded-xl border border-slate-200 focus:border-gold focus:ring-1 focus:ring-gold bg-white"
+                          />
+                        </div>
+
+                        <div>
+                          <label className="block font-bold text-forest-dark mb-1">
+                            Bandar, Poskod & Negeri
+                          </label>
+                          <input
+                            type="text"
+                            value={settings.pickupCityState || ''}
+                            onChange={(e) =>
+                              setSettings({ ...settings, pickupCityState: e.target.value })
+                            }
+                            placeholder="cth: 13300 Tasek Gelugor, Pulau Pinang"
+                            className="w-full px-3 py-2.5 rounded-xl border border-slate-200 focus:border-gold focus:ring-1 focus:ring-gold bg-white"
+                          />
+                        </div>
+                      </div>
+
+                      <div>
+                        <label className="block font-bold text-forest-dark mb-1">
+                          Waktu Operasi Kilang (Operating Hours)
+                        </label>
+                        <input
+                          type="text"
+                          value={settings.pickupOperatingHours || ''}
+                          onChange={(e) =>
+                            setSettings({ ...settings, pickupOperatingHours: e.target.value })
+                          }
+                          placeholder="cth: Isnin – Sabtu: 9:00 AM – 6:00 PM (Ahad & Cuti Umum Tutup)"
+                          className="w-full px-3 py-2.5 rounded-xl border border-slate-200 focus:border-gold focus:ring-1 focus:ring-gold bg-white"
+                        />
+                      </div>
+
+                      <div className="grid grid-cols-1 md:grid-cols-2 gap-4">
+                        <div>
+                          <div className="flex items-center justify-between mb-1">
+                            <label className="block font-bold text-forest-dark">
+                              Pautan Google Maps Lokasi Kilang
+                            </label>
+                            {settings.pickupGoogleMapsUrl && (
+                              <a
+                                href={settings.pickupGoogleMapsUrl}
+                                target="_blank"
+                                rel="noreferrer"
+                                className="text-[10px] text-sky-700 hover:text-sky-900 font-semibold inline-flex items-center gap-1"
+                              >
+                                <span>Buka Peta</span>
+                                <ExternalLink className="w-2.5 h-2.5" />
+                              </a>
+                            )}
+                          </div>
+                          <input
+                            type="url"
+                            value={settings.pickupGoogleMapsUrl || ''}
+                            onChange={(e) =>
+                              setSettings({ ...settings, pickupGoogleMapsUrl: e.target.value })
+                            }
+                            placeholder="https://maps.google.com/?q=..."
+                            className="w-full px-3 py-2.5 rounded-xl border border-slate-200 focus:border-gold focus:ring-1 focus:ring-gold bg-white font-mono text-[11px]"
+                          />
+                        </div>
+
+                        <div>
+                          <div className="flex items-center justify-between mb-1">
+                            <label className="block font-bold text-forest-dark">
+                              Pautan Waze Lokasi Kilang (Pilihan)
+                            </label>
+                            {settings.pickupWazeUrl && (
+                              <a
+                                href={settings.pickupWazeUrl}
+                                target="_blank"
+                                rel="noreferrer"
+                                className="text-[10px] text-sky-700 hover:text-sky-900 font-semibold inline-flex items-center gap-1"
+                              >
+                                <span>Buka Waze</span>
+                                <ExternalLink className="w-2.5 h-2.5" />
+                              </a>
+                            )}
+                          </div>
+                          <input
+                            type="url"
+                            value={settings.pickupWazeUrl || ''}
+                            onChange={(e) =>
+                              setSettings({ ...settings, pickupWazeUrl: e.target.value })
+                            }
+                            placeholder="https://waze.com/ul?q=..."
+                            className="w-full px-3 py-2.5 rounded-xl border border-slate-200 focus:border-gold focus:ring-1 focus:ring-gold bg-white font-mono text-[11px]"
+                          />
+                        </div>
+                      </div>
+                    </div>
+                  )}
                 </div>
               </div>
             </div>

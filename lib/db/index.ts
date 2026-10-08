@@ -851,6 +851,23 @@ export async function getBlogPostBySlug(slug: string): Promise<BlogPost | null> 
 
 export async function getSiteSettings(): Promise<SiteSettings> {
   const db = ensureDb()
+  if (db.siteSettings.selfPickupEnabled === undefined) {
+    db.siteSettings = {
+      ...initialSiteSettings,
+      ...db.siteSettings,
+      selfPickupEnabled: true,
+      pickupLocationName: db.siteSettings.pickupLocationName || initialSiteSettings.pickupLocationName,
+      pickupAddress: db.siteSettings.pickupAddress || initialSiteSettings.pickupAddress,
+      pickupCityState: db.siteSettings.pickupCityState || initialSiteSettings.pickupCityState,
+      pickupPostcode: db.siteSettings.pickupPostcode || initialSiteSettings.pickupPostcode,
+      pickupOperatingHours: db.siteSettings.pickupOperatingHours || initialSiteSettings.pickupOperatingHours,
+      pickupContactPhone: db.siteSettings.pickupContactPhone || initialSiteSettings.pickupContactPhone,
+      pickupGoogleMapsUrl: db.siteSettings.pickupGoogleMapsUrl || initialSiteSettings.pickupGoogleMapsUrl,
+      pickupWazeUrl: db.siteSettings.pickupWazeUrl || initialSiteSettings.pickupWazeUrl,
+      pickupInstructions: db.siteSettings.pickupInstructions || initialSiteSettings.pickupInstructions,
+    }
+    saveDb(db)
+  }
   return db.siteSettings
 }
 

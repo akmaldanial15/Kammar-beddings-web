@@ -365,6 +365,17 @@ export interface SiteSettings {
   eastMalaysiaShippingSen: number
   warrantyDefaultYears: number
   trialDefaultNights: number
+  // Factory Self-Pickup Configuration
+  selfPickupEnabled?: boolean
+  pickupLocationName?: string
+  pickupAddress?: string
+  pickupCityState?: string
+  pickupPostcode?: string
+  pickupOperatingHours?: string
+  pickupContactPhone?: string
+  pickupGoogleMapsUrl?: string
+  pickupWazeUrl?: string
+  pickupInstructions?: string
 }
 
 export type StaffRole = 'owner' | 'catalog_manager' | 'order_manager' | 'content_editor'

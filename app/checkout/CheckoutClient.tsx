@@ -25,6 +25,11 @@ import {
   ArrowLeft,
   Check,
   Copy,
+  MapPin,
+  Store,
+  Navigation,
+  Clock,
+  Phone,
 } from 'lucide-react'
 import { useCart } from '@/lib/context/CartContext'
 import { useLanguage } from '@/lib/i18n/LanguageContext'
@@ -36,10 +41,11 @@ import {
   validateMalaysianPostcode,
   validateMalaysianPhone,
 } from '@/lib/utils/format'
-import { PaymentSettings, PaymentMethodConfig } from '@/types'
+import { PaymentSettings, PaymentMethodConfig, SiteSettings } from '@/types'
 
 interface CheckoutClientProps {
   initialPaymentSettings?: PaymentSettings
+  initialSiteSettings?: SiteSettings
 }
 
 const MALAYSIAN_BANKS = [
@@ -60,7 +66,7 @@ const MALAYSIAN_BANKS = [
   { id: 'bankrakyat', name: 'Bank Rakyat' },
 ]
 
-export function CheckoutClient({ initialPaymentSettings }: CheckoutClientProps) {
+export function CheckoutClient({ initialPaymentSettings, initialSiteSettings }: CheckoutClientProps) {
   const { items, subtotalSen, couponCode, applyCoupon, removeCoupon, notes, clearCart } = useCart()
   const { t } = useLanguage()
   const router = useRouter()
@@ -68,8 +74,11 @@ export function CheckoutClient({ initialPaymentSettings }: CheckoutClientProps) 
 
   const isCancelled = searchParams.get('cancelled') === 'true'
 
-  // Payment configuration from Admin
+  // Settings & Fulfillment configuration
   const [paymentSettings, setPaymentSettings] = useState<PaymentSettings | undefined>(initialPaymentSettings)
+  const [siteSettings, setSiteSettings] = useState<SiteSettings | undefined>(initialSiteSettings)
+  const [fulfillmentType, setFulfillmentType] = useState<'delivery' | 'pickup'>('delivery')
+
   const [activeMethods, setActiveMethods] = useState<PaymentMethodConfig[]>(
     initialPaymentSettings?.methods?.filter((m) => m.enabled) || []
   )
@@ -77,10 +86,18 @@ export function CheckoutClient({ initialPaymentSettings }: CheckoutClientProps) 
     initialPaymentSettings?.defaultMethodId || 'pay-fpx'
   )
 
-  // Fetch updated methods on mount if not provided or to ensure fresh status
+  // Fetch updated settings and methods on mount if not provided or to ensure fresh status
   useEffect(() => {
-    async function loadFreshMethods() {
+    async function loadFreshData() {
       try {
+        if (!initialSiteSettings) {
+          const sRes = await fetch('/api/site-settings')
+          if (sRes.ok) {
+            const sData = await sRes.json()
+            if (sData.settings) setSiteSettings(sData.settings)
+          }
+        }
+
         const res = await fetch('/api/payment-methods')
         if (res.ok) {
           const data = await res.json()
@@ -98,11 +115,11 @@ export function CheckoutClient({ initialPaymentSettings }: CheckoutClientProps) 
           }
         }
       } catch (err) {
-        console.error('Failed to load payment methods:', err)
+        console.error('Failed to load fresh checkout settings:', err)
       }
     }
-    loadFreshMethods()
-  }, [])
+    loadFreshData()
+  }, [initialSiteSettings, selectedMethodId])
 
   // Form states
   const [contactInfo, setContactInfo] = useState('')
@@ -196,6 +213,10 @@ export function CheckoutClient({ initialPaymentSettings }: CheckoutClientProps) 
       (i.productName || i.title || '').toLowerCase().includes('mattress')
   )
 
+  // Factory Self-Pickup condition
+  const isSelfPickupAllowed = Boolean(siteSettings?.selfPickupEnabled ?? true)
+  const isPickup = fulfillmentType === 'pickup' && isSelfPickupAllowed
+
   // Shipping calculation
   const shippingInfo = calculateShippingFee({
     subtotalSen,
@@ -214,7 +235,8 @@ export function CheckoutClient({ initialPaymentSettings }: CheckoutClientProps) 
     discountSen = Math.min(80000, Math.round(subtotalSen * 0.15))
   }
 
-  const finalTotalSen = Math.max(0, subtotalSen - discountSen + shippingInfo.shippingSen)
+  const effectiveShippingSen = isPickup ? 0 : shippingInfo.shippingSen
+  const finalTotalSen = Math.max(0, subtotalSen - discountSen + effectiveShippingSen)
 
   // Selected Payment Method Object
   const selectedMethod = activeMethods.find((m) => m.id === selectedMethodId) || activeMethods[0]
@@ -266,14 +288,16 @@ export function CheckoutClient({ initialPaymentSettings }: CheckoutClientProps) 
       return
     }
 
-    if (!addressLine1 || !addressLine1.trim()) {
-      setErrorMessage('Sila masukkan alamat penghantaran anda.')
-      return
-    }
+    if (!isPickup) {
+      if (!addressLine1 || !addressLine1.trim()) {
+        setErrorMessage('Sila masukkan alamat penghantaran anda.')
+        return
+      }
 
-    if (!postcode || !validateMalaysianPostcode(postcode)) {
-      setErrorMessage('Sila masukkan 5-digit poskod Malaysia yang sah (cth: 50450).')
-      return
+      if (!postcode || !validateMalaysianPostcode(postcode)) {
+        setErrorMessage('Sila masukkan 5-digit poskod Malaysia yang sah (cth: 50450).')
+        return
+      }
     }
 
     const effectivePhone = phone.trim() || (contactInfo.includes('@') ? '' : contactInfo.trim())
@@ -306,19 +330,21 @@ export function CheckoutClient({ initialPaymentSettings }: CheckoutClientProps) 
             phone: effectivePhone || '0123456789',
           },
           shippingAddress: {
-            addressLine1: [addressLine1.trim(), company.trim() ? `(${company.trim()})` : '']
-              .filter(Boolean)
-              .join(', '),
-            addressLine2: addressLine2.trim() || undefined,
-            city: city.trim() || 'Kuala Lumpur',
-            state,
-            postcode: postcode.trim(),
+            addressLine1: isPickup
+              ? (addressLine1.trim() || siteSettings?.pickupAddress || '7878B Jalan Permatang Berangan')
+              : [addressLine1.trim(), company.trim() ? `(${company.trim()})` : ''].filter(Boolean).join(', '),
+            addressLine2: isPickup ? 'Ambil Sendiri di Kilang' : (addressLine2.trim() || undefined),
+            city: isPickup ? (city.trim() || 'Tasek Gelugor') : (city.trim() || 'Kuala Lumpur'),
+            state: isPickup ? (state || 'Pulau Pinang') : state,
+            postcode: isPickup ? (postcode.trim() || siteSettings?.pickupPostcode || '13300') : postcode.trim(),
             country: 'Malaysia',
           },
           deliveryDetails: {
+            method: isPickup ? 'pickup' : 'delivery',
+            pickupLocation: siteSettings?.pickupLocationName || 'Kilang KAMAAR Beddings (Tasek Gelugor)',
             notes: deliveryNotes.trim() || undefined,
-            hasLiftAccess,
-            floorLevel,
+            hasLiftAccess: isPickup ? false : hasLiftAccess,
+            floorLevel: isPickup ? 'Self-Pickup' : floorLevel,
           },
           couponCode: couponCode || undefined,
           affiliateCode: affiliateCode.trim() || undefined,
@@ -663,14 +689,43 @@ export function CheckoutClient({ initialPaymentSettings }: CheckoutClientProps) 
                 </label>
               </div>
 
-              {/* SECTION 2: Delivery Address */}
+              {/* SECTION 2: Delivery Address / Contact Details */}
               <div className="bg-white rounded-2xl p-6 sm:p-7 border border-[#E8E2D8] shadow-2xs space-y-5">
-                <div className="flex items-center space-x-2.5 border-b border-[#E8E2D8]/60 pb-3">
-                  <span className="w-6 h-6 rounded-full bg-forest text-warmwhite text-xs font-bold flex items-center justify-center">
-                    2
-                  </span>
-                  <h2 className="text-base font-bold text-forest">Alamat Penghantaran</h2>
+                <div className="flex items-center justify-between border-b border-[#E8E2D8]/60 pb-3">
+                  <div className="flex items-center space-x-2.5">
+                    <span className="w-6 h-6 rounded-full bg-forest text-warmwhite text-xs font-bold flex items-center justify-center">
+                      2
+                    </span>
+                    <div>
+                      <h2 className="text-base font-bold text-forest leading-tight">
+                        {isPickup ? 'Butiran Pengambilan di Kilang' : 'Alamat Penghantaran'}
+                      </h2>
+                      <span className="text-[11px] text-charcoal-muted">
+                        {isPickup ? 'Nama & nombor telefon penerima yang hadir ke kilang' : 'Alamat kediaman / premis anda di Semenanjung'}
+                      </span>
+                    </div>
+                  </div>
+                  {isPickup && (
+                    <span className="text-[10.5px] font-bold text-amber-900 bg-amber-100/90 px-2.5 py-1 rounded-full border border-amber-300 flex items-center gap-1">
+                      <Store className="w-3 h-3 text-amber-700" />
+                      <span>Ambil di Kilang</span>
+                    </span>
+                  )}
                 </div>
+
+                {isPickup && (
+                  <div className="p-3.5 bg-amber-50 rounded-xl border border-amber-200 text-xs text-amber-950 flex items-start gap-2.5">
+                    <MapPin className="w-4 h-4 text-amber-700 shrink-0 mt-0.5" />
+                    <div>
+                      <strong className="block text-amber-900 font-bold">
+                        Pilihan Ambil Sendiri di Kilang Aktif
+                      </strong>
+                      <p className="mt-0.5 leading-relaxed text-amber-800">
+                        Pesanan ini akan diambil sendiri di kilang Tunas Sinar Jaya Enterprise (Tasek Gelugor, Pulau Pinang). Lori KAMAAR tidak akan dihantar ke rumah anda. Sila lengkapkan nama &amp; nombor telefon penerima di bawah untuk pengesahan serahan barang di kaunter kilang.
+                      </p>
+                    </div>
+                  </div>
+                )}
 
                 {/* Country / Region */}
                 <div className="space-y-1.5">
@@ -733,14 +788,19 @@ export function CheckoutClient({ initialPaymentSettings }: CheckoutClientProps) 
                 {/* Address Line 1 */}
                 <div className="space-y-1.5">
                   <label className="text-xs font-semibold text-forest block">
-                    Alamat Jalan (No. Rumah &amp; Nama Jalan) <span className="text-red-500">*</span>
+                    {isPickup ? 'Alamat Kediaman / Bil (Pilihan untuk Resit)' : 'Alamat Jalan (No. Rumah & Nama Jalan)'}{' '}
+                    {!isPickup && <span className="text-red-500">*</span>}
                   </label>
                   <input
                     type="text"
-                    required
+                    required={!isPickup}
                     value={addressLine1}
                     onChange={(e) => setAddressLine1(e.target.value)}
-                    placeholder="cth: No. 12, Jalan Telawi 3, Bangsar Baru"
+                    placeholder={
+                      isPickup
+                        ? 'cth: No. 12, Taman Seri Gelugor (Pilihan)'
+                        : 'cth: No. 12, Jalan Telawi 3, Bangsar Baru'
+                    }
                     className="w-full px-4 py-3 rounded-xl border border-[#D5CEC2] bg-[#FAF7F2]/40 text-sm text-[#222] placeholder-neutral-400 outline-none focus:border-forest focus:ring-2 focus:ring-forest/10 transition-all"
                   />
                 </div>
@@ -763,29 +823,29 @@ export function CheckoutClient({ initialPaymentSettings }: CheckoutClientProps) 
                 <div className="grid grid-cols-1 sm:grid-cols-3 gap-4">
                   <div className="space-y-1.5">
                     <label className="text-xs font-semibold text-forest block">
-                      Poskod <span className="text-red-500">*</span>
+                      Poskod {!isPickup && <span className="text-red-500">*</span>}
                     </label>
                     <input
                       type="text"
-                      required
+                      required={!isPickup}
                       maxLength={5}
                       value={postcode}
                       onChange={(e) => setPostcode(e.target.value)}
-                      placeholder="50450"
+                      placeholder={isPickup ? '13300' : '50450'}
                       className="w-full px-4 py-3 rounded-xl border border-[#D5CEC2] bg-[#FAF7F2]/40 text-sm text-[#222] placeholder-neutral-400 outline-none focus:border-forest focus:ring-2 focus:ring-forest/10 font-mono transition-all"
                     />
                   </div>
 
                   <div className="space-y-1.5">
                     <label className="text-xs font-semibold text-forest block">
-                      Bandar <span className="text-red-500">*</span>
+                      Bandar {!isPickup && <span className="text-red-500">*</span>}
                     </label>
                     <input
                       type="text"
-                      required
+                      required={!isPickup}
                       value={city}
                       onChange={(e) => setCity(e.target.value)}
-                      placeholder="Kuala Lumpur"
+                      placeholder={isPickup ? 'Tasek Gelugor' : 'Kuala Lumpur'}
                       className="w-full px-4 py-3 rounded-xl border border-[#D5CEC2] bg-[#FAF7F2]/40 text-sm text-[#222] placeholder-neutral-400 outline-none focus:border-forest focus:ring-2 focus:ring-forest/10 transition-all"
                     />
                   </div>
@@ -811,7 +871,9 @@ export function CheckoutClient({ initialPaymentSettings }: CheckoutClientProps) 
 
                 {/* Phone */}
                 <div className="space-y-1.5">
-                  <label className="text-xs font-semibold text-forest block">Nombor Telefon Penerima</label>
+                  <label className="text-xs font-semibold text-forest block">
+                    Nombor Telefon Penerima <span className="text-red-500">*</span>
+                  </label>
                   <div className="relative">
                     <input
                       type="tel"
@@ -822,18 +884,20 @@ export function CheckoutClient({ initialPaymentSettings }: CheckoutClientProps) 
                     />
                     <div
                       className="absolute right-3.5 top-1/2 -translate-y-1/2 text-neutral-400 cursor-help"
-                      title="Diperlukan untuk kru penghantaran menghubungi anda sebelum tiba."
+                      title="Diperlukan untuk kru atau kaunter kilang menghubungi anda."
                     >
                       <HelpCircle className="w-4 h-4" />
                     </div>
                   </div>
                   <p className="text-[11px] text-charcoal-muted">
-                    Pemandu lori KAMAAR akan menghubungi nombor ini untuk menjadualkan masa ketibaan.
+                    {isPickup
+                      ? 'No. telefon ini akan digunakan oleh staf kilang untuk memaklumkan status siap tilam.'
+                      : 'Pemandu lori KAMAAR akan menghubungi nombor ini untuk menjadualkan masa ketibaan.'}
                   </p>
                 </div>
 
-                {/* White-Glove Installation Concierge (bulky items) */}
-                {hasBulkyMattress && (
+                {/* White-Glove Installation Concierge (bulky items, delivery mode only) */}
+                {hasBulkyMattress && !isPickup && (
                   <div className="p-4 sm:p-5 bg-[#FAF7F2] rounded-2xl border border-gold/40 space-y-4 text-xs">
                     <div className="flex items-center space-x-2 text-forest font-bold text-sm">
                       <Truck className="w-4 h-4 text-gold shrink-0" />
@@ -896,40 +960,211 @@ export function CheckoutClient({ initialPaymentSettings }: CheckoutClientProps) 
                     className="w-4 h-4 rounded accent-forest cursor-pointer"
                   />
                   <span className="text-xs text-charcoal-muted">
-                    Simpan maklumat penghantaran ini untuk pesanan masa hadapan
+                    Simpan maklumat ini untuk pesanan masa hadapan
                   </span>
                 </label>
               </div>
 
-              {/* SECTION 3: Shipping Method */}
+              {/* SECTION 3: Shipping / Fulfillment Method */}
               <div className="bg-white rounded-2xl p-6 sm:p-7 border border-[#E8E2D8] shadow-2xs space-y-4">
                 <div className="flex items-center space-x-2.5 border-b border-[#E8E2D8]/60 pb-3">
                   <span className="w-6 h-6 rounded-full bg-forest text-warmwhite text-xs font-bold flex items-center justify-center">
                     3
                   </span>
-                  <h2 className="text-base font-bold text-forest">Kaedah Penghantaran</h2>
+                  <div>
+                    <h2 className="text-base font-bold text-forest leading-tight">Kaedah Penerimaan Pesanan</h2>
+                    <span className="text-[11px] text-charcoal-muted">
+                      Pilih sama ada dihantar terus ke kediaman anda atau diambil sendiri di kilang
+                    </span>
+                  </div>
                 </div>
 
-                <div className="p-4 sm:p-5 rounded-2xl border-2 border-forest/30 bg-[#FAF7F2] flex items-center justify-between gap-4">
-                  <div className="flex items-start space-x-3.5 min-w-0">
-                    <div className="w-5 h-5 rounded-full border-4 border-forest bg-white mt-0.5 shrink-0" />
-                    <div className="min-w-0">
-                      <span className="text-sm font-bold text-forest block truncate">
-                        {shippingInfo.isComplimentary
-                          ? 'Complimentary White-Glove In-Home Setup'
-                          : 'Penghantaran Terus Semenanjung Malaysia'}
-                      </span>
-                      <span className="text-xs text-charcoal-muted block mt-0.5">
-                        {shippingInfo.isComplimentary
-                          ? 'Penghantaran berjadual & pemasangan terus di bilik tidur anda • 3-7 hari bekerja'
-                          : 'Penghantaran standard berinsurans penuh'}
-                      </span>
+                <div className="grid grid-cols-1 gap-3.5">
+                  {/* OPTION 1: Penghantaran ke Rumah / Premis */}
+                  <label
+                    className={`p-4 sm:p-5 rounded-2xl border-2 transition-all cursor-pointer flex flex-col sm:flex-row sm:items-center justify-between gap-4 select-none ${
+                      !isPickup
+                        ? 'border-forest bg-[#FAF7F2] shadow-xs ring-1 ring-forest/10'
+                        : 'border-[#E8E2D8] bg-white hover:bg-stone-50/70'
+                    }`}
+                  >
+                    <div className="flex items-start space-x-3.5 min-w-0">
+                      <input
+                        type="radio"
+                        name="fulfillmentOption"
+                        checked={!isPickup}
+                        onChange={() => setFulfillmentType('delivery')}
+                        className="w-4 h-4 accent-forest mt-1 shrink-0 cursor-pointer"
+                      />
+                      <div className="min-w-0">
+                        <div className="flex items-center gap-2">
+                          <span className="text-sm font-bold text-forest block truncate">
+                            Penghantaran Terus Semenanjung Malaysia
+                          </span>
+                          <span className="text-[10px] font-bold px-2 py-0.5 rounded-full bg-emerald-100 text-emerald-800">
+                            Pilihan Utama
+                          </span>
+                        </div>
+                        <span className="text-xs text-charcoal-muted block mt-0.5 leading-relaxed">
+                          {shippingInfo.isComplimentary
+                            ? 'Penghantaran berjadual & servis White-Glove In-Home Setup di bilik tidur anda • 3-7 hari bekerja'
+                            : 'Penghantaran standard berinsurans penuh terus ke alamat anda'}
+                        </span>
+                      </div>
                     </div>
-                  </div>
 
-                  <span className="text-sm font-extrabold text-forest shrink-0 bg-white px-3 py-1.5 rounded-lg border border-borderLight shadow-2xs">
-                    {shippingInfo.shippingSen === 0 ? 'PERCUMA' : formatMYR(shippingInfo.shippingSen)}
-                  </span>
+                    <span className="text-sm font-extrabold text-forest shrink-0 bg-white px-3 py-1.5 rounded-lg border border-borderLight shadow-2xs self-start sm:self-auto">
+                      {shippingInfo.shippingSen === 0 ? 'PERCUMA' : formatMYR(shippingInfo.shippingSen)}
+                    </span>
+                  </label>
+
+                  {/* OPTION 2: Ambil Sendiri di Kilang (Jika admin benarkan) */}
+                  {isSelfPickupAllowed && (
+                    <div
+                      className={`rounded-2xl border-2 transition-all overflow-hidden ${
+                        isPickup
+                          ? 'border-forest bg-[#FAF7F2] shadow-xs ring-1 ring-forest/10'
+                          : 'border-[#E8E2D8] bg-white hover:bg-stone-50/70'
+                      }`}
+                    >
+                      <label className="p-4 sm:p-5 flex flex-col sm:flex-row sm:items-center justify-between gap-4 cursor-pointer select-none">
+                        <div className="flex items-start space-x-3.5 min-w-0">
+                          <input
+                            type="radio"
+                            name="fulfillmentOption"
+                            checked={isPickup}
+                            onChange={() => setFulfillmentType('pickup')}
+                            className="w-4 h-4 accent-forest mt-1 shrink-0 cursor-pointer"
+                          />
+                          <div className="min-w-0">
+                            <div className="flex items-center gap-2">
+                              <span className="text-sm font-bold text-forest block truncate">
+                                Ambil Sendiri di Kilang (Factory Self-Pickup)
+                              </span>
+                              <span className="text-[10px] font-bold px-2 py-0.5 rounded-full bg-amber-100 text-amber-900">
+                                Sedia Cepat
+                              </span>
+                            </div>
+                            <span className="text-xs text-charcoal-muted block mt-0.5 leading-relaxed">
+                              Ambil terus dari kilang KAMAAR di Tasek Gelugor, Pulau Pinang. Tiada sebarang caj penghantaran.
+                            </span>
+                          </div>
+                        </div>
+
+                        <span className="text-sm font-extrabold text-emerald-700 shrink-0 bg-white px-3 py-1.5 rounded-lg border border-emerald-200 shadow-2xs self-start sm:self-auto">
+                          PERCUMA
+                        </span>
+                      </label>
+
+                      {/* Expanded Factory Details & Google Maps */}
+                      {isPickup && (
+                        <div className="p-4 sm:p-6 bg-white border-t border-[#D5CEC2] space-y-4">
+                          <div className="p-4 sm:p-5 rounded-2xl bg-[#FAF7F2] border border-[#E8E2D8] space-y-3.5 text-xs">
+                            <div className="flex flex-col sm:flex-row sm:items-start justify-between gap-3 border-b border-[#E8E2D8] pb-3">
+                              <div className="space-y-1">
+                                <span className="text-[10px] uppercase tracking-wider font-bold text-charcoal-muted block">
+                                  Lokasi Kilang Rasmi
+                                </span>
+                                <h4 className="text-sm font-bold text-forest flex items-center gap-1.5">
+                                  <Store className="w-4 h-4 text-gold shrink-0" />
+                                  <span>
+                                    {siteSettings?.pickupLocationName ||
+                                      'Kilang KAMAAR Beddings (Tunas Sinar Jaya Enterprise)'}
+                                  </span>
+                                </h4>
+                                <p className="text-charcoal font-medium leading-relaxed">
+                                  {siteSettings?.pickupAddress || '7878B Jalan Permatang Berangan'},{' '}
+                                  {siteSettings?.pickupCityState || '13300 Tasek Gelugor, Pulau Pinang'}
+                                </p>
+                              </div>
+
+                              {/* Navigation Buttons */}
+                              <div className="flex items-center gap-2 shrink-0">
+                                <a
+                                  href={
+                                    siteSettings?.pickupGoogleMapsUrl ||
+                                    'https://maps.google.com/?q=7878B+Jalan+Permatang+Berangan,+13300+Tasek+Gelugor+Pulau+Pinang'
+                                  }
+                                  target="_blank"
+                                  rel="noreferrer"
+                                  className="px-3.5 py-2 bg-white hover:bg-stone-50 border border-[#D5CEC2] hover:border-forest text-forest font-bold text-xs rounded-xl shadow-2xs flex items-center gap-1.5 transition-all cursor-pointer"
+                                  title="Buka panduan arah di Google Maps"
+                                >
+                                  <MapPin className="w-3.5 h-3.5 text-red-500" />
+                                  <span>Google Maps</span>
+                                  <ExternalLink className="w-3 h-3 text-neutral-400" />
+                                </a>
+
+                                <a
+                                  href={
+                                    siteSettings?.pickupWazeUrl ||
+                                    'https://waze.com/ul?q=7878B%20Jalan%20Permatang%20Berangan%20Tasek%20Gelugor'
+                                  }
+                                  target="_blank"
+                                  rel="noreferrer"
+                                  className="px-3.5 py-2 bg-white hover:bg-stone-50 border border-[#D5CEC2] hover:border-sky-600 text-sky-800 font-bold text-xs rounded-xl shadow-2xs flex items-center gap-1.5 transition-all cursor-pointer"
+                                  title="Buka panduan arah di Waze"
+                                >
+                                  <Navigation className="w-3.5 h-3.5 text-sky-600" />
+                                  <span>Waze</span>
+                                  <ExternalLink className="w-3 h-3 text-neutral-400" />
+                                </a>
+                              </div>
+                            </div>
+
+                            <div className="grid grid-cols-1 sm:grid-cols-2 gap-3 pt-0.5">
+                              <div className="flex items-center gap-2 text-charcoal">
+                                <Clock className="w-4 h-4 text-forest shrink-0" />
+                                <span>
+                                  <strong>Waktu Operasi:</strong>{' '}
+                                  {siteSettings?.pickupOperatingHours ||
+                                    'Isnin – Sabtu: 9:00 AM – 6:00 PM'}
+                                </span>
+                              </div>
+                              <div className="flex items-center gap-2 text-charcoal">
+                                <Phone className="w-4 h-4 text-forest shrink-0" />
+                                <span>
+                                  <strong>Hubungi Kilang:</strong>{' '}
+                                  {siteSettings?.pickupContactPhone || '019-478 6991'}
+                                </span>
+                              </div>
+                            </div>
+
+                            {/* Embedded Google Maps */}
+                            <div className="pt-2">
+                              <span className="text-[10px] font-bold uppercase tracking-wider text-charcoal-muted block mb-1.5">
+                                Pratonton Lokasi Google Maps Kilang:
+                              </span>
+                              <div className="w-full h-44 sm:h-52 rounded-xl overflow-hidden border border-[#D5CEC2] shadow-2xs bg-stone-100 relative">
+                                <iframe
+                                  title="Lokasi Kilang KAMAAR Beddings di Google Maps"
+                                  width="100%"
+                                  height="100%"
+                                  style={{ border: 0 }}
+                                  loading="lazy"
+                                  allowFullScreen
+                                  src={`https://maps.google.com/maps?q=${encodeURIComponent(
+                                    (siteSettings?.pickupAddress || '7878B Jalan Permatang Berangan') +
+                                      ', ' +
+                                      (siteSettings?.pickupCityState ||
+                                        '13300 Tasek Gelugor Pulau Pinang')
+                                  )}&t=&z=15&ie=UTF8&iwloc=&output=embed`}
+                                />
+                              </div>
+                            </div>
+
+                            <div className="p-3 bg-amber-50/90 rounded-xl border border-amber-200 text-[11.5px] text-amber-950 flex items-start gap-2">
+                              <Info className="w-4 h-4 text-amber-700 shrink-0 mt-0.5" />
+                              <p className="leading-relaxed">
+                                {siteSettings?.pickupInstructions ||
+                                  'Sila tunjukkan No. Pesanan atau Resit Pengesahan pembayaran semasa hadir ke kaunter kilang untuk penyerahan pesanan anda.'}
+                              </p>
+                            </div>
+                          </div>
+                        </div>
+                      )}
+                    </div>
+                  )}
                 </div>
               </div>
 
@@ -1335,16 +1570,22 @@ export function CheckoutClient({ initialPaymentSettings }: CheckoutClientProps) 
 
                 <div className="flex items-center justify-between text-charcoal-muted">
                   <span className="flex items-center space-x-1.5">
-                    <span>Penghantaran White-Glove</span>
+                    <span>
+                      {isPickup ? 'Ambil Sendiri di Kilang' : 'Penghantaran White-Glove'}
+                    </span>
                     <span
-                      title="Penghantaran & pemasangan percuma di bilik tidur anda di seluruh Semenanjung Malaysia"
+                      title={
+                        isPickup
+                          ? 'Ambil sendiri terus di kilang KAMAAR Beddings, Tasek Gelugor, Pulau Pinang (Percuma)'
+                          : 'Penghantaran & pemasangan percuma di bilik tidur anda di seluruh Semenanjung Malaysia'
+                      }
                       className="cursor-help inline-flex text-neutral-400"
                     >
                       <HelpCircle className="w-3.5 h-3.5" />
                     </span>
                   </span>
                   <span className="font-bold text-forest">
-                    {shippingInfo.shippingSen === 0 ? 'PERCUMA' : formatMYR(shippingInfo.shippingSen)}
+                    {effectiveShippingSen === 0 ? 'PERCUMA' : formatMYR(effectiveShippingSen)}
                   </span>
                 </div>
 
