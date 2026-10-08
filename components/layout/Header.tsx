@@ -350,15 +350,15 @@ export function Header() {
                     onClick={() => setActiveMega(null)}
                     className={`inline-flex items-center gap-1.5 px-3 py-1.5 rounded-full transition-all duration-150 whitespace-nowrap group ${
                       pathname.startsWith('/collections/tilam-toto')
-                        ? 'bg-forest text-warmwhite font-semibold shadow-xs'
-                        : 'hover:bg-forest/5 hover:text-forest text-charcoal font-medium'
+                        ? 'bg-white text-forest font-bold shadow-xs border border-gold/50 ring-2 ring-gold/20'
+                        : 'hover:bg-forest/5 hover:text-forest text-charcoal font-medium border border-transparent'
                     }`}
                   >
                     <Sparkles className={`w-3.5 h-3.5 transition-transform group-hover:scale-110 ${
-                      pathname.startsWith('/collections/tilam-toto') ? 'text-gold' : 'text-amber-500'
+                      pathname.startsWith('/collections/tilam-toto') ? 'text-amber-500 scale-105' : 'text-amber-500'
                     }`} />
                     <span>Tilam Toto</span>
-                    <span className="px-1.5 py-0.2 rounded-full text-[9px] font-black uppercase tracking-wider bg-rose-500/15 text-rose-700 border border-rose-200">
+                    <span className="px-1.5 py-0.2 rounded-full text-[9px] font-black uppercase tracking-wider bg-rose-50 text-rose-700 border border-rose-200">
                       HOT
                     </span>
                     <ChevronDown
@@ -506,15 +506,15 @@ export function Header() {
                     onClick={() => setActiveMega(null)}
                     className={`inline-flex items-center gap-1.5 px-3 py-1.5 rounded-full transition-all duration-150 whitespace-nowrap group ${
                       pathname.startsWith('/collections/tilam-kekabu')
-                        ? 'bg-forest text-warmwhite font-semibold shadow-xs'
-                        : 'hover:bg-forest/5 hover:text-forest text-charcoal font-medium'
+                        ? 'bg-white text-forest font-bold shadow-xs border border-gold/50 ring-2 ring-gold/20'
+                        : 'hover:bg-forest/5 hover:text-forest text-charcoal font-medium border border-transparent'
                     }`}
                   >
                     <Award className={`w-3.5 h-3.5 transition-transform group-hover:scale-110 ${
-                      pathname.startsWith('/collections/tilam-kekabu') ? 'text-gold' : 'text-forest'
+                      pathname.startsWith('/collections/tilam-kekabu') ? 'text-gold-dark scale-105' : 'text-forest'
                     }`} />
                     <span>Tilam & Kekabu</span>
-                    <span className="px-1.5 py-0.2 rounded-full text-[9px] font-black uppercase tracking-wider bg-blue-500/15 text-blue-800 border border-blue-200">
+                    <span className="px-1.5 py-0.2 rounded-full text-[9px] font-black uppercase tracking-wider bg-emerald-50 text-emerald-800 border border-emerald-300 shadow-2xs">
                       100% ASLI
                     </span>
                     <ChevronDown
@@ -622,15 +622,15 @@ export function Header() {
                     onClick={() => setActiveMega(null)}
                     className={`inline-flex items-center gap-1.5 px-3 py-1.5 rounded-full transition-all duration-150 whitespace-nowrap group ${
                       pathname.startsWith('/collections/tilam-lipat')
-                        ? 'bg-forest text-warmwhite font-semibold shadow-xs'
-                        : 'hover:bg-forest/5 hover:text-forest text-charcoal font-medium'
+                        ? 'bg-white text-forest font-bold shadow-xs border border-gold/50 ring-2 ring-gold/20'
+                        : 'hover:bg-forest/5 hover:text-forest text-charcoal font-medium border border-transparent'
                     }`}
                   >
                     <Layers className={`w-3.5 h-3.5 transition-transform group-hover:scale-110 ${
-                      pathname.startsWith('/collections/tilam-lipat') ? 'text-gold' : 'text-blue-600'
+                      pathname.startsWith('/collections/tilam-lipat') ? 'text-blue-600 scale-105' : 'text-blue-600'
                     }`} />
                     <span>Tilam Lipat & Bujang</span>
-                    <span className="px-1.5 py-0.2 rounded-full text-[9px] font-bold tracking-wider bg-blue-500/15 text-blue-800 border border-blue-200">
+                    <span className="px-1.5 py-0.2 rounded-full text-[9px] font-bold tracking-wider bg-blue-50 text-blue-800 border border-blue-200">
                       ASRAMA
                     </span>
                     <ChevronDown
@@ -724,13 +724,13 @@ export function Header() {
                     className={`inline-flex items-center gap-1.5 px-3 py-1.5 rounded-full transition-all duration-150 whitespace-nowrap group ${
                       pathname.startsWith('/collections/bantal') ||
                       pathname.startsWith('/collections/cadang-comforter')
-                        ? 'bg-forest text-warmwhite font-semibold shadow-xs'
-                        : 'hover:bg-forest/5 hover:text-forest text-charcoal font-medium'
+                        ? 'bg-white text-forest font-bold shadow-xs border border-gold/50 ring-2 ring-gold/20'
+                        : 'hover:bg-forest/5 hover:text-forest text-charcoal font-medium border border-transparent'
                     }`}
                   >
                     <Package className={`w-3.5 h-3.5 transition-transform group-hover:scale-110 ${
                       pathname.startsWith('/collections/bantal') || pathname.startsWith('/collections/cadang-comforter')
-                        ? 'text-gold'
+                        ? 'text-gold-dark scale-105'
                         : 'text-gold-dark'
                     }`} />
                     <span>Bantal & Cadar</span>
@@ -844,18 +844,12 @@ export function Header() {
                       pathname.startsWith('/collections/selimut-patchwork') ||
                       pathname.startsWith('/collections/set-bayi') ||
                       pathname.startsWith('/collections/kusyen-sofa')
-                        ? 'bg-forest text-warmwhite font-semibold shadow-xs'
-                        : 'hover:bg-forest/5 hover:text-forest text-charcoal font-medium'
+                        ? 'bg-white text-forest font-bold shadow-xs border border-gold/50 ring-2 ring-gold/20'
+                        : 'hover:bg-forest/5 hover:text-forest text-charcoal font-medium border border-transparent'
                     }`}
                   >
                     <span>Koleksi Khas</span>
-                    <span className={`px-1.5 py-0.2 rounded-full text-[9px] font-semibold ${
-                      pathname.startsWith('/collections/selimut-patchwork') ||
-                      pathname.startsWith('/collections/set-bayi') ||
-                      pathname.startsWith('/collections/kusyen-sofa')
-                        ? 'bg-gold/20 text-gold'
-                        : 'bg-charcoal/5 text-charcoal-muted'
-                    }`}>
+                    <span className="px-1.5 py-0.2 rounded-full text-[9px] font-bold bg-gold/15 text-gold-dark border border-gold/30">
                       3
                     </span>
                     <ChevronDown
@@ -954,7 +948,11 @@ export function Header() {
                   <Link
                     href="/collections/borong-gudang"
                     onClick={() => setActiveMega(null)}
-                    className="inline-flex items-center gap-1.5 px-3.5 py-1.5 rounded-full bg-gradient-to-r from-amber-100 via-amber-50 to-amber-100 hover:from-amber-200 hover:to-amber-100 text-amber-950 border border-amber-300 font-bold transition-all shadow-xs group whitespace-nowrap"
+                    className={`inline-flex items-center gap-1.5 px-3.5 py-1.5 rounded-full bg-gradient-to-r from-amber-100 via-amber-50 to-amber-100 hover:from-amber-200 hover:to-amber-100 text-amber-950 border border-amber-300 font-bold transition-all shadow-xs group whitespace-nowrap ${
+                      pathname.startsWith('/collections/borong-gudang')
+                        ? 'ring-2 ring-amber-400 shadow-sm'
+                        : ''
+                    }`}
                   >
                     <Flame className="w-3.5 h-3.5 text-amber-600 fill-amber-500/30 animate-pulse" />
                     <span>Jualan Gudang & Borong</span>
@@ -1052,17 +1050,17 @@ export function Header() {
                     onClick={() => setActiveMega(null)}
                     className={`inline-flex items-center gap-1.5 px-3 py-1.5 rounded-full transition-all duration-150 whitespace-nowrap group ${
                       pathname.startsWith('/profil') || pathname.startsWith('/business')
-                        ? 'bg-forest text-warmwhite font-semibold shadow-xs'
-                        : 'hover:bg-forest/5 hover:text-forest text-charcoal font-medium'
+                        ? 'bg-white text-forest font-bold shadow-xs border border-gold/50 ring-2 ring-gold/20'
+                        : 'hover:bg-forest/5 hover:text-forest text-charcoal font-medium border border-transparent'
                     }`}
                   >
                     <Building2 className={`w-3.5 h-3.5 transition-transform group-hover:scale-110 ${
                       pathname.startsWith('/profil') || pathname.startsWith('/business')
-                        ? 'text-gold'
+                        ? 'text-gold-dark scale-105'
                         : 'text-forest/80'
                     }`} />
                     <span>Kilang & OEM</span>
-                    <span className="text-[10px] font-semibold text-forest bg-forest/10 border border-forest/20 px-1.5 py-0.2 rounded">
+                    <span className="text-[10px] font-bold text-forest bg-forest/10 border border-forest/20 px-1.5 py-0.2 rounded">
                       4 Unit
                     </span>
                     <ChevronDown

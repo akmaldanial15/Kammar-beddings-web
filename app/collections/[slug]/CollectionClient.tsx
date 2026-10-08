@@ -289,9 +289,9 @@ export function CollectionClient({
                   <button
                     key={item.id}
                     onClick={() => updateFilter('material', item.id)}
-                    className={`w-full text-left py-1 px-2 rounded transition-colors ${
+                    className={`w-full text-left py-1.5 px-2.5 rounded-lg transition-colors ${
                       currentMaterial === item.id
-                        ? 'bg-forest text-warmwhite font-semibold'
+                        ? 'bg-forest/10 text-forest font-bold ring-1 ring-forest/20'
                         : 'hover:bg-cream hover:text-charcoal'
                     }`}
                   >
@@ -317,9 +317,9 @@ export function CollectionClient({
                   <button
                     key={item.id}
                     onClick={() => updateFilter('size', item.id)}
-                    className={`py-1.5 px-2 text-center rounded border transition-colors ${
+                    className={`py-1.5 px-2 text-center rounded-lg border transition-all ${
                       currentSize === item.id
-                        ? 'bg-forest text-warmwhite border-forest font-semibold'
+                        ? 'bg-white text-forest border-gold/60 ring-2 ring-gold/20 font-bold shadow-2xs'
                         : 'bg-warmwhite border-borderLight hover:border-gold'
                     }`}
                   >
@@ -344,9 +344,9 @@ export function CollectionClient({
                   <button
                     key={item.id}
                     onClick={() => updateFilter('firmness', item.id)}
-                    className={`w-full text-left py-1 px-2 rounded transition-colors ${
+                    className={`w-full text-left py-1.5 px-2.5 rounded-lg transition-colors ${
                       currentFirmness === item.id
-                        ? 'bg-forest text-warmwhite font-semibold'
+                        ? 'bg-forest/10 text-forest font-bold ring-1 ring-forest/20'
                         : 'hover:bg-cream hover:text-charcoal'
                     }`}
                   >
@@ -441,8 +441,8 @@ export function CollectionClient({
                     <button
                       key={m.id}
                       onClick={() => updateFilter('material', m.id)}
-                      className={`block w-full text-left py-1.5 px-2 rounded ${
-                        currentMaterial === m.id ? 'bg-forest text-warmwhite font-bold' : ''
+                      className={`block w-full text-left py-1.5 px-2.5 rounded-lg ${
+                        currentMaterial === m.id ? 'bg-forest/10 text-forest font-bold ring-1 ring-forest/20' : ''
                       }`}
                     >
                       {m.label}
@@ -461,9 +461,9 @@ export function CollectionClient({
                     <button
                       key={sz}
                       onClick={() => updateFilter('size', sz)}
-                      className={`py-1.5 px-2 rounded border text-center capitalize ${
+                      className={`py-1.5 px-2 rounded-lg border text-center capitalize transition-all ${
                         currentSize === sz
-                          ? 'bg-forest text-warmwhite border-forest font-bold'
+                          ? 'bg-white text-forest border-gold/60 ring-2 ring-gold/20 font-bold shadow-2xs'
                           : 'bg-cream-light border-borderLight'
                       }`}
                     >
@@ -487,8 +487,8 @@ export function CollectionClient({
                     <button
                       key={f.id}
                       onClick={() => updateFilter('firmness', f.id)}
-                      className={`block w-full text-left py-1.5 px-2 rounded ${
-                        currentFirmness === f.id ? 'bg-forest text-warmwhite font-bold' : ''
+                      className={`block w-full text-left py-1.5 px-2.5 rounded-lg ${
+                        currentFirmness === f.id ? 'bg-forest/10 text-forest font-bold ring-1 ring-forest/20' : ''
                       }`}
                     >
                       {f.label}
