@@ -1192,20 +1192,28 @@ export function CheckoutClient({ initialPaymentSettings }: CheckoutClientProps) 
           {/* RIGHT COLUMN: Order Summary Card (5 Columns)                          */}
           {/* --------------------------------------------------------------------- */}
           <div className="lg:col-span-5">
-            <div className="lg:sticky lg:top-28 bg-[#FAF7F2] rounded-3xl p-6 sm:p-7 border border-[#E8E2D8] shadow-sm space-y-6">
+            <div className="lg:sticky lg:top-24 bg-[#FAF7F2] rounded-3xl p-5 sm:p-6 border border-[#E8E2D8] shadow-sm space-y-5">
               {/* Order Summary Header */}
-              <div className="flex items-center justify-between border-b border-[#E8E2D8] pb-4">
+              <div className="flex items-center justify-between border-b border-[#E8E2D8] pb-3.5">
                 <div className="flex items-center space-x-2">
                   <ShoppingBag className="w-5 h-5 text-forest" />
                   <h3 className="font-serif text-lg font-bold text-forest">Ringkasan Pesanan</h3>
                 </div>
-                <span className="text-xs font-bold text-forest px-2.5 py-1 rounded-full bg-cream border border-borderLight shadow-2xs">
-                  {items.reduce((sum, i) => sum + i.quantity, 0)} Item
-                </span>
+                <div className="flex items-center gap-2">
+                  {items.length > 2 && (
+                    <span className="hidden sm:inline-flex items-center gap-1 text-[10px] font-semibold text-forest/80 bg-forest/5 px-2 py-0.5 rounded-full border border-forest/10">
+                      <ChevronDown className="w-3 h-3 text-gold animate-bounce" />
+                      <span>Skrol ({items.length} item)</span>
+                    </span>
+                  )}
+                  <span className="text-xs font-bold text-forest px-2.5 py-1 rounded-full bg-cream border border-borderLight shadow-2xs">
+                    {items.reduce((sum, i) => sum + i.quantity, 0)} Item
+                  </span>
+                </div>
               </div>
 
               {/* Product Line Items (Zero Overlap Guaranteed!) */}
-              <div className="space-y-4 max-h-[380px] overflow-y-auto pr-1 divide-y divide-[#E8E2D8]/70">
+              <div className="max-h-[260px] sm:max-h-[290px] overflow-y-auto overscroll-contain pr-1.5 space-y-2.5 [&::-webkit-scrollbar]:w-1.5 [&::-webkit-scrollbar-track]:bg-transparent [&::-webkit-scrollbar-thumb]:bg-forest/20 [&::-webkit-scrollbar-thumb]:rounded-full hover:[&::-webkit-scrollbar-thumb]:bg-forest/40">
                 {items.map((item) => {
                   const resolvedImg = item.imageUrl || item.image || defaultProductImage
                   const resolvedTitle = item.productName || item.title || 'KAMAAR Luxury Mattress'
@@ -1214,11 +1222,11 @@ export function CheckoutClient({ initialPaymentSettings }: CheckoutClientProps) 
                   return (
                     <div
                       key={item.variantId}
-                      className="flex items-center justify-between gap-4 pt-4 first:pt-0"
+                      className="group relative flex items-center justify-between gap-3 p-3 rounded-2xl bg-white border border-[#E8E2D8] hover:border-forest/20 shadow-2xs transition-all"
                     >
                       {/* Left: Thumbnail & Quantity Badge */}
                       <div className="relative shrink-0">
-                        <div className="w-16 h-16 rounded-2xl border border-[#E8E2D8] bg-white overflow-hidden relative shadow-2xs">
+                        <div className="w-14 h-14 sm:w-16 sm:h-16 rounded-xl border border-[#E8E2D8] bg-cream/30 overflow-hidden relative shadow-2xs">
                           <Image
                             src={resolvedImg}
                             alt={resolvedTitle}
@@ -1227,34 +1235,34 @@ export function CheckoutClient({ initialPaymentSettings }: CheckoutClientProps) 
                             className="object-cover"
                           />
                         </div>
-                        {/* Quantity Badge (Outside overflow-hidden so it never clips) */}
-                        <span className="absolute -top-2 -right-2 z-10 w-5 h-5 rounded-full bg-forest text-warmwhite text-[11px] font-bold flex items-center justify-center shadow-md border-2 border-white ring-1 ring-forest/20">
+                        {/* Quantity Badge */}
+                        <span className="absolute -top-1.5 -right-1.5 z-10 w-5 h-5 rounded-full bg-forest text-warmwhite text-[10px] font-bold flex items-center justify-center shadow-md border-2 border-white ring-1 ring-forest/20">
                           {item.quantity}
                         </span>
                       </div>
 
-                      {/* Middle: Product Title & Variant Details (Expands smoothly) */}
+                      {/* Middle: Product Title & Variant Details */}
                       <div className="min-w-0 flex-1 flex flex-col justify-center gap-0.5">
-                        <h4 className="text-sm font-bold text-forest leading-snug truncate">
+                        <h4 className="text-xs sm:text-sm font-bold text-forest leading-snug line-clamp-1" title={resolvedTitle}>
                           {resolvedTitle}
                         </h4>
-                        <p className="text-xs text-charcoal-muted leading-tight truncate">
+                        <p className="text-[11px] text-charcoal-muted leading-tight truncate">
                           {resolvedVariant}
                         </p>
                         {item.sku && (
-                          <span className="text-[10px] text-charcoal-muted/70 font-mono tracking-tight">
+                          <span className="text-[9.5px] text-charcoal-muted/70 font-mono tracking-tight truncate">
                             SKU: {item.sku}
                           </span>
                         )}
                       </div>
 
                       {/* Right: Line Total */}
-                      <div className="shrink-0 text-right">
-                        <span className="text-sm font-bold text-forest font-serif block">
+                      <div className="shrink-0 text-right flex flex-col items-end justify-center">
+                        <span className="text-xs sm:text-sm font-bold text-forest font-serif whitespace-nowrap">
                           {formatMYR(item.priceSen * item.quantity)}
                         </span>
                         {item.compareAtPriceSen && item.compareAtPriceSen > item.priceSen && (
-                          <span className="text-[11px] text-charcoal-muted/60 line-through block">
+                          <span className="text-[10px] text-charcoal-muted/60 line-through block whitespace-nowrap">
                             {formatMYR(item.compareAtPriceSen * item.quantity)}
                           </span>
                         )}
@@ -1265,7 +1273,7 @@ export function CheckoutClient({ initialPaymentSettings }: CheckoutClientProps) 
               </div>
 
               {/* Discount Code Input Module */}
-              <div className="pt-4 border-t border-[#E8E2D8] space-y-2.5">
+              <div className="pt-3.5 border-t border-[#E8E2D8] space-y-2">
                 <form onSubmit={handleApplyCoupon} className="flex items-center space-x-2">
                   <div className="relative flex-1">
                     <input
@@ -1273,12 +1281,12 @@ export function CheckoutClient({ initialPaymentSettings }: CheckoutClientProps) 
                       value={inputCoupon}
                       onChange={(e) => setInputCoupon(e.target.value)}
                       placeholder="Kod Diskaun / Baucar"
-                      className="w-full px-4 py-3 rounded-xl border border-[#D5CEC2] text-xs text-[#222] placeholder-neutral-400 bg-white outline-none focus:border-forest uppercase font-mono transition-all shadow-2xs"
+                      className="w-full px-3.5 py-2.5 rounded-xl border border-[#D5CEC2] text-xs text-[#222] placeholder-neutral-400 bg-white outline-none focus:border-forest uppercase font-mono transition-all shadow-2xs"
                     />
                   </div>
                   <button
                     type="submit"
-                    className="px-5 py-3 rounded-xl bg-forest hover:bg-forest-dark text-warmwhite text-xs font-bold transition-all shadow-xs cursor-pointer shrink-0"
+                    className="px-4 py-2.5 rounded-xl bg-forest hover:bg-forest-dark text-warmwhite text-xs font-bold transition-all shadow-xs cursor-pointer shrink-0"
                   >
                     Tebus
                   </button>
@@ -1299,10 +1307,10 @@ export function CheckoutClient({ initialPaymentSettings }: CheckoutClientProps) 
 
                 {/* Applied coupon badge */}
                 {couponCode && (
-                  <div className="flex items-center justify-between p-3 rounded-xl bg-emerald-50 border border-emerald-200 text-xs shadow-2xs">
+                  <div className="flex items-center justify-between p-2.5 rounded-xl bg-emerald-50 border border-emerald-200 text-xs shadow-2xs">
                     <div className="flex items-center space-x-2 text-emerald-900 font-bold">
-                      <Tag className="w-4 h-4 text-emerald-700" />
-                      <span>{couponCode}</span>
+                      <Tag className="w-3.5 h-3.5 text-emerald-700 shrink-0" />
+                      <span className="font-mono text-xs">{couponCode}</span>
                       <span className="text-emerald-700 font-medium">(-{formatMYR(discountSen)})</span>
                     </div>
                     <button
@@ -1317,7 +1325,7 @@ export function CheckoutClient({ initialPaymentSettings }: CheckoutClientProps) 
                 )}
 
                 {!couponCode && (
-                  <div className="flex items-center justify-between text-[11px] text-charcoal-muted pt-1">
+                  <div className="flex items-center justify-between text-[11px] text-charcoal-muted pt-0.5">
                     <span>Ada kod promosi pelancaran?</span>
                     <button
                       type="button"
@@ -1334,7 +1342,7 @@ export function CheckoutClient({ initialPaymentSettings }: CheckoutClientProps) 
               </div>
 
               {/* Pricing Breakdown */}
-              <div className="pt-4 border-t border-[#E8E2D8] space-y-3 text-sm">
+              <div className="pt-3.5 border-t border-[#E8E2D8] space-y-2.5 text-xs sm:text-sm">
                 <div className="flex items-center justify-between text-charcoal-muted">
                   <span>Jumlah Kasar (Subtotal)</span>
                   <span className="font-semibold text-forest font-serif">{formatMYR(subtotalSen)}</span>
@@ -1363,10 +1371,10 @@ export function CheckoutClient({ initialPaymentSettings }: CheckoutClientProps) 
                 )}
 
                 {/* Grand Total */}
-                <div className="pt-4 border-t border-[#E8E2D8] flex items-center justify-between">
+                <div className="pt-3.5 border-t border-[#E8E2D8] flex items-center justify-between">
                   <div>
-                    <span className="text-base font-bold text-forest block">Jumlah Keseluruhan</span>
-                    <span className="text-[11px] text-charcoal-muted block mt-0.5">
+                    <span className="text-sm sm:text-base font-bold text-forest block">Jumlah Keseluruhan</span>
+                    <span className="text-[10.5px] text-charcoal-muted block mt-0.5">
                       Termasuk Cukai SST 0% &amp; Insurans
                     </span>
                   </div>
@@ -1380,22 +1388,22 @@ export function CheckoutClient({ initialPaymentSettings }: CheckoutClientProps) 
               </div>
 
               {/* KAMAAR Factory Guarantees Card */}
-              <div className="p-4 sm:p-5 rounded-2xl bg-white border border-[#E8E2D8] space-y-3 text-xs shadow-2xs">
-                <div className="flex items-center space-x-2 text-forest font-bold">
-                  <Sparkles className="w-4 h-4 text-gold shrink-0" />
+              <div className="p-3.5 sm:p-4 rounded-2xl bg-white border border-[#E8E2D8] space-y-2 text-xs shadow-2xs">
+                <div className="flex items-center space-x-2 text-forest font-bold text-[11.5px]">
+                  <Sparkles className="w-3.5 h-3.5 text-gold shrink-0" />
                   <span>Jaminan Kualiti Kilang KAMAAR BEDDINGS</span>
                 </div>
-                <ul className="space-y-2 text-[11px] text-charcoal-muted leading-relaxed">
+                <ul className="space-y-1.5 text-[10.5px] text-charcoal-muted leading-relaxed">
                   <li className="flex items-start space-x-2">
-                    <ShieldCheck className="w-4 h-4 text-emerald-600 shrink-0 mt-0.5" />
+                    <ShieldCheck className="w-3.5 h-3.5 text-emerald-600 shrink-0 mt-0.5" />
                     <span><strong>Terus Dari Kilang:</strong> Pengeluaran oleh Tunas Sinar Jaya Enterprise, Tasek Gelugor.</span>
                   </li>
                   <li className="flex items-start space-x-2">
-                    <RotateCcw className="w-4 h-4 text-emerald-600 shrink-0 mt-0.5" />
+                    <RotateCcw className="w-3.5 h-3.5 text-emerald-600 shrink-0 mt-0.5" />
                     <span><strong>Kualiti Jahitan &amp; Isian:</strong> Isian Asian Polyester Fibre gebu &amp; jahitan quilting kukuh.</span>
                   </li>
                   <li className="flex items-start space-x-2">
-                    <Truck className="w-4 h-4 text-emerald-600 shrink-0 mt-0.5" />
+                    <Truck className="w-3.5 h-3.5 text-emerald-600 shrink-0 mt-0.5" />
                     <span><strong>Penghantaran Pantas:</strong> Pembungkusan rapi terus dihantar ke seluruh Semenanjung.</span>
                   </li>
                 </ul>
