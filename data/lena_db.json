@@ -246,7 +246,7 @@
           "dimensions": "100cm x 190cm x 7cm",
           "priceSen": 5900,
           "compareAtPriceSen": 7900,
-          "stockQuantity": 80,
+          "stockQuantity": 79,
           "leadTimeDays": 1,
           "isActive": true
         },
@@ -258,7 +258,7 @@
           "dimensions": "150cm x 190cm x 8cm",
           "priceSen": 8900,
           "compareAtPriceSen": 11900,
-          "stockQuantity": 60,
+          "stockQuantity": 59,
           "leadTimeDays": 1,
           "isActive": true
         },
@@ -342,7 +342,7 @@
           "dimensions": "90cm x 190cm x 10cm",
           "priceSen": 9500,
           "compareAtPriceSen": 13500,
-          "stockQuantity": 30,
+          "stockQuantity": 29,
           "leadTimeDays": 2,
           "isActive": true
         },
@@ -412,7 +412,7 @@
           "dimensions": "90cm x 190cm x 5cm",
           "priceSen": 6900,
           "compareAtPriceSen": 8900,
-          "stockQuantity": 40,
+          "stockQuantity": 38,
           "leadTimeDays": 1,
           "isActive": true
         },
@@ -1203,6 +1203,203 @@
       "orderNumber": "LENA-2026-1002",
       "createdAt": "2026-10-05T10:15:17.783Z",
       "updatedAt": "2026-10-05T10:15:17.783Z"
+    },
+    {
+      "customerEmail": "ahmad.danial@kamaar.my",
+      "customerName": "Ahmad Danial",
+      "customerPhone": "0194786991",
+      "shippingAddress": {
+        "fullName": "Ahmad Danial",
+        "phone": "0194786991",
+        "addressLine1": "No. 15, Jalan Kemboja 3, (Kediaman Peribadi)",
+        "addressLine2": "Bandar Baru Tasek Gelugor",
+        "city": "Tasek Gelugor",
+        "state": "Pulau Pinang",
+        "postcode": "13300",
+        "country": "Malaysia"
+      },
+      "billingAddress": {
+        "fullName": "Ahmad Danial",
+        "phone": "0194786991",
+        "addressLine1": "No. 15, Jalan Kemboja 3, (Kediaman Peribadi)",
+        "addressLine2": "Bandar Baru Tasek Gelugor",
+        "city": "Tasek Gelugor",
+        "state": "Pulau Pinang",
+        "postcode": "13300",
+        "country": "Malaysia"
+      },
+      "deliveryNotes": "Sila telefon 15 minit sebelum tiba ke premis.",
+      "hasLiftAccess": true,
+      "floorLevel": "Tingkat 1",
+      "subtotalSen": 6900,
+      "discountSen": 0,
+      "shippingSen": 0,
+      "taxSen": 0,
+      "totalSen": 6900,
+      "paymentStatus": "paid",
+      "fulfillmentStatus": "processing",
+      "paymentProvider": "chip",
+      "items": [
+        {
+          "variantId": "var-lipat-2in",
+          "productName": "Tilam Lipat 3 Berzip Fabrik Tahan Lasak",
+          "sizeName": "Single 2 Inci Tebal",
+          "sku": "TSJ-LIPAT-2IN",
+          "dimensions": "90cm x 190cm x 5cm",
+          "unitPriceSen": 6900,
+          "quantity": 1,
+          "lineTotalSen": 6900,
+          "imageUrl": "/images/products/tilam-lipat-bujang.jpg",
+          "id": "item-1791468338486-0",
+          "orderId": ""
+        }
+      ],
+      "id": "ord-1791468338486-ubwz7",
+      "orderNumber": "LENA-2026-1003",
+      "createdAt": "2026-10-08T14:05:38.486Z",
+      "updatedAt": "2026-10-08T14:11:42.392Z",
+      "paymentId": "chip_sim_1791468357962",
+      "carrier": "LENA White-Glove Fleet",
+      "trackingNumber": "",
+      "internalNotes": ""
+    },
+    {
+      "customerEmail": "ahmad.danial@kamaar.my",
+      "customerName": "Ahmad Danial",
+      "customerPhone": "0194786991",
+      "shippingAddress": {
+        "fullName": "Ahmad Danial",
+        "phone": "0194786991",
+        "addressLine1": "No. 15, Jalan Kemboja 3, (Kediaman Peribadi)",
+        "addressLine2": "Bandar Baru Tasek Gelugor",
+        "city": "Tasek Gelugor",
+        "state": "Pulau Pinang",
+        "postcode": "13300",
+        "country": "Malaysia"
+      },
+      "billingAddress": {
+        "fullName": "Ahmad Danial",
+        "phone": "0194786991",
+        "addressLine1": "No. 15, Jalan Kemboja 3, (Kediaman Peribadi)",
+        "addressLine2": "Bandar Baru Tasek Gelugor",
+        "city": "Tasek Gelugor",
+        "state": "Pulau Pinang",
+        "postcode": "13300",
+        "country": "Malaysia"
+      },
+      "deliveryNotes": "Sila telefon 15 minit sebelum tiba ke premis.",
+      "hasLiftAccess": true,
+      "floorLevel": "Tingkat 1",
+      "subtotalSen": 25300,
+      "discountSen": 0,
+      "shippingSen": 0,
+      "taxSen": 0,
+      "totalSen": 25300,
+      "paymentStatus": "paid",
+      "fulfillmentStatus": "processing",
+      "paymentProvider": "chip",
+      "items": [
+        {
+          "variantId": "var-toto-qen",
+          "productName": "Tilam Toto Asian Polyester Fibre (Paling Lariss!!)",
+          "sizeName": "Queen (150cm x 190cm)",
+          "sku": "TSJ-TOTO-QEN",
+          "dimensions": "150cm x 190cm x 8cm",
+          "unitPriceSen": 8900,
+          "quantity": 1,
+          "lineTotalSen": 8900,
+          "imageUrl": "/images/products/tilam-toto-queen.jpg",
+          "id": "item-1791468699469-0",
+          "orderId": ""
+        },
+        {
+          "variantId": "var-kekabu-sgl",
+          "productName": "Tilam Kekabu Asli Tradisi (Jahitan Tufted Butang)",
+          "sizeName": "Single (90cm x 190cm)",
+          "sku": "TSJ-KB-SGL",
+          "dimensions": "90cm x 190cm x 10cm",
+          "unitPriceSen": 9500,
+          "quantity": 1,
+          "lineTotalSen": 9500,
+          "imageUrl": "/images/products/tilam-kekabu-asli.jpg",
+          "id": "item-1791468699469-1",
+          "orderId": ""
+        },
+        {
+          "variantId": "var-lipat-2in",
+          "productName": "Tilam Lipat 3 Berzip Fabrik Tahan Lasak",
+          "sizeName": "Single 2 Inci Tebal",
+          "sku": "TSJ-LIPAT-2IN",
+          "dimensions": "90cm x 190cm x 5cm",
+          "unitPriceSen": 6900,
+          "quantity": 1,
+          "lineTotalSen": 6900,
+          "imageUrl": "/images/products/tilam-lipat-bujang.jpg",
+          "id": "item-1791468699469-2",
+          "orderId": ""
+        }
+      ],
+      "id": "ord-1791468699470-l60yq",
+      "orderNumber": "LENA-2026-1004",
+      "createdAt": "2026-10-08T14:11:39.470Z",
+      "updatedAt": "2026-10-08T14:12:13.444Z",
+      "paymentId": "chip_sim_1791468732920"
+    },
+    {
+      "customerEmail": "ahmad.danial@kamaar.my",
+      "customerName": "Ahmad Danial",
+      "customerPhone": "0194786991",
+      "shippingAddress": {
+        "fullName": "Ahmad Danial",
+        "phone": "0194786991",
+        "addressLine1": "No. 15, Jalan Kemboja 3, (Kediaman Peribadi)",
+        "addressLine2": "Bandar Baru Tasek Gelugor",
+        "city": "Tasek Gelugor",
+        "state": "Pulau Pinang",
+        "postcode": "13300",
+        "country": "Malaysia"
+      },
+      "billingAddress": {
+        "fullName": "Ahmad Danial",
+        "phone": "0194786991",
+        "addressLine1": "No. 15, Jalan Kemboja 3, (Kediaman Peribadi)",
+        "addressLine2": "Bandar Baru Tasek Gelugor",
+        "city": "Tasek Gelugor",
+        "state": "Pulau Pinang",
+        "postcode": "13300",
+        "country": "Malaysia"
+      },
+      "deliveryNotes": "Sila telefon 15 minit sebelum tiba ke premis.",
+      "hasLiftAccess": true,
+      "floorLevel": "Tingkat 1",
+      "subtotalSen": 5900,
+      "discountSen": 0,
+      "shippingSen": 0,
+      "taxSen": 0,
+      "totalSen": 5900,
+      "paymentStatus": "paid",
+      "fulfillmentStatus": "processing",
+      "paymentProvider": "chip",
+      "items": [
+        {
+          "variantId": "var-toto-sgl",
+          "productName": "Tilam Toto Asian Polyester Fibre (Paling Lariss!!)",
+          "sizeName": "Single (100cm x 190cm)",
+          "sku": "TSJ-TOTO-SGL",
+          "dimensions": "100cm x 190cm x 7cm",
+          "unitPriceSen": 5900,
+          "quantity": 1,
+          "lineTotalSen": 5900,
+          "imageUrl": "/images/products/tilam-toto-queen.jpg",
+          "id": "item-1791468820620-0",
+          "orderId": ""
+        }
+      ],
+      "id": "ord-1791468820621-aokhi",
+      "orderNumber": "LENA-2026-1005",
+      "createdAt": "2026-10-08T14:13:40.621Z",
+      "updatedAt": "2026-10-08T14:14:01.278Z",
+      "paymentId": "chip_sim_1791468840907"
     }
   ],
   "reviews": [
@@ -1410,6 +1607,101 @@
     }
   ],
   "auditLogs": [
+    {
+      "id": "aud-1791468841279-5tfi",
+      "actorEmail": "chip_webhook",
+      "action": "order_status_updated",
+      "entityType": "order",
+      "entityId": "ord-1791468820621-aokhi",
+      "details": {
+        "paymentStatus": "paid",
+        "fulfillmentStatus": "processing",
+        "paymentId": "chip_sim_1791468840907"
+      },
+      "createdAt": "2026-10-08T14:14:01.279Z"
+    },
+    {
+      "id": "aud-1791468733445-qeol",
+      "actorEmail": "chip_webhook",
+      "action": "order_status_updated",
+      "entityType": "order",
+      "entityId": "ord-1791468699470-l60yq",
+      "details": {
+        "paymentStatus": "paid",
+        "fulfillmentStatus": "processing",
+        "paymentId": "chip_sim_1791468732920"
+      },
+      "createdAt": "2026-10-08T14:12:13.445Z"
+    },
+    {
+      "id": "aud-1791468702394-nfj5",
+      "actorEmail": "admin@kamaarbeddings.com",
+      "action": "order_status_updated",
+      "entityType": "order",
+      "entityId": "ord-1791468338486-ubwz7",
+      "details": {
+        "fulfillmentStatus": "processing",
+        "carrier": "LENA White-Glove Fleet",
+        "trackingNumber": "",
+        "internalNotes": ""
+      },
+      "createdAt": "2026-10-08T14:11:42.394Z"
+    },
+    {
+      "id": "aud-1791468701219-236b",
+      "actorEmail": "admin@kamaarbeddings.com",
+      "action": "order_status_updated",
+      "entityType": "order",
+      "entityId": "ord-1791468338486-ubwz7",
+      "details": {
+        "fulfillmentStatus": "delivered",
+        "carrier": "LENA White-Glove Fleet",
+        "trackingNumber": "",
+        "internalNotes": ""
+      },
+      "createdAt": "2026-10-08T14:11:41.219Z"
+    },
+    {
+      "id": "aud-1791468699531-u2z3",
+      "actorEmail": "admin@kamaarbeddings.com",
+      "action": "order_status_updated",
+      "entityType": "order",
+      "entityId": "ord-1791468338486-ubwz7",
+      "details": {
+        "fulfillmentStatus": "shipped",
+        "carrier": "LENA White-Glove Fleet",
+        "trackingNumber": "",
+        "internalNotes": ""
+      },
+      "createdAt": "2026-10-08T14:11:39.531Z"
+    },
+    {
+      "id": "aud-1791468696091-darn",
+      "actorEmail": "admin@kamaarbeddings.com",
+      "action": "order_status_updated",
+      "entityType": "order",
+      "entityId": "ord-1791468338486-ubwz7",
+      "details": {
+        "fulfillmentStatus": "scheduled",
+        "carrier": "LENA White-Glove Fleet",
+        "trackingNumber": "",
+        "internalNotes": ""
+      },
+      "createdAt": "2026-10-08T14:11:36.091Z"
+    },
+    {
+      "id": "aud-1791468358259-flwa",
+      "actorEmail": "chip_webhook",
+      "action": "order_status_updated",
+      "entityType": "order",
+      "entityId": "ord-1791468338486-ubwz7",
+      "details": {
+        "paymentStatus": "paid",
+        "fulfillmentStatus": "processing",
+        "paymentId": "chip_sim_1791468357962"
+      },
+      "createdAt": "2026-10-08T14:05:58.259Z"
+    },
     {
       "id": "aud-1791381762770-ujmz",
       "actorEmail": "admin@kamaarbeddings.com",

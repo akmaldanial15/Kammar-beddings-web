@@ -46,7 +46,7 @@ export default async function OrderConfirmedPage({ params }: Props) {
           <p className="text-sm text-charcoal-muted mt-2 max-w-lg mx-auto">
             {isPaid
               ? `We have confirmed your payment. A formal tax receipt and delivery schedule have been dispatched to ${order.customerEmail}.`
-              : 'Your payment attempt is currently being processed by Stripe. Please check back shortly.'}
+              : 'Your payment attempt is currently being processed by CHIP In Asia (FPX / Touch \'n Go eWallet). Please check back shortly.'}
           </p>
 
           <div className="mt-6 inline-flex items-center space-x-2 px-4 py-2 bg-cream rounded-full border border-borderLight text-xs font-mono font-bold text-forest">
