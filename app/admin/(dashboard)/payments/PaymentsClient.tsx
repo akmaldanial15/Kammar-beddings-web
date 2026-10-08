@@ -362,10 +362,12 @@ export function PaymentsClient({ initialSettings }: PaymentsClientProps) {
   }
 
   // Update Express Checkout Toggle
-  const handleToggleExpress = async (field: 'expressCheckoutEnabled' | 'enableGooglePay' | 'enableApplePay') => {
+  const handleToggleExpress = async (field: 'expressCheckoutEnabled') => {
     const newSettings = {
       ...settings,
       [field]: !settings[field],
+      enableGooglePay: false,
+      enableApplePay: false,
     }
     setSettings(newSettings)
     try {
@@ -464,68 +466,26 @@ export function PaymentsClient({ initialSettings }: PaymentsClientProps) {
           </span>
         </div>
 
-        <div className="grid grid-cols-1 sm:grid-cols-3 gap-4">
-          <div className="p-4 rounded-2xl bg-cream/30 border border-borderLight/80 flex items-center justify-between">
-            <div>
-              <span className="text-xs font-bold text-forest block">Aktifkan Express Checkout</span>
-              <span className="text-[10px] text-charcoal-muted block">Papar bar butang pantas</span>
-            </div>
-            <button
-              type="button"
-              onClick={() => handleToggleExpress('expressCheckoutEnabled')}
-              className={`w-11 h-6 rounded-full transition-colors relative cursor-pointer ${
-                settings.expressCheckoutEnabled ? 'bg-forest' : 'bg-neutral-300'
-              }`}
-            >
-              <div
-                className={`w-4 h-4 rounded-full bg-white shadow-xs transition-transform absolute top-1 ${
-                  settings.expressCheckoutEnabled ? 'right-1' : 'left-1'
-                }`}
-              />
-            </button>
+        <div className="p-4 rounded-2xl bg-cream/30 border border-borderLight/80 flex items-center justify-between">
+          <div>
+            <span className="text-xs font-bold text-forest block">Aktifkan Express Checkout (FPX &amp; TNG)</span>
+            <span className="text-[10px] text-charcoal-muted block">
+              Papar bar butang pintasan pantas FPX &amp; Touch &apos;n Go di bahagian atas halaman checkout
+            </span>
           </div>
-
-          <div className="p-4 rounded-2xl bg-cream/30 border border-borderLight/80 flex items-center justify-between">
-            <div>
-              <span className="text-xs font-bold text-forest block">Google Pay (G Pay)</span>
-              <span className="text-[10px] text-charcoal-muted block">Butang hitam Google Pay</span>
-            </div>
-            <button
-              type="button"
-              disabled={!settings.expressCheckoutEnabled}
-              onClick={() => handleToggleExpress('enableGooglePay')}
-              className={`w-11 h-6 rounded-full transition-colors relative cursor-pointer disabled:opacity-40 ${
-                settings.enableGooglePay && settings.expressCheckoutEnabled ? 'bg-forest' : 'bg-neutral-300'
+          <button
+            type="button"
+            onClick={() => handleToggleExpress('expressCheckoutEnabled')}
+            className={`w-11 h-6 rounded-full transition-colors relative cursor-pointer ${
+              settings.expressCheckoutEnabled ? 'bg-forest' : 'bg-neutral-300'
+            }`}
+          >
+            <div
+              className={`w-4 h-4 rounded-full bg-white shadow-xs transition-transform absolute top-1 ${
+                settings.expressCheckoutEnabled ? 'right-1' : 'left-1'
               }`}
-            >
-              <div
-                className={`w-4 h-4 rounded-full bg-white shadow-xs transition-transform absolute top-1 ${
-                  settings.enableGooglePay && settings.expressCheckoutEnabled ? 'right-1' : 'left-1'
-                }`}
-              />
-            </button>
-          </div>
-
-          <div className="p-4 rounded-2xl bg-cream/30 border border-borderLight/80 flex items-center justify-between">
-            <div>
-              <span className="text-xs font-bold text-forest block">Apple Pay</span>
-              <span className="text-[10px] text-charcoal-muted block">Pengguna Safari &amp; iOS</span>
-            </div>
-            <button
-              type="button"
-              disabled={!settings.expressCheckoutEnabled}
-              onClick={() => handleToggleExpress('enableApplePay')}
-              className={`w-11 h-6 rounded-full transition-colors relative cursor-pointer disabled:opacity-40 ${
-                settings.enableApplePay && settings.expressCheckoutEnabled ? 'bg-forest' : 'bg-neutral-300'
-              }`}
-            >
-              <div
-                className={`w-4 h-4 rounded-full bg-white shadow-xs transition-transform absolute top-1 ${
-                  settings.enableApplePay && settings.expressCheckoutEnabled ? 'right-1' : 'left-1'
-                }`}
-              />
-            </button>
-          </div>
+            />
+          </button>
         </div>
       </div>
 
