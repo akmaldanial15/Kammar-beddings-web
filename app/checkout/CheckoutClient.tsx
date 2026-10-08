@@ -190,6 +190,28 @@ export function CheckoutClient({ initialPaymentSettings, initialSiteSettings, av
   const [isSubmitting, setIsSubmitting] = useState(false)
   const [errorMessage, setErrorMessage] = useState('')
   const [affiliateCode, setAffiliateCode] = useState('')
+  const [isAutofilled, setIsAutofilled] = useState(false)
+
+  // Demo Autofill for quick payment gateway testing
+  const handleAutofillDemo = () => {
+    setContactInfo('ahmad.danial@kamaar.my')
+    setFirstName('Ahmad')
+    setLastName('Danial')
+    setCompany('Kediaman Peribadi')
+    setAddressLine1('No. 15, Jalan Kemboja 3')
+    setAddressLine2('Bandar Baru Tasek Gelugor')
+    setCity('Tasek Gelugor')
+    setState('Pulau Pinang')
+    setPostcode('13300')
+    setPhone('0194786991')
+    setNewsletterConsent(true)
+    setDeliveryNotes('Sila telefon 15 minit sebelum tiba ke premis.')
+    setHasLiftAccess(true)
+    setFloorLevel('Tingkat 1')
+    setErrorMessage('')
+    setIsAutofilled(true)
+    setTimeout(() => setIsAutofilled(false), 3500)
+  }
 
   // Format credit card number with spaces
   const handleCardNumberChange = (e: React.ChangeEvent<HTMLInputElement>) => {
@@ -693,22 +715,73 @@ export function CheckoutClient({ initialPaymentSettings, initialSiteSettings, av
               </div>
             )}
 
+            {/* Quick Demo Autofill Bar for Payment Gateway Testing */}
+            <div className="bg-gradient-to-r from-amber-50 via-gold/15 to-amber-50 rounded-2xl p-3.5 sm:p-4 border-2 border-dashed border-gold/60 flex flex-col sm:flex-row sm:items-center justify-between gap-3 shadow-xs">
+              <div className="flex items-center gap-3 min-w-0">
+                <div className="w-9 h-9 rounded-xl bg-gold/25 border border-gold/40 flex items-center justify-center text-amber-900 shrink-0 shadow-2xs">
+                  <Sparkles className="w-4.5 h-4.5 text-amber-800" />
+                </div>
+                <div className="min-w-0">
+                  <div className="flex items-center gap-2">
+                    <span className="text-xs sm:text-sm font-bold text-forest block leading-tight">
+                      Mod Ujian Pembayaran (Demo)
+                    </span>
+                    <span className="text-[10px] font-bold text-amber-900 bg-gold/30 px-2 py-0.5 rounded-full border border-gold/50">
+                      Ujian Pantas
+                    </span>
+                  </div>
+                  <span className="text-[11.5px] text-charcoal-muted leading-tight block mt-0.5">
+                    Klik butang untuk isi maklumat penerima &amp; alamat secara automatik bagi menguji gerbang pembayaran (CHIP / FPX / TNG).
+                  </span>
+                </div>
+              </div>
+
+              <div className="flex items-center gap-2 shrink-0 self-end sm:self-auto">
+                {isAutofilled && (
+                  <span className="text-xs font-bold text-emerald-700 bg-emerald-100/90 border border-emerald-300 px-2.5 py-1.5 rounded-xl flex items-center gap-1">
+                    <Check className="w-3.5 h-3.5" />
+                    <span>Maklumat Diisi!</span>
+                  </span>
+                )}
+                <button
+                  type="button"
+                  onClick={handleAutofillDemo}
+                  id="btn-autofill-demo"
+                  className="px-4 py-2 bg-gradient-to-r from-forest to-forest-dark hover:from-forest-light hover:to-forest text-warmwhite text-xs font-bold rounded-xl shadow-md transition-all hover:scale-[1.02] active:scale-95 flex items-center gap-2 cursor-pointer"
+                >
+                  <Sparkles className="w-3.5 h-3.5 text-gold-light" />
+                  <span>{isAutofilled ? 'Isi Semula Demo' : '⚡ Isi Auto (Demo)'}</span>
+                </button>
+              </div>
+            </div>
+
             <form onSubmit={handleSubmit} className="space-y-8">
               {/* SECTION 1: Contact Information */}
               <div className="bg-white rounded-2xl p-6 sm:p-7 border border-[#E8E2D8] shadow-2xs space-y-4">
-                <div className="flex items-center justify-between border-b border-[#E8E2D8]/60 pb-3">
+                <div className="flex items-center justify-between border-b border-[#E8E2D8]/60 pb-3 gap-2 flex-wrap">
                   <div className="flex items-center space-x-2.5">
                     <span className="w-6 h-6 rounded-full bg-forest text-warmwhite text-xs font-bold flex items-center justify-center">
                       1
                     </span>
                     <h2 className="text-base font-bold text-forest">Maklumat Hubungan</h2>
                   </div>
-                  <Link
-                    href="/account/login"
-                    className="text-xs text-forest hover:text-gold font-semibold underline underline-offset-2 transition-colors"
-                  >
-                    Log Masuk Akaun
-                  </Link>
+                  <div className="flex items-center gap-2.5">
+                    <button
+                      type="button"
+                      onClick={handleAutofillDemo}
+                      className="inline-flex items-center gap-1.5 text-xs text-amber-900 hover:text-forest bg-gold/15 hover:bg-gold/25 border border-gold/40 px-2.5 py-1 rounded-lg font-bold transition-all cursor-pointer shadow-2xs"
+                      title="Isi pantas untuk ujian demo pembayaran"
+                    >
+                      <Sparkles className="w-3 h-3 text-gold-dark" />
+                      <span>Autofill Demo</span>
+                    </button>
+                    <Link
+                      href="/account/login"
+                      className="text-xs text-forest hover:text-gold font-semibold underline underline-offset-2 transition-colors"
+                    >
+                      Log Masuk Akaun
+                    </Link>
+                  </div>
                 </div>
 
                 <div className="space-y-2">
@@ -751,7 +824,7 @@ export function CheckoutClient({ initialPaymentSettings, initialSiteSettings, av
 
               {/* SECTION 2: Delivery Address / Contact Details */}
               <div className="bg-white rounded-2xl p-6 sm:p-7 border border-[#E8E2D8] shadow-2xs space-y-5">
-                <div className="flex items-center justify-between border-b border-[#E8E2D8]/60 pb-3">
+                <div className="flex items-center justify-between border-b border-[#E8E2D8]/60 pb-3 gap-2 flex-wrap">
                   <div className="flex items-center space-x-2.5">
                     <span className="w-6 h-6 rounded-full bg-forest text-warmwhite text-xs font-bold flex items-center justify-center">
                       2
@@ -765,12 +838,23 @@ export function CheckoutClient({ initialPaymentSettings, initialSiteSettings, av
                       </span>
                     </div>
                   </div>
-                  {isPickup && (
-                    <span className="text-[10.5px] font-bold text-amber-900 bg-amber-100/90 px-2.5 py-1 rounded-full border border-amber-300 flex items-center gap-1">
-                      <Store className="w-3 h-3 text-amber-700" />
-                      <span>Ambil di Kilang</span>
-                    </span>
-                  )}
+                  <div className="flex items-center gap-2">
+                    <button
+                      type="button"
+                      onClick={handleAutofillDemo}
+                      className="inline-flex items-center gap-1 text-[11px] font-bold text-amber-900 hover:text-forest bg-gold/15 hover:bg-gold/25 border border-gold/40 px-2.5 py-1 rounded-lg transition-all cursor-pointer shadow-2xs"
+                      title="Isi pantas alamat demo"
+                    >
+                      <Sparkles className="w-3 h-3 text-gold-dark" />
+                      <span>Isi Alamat Demo</span>
+                    </button>
+                    {isPickup && (
+                      <span className="text-[10.5px] font-bold text-amber-900 bg-amber-100/90 px-2.5 py-1 rounded-full border border-amber-300 flex items-center gap-1">
+                        <Store className="w-3 h-3 text-amber-700" />
+                        <span>Ambil di Kilang</span>
+                      </span>
+                    )}
+                  </div>
                 </div>
 
                 {isPickup && (
