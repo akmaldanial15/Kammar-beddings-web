@@ -1,6 +1,7 @@
 'use client'
 
 import React, { useState } from 'react'
+import { useRouter } from 'next/navigation'
 import { Order } from '@/types'
 import { formatMYR, formatKLDate } from '@/lib/utils/format'
 import {
@@ -15,6 +16,8 @@ import {
   Save,
   Tag,
   Share2,
+  Trash2,
+  Loader2,
 } from 'lucide-react'
 import Link from 'next/link'
 
@@ -23,6 +26,7 @@ interface OrderDetailAdminClientProps {
 }
 
 export function OrderDetailAdminClient({ initialOrder }: OrderDetailAdminClientProps) {
+  const router = useRouter()
   const [order, setOrder] = useState<Order>(initialOrder)
   const [carrier, setCarrier] = useState(order.carrier || 'LENA White-Glove Fleet')
   const [trackingNumber, setTrackingNumber] = useState(order.trackingNumber || '')
@@ -35,6 +39,31 @@ export function OrderDetailAdminClient({ initialOrder }: OrderDetailAdminClientP
   const [refundAmount, setRefundAmount] = useState<number>(order.totalSen / 100)
   const [refundReason, setRefundReason] = useState<string>('Customer order cancellation request')
   const [isRefunding, setIsRefunding] = useState(false)
+
+  // Delete Modal State
+  const [showDeleteModal, setShowDeleteModal] = useState(false)
+  const [isDeleting, setIsDeleting] = useState(false)
+
+  const handleDeleteOrder = async () => {
+    setIsDeleting(true)
+    try {
+      const res = await fetch(`/api/admin/orders/${order.id}`, {
+        method: 'DELETE',
+      })
+      const data = await res.json()
+      if (res.ok && data.success) {
+        router.push('/admin/orders')
+      } else {
+        setFeedback({ text: data.error || 'Gagal memadam pesanan.', type: 'error' })
+        setShowDeleteModal(false)
+      }
+    } catch {
+      setFeedback({ text: 'Ralat sambungan semasa memadam pesanan.', type: 'error' })
+      setShowDeleteModal(false)
+    } finally {
+      setIsDeleting(false)
+    }
+  }
 
   const handleUpdateFulfillment = async (newStatus: Order['fulfillmentStatus']) => {
     setIsUpdating(true)
@@ -159,11 +188,11 @@ export function OrderDetailAdminClient({ initialOrder }: OrderDetailAdminClientP
           </div>
         </div>
 
-        <div className="flex items-center space-x-3">
+        <div className="flex items-center space-x-2 sm:space-x-3">
           {order.paymentStatus === 'paid' && (
             <button
               onClick={() => setShowRefundModal(true)}
-              className="flex items-center space-x-1.5 px-4 py-2 border border-sale text-sale rounded-xl text-xs font-bold hover:bg-sale/10 transition-colors"
+              className="flex items-center space-x-1.5 px-3.5 py-2 border border-sale text-sale rounded-xl text-xs font-bold hover:bg-sale/10 transition-colors"
             >
               <RotateCcw className="w-4 h-4" />
               <span>Issue Refund</span>
@@ -173,11 +202,21 @@ export function OrderDetailAdminClient({ initialOrder }: OrderDetailAdminClientP
           <Link
             href={`/order/confirmed/${order.id}`}
             target="_blank"
-            className="flex items-center space-x-1.5 px-4 py-2 bg-warmwhite border border-borderLight text-forest-dark rounded-xl text-xs font-bold hover:border-forest transition-colors shadow-sm"
+            className="flex items-center space-x-1.5 px-3.5 py-2 bg-warmwhite border border-borderLight text-forest-dark rounded-xl text-xs font-bold hover:border-forest transition-colors shadow-sm"
           >
             <FileText className="w-4 h-4 text-gold" />
             <span>Customer Tax Invoice</span>
           </Link>
+
+          <button
+            type="button"
+            onClick={() => setShowDeleteModal(true)}
+            className="flex items-center space-x-1.5 px-3.5 py-2 border border-rose-300 bg-rose-50/70 text-rose-700 rounded-xl text-xs font-bold hover:bg-rose-100 transition-colors cursor-pointer"
+            title="Padam rekod pesanan ini"
+          >
+            <Trash2 className="w-4 h-4 text-rose-600" />
+            <span>Padam Pesanan</span>
+          </button>
         </div>
       </div>
 
@@ -579,6 +618,79 @@ export function OrderDetailAdminClient({ initialOrder }: OrderDetailAdminClientP
                 </button>
               </div>
             </form>
+          </div>
+        </div>
+      )}
+
+      {/* Delete Confirmation Modal */}
+      {showDeleteModal && (
+        <div className="fixed inset-0 z-50 flex items-center justify-center p-4 bg-forest-dark/60 backdrop-blur-xs animate-fade-in">
+          <div className="bg-warmwhite rounded-2xl border border-borderLight shadow-2xl max-w-md w-full p-5 sm:p-6 space-y-4 animate-scale-in">
+            <div className="flex items-center space-x-3 text-rose-600">
+              <div className="w-10 h-10 rounded-xl bg-rose-100 flex items-center justify-center flex-shrink-0">
+                <Trash2 className="w-5 h-5 text-rose-600" />
+              </div>
+              <div>
+                <h3 className="font-bold text-forest-dark text-base sm:text-lg">
+                  Padam Pesanan Ini?
+                </h3>
+                <p className="text-xs text-secondary">
+                  Tindakan ini tidak boleh diundur.
+                </p>
+              </div>
+            </div>
+
+            <div className="bg-cream/60 rounded-xl p-3 text-xs space-y-1.5 border border-borderLight/60">
+              <div className="flex justify-between">
+                <span className="text-secondary">No. Pesanan:</span>
+                <span className="font-mono font-bold text-forest">{order.orderNumber}</span>
+              </div>
+              <div className="flex justify-between">
+                <span className="text-secondary">Pelanggan:</span>
+                <span className="font-bold text-forest-dark truncate max-w-[200px]">{order.customerName}</span>
+              </div>
+              <div className="flex justify-between">
+                <span className="text-secondary">Jumlah Bayaran:</span>
+                <span className="font-bold text-forest-dark">{formatMYR(order.totalSen)}</span>
+              </div>
+              <div className="flex justify-between">
+                <span className="text-secondary">Status Bayaran:</span>
+                <span className="font-medium capitalize">{order.paymentStatus}</span>
+              </div>
+            </div>
+
+            <p className="text-[11.5px] text-secondary">
+              Rekod pesanan ini akan dipadamkan daripada pangkalan data secara kekal. Sebarang stok produk yang belum dihantar akan dikembalikan ke inventori kilang secara automatik.
+            </p>
+
+            <div className="flex items-center justify-end space-x-2 pt-2">
+              <button
+                type="button"
+                disabled={isDeleting}
+                onClick={() => setShowDeleteModal(false)}
+                className="px-4 py-2 text-xs font-bold text-secondary hover:text-charcoal bg-cream/70 hover:bg-cream rounded-xl transition-colors cursor-pointer"
+              >
+                Batal
+              </button>
+              <button
+                type="button"
+                disabled={isDeleting}
+                onClick={handleDeleteOrder}
+                className="flex items-center space-x-1.5 px-4 py-2 text-xs font-bold text-white bg-rose-600 hover:bg-rose-700 disabled:opacity-50 rounded-xl transition-all shadow-xs cursor-pointer"
+              >
+                {isDeleting ? (
+                  <>
+                    <Loader2 className="w-3.5 h-3.5 animate-spin" />
+                    <span>Memadam...</span>
+                  </>
+                ) : (
+                  <>
+                    <Trash2 className="w-3.5 h-3.5" />
+                    <span>Ya, Padam Pesanan</span>
+                  </>
+                )}
+              </button>
+            </div>
           </div>
         </div>
       )}

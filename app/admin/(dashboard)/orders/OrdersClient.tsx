@@ -17,6 +17,9 @@ import {
   DollarSign,
   AlertTriangle,
   Tag,
+  Trash2,
+  Loader2,
+  CheckCircle,
 } from 'lucide-react'
 import Link from 'next/link'
 
@@ -25,10 +28,78 @@ interface OrdersClientProps {
 }
 
 export function OrdersClient({ initialOrders }: OrdersClientProps) {
-  const [orders] = useState<Order[]>(initialOrders)
+  const [orders, setOrders] = useState<Order[]>(initialOrders)
   const [search, setSearch] = useState('')
   const [paymentFilter, setPaymentFilter] = useState<string>('all')
   const [fulfillmentFilter, setFulfillmentFilter] = useState<string>('all')
+  const [selectedIds, setSelectedIds] = useState<string[]>([])
+  const [orderToDelete, setOrderToDelete] = useState<Order | null>(null)
+  const [isBulkDeleting, setIsBulkDeleting] = useState<boolean>(false)
+  const [isDeleting, setIsDeleting] = useState<boolean>(false)
+  const [toast, setToast] = useState<{ type: 'success' | 'error'; message: string } | null>(null)
+
+  const handleDeleteSingle = async () => {
+    if (!orderToDelete) return
+    setIsDeleting(true)
+    try {
+      const res = await fetch(`/api/admin/orders/${orderToDelete.id}`, {
+        method: 'DELETE',
+      })
+      const data = await res.json()
+      if (res.ok && data.success) {
+        setOrders((prev) => prev.filter((o) => o.id !== orderToDelete.id))
+        setSelectedIds((prev) => prev.filter((id) => id !== orderToDelete.id))
+        setToast({ type: 'success', message: `Pesanan ${orderToDelete.orderNumber} berjaya dipadam.` })
+        setOrderToDelete(null)
+      } else {
+        setToast({ type: 'error', message: data.error || 'Gagal memadam pesanan.' })
+      }
+    } catch {
+      setToast({ type: 'error', message: 'Ralat sambungan semasa memadam pesanan.' })
+    } finally {
+      setIsDeleting(false)
+    }
+  }
+
+  const handleBulkDelete = async () => {
+    if (selectedIds.length === 0) return
+    setIsDeleting(true)
+    try {
+      const res = await fetch('/api/admin/orders', {
+        method: 'DELETE',
+        headers: { 'Content-Type': 'application/json' },
+        body: JSON.stringify({ ids: selectedIds }),
+      })
+      const data = await res.json()
+      if (res.ok && data.success) {
+        const deletedSet = new Set(selectedIds)
+        setOrders((prev) => prev.filter((o) => !deletedSet.has(o.id)))
+        setSelectedIds([])
+        setToast({ type: 'success', message: `${data.count || selectedIds.length} pesanan terpilih berjaya dipadam.` })
+        setIsBulkDeleting(false)
+      } else {
+        setToast({ type: 'error', message: data.error || 'Gagal memadam pesanan terpilih.' })
+      }
+    } catch {
+      setToast({ type: 'error', message: 'Ralat sambungan semasa memadam pesanan.' })
+    } finally {
+      setIsDeleting(false)
+    }
+  }
+
+  const handleSelectAll = () => {
+    if (filtered.length > 0 && selectedIds.length === filtered.length) {
+      setSelectedIds([])
+    } else {
+      setSelectedIds(filtered.map((o) => o.id))
+    }
+  }
+
+  const handleToggleSelect = (id: string) => {
+    setSelectedIds((prev) =>
+      prev.includes(id) ? prev.filter((item) => item !== id) : [...prev, id]
+    )
+  }
 
   const filtered = orders.filter((order) => {
     const matchesSearch =
@@ -157,6 +228,33 @@ export function OrdersClient({ initialOrders }: OrdersClientProps) {
 
   return (
     <div className="space-y-4 sm:space-y-6">
+      {/* Toast Feedback */}
+      {toast && (
+        <div
+          className={`p-3 sm:p-4 rounded-xl sm:rounded-2xl border flex items-center justify-between text-xs sm:text-sm animate-fade-in ${
+            toast.type === 'success'
+              ? 'bg-emerald-50 text-emerald-900 border-emerald-200'
+              : 'bg-rose-50 text-rose-900 border-rose-200'
+          }`}
+        >
+          <div className="flex items-center space-x-2.5">
+            {toast.type === 'success' ? (
+              <CheckCircle className="w-4 h-4 sm:w-5 sm:h-5 text-emerald-600 flex-shrink-0" />
+            ) : (
+              <AlertTriangle className="w-4 h-4 sm:w-5 sm:h-5 text-rose-600 flex-shrink-0" />
+            )}
+            <span className="font-medium">{toast.message}</span>
+          </div>
+          <button
+            type="button"
+            onClick={() => setToast(null)}
+            className="text-charcoal-muted hover:text-charcoal p-1 rounded-lg hover:bg-black/5 transition-colors cursor-pointer"
+          >
+            <X className="w-4 h-4" />
+          </button>
+        </div>
+      )}
+
       {/* Summary KPI Badges: 3-column responsive grid on all devices */}
       <div className="grid grid-cols-3 gap-2 sm:gap-4 animate-fade-in-up">
         {/* Card 1: Total Orders */}
@@ -235,6 +333,33 @@ export function OrdersClient({ initialOrders }: OrdersClientProps) {
           </div>
         </button>
       </div>
+
+      {/* Bulk Action Bar (when orders selected) */}
+      {selectedIds.length > 0 && (
+        <div className="bg-forest text-warmwhite p-3 sm:px-5 sm:py-3.5 rounded-2xl flex items-center justify-between shadow-lg border border-gold/30 animate-fade-in-up">
+          <div className="flex items-center space-x-2 text-xs sm:text-sm">
+            <span className="w-2.5 h-2.5 rounded-full bg-gold animate-pulse" />
+            <span className="font-bold">{selectedIds.length} pesanan dipilih</span>
+          </div>
+          <div className="flex items-center space-x-2 sm:space-x-3">
+            <button
+              type="button"
+              onClick={() => setSelectedIds([])}
+              className="px-3 py-1.5 text-xs text-warmwhite/80 hover:text-warmwhite hover:bg-white/10 rounded-xl transition-colors cursor-pointer"
+            >
+              Batal Pilihan
+            </button>
+            <button
+              type="button"
+              onClick={() => setIsBulkDeleting(true)}
+              className="flex items-center space-x-1.5 px-3.5 py-1.5 bg-rose-600 hover:bg-rose-700 text-white text-xs font-bold rounded-xl shadow-xs transition-colors cursor-pointer"
+            >
+              <Trash2 className="w-3.5 h-3.5" />
+              <span>Padam Terpilih ({selectedIds.length})</span>
+            </button>
+          </div>
+        </div>
+      )}
 
       {/* Search and Filters */}
       <div className="bg-warmwhite p-3 sm:p-4 rounded-2xl border border-borderLight flex flex-col md:flex-row gap-2.5 sm:gap-3 items-stretch md:items-center justify-between shadow-xs animate-fade-in-up delay-100">
@@ -322,24 +447,35 @@ export function OrdersClient({ initialOrders }: OrdersClientProps) {
             const paymentBadge = getPaymentBadge(order.paymentStatus)
             const fulfillmentBadge = getFulfillmentBadge(order.fulfillmentStatus)
             const staggerClass = `stagger-${(idx % 10) + 1}`
+            const isSelected = selectedIds.includes(order.id)
 
             return (
               <div
                 key={order.id}
-                className={`bg-warmwhite rounded-2xl border border-borderLight p-3.5 shadow-xs transition-all animate-fade-in-up ${staggerClass}`}
+                className={`bg-warmwhite rounded-2xl border p-3.5 shadow-xs transition-all animate-fade-in-up ${staggerClass} ${
+                  isSelected ? 'border-gold bg-gold/5 ring-1 ring-gold/20' : 'border-borderLight'
+                }`}
               >
-                {/* Header: Order Number + Badges */}
+                {/* Header: Checkbox + Order Number + Badges */}
                 <div className="flex items-start justify-between gap-2 pb-2.5 border-b border-borderLight/60">
-                  <div>
-                    <Link
-                      href={`/admin/orders/${order.id}`}
-                      className="font-mono font-bold text-xs text-forest hover:underline block"
-                    >
-                      {order.orderNumber}
-                    </Link>
-                    <span className="text-[10px] text-charcoal-muted block mt-0.5">
-                      {formatKLDate(order.createdAt)}
-                    </span>
+                  <div className="flex items-start space-x-2.5">
+                    <input
+                      type="checkbox"
+                      checked={isSelected}
+                      onChange={() => handleToggleSelect(order.id)}
+                      className="mt-0.5 w-4 h-4 rounded border-borderLight text-forest focus:ring-forest cursor-pointer"
+                    />
+                    <div>
+                      <Link
+                        href={`/admin/orders/${order.id}`}
+                        className="font-mono font-bold text-xs text-forest hover:underline block"
+                      >
+                        {order.orderNumber}
+                      </Link>
+                      <span className="text-[10px] text-charcoal-muted block mt-0.5">
+                        {formatKLDate(order.createdAt)}
+                      </span>
+                    </div>
                   </div>
 
                   <div className="flex items-center space-x-1.5 flex-shrink-0">
@@ -416,7 +552,7 @@ export function OrdersClient({ initialOrders }: OrdersClientProps) {
                   </span>
                 </div>
 
-                {/* Footer: Total & Manage Button */}
+                {/* Footer: Total & Actions (Manage + Delete) */}
                 <div className="pt-2.5 border-t border-borderLight/60 flex items-center justify-between">
                   <div>
                     <span className="text-[10px] text-secondary block">Jumlah Bayaran:</span>
@@ -425,13 +561,24 @@ export function OrdersClient({ initialOrders }: OrdersClientProps) {
                     </span>
                   </div>
 
-                  <Link
-                    href={`/admin/orders/${order.id}`}
-                    className="inline-flex items-center space-x-1 px-3.5 py-2 bg-forest hover:bg-forest-dark text-warmwhite text-xs font-bold rounded-xl transition-all shadow-xs cursor-pointer"
-                  >
-                    <span>Urus Pesanan</span>
-                    <ArrowUpRight className="w-3.5 h-3.5 text-gold" />
-                  </Link>
+                  <div className="flex items-center space-x-1.5">
+                    <button
+                      type="button"
+                      onClick={() => setOrderToDelete(order)}
+                      className="p-2 text-rose-600 hover:text-rose-700 bg-rose-50 hover:bg-rose-100 border border-rose-200 rounded-xl text-xs font-bold transition-all cursor-pointer flex items-center space-x-1"
+                      title="Padam Pesanan"
+                    >
+                      <Trash2 className="w-3.5 h-3.5" />
+                      <span className="hidden xs:inline">Padam</span>
+                    </button>
+                    <Link
+                      href={`/admin/orders/${order.id}`}
+                      className="inline-flex items-center space-x-1 px-3.5 py-2 bg-forest hover:bg-forest-dark text-warmwhite text-xs font-bold rounded-xl transition-all shadow-xs cursor-pointer"
+                    >
+                      <span>Urus</span>
+                      <ArrowUpRight className="w-3.5 h-3.5 text-gold" />
+                    </Link>
+                  </div>
                 </div>
               </div>
             )
@@ -458,6 +605,15 @@ export function OrdersClient({ initialOrders }: OrdersClientProps) {
             <table className="w-full text-left text-xs">
               <thead className="bg-cream/60 border-b border-borderLight text-secondary uppercase font-semibold text-[10px] tracking-wider">
                 <tr>
+                  <th className="py-3.5 px-3 w-10 text-center">
+                    <input
+                      type="checkbox"
+                      checked={filtered.length > 0 && selectedIds.length === filtered.length}
+                      onChange={handleSelectAll}
+                      className="w-4 h-4 rounded border-borderLight text-forest focus:ring-forest cursor-pointer"
+                      title="Pilih semua"
+                    />
+                  </th>
                   <th className="py-3.5 px-4">Order Number</th>
                   <th className="py-3.5 px-4">Customer</th>
                   <th className="py-3.5 px-4">Referral / Agent</th>
@@ -474,9 +630,23 @@ export function OrdersClient({ initialOrders }: OrdersClientProps) {
                   const itemCount = order.items.reduce((acc, i) => acc + i.quantity, 0)
                   const paymentBadge = getPaymentBadge(order.paymentStatus)
                   const fulfillmentBadge = getFulfillmentBadge(order.fulfillmentStatus)
+                  const isSelected = selectedIds.includes(order.id)
 
                   return (
-                    <tr key={order.id} className="hover:bg-cream/20 transition-colors">
+                    <tr
+                      key={order.id}
+                      className={`hover:bg-cream/20 transition-colors ${
+                        isSelected ? 'bg-gold/5' : ''
+                      }`}
+                    >
+                      <td className="py-4 px-3 text-center">
+                        <input
+                          type="checkbox"
+                          checked={isSelected}
+                          onChange={() => handleToggleSelect(order.id)}
+                          className="w-4 h-4 rounded border-borderLight text-forest focus:ring-forest cursor-pointer"
+                        />
+                      </td>
                       <td className="py-4 px-4">
                         <Link
                           href={`/admin/orders/${order.id}`}
@@ -551,13 +721,23 @@ export function OrdersClient({ initialOrders }: OrdersClientProps) {
                         </span>
                       </td>
                       <td className="py-4 px-4 text-right">
-                        <Link
-                          href={`/admin/orders/${order.id}`}
-                          className="inline-flex items-center space-x-1 px-3 py-1.5 bg-forest text-warmwhite text-xs font-bold rounded-lg hover:bg-forest-dark transition-colors shadow-sm"
-                        >
-                          <span>Manage</span>
-                          <ArrowUpRight className="w-3.5 h-3.5" />
-                        </Link>
+                        <div className="flex items-center justify-end space-x-1.5">
+                          <Link
+                            href={`/admin/orders/${order.id}`}
+                            className="inline-flex items-center space-x-1 px-3 py-1.5 bg-forest text-warmwhite text-xs font-bold rounded-lg hover:bg-forest-dark transition-colors shadow-xs"
+                          >
+                            <span>Manage</span>
+                            <ArrowUpRight className="w-3.5 h-3.5" />
+                          </Link>
+                          <button
+                            type="button"
+                            onClick={() => setOrderToDelete(order)}
+                            className="p-1.5 text-rose-600 hover:text-rose-700 hover:bg-rose-50 border border-transparent hover:border-rose-200 rounded-lg transition-colors cursor-pointer"
+                            title="Padam Pesanan"
+                          >
+                            <Trash2 className="w-4 h-4" />
+                          </button>
+                        </div>
                       </td>
                     </tr>
                   )
@@ -567,6 +747,137 @@ export function OrdersClient({ initialOrders }: OrdersClientProps) {
           </div>
         )}
       </div>
+
+      {/* ========================================================================= */}
+      {/* DELETE CONFIRMATION MODAL (Single Order)                                 */}
+      {/* ========================================================================= */}
+      {orderToDelete && (
+        <div className="fixed inset-0 z-50 flex items-center justify-center p-4 bg-forest-dark/60 backdrop-blur-xs animate-fade-in">
+          <div className="bg-warmwhite rounded-2xl border border-borderLight shadow-2xl max-w-md w-full p-5 sm:p-6 space-y-4 animate-scale-in">
+            <div className="flex items-center space-x-3 text-rose-600">
+              <div className="w-10 h-10 rounded-xl bg-rose-100 flex items-center justify-center flex-shrink-0">
+                <Trash2 className="w-5 h-5 text-rose-600" />
+              </div>
+              <div>
+                <h3 className="font-bold text-forest-dark text-base sm:text-lg">
+                  Padam Pesanan Ini?
+                </h3>
+                <p className="text-xs text-secondary">
+                  Tindakan ini tidak boleh diundur.
+                </p>
+              </div>
+            </div>
+
+            <div className="bg-cream/60 rounded-xl p-3 text-xs space-y-1.5 border border-borderLight/60">
+              <div className="flex justify-between">
+                <span className="text-secondary">No. Pesanan:</span>
+                <span className="font-mono font-bold text-forest">{orderToDelete.orderNumber}</span>
+              </div>
+              <div className="flex justify-between">
+                <span className="text-secondary">Pelanggan:</span>
+                <span className="font-bold text-forest-dark truncate max-w-[200px]">{orderToDelete.customerName}</span>
+              </div>
+              <div className="flex justify-between">
+                <span className="text-secondary">Jumlah Bayaran:</span>
+                <span className="font-bold text-forest-dark">{formatMYR(orderToDelete.totalSen)}</span>
+              </div>
+              <div className="flex justify-between">
+                <span className="text-secondary">Status Bayaran:</span>
+                <span className="font-medium capitalize">{orderToDelete.paymentStatus}</span>
+              </div>
+            </div>
+
+            <p className="text-[11.5px] text-secondary">
+              Rekod pesanan ini akan dipadamkan daripada pangkalan data secara kekal. Stok bagi produk pesanan ini akan dikembalikan ke inventori kilang.
+            </p>
+
+            <div className="flex items-center justify-end space-x-2 pt-2">
+              <button
+                type="button"
+                disabled={isDeleting}
+                onClick={() => setOrderToDelete(null)}
+                className="px-4 py-2 text-xs font-bold text-secondary hover:text-charcoal bg-cream/70 hover:bg-cream rounded-xl transition-colors cursor-pointer"
+              >
+                Batal
+              </button>
+              <button
+                type="button"
+                disabled={isDeleting}
+                onClick={handleDeleteSingle}
+                className="flex items-center space-x-1.5 px-4 py-2 text-xs font-bold text-white bg-rose-600 hover:bg-rose-700 disabled:opacity-50 rounded-xl transition-all shadow-xs cursor-pointer"
+              >
+                {isDeleting ? (
+                  <>
+                    <Loader2 className="w-3.5 h-3.5 animate-spin" />
+                    <span>Memadam...</span>
+                  </>
+                ) : (
+                  <>
+                    <Trash2 className="w-3.5 h-3.5" />
+                    <span>Ya, Padam Pesanan</span>
+                  </>
+                )}
+              </button>
+            </div>
+          </div>
+        </div>
+      )}
+
+      {/* ========================================================================= */}
+      {/* BULK DELETE CONFIRMATION MODAL                                            */}
+      {/* ========================================================================= */}
+      {isBulkDeleting && (
+        <div className="fixed inset-0 z-50 flex items-center justify-center p-4 bg-forest-dark/60 backdrop-blur-xs animate-fade-in">
+          <div className="bg-warmwhite rounded-2xl border border-borderLight shadow-2xl max-w-md w-full p-5 sm:p-6 space-y-4 animate-scale-in">
+            <div className="flex items-center space-x-3 text-rose-600">
+              <div className="w-10 h-10 rounded-xl bg-rose-100 flex items-center justify-center flex-shrink-0">
+                <Trash2 className="w-5 h-5 text-rose-600" />
+              </div>
+              <div>
+                <h3 className="font-bold text-forest-dark text-base sm:text-lg">
+                  Padam {selectedIds.length} Pesanan Terpilih?
+                </h3>
+                <p className="text-xs text-secondary">
+                  Semua rekod pesanan yang dipilih akan dipadam secara kekal.
+                </p>
+              </div>
+            </div>
+
+            <p className="text-[11.5px] text-secondary">
+              Adakah anda pasti mahu memadamkan {selectedIds.length} pesanan yang telah dipilih? Sebarang stok bagi produk berkaitan akan dikembalikan ke inventori kilang secara automatik.
+            </p>
+
+            <div className="flex items-center justify-end space-x-2 pt-2">
+              <button
+                type="button"
+                disabled={isDeleting}
+                onClick={() => setIsBulkDeleting(false)}
+                className="px-4 py-2 text-xs font-bold text-secondary hover:text-charcoal bg-cream/70 hover:bg-cream rounded-xl transition-colors cursor-pointer"
+              >
+                Batal
+              </button>
+              <button
+                type="button"
+                disabled={isDeleting}
+                onClick={handleBulkDelete}
+                className="flex items-center space-x-1.5 px-4 py-2 text-xs font-bold text-white bg-rose-600 hover:bg-rose-700 disabled:opacity-50 rounded-xl transition-all shadow-xs cursor-pointer"
+              >
+                {isDeleting ? (
+                  <>
+                    <Loader2 className="w-3.5 h-3.5 animate-spin" />
+                    <span>Memadam ({selectedIds.length})...</span>
+                  </>
+                ) : (
+                  <>
+                    <Trash2 className="w-3.5 h-3.5" />
+                    <span>Ya, Padam Semua ({selectedIds.length})</span>
+                  </>
+                )}
+              </button>
+            </div>
+          </div>
+        </div>
+      )}
     </div>
   )
 }

@@ -1,6 +1,6 @@
 import { NextRequest, NextResponse } from 'next/server'
 import { getAdminSession } from '@/lib/admin/auth'
-import { updateOrderStatus, processRefund, getOrderById } from '@/lib/db'
+import { updateOrderStatus, processRefund, getOrderById, deleteOrder } from '@/lib/db'
 
 export async function GET(
   req: NextRequest,
@@ -88,5 +88,26 @@ export async function POST(
     return NextResponse.json({ success: true, message: res.message, order: updatedOrder })
   } catch (error: any) {
     return NextResponse.json({ error: error.message || 'Failed to process refund' }, { status: 500 })
+  }
+}
+
+export async function DELETE(
+  req: NextRequest,
+  { params }: { params: { orderId: string } }
+) {
+  const session = await getAdminSession()
+  if (!session) {
+    return NextResponse.json({ error: 'Unauthorized staff access' }, { status: 401 })
+  }
+
+  try {
+    const res = await deleteOrder(params.orderId, session.email)
+    if (!res.success) {
+      return NextResponse.json({ error: res.message }, { status: 400 })
+    }
+
+    return NextResponse.json({ success: true, message: res.message })
+  } catch (error: any) {
+    return NextResponse.json({ error: error.message || 'Failed to delete order' }, { status: 500 })
   }
 }

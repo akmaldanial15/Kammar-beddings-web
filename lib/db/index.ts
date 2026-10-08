@@ -640,6 +640,77 @@ export async function processRefund(
   return { success: true, message: 'Refund processed successfully.' }
 }
 
+export async function deleteOrder(
+  orderId: string,
+  actorEmail: string = 'system'
+): Promise<{ success: boolean; message: string }> {
+  const db = ensureDb()
+  const index = db.orders.findIndex((o) => o.id === orderId)
+  if (index === -1) {
+    return { success: false, message: 'Pesanan tidak dijumpai' }
+  }
+
+  const order = db.orders[index]
+
+  // If order was active/unfulfilled, return reserved stock back to inventory
+  if (order.fulfillmentStatus !== 'cancelled' && order.items && order.items.length > 0) {
+    for (const item of order.items) {
+      if (item.variantId) {
+        await restoreStock(item.variantId, item.quantity)
+      }
+    }
+  }
+
+  db.orders.splice(index, 1)
+  saveDb(db)
+
+  logAdminAction(actorEmail, 'order_deleted', 'order', orderId, {
+    orderNumber: order.orderNumber,
+    customerName: order.customerName,
+    customerEmail: order.customerEmail,
+    totalSen: order.totalSen,
+  })
+
+  return { success: true, message: `Pesanan ${order.orderNumber} berjaya dipadam.` }
+}
+
+export async function deleteOrders(
+  orderIds: string[],
+  actorEmail: string = 'system'
+): Promise<{ success: boolean; count: number; message: string }> {
+  const db = ensureDb()
+  const idsSet = new Set(orderIds)
+  const ordersToDelete = db.orders.filter((o) => idsSet.has(o.id))
+
+  if (ordersToDelete.length === 0) {
+    return { success: false, count: 0, message: 'Tiada pesanan dijumpai untuk dipadam' }
+  }
+
+  for (const order of ordersToDelete) {
+    if (order.fulfillmentStatus !== 'cancelled' && order.items && order.items.length > 0) {
+      for (const item of order.items) {
+        if (item.variantId) {
+          await restoreStock(item.variantId, item.quantity)
+        }
+      }
+    }
+  }
+
+  db.orders = db.orders.filter((o) => !idsSet.has(o.id))
+  saveDb(db)
+
+  logAdminAction(actorEmail, 'orders_bulk_deleted', 'order', undefined, {
+    count: ordersToDelete.length,
+    orderNumbers: ordersToDelete.map((o) => o.orderNumber),
+  })
+
+  return {
+    success: true,
+    count: ordersToDelete.length,
+    message: `${ordersToDelete.length} pesanan berjaya dipadam.`,
+  }
+}
+
 // ==========================================
 // REVIEWS & WISHLISTS
 // ==========================================
