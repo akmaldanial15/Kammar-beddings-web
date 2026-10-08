@@ -129,7 +129,7 @@ const companyPillars = [
     highlight: 'Kapasiti Harian Tinggi',
     icon: Factory,
     iconBg: 'bg-forest/10 text-forest border-forest/20',
-    accentGradient: 'from-[#0B1E36] via-[#1E4E8C] to-[#13325B]',
+    accentGradient: 'from-[#1E4E8C] via-[#153D73] to-[#13325B]',
   },
   {
     num: '03',
@@ -164,7 +164,7 @@ export default async function ProfilPage() {
   return (
     <div className="min-h-screen bg-[#FDFBF7] text-[#2D2A26] font-sans antialiased selection:bg-gold/20 selection:text-forest">
       {/* Hero Section */}
-      <section className="relative bg-gradient-to-br from-[#0B1E36] via-[#13325B] to-[#0A1A2F] text-white pt-16 sm:pt-20 pb-24 sm:pb-32 overflow-hidden">
+      <section className="relative bg-gradient-to-br from-[#1E4E8C] via-[#153D73] to-[#0F2D54] text-white pt-16 sm:pt-20 pb-24 sm:pb-32 overflow-hidden">
         <div className="absolute inset-0 opacity-10 bg-[radial-gradient(#D4AF37_1px,transparent_1px)] [background-size:24px_24px]" />
         
         <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 relative z-10">
@@ -432,7 +432,7 @@ export default async function ProfilPage() {
       </section>
 
       {/* Visi & Misi Section */}
-      <section className="py-16 sm:py-20 bg-gradient-to-br from-[#0B1E36] via-[#13325B] to-[#0A1A2F] text-white border-y border-gold/20 relative overflow-hidden">
+      <section className="py-16 sm:py-20 bg-gradient-to-br from-[#1E4E8C] via-[#153D73] to-[#0F2D54] text-white border-y border-gold/20 relative overflow-hidden">
         <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 relative z-10">
           <div className="grid grid-cols-1 lg:grid-cols-12 gap-12 items-center">
             {/* Left: Mission & Vision */}

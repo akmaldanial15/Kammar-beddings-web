@@ -92,17 +92,17 @@ export function Footer() {
   ]
 
   return (
-    <footer className="relative bg-gradient-to-b from-[#0B1E36] via-[#09172A] to-[#050E1A] text-white pt-14 sm:pt-20 pb-10 border-t border-white/[0.08] font-sans overflow-hidden">
+    <footer className="relative bg-gradient-to-b from-[#1E4E8C] via-[#153D73] to-[#0F2D54] text-white pt-14 sm:pt-20 pb-10 border-t border-white/15 font-sans overflow-hidden">
       {/* Ambient background glows */}
-      <div className="absolute top-0 left-1/4 w-96 h-96 bg-blue-500/5 rounded-full blur-3xl pointer-events-none" />
-      <div className="absolute bottom-10 right-1/4 w-96 h-96 bg-gold/5 rounded-full blur-3xl pointer-events-none" />
+      <div className="absolute top-0 left-1/4 w-96 h-96 bg-blue-300/10 rounded-full blur-3xl pointer-events-none" />
+      <div className="absolute bottom-10 right-1/4 w-96 h-96 bg-gold/15 rounded-full blur-3xl pointer-events-none" />
 
       <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 relative z-10">
         
         {/* 1. Reassurance Header */}
-        <div className="flex flex-col md:flex-row md:items-end justify-between gap-4 mb-8 pb-5 border-b border-white/10">
+        <div className="flex flex-col md:flex-row md:items-end justify-between gap-4 mb-8 pb-5 border-b border-white/15">
           <div className="space-y-1.5">
-            <div className="inline-flex items-center gap-2 px-3 py-1 rounded-full bg-gold/10 border border-gold/25 text-gold text-[10px] font-bold tracking-widest uppercase">
+            <div className="inline-flex items-center gap-2 px-3 py-1 rounded-full bg-gold/15 border border-gold/30 text-gold-light text-[10px] font-bold tracking-widest uppercase">
               <span className="w-1.5 h-1.5 rounded-full bg-gold animate-pulse" />
               <span>{isBM ? 'Jaminan Mutu KAMAAR' : 'KAMAAR Quality Guarantee'}</span>
             </div>
@@ -110,31 +110,31 @@ export function Footer() {
               {isBM ? 'Ketenangan Tidur Sepenuhnya Untuk Anda' : 'Sleep With Total Peace of Mind'}
             </h3>
           </div>
-          <div className="flex items-center gap-2 text-xs text-slate-300/90 bg-white/5 px-3.5 py-1.5 rounded-full border border-white/10 self-start md:self-auto">
+          <div className="flex items-center gap-2 text-xs text-blue-100 bg-white/10 px-3.5 py-1.5 rounded-full border border-white/15 self-start md:self-auto shadow-xs">
             <CheckCircle2 className="w-3.5 h-3.5 text-gold flex-shrink-0" />
             <span>{isBM ? 'Dipercayai oleh 15,000+ Keluarga Malaysia' : 'Trusted by 15,000+ Malaysian Homes'}</span>
           </div>
         </div>
 
         {/* 2. Reassurance Grid - 4 Floating Glass Cards */}
-        <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-4 gap-4 lg:gap-5 pb-10 sm:pb-12 border-b border-white/10">
+        <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-4 gap-4 lg:gap-5 pb-10 sm:pb-12 border-b border-white/15">
           {reassuranceItems.map((item, idx) => {
             const Icon = item.icon
             return (
               <Link
                 key={idx}
                 href={item.href}
-                className="group relative flex flex-col justify-between p-5 sm:p-6 rounded-2xl bg-white/[0.03] hover:bg-white/[0.07] border border-white/10 hover:border-gold/50 transition-all duration-300 hover:-translate-y-1 shadow-xs hover:shadow-xl hover:shadow-black/25 overflow-hidden"
+                className="group relative flex flex-col justify-between p-5 sm:p-6 rounded-2xl bg-white/[0.08] hover:bg-white/[0.14] border border-white/15 hover:border-gold/60 transition-all duration-300 hover:-translate-y-1 shadow-md hover:shadow-xl hover:shadow-black/20 backdrop-blur-sm overflow-hidden"
               >
                 <div className="absolute top-0 left-0 right-0 h-1 bg-gradient-to-r from-transparent via-gold/50 to-transparent opacity-0 group-hover:opacity-100 transition-opacity duration-300" />
-                <div className="absolute -top-10 -right-10 w-24 h-24 bg-gold/5 rounded-full blur-xl group-hover:bg-gold/15 transition-all duration-300 pointer-events-none" />
+                <div className="absolute -top-10 -right-10 w-24 h-24 bg-gold/10 rounded-full blur-xl group-hover:bg-gold/20 transition-all duration-300 pointer-events-none" />
 
                 <div>
                   <div className="flex items-center justify-between gap-2 mb-4">
-                    <div className="w-11 h-11 rounded-xl bg-gold/10 border border-gold/25 flex items-center justify-center text-gold group-hover:scale-105 group-hover:bg-gold group-hover:text-forest-dark transition-all duration-300 shadow-xs flex-shrink-0">
+                    <div className="w-11 h-11 rounded-xl bg-gold/15 border border-gold/30 flex items-center justify-center text-gold group-hover:scale-105 group-hover:bg-gold group-hover:text-forest-dark transition-all duration-300 shadow-xs flex-shrink-0">
                       <Icon className="w-5 h-5 transition-transform" />
                     </div>
-                    <span className="inline-flex items-center px-2.5 py-0.5 rounded-full text-[10px] font-bold uppercase tracking-wider bg-white/5 text-gold-light border border-white/10 group-hover:border-gold/30 group-hover:bg-gold/10 transition-colors">
+                    <span className="inline-flex items-center px-2.5 py-0.5 rounded-full text-[10px] font-bold uppercase tracking-wider bg-white/10 text-gold-light border border-white/15 group-hover:border-gold/40 group-hover:bg-gold/15 transition-colors">
                       {item.badge}
                     </span>
                   </div>
@@ -143,14 +143,14 @@ export function Footer() {
                     {item.title}
                   </h4>
 
-                  <p className="font-sans text-xs text-slate-300/85 leading-relaxed font-normal">
+                  <p className="font-sans text-xs text-blue-100/90 leading-relaxed font-normal">
                     {item.subtitle}
                   </p>
                 </div>
 
-                <div className="mt-4 pt-3 border-t border-white/[0.06] flex items-center justify-between text-[11px] font-medium text-slate-400 group-hover:text-gold transition-colors">
+                <div className="mt-4 pt-3 border-t border-white/10 flex items-center justify-between text-[11px] font-medium text-blue-200 group-hover:text-gold transition-colors">
                   <span>{isBM ? 'Ketahui Lebih Lanjut' : 'Learn More'}</span>
-                  <ArrowUpRight className="w-3.5 h-3.5 group-hover:translate-x-0.5 group-hover:-translate-y-0.5 transition-transform text-gold/70 group-hover:text-gold" />
+                  <ArrowUpRight className="w-3.5 h-3.5 group-hover:translate-x-0.5 group-hover:-translate-y-0.5 transition-transform text-gold/80 group-hover:text-gold" />
                 </div>
               </Link>
             )
@@ -158,19 +158,19 @@ export function Footer() {
         </div>
 
         {/* 3. VIP Newsletter Bar (Ultra-Clean, Dedicated Modern Card) */}
-        <div className="my-10 sm:my-12 p-6 sm:p-8 rounded-3xl bg-gradient-to-r from-white/[0.05] via-white/[0.02] to-white/[0.05] border border-white/10 backdrop-blur-sm relative overflow-hidden">
-          <div className="absolute -right-10 -bottom-10 w-64 h-64 bg-gold/10 rounded-full blur-3xl pointer-events-none" />
+        <div className="my-10 sm:my-12 p-6 sm:p-8 rounded-3xl bg-gradient-to-r from-white/[0.10] via-white/[0.06] to-white/[0.10] border border-white/20 backdrop-blur-md shadow-lg relative overflow-hidden">
+          <div className="absolute -right-10 -bottom-10 w-64 h-64 bg-gold/15 rounded-full blur-3xl pointer-events-none" />
           
           <div className="relative z-10 grid grid-cols-1 lg:grid-cols-12 gap-6 lg:gap-8 items-center">
             <div className="lg:col-span-7 space-y-2">
-              <div className="inline-flex items-center gap-1.5 px-3 py-1 rounded-full bg-gold/10 border border-gold/25 text-gold text-[10px] font-bold tracking-widest uppercase">
+              <div className="inline-flex items-center gap-1.5 px-3 py-1 rounded-full bg-gold/15 border border-gold/30 text-gold text-[10px] font-bold tracking-widest uppercase">
                 <Sparkles className="w-3 h-3 text-gold" />
                 <span>{isBM ? 'Kelab Eksklusif KAMAAR' : 'KAMAAR Exclusive Club'}</span>
               </div>
               <h3 className="font-serif text-2xl sm:text-3xl font-bold text-white tracking-tight">
                 {isBM ? 'Tawaran Kilang & Katalog Terkini Terus ke Emel' : 'Receive Exclusive Factory Deals & Catalog'}
               </h3>
-              <p className="text-xs sm:text-sm text-slate-300/80 max-w-xl leading-relaxed">
+              <p className="text-xs sm:text-sm text-blue-100/90 max-w-xl leading-relaxed">
                 {isBM
                   ? 'Sertai komuniti kami untuk menerima kemas kini promosi jualan gudang tahunan, diskaun tempahan pukal asrama & panduan penjagaan tilam.'
                   : 'Join our community for seasonal warehouse sales, bulk hostel quotes & expert mattress care tips.'}
@@ -196,7 +196,7 @@ export function Footer() {
                       value={email}
                       onChange={(e) => setEmail(e.target.value)}
                       placeholder={isBM ? 'Masukkan alamat emel anda...' : 'Enter your email address...'}
-                      className="w-full pl-4 pr-32 sm:pr-36 py-3.5 bg-black/30 text-white placeholder-slate-400 text-xs sm:text-sm rounded-2xl border border-white/15 focus:outline-none focus:border-gold transition-colors"
+                      className="w-full pl-4 pr-32 sm:pr-36 py-3.5 bg-black/20 text-white placeholder-blue-100/70 text-xs sm:text-sm rounded-2xl border border-white/20 focus:outline-none focus:border-gold focus:bg-black/30 transition-all"
                     />
                     <button
                       type="submit"
@@ -206,7 +206,7 @@ export function Footer() {
                       <Send className="w-3.5 h-3.5" />
                     </button>
                   </div>
-                  <p className="text-[10.5px] text-slate-400 pl-1">
+                  <p className="text-[10.5px] text-blue-200/80 pl-1">
                     {isBM
                       ? '🔒 Tanpa spam. Privasi anda dijamin & boleh berhenti bila-bila masa.'
                       : '🔒 No spam. We respect your privacy & you can unsubscribe anytime.'}
@@ -228,11 +228,11 @@ export function Footer() {
               </Link>
             </div>
             
-            <p className="text-xs sm:text-sm text-slate-300 leading-relaxed max-w-sm">
+            <p className="text-xs sm:text-sm text-blue-100/90 leading-relaxed max-w-sm">
               <strong className="text-white">TUNAS SINAR JAYA ENTERPRISE (KAMAAR BEDDINGS)</strong> merupakan syarikat pengeluar tekstil Bumiputera terkemuka di Tasek Gelugor, Pulau Pinang. Menghasilkan Tilam Toto, Tilam Lipat, Bantal dan Cadar berkualiti tinggi terus dari kilang.
             </p>
 
-            <div className="inline-flex items-center gap-2 px-3 py-1.5 rounded-full bg-white/[0.04] border border-white/10 text-[11px] text-slate-300">
+            <div className="inline-flex items-center gap-2 px-3 py-1.5 rounded-full bg-white/10 border border-white/20 text-[11px] text-blue-100 shadow-xs">
               <span className="w-2 h-2 rounded-full bg-gold animate-pulse" />
               <span>Pengeluar Tekstil Bumiputera (Sejak 2017)</span>
             </div>
@@ -244,7 +244,7 @@ export function Footer() {
                 target="_blank"
                 rel="noopener noreferrer"
                 aria-label="Facebook Jualan Gudang"
-                className="h-9 px-3 rounded-xl bg-white/[0.06] hover:bg-[#1877F2]/20 hover:text-[#1877F2] border border-white/10 hover:border-[#1877F2]/40 text-slate-300 transition-all flex items-center gap-2 text-xs font-medium"
+                className="h-9 px-3 rounded-xl bg-white/10 hover:bg-[#1877F2]/30 hover:text-white border border-white/20 hover:border-[#1877F2]/50 text-blue-100 transition-all flex items-center gap-2 text-xs font-medium"
               >
                 <Facebook className="w-3.5 h-3.5" />
                 <span>Facebook</span>
@@ -255,7 +255,7 @@ export function Footer() {
                 target="_blank"
                 rel="noopener noreferrer"
                 aria-label="TikTok @KAMAAR_SHOP"
-                className="h-9 px-3 rounded-xl bg-white/[0.06] hover:bg-white/20 hover:text-white border border-white/10 hover:border-white/30 text-slate-300 transition-all flex items-center gap-2 text-xs font-medium"
+                className="h-9 px-3 rounded-xl bg-white/10 hover:bg-white/20 hover:text-white border border-white/20 hover:border-white/40 text-blue-100 transition-all flex items-center gap-2 text-xs font-medium"
               >
                 <TikTokIcon className="w-3.5 h-3.5" />
                 <span>TikTok</span>
@@ -266,7 +266,7 @@ export function Footer() {
                 target="_blank"
                 rel="noopener noreferrer"
                 aria-label="WhatsApp Kilang"
-                className="h-9 px-3 rounded-xl bg-white/[0.06] hover:bg-[#25D366]/20 hover:text-[#25D366] border border-white/10 hover:border-[#25D366]/40 text-slate-300 transition-all flex items-center gap-2 text-xs font-medium"
+                className="h-9 px-3 rounded-xl bg-white/10 hover:bg-[#25D366]/30 hover:text-white border border-white/20 hover:border-[#25D366]/50 text-blue-100 transition-all flex items-center gap-2 text-xs font-medium"
               >
                 <WhatsAppIcon className="w-3.5 h-3.5" />
                 <span>WhatsApp</span>
@@ -276,10 +276,10 @@ export function Footer() {
 
           {/* Col 2: Produk & Koleksi (lg:col-span-2) */}
           <div className="lg:col-span-2 space-y-3.5">
-            <h5 className="font-serif text-sm font-bold uppercase tracking-wider text-gold flex items-center gap-2 pb-1 border-b border-white/10">
+            <h5 className="font-serif text-sm font-bold uppercase tracking-wider text-gold flex items-center gap-2 pb-1 border-b border-white/15">
               <span>{isBM ? 'Produk Kilang' : 'Factory Products'}</span>
             </h5>
-            <ul className="space-y-2.5 text-xs text-slate-300/90 font-medium">
+            <ul className="space-y-2.5 text-xs text-blue-100/90 font-medium">
               <li>
                 <Link href="/collections/tilam-toto" className="hover:text-gold hover:translate-x-1 inline-flex items-center gap-1.5 transition-all text-white font-semibold">
                   <ChevronRight className="w-3 h-3 text-gold" />
@@ -288,25 +288,25 @@ export function Footer() {
               </li>
               <li>
                 <Link href="/collections/tilam-kekabu" className="hover:text-gold hover:translate-x-1 inline-flex items-center gap-1.5 transition-all">
-                  <ChevronRight className="w-3 h-3 text-gold/60" />
+                  <ChevronRight className="w-3 h-3 text-gold/70" />
                   <span>Tilam & Kekabu Asli</span>
                 </Link>
               </li>
               <li>
                 <Link href="/collections/tilam-lipat" className="hover:text-gold hover:translate-x-1 inline-flex items-center gap-1.5 transition-all">
-                  <ChevronRight className="w-3 h-3 text-gold/60" />
+                  <ChevronRight className="w-3 h-3 text-gold/70" />
                   <span>Tilam Lipat 3 & Bujang</span>
                 </Link>
               </li>
               <li>
                 <Link href="/collections/bantal" className="hover:text-gold hover:translate-x-1 inline-flex items-center gap-1.5 transition-all">
-                  <ChevronRight className="w-3 h-3 text-gold/60" />
+                  <ChevronRight className="w-3 h-3 text-gold/70" />
                   <span>Bantal Tidur Gebu & Peluk</span>
                 </Link>
               </li>
               <li>
                 <Link href="/collections/cadang-comforter" className="hover:text-gold hover:translate-x-1 inline-flex items-center gap-1.5 transition-all">
-                  <ChevronRight className="w-3 h-3 text-gold/60" />
+                  <ChevronRight className="w-3 h-3 text-gold/70" />
                   <span>Cadar & Comforter</span>
                 </Link>
               </li>
@@ -321,43 +321,43 @@ export function Footer() {
 
           {/* Col 3: Maklumat & Servis (lg:col-span-2) */}
           <div className="lg:col-span-2 space-y-3.5">
-            <h5 className="font-serif text-sm font-bold uppercase tracking-wider text-gold flex items-center gap-2 pb-1 border-b border-white/10">
+            <h5 className="font-serif text-sm font-bold uppercase tracking-wider text-gold flex items-center gap-2 pb-1 border-b border-white/15">
               <span>{isBM ? 'Maklumat & Servis' : 'Company & Services'}</span>
             </h5>
-            <ul className="space-y-2.5 text-xs text-slate-300/90 font-medium">
+            <ul className="space-y-2.5 text-xs text-blue-100/90 font-medium">
               <li>
                 <Link href="/profil" className="hover:text-gold hover:translate-x-1 inline-flex items-center gap-1.5 transition-all text-white font-medium">
-                  <ChevronRight className="w-3 h-3 text-gold/60" />
+                  <ChevronRight className="w-3 h-3 text-gold/70" />
                   <span>Profil Tunas Sinar Jaya</span>
                 </Link>
               </li>
               <li>
                 <Link href="/profil#tentang-kami" className="hover:text-gold hover:translate-x-1 inline-flex items-center gap-1.5 transition-all">
-                  <ChevronRight className="w-3 h-3 text-gold/60" />
+                  <ChevronRight className="w-3 h-3 text-gold/70" />
                   <span>Aktiviti Pengilangan 4 Unit</span>
                 </Link>
               </li>
               <li>
                 <Link href="/profil#carta-organisasi" className="hover:text-gold hover:translate-x-1 inline-flex items-center gap-1.5 transition-all">
-                  <ChevronRight className="w-3 h-3 text-gold/60" />
+                  <ChevronRight className="w-3 h-3 text-gold/70" />
                   <span>Carta Organisasi Kilang</span>
                 </Link>
               </li>
               <li>
                 <Link href="/business" className="hover:text-gold hover:translate-x-1 inline-flex items-center gap-1.5 transition-all">
-                  <ChevronRight className="w-3 h-3 text-gold/60" />
+                  <ChevronRight className="w-3 h-3 text-gold/70" />
                   <span>Tempahan OEM & Kerajaan</span>
                 </Link>
               </li>
               <li>
                 <Link href="/account" className="hover:text-gold hover:translate-x-1 inline-flex items-center gap-1.5 transition-all">
-                  <ChevronRight className="w-3 h-3 text-gold/60" />
+                  <ChevronRight className="w-3 h-3 text-gold/70" />
                   <span>Semak Pesanan & Lori</span>
                 </Link>
               </li>
               <li>
                 <Link href="/affiliate/login" className="hover:text-gold hover:translate-x-1 inline-flex items-center gap-1.5 transition-all group">
-                  <ChevronRight className="w-3 h-3 text-gold/60" />
+                  <ChevronRight className="w-3 h-3 text-gold/70" />
                   <span>Portal Ejen & Affiliate</span>
                   <span className="text-[9px] px-1.5 py-0.2 rounded bg-gold/20 text-gold font-bold">Ejen</span>
                 </Link>
@@ -367,17 +367,17 @@ export function Footer() {
 
           {/* Col 4: Kilang & Hubungi Kami (lg:col-span-4) */}
           <div className="lg:col-span-4 space-y-3.5">
-            <h5 className="font-serif text-sm font-bold uppercase tracking-wider text-gold flex items-center gap-2 pb-1 border-b border-white/10">
+            <h5 className="font-serif text-sm font-bold uppercase tracking-wider text-gold flex items-center gap-2 pb-1 border-b border-white/15">
               <span>{isBM ? 'Kilang & Hubungi Kami' : 'Factory & Contact'}</span>
             </h5>
             
-            <div className="space-y-3 text-xs text-slate-300">
+            <div className="space-y-3 text-xs text-blue-100">
               {/* Address card */}
-              <div className="flex items-start gap-2.5 p-3 rounded-2xl bg-white/[0.03] border border-white/[0.08] hover:border-gold/30 transition-colors">
+              <div className="flex items-start gap-2.5 p-3 rounded-2xl bg-white/[0.08] border border-white/15 hover:border-gold/40 transition-colors shadow-xs">
                 <MapPin className="w-4 h-4 text-gold flex-shrink-0 mt-0.5" />
                 <div className="leading-relaxed">
                   <strong className="text-white block font-medium">Premis Kilang & Stor Utama:</strong>
-                  <span className="text-slate-300/90">7878B Jalan Permatang Berangan, 13300 Tasek Gelugor SPU, Pulau Pinang</span>
+                  <span className="text-blue-100/90">7878B Jalan Permatang Berangan, 13300 Tasek Gelugor SPU, Pulau Pinang</span>
                 </div>
               </div>
 
@@ -385,7 +385,7 @@ export function Footer() {
               <div className="grid grid-cols-1 sm:grid-cols-2 gap-2">
                 <a
                   href="tel:0194786991"
-                  className="flex items-center gap-2 p-2.5 rounded-xl bg-white/[0.03] border border-white/[0.08] hover:border-gold/40 hover:bg-white/[0.06] text-white font-semibold transition-all group"
+                  className="flex items-center gap-2 p-2.5 rounded-xl bg-white/[0.08] border border-white/15 hover:border-gold/40 hover:bg-white/15 text-white font-semibold transition-all group shadow-xs"
                 >
                   <Phone className="w-3.5 h-3.5 text-gold group-hover:scale-110 transition-transform" />
                   <span>019-478 6991</span>
@@ -393,7 +393,7 @@ export function Footer() {
 
                 <a
                   href="mailto:tunassinar@gmail.com"
-                  className="flex items-center gap-2 p-2.5 rounded-xl bg-white/[0.03] border border-white/[0.08] hover:border-gold/40 hover:bg-white/[0.06] text-white font-medium transition-all group truncate"
+                  className="flex items-center gap-2 p-2.5 rounded-xl bg-white/[0.08] border border-white/15 hover:border-gold/40 hover:bg-white/15 text-white font-medium transition-all group truncate shadow-xs"
                 >
                   <Mail className="w-3.5 h-3.5 text-gold group-hover:scale-110 transition-transform flex-shrink-0" />
                   <span className="truncate text-[11px]">tunassinar@gmail.com</span>
@@ -401,8 +401,8 @@ export function Footer() {
               </div>
 
               {/* Operating hours */}
-              <div className="flex items-center gap-2 text-[11px] text-slate-400 pl-1">
-                <Clock className="w-3.5 h-3.5 text-gold/80 flex-shrink-0" />
+              <div className="flex items-center gap-2 text-[11px] text-blue-100/80 pl-1">
+                <Clock className="w-3.5 h-3.5 text-gold/90 flex-shrink-0" />
                 <span>Waktu Operasi Kilang: Isnin – Sabtu (9:00 AM – 6:00 PM)</span>
               </div>
 
@@ -421,13 +421,13 @@ export function Footer() {
         </div>
 
         {/* 5. Bottom Copyright & Strict Payment Badges Row */}
-        <div className="pt-8 border-t border-white/[0.08] flex flex-col md:flex-row items-center justify-between text-xs text-slate-400 gap-4 font-sans">
+        <div className="pt-8 border-t border-white/15 flex flex-col md:flex-row items-center justify-between text-xs text-blue-100/80 gap-4 font-sans">
           <div className="space-y-1 text-center md:text-left">
             <p>&copy; {new Date().getFullYear()} TUNAS SINAR JAYA ENTERPRISE (KAMAAR BEDDINGS). Hak Cipta Terpelihara.</p>
-            <p className="text-[11px] text-gold/80 italic">
+            <p className="text-[11px] text-gold/90 italic">
               &ldquo;Menjahit Kepercayaan, Menyulam Masa Depan&rdquo; &bull; &ldquo;Kualiti Jahitan, Kepuasan Terjamin&rdquo;
             </p>
-            <div className="flex items-center justify-center md:justify-start gap-3 pt-0.5 text-[11px] text-slate-400">
+            <div className="flex items-center justify-center md:justify-start gap-3 pt-0.5 text-[11px] text-blue-200/90">
               <Link href="/privacy" className="hover:text-gold transition-colors">Dasar Privasi</Link>
               <span>&bull;</span>
               <Link href="/terms" className="hover:text-gold transition-colors">Terma &amp; Syarat</Link>
@@ -437,8 +437,8 @@ export function Footer() {
           </div>
 
           {/* Payment Badges Container: STRICTLY FPX & Touch 'n Go eWallet */}
-          <div className="flex flex-col sm:flex-row items-center gap-2.5 bg-white/[0.03] border border-white/10 px-3.5 py-2 rounded-2xl backdrop-blur-xs">
-            <span className="text-[11px] text-slate-300 flex items-center gap-1.5 font-medium">
+          <div className="flex flex-col sm:flex-row items-center gap-2.5 bg-white/10 border border-white/20 px-3.5 py-2 rounded-2xl backdrop-blur-xs shadow-xs">
+            <span className="text-[11px] text-white flex items-center gap-1.5 font-medium">
               <CreditCard className="w-3.5 h-3.5 text-gold flex-shrink-0" />
               <span>{isBM ? 'Kaedah Pembayaran Sah:' : 'Accepted Payments:'}</span>
             </span>
