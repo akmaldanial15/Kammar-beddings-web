@@ -11,28 +11,28 @@ export function UtilityBar() {
   return (
     <div className="bg-cream/90 backdrop-blur-sm text-charcoal border-b border-borderLight/70 text-xs py-1.5 px-4 hidden lg:block">
       <div className="max-w-7xl mx-auto flex items-center justify-between">
-        {/* Left Links */}
-        <div className="flex items-center space-x-6 text-[11.5px]">
+        {/* Left Links - Exactly Slide 1 of PERUBAHAN DI MUKA DEPAN.pptx */}
+        <div className="flex items-center space-x-5 text-[11.5px]">
           <Link
             href="/showrooms"
-            className="flex items-center space-x-1.5 text-charcoal-muted hover:text-forest transition-colors font-medium"
+            className="flex items-center space-x-1.5 text-charcoal-muted hover:text-forest transition-colors font-semibold uppercase tracking-wider"
           >
             <MapPin className="w-3.5 h-3.5 text-gold-dark" />
-            <span>{t.findShowroom}</span>
+            <span>SHOWROOM</span>
           </Link>
           <Link
-            href="/faq"
-            className="flex items-center space-x-1.5 text-charcoal-muted hover:text-forest transition-colors font-medium"
+            href="/jelajah-promosi"
+            className="flex items-center space-x-1.5 text-amber-700 hover:text-amber-900 transition-colors font-bold uppercase tracking-wider bg-amber-50 px-2 py-0.5 rounded border border-amber-200"
           >
-            <HelpCircle className="w-3.5 h-3.5 text-gold-dark" />
-            <span>{t.customerCare}</span>
+            <span className="w-2 h-2 rounded-full bg-amber-500 animate-ping inline-block" />
+            <span>JELAJAH PROMOSI (LOKASI TERKINI)</span>
           </Link>
           <Link
-            href="/business"
-            className="flex items-center space-x-1.5 text-charcoal-muted hover:text-forest transition-colors font-medium"
+            href="/profil"
+            className="flex items-center space-x-1.5 text-charcoal-muted hover:text-forest transition-colors font-semibold uppercase tracking-wider"
           >
             <Briefcase className="w-3.5 h-3.5 text-gold-dark" />
-            <span>{t.businessEnquiries}</span>
+            <span>PROFIL SYARIKAT</span>
           </Link>
         </div>
 

@@ -1,3 +1,4 @@
+import crypto from 'crypto'
 import { PaymentProvider, CreatePaymentSessionParams, PaymentSessionResult } from './provider'
 
 const chipBrandId = process.env.CHIP_BRAND_ID || ''
@@ -87,9 +88,24 @@ export class ChipPaymentProvider implements PaymentProvider {
     signature: string
   ): Promise<{ isValid: boolean; eventType?: string; eventId?: string; payload?: any; orderId?: string }> {
     try {
+      // If CHIP Public Key is configured, verify X-Signature (RSA-SHA256)
+      if (chipPublicKey && signature) {
+        try {
+          const verifier = crypto.createVerify('RSA-SHA256')
+          verifier.update(rawBody)
+          const isVerified = verifier.verify(chipPublicKey, signature, 'base64')
+          if (!isVerified && isRealChipConfigured) {
+            console.warn('CHIP RSA-SHA256 signature verification failed')
+            return { isValid: false }
+          }
+        } catch (verErr) {
+          console.warn('CHIP signature verification error:', verErr)
+        }
+      }
+
       const data = typeof rawBody === 'string' ? JSON.parse(rawBody) : rawBody
 
-      // In production with CHIP public key, signature header X-Signature can be verified
+      // In production with CHIP, reference contains orderId
       const orderId = data.reference || data.order_id || data.metadata?.orderId
       const status = data.status || data.event_type
 

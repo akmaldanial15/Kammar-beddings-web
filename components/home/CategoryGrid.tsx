@@ -11,88 +11,104 @@ export function CategoryGrid() {
 
   const mattressTypes = [
     {
-      title: 'Tilam Toto Asian Polyester Fibre (Paling Lariss!!)',
-      subtitle: 'Isian fiber bermutu tinggi dengan Random Floral & Geometric Design. Empuk, tebal dan selesa untuk seisi keluarga.',
-      tag: 'Paling Lariss!!',
-      link: '/products/tilam-toto-asian-polyester-fibre',
-      imageUrl: '/images/products/tilam-toto-queen.jpg',
+      title: 'TC SHODDY FIBRE',
+      subtitle:
+        'TC SHODDY dihasilkan melalui proses reverse engineering daripada "waste yarn" menjadi kapas yang lembut dan gebu, memberikan isian lebih padat, kenyal serta keselesaan optimum kepada pengguna.',
+      tag: 'LEBIH JIMAT',
+      link: '/collections/tilam-gulung',
+      imageUrl: '/images/products/tilam-gulung-a-tc.png',
     },
     {
-      title: 'Tilam & Bantal Kekabu Asli Tradisi',
-      subtitle: '100% Isian kekabu asli tradisi dengan jahitan tufted butang yang sejuk, padat dan melegakan otot belakang.',
-      tag: '100% Kekabu Asli',
-      link: '/products/tilam-kekabu-asli-tradisi',
-      imageUrl: '/images/products/tilam-kekabu-asli.jpg',
+      title: 'POLYESTER FIBRE',
+      subtitle:
+        'POLYESTER STAPLE FIBRE (POLY) memberikan isian yang lembut, gebu dan ringan, dengan keanjalan yang baik serta mampu mengekalkan bentuk. Sesuai untuk bantal dan tilam, tahan lama, mudah dijaga dan memberikan keselesaan optimum ketika tidur.',
+      tag: 'PALING LARIS',
+      link: '/collections/tilam-toto',
+      imageUrl: '/images/products/toto-single-poly.png',
     },
     {
-      title: 'Tilam Lipat 3 & Bujang Asrama',
-      subtitle: 'Tilam lipat mudah alih berzip dan tilam single 3 kaki asrama tahan lasak. Sangat praktikal, jimat ruang dan mudah disimpan.',
-      tag: 'Jimat Ruang & Asrama',
-      link: '/collections/tilam-lipat',
-      imageUrl: '/images/products/tilam-lipat-bujang.jpg',
+      title: 'KEKABU ASLI',
+      subtitle:
+        'Dihasilkan daripada serat kekabu semula jadi yang ringan dan gebu, memberikan sokongan lembut, pengudaraan yang baik serta rasa nyaman ketika tidur. Pilihan semula jadi untuk tidur yang lebih selesa setiap malam.',
+      tag: 'ORGANIK',
+      link: '/collections/tilam-kekabu',
+      imageUrl: '/images/products/tilam-gulung-kekabu-asli.png',
     },
     {
-      title: 'Jualan Gudang & Pakej Borong Asrama',
-      subtitle: 'Harga pengeluar terus dari kilang Tasek Gelugor untuk pembekal asrama, pusat tahfiz, homestay dan kontraktor.',
-      tag: 'Harga Terus Dari Kilang',
-      link: '/collections/borong-gudang',
-      imageUrl: '/images/hero/hero-jualan-gudang-crowd.jpg',
+      title: 'JELAJAH PROMOSI & JUALAN GUDANG',
+      subtitle:
+        'Kami bawakan pelbagai produk KAMAAR seperti bantal, tilam, selimut dan pelbagai produk berkualiti terus dari kilang, ditawarkan pada harga promosi istimewa di tempat anda.',
+      tag: 'KAMI KE TEMPAT ANDA',
+      link: '/jelajah-promosi',
+      imageUrl: '/images/promosi/PROMOSI 1.png',
     },
   ]
 
   const supportingCategories = [
     {
-      name: 'Bantal Tidur & Bantal Peluk',
-      description: 'Isian Asian Fibre gebu padat',
-      link: '/collections/bantal',
-      imageUrl: '/images/products/bantal-gebu-asian-fibre.jpg',
+      name: 'Bantal Tidur (M, L, XL)',
+      description: 'TC, Poly Fibre & Kekabu Asli',
+      link: '/collections/bantal-tidur',
+      imageUrl: '/images/products/bantal-tidur-l-poly.png',
     },
     {
-      name: 'Comforter & Selimut Patchwork',
-      description: 'Jahitan quilting kemas & rapi',
-      link: '/collections/cadang-comforter',
-      imageUrl: '/images/products/selimut-patchwork.jpg',
+      name: 'Bantal Peluk Gebu',
+      description: 'Isian padat saiz M & L',
+      link: '/collections/bantal-peluk',
+      imageUrl: '/images/products/bantal-peluk-l-poly.png',
     },
     {
-      name: 'Set Tilam Bayi Gebu (4-in-1)',
-      description: 'Tilam, bantal lekuk & bolster comel',
-      link: '/products/set-tilam-bayi-gebu',
-      imageUrl: '/images/products/set-tilam-bayi.jpg',
+      name: 'Produk Baby Kekabu',
+      description: 'Set tilam baby A & B dan bantal',
+      link: '/collections/produk-baby',
+      imageUrl: '/images/products/set-tilam-baby-a-kekabu-asli.png',
     },
     {
-      name: 'Sarung Kusyen Sofa Eksklusif',
-      description: 'Rekaan mewah & tema Aidilfitri',
-      link: '/products/set-sarung-kusyen-sofa-eksklusif',
-      imageUrl: '/images/products/kusyen-sofa-eksklusif.jpg',
+      name: 'Selimut Legend Kilang',
+      description: 'Saiz M (60x80) & L (70x90)',
+      link: '/collections/selimut',
+      imageUrl: '/images/products/selimut-legend-m.png',
     },
     {
-      name: 'Profil Kilang & 4 Unit Operasi',
-      description: 'Tunas Sinar Jaya Enterprise',
+      name: 'Bantal Kusyen / Sofa',
+      description: 'Saiz 14x14 sehingga 30x30 inci',
+      link: '/collections/kusyen-sofa',
+      imageUrl: '/images/products/bantal-kusyen-20x20-poly.png',
+    },
+    {
+      name: 'Sarung Tilam Berzip',
+      description: 'Single & Queen mudah cuci',
+      link: '/collections/sarung-tilam',
+      imageUrl: '/images/products/sarung-tilam-single.png',
+    },
+    {
+      name: 'Showroom Studio Live',
+      description: 'Lawati studio live di Tasek Gelugor',
+      link: '/showrooms',
+      imageUrl: '/images/company/SHOWROOM STUDIO.png',
+    },
+    {
+      name: 'Kilang & Unit Jahitan',
+      description: 'Tenaga mahir tempatan 4 fasa QC',
       link: '/profil',
-      imageUrl: '/images/company/team-kamaar-factory.jpg',
-    },
-    {
-      name: 'Tempahan Pukal (OEM) & Kerajaan',
-      description: 'Pengilangan jenama sendiri & tender',
-      link: '/business',
-      imageUrl: '/images/company/oem-tekstil-pukal.jpg',
+      imageUrl: '/images/company/UNIT JAHITAN.png',
     },
   ]
 
   return (
     <section className="py-16 sm:py-24 bg-warmwhite">
       <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
-        {/* Section Header */}
+        {/* Section Header - Exactly Slide 2 of PERUBAHAN DI MUKA DEPAN.pptx */}
         <div className="text-center max-w-3xl mx-auto mb-12 sm:mb-16">
-          <span className="text-xs uppercase tracking-[0.2em] font-semibold text-gold-dark flex items-center justify-center space-x-1.5 mb-2">
+          <span className="text-xs uppercase tracking-[0.25em] font-bold text-gold-dark flex items-center justify-center space-x-1.5 mb-2.5">
             <Sparkles className="w-3.5 h-3.5 text-gold" />
-            <span>Koleksi Pengeluaran Kilang Tekstil</span>
+            <span>KOLEKSI KAMAAR</span>
           </span>
-          <h2 className="font-serif text-3xl sm:text-4xl lg:text-5xl font-bold text-forest">
-            Produk Paling Laris &amp; Pilihan Ramai
+          <h2 className="font-serif text-3xl sm:text-4xl lg:text-5xl font-bold text-forest tracking-tight">
+            KOLEKSI KAMAAR PALING LARIS &amp; PILIHAN RAMAI
           </h2>
-          <p className="text-sm sm:text-base text-charcoal-muted mt-3 leading-relaxed">
-            Dihasilkan sendiri oleh tenaga kerja mahir tempatan Tunas Sinar Jaya Enterprise di Tasek Gelugor dengan mutu jahitan kemas dan harga terus kilang.
+          <p className="text-sm sm:text-base text-charcoal-muted mt-3.5 leading-relaxed font-sans uppercase text-xs sm:text-sm tracking-wide">
+            DIHASILKAN OLEH TENAGA MAHIR TEMPATAN MENGGUNAKAN BAHAN BERKUALITI TINGGI, DENGAN KAWALAN KUALITI TELITI DAN HARGA TERBAIK DI PASARAN.
           </p>
         </div>
 
@@ -153,7 +169,7 @@ export function CategoryGrid() {
             </Link>
           </div>
 
-          <div className="grid grid-cols-2 sm:grid-cols-3 lg:grid-cols-6 gap-3 sm:gap-4">
+          <div className="grid grid-cols-2 sm:grid-cols-4 lg:grid-cols-4 xl:grid-cols-8 gap-3 sm:gap-3.5">
             {supportingCategories.map((cat, idx) => (
               <Link
                 key={idx}

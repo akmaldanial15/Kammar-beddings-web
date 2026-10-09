@@ -109,7 +109,7 @@ export default function RefundsPage() {
               Once our logistics team has collected the mattress and verified its condition:
             </p>
             <ul className="list-disc pl-5 space-y-1.5 text-secondary">
-              <li>A 100% full refund of the original purchase amount will be credited back to your original payment method (Stripe Credit/Debit Card or FPX Online Banking).</li>
+              <li>A 100% full refund of the original purchase amount will be credited back to your original payment method (CHIP In Asia FPX Online Banking, Touch &apos;n Go eWallet, or Credit/Debit Card).</li>
               <li>Refunds typically reflect in your Malaysian bank account or credit card statement within <strong>5 to 10 business days</strong> depending on your issuing bank.</li>
             </ul>
           </section>

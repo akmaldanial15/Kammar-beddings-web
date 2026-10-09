@@ -64,6 +64,9 @@ const DB_FILE = path.join(DATA_DIR, 'lena_db.json')
 let dbCache: DatabaseSchema | null = null
 
 function ensureDb(): DatabaseSchema {
+  if (process.env.NODE_ENV !== 'production') {
+    dbCache = null
+  }
   if (dbCache) return dbCache
 
   if (!fs.existsSync(DATA_DIR)) {

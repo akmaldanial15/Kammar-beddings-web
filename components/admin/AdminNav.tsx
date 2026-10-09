@@ -1,6 +1,7 @@
 'use client'
 
 import React, { useState, useEffect } from 'react'
+import Image from 'next/image'
 import Link from 'next/link'
 import { usePathname } from 'next/navigation'
 import {
@@ -45,21 +46,61 @@ interface AdminNavProps {
   }
 }
 
-const navItems = [
-  { label: 'Overview', href: '/admin', icon: LayoutDashboard, keywords: 'dashboard metrik ringkasan jualan' },
-  { label: 'Products & Variants', href: '/admin/products', icon: BedDouble, keywords: 'tilam mattress bantal topper saiz varian harga' },
-  { label: 'Categories & Nav', href: '/admin/categories', icon: Layers, keywords: 'kategori menu navigasi tag' },
-  { label: 'Website Editor', href: '/admin/website-editor', icon: Palette, isNew: true, keywords: 'banner hero announcement theme warna visual gambar logo' },
-  { label: 'Inventory & Stock', href: '/admin/inventory', icon: Boxes, keywords: 'stok baki fizikal sku inventori restock gudang' },
-  { label: 'Orders & Fulfilment', href: '/admin/orders', icon: ShoppingBag, keywords: 'pesanan tempahan pelanggan invois bayaran paid delivery' },
-  { label: 'Promotions & Coupons', href: '/admin/promotions', icon: Tag, keywords: 'baucar diskaun kupon promosi diskaun kod' },
-  { label: 'Payment Settings', href: '/admin/payments', icon: CreditCard, isNew: true, keywords: 'payment bayaran stripe fpx atome duitnow toyyibpay gateway bank' },
-  { label: 'Affiliates & Agents', href: '/admin/affiliates', icon: Share2, keywords: 'agen komisen affiliate jualan link referral' },
-  { label: 'Showroom Studios', href: '/admin/showrooms', icon: MapPin, keywords: 'galeri studio cawangan kedai fizikal showroom appointment' },
-  { label: 'Warranty Registrations', href: '/admin/warranties', icon: ShieldCheck, keywords: 'waranti jaminan pendaftaran tuntutan claim' },
-  { label: 'Site Settings', href: '/admin/settings', icon: Settings, keywords: 'tetapan jenama whatsapp telefon email shipping had percuma admin' },
-  { label: 'Admin Audit Log', href: '/admin/audits', icon: History, keywords: 'audit log aktiviti keselamatan staf rekod' },
+export interface NavItem {
+  label: string
+  href: string
+  icon: any
+  keywords: string
+  isNew?: boolean
+}
+
+export interface NavGroup {
+  id: string
+  title: string
+  items: NavItem[]
+}
+
+const navGroups: NavGroup[] = [
+  {
+    id: 'operations',
+    title: 'Operasi & Pesanan',
+    items: [
+      { label: 'Overview', href: '/admin', icon: LayoutDashboard, keywords: 'dashboard metrik ringkasan jualan' },
+      { label: 'Orders & Fulfilment', href: '/admin/orders', icon: ShoppingBag, keywords: 'pesanan tempahan pelanggan invois bayaran paid delivery' },
+      { label: 'Inventory & Stock', href: '/admin/inventory', icon: Boxes, keywords: 'stok baki fizikal sku inventori restock gudang' },
+    ],
+  },
+  {
+    id: 'storefront',
+    title: 'Katalog & Kedai',
+    items: [
+      { label: 'Products & Variants', href: '/admin/products', icon: BedDouble, keywords: 'tilam mattress bantal topper saiz varian harga' },
+      { label: 'Categories & Nav', href: '/admin/categories', icon: Layers, keywords: 'kategori menu navigasi tag' },
+      { label: 'Website Editor', href: '/admin/website-editor', icon: Palette, isNew: true, keywords: 'banner hero announcement theme warna visual gambar logo' },
+      { label: 'Promotions & Coupons', href: '/admin/promotions', icon: Tag, keywords: 'baucar diskaun kupon promosi diskaun kod' },
+    ],
+  },
+  {
+    id: 'retail',
+    title: 'Pemasaran & Cawangan',
+    items: [
+      { label: 'Affiliates & Agents', href: '/admin/affiliates', icon: Share2, keywords: 'agen komisen affiliate jualan link referral' },
+      { label: 'Showroom Studios', href: '/admin/showrooms', icon: MapPin, keywords: 'galeri studio cawangan kedai fizikal showroom appointment' },
+      { label: 'Warranty Registrations', href: '/admin/warranties', icon: ShieldCheck, keywords: 'waranti jaminan pendaftaran tuntutan claim' },
+    ],
+  },
+  {
+    id: 'settings',
+    title: 'Sistem & Tetapan',
+    items: [
+      { label: 'Payment Settings', href: '/admin/payments', icon: CreditCard, isNew: true, keywords: 'payment bayaran stripe fpx atome duitnow toyyibpay gateway bank' },
+      { label: 'Site Settings', href: '/admin/settings', icon: Settings, keywords: 'tetapan jenama whatsapp telefon email shipping had percuma admin' },
+      { label: 'Admin Audit Log', href: '/admin/audits', icon: History, keywords: 'audit log aktiviti keselamatan staf rekod' },
+    ],
+  },
 ]
+
+const navItems = navGroups.flatMap((g) => g.items)
 
 export function AdminNav({ session }: AdminNavProps) {
   const pathname = usePathname()
@@ -248,320 +289,436 @@ export function AdminNav({ session }: AdminNavProps) {
         </div>
       </header>
 
-      {/* ========================================================================= */}
-      {/* 2. MOBILE SLIDE-OVER DRAWER NAVIGATION (< md)                            */}
-      {/* ========================================================================= */}
-      {isMobileMenuOpen && (
-        <div className="fixed inset-0 z-50 md:hidden animate-in fade-in duration-200">
-          {/* Backdrop Blur Overlay */}
-          <div
-            className="fixed inset-0 bg-black/60 backdrop-blur-sm transition-opacity"
-            onClick={() => setIsMobileMenuOpen(false)}
-          />
+      {/* Helper to render navigation items */}
+      {(() => {
+        const renderSingleNavItem = (item: NavItem, onItemClick?: () => void) => {
+          const Icon = item.icon
+          const isActive =
+            item.href === '/admin' ? pathname === '/admin' : pathname.startsWith(item.href)
 
-          {/* Drawer Container */}
-          <div className="fixed inset-y-0 left-0 w-[84%] max-w-xs bg-[#13325B] text-warmwhite shadow-2xl flex flex-col justify-between border-r border-[#B49A58]/20 z-10 animate-in slide-in-from-left duration-300">
-            <div className="flex-1 overflow-y-auto">
-              {/* Drawer Header */}
-              <div className="p-4 border-b border-white/10 flex items-center justify-between">
-                <Link href="/admin" onClick={() => setIsMobileMenuOpen(false)} className="block">
-                  <KamaarLogo variant="horizontal" size="sm" theme="dark" />
-                  <span className="text-[8.5px] uppercase tracking-[0.2em] text-[#D4AF37] font-bold block mt-1.5">
-                    Admin Atelier Dashboard
-                  </span>
-                </Link>
-
-                <button
-                  type="button"
-                  onClick={() => setIsMobileMenuOpen(false)}
-                  className="p-1.5 rounded-lg text-neutral-300 hover:text-white hover:bg-white/10 cursor-pointer"
-                  aria-label="Tutup Menu"
-                >
-                  <X className="w-5 h-5" />
-                </button>
-              </div>
-
-              {/* Staff Profile Card */}
-              <div className="p-3 border-b border-white/10 bg-white/5">
-                <div className="flex items-center space-x-3">
-                  <div className="w-9 h-9 rounded-xl bg-gradient-to-br from-[#1E4E8C] to-[#2A6DB5] border border-[#B49A58]/40 text-[#D4AF37] flex items-center justify-center font-bold text-sm shadow-md">
-                    {adminInitial}
-                  </div>
-                  <div className="min-w-0 flex-1">
-                    <span className="text-xs font-bold text-white block truncate">
-                      {adminName}
-                    </span>
-                    <span className="text-[10px] text-[#D4AF37] uppercase tracking-wider font-semibold block">
-                      {session.role.replace('_', ' ')}
-                    </span>
-                  </div>
-                </div>
-              </div>
-
-              {/* Search & Quick Edit Bar in Mobile Drawer */}
-              <div className="p-3 border-b border-white/10 space-y-2">
-                <div className="relative">
-                  <Search className="w-3.5 h-3.5 text-neutral-400 absolute left-3 top-1/2 -translate-y-1/2" />
-                  <input
-                    type="text"
-                    placeholder="Cari menu / tetapan..."
-                    value={searchQuery}
-                    onChange={(e) => setSearchQuery(e.target.value)}
-                    className="w-full pl-8 pr-7 py-2 text-xs rounded-xl bg-white/10 border border-white/15 text-white placeholder:text-neutral-400 focus:outline-none focus:border-[#D4AF37] focus:bg-white/15 transition-all"
-                  />
-                  {searchQuery && (
-                    <button
-                      type="button"
-                      onClick={() => setSearchQuery('')}
-                      className="absolute right-2 top-1/2 -translate-y-1/2 text-neutral-400 hover:text-white"
-                    >
-                      <X className="w-3 h-3" />
-                    </button>
-                  )}
-                </div>
-
-                <button
-                  type="button"
-                  onClick={() => {
-                    setIsMobileMenuOpen(false)
-                    openQuickSettings()
-                  }}
-                  className="w-full py-2 px-3 bg-gradient-to-r from-[#1E4E8C] to-[#13325B] border border-[#B49A58]/40 rounded-xl text-xs font-bold text-[#D4AF37] flex items-center justify-center gap-1.5 shadow-xs cursor-pointer hover:bg-white/10"
-                >
-                  <Sparkles className="w-3.5 h-3.5" />
-                  <span>⚡ Quick Edit Settings</span>
-                </button>
-              </div>
-
-              {/* Navigation Links */}
-              <nav className="p-3 space-y-1 text-xs font-medium">
-                {filteredNavItems.map((item) => {
-                  const Icon = item.icon
-                  const isActive =
-                    item.href === '/admin' ? pathname === '/admin' : pathname.startsWith(item.href)
-
-                  return (
-                    <Link
-                      key={item.href}
-                      href={item.href}
-                      onClick={() => setIsMobileMenuOpen(false)}
-                      className={`flex items-center justify-between px-3 py-2.5 rounded-xl transition-all cursor-pointer ${
-                        isActive
-                          ? 'bg-[#1E4E8C] text-white font-bold border-l-4 border-[#D4AF37] shadow-sm'
-                          : 'text-neutral-200 hover:bg-white/10 hover:text-white'
-                      }`}
-                    >
-                      <div className="flex items-center space-x-3">
-                        <Icon
-                          className={`w-4 h-4 ${
-                            isActive ? 'text-[#D4AF37]' : 'text-neutral-400'
-                          }`}
-                        />
-                        <span className="text-xs">{item.label}</span>
-                      </div>
-                      <div className="flex items-center space-x-1.5">
-                        {item.isNew && (
-                          <span className="px-1.5 py-0.5 text-[9px] font-bold rounded-md bg-[#D4AF37]/20 text-[#D4AF37] border border-[#D4AF37]/40 uppercase tracking-wider animate-pulse">
-                            Baru
-                          </span>
-                        )}
-                        {isActive && <ChevronRight className="w-3.5 h-3.5 text-[#D4AF37]" />}
-                      </div>
-                    </Link>
-                  )
-                })}
-              </nav>
-            </div>
-
-            {/* Drawer Bottom Actions */}
-            <div className="p-4 border-t border-white/10 space-y-2 text-xs bg-[#0F2746]">
-              <Link
-                href="/"
-                target="_blank"
-                onClick={() => setIsMobileMenuOpen(false)}
-                className="flex items-center justify-between px-3 py-2.5 rounded-xl bg-white/5 hover:bg-white/10 text-neutral-200 hover:text-white transition-colors"
-              >
-                <span className="flex items-center space-x-2">
-                  <ExternalLink className="w-3.5 h-3.5 text-[#D4AF37]" />
-                  <span>Lihat Kedai Awam</span>
-                </span>
-                <span className="text-[10px] text-[#D4AF37] font-bold">&rarr;</span>
-              </Link>
-
-              <AdminLogoutButton />
-            </div>
-          </div>
-        </div>
-      )}
-
-      {/* ========================================================================= */}
-      {/* 3. DESKTOP PERMANENT SIDEBAR (>= md)                                     */}
-      {/* ========================================================================= */}
-      <aside className="hidden md:flex md:w-64 bg-[#13325B] text-warmwhite flex-shrink-0 flex-col justify-between border-r border-[#B49A58]/20 min-h-screen sticky top-0 h-screen select-none">
-        <div className="flex-1 overflow-y-auto no-scrollbar">
-          {/* Brand Header */}
-          <div className="p-5 border-b border-white/10">
-            <Link href="/admin" className="block">
-              <KamaarLogo variant="horizontal" size="sm" theme="dark" />
-              <span className="text-[8.5px] uppercase tracking-[0.2em] text-[#D4AF37] font-bold block mt-1.5">
-                Admin Atelier Dashboard
-              </span>
-            </Link>
-
-            {/* Staff Info Card */}
-            <div className="mt-4 p-3 bg-white/5 rounded-xl border border-white/10">
-              <div className="flex items-center space-x-2.5">
-                <div className="w-8 h-8 rounded-xl bg-gradient-to-br from-[#1E4E8C] to-[#2A6DB5] border border-[#B49A58]/40 text-[#D4AF37] flex items-center justify-center font-bold text-xs shadow-xs">
-                  {adminInitial}
-                </div>
-                <div className="min-w-0 flex-1">
-                  <span className="text-xs font-bold text-white block truncate">
-                    {adminName}
-                  </span>
-                  <span className="text-[10px] text-[#D4AF37] uppercase tracking-wider font-semibold block">
-                    {session.role.replace('_', ' ')}
-                  </span>
-                </div>
-              </div>
-            </div>
-          </div>
-
-          {/* Search & Quick Edit Controls in Sidebar */}
-          <div className="p-3 border-b border-white/10 space-y-2">
-            <div className="relative">
-              <Search className="w-3.5 h-3.5 text-neutral-400 absolute left-3 top-1/2 -translate-y-1/2" />
-              <input
-                type="text"
-                placeholder="Cari menu & tetapan..."
-                value={searchQuery}
-                onChange={(e) => setSearchQuery(e.target.value)}
-                className="w-full pl-8 pr-7 py-2 text-xs rounded-xl bg-white/10 border border-white/15 text-white placeholder:text-neutral-400 focus:outline-none focus:border-[#D4AF37] focus:bg-white/15 transition-all"
-              />
-              {searchQuery ? (
-                <button
-                  type="button"
-                  onClick={() => setSearchQuery('')}
-                  className="absolute right-2 top-1/2 -translate-y-1/2 text-neutral-400 hover:text-white cursor-pointer"
-                >
-                  <X className="w-3 h-3" />
-                </button>
-              ) : (
-                <kbd className="absolute right-2.5 top-1/2 -translate-y-1/2 text-[9px] px-1 py-0.5 rounded bg-white/10 text-neutral-300 font-mono">
-                  ⌘K
-                </kbd>
-              )}
-            </div>
-
-            {/* Quick Edit Trigger Button */}
-            <button
-              type="button"
-              onClick={openQuickSettings}
-              className="w-full py-2 px-3 bg-gradient-to-r from-[#1E4E8C] to-[#13325B] hover:from-[#255fa3] hover:to-[#1a4277] border border-[#B49A58]/40 rounded-xl text-xs font-bold text-[#D4AF37] flex items-center justify-between shadow-xs transition-all cursor-pointer group"
-              title="Sunting tetapan pantas terus tanpa tukar halaman (Ctrl+K)"
+          return (
+            <Link
+              key={item.href}
+              href={item.href}
+              onClick={onItemClick}
+              className={`group/nav flex items-center justify-between px-3 py-2 rounded-xl text-xs transition-all duration-150 cursor-pointer ${
+                isActive
+                  ? 'bg-gradient-to-r from-[#1E4E8C] to-[#153D73] text-white font-bold border-l-2 border-[#D4AF37] shadow-sm shadow-black/25 ring-1 ring-white/10'
+                  : 'text-blue-100/75 hover:bg-white/[0.08] hover:text-white font-medium'
+              }`}
             >
-              <div className="flex items-center gap-1.5">
-                <Sparkles className="w-3.5 h-3.5 text-gold group-hover:rotate-12 transition-transform" />
-                <span>⚡ Quick Edit Settings</span>
+              <div className="flex items-center space-x-2.5 min-w-0">
+                <div
+                  className={`p-1 rounded-lg transition-colors flex-shrink-0 ${
+                    isActive
+                      ? 'bg-[#D4AF37]/20 text-[#D4AF37]'
+                      : 'text-blue-200/50 group-hover/nav:text-[#D4AF37] group-hover/nav:bg-white/10'
+                  }`}
+                >
+                  <Icon className="w-3.5 h-3.5" />
+                </div>
+                <span className="truncate">{item.label}</span>
               </div>
-              <span className="text-[10px] text-white/50 group-hover:text-white">&rarr;</span>
-            </button>
-          </div>
+              <div className="flex items-center space-x-1.5 flex-shrink-0">
+                {item.isNew && (
+                  <span className="px-1.5 py-0.2 text-[8.5px] font-bold rounded-full bg-[#D4AF37]/20 text-[#D4AF37] border border-[#D4AF37]/40 uppercase tracking-wider animate-pulse">
+                    Baru
+                  </span>
+                )}
+                {isActive && (
+                  <ChevronRight className="w-3.5 h-3.5 text-[#D4AF37] transition-transform group-hover/nav:translate-x-0.5" />
+                )}
+              </div>
+            </Link>
+          )
+        }
 
-          {/* Quick Settings Shortcut Banner when searching settings keywords */}
-          {matchesQuickSettingsKeywords && (
-            <div className="m-3 p-2.5 rounded-xl bg-amber-500/10 border border-[#D4AF37]/30 text-xs space-y-1.5 animate-fade-in">
-              <span className="text-[10px] font-bold text-[#D4AF37] uppercase tracking-wider block">
-                ⚡ Tetapan Ditemui
-              </span>
-              <p className="text-[11px] text-neutral-200">
-                Padanan kata kunci untuk tetapan kedai dijumpai.
-              </p>
-              <button
-                type="button"
-                onClick={openQuickSettings}
-                className="w-full py-1.5 bg-[#D4AF37] hover:bg-[#c29f2e] text-[#13325B] font-bold rounded-lg text-xs transition-colors cursor-pointer text-center block"
-              >
-                Buka Quick Edit Sekarang
-              </button>
-            </div>
-          )}
-
-          {/* Navigation Links */}
-          <nav className="p-3 space-y-1 text-xs font-medium">
-            {filteredNavItems.length === 0 ? (
-              <div className="p-4 text-center text-xs text-neutral-400">
+        const renderNavContent = (onItemClick?: () => void) => {
+          if (filteredNavItems.length === 0) {
+            return (
+              <div className="p-6 text-center text-xs text-neutral-400">
                 <p>Tiada menu sepadan</p>
                 <button
                   type="button"
                   onClick={() => setSearchQuery('')}
-                  className="mt-1 text-[#D4AF37] hover:underline font-bold text-[11px] cursor-pointer"
+                  className="mt-2 px-3 py-1 bg-white/10 hover:bg-white/20 text-[#D4AF37] rounded-lg font-bold text-[11px] cursor-pointer transition-colors"
                 >
                   Kosongkan carian
                 </button>
               </div>
-            ) : (
-              filteredNavItems.map((item) => {
-                const Icon = item.icon
-                const isActive =
-                  item.href === '/admin' ? pathname === '/admin' : pathname.startsWith(item.href)
+            )
+          }
 
+          if (q) {
+            return (
+              <div className="p-2 space-y-1">
+                <div className="px-3 py-1 text-[9.5px] font-bold uppercase tracking-wider text-[#D4AF37]">
+                  Hasil Carian ({filteredNavItems.length})
+                </div>
+                {filteredNavItems.map((item) => renderSingleNavItem(item, onItemClick))}
+              </div>
+            )
+          }
+
+          return (
+            <nav className="p-2.5 space-y-3.5 text-xs">
+              {navGroups.map((group) => {
                 return (
-                  <Link
-                    key={item.href}
-                    href={item.href}
-                    className={`flex items-center justify-between px-3 py-2.5 rounded-xl transition-all ${
-                      isActive
-                        ? 'bg-[#1E4E8C] text-white font-bold border-l-4 border-[#D4AF37] shadow-sm'
-                        : 'text-neutral-300 hover:bg-white/10 hover:text-white'
-                    }`}
-                  >
-                    <div className="flex items-center space-x-2.5">
-                      <Icon
-                        className={`w-4 h-4 ${
-                          isActive ? 'text-[#D4AF37]' : 'text-neutral-400'
-                        }`}
-                      />
-                      <span>{item.label}</span>
+                  <div key={group.id} className="space-y-1">
+                    <div className="px-3 pt-1 pb-1 flex items-center justify-between text-[9px] font-extrabold uppercase tracking-[0.2em] text-[#D4AF37]/80 select-none">
+                      <span>{group.title}</span>
                     </div>
-                    <div className="flex items-center space-x-1.5">
-                      {item.isNew && (
-                        <span className="px-1.5 py-0.5 text-[9px] font-bold rounded-md bg-[#D4AF37]/20 text-[#D4AF37] border border-[#D4AF37]/40 uppercase tracking-wider animate-pulse">
-                          Baru
+                    <div className="space-y-0.5">
+                      {group.items.map((item) => renderSingleNavItem(item, onItemClick))}
+                    </div>
+                  </div>
+                )
+              })}
+            </nav>
+          )
+        }
+
+        return (
+          <>
+            {/* ========================================================================= */}
+            {/* 2. MOBILE SLIDE-OVER DRAWER NAVIGATION (< md)                            */}
+            {/* ========================================================================= */}
+            <div
+              className={`fixed inset-0 z-50 md:hidden ${
+                isMobileMenuOpen
+                  ? 'pointer-events-auto visible'
+                  : 'pointer-events-none invisible delay-300'
+              }`}
+            >
+              {/* Backdrop Blur Overlay */}
+              <div
+                className={`fixed inset-0 bg-black/60 backdrop-blur-sm transition-opacity duration-300 ease-out ${
+                  isMobileMenuOpen ? 'opacity-100' : 'opacity-0'
+                }`}
+                onClick={() => setIsMobileMenuOpen(false)}
+              />
+
+              {/* Drawer Container */}
+              <div
+                className={`fixed inset-y-0 left-0 w-[84%] max-w-xs bg-gradient-to-b from-[#11294A] via-[#0E223D] to-[#0A192E] text-warmwhite shadow-2xl flex flex-col justify-between border-r border-[#B49A58]/25 z-10 transform transition-transform duration-300 ease-out will-change-transform ${
+                  isMobileMenuOpen ? 'translate-x-0' : '-translate-x-full'
+                }`}
+              >
+                  <div className="flex-1 overflow-y-auto">
+                    {/* Drawer Header */}
+                    <div className="p-4 border-b border-white/10">
+                      <div className="flex items-center justify-between mb-3">
+                        <Link
+                          href="/admin"
+                          onClick={() => setIsMobileMenuOpen(false)}
+                          className="block flex-1 mr-2"
+                        >
+                          <div className="bg-white rounded-2xl p-2.5 px-3 border border-white/40 shadow-sm flex items-center justify-between">
+                            <div className="relative h-10 w-44">
+                              <Image
+                                src="/images/kamaar-logo-clean.png"
+                                alt="KAMAAR Beddings"
+                                fill
+                                className="object-contain object-left"
+                                priority
+                              />
+                            </div>
+                            <span className="px-2 py-0.5 rounded-md text-[8px] font-black uppercase tracking-wider bg-[#13325B] text-white border border-[#D4AF37]/40 flex-shrink-0">
+                              HQ
+                            </span>
+                          </div>
+                        </Link>
+
+                        <button
+                          type="button"
+                          onClick={() => setIsMobileMenuOpen(false)}
+                          className="p-2 rounded-xl text-neutral-300 hover:text-white bg-white/5 hover:bg-white/10 cursor-pointer transition-colors"
+                          aria-label="Tutup Menu"
+                        >
+                          <X className="w-5 h-5" />
+                        </button>
+                      </div>
+
+                      <div className="flex items-center justify-between px-1">
+                        <span className="text-[8.5px] uppercase tracking-[0.22em] text-[#D4AF37] font-extrabold">
+                          OPERATIONS ATELIER
                         </span>
-                      )}
-                      {isActive && <ChevronRight className="w-3.5 h-3.5 text-[#D4AF37]" />}
+                        <span className="inline-flex items-center gap-1 px-1.5 py-0.5 rounded-full bg-emerald-500/15 border border-emerald-500/30 text-[8.5px] font-bold text-emerald-300">
+                          <span className="w-1.5 h-1.5 rounded-full bg-emerald-400 animate-pulse" />
+                          SISTEM AKTIF
+                        </span>
+                      </div>
+
+                      {/* Staff Profile Card */}
+                      <div className="mt-3 p-2.5 bg-white/[0.05] rounded-2xl border border-white/10">
+                        <div className="flex items-center space-x-2.5">
+                          <div className="relative flex-shrink-0">
+                            <div className="w-8 h-8 rounded-xl bg-gradient-to-br from-[#D4AF37] via-[#B49A58] to-[#8C6B1C] text-forest-dark flex items-center justify-center font-black text-xs shadow-md border border-white/20">
+                              {adminInitial}
+                            </div>
+                            <span className="absolute -bottom-0.5 -right-0.5 w-2.5 h-2.5 bg-emerald-500 border-2 border-[#0E223D] rounded-full" />
+                          </div>
+                          <div className="min-w-0 flex-1">
+                            <span className="text-xs font-bold text-white block truncate">
+                              {adminName}
+                            </span>
+                            <div className="flex items-center gap-1.5 mt-0.5">
+                              <span className="text-[8.5px] font-bold uppercase tracking-wider text-[#D4AF37] bg-gold/15 px-1.5 py-0.2 rounded border border-gold/25">
+                                {session.role.replace('_', ' ')}
+                              </span>
+                              <span className="text-[9px] text-blue-200/60 truncate">
+                                Tunas Sinar Jaya
+                              </span>
+                            </div>
+                          </div>
+                        </div>
+                      </div>
+                    </div>
+
+                    {/* Search & Quick Edit Bar in Mobile Drawer */}
+                    <div className="p-3 border-b border-white/10 space-y-2">
+                      <div className="relative">
+                        <Search className="w-3.5 h-3.5 text-blue-200/50 absolute left-3 top-1/2 -translate-y-1/2" />
+                        <input
+                          type="text"
+                          placeholder="Cari menu & tetapan..."
+                          value={searchQuery}
+                          onChange={(e) => setSearchQuery(e.target.value)}
+                          className="w-full pl-8 pr-7 py-2 text-xs rounded-xl bg-black/25 border border-white/10 text-white placeholder:text-blue-200/50 focus:outline-none focus:border-[#D4AF37] focus:bg-black/35 transition-all shadow-inner"
+                        />
+                        {searchQuery && (
+                          <button
+                            type="button"
+                            onClick={() => setSearchQuery('')}
+                            className="absolute right-2 top-1/2 -translate-y-1/2 text-neutral-400 hover:text-white"
+                          >
+                            <X className="w-3 h-3" />
+                          </button>
+                        )}
+                      </div>
+
+                      <button
+                        type="button"
+                        onClick={() => {
+                          setIsMobileMenuOpen(false)
+                          openQuickSettings()
+                        }}
+                        className="w-full py-2 px-3 bg-gradient-to-r from-gold/20 via-gold/10 to-transparent hover:from-gold/30 hover:to-gold/15 border border-gold/40 rounded-xl text-xs font-bold text-[#F3E5AB] flex items-center justify-between shadow-xs cursor-pointer"
+                      >
+                        <div className="flex items-center gap-1.5">
+                          <Sparkles className="w-3.5 h-3.5 text-[#D4AF37]" />
+                          <span>Quick Edit Settings</span>
+                        </div>
+                        <span className="text-[10px] text-[#D4AF37] font-bold">&rarr;</span>
+                      </button>
+                    </div>
+
+                    {/* Navigation Links */}
+                    {renderNavContent(() => setIsMobileMenuOpen(false))}
+                  </div>
+
+                  {/* Drawer Bottom Actions */}
+                  <div className="p-3.5 border-t border-white/10 space-y-2 text-xs bg-gradient-to-b from-[#11294A] to-[#0A192E]">
+                    <Link
+                      href="/"
+                      target="_blank"
+                      onClick={() => setIsMobileMenuOpen(false)}
+                      className="flex items-center justify-between p-2.5 rounded-xl bg-white/[0.06] hover:bg-white/[0.12] border border-white/10 text-neutral-200 hover:text-white transition-all shadow-xs"
+                    >
+                      <div className="flex items-center space-x-2.5 min-w-0">
+                        <div className="w-7 h-7 rounded-lg bg-gold/15 border border-gold/30 flex items-center justify-center text-gold">
+                          <ExternalLink className="w-3.5 h-3.5" />
+                        </div>
+                        <div className="min-w-0 text-left">
+                          <span className="text-xs font-bold text-white block leading-tight">Lihat Kedai Awam</span>
+                          <span className="text-[9.5px] text-blue-200/70 block truncate">kamaarbeddings.my</span>
+                        </div>
+                      </div>
+                      <span className="text-[11px] text-[#D4AF37] font-bold">&rarr;</span>
+                    </Link>
+
+                    <AdminLogoutButton />
+                  </div>
+              </div>
+            </div>
+
+            {/* ========================================================================= */}
+            {/* 3. DESKTOP PERMANENT SIDEBAR (>= md)                                     */}
+            {/* ========================================================================= */}
+            <aside className="hidden md:flex md:w-68 lg:w-72 bg-gradient-to-b from-[#11294A] via-[#0E223D] to-[#0A192E] text-warmwhite flex-shrink-0 flex-col justify-between border-r border-[#B49A58]/25 min-h-screen sticky top-0 h-screen select-none shadow-2xl z-20">
+              <div className="flex-1 overflow-y-auto no-scrollbar">
+                {/* Brand Header */}
+                <div className="p-4 border-b border-white/10 relative">
+                  <Link href="/admin" className="block group">
+                    <div className="bg-white rounded-2xl p-3 px-3.5 border border-white/50 shadow-md flex items-center justify-between transition-all group-hover:border-gold/80 group-hover:shadow-lg">
+                      <div className="relative h-11 w-44">
+                        <Image
+                          src="/images/kamaar-logo-clean.png"
+                          alt="KAMAAR Beddings (Tunas Sinar Jaya)"
+                          fill
+                          className="object-contain object-left"
+                          priority
+                        />
+                      </div>
+                      <span className="px-2 py-0.5 rounded-md text-[8.5px] font-black uppercase tracking-wider bg-[#13325B] text-white border border-[#D4AF37]/50 shadow-xs flex-shrink-0">
+                        HQ
+                      </span>
                     </div>
                   </Link>
-                )
-              })
-            )}
-          </nav>
-        </div>
 
-        {/* Desktop Footer Actions */}
-        <div className="p-4 border-t border-white/10 space-y-2 text-xs bg-[#0F2746]">
-          <Link
-            href="/"
-            target="_blank"
-            className="flex items-center justify-between px-3 py-2 rounded-xl bg-white/5 hover:bg-white/10 text-neutral-200 hover:text-white transition-colors"
-          >
-            <span className="flex items-center space-x-2">
-              <ExternalLink className="w-3.5 h-3.5 text-[#D4AF37]" />
-              <span>Lihat Kedai Awam</span>
-            </span>
-            <span className="text-[10px] text-[#D4AF37] font-bold">&rarr;</span>
-          </Link>
+                  <div className="flex items-center justify-between mt-2.5 px-1">
+                    <span className="text-[8.5px] uppercase tracking-[0.22em] text-[#D4AF37] font-extrabold">
+                      OPERATIONS ATELIER
+                    </span>
+                    <span className="inline-flex items-center gap-1 px-1.5 py-0.5 rounded-full bg-emerald-500/15 border border-emerald-500/30 text-[8.5px] font-bold text-emerald-300">
+                      <span className="w-1.5 h-1.5 rounded-full bg-emerald-400 animate-pulse" />
+                      SISTEM AKTIF
+                    </span>
+                  </div>
 
-          <AdminLogoutButton />
-        </div>
-      </aside>
+                  {/* Staff Info Card */}
+                  <div className="mt-3 p-2.5 bg-white/[0.05] hover:bg-white/[0.08] rounded-2xl border border-white/10 transition-all backdrop-blur-sm shadow-2xs group/staff">
+                    <div className="flex items-center space-x-2.5">
+                      <div className="relative flex-shrink-0">
+                        <div className="w-8 h-8 rounded-xl bg-gradient-to-br from-[#D4AF37] via-[#B49A58] to-[#8C6B1C] text-forest-dark flex items-center justify-center font-black text-xs shadow-md border border-white/20">
+                          {adminInitial}
+                        </div>
+                        <span className="absolute -bottom-0.5 -right-0.5 w-2.5 h-2.5 bg-emerald-500 border-2 border-[#0E223D] rounded-full" />
+                      </div>
+                      <div className="min-w-0 flex-1">
+                        <span className="text-xs font-bold text-white block truncate tracking-tight group-hover/staff:text-gold-light transition-colors">
+                          {adminName}
+                        </span>
+                        <div className="flex items-center gap-1.5 mt-0.5">
+                          <span className="text-[8.5px] font-bold uppercase tracking-wider text-[#D4AF37] bg-gold/15 px-1.5 py-0.2 rounded border border-gold/25">
+                            {session.role.replace('_', ' ')}
+                          </span>
+                          <span className="text-[9px] text-blue-200/60 truncate">
+                            Tunas Sinar Jaya
+                          </span>
+                        </div>
+                      </div>
+                    </div>
+                  </div>
+                </div>
+
+                {/* Search & Quick Edit Controls in Sidebar */}
+                <div className="p-3 border-b border-white/10 space-y-2">
+                  <div className="relative group">
+                    <Search className="w-3.5 h-3.5 text-blue-200/50 absolute left-3 top-1/2 -translate-y-1/2 transition-colors group-focus-within:text-[#D4AF37]" />
+                    <input
+                      type="text"
+                      placeholder="Cari menu & tetapan..."
+                      value={searchQuery}
+                      onChange={(e) => setSearchQuery(e.target.value)}
+                      className="w-full pl-8 pr-12 py-2 text-xs rounded-xl bg-black/25 border border-white/10 text-white placeholder:text-blue-200/50 focus:outline-none focus:border-[#D4AF37] focus:bg-black/35 focus:ring-1 focus:ring-[#D4AF37]/30 transition-all shadow-inner"
+                    />
+                    {searchQuery ? (
+                      <button
+                        type="button"
+                        onClick={() => setSearchQuery('')}
+                        className="absolute right-2.5 top-1/2 -translate-y-1/2 text-neutral-400 hover:text-white cursor-pointer"
+                      >
+                        <X className="w-3 h-3" />
+                      </button>
+                    ) : (
+                      <kbd className="absolute right-2.5 top-1/2 -translate-y-1/2 text-[9px] px-1.5 py-0.5 rounded bg-white/10 text-blue-200/70 font-mono border border-white/10">
+                        ⌘K
+                      </kbd>
+                    )}
+                  </div>
+
+                  {/* Quick Edit Trigger Button */}
+                  <button
+                    type="button"
+                    onClick={openQuickSettings}
+                    className="w-full py-2 px-3 bg-gradient-to-r from-gold/20 via-gold/10 to-transparent hover:from-gold/30 hover:to-gold/15 border border-gold/40 hover:border-gold/60 rounded-xl text-xs font-bold text-[#F3E5AB] hover:text-white flex items-center justify-between shadow-xs transition-all cursor-pointer group"
+                    title="Sunting tetapan pantas terus tanpa tukar halaman (Ctrl+K)"
+                  >
+                    <div className="flex items-center gap-1.5">
+                      <Sparkles className="w-3.5 h-3.5 text-[#D4AF37] group-hover:rotate-12 transition-transform" />
+                      <span>Quick Edit Settings</span>
+                    </div>
+                    <span className="text-[10px] text-[#D4AF37] font-bold group-hover:translate-x-0.5 transition-transform">&rarr;</span>
+                  </button>
+                </div>
+
+                {/* Quick Settings Shortcut Banner when searching settings keywords */}
+                {matchesQuickSettingsKeywords && (
+                  <div className="m-3 p-2.5 rounded-xl bg-amber-500/10 border border-[#D4AF37]/30 text-xs space-y-1.5 animate-fade-in">
+                    <span className="text-[10px] font-bold text-[#D4AF37] uppercase tracking-wider block">
+                      ⚡ Tetapan Ditemui
+                    </span>
+                    <p className="text-[11px] text-neutral-200">
+                      Padanan kata kunci untuk tetapan kedai dijumpai.
+                    </p>
+                    <button
+                      type="button"
+                      onClick={openQuickSettings}
+                      className="w-full py-1.5 bg-[#D4AF37] hover:bg-[#c29f2e] text-[#13325B] font-bold rounded-lg text-xs transition-colors cursor-pointer text-center block"
+                    >
+                      Buka Quick Edit Sekarang
+                    </button>
+                  </div>
+                )}
+
+                {/* Categorized Navigation Links */}
+                {renderNavContent()}
+              </div>
+
+              {/* Desktop Footer Actions */}
+              <div className="p-3.5 border-t border-white/10 space-y-2 text-xs bg-gradient-to-b from-[#11294A] to-[#0A192E]">
+                <Link
+                  href="/"
+                  target="_blank"
+                  className="flex items-center justify-between p-2.5 rounded-xl bg-white/[0.06] hover:bg-white/[0.12] border border-white/10 hover:border-gold/40 text-neutral-200 hover:text-white transition-all shadow-xs group"
+                >
+                  <div className="flex items-center space-x-2.5 min-w-0">
+                    <div className="w-7 h-7 rounded-lg bg-gold/15 border border-gold/30 flex items-center justify-center text-gold group-hover:scale-105 transition-transform">
+                      <ExternalLink className="w-3.5 h-3.5" />
+                    </div>
+                    <div className="min-w-0 text-left">
+                      <span className="text-xs font-bold text-white block leading-tight">Lihat Kedai Awam</span>
+                      <span className="text-[9.5px] text-blue-200/70 block truncate">kamaarbeddings.my</span>
+                    </div>
+                  </div>
+                  <span className="text-[11px] text-[#D4AF37] font-bold group-hover:translate-x-0.5 transition-transform">&rarr;</span>
+                </Link>
+
+                <AdminLogoutButton />
+
+                <div className="pt-1 text-center">
+                  <span className="text-[9px] text-blue-200/40 tracking-wider">
+                    TSJ Admin v2.4 • Tasek Gelugor
+                  </span>
+                </div>
+              </div>
+            </aside>
+          </>
+        )
+      })()}
 
       {/* ========================================================================= */}
       {/* 4. GLOBAL QUICK EDIT SETTINGS MODAL (Accessible from anywhere)           */}
       {/* ========================================================================= */}
-      {isQuickSettingsOpen && (
-        <div className="fixed inset-0 z-50 bg-black/60 backdrop-blur-sm flex items-center justify-center p-3 sm:p-4 animate-in fade-in duration-150">
-          <div className="bg-white w-full max-w-xl rounded-3xl border border-slate-200 shadow-2xl overflow-hidden font-sans flex flex-col max-h-[90vh]">
+      <div
+        className={`fixed inset-0 z-50 flex items-center justify-center p-3 sm:p-4 transition-all duration-300 ease-in-out ${
+          isQuickSettingsOpen
+            ? 'pointer-events-auto opacity-100 visible'
+            : 'pointer-events-none opacity-0 invisible delay-150'
+        }`}
+      >
+        <div
+          className={`fixed inset-0 bg-black/60 backdrop-blur-sm transition-opacity duration-300 ease-out ${
+            isQuickSettingsOpen ? 'opacity-100' : 'opacity-0'
+          }`}
+          onClick={() => setIsQuickSettingsOpen(false)}
+        />
+        <div
+          className={`relative z-10 bg-white w-full max-w-xl rounded-3xl border border-slate-200 shadow-2xl overflow-hidden font-sans flex flex-col max-h-[90vh] transform transition-all duration-300 ease-out will-change-transform ${
+            isQuickSettingsOpen ? 'scale-100 translate-y-0 opacity-100' : 'scale-95 translate-y-4 opacity-0'
+          }`}
+        >
             {/* Modal Header */}
             <div className="p-4 sm:p-5 bg-[#13325B] text-warmwhite flex items-center justify-between border-b border-[#B49A58]/20 flex-shrink-0">
               <div className="flex items-center space-x-2.5">
@@ -755,7 +912,6 @@ export function AdminNav({ session }: AdminNavProps) {
             </form>
           </div>
         </div>
-      )}
     </>
   )
 }

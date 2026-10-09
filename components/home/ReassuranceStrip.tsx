@@ -10,23 +10,23 @@ export function ReassuranceStrip() {
   const items = [
     {
       icon: Sparkles,
-      title: t.reassureLatex,
-      subtitle: t.reassureLatexSub,
+      title: 'TERUS DARI KILANG',
+      subtitle: 'PRODUK TERUS DARI KILANG DI TASEK GELUGOR PULAU PINANG',
     },
     {
       icon: RotateCcw,
-      title: t.reassureTrial,
-      subtitle: t.reassureTrialSub,
+      title: 'JAMINAN HARGA TERENDAH',
+      subtitle: 'JAMINAN HARGA PALING RENDAH DALAM PASARAN',
     },
     {
       icon: ShieldCheck,
-      title: t.reassureWarranty,
-      subtitle: t.reassureWarrantySub,
+      title: 'KAWALAN KUALITI (QC)',
+      subtitle: 'KAWALAN KUALITI YANG TELITI SEBELUM SAMPAI KE PELANGGAN',
     },
     {
       icon: Truck,
-      title: t.reassureDelivery,
-      subtitle: t.reassureDeliverySub,
+      title: 'PENGHANTARAN SELURUH MALAYSIA',
+      subtitle: 'RANGKAIAN PENGHANTARAN DI SELURUH MALAYSIA (DOOR TO DOOR SERVICE)',
     },
   ]
 

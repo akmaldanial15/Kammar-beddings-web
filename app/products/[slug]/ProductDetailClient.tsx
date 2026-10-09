@@ -474,7 +474,12 @@ export function ProductDetailClient({
                     Key Features & Advantages
                   </h4>
                   <ul className="grid grid-cols-1 md:grid-cols-2 gap-3 text-xs text-charcoal">
-                    {product.features.map((feat, i) => (
+                    {(product.features || [
+                      'Jahitan kemas terus dari kilang Tunas Sinar Jaya Sdn. Bhd.',
+                      'Isian berkualiti tinggi tahan mendap dan empuk',
+                      'Kain luaran lembut, selesa dan sejuk',
+                      'Kawalan kualiti teliti sebelum sampai ke pelanggan',
+                    ]).map((feat, i) => (
                       <li key={i} className="flex items-start space-x-2 p-2.5 bg-cream-light rounded-lg border border-borderLight">
                         <Check className="w-4 h-4 text-emerald-600 flex-shrink-0 mt-0.5" />
                         <span>{feat}</span>
@@ -491,7 +496,11 @@ export function ProductDetailClient({
                 <h3 className="font-serif text-2xl font-bold text-forest mb-4">
                   Multi-Tiered Ergonomic Anatomy
                 </h3>
-                {product.layers.map((layer) => (
+                {(product.layers || [
+                  { number: 1, name: 'Lapisan Luar Fabrik Tekstil', description: 'Fabrik berkualiti tinggi dengan jahitan kelim rapi dan corak kemas.' },
+                  { number: 2, name: 'Isian Utama Berkualiti', description: product.material || 'Isian terpilih memberikan keempukan dan ketahanan bentuk.' },
+                  { number: 3, name: 'Kemasan & Piping Kukuh', description: 'Jahitan kelim gred industri untuk ketahanan penggunaan berpanjangan.' },
+                ]).map((layer) => (
                   <div key={layer.number} className="p-4 bg-cream rounded-xl border border-borderLight flex items-start space-x-4">
                     <span className="w-8 h-8 rounded-full bg-forest text-warmwhite font-bold text-xs flex items-center justify-center flex-shrink-0">
                       {layer.number}
@@ -514,7 +523,13 @@ export function ProductDetailClient({
                   Product Technical Specifications
                 </h3>
                 <div className="divide-y divide-borderLight border border-borderLight rounded-xl overflow-hidden">
-                  {Object.entries(product.specifications).map(([key, val]) => (
+                  {Object.entries(product.specifications || {
+                    'Pengeluar': 'Tunas Sinar Jaya Sdn. Bhd. (KAMAAR)',
+                    'Lokasi Kilang': 'Tasek Gelugor, Pulau Pinang',
+                    'Bahan Isian': product.material || 'Polyester Fibre / Kekabu Asli',
+                    'Ukuran / Saiz': (product as any).dimensions || selectedVariant?.dimensions || 'Standard',
+                    'Jaminan': `${product.warrantyYears || 1} Tahun Terus Dari Kilang`,
+                  }).map(([key, val]) => (
                     <div key={key} className="flex text-xs py-3 px-4 odd:bg-cream-light even:bg-warmwhite">
                       <span className="w-1/3 font-bold text-charcoal">{key}</span>
                       <span className="w-2/3 text-charcoal-muted">{val}</span>
@@ -687,7 +702,11 @@ export function ProductDetailClient({
                 <h3 className="font-serif text-2xl font-bold text-forest mb-4">
                   Frequently Asked Questions
                 </h3>
-                {product.faq.map((item, idx) => (
+                {(product.faq || [
+                  { question: 'Bolehkah saya beli terus di kilang?', answer: 'Ya, pelanggan dialu-alukan hadir terus ke premis kilang dan showroom kami di Tasek Gelugor, Pulau Pinang.' },
+                  { question: 'Bagaimanakah kaedah penghantaran?', answer: 'Penghantaran disediakan ke seluruh Semenanjung Malaysia terus ke pintu rumah anda atau menggunakan lori kilang untuk tempahan borong.' },
+                  { question: 'Apakah pilihan pembayaran yang disediakan?', answer: 'Pembayaran disahkan secara selamat melalui FPX Online Banking dan Touch \'n Go eWallet.' },
+                ]).map((item, idx) => (
                   <div key={idx} className="p-4 bg-cream rounded-xl border border-borderLight space-y-1.5">
                     <h4 className="text-xs font-bold text-charcoal flex items-center space-x-2">
                       <HelpCircle className="w-4 h-4 text-gold-dark flex-shrink-0" />

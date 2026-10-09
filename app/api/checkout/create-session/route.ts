@@ -8,7 +8,6 @@ import {
   getAffiliateByCode,
 } from '@/lib/db'
 import { calculateShippingFee, validateMalaysianPostcode, validateMalaysianPhone } from '@/lib/utils/format'
-import { stripeProvider } from '@/lib/payment/stripe'
 import { chipProvider } from '@/lib/payment/chip'
 
 const CheckoutRequestSchema = z.object({
@@ -220,7 +219,7 @@ export async function POST(request: NextRequest) {
       appliedCoupon,
       paymentStatus: 'unpaid',
       fulfillmentStatus: 'unfulfilled',
-      paymentProvider: paymentMethodId === 'pay-fpx' || paymentMethodId === 'pay-tng' || reqProvider === 'chip' || reqProvider === 'fpx' || reqProvider === 'tng' ? 'chip' : 'stripe',
+      paymentProvider: 'chip',
       items: validatedOrderItems.map((item, idx) => ({
         ...item,
         id: `item-${Date.now()}-${idx}`,
@@ -228,19 +227,12 @@ export async function POST(request: NextRequest) {
       })),
     })
 
-    // 6. Create Payment Session via CHIP (FPX / TNG) or Stripe (Cards)
+    // 6. Create Payment Session via CHIP (FPX / Touch 'n Go eWallet)
     const appUrl = process.env.NEXT_PUBLIC_APP_URL || 'http://localhost:3000'
-    const isChipPayment =
-      reqProvider === 'chip' ||
-      paymentMethodId === 'pay-fpx' ||
-      paymentMethodId === 'pay-tng' ||
-      reqProvider === 'fpx' ||
-      reqProvider === 'tng'
+    const preferredMethod =
+      paymentMethodId === 'pay-tng' || reqProvider === 'tng' ? 'tng' : 'fpx'
 
-    const activeProvider = isChipPayment ? chipProvider : stripeProvider
-    const preferredMethod = paymentMethodId === 'pay-tng' || reqProvider === 'tng' ? 'tng' : 'fpx'
-
-    const session = await activeProvider.createCheckoutSession({
+    const session = await chipProvider.createCheckoutSession({
       orderId: order.id,
       orderNumber: order.orderNumber,
       customerEmail: customer.email,

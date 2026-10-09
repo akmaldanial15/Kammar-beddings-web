@@ -30,8 +30,6 @@ export function CartDrawer() {
   const [couponSuccess, setCouponSuccess] = useState('')
   const [isValidating, setIsValidating] = useState(false)
 
-  if (!isDrawerOpen) return null
-
   // Free shipping calculation threshold (RM500 = 50000 sen)
   const FREE_SHIPPING_THRESHOLD = 50000
   const hasMattress = items.some((i) => i.sku.includes('RH') || i.sku.includes('CN') || i.sku.includes('OR') || i.sku.includes('EC') || i.sku.includes('SL') || i.sku.includes('CS') || i.sku.includes('NF') || i.sku.includes('LC') || i.sku.includes('CP') || i.sku.includes('MS') || i.sku.includes('DS') || i.sku.includes('CF'))
@@ -74,15 +72,27 @@ export function CartDrawer() {
   }
 
   return (
-    <div className="fixed inset-0 z-50 overflow-hidden">
+    <div
+      className={`fixed inset-0 z-50 overflow-hidden ${
+        isDrawerOpen
+          ? 'pointer-events-auto visible'
+          : 'pointer-events-none invisible delay-300'
+      }`}
+    >
       {/* Backdrop */}
       <div
-        className="absolute inset-0 bg-charcoal/60 backdrop-blur-sm transition-opacity animate-fade-in"
+        className={`absolute inset-0 bg-charcoal/60 backdrop-blur-sm transition-opacity duration-300 ease-out ${
+          isDrawerOpen ? 'opacity-100' : 'opacity-0'
+        }`}
         onClick={closeDrawer}
       />
 
-      <div className="fixed inset-y-0 right-0 max-w-full flex pl-10 animate-slide-in-right">
-        <div className="w-screen max-w-md bg-warmwhite shadow-2xl flex flex-col">
+      <div
+        className={`fixed inset-y-0 right-0 max-w-full flex pl-10 transform transition-transform duration-300 ease-out will-change-transform ${
+          isDrawerOpen ? 'translate-x-0' : 'translate-x-full'
+        }`}
+      >
+        <div className="w-screen max-w-md bg-white shadow-2xl flex flex-col">
           {/* Header */}
           <div className="p-4 sm:p-5 border-b border-borderLight flex items-center justify-between bg-cream-light">
             <div className="flex items-center space-x-2">

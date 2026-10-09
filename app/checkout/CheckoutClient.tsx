@@ -132,9 +132,14 @@ export function CheckoutClient({ initialPaymentSettings, initialSiteSettings, av
         if (res.ok) {
           const data = await res.json()
           if (data.methods) {
-            // Strictly enforce only FPX and TNG
+            // Strictly enforce only FPX and TNG via CHIP
             const allowed = data.methods.filter(
-              (m: any) => m.id === 'pay-fpx' || m.id === 'pay-tng' || m.providerType === 'fpx' || m.providerType === 'tng'
+              (m: any) =>
+                m.id === 'pay-fpx' ||
+                m.id === 'pay-tng' ||
+                m.providerType === 'chip' ||
+                m.providerType === 'fpx' ||
+                m.providerType === 'tng'
             )
             if (allowed.length > 0) {
               setActiveMethods(allowed)
@@ -401,10 +406,7 @@ export function CheckoutClient({ initialPaymentSettings, initialSiteSettings, av
           couponCode: couponCode || undefined,
           affiliateCode: affiliateCode.trim() || undefined,
           paymentMethodId: selectedMethodId || selectedMethod?.id,
-          paymentProvider:
-            selectedMethodId === 'pay-fpx' || selectedMethodId === 'pay-tng'
-              ? 'chip'
-              : selectedMethod?.providerType || 'chip',
+          paymentProvider: 'chip',
         }),
       })
 

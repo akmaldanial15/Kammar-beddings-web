@@ -231,10 +231,10 @@ export function Header() {
 
                   <Link
                     href="/showrooms"
-                    className="flex items-center space-x-1.5 text-xs text-charcoal-muted hover:text-forest transition-colors font-medium"
+                    className="flex items-center space-x-1.5 text-xs text-charcoal-muted hover:text-forest transition-colors font-bold uppercase tracking-wider"
                   >
                     <MapPin className="w-3.5 h-3.5 text-gold-dark" />
-                    <span className="hidden xl:inline">Showroom Studios</span>
+                    <span>SHOWROOM</span>
                   </Link>
                 </div>
 
@@ -939,64 +939,64 @@ export function Header() {
                 {/* VERTICAL DIVIDER */}
                 <div className="h-5 w-px bg-borderLight mx-1" />
 
-                {/* 6. JUALAN GUDANG & BORONG (VIP GLOWING PILL & MEGA MENU) */}
+                {/* 6. JELAJAH PROMOSI ( LOKASI TERKINI) */}
                 <div
                   className="relative"
-                  onMouseEnter={() => handleOpenMega('borong')}
+                  onMouseEnter={() => handleOpenMega('promosi')}
                   onMouseLeave={handleCloseMega}
                 >
                   <Link
-                    href="/collections/borong-gudang"
+                    href="/jelajah-promosi"
                     onClick={() => setActiveMega(null)}
                     className={`inline-flex items-center gap-1.5 px-3.5 py-1.5 rounded-full bg-gradient-to-r from-amber-100 via-amber-50 to-amber-100 hover:from-amber-200 hover:to-amber-100 text-amber-950 border border-amber-300 font-bold transition-all shadow-xs group whitespace-nowrap ${
-                      pathname.startsWith('/collections/borong-gudang')
+                      pathname.startsWith('/jelajah-promosi')
                         ? 'ring-2 ring-amber-400 shadow-sm'
                         : ''
                     }`}
                   >
                     <Flame className="w-3.5 h-3.5 text-amber-600 fill-amber-500/30 animate-pulse" />
-                    <span>Jualan Gudang & Borong</span>
+                    <span>JELAJAH PROMOSI</span>
                     <span className="px-1.5 py-0.2 rounded text-[9px] font-black uppercase bg-amber-600 text-white tracking-wider shadow-xs">
-                      HARGA GUDANG
+                      LOKASI TERKINI
                     </span>
                     <ChevronDown
                       className={`w-3 h-3 text-amber-800 transition-transform duration-200 ${
-                        activeMega === 'borong' ? 'rotate-180' : ''
+                        activeMega === 'promosi' ? 'rotate-180' : ''
                       }`}
                     />
                   </Link>
 
-                  {/* Mega Menu: Jualan Gudang & Borong */}
-                  {activeMega === 'borong' && (
+                  {/* Mega Menu: Jelajah Promosi */}
+                  {activeMega === 'promosi' && (
                     <div
                       className="absolute top-full left-1/2 -translate-x-1/2 pt-2 z-50 pointer-events-auto"
-                      onMouseEnter={() => handleKeepMega('borong')}
+                      onMouseEnter={() => handleKeepMega('promosi')}
                       onMouseLeave={handleCloseMega}
                     >
                       <div className="w-[660px] bg-warmwhite rounded-2xl shadow-[0_25px_50px_-12px_rgba(19,50,91,0.22)] border border-amber-200 p-5 grid grid-cols-12 gap-5 animate-[fadeIn_0.15s_ease-out]">
                         <div className="col-span-6 border-r border-borderLight pr-4">
                           <div className="inline-flex items-center gap-1.5 text-[10px] font-black uppercase tracking-wider text-amber-800 bg-amber-100 px-2 py-0.5 rounded mb-2">
                             <Flame className="w-3 h-3 text-amber-600" />
-                            <span>Terus Dari Kilang Tasek Gelugor</span>
+                            <span>Jelajah Promosi & Lokasi Terkini</span>
                           </div>
                           <h4 className="font-serif text-sm font-bold text-forest leading-snug">
-                            Harga Kilang Terus Untuk Peniaga & Institusi
+                            Promosi Terus Dari Kilang Ke Tempat Anda
                           </h4>
                           <p className="text-[11px] text-charcoal-muted mt-1 leading-relaxed">
-                            Diskaun bertingkat untuk pembelian kuantiti banyak terus dari pengeluar Tunas Sinar Jaya.
+                            Kami bawakan produk KAMAAR terus ke lokasi promosi terpilih dengan harga promosi jualan gudang terhebat.
                           </p>
                           <div className="mt-2.5 space-y-1.5 text-xs">
                             <div className="flex items-center justify-between p-1.5 rounded bg-amber-50/60 border border-amber-100">
-                              <span className="font-medium text-charcoal">10 – 49 Unit (Homestay / Tadika)</span>
-                              <span className="font-bold text-amber-800">Diskaun 15%</span>
+                              <span className="font-medium text-charcoal">Gudang Utama Tasek Gelugor</span>
+                              <span className="font-bold text-emerald-700">Sedang Berlangsung</span>
                             </div>
                             <div className="flex items-center justify-between p-1.5 rounded bg-amber-50/60 border border-amber-100">
-                              <span className="font-medium text-charcoal">50 – 99 Unit (Asrama / Tahfiz)</span>
-                              <span className="font-bold text-amber-800">Diskaun 25%</span>
+                              <span className="font-medium text-charcoal">Jelajah Utara (Kedah / Perak)</span>
+                              <span className="font-bold text-amber-800">Akan Datang</span>
                             </div>
                             <div className="flex items-center justify-between p-1.5 rounded bg-amber-50/60 border border-amber-100">
-                              <span className="font-medium text-charcoal">100+ Unit (Tender Pukal)</span>
-                              <span className="font-bold text-forest">Harga Kontrak Kilang</span>
+                              <span className="font-medium text-charcoal">Karnival Lembah Klang</span>
+                              <span className="font-bold text-blue-800">Tempahan Awal</span>
                             </div>
                           </div>
                         </div>
@@ -1005,32 +1005,32 @@ export function Header() {
                           <div className="relative h-28 w-full rounded-lg overflow-hidden mb-2">
                             <Image
                               src="/images/hero/hero-jualan-gudang-crowd.jpg"
-                              alt="Suasana Jualan Gudang Tunas Sinar Jaya Enterprise"
+                              alt="Jelajah Promosi KAMAAR Beddings"
                               fill
                               className="object-cover"
                               sizes="280px"
                             />
                             <div className="absolute bottom-2 left-2 right-2 bg-charcoal/80 backdrop-blur-xs text-warmwhite text-[10px] px-2 py-0.5 rounded">
-                              Walk-in ke Gudang Tasek Gelugor dibuka!
+                              Tapak Promosi & Gudang Tasek Gelugor Dibuka!
                             </div>
                           </div>
                           <div className="space-y-1.5">
                             <Link
-                              href="/collections/borong-gudang"
+                              href="/jelajah-promosi"
                               onClick={() => setActiveMega(null)}
                               className="w-full inline-flex items-center justify-center gap-1.5 px-3 py-1.5 bg-forest text-warmwhite text-xs font-bold rounded-lg hover:bg-forest-dark transition-all"
                             >
-                              <span>Katalog Pakej Borong</span>
+                              <span>Lihat Semua Lokasi Jelajah</span>
                               <ArrowRight className="w-3.5 h-3.5 text-gold" />
                             </Link>
                             <a
-                              href="https://wa.me/60194786991?text=Salam%20KAMAAR%20Beddings,%20saya%20berminat%20sebut%20harga%20borong%20jualan%20gudang"
+                              href="https://wa.me/60194786991?text=Salam%20KAMAAR%20Beddings,%20saya%20ingin%20tahu%20lokasi%20terkini%20jelajah%20promosi"
                               target="_blank"
                               rel="noopener noreferrer"
                               className="w-full inline-flex items-center justify-center gap-1.5 px-3 py-1.5 bg-[#25D366] text-white text-xs font-bold rounded-lg hover:bg-[#20ba59] transition-all shadow-xs"
                             >
                               <Phone className="w-3.5 h-3.5" />
-                              <span>WhatsApp Sebut Harga Borong</span>
+                              <span>WhatsApp Pertanyaan Lokasi</span>
                             </a>
                           </div>
                         </div>
@@ -1039,7 +1039,7 @@ export function Header() {
                   )}
                 </div>
 
-                {/* 7. KILANG & OEM (DROPDOWN COHESIVE) */}
+                {/* 7. PROFIL SYARIKAT */}
                 <div
                   className="relative"
                   onMouseEnter={() => handleOpenMega('kilang')}
@@ -1048,7 +1048,7 @@ export function Header() {
                   <Link
                     href="/profil"
                     onClick={() => setActiveMega(null)}
-                    className={`inline-flex items-center gap-1.5 px-3 py-1.5 rounded-full transition-all duration-150 whitespace-nowrap group ${
+                    className={`inline-flex items-center gap-1.5 px-3.5 py-1.5 rounded-full transition-all duration-150 whitespace-nowrap group ${
                       pathname.startsWith('/profil') || pathname.startsWith('/business')
                         ? 'bg-white text-forest font-bold shadow-xs border border-gold/50 ring-2 ring-gold/20'
                         : 'hover:bg-forest/5 hover:text-forest text-charcoal font-medium border border-transparent'
@@ -1059,10 +1059,7 @@ export function Header() {
                         ? 'text-gold-dark scale-105'
                         : 'text-forest/80'
                     }`} />
-                    <span>Kilang & OEM</span>
-                    <span className="text-[10px] font-bold text-forest bg-forest/10 border border-forest/20 px-1.5 py-0.2 rounded">
-                      4 Unit
-                    </span>
+                    <span>PROFIL SYARIKAT</span>
                     <ChevronDown
                       className={`w-3 h-3 text-gold-dark transition-transform duration-200 ${
                         activeMega === 'kilang' ? 'rotate-180' : ''
@@ -1199,16 +1196,27 @@ export function Header() {
       {/* ========================================================================= */}
       {/* MOBILE SLIDE-OVER DRAWER (LUXURY ATELIER EDITION)                         */}
       {/* ========================================================================= */}
-      {isMobileMenuOpen && (
-        <div className="fixed inset-0 z-50 lg:hidden">
-          {/* Backdrop with silky blur */}
-          <div
-            className="fixed inset-0 bg-forest-dark/60 backdrop-blur-sm transition-opacity animate-fade-in"
-            onClick={() => setIsMobileMenuOpen(false)}
-          />
+      <div
+        className={`fixed inset-0 z-50 lg:hidden ${
+          isMobileMenuOpen
+            ? 'pointer-events-auto visible'
+            : 'pointer-events-none invisible delay-300'
+        }`}
+      >
+        {/* Backdrop with silky blur */}
+        <div
+          className={`fixed inset-0 bg-forest-dark/60 backdrop-blur-sm transition-opacity duration-300 ease-out ${
+            isMobileMenuOpen ? 'opacity-100' : 'opacity-0'
+          }`}
+          onClick={() => setIsMobileMenuOpen(false)}
+        />
 
-          {/* Drawer Panel */}
-          <div className="fixed inset-y-0 left-0 max-w-[340px] w-[88vw] bg-warmwhite shadow-2xl flex flex-col justify-between overflow-hidden animate-slide-in-left">
+        {/* Drawer Panel */}
+        <div
+          className={`fixed inset-y-0 left-0 max-w-[340px] w-[88vw] bg-warmwhite shadow-2xl flex flex-col justify-between overflow-hidden transform transition-transform duration-300 ease-out will-change-transform ${
+            isMobileMenuOpen ? 'translate-x-0' : '-translate-x-full'
+          }`}
+        >
             {/* SCROLLABLE MAIN CONTENT AREA */}
             <div className="flex-1 overflow-y-auto no-scrollbar">
               {/* TOP BRAND HEADER */}
@@ -1244,49 +1252,62 @@ export function Header() {
                 </button>
               </div>
 
-              {/* 2-COLUMN FACTORY DISCOVERY CARDS */}
+              {/* 3 SLIDE 1 PROMINENT DISCOVERY CARDS */}
               <div className="p-3 bg-gradient-to-b from-cream/20 to-warmwhite border-b border-borderLight/60">
-                <div className="grid grid-cols-2 gap-2">
-                  {/* Profil Kilang Card */}
+                <div className="grid grid-cols-3 gap-2">
+                  {/* Showroom */}
                   <Link
-                    href="/profil"
+                    href="/showrooms"
                     onClick={() => setIsMobileMenuOpen(false)}
-                    className="p-3 rounded-2xl bg-gradient-to-br from-warmwhite to-cream border border-[#B49A58]/35 shadow-2xs hover:border-[#1E4E8C] transition-all group flex flex-col justify-between"
+                    className="p-2.5 rounded-2xl bg-warmwhite border border-borderLight shadow-2xs hover:border-[#1E4E8C] transition-all group flex flex-col justify-between"
                   >
-                    <div className="flex items-center justify-between mb-1.5">
-                      <div className="w-7 h-7 rounded-xl bg-[#B49A58]/15 flex items-center justify-center text-[#B49A58]">
-                        <Sparkles className="w-3.5 h-3.5" />
-                      </div>
-                      <ArrowRight className="w-3 h-3 text-secondary group-hover:text-forest group-hover:translate-x-0.5 transition-all" />
+                    <div className="w-6 h-6 rounded-lg bg-[#B49A58]/15 flex items-center justify-center text-[#B49A58] mb-1.5">
+                      <MapPin className="w-3.5 h-3.5" />
                     </div>
                     <div>
-                      <span className="text-xs font-bold text-forest-dark block leading-snug">
-                        {locale === 'bm' ? 'Profil Kilang' : 'Factory Profile'}
+                      <span className="text-[11px] font-bold text-forest-dark block leading-tight">
+                        SHOWROOM
                       </span>
-                      <span className="text-[10px] text-secondary">
-                        {locale === 'bm' ? '4 Unit & Pengurusan' : '4 Units & Org'}
+                      <span className="text-[9px] text-secondary">
+                        Tasek Gelugor
                       </span>
                     </div>
                   </Link>
 
-                  {/* Jualan Gudang Card */}
+                  {/* Jelajah Promosi Card */}
                   <Link
-                    href="/collections/borong-gudang"
+                    href="/jelajah-promosi"
                     onClick={() => setIsMobileMenuOpen(false)}
-                    className="p-3 rounded-2xl bg-gradient-to-br from-warmwhite to-cream border border-[#B49A58]/35 shadow-2xs hover:border-[#1E4E8C] transition-all group flex flex-col justify-between"
+                    className="p-2.5 rounded-2xl bg-amber-50 border border-amber-200 shadow-2xs hover:border-amber-400 transition-all group flex flex-col justify-between"
                   >
-                    <div className="flex items-center justify-between mb-1.5">
-                      <div className="w-7 h-7 rounded-xl bg-[#1E4E8C]/10 flex items-center justify-center text-[#1E4E8C]">
-                        <MapPin className="w-3.5 h-3.5" />
-                      </div>
-                      <ArrowRight className="w-3 h-3 text-secondary group-hover:text-forest group-hover:translate-x-0.5 transition-all" />
+                    <div className="w-6 h-6 rounded-lg bg-amber-500/15 flex items-center justify-center text-amber-700 mb-1.5">
+                      <Flame className="w-3.5 h-3.5" />
                     </div>
                     <div>
-                      <span className="text-xs font-bold text-forest-dark block leading-snug">
-                        {locale === 'bm' ? 'Jualan Gudang' : 'Warehouse Sale'}
+                      <span className="text-[11px] font-bold text-amber-900 block leading-tight">
+                        JELAJAH PROMOSI
                       </span>
-                      <span className="text-[10px] text-secondary">
-                        {locale === 'bm' ? 'Tasek Gelugor Penang' : 'Tasek Gelugor'}
+                      <span className="text-[9px] text-amber-700 font-semibold">
+                        Lokasi Terkini
+                      </span>
+                    </div>
+                  </Link>
+
+                  {/* Profil Kilang Card */}
+                  <Link
+                    href="/profil"
+                    onClick={() => setIsMobileMenuOpen(false)}
+                    className="p-2.5 rounded-2xl bg-warmwhite border border-borderLight shadow-2xs hover:border-[#1E4E8C] transition-all group flex flex-col justify-between"
+                  >
+                    <div className="w-6 h-6 rounded-lg bg-[#1E4E8C]/10 flex items-center justify-center text-[#1E4E8C] mb-1.5">
+                      <Building2 className="w-3.5 h-3.5" />
+                    </div>
+                    <div>
+                      <span className="text-[11px] font-bold text-forest-dark block leading-tight">
+                        PROFIL SYARIKAT
+                      </span>
+                      <span className="text-[9px] text-secondary">
+                        Fasiliti Kilang
                       </span>
                     </div>
                   </Link>
@@ -1566,7 +1587,6 @@ export function Header() {
             </div>
           </div>
         </div>
-      )}
 
       {/* Global Predictive Search Modal */}
       <SearchModal isOpen={isSearchOpen} onClose={() => setIsSearchOpen(false)} />

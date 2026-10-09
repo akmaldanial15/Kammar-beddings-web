@@ -70,8 +70,6 @@ export function SearchModal({ isOpen, onClose }: SearchModalProps) {
     return () => window.removeEventListener('keydown', handleKeyDown)
   }, [isOpen, onClose])
 
-  if (!isOpen) return null
-
   const handleSelectQuick = (tag: string) => {
     setQuery(tag)
   }
@@ -85,9 +83,23 @@ export function SearchModal({ isOpen, onClose }: SearchModalProps) {
   }
 
   return (
-    <div className="fixed inset-0 z-50 flex flex-col bg-charcoal/60 backdrop-blur-sm animate-fade-in">
+    <div
+      className={`fixed inset-0 z-50 flex flex-col ${
+        isOpen
+          ? 'pointer-events-auto visible'
+          : 'pointer-events-none invisible delay-300'
+      }`}
+    >
       <div
-        className="w-full bg-warmwhite border-b border-borderLight shadow-2xl py-6 px-4 md:px-8 transition-all animate-fade-in-down"
+        className={`fixed inset-0 bg-charcoal/60 backdrop-blur-sm transition-opacity duration-300 ease-out ${
+          isOpen ? 'opacity-100' : 'opacity-0'
+        }`}
+        onClick={onClose}
+      />
+      <div
+        className={`w-full bg-warmwhite border-b border-borderLight shadow-2xl py-6 px-4 md:px-8 z-10 transform transition-transform duration-300 ease-out will-change-transform ${
+          isOpen ? 'translate-y-0' : '-translate-y-full'
+        }`}
         onClick={(e) => e.stopPropagation()}
       >
         <div className="max-w-4xl mx-auto">

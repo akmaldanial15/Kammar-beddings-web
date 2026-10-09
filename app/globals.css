@@ -86,7 +86,9 @@ h3, h4, h5, h6 {
 .animate-fade-in-down,
 .animate-scale-in,
 .animate-slide-in-right,
-.animate-slide-in-left {
+.animate-slide-in-left,
+.animate-slide-out-right,
+.animate-slide-out-left {
   animation-fill-mode: both !important;
   will-change: transform, opacity;
   backface-visibility: hidden;

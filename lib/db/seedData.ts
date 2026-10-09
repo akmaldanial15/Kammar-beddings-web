@@ -1347,11 +1347,11 @@ export const initialWebsiteConfig: WebsiteConfig = {
   },
   "announcement": {
     "enabled": true,
-    "leftBenefit": "Penghantaran Terus Semenanjung",
-    "centerText": "Jualan Gudang Terus Dari Kilang Tasek Gelugor • Kod Baucar",
-    "highlightCode": "KAMAAR10",
-    "url": "/collections/tilam-toto",
-    "rightGuarantee": "Kualiti Jahitan Terjamin",
+    "leftBenefit": "PENGHANTARAN SELURUH MALAYSIA",
+    "centerText": "PENGILANG & PEMASAR PRODUK JAHITAN TEKSTIL",
+    "highlightCode": "",
+    "url": "",
+    "rightGuarantee": "JAMINAN HARGA TERENDAH",
     "bgColor": "#13325B",
     "textColor": "#FFFFFF"
   },
@@ -1647,7 +1647,7 @@ export const initialPaymentSettings: PaymentSettings = {
       "id": "pay-fpx",
       "name": "FPX Online Banking",
       "subtitle": "Maybank2u, CIMB Clicks, Public Bank, RHB, Hong Leong & semua bank Malaysia",
-      "providerType": "fpx",
+      "providerType": "chip",
       "enabled": true,
       "isDefault": true,
       "testMode": false,
@@ -1655,14 +1655,14 @@ export const initialPaymentSettings: PaymentSettings = {
       "badgeIcons": [
         "fpx"
       ],
-      "description": "Bayar terus melalui perbankan internet rasmi Malaysia (FPX). Selamat, pantas dan disahkan serta-merta.",
+      "description": "Bayar terus melalui perbankan internet rasmi Malaysia (FPX) menerusi gerbang selamat CHIP In Asia. Selamat, pantas dan disahkan serta-merta.",
       "instructions": "Pilih bank pilihan anda di bawah untuk log masuk ke perbankan internet dan sahkan bayaran."
     },
     {
       "id": "pay-tng",
       "name": "Touch 'n Go eWallet (TNG)",
       "subtitle": "Imbas kod QR TNG eWallet atau bayar terus melalui aplikasi Touch 'n Go",
-      "providerType": "tng",
+      "providerType": "chip",
       "enabled": true,
       "isDefault": false,
       "testMode": false,
@@ -1670,7 +1670,7 @@ export const initialPaymentSettings: PaymentSettings = {
       "badgeIcons": [
         "tng"
       ],
-      "description": "Pembayaran mudah melalui aplikasi Touch 'n Go eWallet terus ke akaun jualan Tunas Sinar Jaya Enterprise.",
+      "description": "Pembayaran mudah melalui aplikasi Touch 'n Go eWallet menerusi gerbang CHIP In Asia terus ke akaun jualan Tunas Sinar Jaya Enterprise.",
       "instructions": "Buka aplikasi TNG eWallet anda dan imbas kod QR rasmi Tunas Sinar Jaya Enterprise / KAMAAR Beddings."
     }
   ]

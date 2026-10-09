@@ -35,8 +35,8 @@ export default async function CollectionPage({ params }: Props) {
   const collection = collections.find((c) => c.slug === slug)
 
   let relevantProducts = allProducts
-  let pageTitle = 'Koleksi Produk Kilang Tunas Sinar Jaya'
-  let pageDescription = 'Pengeluar dan pembekal kelengkapan tilam toto, kekabu asli, tilam asrama, bantal gebu, dan tekstil rumah terus dari kilang Tasek Gelugor, Pulau Pinang.'
+  let pageTitle = 'KOLEKSI KAMAAR PALING LARIS & PILIHAN RAMAI'
+  let pageDescription = 'DIHASILKAN OLEH TENAGA MAHIR TEMPATAN MENGGUNAKAN BAHAN BERKUALITI TINGGI, DENGAN KAWALAN KUALITI TELITI DAN HARGA TERBAIK DI PASARAN.'
 
   if (category) {
     relevantProducts = allProducts.filter((p) => p.categoryId === category.id)

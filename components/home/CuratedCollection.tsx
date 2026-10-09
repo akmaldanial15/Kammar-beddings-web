@@ -13,14 +13,15 @@ interface CuratedCollectionProps {
 
 export function CuratedCollection({ products }: CuratedCollectionProps) {
   const { t } = useLanguage()
-  const [activeFilter, setActiveFilter] = useState<'all' | 'toto' | 'lipat' | 'bantal' | 'borong'>('all')
+  const [activeFilter, setActiveFilter] = useState<'all' | 'toto' | 'gulung' | 'kekabu' | 'bantal' | 'selimut'>('all')
 
   const filteredProducts = products.filter((p) => {
     if (activeFilter === 'all') return true
     if (activeFilter === 'toto') return p.categoryId === 'cat-tilam-toto' || p.slug?.includes('toto')
-    if (activeFilter === 'lipat') return p.categoryId === 'cat-tilam-lipat' || p.slug?.includes('lipat') || p.slug?.includes('bujang')
-    if (activeFilter === 'bantal') return p.categoryId === 'cat-bantal' || p.slug?.includes('bantal')
-    if (activeFilter === 'borong') return p.categoryId === 'cat-borong-gudang' || p.slug?.includes('borong') || p.slug?.includes('asrama')
+    if (activeFilter === 'gulung') return p.categoryId === 'cat-tilam-gulung' || p.slug?.includes('gulung')
+    if (activeFilter === 'kekabu') return p.categoryId === 'cat-tilam-kekabu' || p.slug?.includes('kekabu')
+    if (activeFilter === 'bantal') return p.categoryId?.startsWith('cat-bantal') || p.slug?.includes('bantal')
+    if (activeFilter === 'selimut') return p.categoryId === 'cat-selimut' || p.slug?.includes('selimut')
     return true
   })
 
@@ -29,15 +30,15 @@ export function CuratedCollection({ products }: CuratedCollectionProps) {
       <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
         <div className="flex flex-col md:flex-row md:items-end justify-between mb-10">
           <div>
-            <span className="text-xs uppercase tracking-[0.2em] font-semibold text-gold-dark flex items-center space-x-1.5 mb-2">
+            <span className="text-xs uppercase tracking-[0.2em] font-bold text-gold-dark flex items-center space-x-1.5 mb-2">
               <Sparkles className="w-3.5 h-3.5 text-gold" />
-              <span>Keluaran Tunas Sinar Jaya Enterprise</span>
+              <span>KOLEKSI KAMAAR</span>
             </span>
             <h2 className="font-serif text-3xl sm:text-4xl lg:text-5xl font-bold text-forest">
-              Koleksi Produk Kilang Paling Laris
+              KOLEKSI KAMAAR PALING LARIS &amp; PILIHAN RAMAI
             </h2>
-            <p className="text-sm sm:text-base text-charcoal-muted mt-2 max-w-xl">
-              Harga pengeluar terus dari kilang di Tasek Gelugor, Pulau Pinang. Kualiti jahitan kemas, isian serat berkualiti dan kepuasan terjamin.
+            <p className="text-sm sm:text-base text-charcoal-muted mt-2 max-w-xl font-sans uppercase text-xs sm:text-sm tracking-wide">
+              DIHASILKAN OLEH TENAGA MAHIR TEMPATAN MENGGUNAKAN BAHAN BERKUALITI TINGGI, DENGAN KAWALAN KUALITI TELITI DAN HARGA TERBAIK DI PASARAN.
             </p>
           </div>
 
@@ -45,10 +46,11 @@ export function CuratedCollection({ products }: CuratedCollectionProps) {
           <div className="flex items-center space-x-2 mt-6 md:mt-0 overflow-x-auto pb-2 md:pb-0">
             {[
               { id: 'all', label: 'Semua Koleksi' },
-              { id: 'toto', label: 'Tilam Toto (Paling Lariss!!)' },
-              { id: 'lipat', label: 'Tilam Lipat & Bujang' },
-              { id: 'bantal', label: 'Bantal & Bantal Peluk' },
-              { id: 'borong', label: 'Pakej Borong Kilang' },
+              { id: 'toto', label: 'Tilam Toto (Paling Laris)' },
+              { id: 'gulung', label: 'Tilam Gulung' },
+              { id: 'kekabu', label: 'Kekabu Asli' },
+              { id: 'bantal', label: 'Bantal Tidur & Peluk' },
+              { id: 'selimut', label: 'Selimut' },
             ].map((tab) => (
               <button
                 key={tab.id}

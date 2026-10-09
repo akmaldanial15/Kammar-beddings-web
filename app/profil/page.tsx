@@ -45,28 +45,28 @@ const factoryUnits = [
     description: 'Proses pemotongan fabrik tekstil dengan mesin berketepatan tinggi untuk memastikan ukuran seragam dan jimat bahan.',
     badge: 'Fasa 1: Penyediaan Fabrik',
     icon: Scissors,
-    image: '/images/company/unit-potong-kain.jpg',
+    image: '/images/company/UNIT POTONG KAIN.png',
   },
   {
     name: 'Unit Jahitan',
     description: 'Barisan mesin jahit industri yang dikendalikan tenaga kerja mahir tempatan bagi menghasilkan jahitan yang kemas, kukuh dan rapi.',
     badge: 'Fasa 2: Jahitan & Kemasan',
     icon: Layers,
-    image: '/images/company/unit-jahitan.jpg',
+    image: '/images/company/UNIT JAHITAN.png',
   },
   {
-    name: 'Unit Bantal & Tilam',
+    name: 'Unit Bantal, Tilam & Isian',
     description: 'Pemasangan isian Asian Polyester Fibre bermutu tinggi, pembentukan tilam toto empuk, tilam lipat serta bantal tidur gebu.',
-    badge: 'Fasa 3: Isian & Quilting',
+    badge: 'Fasa 3: Isian & Blower Packing',
     icon: Sparkles,
-    image: '/images/company/unit-bantal-tilam.jpg',
+    image: '/images/company/UNIT ISIAN & PACKING.png',
   },
   {
-    name: 'Stor Produk Siap',
-    description: 'Gudang penyimpanan sistematik dengan kawalan kualiti (QC) ketat sebelum pembungkusan dan pengedaran ke seluruh Malaysia.',
-    badge: 'Fasa 4: QC & Logistik',
+    name: 'Showroom & Studio Live',
+    description: 'Galeri pameran produk dan studio siaran langsung TikTok / e-dagang untuk interaksi terus bersama pelanggan seluruh Malaysia.',
+    badge: 'Fasa 4: Showroom & Promosi',
     icon: Package,
-    image: '/images/company/unit-stor-siap.jpg',
+    image: '/images/company/SHOWROOM STUDIO.png',
   },
 ]
 
@@ -427,6 +427,117 @@ export default async function ProfilPage() {
                 </div>
               )
             })}
+          </div>
+        </div>
+      </section>
+
+      {/* 6 Fasa Proses Kerja Kilang & Lencana Kualiti */}
+      <section className="py-14 sm:py-20 bg-cream/70 border-t border-borderLight">
+        <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
+          <div className="text-center max-w-3xl mx-auto space-y-3 mb-12">
+            <span className="text-xs uppercase tracking-widest text-gold-dark font-bold">
+              Standard Operasi Kilang
+            </span>
+            <h2 className="font-serif text-3xl sm:text-4xl font-bold text-forest">
+              Proses Kerja &amp; Kawalan Kualiti Rapi
+            </h2>
+            <p className="text-xs sm:text-sm text-charcoal-muted leading-relaxed">
+              Setiap tilam dan bantal KAMAAR melalui proses pembuatan teliti oleh warga kerja mahir tempatan di Tasek Gelugor.
+            </p>
+          </div>
+
+          <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 gap-6 mb-12">
+            {[
+              {
+                title: 'Proses Potong Kain',
+                desc: 'Pemotongan corak fabrik cotton dan kain pelapik berketepatan tinggi mengikut pola saiz piawai.',
+                image: '/images/proses/PROSES POTONG KAIN.png',
+                step: 'Langkah 1',
+              },
+              {
+                title: 'Proses Menjahit',
+                desc: 'Jahitan kelongsong dan jahitan tepi kemas oleh jurujahitan berpengalaman menggunakan benang industri tebal.',
+                image: '/images/proses/PROSES MENJAHIT.png',
+                step: 'Langkah 2',
+              },
+              {
+                title: 'Proses Isian Bantal & Tilam',
+                desc: 'Isian serat Asian Polyester Fibre & Kekabu Asli gred terpilih yang mampat, empuk dan tidak berdebu.',
+                image: '/images/proses/PROSES ISI KEKABU KE DALAM BANTAL.png',
+                step: 'Langkah 3',
+              },
+              {
+                title: 'Proses Jahit Selimut & Quilting',
+                desc: 'Jahitan tufting dan quilting selimut legend yang kukuh mengikat lapisan fiber agar kekal sekata.',
+                image: '/images/proses/PROSES JAHIT SELIMUT.png',
+                step: 'Langkah 4',
+              },
+              {
+                title: 'Proses Packing & Sanitasi',
+                desc: 'Pemeriksaan kualiti (QC) 100%, pembungkusan plastik tebal tahan koyak dan label pengenalan rasmi KAMAAR.',
+                image: '/images/proses/PROSES PACKING.png',
+                step: 'Langkah 5',
+              },
+              {
+                title: 'Proses Penghantaran (Door to Door)',
+                desc: 'Muatan ke trak logistik untuk penghantaran door-to-door ke seluruh semenanjung Malaysia serta jualan gudang.',
+                image: '/images/proses/PROSES PENGHANTARAN.png',
+                step: 'Langkah 6',
+              },
+            ].map((p, idx) => (
+              <div
+                key={idx}
+                className="bg-white rounded-2xl overflow-hidden border border-borderLight shadow-subtle hover:shadow-card transition-all group"
+              >
+                <div className="relative aspect-[4/3] w-full bg-cream overflow-hidden">
+                  <Image
+                    src={p.image}
+                    alt={p.title}
+                    fill
+                    className="object-cover group-hover:scale-105 transition-transform duration-500"
+                    sizes="(max-width: 768px) 100vw, 33vw"
+                  />
+                  <span className="absolute top-3 left-3 px-2.5 py-1 rounded bg-forest/90 text-gold text-[10px] font-bold uppercase tracking-wider backdrop-blur-xs">
+                    {p.step}
+                  </span>
+                </div>
+                <div className="p-5 space-y-1.5">
+                  <h4 className="font-serif text-base font-bold text-forest">{p.title}</h4>
+                  <p className="text-xs text-charcoal-muted leading-relaxed">{p.desc}</p>
+                </div>
+              </div>
+            ))}
+          </div>
+
+          {/* 3 Brand Value Badges */}
+          <div className="grid grid-cols-1 md:grid-cols-3 gap-6 pt-6 border-t border-borderLight">
+            <div className="relative aspect-[16/10] w-full rounded-2xl overflow-hidden shadow-card border border-borderLight">
+              <Image
+                src="/images/hiasan/JJENAMA INDUSTRI JAHITAN LUAR BANDAR.png"
+                alt="Jenama Industri Jahitan Luar Bandar"
+                fill
+                className="object-cover"
+                sizes="(max-width: 768px) 100vw, 33vw"
+              />
+            </div>
+            <div className="relative aspect-[16/10] w-full rounded-2xl overflow-hidden shadow-card border border-borderLight">
+              <Image
+                src="/images/hiasan/KUALITI PREMIUM.png"
+                alt="Kualiti Premium Terjamin"
+                fill
+                className="object-cover"
+                sizes="(max-width: 768px) 100vw, 33vw"
+              />
+            </div>
+            <div className="relative aspect-[16/10] w-full rounded-2xl overflow-hidden shadow-card border border-borderLight">
+              <Image
+                src="/images/hiasan/MEMENUHI KEPERLUAN PELANGGAN.png"
+                alt="Memenuhi Keperluan Pelanggan"
+                fill
+                className="object-cover"
+                sizes="(max-width: 768px) 100vw, 33vw"
+              />
+            </div>
           </div>
         </div>
       </section>

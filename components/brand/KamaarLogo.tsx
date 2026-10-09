@@ -33,16 +33,20 @@ export function KamaarLogo({
 
   const currentSize = emblemSizes[size] || 44
 
-  // If using the official PNG asset provided by user
-  if (useImage) {
+  // By default, render the official high-resolution KAMAAR BEDDING'S brand asset
+  const logoSrc = theme === 'dark' ? '/images/kamaar-logo-dark-clean.png' : '/images/kamaar-logo-clean.png'
+  
+  if (useImage || variant === 'horizontal') {
+    const heightPx = currentSize === 34 ? 36 : currentSize === 44 ? 46 : currentSize === 56 ? 58 : 68
     return (
-      <div className={`flex items-center space-x-2.5 ${className}`}>
+      <div className={`inline-flex items-center ${className}`}>
         <Image
-          src="/images/kamaar-logo.png"
-          alt="KAMAAR Beddings"
-          width={currentSize * 2.2}
-          height={currentSize * 2.2}
-          className="object-contain"
+          src={logoSrc}
+          alt="KAMAAR Beddings (Tunas Sinar Jaya Enterprise)"
+          width={Math.round(heightPx * 3.125)}
+          height={heightPx}
+          style={{ height: `${heightPx}px`, width: 'auto' }}
+          className="object-contain drop-shadow-xs transition-transform group-hover:scale-[1.02]"
           priority
         />
       </div>

@@ -22,44 +22,44 @@ const hotspots: Hotspot[] = [
   {
     id: 'hs-1',
     number: 1,
-    name: 'Tilam Toto Asian Polyester Fibre (Paling Lariss!!)',
+    name: 'TOTO SINGLE (POLY) - Paling Laris',
     category: 'Tilam Toto Kilang',
-    priceSen: 5900,
-    link: '/products/tilam-toto-asian-polyester-fibre',
-    imageUrl: '/images/products/tilam-toto-queen.jpg',
+    priceSen: 3490,
+    link: '/products/toto-single-poly',
+    imageUrl: '/images/products/toto-single-poly.png',
     topPercent: 54,
     leftPercent: 44,
   },
   {
     id: 'hs-2',
     number: 2,
-    name: 'Bantal Tidur Gebu Asian Polyester Fibre',
-    category: 'Bantal Isian Fiber',
-    priceSen: 1800,
-    link: '/products/bantal-tidur-gebu-asian-polyester-fibre',
-    imageUrl: '/images/products/bantal-gebu-asian-fibre.jpg',
+    name: 'BANTAL SIZE L (POLY)',
+    category: 'Bantal Tidur',
+    priceSen: 990,
+    link: '/products/bantal-l-poly',
+    imageUrl: '/images/products/bantal-tidur-l-poly.png',
     topPercent: 38,
     leftPercent: 30,
   },
   {
     id: 'hs-3',
     number: 3,
-    name: 'Set Comforter Tebal Quilting Corak Moden',
-    category: 'Cadar & Comforter',
-    priceSen: 7900,
-    link: '/products/set-comforter-tebal-quilting',
-    imageUrl: '/images/hero/hero-tilam-toto-lifestyle.jpg',
+    name: 'TILAM GULUNG (KEKABU ASLI)',
+    category: 'Kekabu Asli Tradisi',
+    priceSen: 9990,
+    link: '/products/tilam-gulung-kekabu-asli',
+    imageUrl: '/images/products/tilam-gulung-kekabu-asli.png',
     topPercent: 68,
     leftPercent: 62,
   },
   {
     id: 'hs-4',
     number: 4,
-    name: 'Tilam Lipat 3 Berzip Mudah Alih',
-    category: 'Tilam Lipat & Bujang',
-    priceSen: 6900,
-    link: '/products/tilam-lipat-3-berzip-mudah-alih',
-    imageUrl: '/images/products/tilam-lipat-bujang.jpg',
+    name: 'TILAM GULUNG A (TC)',
+    category: 'Tilam Gulung',
+    priceSen: 3990,
+    link: '/products/tilam-gulung-a-tc',
+    imageUrl: '/images/products/tilam-gulung-a-tc.png',
     topPercent: 28,
     leftPercent: 65,
   },
@@ -74,21 +74,21 @@ export function LookbookSection() {
         <div className="text-center max-w-2xl mx-auto mb-12">
           <span className="text-xs uppercase tracking-[0.2em] font-semibold text-gold-dark flex items-center justify-center space-x-1.5 mb-2">
             <Sparkles className="w-3.5 h-3.5 text-gold" />
-            <span>Ruang Santai &amp; Bilik Tidur Keluarga</span>
+            <span>Showroom Studio &amp; Produk Kilang</span>
           </span>
           <h2 className="font-serif text-3xl sm:text-4xl lg:text-5xl font-bold text-forest">
             Koleksi Produk Selesa Terus Dari Kilang
           </h2>
           <p className="text-sm sm:text-base text-charcoal-muted mt-2">
-            Tekan sebarang nombor pin untuk melihat butiran Tilam Toto gebu, Bantal Asian Fibre, Comforter Quilting, dan Tilam Lipat buatan kilang kami.
+            Tekan sebarang nombor pin untuk melihat butiran Toto empuk, Tilam Gulung Kekabu Asli, Tilam Gulung TC Shoddy, dan Bantal Asian Fibre buatan kilang kami.
           </p>
         </div>
 
         {/* Lookbook Bedroom Scene Container */}
         <div className="relative rounded-2xl overflow-hidden shadow-2xl border border-borderLight aspect-[16/10] sm:aspect-[16/9] w-full bg-forest-dark">
           <Image
-            src="/images/hero/hero-tilam-toto-lifestyle.jpg"
-            alt="Koleksi Tilam Toto & Tekstil KAMAAR Beddings Tunas Sinar Jaya"
+            src="/images/company/SHOWROOM STUDIO.png"
+            alt="Showroom Studio KAMAAR Beddings Tunas Sinar Jaya"
             fill
             className="object-cover"
           />
@@ -117,7 +117,7 @@ export function LookbookSection() {
 
           {/* Active Hotspot Desktop Popover */}
           {activeHotspot && (
-            <div className="hidden md:flex absolute bottom-6 right-6 z-30 max-w-sm bg-warmwhite/95 backdrop-blur-md rounded-xl p-4 shadow-2xl border border-borderLight animate-fadeIn">
+            <div className="hidden md:flex absolute bottom-6 right-6 z-30 max-w-sm bg-warmwhite/95 backdrop-blur-md rounded-xl p-4 shadow-2xl border border-borderLight animate-fade-in-up">
               <div className="flex space-x-3.5 items-center">
                 <div className="relative w-20 h-20 rounded-lg overflow-hidden flex-shrink-0 bg-cream border border-borderLight">
                   <Image

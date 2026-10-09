@@ -406,13 +406,24 @@ export function CollectionClient({
       </div>
 
       {/* Mobile Filter Drawer */}
-      {isMobileFilterOpen && (
-        <div className="fixed inset-0 z-50 lg:hidden">
-          <div
-            className="fixed inset-0 bg-charcoal/60 backdrop-blur-sm animate-fade-in"
-            onClick={() => setIsMobileFilterOpen(false)}
-          />
-          <div className="fixed inset-y-0 right-0 w-4/5 max-w-sm bg-warmwhite shadow-2xl z-50 p-6 flex flex-col justify-between overflow-y-auto animate-slide-in-right">
+      <div
+        className={`fixed inset-0 z-50 lg:hidden ${
+          isMobileFilterOpen
+            ? 'pointer-events-auto visible'
+            : 'pointer-events-none invisible delay-300'
+        }`}
+      >
+        <div
+          className={`fixed inset-0 bg-charcoal/60 backdrop-blur-sm transition-opacity duration-300 ease-out ${
+            isMobileFilterOpen ? 'opacity-100' : 'opacity-0'
+          }`}
+          onClick={() => setIsMobileFilterOpen(false)}
+        />
+        <div
+          className={`fixed inset-y-0 right-0 w-4/5 max-w-sm bg-warmwhite shadow-2xl z-50 p-6 flex flex-col justify-between overflow-y-auto transform transition-transform duration-300 ease-out will-change-transform ${
+            isMobileFilterOpen ? 'translate-x-0' : 'translate-x-full'
+          }`}
+        >
             <div className="space-y-6">
               <div className="flex items-center justify-between pb-3 border-b border-borderLight">
                 <h3 className="font-serif text-xl font-bold text-forest">
@@ -514,7 +525,6 @@ export function CollectionClient({
             </div>
           </div>
         </div>
-      )}
-    </div>
+      </div>
   )
 }

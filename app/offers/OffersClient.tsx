@@ -40,6 +40,149 @@ export function OffersClient({ coupons, eligibleProducts }: OffersClientProps) {
           </div>
         </div>
 
+        {/* 5 TAWARAN ISTIMEWA DARI DOKUMEN RASMI */}
+        <div>
+          <div className="flex flex-col sm:flex-row sm:items-end justify-between mb-8">
+            <div>
+              <span className="text-xs font-bold uppercase tracking-wider text-gold-dark flex items-center space-x-1.5 mb-1.5">
+                <Sparkles className="w-3.5 h-3.5 text-gold" />
+                <span>Promosi Kilang & Jelajah</span>
+              </span>
+              <h2 className="font-serif text-2xl sm:text-4xl font-bold text-forest">
+                5 Tawaran Istimewa Terhangat
+              </h2>
+              <p className="text-xs sm:text-sm text-charcoal-muted mt-1 max-w-xl">
+                Harga promosi terhad untuk produk pilihan ramai terus dari kilang Tunas Sinar Jaya Sdn. Bhd.
+              </p>
+            </div>
+            <Link
+              href="/jelajah-promosi"
+              className="mt-4 sm:mt-0 text-xs font-bold text-gold-dark hover:text-forest flex items-center space-x-1"
+            >
+              <span>Lihat Jadual Jelajah Promosi</span>
+              <ArrowRight className="w-3.5 h-3.5" />
+            </Link>
+          </div>
+
+          <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-6 gap-4">
+            {[
+              {
+                name: 'Toto Single Poly',
+                material: 'Asian Polyester Fibre',
+                size: '90 cm x 200 cm',
+                normalPrice: 'RM34.90',
+                offerPrice: 'RM29.90',
+                save: 'JIMAT RM5.00',
+                image: '/images/products/toto-single-poly.png',
+                link: '/products/toto-single-poly',
+                badge: 'PALING LARIS',
+              },
+              {
+                name: 'Tilam Gulung A (TC)',
+                material: 'Poly Fibre / Kain TC',
+                size: '90 cm x 180 cm',
+                normalPrice: 'RM45.00',
+                offerPrice: 'RM39.90',
+                save: 'HOT ITEM',
+                image: '/images/products/tilam-gulung-a-tc.png',
+                link: '/products/tilam-gulung-a-tc',
+                badge: 'LEBIH JIMAT',
+              },
+              {
+                name: 'Bantal Size M (TC)',
+                material: 'TC Shoddy Fibre',
+                size: '15" x 24"',
+                normalPrice: 'RM5.90',
+                offerPrice: 'RM4.90',
+                save: 'JIMAT RM1.00',
+                image: '/images/products/bantal-tidur-m-tc.png',
+                link: '/products/bantal-m-tc',
+                badge: 'SUPER JIMAT',
+              },
+              {
+                name: 'Bantal Size L (Poly)',
+                material: 'Asian Polyester Fibre',
+                size: '17" x 26"',
+                normalPrice: 'RM11.90',
+                offerPrice: 'RM9.90',
+                save: 'JIMAT RM2.00',
+                image: '/images/products/bantal-tidur-l-poly.png',
+                link: '/products/bantal-l-poly',
+                badge: 'PILIHAN RAMAI',
+              },
+              {
+                name: 'Selimut Legend M',
+                material: 'Poly & Cotton Berjalur',
+                size: '60" x 80"',
+                normalPrice: 'RM16.90',
+                offerPrice: 'RM14.90',
+                save: 'JIMAT RM2.00',
+                image: '/images/products/selimut-legend-m.png',
+                link: '/products/selimut-legend-m',
+                badge: 'LEGEND',
+              },
+              {
+                name: 'Bantal Sofa 14x14',
+                material: 'Asian Polyester Fibre',
+                size: '14" x 14"',
+                normalPrice: 'RM12.90',
+                offerPrice: 'RM9.90',
+                save: 'JIMAT RM3.00',
+                image: '/images/products/bantal-sofa-14x14-poly.png',
+                link: '/products/bantal-sofa-14x14',
+                badge: 'HOT DEAL',
+              },
+            ].map((item, idx) => (
+              <div
+                key={idx}
+                className="bg-cream-light rounded-2xl border border-borderLight overflow-hidden p-4 shadow-card hover:border-gold hover:shadow-lg transition-all flex flex-col justify-between group"
+              >
+                <div>
+                  <div className="relative aspect-square w-full rounded-xl overflow-hidden bg-white mb-3">
+                    <img
+                      src={item.image}
+                      alt={item.name}
+                      className="w-full h-full object-contain p-1 group-hover:scale-105 transition-transform"
+                    />
+                    <span className="absolute top-2 left-2 px-2 py-0.5 rounded bg-forest text-warmwhite text-[10px] font-bold">
+                      {item.badge}
+                    </span>
+                    <span className="absolute bottom-2 right-2 px-2 py-0.5 rounded bg-gold text-forest-dark text-[10px] font-bold">
+                      {item.save}
+                    </span>
+                  </div>
+
+                  <h3 className="font-serif text-base font-bold text-forest leading-tight mb-1">
+                    {item.name}
+                  </h3>
+                  <div className="text-[11px] text-charcoal-muted space-y-0.5 mb-3">
+                    <div>{item.material}</div>
+                    <div className="font-mono text-gold-dark">{item.size}</div>
+                  </div>
+                </div>
+
+                <div className="pt-3 border-t border-borderLight flex items-baseline justify-between">
+                  <div>
+                    <span className="text-xs text-charcoal-muted line-through mr-1.5">
+                      {item.normalPrice}
+                    </span>
+                    <span className="text-lg font-bold text-forest">
+                      {item.offerPrice}
+                    </span>
+                  </div>
+                  <Link
+                    href={item.link}
+                    className="p-1.5 rounded-lg bg-forest hover:bg-forest-dark text-gold transition-colors"
+                    title="Beli sekarang"
+                  >
+                    <ArrowRight className="w-4 h-4" />
+                  </Link>
+                </div>
+              </div>
+            ))}
+          </div>
+        </div>
+
         {/* Free Gift with Purchase Promotion Spotlight */}
         <div className="bg-cream rounded-2xl p-6 sm:p-8 border border-gold/40 shadow-card flex flex-col md:flex-row items-center justify-between gap-6">
           <div className="flex items-start space-x-4">

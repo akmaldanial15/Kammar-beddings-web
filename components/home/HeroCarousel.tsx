@@ -28,7 +28,7 @@ const slides: Slide[] = [
     ctaLink: '/collections/tilam-toto',
     secondaryCtaText: 'Profil Kilang Kami',
     secondaryCtaLink: '/profil',
-    imageUrl: '/images/hero/hero-tilam-toto-lifestyle.jpg',
+    imageUrl: '/images/products/toto-single-poly.png',
   },
   {
     id: 'slide-2',
@@ -36,10 +36,10 @@ const slides: Slide[] = [
     title: 'Kualiti Jahitan, Kepuasan Terjamin',
     subtitle: 'Menjahit Kepercayaan, Menyulam Masa Depan. Operasi sistematik merangkumi Unit Potong Kain, Unit Jahitan, Unit Bantal & Tilam.',
     ctaText: 'Aktiviti Pengilangan',
-    ctaLink: '/profil#tentang-kami',
+    ctaLink: '/profil#aktiviti-pengilangan',
     secondaryCtaText: 'Carta Organisasi',
     secondaryCtaLink: '/profil#carta-organisasi',
-    imageUrl: '/images/hero/hero-kilang-tekstil.jpg',
+    imageUrl: '/images/company/KILANG OPERASI KAMAAR.jpeg',
   },
   {
     id: 'slide-3',
@@ -49,19 +49,19 @@ const slides: Slide[] = [
     ctaText: 'Koleksi Kekabu Asli',
     ctaLink: '/collections/tilam-kekabu',
     secondaryCtaText: 'Tempah Sekarang',
-    secondaryCtaLink: '/products/tilam-kekabu-asli-tradisi',
-    imageUrl: '/images/products/tilam-kekabu-asli.jpg',
+    secondaryCtaLink: '/products/tilam-gulung-kekabu-asli',
+    imageUrl: '/images/products/tilam-gulung-kekabu-asli.png',
   },
   {
     id: 'slide-4',
-    badge: 'HARGA BORONG GUDANG',
-    title: 'Jualan Gudang & Tempahan Borong Asrama / Homestay',
-    subtitle: 'Harga pengeluar terus dari Tasek Gelugor, Pulau Pinang. Pakej lengkap tilam bujang asrama, bantal tidur gebu dan cadar berzip berkualiti tinggi.',
-    ctaText: 'Pakej Jualan Gudang',
-    ctaLink: '/collections/borong-gudang',
+    badge: 'JELAJAH PROMOSI & JUALAN GUDANG',
+    title: 'Jelajah Promosi & Jualan Terus Dari Kilang',
+    subtitle: 'Kami membawakan tilam toto, tilam gulung dan bantal berkualiti terus ke komuniti anda dengan tawaran harga terendah dalam pasaran.',
+    ctaText: 'Lokasi Jelajah Terkini',
+    ctaLink: '/jelajah-promosi',
     secondaryCtaText: 'WhatsApp 019-478 6991',
     secondaryCtaLink: 'https://wa.me/60194786991',
-    imageUrl: '/images/hero/hero-jualan-gudang-crowd.jpg',
+    imageUrl: '/images/promosi/PROMOSI 1.png',
   },
 ]
 
@@ -111,18 +111,20 @@ export function HeroCarousel() {
       {activeSlides.map((slide, index) => (
         <div
           key={slide.id}
-          className={`absolute inset-0 transition-opacity duration-1000 ease-in-out ${
+          className={`absolute inset-0 transition-all duration-1000 ease-in-out ${
             index === currentSlide ? 'opacity-100 z-10' : 'opacity-0 z-0 pointer-events-none'
           }`}
         >
           {/* Background Image with Dark Vignette Overlay */}
-          <div className="absolute inset-0">
+          <div className="absolute inset-0 overflow-hidden">
             <Image
               src={slide.imageUrl}
               alt={slide.title}
               fill
               priority={index === 0}
-              className="object-cover object-center transform scale-105 transition-transform duration-10000 ease-out"
+              className={`object-cover object-center transform transition-transform duration-[7000ms] ease-out ${
+                index === currentSlide ? 'scale-105' : 'scale-100'
+              }`}
             />
             <div className="absolute inset-0 bg-gradient-to-r from-forest-dark/90 via-forest-dark/60 to-transparent" />
             <div className="absolute inset-0 bg-gradient-to-t from-forest-dark/80 via-transparent to-transparent" />
@@ -132,30 +134,30 @@ export function HeroCarousel() {
           <div className="relative z-20 max-w-7xl mx-auto h-full px-4 sm:px-6 lg:px-8 flex flex-col justify-center">
             <div className="max-w-2xl space-y-4 sm:space-y-6">
               {/* Badge */}
-              <div className={`inline-flex items-center space-x-2 bg-warmwhite/10 backdrop-blur-md px-3.5 py-1 rounded-full border border-gold/40 text-gold text-xs font-semibold tracking-wider uppercase ${
-                index === currentSlide ? 'animate-fade-in-down' : ''
+              <div className={`inline-flex items-center space-x-2 bg-warmwhite/10 backdrop-blur-md px-3.5 py-1 rounded-full border border-gold/40 text-gold text-xs font-semibold tracking-wider uppercase transform transition-all duration-700 ease-out ${
+                index === currentSlide ? 'opacity-100 translate-y-0' : 'opacity-0 -translate-y-3'
               }`}>
                 <Sparkles className="w-3.5 h-3.5" />
                 <span>{slide.badge}</span>
               </div>
 
               {/* Headline */}
-              <h1 className={`font-serif text-3xl sm:text-5xl lg:text-6xl font-bold text-warmwhite leading-[1.15] tracking-tight ${
-                index === currentSlide ? 'animate-fade-in-up delay-100' : ''
+              <h1 className={`font-serif text-3xl sm:text-5xl lg:text-6xl font-bold text-warmwhite leading-[1.15] tracking-tight transform transition-all duration-700 delay-100 ease-out ${
+                index === currentSlide ? 'opacity-100 translate-y-0' : 'opacity-0 translate-y-4'
               }`}>
                 {slide.title}
               </h1>
 
               {/* Subhead */}
-              <p className={`text-sm sm:text-base lg:text-lg text-warmwhite/80 leading-relaxed font-light ${
-                index === currentSlide ? 'animate-fade-in-up delay-200' : ''
+              <p className={`text-sm sm:text-base lg:text-lg text-warmwhite/80 leading-relaxed font-light transform transition-all duration-700 delay-200 ease-out ${
+                index === currentSlide ? 'opacity-100 translate-y-0' : 'opacity-0 translate-y-4'
               }`}>
                 {slide.subtitle}
               </p>
 
               {/* CTA Buttons */}
-              <div className={`pt-2 flex flex-col sm:flex-row items-stretch sm:items-center space-y-3 sm:space-y-0 sm:space-x-4 ${
-                index === currentSlide ? 'animate-fade-in-up delay-300' : ''
+              <div className={`pt-2 flex flex-col sm:flex-row items-stretch sm:items-center space-y-3 sm:space-y-0 sm:space-x-4 transform transition-all duration-700 delay-300 ease-out ${
+                index === currentSlide ? 'opacity-100 translate-y-0' : 'opacity-0 translate-y-4'
               }`}>
                 <Link
                   href={slide.ctaLink}

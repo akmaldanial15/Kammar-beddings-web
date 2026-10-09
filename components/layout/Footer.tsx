@@ -55,39 +55,31 @@ export function Footer() {
   const reassuranceItems = [
     {
       icon: Sparkles,
-      badge: isBM ? 'Terus Kilang' : 'Direct Price',
-      title: isBM ? 'Harga Terus Kilang' : 'Factory Direct Price',
-      subtitle: isBM
-        ? 'Tanpa orang tengah, pengeluaran terus di Tasek Gelugor, Pulau Pinang.'
-        : 'Zero middlemen, produced directly in Tasek Gelugor.',
+      badge: isBM ? 'Terus Dari Kilang' : 'Direct Factory',
+      title: 'TERUS DARI KILANG',
+      subtitle: 'PRODUK TERUS DARI KILANG DI TASEK GELUGOR PULAU PINANG',
       href: '/profil',
     },
     {
       icon: Award,
-      badge: isBM ? 'Paling Lariss' : 'Best Seller',
-      title: isBM ? 'Asian Polyester Fibre' : 'Asian Polyester Fibre',
-      subtitle: isBM
-        ? 'Isian serat lembut bermutu tinggi, gebu, empuk dan tahan lasak jangka panjang.'
-        : 'High-density resilient soft fibre fill, plush and durable.',
+      badge: isBM ? 'Harga Terendah' : 'Lowest Price',
+      title: 'JAMINAN HARGA TERENDAH',
+      subtitle: 'JAMINAN HARGA PALING RENDAH DALAM PASARAN',
       href: '/collections/tilam-toto',
     },
     {
       icon: ShieldCheck,
-      badge: isBM ? 'Mutu Terjamin' : 'QC Assured',
-      title: isBM ? 'Kualiti Jahitan & QC' : 'Strict Sewing & QC',
-      subtitle: isBM
-        ? 'Jahitan quilting kemas, kain berkualiti tinggi dengan kawalan mutu teliti.'
-        : 'Durable quilting stitching and strict quality standards.',
+      badge: isBM ? 'Kawalan Kualiti' : 'Quality Control',
+      title: 'KAWALAN KUALITI (QC)',
+      subtitle: 'KAWALAN KUALITI YANG TELITI SEBELUM SAMPAI KE PELANGGAN',
       href: '/profil#tentang-kami',
     },
     {
       icon: Truck,
-      badge: isBM ? 'Pantas & Jimat' : 'Fast Shipping',
-      title: isBM ? 'Penghantaran & Borong' : 'Fast Delivery & Bulk',
-      subtitle: isBM
-        ? 'Sedia kirim ke seluruh Malaysia untuk kediaman, asrama sekolah & institusi.'
-        : 'Nationwide delivery for homes, hostels & wholesalers.',
-      href: '/collections/borong-gudang',
+      badge: isBM ? 'Seluruh Malaysia' : 'Nationwide',
+      title: 'PENGHANTARAN SELURUH MALAYSIA',
+      subtitle: 'RANGKAIAN PENGHANTARAN DI SELURUH MALAYSIA (DOOR TO DOOR SERVICE)',
+      href: '/delivery',
     },
   ]
 

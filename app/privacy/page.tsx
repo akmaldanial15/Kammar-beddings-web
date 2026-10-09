@@ -34,7 +34,7 @@ export default function PrivacyPage() {
           <div className="p-4 rounded-2xl bg-forest/5 border border-forest/20 flex items-start space-x-3">
             <Lock className="w-5 h-5 text-forest flex-shrink-0 mt-0.5" />
             <p className="text-xs text-forest-dark">
-              <strong>Your Privacy Guarantee:</strong> KAMAAR Beddings Sdn. Bhd. respects your confidentiality. We do not sell, rent, or trade your personal information to third-party data brokers. All financial transactions are processed through encrypted Stripe infrastructure.
+              <strong>Your Privacy Guarantee:</strong> KAMAAR Beddings (Tunas Sinar Jaya Enterprise) respects your confidentiality. We do not sell, rent, or trade your personal information to third-party data brokers. All financial transactions are processed securely through encrypted CHIP In Asia payment gateway infrastructure.
             </p>
           </div>
 
@@ -59,7 +59,7 @@ export default function PrivacyPage() {
             <ul className="list-disc pl-5 space-y-1.5 text-secondary">
               <li><strong>Contact Information:</strong> Full name, telephone number, email address, delivery residence address, state, and 5-digit postcode.</li>
               <li><strong>Order & Purchase Records:</strong> Mattress models selected, sizes, invoice numbers, delivery dates, and warranty registration details.</li>
-              <li><strong>Payment Verification:</strong> Transaction reference IDs, payment method tokens, and billing confirmations via Stripe. (We do not store your raw credit or debit card CVV/CVC numbers).</li>
+              <li><strong>Payment Verification:</strong> Transaction reference IDs, payment method tokens, and billing confirmations via CHIP In Asia. (We do not store your bank credentials or raw payment secrets).</li>
               <li><strong>Digital Identifiers & Cookies:</strong> IP address, device type, browser settings, and user session cookies for cart persistence and bilingual preferences.</li>
             </ul>
           </section>
@@ -89,7 +89,7 @@ export default function PrivacyPage() {
             </p>
             <ul className="list-disc pl-5 space-y-1.5 text-secondary">
               <li><strong>Logistics & Freight Crews:</strong> Authorized delivery partners responsible for delivering heavy mattresses directly into your residence.</li>
-              <li><strong>Payment Processors:</strong> Stripe Malaysia Sdn. Bhd. for secure PCI-DSS compliant credit card and FPX online banking settlement.</li>
+              <li><strong>Payment Processors:</strong> CHIP In Asia (Chip Technology Sdn. Bhd.) for secure Bank Negara Malaysia &amp; PayNet compliant FPX online banking, Touch &apos;n Go eWallet, and card settlements.</li>
               <li><strong>Legal & Regulatory Authorities:</strong> When required by Malaysian court order, statutory regulation, or law enforcement.</li>
             </ul>
           </section>

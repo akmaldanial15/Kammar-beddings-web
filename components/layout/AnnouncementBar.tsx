@@ -33,25 +33,25 @@ export function AnnouncementBar() {
     >
       <div className="max-w-7xl mx-auto flex items-center justify-between">
         {/* Left benefit */}
-        <div className="hidden md:flex items-center space-x-2 text-[11px] text-warmwhite/80">
+        <div className="hidden md:flex items-center space-x-2 text-[11px] text-warmwhite/90 font-bold uppercase tracking-wider">
           <Truck className="w-3.5 h-3.5 text-gold flex-shrink-0" />
-          <span>{announcement.leftBenefit}</span>
+          <span>{announcement.leftBenefit || 'PENGHANTARAN SELURUH MALAYSIA'}</span>
         </div>
 
         {/* Center promotional notice */}
         <div className="flex-1 md:flex-initial flex items-center justify-center space-x-2 text-center">
           <Sparkles className="w-3.5 h-3.5 text-gold flex-shrink-0 animate-pulse" />
-          <span className="font-medium text-warmwhite text-[11.5px] sm:text-xs">
-            {announcement.centerText}{' '}
+          <span className="font-bold text-warmwhite text-[11.5px] sm:text-xs tracking-wider uppercase">
+            {announcement.centerText || 'PENGILANG & PEMASAR PRODUK JAHITAN TEKSTIL'}
             {announcement.highlightCode && (
-              <strong className="text-gold font-bold tracking-wider">
+              <strong className="text-gold font-bold tracking-wider ml-1.5">
                 {announcement.highlightCode}
               </strong>
             )}
           </span>
           {announcement.url && (
             <Link
-              href={announcement.url || '/collections/tilam-toto'}
+              href={announcement.url}
               className="hidden sm:inline-flex items-center space-x-1 text-gold hover:text-gold-light font-bold underline ml-1.5 transition-colors"
             >
               <span>Lihat Tawaran Kilang</span>
@@ -61,9 +61,9 @@ export function AnnouncementBar() {
         </div>
 
         {/* Right guarantee */}
-        <div className="hidden lg:flex items-center space-x-1.5 text-[11px] text-warmwhite/80">
+        <div className="hidden lg:flex items-center space-x-1.5 text-[11px] text-warmwhite/90 font-bold uppercase tracking-wider">
           <ShieldCheck className="w-3.5 h-3.5 text-gold flex-shrink-0" />
-          <span>{announcement.rightGuarantee}</span>
+          <span>{announcement.rightGuarantee || 'JAMINAN HARGA TERENDAH'}</span>
         </div>
       </div>
     </div>

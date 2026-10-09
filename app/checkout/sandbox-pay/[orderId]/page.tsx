@@ -120,40 +120,19 @@ function SandboxPaymentContent({ params }: Props) {
     setSimulationStatus(status === 'success' ? 'Memproses pengesahan bayaran...' : 'Membatalkan sesi bayaran...')
 
     try {
-      if (order?.paymentProvider === 'chip' || !order?.paymentProvider || order?.paymentProvider === 'chip_sandbox_simulator') {
-        await fetch('/api/webhooks/chip', {
-          method: 'POST',
-          headers: { 'Content-Type': 'application/json' },
-          body: JSON.stringify({
-            event_type: status === 'success' ? 'purchase.paid' : 'purchase.failed',
-            status: status === 'success' ? 'paid' : 'failed',
-            id: `chip_sim_${Date.now()}`,
-            reference: orderId,
-            order_id: orderId,
-            payment_method: method,
-            bank: method === 'fpx' ? selectedBank.name : 'Touch n Go eWallet',
-          }),
-        })
-      } else {
-        await fetch('/api/webhooks/stripe', {
-          method: 'POST',
-          headers: { 'Content-Type': 'application/json' },
-          body: JSON.stringify({
-            type: status === 'success' ? 'checkout.session.completed' : 'payment_intent.payment_failed',
-            id: `evt_sim_${Date.now()}`,
-            orderId,
-            data: {
-              object: {
-                id: `pi_sim_${Date.now()}`,
-                metadata: { orderId },
-                client_reference_id: orderId,
-                amount_received: order?.totalSen,
-                currency: 'myr',
-              },
-            },
-          }),
-        })
-      }
+      await fetch('/api/webhooks/chip', {
+        method: 'POST',
+        headers: { 'Content-Type': 'application/json' },
+        body: JSON.stringify({
+          event_type: status === 'success' ? 'purchase.paid' : 'purchase.failed',
+          status: status === 'success' ? 'paid' : 'failed',
+          id: `chip_sim_${Date.now()}`,
+          reference: orderId,
+          order_id: orderId,
+          payment_method: method,
+          bank: method === 'fpx' ? selectedBank.name : 'Touch n Go eWallet',
+        }),
+      })
 
       // Small delay for realistic feel
       setTimeout(() => {

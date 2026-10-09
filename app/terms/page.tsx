@@ -58,7 +58,7 @@ export default function TermsPage() {
               3. Ordering & Payment Security
             </h2>
             <p className="text-secondary">
-              Upon placing an order, you will receive an automated electronic order receipt. Official tax invoices with individual serial and order codes are issued upon successful payment processing via Stripe Malaysia. Full payment is required prior to mattress dispatch from our central logistics atelier.
+              Upon placing an order, you will receive an automated electronic order receipt. Official tax invoices with individual serial and order codes are issued upon successful payment processing via CHIP In Asia (FPX Online Banking &amp; Touch &apos;n Go eWallet). Full payment is required prior to mattress dispatch from our central logistics atelier.
             </p>
           </section>
 
