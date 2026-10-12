@@ -6,6 +6,7 @@ import {
   reserveStock,
   createOrder,
   getAffiliateByCode,
+  updateOrderStatus,
 } from '@/lib/db'
 import { calculateShippingFee, validateMalaysianPostcode, validateMalaysianPhone } from '@/lib/utils/format'
 import { chipProvider } from '@/lib/payment/chip'
@@ -242,13 +243,17 @@ export async function POST(request: NextRequest) {
       currency: 'MYR',
       preferredMethod,
       successUrl: `${appUrl}/order/confirmed/${order.id}`,
-      cancelUrl: `${appUrl}/checkout?cancelled=true`,
+      cancelUrl: `${appUrl}/checkout?cancelled=true&orderId=${order.id}`,
       items: validatedOrderItems.map((i) => ({
         name: `${i.productName} (${i.sizeName})`,
         quantity: i.quantity,
         unitPriceSen: i.unitPriceSen,
       })),
     })
+
+    if (session.sessionId) {
+      await updateOrderStatus(order.id, { paymentId: session.sessionId }, 'create_session')
+    }
 
     return NextResponse.json({
       orderId: order.id,

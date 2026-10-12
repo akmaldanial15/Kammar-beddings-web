@@ -68,10 +68,17 @@ export function CollectionClient({
   const filteredAndSortedProducts = useMemo(() => {
     let list = [...products]
 
-    // Material filter
+    // Material filter (TC Shoddy, Poly Fibre, Kekabu Asli)
     if (currentMaterial) {
       const mat = currentMaterial.toLowerCase()
-      list = list.filter((p) => p.material?.toLowerCase().includes(mat))
+      list = list.filter((p) => {
+        const matL = (p.material || '').toLowerCase()
+        const nameL = p.name.toLowerCase()
+        if (mat === 'tc') return matL.includes('tc') || nameL.includes('(tc)')
+        if (mat === 'poly') return matL.includes('poly') || nameL.includes('(poly)')
+        if (mat === 'kekabu') return matL.includes('kabu') || nameL.includes('kabu')
+        return matL.includes(mat)
+      })
     }
 
     // Firmness filter
@@ -80,12 +87,37 @@ export function CollectionClient({
       list = list.filter((p) => p.firmness?.toLowerCase().includes(firm))
     }
 
-    // Size filter
+    // Size filter (Small, Medium, Large, Extra Large, Single, Queen)
     if (currentSize) {
       const sz = currentSize.toLowerCase()
-      list = list.filter((p) =>
-        p.variants.some((v) => v.sizeName.toLowerCase().replace(/\s/g, '').includes(sz))
-      )
+      list = list.filter((p) => {
+        const nameL = p.name.toLowerCase()
+        const dimL = ((p as any).dimensions || '').toLowerCase()
+        const varMatch = p.variants?.some((v: any) =>
+          v.sizeName?.toLowerCase().replace(/\s/g, '').includes(sz) ||
+          v.name?.toLowerCase().includes(sz) ||
+          v.dimensions?.toLowerCase().includes(sz)
+        )
+        if (sz === 'small') {
+          return nameL.includes('baby') || dimL.includes('12x17') || dimL.includes('14x14') || dimL.includes('20x30') || varMatch
+        }
+        if (sz === 'medium') {
+          return nameL.includes('size m') || nameL.includes('saiz m') || dimL.includes('15x24') || dimL.includes('60x80') || varMatch
+        }
+        if (sz === 'large') {
+          return nameL.includes('size l') || nameL.includes('saiz l') || dimL.includes('17x26') || dimL.includes('70x90') || varMatch
+        }
+        if (sz === 'extralarge' || sz === 'xl') {
+          return nameL.includes('size xl') || nameL.includes('saiz xl') || dimL.includes('18x28') || varMatch
+        }
+        if (sz === 'single') {
+          return nameL.includes('single') || dimL.includes('90') || varMatch
+        }
+        if (sz === 'queen') {
+          return nameL.includes('queen') || dimL.includes('150') || varMatch
+        }
+        return nameL.includes(sz) || dimL.includes(sz) || varMatch
+      })
     }
 
     // In Stock Only
@@ -273,7 +305,7 @@ export function CollectionClient({
               )}
             </div>
 
-            {/* Material Filter */}
+            {/* Material Filter (TC Shoddy, Poly Fibre, Kekabu Asli) */}
             <div className="space-y-2">
               <label className="text-xs font-bold text-charcoal uppercase tracking-wider block">
                 {t.byMaterial}
@@ -281,10 +313,9 @@ export function CollectionClient({
               <div className="space-y-1.5 text-xs text-charcoal-muted">
                 {[
                   { id: '', label: 'Semua Bahan / Isian' },
-                  { id: 'polyester', label: 'Asian Polyester Fibre' },
-                  { id: 'foam', label: 'High Density Foam' },
-                  { id: 'microfibre', label: 'Microfibre & Kapas' },
-                  { id: 'quilted', label: 'Quilted Fabrik Sejuk' },
+                  { id: 'tc', label: 'TC Shoddy' },
+                  { id: 'poly', label: 'Poly Fibre' },
+                  { id: 'kekabu', label: 'Kekabu Asli' },
                 ].map((item) => (
                   <button
                     key={item.id}
@@ -301,7 +332,7 @@ export function CollectionClient({
               </div>
             </div>
 
-            {/* Size Filter */}
+            {/* Size Filter (Small, Medium, Large, Extra Large, Single, Queen) */}
             <div className="space-y-2 pt-4 border-t border-borderLight">
               <label className="text-xs font-bold text-charcoal uppercase tracking-wider block">
                 {t.bySize}
@@ -309,10 +340,12 @@ export function CollectionClient({
               <div className="grid grid-cols-2 gap-1.5 text-xs text-charcoal-muted">
                 {[
                   { id: '', label: 'All' },
+                  { id: 'small', label: 'Small' },
+                  { id: 'medium', label: 'Medium' },
+                  { id: 'large', label: 'Large' },
+                  { id: 'xl', label: 'Extra Large' },
                   { id: 'single', label: 'Single' },
-                  { id: 'supersingle', label: 'Super Single' },
                   { id: 'queen', label: 'Queen' },
-                  { id: 'king', label: 'King' },
                 ].map((item) => (
                   <button
                     key={item.id}
@@ -445,9 +478,9 @@ export function CollectionClient({
                 <div className="space-y-1 text-xs text-charcoal-muted">
                   {[
                     { id: '', label: 'Semua Bahan' },
-                    { id: 'polyester', label: 'Asian Polyester Fibre' },
-                    { id: 'foam', label: 'High Density Foam' },
-                    { id: 'microfibre', label: 'Microfibre & Kapas' },
+                    { id: 'tc', label: 'TC Shoddy' },
+                    { id: 'poly', label: 'Poly Fibre' },
+                    { id: 'kekabu', label: 'Kekabu Asli' },
                   ].map((m) => (
                     <button
                       key={m.id}
@@ -462,23 +495,30 @@ export function CollectionClient({
                 </div>
               </div>
 
-              {/* Size */}
+              {/* Size (Small, Medium, Large, Extra Large, Single, Queen) */}
               <div>
                 <h4 className="text-xs font-bold uppercase tracking-wider text-charcoal mb-2">
                   {t.bySize}
                 </h4>
                 <div className="grid grid-cols-2 gap-2 text-xs">
-                  {['single', 'supersingle', 'queen', 'king'].map((sz) => (
+                  {[
+                    { id: 'small', label: 'Small' },
+                    { id: 'medium', label: 'Medium' },
+                    { id: 'large', label: 'Large' },
+                    { id: 'xl', label: 'Extra Large' },
+                    { id: 'single', label: 'Single' },
+                    { id: 'queen', label: 'Queen' },
+                  ].map((sz) => (
                     <button
-                      key={sz}
-                      onClick={() => updateFilter('size', sz)}
+                      key={sz.id}
+                      onClick={() => updateFilter('size', sz.id)}
                       className={`py-1.5 px-2 rounded-lg border text-center capitalize transition-all ${
-                        currentSize === sz
+                        currentSize === sz.id
                           ? 'bg-white text-forest border-gold/60 ring-2 ring-gold/20 font-bold shadow-2xs'
                           : 'bg-cream-light border-borderLight'
                       }`}
                     >
-                      {sz}
+                      {sz.label}
                     </button>
                   ))}
                 </div>

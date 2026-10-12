@@ -49,7 +49,7 @@ export function OffersClient({ coupons, eligibleProducts }: OffersClientProps) {
                 <span>Promosi Kilang & Jelajah</span>
               </span>
               <h2 className="font-serif text-2xl sm:text-4xl font-bold text-forest">
-                5 Tawaran Istimewa Terhangat
+                6 Tawaran Istimewa Terhangat
               </h2>
               <p className="text-xs sm:text-sm text-charcoal-muted mt-1 max-w-xl">
                 Harga promosi terhad untuk produk pilihan ramai terus dari kilang Tunas Sinar Jaya Sdn. Bhd.

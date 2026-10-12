@@ -104,6 +104,18 @@
       "showInNav": true,
       "hasMegaMenu": true,
       "isActive": true
+    },
+    {
+      "id": "cat-custom-oem",
+      "name": "Custom (OEM)",
+      "slug": "custom-oem",
+      "description": "Perkhidmatan tempahan pukal & jahit jenama sendiri (OEM/ODM) untuk hotel, asrama, hospital, resort, agensi kerajaan dan peniaga tekstil terus dari kilang Tunas Sinar Jaya Enterprise.",
+      "imageUrl": "/images/company/UNIT JAHITAN.png",
+      "displayOrder": 10,
+      "showInNav": true,
+      "hasMegaMenu": true,
+      "badge": "BORONG & PUKAL",
+      "isActive": true
     }
   ],
   "collections": [
@@ -199,7 +211,7 @@
           "dimensions": "90 cm x 200 cm",
           "priceSen": 3490,
           "compareAtPriceSen": 3990,
-          "stockQuantity": 149,
+          "stockQuantity": 146,
           "isActive": true
         }
       ]
@@ -363,7 +375,7 @@
           "dimensions": "90 cm x 180 cm",
           "priceSen": 9990,
           "compareAtPriceSen": 11900,
-          "stockQuantity": 80,
+          "stockQuantity": 79,
           "isActive": true
         }
       ]
@@ -404,7 +416,7 @@
           "dimensions": "15\" x 24\"",
           "priceSen": 490,
           "compareAtPriceSen": 590,
-          "stockQuantity": 300,
+          "stockQuantity": 299,
           "isActive": true
         }
       ]
@@ -1608,6 +1620,271 @@
       "createdAt": "2026-10-08T14:13:40.621Z",
       "updatedAt": "2026-10-08T14:14:01.278Z",
       "paymentId": "chip_sim_1791468840907"
+    },
+    {
+      "customerEmail": "danialtest@gmail.com",
+      "customerName": "Ahmad Danial Test",
+      "customerPhone": "+60123456789",
+      "shippingAddress": {
+        "fullName": "Ahmad Danial Test",
+        "phone": "+60123456789",
+        "addressLine1": "No 12, Jalan Merbok",
+        "city": "Butterworth",
+        "state": "Pulau Pinang",
+        "postcode": "13300",
+        "country": "Malaysia"
+      },
+      "billingAddress": {
+        "fullName": "Ahmad Danial Test",
+        "phone": "+60123456789",
+        "addressLine1": "No 12, Jalan Merbok",
+        "city": "Butterworth",
+        "state": "Pulau Pinang",
+        "postcode": "13300",
+        "country": "Malaysia"
+      },
+      "subtotalSen": 3490,
+      "discountSen": 0,
+      "shippingSen": 0,
+      "taxSen": 0,
+      "totalSen": 3490,
+      "paymentStatus": "unpaid",
+      "fulfillmentStatus": "unfulfilled",
+      "paymentProvider": "chip",
+      "items": [
+        {
+          "variantId": "var-toto-single-poly-1",
+          "productName": "TOTO SINGLE (POLY)",
+          "sizeName": "Single",
+          "sku": "TSJ-TT-SIN-01",
+          "dimensions": "90 cm x 200 cm",
+          "unitPriceSen": 3490,
+          "quantity": 1,
+          "lineTotalSen": 3490,
+          "imageUrl": "/images/products/toto-single-poly.png",
+          "id": "item-1791791213883-0",
+          "orderId": ""
+        }
+      ],
+      "id": "ord-1791791213885-wpszh",
+      "orderNumber": "LENA-2026-1006",
+      "createdAt": "2026-10-12T07:46:53.885Z",
+      "updatedAt": "2026-10-12T07:46:54.097Z",
+      "paymentId": "chip_sim_ord-1791791213885-wpszh"
+    },
+    {
+      "customerEmail": "danialtest@gmail.com",
+      "customerName": "Ahmad Danial Test",
+      "customerPhone": "+60123456789",
+      "shippingAddress": {
+        "fullName": "Ahmad Danial Test",
+        "phone": "+60123456789",
+        "addressLine1": "No 12, Jalan Merbok",
+        "city": "Butterworth",
+        "state": "Pulau Pinang",
+        "postcode": "13300",
+        "country": "Malaysia"
+      },
+      "billingAddress": {
+        "fullName": "Ahmad Danial Test",
+        "phone": "+60123456789",
+        "addressLine1": "No 12, Jalan Merbok",
+        "city": "Butterworth",
+        "state": "Pulau Pinang",
+        "postcode": "13300",
+        "country": "Malaysia"
+      },
+      "subtotalSen": 3490,
+      "discountSen": 0,
+      "shippingSen": 0,
+      "taxSen": 0,
+      "totalSen": 3490,
+      "paymentStatus": "unpaid",
+      "fulfillmentStatus": "unfulfilled",
+      "paymentProvider": "chip",
+      "items": [
+        {
+          "variantId": "var-toto-single-poly-1",
+          "productName": "TOTO SINGLE (POLY)",
+          "sizeName": "Single",
+          "sku": "TSJ-TT-SIN-01",
+          "dimensions": "90 cm x 200 cm",
+          "unitPriceSen": 3490,
+          "quantity": 1,
+          "lineTotalSen": 3490,
+          "imageUrl": "/images/products/toto-single-poly.png",
+          "id": "item-1791791264989-0",
+          "orderId": ""
+        }
+      ],
+      "id": "ord-1791791264991-uf189",
+      "orderNumber": "LENA-2026-1007",
+      "createdAt": "2026-10-12T07:47:44.991Z",
+      "updatedAt": "2026-10-12T07:47:45.135Z",
+      "paymentId": "chip_sim_ord-1791791264991-uf189"
+    },
+    {
+      "customerEmail": "danialtest@gmail.com",
+      "customerName": "Ahmad Danial Test",
+      "customerPhone": "+60123456789",
+      "shippingAddress": {
+        "fullName": "Ahmad Danial Test",
+        "phone": "+60123456789",
+        "addressLine1": "No 12, Jalan Merbok",
+        "city": "Butterworth",
+        "state": "Pulau Pinang",
+        "postcode": "13300",
+        "country": "Malaysia"
+      },
+      "billingAddress": {
+        "fullName": "Ahmad Danial Test",
+        "phone": "+60123456789",
+        "addressLine1": "No 12, Jalan Merbok",
+        "city": "Butterworth",
+        "state": "Pulau Pinang",
+        "postcode": "13300",
+        "country": "Malaysia"
+      },
+      "subtotalSen": 3490,
+      "discountSen": 0,
+      "shippingSen": 0,
+      "taxSen": 0,
+      "totalSen": 3490,
+      "paymentStatus": "unpaid",
+      "fulfillmentStatus": "unfulfilled",
+      "paymentProvider": "chip",
+      "items": [
+        {
+          "variantId": "var-toto-single-poly-1",
+          "productName": "TOTO SINGLE (POLY)",
+          "sizeName": "Single",
+          "sku": "TSJ-TT-SIN-01",
+          "dimensions": "90 cm x 200 cm",
+          "unitPriceSen": 3490,
+          "quantity": 1,
+          "lineTotalSen": 3490,
+          "imageUrl": "/images/products/toto-single-poly.png",
+          "id": "item-1791791335490-0",
+          "orderId": ""
+        }
+      ],
+      "id": "ord-1791791335492-rct2k",
+      "orderNumber": "LENA-2026-1008",
+      "createdAt": "2026-10-12T07:48:55.492Z",
+      "updatedAt": "2026-10-12T07:48:55.744Z",
+      "paymentId": "d99d4f61-0ff6-4f37-b454-2def536c1682"
+    },
+    {
+      "customerEmail": "ahmad.danial@kamaar.my",
+      "customerName": "Ahmad Danial",
+      "customerPhone": "0194786991",
+      "shippingAddress": {
+        "fullName": "Ahmad Danial",
+        "phone": "0194786991",
+        "addressLine1": "No. 15, Jalan Kemboja 3, (Kediaman Peribadi)",
+        "addressLine2": "Bandar Baru Tasek Gelugor",
+        "city": "Tasek Gelugor",
+        "state": "Pulau Pinang",
+        "postcode": "13300",
+        "country": "Malaysia"
+      },
+      "billingAddress": {
+        "fullName": "Ahmad Danial",
+        "phone": "0194786991",
+        "addressLine1": "No. 15, Jalan Kemboja 3, (Kediaman Peribadi)",
+        "addressLine2": "Bandar Baru Tasek Gelugor",
+        "city": "Tasek Gelugor",
+        "state": "Pulau Pinang",
+        "postcode": "13300",
+        "country": "Malaysia"
+      },
+      "deliveryNotes": "Sila telefon 15 minit sebelum tiba ke premis.",
+      "hasLiftAccess": true,
+      "floorLevel": "Tingkat 1",
+      "subtotalSen": 9990,
+      "discountSen": 0,
+      "shippingSen": 0,
+      "taxSen": 0,
+      "totalSen": 9990,
+      "paymentStatus": "paid",
+      "fulfillmentStatus": "processing",
+      "paymentProvider": "chip",
+      "items": [
+        {
+          "variantId": "var-tilam-gulung-kekabu-asli-1",
+          "productName": "TILAM GULUNG (KEKABU ASLI)",
+          "sizeName": "Single",
+          "sku": "TSJ-TG-KB-01",
+          "dimensions": "90 cm x 180 cm",
+          "unitPriceSen": 9990,
+          "quantity": 1,
+          "lineTotalSen": 9990,
+          "imageUrl": "/images/products/tilam-gulung-kekabu-asli.png",
+          "id": "item-1791791618539-0",
+          "orderId": ""
+        }
+      ],
+      "id": "ord-1791791618541-awfvq",
+      "orderNumber": "LENA-2026-1009",
+      "createdAt": "2026-10-12T07:53:38.541Z",
+      "updatedAt": "2026-10-12T07:53:49.169Z",
+      "paymentId": "13d5e6e5-66f6-4ff5-b2b6-dd0656246e4f"
+    },
+    {
+      "customerEmail": "ahmad.danial@kamaar.my",
+      "customerName": "Ahmad Danial",
+      "customerPhone": "0194786991",
+      "shippingAddress": {
+        "fullName": "Ahmad Danial",
+        "phone": "0194786991",
+        "addressLine1": "No. 15, Jalan Kemboja 3, (Kediaman Peribadi)",
+        "addressLine2": "Bandar Baru Tasek Gelugor",
+        "city": "Tasek Gelugor",
+        "state": "Pulau Pinang",
+        "postcode": "13300",
+        "country": "Malaysia"
+      },
+      "billingAddress": {
+        "fullName": "Ahmad Danial",
+        "phone": "0194786991",
+        "addressLine1": "No. 15, Jalan Kemboja 3, (Kediaman Peribadi)",
+        "addressLine2": "Bandar Baru Tasek Gelugor",
+        "city": "Tasek Gelugor",
+        "state": "Pulau Pinang",
+        "postcode": "13300",
+        "country": "Malaysia"
+      },
+      "deliveryNotes": "Sila telefon 15 minit sebelum tiba ke premis.",
+      "hasLiftAccess": true,
+      "floorLevel": "Tingkat 1",
+      "subtotalSen": 490,
+      "discountSen": 0,
+      "shippingSen": 1500,
+      "taxSen": 0,
+      "totalSen": 1990,
+      "paymentStatus": "unpaid",
+      "fulfillmentStatus": "unfulfilled",
+      "paymentProvider": "chip",
+      "items": [
+        {
+          "variantId": "var-bantal-m-tc-1",
+          "productName": "BANTAL SIZE M (TC)",
+          "sizeName": "Standard",
+          "sku": "TSJ-B-M-TC",
+          "dimensions": "15\" x 24\"",
+          "unitPriceSen": 490,
+          "quantity": 1,
+          "lineTotalSen": 490,
+          "imageUrl": "/images/products/bantal-tidur-m-tc.png",
+          "id": "item-1791796114786-0",
+          "orderId": ""
+        }
+      ],
+      "id": "ord-1791796114789-gu4fz",
+      "orderNumber": "LENA-2026-1010",
+      "createdAt": "2026-10-12T09:08:34.789Z",
+      "updatedAt": "2026-10-12T09:08:35.052Z",
+      "paymentId": "36475cb6-c72c-4ae7-9bc8-b064fc29a3ee"
     }
   ],
   "reviews": [
@@ -1847,6 +2124,73 @@
     }
   ],
   "auditLogs": [
+    {
+      "id": "aud-1791796115056-q9yj",
+      "actorEmail": "create_session",
+      "action": "order_status_updated",
+      "entityType": "order",
+      "entityId": "ord-1791796114789-gu4fz",
+      "details": {
+        "paymentId": "36475cb6-c72c-4ae7-9bc8-b064fc29a3ee"
+      },
+      "createdAt": "2026-10-12T09:08:35.056Z"
+    },
+    {
+      "id": "aud-1791791629176-zk6z",
+      "actorEmail": "chip_sync",
+      "action": "order_status_updated",
+      "entityType": "order",
+      "entityId": "ord-1791791618541-awfvq",
+      "details": {
+        "paymentStatus": "paid",
+        "fulfillmentStatus": "processing"
+      },
+      "createdAt": "2026-10-12T07:53:49.176Z"
+    },
+    {
+      "id": "aud-1791791618844-nzvu",
+      "actorEmail": "create_session",
+      "action": "order_status_updated",
+      "entityType": "order",
+      "entityId": "ord-1791791618541-awfvq",
+      "details": {
+        "paymentId": "13d5e6e5-66f6-4ff5-b2b6-dd0656246e4f"
+      },
+      "createdAt": "2026-10-12T07:53:38.844Z"
+    },
+    {
+      "id": "aud-1791791335750-jx0r",
+      "actorEmail": "create_session",
+      "action": "order_status_updated",
+      "entityType": "order",
+      "entityId": "ord-1791791335492-rct2k",
+      "details": {
+        "paymentId": "d99d4f61-0ff6-4f37-b454-2def536c1682"
+      },
+      "createdAt": "2026-10-12T07:48:55.750Z"
+    },
+    {
+      "id": "aud-1791791265141-f8eb",
+      "actorEmail": "create_session",
+      "action": "order_status_updated",
+      "entityType": "order",
+      "entityId": "ord-1791791264991-uf189",
+      "details": {
+        "paymentId": "chip_sim_ord-1791791264991-uf189"
+      },
+      "createdAt": "2026-10-12T07:47:45.141Z"
+    },
+    {
+      "id": "aud-1791791214110-a5bt",
+      "actorEmail": "create_session",
+      "action": "order_status_updated",
+      "entityType": "order",
+      "entityId": "ord-1791791213885-wpszh",
+      "details": {
+        "paymentId": "chip_sim_ord-1791791213885-wpszh"
+      },
+      "createdAt": "2026-10-12T07:46:54.110Z"
+    },
     {
       "id": "aud-1791553199995-gbxp",
       "actorEmail": "chip_webhook",
@@ -3064,9 +3408,9 @@
             },
             {
               "id": "m-13",
-              "label": "Jualan Gudang Tasek Gelugor",
-              "labelBm": "Jualan Gudang Tasek Gelugor",
-              "href": "/collections/borong-gudang"
+              "label": "Jelajah Promosi (Lokasi Terkini)",
+              "labelBm": "Jelajah Promosi (Lokasi Terkini)",
+              "href": "/jelajah-promosi"
             },
             {
               "id": "m-14",
@@ -3091,25 +3435,25 @@
         {
           "id": "slide-1",
           "badge": "PALING LARISS!! ASIAN POLYESTER FIBRE",
-          "title": "Tilam Toto Tebal & Empuk Terus Dari Kilang",
-          "subtitle": "Isian Asian Polyester Fibre berkualiti tinggi, jahitan quilting kemas pelbagai corak floral & moden. Selesa, empuk, dan jimat terus dari pengeluar.",
+          "title": "Tilam Toto Tebal & Selesa Terus Dari Kilang",
+          "subtitle": "Isian Asian Polyester Fibre bermutu tinggi, pelbagai corak menarik Random Design & Floral. Empuk, tidak mudah leper dan jimat.",
           "ctaText": "Beli Tilam Toto Sekarang",
-          "ctaLink": "/products/tilam-toto-asian-polyester-fibre",
+          "ctaLink": "/collections/tilam-toto",
           "secondaryCtaText": "Profil Kilang Kami",
           "secondaryCtaLink": "/profil",
-          "imageUrl": "/images/hero/hero-tilam-toto-lifestyle.jpg",
+          "imageUrl": "/images/products/toto-single-poly.png",
           "isActive": true
         },
         {
           "id": "slide-2",
           "badge": "PENGILANG TEKSTIL BUMIPUTERA",
           "title": "Kualiti Jahitan, Kepuasan Terjamin",
-          "subtitle": "Menjahit Kepercayaan, Menyulam Masa Depan. Operasi sistematik 4 unit: Unit Potong Kain, Unit Jahitan, Unit Bantal & Tilam, dan Stor Produk Siap.",
-          "ctaText": "Lihat Operasi Kilang",
-          "ctaLink": "/profil#tentang-kami",
+          "subtitle": "Menjahit Kepercayaan, Menyulam Masa Depan. Operasi sistematik merangkumi Unit Potong Kain, Unit Jahitan, Unit Bantal & Tilam.",
+          "ctaText": "Aktiviti Pengilangan",
+          "ctaLink": "/profil#aktiviti-pengilangan",
           "secondaryCtaText": "Carta Organisasi",
           "secondaryCtaLink": "/profil#carta-organisasi",
-          "imageUrl": "/images/hero/hero-kilang-tekstil.jpg",
+          "imageUrl": "/images/company/KILANG OPERASI KAMAAR.jpeg",
           "isActive": true
         },
         {
@@ -3118,22 +3462,22 @@
           "title": "Tilam & Bantal Kekabu Asli Buatan Tempatan",
           "subtitle": "Kelembutan semulajadi yang sejuk, padat dan selesa dengan teknik jahitan butang tufting tradisi yang tahan lasak turun-temurun.",
           "ctaText": "Koleksi Kekabu Asli",
-          "ctaLink": "/products/tilam-kekabu-asli-tradisi",
+          "ctaLink": "/collections/tilam-kekabu",
           "secondaryCtaText": "Tempah Sekarang",
-          "secondaryCtaLink": "/collections/tilam-kekabu",
-          "imageUrl": "/images/products/tilam-kekabu-asli.jpg",
+          "secondaryCtaLink": "/products/tilam-gulung-kekabu-asli",
+          "imageUrl": "/images/products/tilam-gulung-kekabu-asli.png",
           "isActive": true
         },
         {
           "id": "slide-4",
-          "badge": "HARGA BORONG GUDANG",
-          "title": "Jualan Gudang & Tempahan Pukal Asrama / Homestay",
-          "subtitle": "Pakej lengkap tilam bujang, bantal tidur gebu dan cadar berzip untuk asrama sekolah, tahfiz, homestay dan kemudahan kontraktor.",
-          "ctaText": "Pakej Jualan Gudang",
-          "ctaLink": "/collections/borong-gudang",
+          "badge": "JELAJAH PROMOSI (LOKASI TERKINI)",
+          "title": "Jelajah Promosi & Jualan Terus Dari Kilang",
+          "subtitle": "Kami membawakan tilam toto, tilam gulung dan bantal berkualiti terus ke komuniti anda dengan tawaran jaminan harga terendah.",
+          "ctaText": "Lokasi Jelajah Terkini",
+          "ctaLink": "/jelajah-promosi",
           "secondaryCtaText": "WhatsApp 019-478 6991",
           "secondaryCtaLink": "https://wa.me/60194786991",
-          "imageUrl": "/images/hero/hero-jualan-gudang-crowd.jpg",
+          "imageUrl": "/images/promosi/PROMOSI 1.png",
           "isActive": true
         }
       ]

@@ -31,12 +31,16 @@ export function StorefrontShell({ children }: { children: React.ReactNode }) {
   return (
     <div className="flex flex-col min-h-screen">
       <ThemeInjector />
-      <AnnouncementBar />
-      <Header />
-      <CartDrawer />
+      <div className="print:hidden">
+        <AnnouncementBar />
+        <Header />
+        <CartDrawer />
+      </div>
       <main className="flex-1">{children}</main>
-      <WhatsAppButton phoneNumber="+601164447908" />
-      <Footer />
+      <div className="print:hidden">
+        <WhatsAppButton phoneNumber="+601164447908" />
+        <Footer />
+      </div>
     </div>
   )
 }

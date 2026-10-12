@@ -385,42 +385,42 @@ export function Header() {
                           <ul className="space-y-1.5 text-xs text-charcoal-muted">
                             <li>
                               <Link
-                                href="/products/tilam-toto-asian-polyester-fibre"
+                                href="/products/toto-queen-poly"
                                 onClick={() => setActiveMega(null)}
                                 className="hover:text-forest hover:font-bold block transition-colors group p-1.5 rounded-lg hover:bg-cream"
                               >
-                                <div className="font-semibold text-charcoal group-hover:text-forest">Tilam Toto Queen (5 Kaki)</div>
-                                <div className="text-[11px] text-charcoal-muted">Paling Laris • Corak Floral & Moden</div>
+                                <div className="font-semibold text-charcoal group-hover:text-forest">Toto Queen (Poly) – RM59.90</div>
+                                <div className="text-[11px] text-charcoal-muted">Size 150 cm x 200 cm • Tebal & Empuk</div>
                               </Link>
                             </li>
                             <li>
                               <Link
-                                href="/products/tilam-toto-asian-polyester-fibre"
+                                href="/products/toto-single-poly"
                                 onClick={() => setActiveMega(null)}
                                 className="hover:text-forest hover:font-bold block transition-colors group p-1.5 rounded-lg hover:bg-cream"
                               >
-                                <div className="font-semibold text-charcoal group-hover:text-forest">Tilam Toto Single (3 Kaki)</div>
-                                <div className="text-[11px] text-charcoal-muted">Sesuai Bilik Anak & Ruang Tamu</div>
+                                <div className="font-semibold text-charcoal group-hover:text-forest">Toto Single (Poly) – RM34.90</div>
+                                <div className="text-[11px] text-charcoal-muted">Size 90 cm x 200 cm • Paling Laris</div>
                               </Link>
                             </li>
                             <li>
                               <Link
-                                href="/products/tilam-toto-asian-polyester-fibre"
+                                href="/products/sarung-tilam-queen"
                                 onClick={() => setActiveMega(null)}
                                 className="hover:text-forest hover:font-bold block transition-colors group p-1.5 rounded-lg hover:bg-cream"
                               >
-                                <div className="font-semibold text-charcoal group-hover:text-forest">Tilam Toto King (6 Kaki)</div>
-                                <div className="text-[11px] text-charcoal-muted">Ekstra Luas Untuk Seisi Keluarga</div>
+                                <div className="font-semibold text-charcoal group-hover:text-forest">Sarung Tilam Queen – RM19.90</div>
+                                <div className="text-[11px] text-charcoal-muted">Size 150 cm x 200 cm • Kain Berzip</div>
                               </Link>
                             </li>
                             <li>
                               <Link
-                                href="/collections/tilam-toto"
+                                href="/products/sarung-tilam-single"
                                 onClick={() => setActiveMega(null)}
                                 className="hover:text-forest hover:font-bold block transition-colors group p-1.5 rounded-lg hover:bg-cream"
                               >
-                                <div className="font-semibold text-charcoal group-hover:text-forest">Sarung Toto Berzip (Cotton)</div>
-                                <div className="text-[11px] text-charcoal-muted">Ganti Corak & Senang Dicuci</div>
+                                <div className="font-semibold text-charcoal group-hover:text-forest">Sarung Tilam Single – RM14.90</div>
+                                <div className="text-[11px] text-charcoal-muted">Size 90 cm x 200 cm • Kain Berzip</div>
                               </Link>
                             </li>
                           </ul>
@@ -460,7 +460,7 @@ export function Header() {
                         <div className="col-span-4 bg-cream rounded-xl p-3 flex flex-col justify-between border border-borderLight overflow-hidden">
                           <div className="relative h-28 w-full rounded-lg overflow-hidden mb-2">
                             <Image
-                              src="/images/hero/hero-tilam-toto-lifestyle.jpg"
+                              src="/images/products/toto-single-poly.png"
                               alt="Tilam Toto Asian Polyester Fibre KAMAAR Beddings"
                               fill
                               className="object-cover hover:scale-105 transition-transform duration-300"
@@ -478,7 +478,7 @@ export function Header() {
                               Jahitan quilting kemas, random floral eksklusif. Jimat terus dari pengeluar!
                             </p>
                             <div className="text-xs font-bold text-forest mt-1">
-                              Dari <span className="text-sm text-gold-dark font-black">RM38.00</span>
+                              Dari <span className="text-sm text-gold-dark font-black">RM34.90</span>
                             </div>
                           </div>
                           <Link
@@ -495,215 +495,115 @@ export function Header() {
                   )}
                 </div>
 
-                {/* 2. TILAM & KEKABU (100% ASLI MEGA MENU) */}
+                {/* 2. TILAM GULUNG (TC & KEKABU) */}
                 <div
                   className="relative"
-                  onMouseEnter={() => handleOpenMega('kekabu')}
+                  onMouseEnter={() => handleOpenMega('gulung')}
                   onMouseLeave={handleCloseMega}
                 >
                   <Link
-                    href="/collections/tilam-kekabu"
+                    href="/collections/tilam-gulung"
                     onClick={() => setActiveMega(null)}
                     className={`inline-flex items-center gap-1.5 px-3 py-1.5 rounded-full transition-all duration-150 whitespace-nowrap group ${
-                      pathname.startsWith('/collections/tilam-kekabu')
-                        ? 'bg-white text-forest font-bold shadow-xs border border-gold/50 ring-2 ring-gold/20'
-                        : 'hover:bg-forest/5 hover:text-forest text-charcoal font-medium border border-transparent'
-                    }`}
-                  >
-                    <Award className={`w-3.5 h-3.5 transition-transform group-hover:scale-110 ${
-                      pathname.startsWith('/collections/tilam-kekabu') ? 'text-gold-dark scale-105' : 'text-forest'
-                    }`} />
-                    <span>Tilam & Kekabu</span>
-                    <span className="px-1.5 py-0.2 rounded-full text-[9px] font-black uppercase tracking-wider bg-emerald-50 text-emerald-800 border border-emerald-300 shadow-2xs">
-                      100% ASLI
-                    </span>
-                    <ChevronDown
-                      className={`w-3 h-3 text-gold-dark transition-transform duration-200 ${
-                        activeMega === 'kekabu' ? 'rotate-180' : ''
-                      }`}
-                    />
-                  </Link>
-
-                  {/* Mega Menu: Kekabu */}
-                  {activeMega === 'kekabu' && (
-                    <div
-                      className="absolute top-full left-1/2 -translate-x-1/2 pt-2 z-50 pointer-events-auto"
-                      onMouseEnter={() => handleKeepMega('kekabu')}
-                      onMouseLeave={handleCloseMega}
-                    >
-                      <div className="w-[760px] bg-warmwhite rounded-2xl shadow-[0_25px_50px_-12px_rgba(19,50,91,0.18)] border border-borderLight p-5 grid grid-cols-12 gap-5 animate-[fadeIn_0.15s_ease-out]">
-                        <div className="col-span-7">
-                          <h4 className="text-[11px] font-bold uppercase tracking-wider text-gold-dark pb-2 border-b border-borderLight mb-2.5">
-                            Koleksi Kekabu Asli Tradisi Tempatan
-                          </h4>
-                          <div className="grid grid-cols-2 gap-2 text-xs text-charcoal-muted">
-                            <Link
-                              href="/products/tilam-kekabu-asli-tradisi"
-                              onClick={() => setActiveMega(null)}
-                              className="p-2 rounded-lg hover:bg-cream border border-transparent hover:border-borderLight transition-all group"
-                            >
-                              <div className="font-semibold text-charcoal group-hover:text-forest">Tilam Kekabu Tebal</div>
-                              <div className="text-[11px] text-charcoal-muted mt-0.5">Jahitan butang tufting, sejuk & padat.</div>
-                            </Link>
-                            <Link
-                              href="/collections/tilam-kekabu"
-                              onClick={() => setActiveMega(null)}
-                              className="p-2 rounded-lg hover:bg-cream border border-transparent hover:border-borderLight transition-all group"
-                            >
-                              <div className="font-semibold text-charcoal group-hover:text-forest">Bantal Kekabu Tradisi</div>
-                              <div className="text-[11px] text-charcoal-muted mt-0.5">Corak jalur klasik, gebu & tidak panas.</div>
-                            </Link>
-                            <Link
-                              href="/collections/tilam-kekabu"
-                              onClick={() => setActiveMega(null)}
-                              className="p-2 rounded-lg hover:bg-cream border border-transparent hover:border-borderLight transition-all group"
-                            >
-                              <div className="font-semibold text-charcoal group-hover:text-forest">Bantal Peluk Kekabu</div>
-                              <div className="text-[11px] text-charcoal-muted mt-0.5">Serat kekabu pokok asli padat.</div>
-                            </Link>
-                            <Link
-                              href="/collections/tilam-kekabu"
-                              onClick={() => setActiveMega(null)}
-                              className="p-2 rounded-lg hover:bg-cream border border-transparent hover:border-borderLight transition-all group"
-                            >
-                              <div className="font-semibold text-charcoal group-hover:text-forest">Set Lengkap Tradisi</div>
-                              <div className="text-[11px] text-charcoal-muted mt-0.5">Tilam + bantal kepala + bantal peluk.</div>
-                            </Link>
-                          </div>
-                          <div className="mt-3 pt-2.5 border-t border-borderLight text-[11px] text-forest flex items-center gap-1.5 font-medium">
-                            <ShieldCheck className="w-4 h-4 text-forest" />
-                            <span>100% serat kekabu semulajadi, bukan habuk sintetik.</span>
-                          </div>
-                        </div>
-
-                        <div className="col-span-5 bg-cream rounded-xl p-3 flex flex-col justify-between border border-borderLight">
-                          <div className="relative h-28 w-full rounded-lg overflow-hidden mb-2">
-                            <Image
-                              src="/images/products/tilam-kekabu-asli.jpg"
-                              alt="Tilam Kekabu Asli Tunas Sinar Jaya"
-                              fill
-                              className="object-cover"
-                              sizes="240px"
-                            />
-                            <div className="absolute top-2 left-2 bg-forest text-warmwhite text-[9px] font-bold px-2 py-0.5 rounded shadow">
-                              100% KEKABU POKOK
-                            </div>
-                          </div>
-                          <div>
-                            <h5 className="font-serif text-sm font-bold text-forest">
-                              Warisan Kekabu Tradisi Sejak 2017
-                            </h5>
-                            <p className="text-[11px] text-charcoal-muted mt-0.5 leading-relaxed">
-                              Kelembutan semula jadi turun-temurun. Baik untuk postur tulang belakang & elak panas.
-                            </p>
-                          </div>
-                          <Link
-                            href="/collections/tilam-kekabu"
-                            onClick={() => setActiveMega(null)}
-                            className="mt-2 inline-flex items-center justify-between px-3 py-1.5 bg-forest text-warmwhite text-xs font-bold rounded-lg hover:bg-forest-dark transition-all group"
-                          >
-                            <span>Lihat Koleksi Kekabu</span>
-                            <ArrowRight className="w-3.5 h-3.5 text-gold group-hover:translate-x-0.5 transition-transform" />
-                          </Link>
-                        </div>
-                      </div>
-                    </div>
-                  )}
-                </div>
-
-                {/* 3. TILAM LIPAT & BUJANG (ASRAMA MEGA MENU) */}
-                <div
-                  className="relative"
-                  onMouseEnter={() => handleOpenMega('lipat')}
-                  onMouseLeave={handleCloseMega}
-                >
-                  <Link
-                    href="/collections/tilam-lipat"
-                    onClick={() => setActiveMega(null)}
-                    className={`inline-flex items-center gap-1.5 px-3 py-1.5 rounded-full transition-all duration-150 whitespace-nowrap group ${
-                      pathname.startsWith('/collections/tilam-lipat')
+                      pathname.startsWith('/collections/tilam-gulung')
                         ? 'bg-white text-forest font-bold shadow-xs border border-gold/50 ring-2 ring-gold/20'
                         : 'hover:bg-forest/5 hover:text-forest text-charcoal font-medium border border-transparent'
                     }`}
                   >
                     <Layers className={`w-3.5 h-3.5 transition-transform group-hover:scale-110 ${
-                      pathname.startsWith('/collections/tilam-lipat') ? 'text-blue-600 scale-105' : 'text-blue-600'
+                      pathname.startsWith('/collections/tilam-gulung') ? 'text-gold-dark scale-105' : 'text-forest'
                     }`} />
-                    <span>Tilam Lipat & Bujang</span>
-                    <span className="px-1.5 py-0.2 rounded-full text-[9px] font-bold tracking-wider bg-blue-50 text-blue-800 border border-blue-200">
-                      ASRAMA
+                    <span>Tilam Gulung</span>
+                    <span className="px-1.5 py-0.2 rounded-full text-[9px] font-black uppercase tracking-wider bg-emerald-50 text-emerald-800 border border-emerald-300 shadow-2xs">
+                      TC & KEKABU
                     </span>
                     <ChevronDown
                       className={`w-3 h-3 text-gold-dark transition-transform duration-200 ${
-                        activeMega === 'lipat' ? 'rotate-180' : ''
+                        activeMega === 'gulung' ? 'rotate-180' : ''
                       }`}
                     />
                   </Link>
 
-                  {/* Mega Menu: Tilam Lipat */}
-                  {activeMega === 'lipat' && (
+                  {/* Mega Menu: Tilam Gulung */}
+                  {activeMega === 'gulung' && (
                     <div
                       className="absolute top-full left-1/2 -translate-x-1/2 pt-2 z-50 pointer-events-auto"
-                      onMouseEnter={() => handleKeepMega('lipat')}
+                      onMouseEnter={() => handleKeepMega('gulung')}
                       onMouseLeave={handleCloseMega}
                     >
-                      <div className="w-[740px] bg-warmwhite rounded-2xl shadow-[0_25px_50px_-12px_rgba(19,50,91,0.18)] border border-borderLight p-5 grid grid-cols-12 gap-5 animate-[fadeIn_0.15s_ease-out]">
+                      <div className="w-[760px] bg-warmwhite rounded-2xl shadow-[0_25px_50px_-12px_rgba(19,50,91,0.18)] border border-borderLight p-5 grid grid-cols-12 gap-5 animate-[fadeIn_0.15s_ease-out]">
                         <div className="col-span-7">
                           <h4 className="text-[11px] font-bold uppercase tracking-wider text-gold-dark pb-2 border-b border-borderLight mb-2.5">
-                            Pilihan Tilam Lipat & Bujang Asrama
+                            Koleksi Tilam Gulung Kilang Tunas Sinar Jaya
                           </h4>
-                          <div className="space-y-1.5 text-xs text-charcoal-muted">
+                          <div className="space-y-2 text-xs text-charcoal-muted">
                             <Link
-                              href="/products/tilam-lipat-3-berzip"
+                              href="/products/tilam-gulung-a-tc"
                               onClick={() => setActiveMega(null)}
-                              className="block p-2 rounded-lg hover:bg-cream border border-transparent hover:border-borderLight transition-all group"
+                              className="p-2 rounded-lg hover:bg-cream border border-transparent hover:border-borderLight transition-all block group"
                             >
-                              <div className="font-semibold text-charcoal group-hover:text-forest">Tilam Lipat 3 Berzip (Boleh Cuci)</div>
-                              <div className="text-[11px] text-charcoal-muted">Mudah alih, jimat ruang, sarung berzip senang tanggal untuk basuh.</div>
+                              <div className="flex items-center justify-between">
+                                <span className="font-semibold text-charcoal group-hover:text-forest">TILAM GULUNG A (TC)</span>
+                                <span className="font-bold text-forest text-xs">RM39.90</span>
+                              </div>
+                              <div className="text-[11px] text-charcoal-muted mt-0.5">Size 90 cm x 180 cm • Isian Poly Fibre / TC Shoddy padat</div>
                             </Link>
                             <Link
-                              href="/products/tilam-single-3-kaki-asrama"
+                              href="/products/tilam-gulung-b-tc"
                               onClick={() => setActiveMega(null)}
-                              className="block p-2 rounded-lg hover:bg-cream border border-transparent hover:border-borderLight transition-all group"
+                              className="p-2 rounded-lg hover:bg-cream border border-transparent hover:border-borderLight transition-all block group"
                             >
-                              <div className="font-semibold text-charcoal group-hover:text-forest">Tilam Bujang 3 Kaki Standard (Tebal 4 Inci)</div>
-                              <div className="text-[11px] text-charcoal-muted">Spesifikasi piawai asrama sekolah, MRSM, tahfiz & homestay.</div>
+                              <div className="flex items-center justify-between">
+                                <span className="font-semibold text-charcoal group-hover:text-forest">TILAM GULUNG B (TC)</span>
+                                <span className="font-bold text-forest text-xs">RM34.90</span>
+                              </div>
+                              <div className="text-[11px] text-charcoal-muted mt-0.5">Size 90 cm x 180 cm • Jimat, ringan dan mudah digulung</div>
                             </Link>
                             <Link
-                              href="/products/pakej-pukal-asrama-homestay"
+                              href="/products/tilam-gulung-kekabu-asli"
                               onClick={() => setActiveMega(null)}
-                              className="block p-2 rounded-lg hover:bg-cream border border-transparent hover:border-borderLight transition-all group"
+                              className="p-2 rounded-lg hover:bg-cream border border-transparent hover:border-borderLight transition-all block group"
                             >
-                              <div className="font-semibold text-charcoal group-hover:text-forest">Pakej Borong Asrama (10 Set Pukal)</div>
-                              <div className="text-[11px] text-charcoal-muted">Diskaun pembekalan terus dari pengilang untuk institusi.</div>
+                              <div className="flex items-center justify-between">
+                                <span className="font-semibold text-charcoal group-hover:text-forest">TILAM GULUNG (KEKABU ASLI)</span>
+                                <span className="font-bold text-forest text-xs">RM99.90</span>
+                              </div>
+                              <div className="text-[11px] text-charcoal-muted mt-0.5">Size 90 cm x 180 cm • 100% serat kekabu asli sejuk dan selesa</div>
                             </Link>
+                          </div>
+                          <div className="mt-3 pt-2.5 border-t border-borderLight text-[11px] text-forest flex items-center gap-1.5 font-medium">
+                            <ShieldCheck className="w-4 h-4 text-forest" />
+                            <span>Kualiti jahitan kemas terus dari kilang di Tasek Gelugor.</span>
                           </div>
                         </div>
 
                         <div className="col-span-5 bg-cream rounded-xl p-3 flex flex-col justify-between border border-borderLight">
                           <div className="relative h-28 w-full rounded-lg overflow-hidden mb-2">
                             <Image
-                              src="/images/products/tilam-lipat-bujang.jpg"
-                              alt="Tilam Lipat 3 Berzip & Tilam Bujang Asrama"
+                              src="/images/products/tilam-gulung-a-tc.png"
+                              alt="Tilam Gulung Kilang KAMAAR"
                               fill
                               className="object-cover"
                               sizes="240px"
                             />
+                            <div className="absolute top-2 left-2 bg-forest text-warmwhite text-[9px] font-bold px-2 py-0.5 rounded shadow">
+                              JIMAT & PRAKTIKAL
+                            </div>
                           </div>
                           <div>
                             <h5 className="font-serif text-sm font-bold text-forest">
-                              Praktikal, Tahan Lasak & Jimat Ruang
+                              Sesuai Untuk Asrama & Homestay
                             </h5>
                             <p className="text-[11px] text-charcoal-muted mt-0.5 leading-relaxed">
-                              Pilihan utama ibu bapa untuk anak ke asrama & pemilik homestay seluruh Malaysia.
+                              Ringan, mudah digulung dan disimpan. Pilihan paling menjimatkan untuk tilam tambahan tetamu.
                             </p>
                           </div>
                           <Link
-                            href="/collections/tilam-lipat"
+                            href="/collections/tilam-gulung"
                             onClick={() => setActiveMega(null)}
                             className="mt-2 inline-flex items-center justify-between px-3 py-1.5 bg-forest text-warmwhite text-xs font-bold rounded-lg hover:bg-forest-dark transition-all group"
                           >
-                            <span>Lihat Semua Tilam Lipat</span>
+                            <span>Lihat Koleksi Tilam Gulung</span>
                             <ArrowRight className="w-3.5 h-3.5 text-gold group-hover:translate-x-0.5 transition-transform" />
                           </Link>
                         </div>
@@ -712,145 +612,216 @@ export function Header() {
                   )}
                 </div>
 
-                {/* 4. BANTAL & CADAR (DROPDOWN COMPACT) */}
+                {/* 3. BANTAL & BANTAL PELUK */}
                 <div
                   className="relative"
-                  onMouseEnter={() => handleOpenMega('bantal-cadar')}
+                  onMouseEnter={() => handleOpenMega('bantal')}
                   onMouseLeave={handleCloseMega}
                 >
                   <Link
-                    href="/collections/bantal"
+                    href="/collections/bantal-tidur"
                     onClick={() => setActiveMega(null)}
                     className={`inline-flex items-center gap-1.5 px-3 py-1.5 rounded-full transition-all duration-150 whitespace-nowrap group ${
-                      pathname.startsWith('/collections/bantal') ||
-                      pathname.startsWith('/collections/cadang-comforter')
+                      pathname.startsWith('/collections/bantal-tidur') || pathname.startsWith('/collections/bantal-peluk')
                         ? 'bg-white text-forest font-bold shadow-xs border border-gold/50 ring-2 ring-gold/20'
                         : 'hover:bg-forest/5 hover:text-forest text-charcoal font-medium border border-transparent'
                     }`}
                   >
-                    <Package className={`w-3.5 h-3.5 transition-transform group-hover:scale-110 ${
-                      pathname.startsWith('/collections/bantal') || pathname.startsWith('/collections/cadang-comforter')
+                    <Award className={`w-3.5 h-3.5 transition-transform group-hover:scale-110 ${
+                      pathname.startsWith('/collections/bantal-tidur') || pathname.startsWith('/collections/bantal-peluk')
                         ? 'text-gold-dark scale-105'
-                        : 'text-gold-dark'
+                        : 'text-forest'
                     }`} />
-                    <span>Bantal & Cadar</span>
+                    <span>Bantal & Peluk</span>
+                    <span className="px-1.5 py-0.2 rounded-full text-[9px] font-bold tracking-wider bg-gold/15 text-gold-dark border border-gold/30">
+                      GEBU
+                    </span>
                     <ChevronDown
                       className={`w-3 h-3 text-gold-dark transition-transform duration-200 ${
-                        activeMega === 'bantal-cadar' ? 'rotate-180' : ''
+                        activeMega === 'bantal' ? 'rotate-180' : ''
                       }`}
                     />
                   </Link>
 
-                  {/* Dropdown: Bantal & Cadar */}
-                  {activeMega === 'bantal-cadar' && (
+                  {/* Mega Menu: Bantal & Peluk */}
+                  {activeMega === 'bantal' && (
                     <div
                       className="absolute top-full left-1/2 -translate-x-1/2 pt-2 z-50 pointer-events-auto"
-                      onMouseEnter={() => handleKeepMega('bantal-cadar')}
+                      onMouseEnter={() => handleKeepMega('bantal')}
                       onMouseLeave={handleCloseMega}
                     >
-                      <div className="w-[500px] bg-warmwhite rounded-2xl shadow-[0_20px_45px_-10px_rgba(19,50,91,0.18)] border border-borderLight p-5 grid grid-cols-2 gap-5 animate-[fadeIn_0.15s_ease-out]">
-                        {/* Col 1: Bantal */}
-                        <div className="border-r border-borderLight/80 pr-4">
-                          <h4 className="text-[11px] font-bold uppercase tracking-wider text-gold-dark pb-1.5 border-b border-borderLight mb-2.5">
-                            Bantal & Bolster
+                      <div className="w-[840px] bg-warmwhite rounded-2xl shadow-[0_25px_50px_-12px_rgba(19,50,91,0.18)] border border-borderLight p-5 grid grid-cols-12 gap-5 animate-[fadeIn_0.15s_ease-out]">
+                        {/* Col 1: Bantal Tidur */}
+                        <div className="col-span-4 border-r border-borderLight/80 pr-3">
+                          <h4 className="text-[11px] font-bold uppercase tracking-wider text-gold-dark pb-2 border-b border-borderLight mb-2.5 flex items-center justify-between">
+                            <span>Bantal Tidur</span>
+                            <span className="text-[10px] text-charcoal-muted font-normal">4 Pilihan</span>
                           </h4>
-                          <ul className="space-y-2 text-xs">
-                            <li>
-                              <Link
-                                href="/products/bantal-tidur-gebu-asian-fibre"
-                                onClick={() => setActiveMega(null)}
-                                className="block p-1.5 rounded-lg hover:bg-cream text-charcoal hover:text-forest group transition-colors"
-                              >
-                                <div className="font-semibold text-charcoal group-hover:text-forest">Bantal Tidur Gebu Asian Fibre</div>
-                                <div className="text-[11px] text-charcoal-muted">Isian padat & tak sakit tengkuk</div>
-                              </Link>
-                            </li>
-                            <li>
-                              <Link
-                                href="/products/bantal-peluk-bolster-gebu"
-                                onClick={() => setActiveMega(null)}
-                                className="block p-1.5 rounded-lg hover:bg-cream text-charcoal hover:text-forest group transition-colors"
-                              >
-                                <div className="font-semibold text-charcoal group-hover:text-forest">Bantal Peluk (Bolster) Gebu</div>
-                                <div className="text-[11px] text-charcoal-muted">Panjang standard, empuk selesa</div>
-                              </Link>
-                            </li>
-                            <li className="pt-1 border-t border-borderLight/60">
-                              <Link
-                                href="/collections/bantal"
-                                onClick={() => setActiveMega(null)}
-                                className="text-forest hover:underline font-bold text-[11.5px] inline-flex items-center gap-1"
-                              >
-                                <span>Lihat Semua Koleksi Bantal</span>
-                                <ArrowRight className="w-3 h-3 text-gold" />
-                              </Link>
-                            </li>
-                          </ul>
+                          <div className="space-y-1.5 text-xs text-charcoal-muted">
+                            <Link
+                              href="/products/bantal-m-tc"
+                              onClick={() => setActiveMega(null)}
+                              className="p-1.5 rounded-lg hover:bg-cream border border-transparent hover:border-borderLight transition-all block group"
+                            >
+                              <div className="flex items-center justify-between font-semibold text-charcoal group-hover:text-forest">
+                                <span>Bantal M (TC)</span>
+                                <span className="font-bold text-forest">RM4.90</span>
+                              </div>
+                              <div className="text-[10.5px] text-charcoal-muted">Size 15" x 24" • Paling jimat ekonomi</div>
+                            </Link>
+                            <Link
+                              href="/products/bantal-l-poly"
+                              onClick={() => setActiveMega(null)}
+                              className="p-1.5 rounded-lg hover:bg-cream border border-transparent hover:border-borderLight transition-all block group"
+                            >
+                              <div className="flex items-center justify-between font-semibold text-charcoal group-hover:text-forest">
+                                <span>Bantal L (Poly)</span>
+                                <span className="font-bold text-forest">RM9.90</span>
+                              </div>
+                              <div className="text-[10.5px] text-charcoal-muted">Size 17" x 26" • Gebu Asian Polyester</div>
+                            </Link>
+                            <Link
+                              href="/products/bantal-l-kekabu-asli"
+                              onClick={() => setActiveMega(null)}
+                              className="p-1.5 rounded-lg hover:bg-cream border border-transparent hover:border-borderLight transition-all block group"
+                            >
+                              <div className="flex items-center justify-between font-semibold text-charcoal group-hover:text-forest">
+                                <span>Bantal L (Kekabu)</span>
+                                <span className="font-bold text-forest">RM24.90</span>
+                              </div>
+                              <div className="text-[10.5px] text-charcoal-muted">Size 17" x 26" • Serat pokok asli sejuk</div>
+                            </Link>
+                            <Link
+                              href="/products/bantal-xl-kekabu-asli"
+                              onClick={() => setActiveMega(null)}
+                              className="p-1.5 rounded-lg hover:bg-cream border border-transparent hover:border-borderLight transition-all block group"
+                            >
+                              <div className="flex items-center justify-between font-semibold text-charcoal group-hover:text-forest">
+                                <span>Bantal XL (Kekabu)</span>
+                                <span className="font-bold text-forest">RM34.90</span>
+                              </div>
+                              <div className="text-[10.5px] text-charcoal-muted">Size 18" x 28" • Ekstra besar & padat</div>
+                            </Link>
+                          </div>
                         </div>
 
-                        {/* Col 2: Cadar & Comforter */}
-                        <div>
-                          <h4 className="text-[11px] font-bold uppercase tracking-wider text-gold-dark pb-1.5 border-b border-borderLight mb-2.5">
-                            Cadar & Comforter
+                        {/* Col 2: Bantal Peluk */}
+                        <div className="col-span-4 border-r border-borderLight/80 pr-3">
+                          <h4 className="text-[11px] font-bold uppercase tracking-wider text-gold-dark pb-2 border-b border-borderLight mb-2.5 flex items-center justify-between">
+                            <span>Bantal Peluk</span>
+                            <span className="text-[10px] text-charcoal-muted font-normal">4 Pilihan</span>
                           </h4>
-                          <ul className="space-y-2 text-xs">
-                            <li>
-                              <Link
-                                href="/products/set-comforter-tebal-quilting"
-                                onClick={() => setActiveMega(null)}
-                                className="block p-1.5 rounded-lg hover:bg-cream text-charcoal hover:text-forest group transition-colors"
-                              >
-                                <div className="font-semibold text-charcoal group-hover:text-forest">Set Comforter Tebal Quilting</div>
-                                <div className="text-[11px] text-charcoal-muted">Jahitan kilang tahan basuh mesin</div>
-                              </Link>
-                            </li>
-                            <li>
-                              <Link
-                                href="/collections/tilam-toto"
-                                onClick={() => setActiveMega(null)}
-                                className="block p-1.5 rounded-lg hover:bg-cream text-charcoal hover:text-forest group transition-colors"
-                              >
-                                <div className="font-semibold text-charcoal group-hover:text-forest">Sarung Tilam Toto Berzip</div>
-                                <div className="text-[11px] text-charcoal-muted">Fabrik cotton sejuk pelbagai corak</div>
-                              </Link>
-                            </li>
-                            <li className="pt-1 border-t border-borderLight/60">
-                              <Link
-                                href="/collections/cadang-comforter"
-                                onClick={() => setActiveMega(null)}
-                                className="text-forest hover:underline font-bold text-[11.5px] inline-flex items-center gap-1"
-                              >
-                                <span>Lihat Cadar & Comforter</span>
-                                <ArrowRight className="w-3 h-3 text-gold" />
-                              </Link>
-                            </li>
-                          </ul>
+                          <div className="space-y-1.5 text-xs text-charcoal-muted">
+                            <Link
+                              href="/products/bantal-peluk-m-poly"
+                              onClick={() => setActiveMega(null)}
+                              className="p-1.5 rounded-lg hover:bg-cream border border-transparent hover:border-borderLight transition-all block group"
+                            >
+                              <div className="flex items-center justify-between font-semibold text-charcoal group-hover:text-forest">
+                                <span>Peluk M (Poly)</span>
+                                <span className="font-bold text-forest">RM13.90</span>
+                              </div>
+                              <div className="text-[10.5px] text-charcoal-muted">Size 60 x 80 cm • Gebu selesa dipeluk</div>
+                            </Link>
+                            <Link
+                              href="/products/bantal-peluk-l-tc"
+                              onClick={() => setActiveMega(null)}
+                              className="p-1.5 rounded-lg hover:bg-cream border border-transparent hover:border-borderLight transition-all block group"
+                            >
+                              <div className="flex items-center justify-between font-semibold text-charcoal group-hover:text-forest">
+                                <span>Peluk L (TC)</span>
+                                <span className="font-bold text-forest">RM14.90</span>
+                              </div>
+                              <div className="text-[10.5px] text-charcoal-muted">Size 70 x 90 cm • Tahan lasak padat</div>
+                            </Link>
+                            <Link
+                              href="/products/bantal-peluk-l-poly"
+                              onClick={() => setActiveMega(null)}
+                              className="p-1.5 rounded-lg hover:bg-cream border border-transparent hover:border-borderLight transition-all block group"
+                            >
+                              <div className="flex items-center justify-between font-semibold text-charcoal group-hover:text-forest">
+                                <span>Peluk L (Poly)</span>
+                                <span className="font-bold text-forest">RM24.90</span>
+                              </div>
+                              <div className="text-[10.5px] text-charcoal-muted">Size 70 x 90 cm • Ekstra gebu Asian fibre</div>
+                            </Link>
+                            <Link
+                              href="/products/bantal-peluk-l-kekabu-asli"
+                              onClick={() => setActiveMega(null)}
+                              className="p-1.5 rounded-lg hover:bg-cream border border-transparent hover:border-borderLight transition-all block group"
+                            >
+                              <div className="flex items-center justify-between font-semibold text-charcoal group-hover:text-forest">
+                                <span>Peluk L (Kekabu)</span>
+                                <span className="font-bold text-forest">RM34.90</span>
+                              </div>
+                              <div className="text-[10.5px] text-charcoal-muted">Size 70 x 90 cm • 100% kekabu asli</div>
+                            </Link>
+                          </div>
+                        </div>
+
+                        {/* Col 3: Visual Showcase */}
+                        <div className="col-span-4 bg-cream rounded-xl p-3 flex flex-col justify-between border border-borderLight overflow-hidden">
+                          <div className="relative h-28 w-full rounded-lg overflow-hidden mb-2">
+                            <Image
+                              src="/images/products/bantal-l-poly.png"
+                              alt="Bantal Tidur Gebu KAMAAR Beddings"
+                              fill
+                              className="object-cover hover:scale-105 transition-transform duration-300"
+                              sizes="240px"
+                            />
+                            <div className="absolute top-2 left-2 bg-forest text-warmwhite text-[9px] font-bold px-2 py-0.5 rounded shadow">
+                              DARI RM4.90
+                            </div>
+                          </div>
+                          <div>
+                            <h5 className="font-serif text-sm font-bold text-forest leading-snug">
+                              Gebu, Padat & Selesa Leher
+                            </h5>
+                            <p className="text-[11px] text-charcoal-muted mt-0.5 leading-relaxed line-clamp-2">
+                              Pilihan isian Poly Fibre berkualiti & serat 100% kekabu asli tradisi.
+                            </p>
+                          </div>
+                          <Link
+                            href="/collections/bantal-tidur"
+                            onClick={() => setActiveMega(null)}
+                            className="mt-2 inline-flex items-center justify-between px-3 py-1.5 bg-forest text-warmwhite text-xs font-bold rounded-lg hover:bg-forest-dark transition-all group"
+                          >
+                            <span>Lihat Semua Bantal</span>
+                            <ArrowRight className="w-3.5 h-3.5 text-gold group-hover:translate-x-0.5 transition-transform" />
+                          </Link>
                         </div>
                       </div>
                     </div>
                   )}
                 </div>
 
-                {/* 5. KOLEKSI KHAS (PATCHWORK, BAYI, KUSYEN SOFA) */}
+                {/* 4. KOLEKSI KHAS (BAYI, SELIMUT, KUSYEN SOFA) */}
                 <div
                   className="relative"
                   onMouseEnter={() => handleOpenMega('khas')}
                   onMouseLeave={handleCloseMega}
                 >
                   <Link
-                    href="/collections/selimut-patchwork"
+                    href="/collections/produk-baby"
                     onClick={() => setActiveMega(null)}
                     className={`inline-flex items-center gap-1.5 px-3 py-1.5 rounded-full transition-all duration-150 whitespace-nowrap group ${
-                      pathname.startsWith('/collections/selimut-patchwork') ||
-                      pathname.startsWith('/collections/set-bayi') ||
+                      pathname.startsWith('/collections/produk-baby') ||
+                      pathname.startsWith('/collections/selimut') ||
                       pathname.startsWith('/collections/kusyen-sofa')
                         ? 'bg-white text-forest font-bold shadow-xs border border-gold/50 ring-2 ring-gold/20'
                         : 'hover:bg-forest/5 hover:text-forest text-charcoal font-medium border border-transparent'
                     }`}
                   >
+                    <Package className={`w-3.5 h-3.5 transition-transform group-hover:scale-110 ${
+                      pathname.startsWith('/collections/produk-baby') ||
+                      pathname.startsWith('/collections/selimut') ||
+                      pathname.startsWith('/collections/kusyen-sofa')
+                        ? 'text-gold-dark scale-105'
+                        : 'text-gold-dark'
+                    }`} />
                     <span>Koleksi Khas</span>
                     <span className="px-1.5 py-0.2 rounded-full text-[9px] font-bold bg-gold/15 text-gold-dark border border-gold/30">
-                      3
+                      BABY & KUSYEN
                     </span>
                     <ChevronDown
                       className={`w-3 h-3 text-gold-dark transition-transform duration-200 ${
@@ -866,52 +837,52 @@ export function Header() {
                       onMouseEnter={() => handleKeepMega('khas')}
                       onMouseLeave={handleCloseMega}
                     >
-                      <div className="w-[620px] bg-warmwhite rounded-2xl shadow-[0_20px_45px_-10px_rgba(19,50,91,0.18)] border border-borderLight p-4 animate-[fadeIn_0.15s_ease-out]">
+                      <div className="w-[660px] bg-warmwhite rounded-2xl shadow-[0_20px_45px_-10px_rgba(19,50,91,0.18)] border border-borderLight p-4 animate-[fadeIn_0.15s_ease-out]">
                         <h4 className="text-[11px] font-bold uppercase tracking-wider text-gold-dark pb-1.5 border-b border-borderLight mb-3">
-                          Koleksi Jahitan Khas & Eksklusif Kilang
+                          Koleksi Jahitan Khas & Produk Terus Dari Kilang
                         </h4>
                         <div className="grid grid-cols-3 gap-2.5">
-                          {/* Card 1: Selimut Patchwork */}
+                          {/* Card 1: Produk Baby */}
                           <Link
-                            href="/collections/selimut-patchwork"
+                            href="/collections/produk-baby"
                             onClick={() => setActiveMega(null)}
                             className="group bg-cream/70 hover:bg-cream rounded-xl p-2.5 border border-borderLight/80 hover:border-gold transition-all block"
                           >
                             <div className="relative h-20 w-full rounded-lg overflow-hidden mb-1.5">
                               <Image
-                                src="/images/products/selimut-patchwork.jpg"
-                                alt="Selimut Patchwork KAMAAR"
+                                src="/images/products/set-tilam-baby-a-kekabu-asli.png"
+                                alt="Produk Baby Kekabu Asli KAMAAR"
                                 fill
                                 className="object-cover group-hover:scale-105 transition-transform"
                                 sizes="180px"
                               />
                             </div>
-                            <div className="font-semibold text-xs text-charcoal group-hover:text-forest">Selimut Patchwork</div>
-                            <div className="text-[10.5px] text-charcoal-muted line-clamp-1">Corak cantuman sejuk</div>
-                            <div className="text-xs font-bold text-forest mt-1">Dari RM25.00</div>
+                            <div className="font-semibold text-xs text-charcoal group-hover:text-forest">Produk Baby (Kekabu)</div>
+                            <div className="text-[10.5px] text-charcoal-muted line-clamp-1">Bantal & Set Tilam Bayi</div>
+                            <div className="text-xs font-bold text-forest mt-1">Dari RM9.90</div>
                           </Link>
 
-                          {/* Card 2: Set Bayi */}
+                          {/* Card 2: Selimut Legend */}
                           <Link
-                            href="/collections/set-bayi"
+                            href="/collections/selimut"
                             onClick={() => setActiveMega(null)}
                             className="group bg-cream/70 hover:bg-cream rounded-xl p-2.5 border border-borderLight/80 hover:border-gold transition-all block"
                           >
                             <div className="relative h-20 w-full rounded-lg overflow-hidden mb-1.5">
                               <Image
-                                src="/images/products/set-tilam-bayi.jpg"
-                                alt="Set Tilam Bayi KAMAAR"
+                                src="/images/products/selimut-legend-m.png"
+                                alt="Selimut Legend KAMAAR"
                                 fill
                                 className="object-cover group-hover:scale-105 transition-transform"
                                 sizes="180px"
                               />
                             </div>
-                            <div className="font-semibold text-xs text-charcoal group-hover:text-forest">Set Bayi (4-in-1)</div>
-                            <div className="text-[10.5px] text-charcoal-muted line-clamp-1">Tilam + bantal lekuk</div>
-                            <div className="text-xs font-bold text-forest mt-1">Dari RM35.00</div>
+                            <div className="font-semibold text-xs text-charcoal group-hover:text-forest">Selimut Legend</div>
+                            <div className="text-[10.5px] text-charcoal-muted line-clamp-1">Corak klasik saiz M & L</div>
+                            <div className="text-xs font-bold text-forest mt-1">Dari RM14.90</div>
                           </Link>
 
-                          {/* Card 3: Kusyen Sofa */}
+                          {/* Card 3: Bantal Kusyen Sofa */}
                           <Link
                             href="/collections/kusyen-sofa"
                             onClick={() => setActiveMega(null)}
@@ -919,16 +890,121 @@ export function Header() {
                           >
                             <div className="relative h-20 w-full rounded-lg overflow-hidden mb-1.5">
                               <Image
-                                src="/images/products/kusyen-sofa-eksklusif.jpg"
-                                alt="Sarung Kusyen Sofa Aidilfitri"
+                                src="/images/products/bantal-sofa-14x14.png"
+                                alt="Bantal Kusyen Sofa KAMAAR"
                                 fill
                                 className="object-cover group-hover:scale-105 transition-transform"
                                 sizes="180px"
                               />
                             </div>
-                            <div className="font-semibold text-xs text-charcoal group-hover:text-forest">Kusyen Sofa Raya</div>
-                            <div className="text-[10.5px] text-charcoal-muted line-clamp-1">Eksklusif & piping tebal</div>
-                            <div className="text-xs font-bold text-forest mt-1">Dari RM18.00</div>
+                            <div className="font-semibold text-xs text-charcoal group-hover:text-forest">Kusyen / Sofa</div>
+                            <div className="text-[10.5px] text-charcoal-muted line-clamp-1">6 Saiz (14x14 - 30x30)</div>
+                            <div className="text-xs font-bold text-forest mt-1">Dari RM9.90</div>
+                          </Link>
+                        </div>
+                      </div>
+                    </div>
+                  )}
+                </div>
+
+                {/* 5. CUSTOM (OEM) */}
+                <div
+                  className="relative"
+                  onMouseEnter={() => handleOpenMega('oem')}
+                  onMouseLeave={handleCloseMega}
+                >
+                  <Link
+                    href="/collections/custom-oem"
+                    onClick={() => setActiveMega(null)}
+                    className={`inline-flex items-center gap-1.5 px-3 py-1.5 rounded-full transition-all duration-150 whitespace-nowrap group ${
+                      pathname.startsWith('/collections/custom-oem')
+                        ? 'bg-white text-forest font-bold shadow-xs border border-gold/50 ring-2 ring-gold/20'
+                        : 'hover:bg-forest/5 hover:text-forest text-charcoal font-medium border border-transparent'
+                    }`}
+                  >
+                    <Sparkles className={`w-3.5 h-3.5 transition-transform group-hover:scale-110 ${
+                      pathname.startsWith('/collections/custom-oem') ? 'text-amber-500 scale-105' : 'text-amber-500'
+                    }`} />
+                    <span>Custom (OEM)</span>
+                    <span className="px-1.5 py-0.2 rounded-full text-[9px] font-black uppercase tracking-wider bg-rose-50 text-rose-700 border border-rose-200">
+                      PUKAL RM1000
+                    </span>
+                    <ChevronDown
+                      className={`w-3 h-3 text-gold-dark transition-transform duration-200 ${
+                        activeMega === 'oem' ? 'rotate-180' : ''
+                      }`}
+                    />
+                  </Link>
+
+                  {/* Dropdown: Custom (OEM) */}
+                  {activeMega === 'oem' && (
+                    <div
+                      className="absolute top-full left-1/2 -translate-x-1/2 pt-2 z-50 pointer-events-auto"
+                      onMouseEnter={() => handleKeepMega('oem')}
+                      onMouseLeave={handleCloseMega}
+                    >
+                      <div className="w-[660px] bg-warmwhite rounded-2xl shadow-[0_20px_45px_-10px_rgba(19,50,91,0.18)] border border-borderLight p-4 animate-[fadeIn_0.15s_ease-out]">
+                        <div className="flex items-center justify-between pb-2 border-b border-borderLight mb-3">
+                          <h4 className="text-[11px] font-bold uppercase tracking-wider text-gold-dark">
+                            Tempahan Pukal & Jahitan Custom (OEM)
+                          </h4>
+                          <span className="text-[10px] font-bold text-rose-700 bg-rose-50 px-2 py-0.5 rounded border border-rose-200">
+                            Minima Tempahan RM1,000
+                          </span>
+                        </div>
+                        <div className="grid grid-cols-4 gap-2">
+                          <Link
+                            href="/products/bantal-tidur-oem"
+                            onClick={() => setActiveMega(null)}
+                            className="p-2 rounded-xl bg-cream/70 hover:bg-cream border border-borderLight hover:border-gold transition-all block group text-center"
+                          >
+                            <div className="text-xl mb-1">🛏️</div>
+                            <div className="font-bold text-xs text-charcoal group-hover:text-forest">Bantal OEM</div>
+                            <div className="text-[10px] text-charcoal-muted mt-0.5">Pukal Kilang</div>
+                            <div className="text-xs font-black text-forest mt-1">RM1,000</div>
+                          </Link>
+                          <Link
+                            href="/products/tilam-toto-oem"
+                            onClick={() => setActiveMega(null)}
+                            className="p-2 rounded-xl bg-cream/70 hover:bg-cream border border-borderLight hover:border-gold transition-all block group text-center"
+                          >
+                            <div className="text-xl mb-1">✨</div>
+                            <div className="font-bold text-xs text-charcoal group-hover:text-forest">Toto OEM</div>
+                            <div className="text-[10px] text-charcoal-muted mt-0.5">Pukal Kilang</div>
+                            <div className="text-xs font-black text-forest mt-1">RM1,000</div>
+                          </Link>
+                          <Link
+                            href="/products/tilam-gulung-oem"
+                            onClick={() => setActiveMega(null)}
+                            className="p-2 rounded-xl bg-cream/70 hover:bg-cream border border-borderLight hover:border-gold transition-all block group text-center"
+                          >
+                            <div className="text-xl mb-1">📜</div>
+                            <div className="font-bold text-xs text-charcoal group-hover:text-forest">Gulung OEM</div>
+                            <div className="text-[10px] text-charcoal-muted mt-0.5">Pukal Kilang</div>
+                            <div className="text-xs font-black text-forest mt-1">RM1,000</div>
+                          </Link>
+                          <Link
+                            href="/products/kusyen-sofa-oem"
+                            onClick={() => setActiveMega(null)}
+                            className="p-2 rounded-xl bg-cream/70 hover:bg-cream border border-borderLight hover:border-gold transition-all block group text-center"
+                          >
+                            <div className="text-xl mb-1">🛋️</div>
+                            <div className="font-bold text-xs text-charcoal group-hover:text-forest">Kusyen OEM</div>
+                            <div className="text-[10px] text-charcoal-muted mt-0.5">Pukal Kilang</div>
+                            <div className="text-xs font-black text-forest mt-1">RM1,000</div>
+                          </Link>
+                        </div>
+                        <div className="mt-3 pt-2 border-t border-borderLight flex items-center justify-between">
+                          <span className="text-[11px] text-charcoal-muted">
+                            Khas untuk jenama sendiri, tender institusi, hotel & asrama.
+                          </span>
+                          <Link
+                            href="/collections/custom-oem"
+                            onClick={() => setActiveMega(null)}
+                            className="text-xs font-bold text-forest hover:text-gold-dark flex items-center gap-1"
+                          >
+                            <span>Terokai Pakej OEM</span>
+                            <ArrowRight className="w-3.5 h-3.5" />
                           </Link>
                         </div>
                       </div>

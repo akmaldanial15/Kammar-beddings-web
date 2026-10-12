@@ -10,6 +10,8 @@ import {
   HelpCircle,
   CheckCircle2,
   AlertCircle,
+  AlertTriangle,
+  RefreshCw,
   ChevronDown,
   Tag,
   CreditCard as CardIcon,
@@ -74,6 +76,7 @@ const MALAYSIAN_BANKS = [
 export function CheckoutClient({ initialPaymentSettings, initialSiteSettings, availableProducts }: CheckoutClientProps) {
   const {
     items,
+    addItem,
     subtotalSen,
     couponCode,
     applyCoupon,
@@ -88,7 +91,38 @@ export function CheckoutClient({ initialPaymentSettings, initialSiteSettings, av
   const router = useRouter()
   const searchParams = useSearchParams()
 
-  const isCancelled = searchParams.get('cancelled') === 'true'
+  const isCancelled =
+    searchParams.get('cancelled') === 'true' ||
+    searchParams.get('status') === 'failed' ||
+    searchParams.get('status') === 'cancelled'
+  const orderIdParam = searchParams.get('orderId')
+  const [hasDismissedCancel, setHasDismissedCancel] = useState(false)
+  const [cancelledOrder, setCancelledOrder] = useState<any>(null)
+  const [loadingCancelledOrder, setLoadingCancelledOrder] = useState(false)
+
+  // Auto-fetch cancelled/unpaid order details if orderId is provided or stored
+  useEffect(() => {
+    if (isCancelled && !hasDismissedCancel) {
+      const orderIdToFetch =
+        orderIdParam ||
+        (typeof window !== 'undefined'
+          ? sessionStorage.getItem('kamaar_last_order_id')
+          : null)
+
+      if (orderIdToFetch) {
+        setLoadingCancelledOrder(true)
+        fetch(`/api/orders/${orderIdToFetch}`)
+          .then((r) => r.json())
+          .then((data) => {
+            if (data && data.order) {
+              setCancelledOrder(data.order)
+            }
+          })
+          .catch(() => {})
+          .finally(() => setLoadingCancelledOrder(false))
+      }
+    }
+  }, [isCancelled, orderIdParam, hasDismissedCancel])
 
   // Settings & Fulfillment configuration
   const [paymentSettings, setPaymentSettings] = useState<PaymentSettings | undefined>(initialPaymentSettings)
@@ -418,6 +452,12 @@ export function CheckoutClient({ initialPaymentSettings, initialSiteSettings, av
         return
       }
 
+      // Save order snapshot in session storage for instant recovery if payment fails/cancels
+      try {
+        if (data.orderId) sessionStorage.setItem('kamaar_last_order_id', data.orderId)
+        sessionStorage.setItem('kamaar_last_checkout_items', JSON.stringify(items))
+      } catch (_) {}
+
       // Clear client cart after session persistence
       clearCart()
 
@@ -516,6 +556,212 @@ export function CheckoutClient({ initialPaymentSettings, initialSiteSettings, av
 
   // Fallback product image if missing or empty
   const defaultProductImage = '/images/products/tilam-toto-queen.jpg'
+
+  const handleRetryPayment = () => {
+    // If cart is currently empty, restore items from cancelledOrder or sessionStorage
+    if (items.length === 0) {
+      if (cancelledOrder?.items && cancelledOrder.items.length > 0) {
+        cancelledOrder.items.forEach((it: any) => {
+          addItem({
+            productId: it.productId,
+            variantId: it.variantId,
+            productName: it.productName,
+            sizeName: it.sizeName || 'Standard',
+            sku: it.sku || 'KAMAAR-PROD',
+            dimensions: it.dimensions || '',
+            priceSen: it.unitPriceSen || it.priceSen || 0,
+            quantity: it.quantity || 1,
+            stockAvailable: 99,
+            imageUrl: it.imageUrl || defaultProductImage,
+          })
+        })
+      } else {
+        try {
+          const saved = sessionStorage.getItem('kamaar_last_checkout_items')
+          if (saved) {
+            const parsed = JSON.parse(saved)
+            if (Array.isArray(parsed)) {
+              parsed.forEach((it: any) => addItem(it))
+            }
+          }
+        } catch (_) {}
+      }
+    }
+    setHasDismissedCancel(true)
+    router.replace('/checkout')
+  }
+
+  // =========================================================================
+  // 1. DEDICATED COMPREHENSIVE PAYMENT CANCELLED / FAILED SCREEN
+  // =========================================================================
+  if (isCancelled && !hasDismissedCancel) {
+    return (
+      <div className="min-h-screen bg-[#FDFBF7] text-[#2D2A26] font-sans antialiased selection:bg-gold/20 selection:text-forest flex flex-col">
+        {/* Distraction-free Checkout Header */}
+        <header className="border-b border-[#E8E2D8] bg-white/95 backdrop-blur-md sticky top-0 z-40 shadow-2xs">
+          <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 h-20 flex items-center justify-between gap-4">
+            <Link
+              href="/cart"
+              className="inline-flex items-center space-x-2 text-xs font-semibold text-charcoal-muted hover:text-forest py-2 px-3 rounded-lg hover:bg-stone-50 transition-colors"
+            >
+              <ArrowLeft className="w-4 h-4 text-forest" />
+              <span>Kembali ke Troli</span>
+            </Link>
+
+            <Link href="/" className="block">
+              <KamaarLogo variant="horizontal" size="md" theme="light" />
+            </Link>
+
+            <div className="flex items-center space-x-1.5 text-xs text-charcoal-muted">
+              <ShieldCheck className="w-4 h-4 text-forest" />
+              <span className="hidden sm:inline font-medium">Bantuan Pembayaran</span>
+            </div>
+          </div>
+        </header>
+
+        {/* Main Body */}
+        <main className="flex-1 py-10 sm:py-16 px-4">
+          <div className="max-w-2xl mx-auto space-y-6">
+            
+            {/* Main Status Card */}
+            <div className="bg-white rounded-3xl p-6 sm:p-10 border border-[#E8E2D8] shadow-card text-center space-y-6">
+              
+              {/* Alert Badge Icon */}
+              <div className="w-16 h-16 rounded-full bg-rose-50 border border-rose-200 text-rose-600 mx-auto flex items-center justify-center shadow-xs">
+                <AlertCircle className="w-9 h-9" />
+              </div>
+
+              <div className="space-y-2">
+                <span className="inline-block px-3.5 py-1 bg-rose-100 text-rose-800 text-[11px] font-bold uppercase tracking-widest rounded-full">
+                  STATUS PEMBAYARAN: TIDAK BERJAYA / DIBATALKAN
+                </span>
+
+                <h1 className="font-serif text-2xl sm:text-3xl font-bold text-forest">
+                  Sesi Pembayaran Dibatalkan Atau Tidak Berjaya
+                </h1>
+
+                <p className="text-sm text-charcoal-muted max-w-lg mx-auto leading-relaxed">
+                  <strong className="text-forest font-semibold">Jangan risau, tiada sebarang wang telah ditolak</strong> daripada akaun bank atau eWallet anda. Maklumat tempahan anda masih selamat disimpan.
+                </p>
+              </div>
+
+              {/* Order Info Card (If order details found) */}
+              {(cancelledOrder || orderIdParam) && (
+                <div className="p-4 sm:p-5 bg-[#FAF7F2] rounded-2xl border border-[#E8E2D8] text-left text-xs space-y-3">
+                  <div className="flex items-center justify-between pb-3 border-b border-[#E8E2D8]">
+                    <div>
+                      <span className="text-[10px] uppercase font-bold text-charcoal-muted block">Rujukan Pesanan</span>
+                      <span className="font-mono font-bold text-forest text-sm">
+                        {cancelledOrder?.orderNumber || orderIdParam}
+                      </span>
+                    </div>
+                    {cancelledOrder && (
+                      <div className="text-right">
+                        <span className="text-[10px] uppercase font-bold text-charcoal-muted block">Jumlah Pesanan</span>
+                        <span className="font-mono font-bold text-forest text-sm">
+                          {formatMYR(cancelledOrder.totalSen)}
+                        </span>
+                      </div>
+                    )}
+                  </div>
+
+                  {cancelledOrder?.items && cancelledOrder.items.length > 0 && (
+                    <div className="space-y-1.5 pt-1">
+                      <span className="text-[10px] uppercase font-bold text-charcoal-muted block">Item Yang Ditempah:</span>
+                      <ul className="divide-y divide-borderLight/60">
+                        {cancelledOrder.items.map((it: any) => (
+                          <li key={it.id || it.variantId} className="py-1.5 flex justify-between items-center text-xs">
+                            <span className="font-medium text-charcoal truncate mr-2">
+                              {it.productName} ({it.sizeName}) &times; {it.quantity}
+                            </span>
+                            <span className="font-mono text-forest font-bold shrink-0">
+                              {formatMYR(it.lineTotalSen || it.unitPriceSen * it.quantity)}
+                            </span>
+                          </li>
+                        ))}
+                      </ul>
+                    </div>
+                  )}
+
+                  <div className="pt-2 flex items-center gap-2 text-[11px] text-forest font-medium">
+                    <ShieldCheck className="w-4 h-4 text-gold shrink-0" />
+                    <span>Stok barangan anda disimpan sementara selama 24 jam. Anda boleh teruskan semula bayaran bila-bila masa.</span>
+                  </div>
+                </div>
+              )}
+
+              {/* Common Reasons Card */}
+              <div className="p-4 sm:p-5 bg-stone-50/80 rounded-2xl border border-stone-200/80 text-left text-xs space-y-3">
+                <span className="text-[11px] font-bold text-charcoal uppercase tracking-wider flex items-center gap-1.5">
+                  <HelpCircle className="w-4 h-4 text-gold-dark" />
+                  <span>Kemungkinan Sebab Transaksi Tidak Berjaya:</span>
+                </span>
+                <ul className="space-y-2 text-charcoal-muted text-[11px] leading-relaxed">
+                  <li className="flex items-start gap-2">
+                    <span className="text-rose-500 font-bold shrink-0">&bull;</span>
+                    <span><strong>Sesi Tamat (Timeout):</strong> Sesi perbankan FPX tamat tempoh semasa menunggu kelulusan TAC/OTP.</span>
+                  </li>
+                  <li className="flex items-start gap-2">
+                    <span className="text-rose-500 font-bold shrink-0">&bull;</span>
+                    <span><strong>Dibatalkan:</strong> Butang &ldquo;Cancel&rdquo; ditekan pada halaman log masuk bank atau aplikasi Touch &apos;n Go.</span>
+                  </li>
+                  <li className="flex items-start gap-2">
+                    <span className="text-rose-500 font-bold shrink-0">&bull;</span>
+                    <span><strong>Had Baki / Had Harian:</strong> Baki akaun tidak mencukupi atau transaksi melebihi had harian perbankan internet anda.</span>
+                  </li>
+                  <li className="flex items-start gap-2">
+                    <span className="text-rose-500 font-bold shrink-0">&bull;</span>
+                    <span><strong>Gangguan Sistem Bank:</strong> Server bank atau sistem FPX sedang menjalani penyelenggaraan sementara.</span>
+                  </li>
+                </ul>
+              </div>
+
+              {/* Action Buttons */}
+              <div className="pt-2 space-y-3">
+                <button
+                  type="button"
+                  onClick={handleRetryPayment}
+                  className="w-full py-4 px-6 bg-forest hover:bg-forest-dark text-warmwhite text-sm font-bold rounded-2xl transition-all shadow-md flex items-center justify-center gap-2 cursor-pointer group hover:scale-[1.01]"
+                >
+                  <RefreshCw className="w-4 h-4 group-hover:rotate-180 transition-transform duration-500" />
+                  <span>Cuba Bayar Semula Sekarang (Pilih Bank Lain / Kaedah Lain)</span>
+                </button>
+
+                <a
+                  href={`https://wa.me/60194786991?text=${encodeURIComponent(
+                    `Salam KAMAAR Beddings (Tunas Sinar Jaya), pembayaran pesanan saya ${
+                      cancelledOrder?.orderNumber ? `[${cancelledOrder.orderNumber}]` : ''
+                    } tidak berjaya. Boleh saya dapatkan bantuan atau buat pemindahan bank manual (Instant Transfer)?`
+                  )}`}
+                  target="_blank"
+                  rel="noopener noreferrer"
+                  className="w-full py-3.5 px-6 bg-[#25D366] hover:bg-[#20ba59] text-white text-xs sm:text-sm font-bold rounded-2xl transition-all shadow-sm flex items-center justify-center gap-2"
+                >
+                  <Phone className="w-4 h-4 fill-white" />
+                  <span>Bantuan Pembayaran Kilang via WhatsApp (019-478 6991)</span>
+                </a>
+
+                <Link
+                  href="/collections/tilam-toto"
+                  className="inline-block pt-2 text-xs font-semibold text-charcoal-muted hover:text-forest transition-colors"
+                >
+                  &larr; Kembali ke Katalog Tilam &amp; Bantal
+                </Link>
+              </div>
+
+            </div>
+
+            {/* Reassurance Guarantee Footer */}
+            <div className="text-center text-xs text-charcoal-muted/80 space-y-1">
+              <p>TUNAS SINAR JAYA ENTERPRISE (PG0395419W) &bull; KAMAAR BEDDINGS</p>
+              <p className="text-[11px]">Khidmat Pelanggan Kilang: Isnin &ndash; Sabtu (9:00 AM &ndash; 6:00 PM)</p>
+            </div>
+
+          </div>
+        </main>
+      </div>
+    )
+  }
 
   if (items.length === 0 && !isSubmitting) {
     return (

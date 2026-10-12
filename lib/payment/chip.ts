@@ -1,35 +1,58 @@
 import crypto from 'crypto'
+import fs from 'fs'
+import path from 'path'
 import { PaymentProvider, CreatePaymentSessionParams, PaymentSessionResult } from './provider'
 
-const chipBrandId = process.env.CHIP_BRAND_ID || ''
-const chipSecretKey = process.env.CHIP_SECRET_KEY || ''
-const chipPublicKey = process.env.CHIP_PUBLIC_KEY || ''
+function getChipConfig() {
+  let brandId = process.env.CHIP_BRAND_ID || ''
+  let secretKey = process.env.CHIP_SECRET_KEY || ''
+  let publicKey = process.env.CHIP_PUBLIC_KEY || ''
 
-// Check whether real CHIP API keys are configured
-const isRealChipConfigured =
-  Boolean(chipBrandId) &&
-  Boolean(chipSecretKey) &&
-  !chipSecretKey.includes('demo') &&
-  !chipSecretKey.includes('mock')
+  if (!brandId || !secretKey) {
+    try {
+      const envPath = path.join(process.cwd(), '.env')
+      if (fs.existsSync(envPath)) {
+        const raw = fs.readFileSync(envPath, 'utf8')
+        const brandMatch = raw.match(/^CHIP_BRAND_ID=(.*)$/m)
+        const secretMatch = raw.match(/^CHIP_SECRET_KEY=(.*)$/m)
+        const publicMatch = raw.match(/^CHIP_PUBLIC_KEY=(.*)$/m)
+        if (brandMatch && brandMatch[1].trim()) brandId = brandMatch[1].trim()
+        if (secretMatch && secretMatch[1].trim()) secretKey = secretMatch[1].trim()
+        if (publicMatch && publicMatch[1].trim()) publicKey = publicMatch[1].trim()
+      }
+    } catch (_) {}
+  }
+
+  const isReal =
+    Boolean(brandId) &&
+    Boolean(secretKey) &&
+    !secretKey.includes('demo') &&
+    !secretKey.includes('mock')
+
+  return { brandId, secretKey, publicKey, isReal }
+}
 
 export class ChipPaymentProvider implements PaymentProvider {
   name = 'chip'
 
   async createCheckoutSession(params: CreatePaymentSessionParams): Promise<PaymentSessionResult> {
     const appUrl = process.env.NEXT_PUBLIC_APP_URL || 'http://localhost:3000'
+    const { brandId, secretKey, isReal } = getChipConfig()
 
     // If live/sandbox CHIP credentials are provided
-    if (isRealChipConfigured) {
+    if (isReal) {
       try {
-        const purchasePayload = {
+        const isLocalOrCustomPort = appUrl.includes('localhost') || /:\d+/.test(appUrl)
+        const callbackUrl = isLocalOrCustomPort ? undefined : `${appUrl}/api/webhooks/chip`
+
+        const purchasePayload: any = {
           success_redirect: params.successUrl,
           failure_redirect: params.cancelUrl,
           cancel_redirect: params.cancelUrl,
-          success_callback: `${appUrl}/api/webhooks/chip`,
-          creator_agent: 'KAMAAR Beddings (Tunas Sinar Jaya Enterprise)',
+          creator_agent: 'KAMAAR Beddings',
           reference: params.orderId,
           platform: 'web',
-          brand_id: chipBrandId,
+          brand_id: brandId,
           client: {
             email: params.customerEmail,
             full_name: params.customerName,
@@ -45,10 +68,14 @@ export class ChipPaymentProvider implements PaymentProvider {
           },
         }
 
+        if (callbackUrl) {
+          purchasePayload.success_callback = callbackUrl
+        }
+
         const res = await fetch('https://gate.chip-in.asia/api/v1/purchases/', {
           method: 'POST',
           headers: {
-            Authorization: `Bearer ${chipSecretKey}`,
+            Authorization: `Bearer ${secretKey}`,
             'Content-Type': 'application/json',
           },
           body: JSON.stringify(purchasePayload),
@@ -88,13 +115,14 @@ export class ChipPaymentProvider implements PaymentProvider {
     signature: string
   ): Promise<{ isValid: boolean; eventType?: string; eventId?: string; payload?: any; orderId?: string }> {
     try {
+      const { publicKey, isReal } = getChipConfig()
       // If CHIP Public Key is configured, verify X-Signature (RSA-SHA256)
-      if (chipPublicKey && signature) {
+      if (publicKey && signature) {
         try {
           const verifier = crypto.createVerify('RSA-SHA256')
           verifier.update(rawBody)
-          const isVerified = verifier.verify(chipPublicKey, signature, 'base64')
-          if (!isVerified && isRealChipConfigured) {
+          const isVerified = verifier.verify(publicKey, signature, 'base64')
+          if (!isVerified && isReal) {
             console.warn('CHIP RSA-SHA256 signature verification failed')
             return { isValid: false }
           }
@@ -146,6 +174,24 @@ export class ChipPaymentProvider implements PaymentProvider {
       console.error('CHIP Webhook parsing error:', err)
       return { isValid: false }
     }
+  }
+
+  async getPurchase(purchaseId: string): Promise<any> {
+    const { secretKey } = getChipConfig()
+    if (!secretKey || !purchaseId) return null
+    try {
+      const res = await fetch(`https://gate.chip-in.asia/api/v1/purchases/${purchaseId}/`, {
+        headers: {
+          Authorization: `Bearer ${secretKey}`,
+        },
+      })
+      if (res.ok) {
+        return await res.json()
+      }
+    } catch (err) {
+      console.error('CHIP getPurchase error:', err)
+    }
+    return null
   }
 }
 

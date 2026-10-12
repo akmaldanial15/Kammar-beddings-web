@@ -9,38 +9,63 @@ import { useLanguage } from '@/lib/i18n/LanguageContext'
 export function CategoryGrid() {
   const { t } = useLanguage()
 
-  const mattressTypes = [
+  interface MattressType {
+    title: string
+    subtitle: React.ReactNode
+    tag: string
+    link: string
+    imageUrl: string
+  }
+
+  const mattressTypes: MattressType[] = [
     {
       title: 'TC SHODDY FIBRE',
-      subtitle:
-        'TC SHODDY dihasilkan melalui proses reverse engineering daripada "waste yarn" menjadi kapas yang lembut dan gebu, memberikan isian lebih padat, kenyal serta keselesaan optimum kepada pengguna.',
+      subtitle: (
+        <>
+          <strong className="font-bold text-white">TC SHODDY</strong> dihasilkan melalui proses{' '}
+          <span className="italic">reverse engineering</span> daripada &ldquo;waste yarn&rdquo; menjadi kapas yang lembut dan gebu, memberikan isian lebih padat, kenyal serta keselesaan optimum kepada pengguna.
+        </>
+      ),
       tag: 'LEBIH JIMAT',
       link: '/collections/tilam-gulung',
       imageUrl: '/images/products/tilam-gulung-a-tc.png',
     },
     {
       title: 'POLYESTER FIBRE',
-      subtitle:
-        'POLYESTER STAPLE FIBRE (POLY) memberikan isian yang lembut, gebu dan ringan, dengan keanjalan yang baik serta mampu mengekalkan bentuk. Sesuai untuk bantal dan tilam, tahan lama, mudah dijaga dan memberikan keselesaan optimum ketika tidur.',
+      subtitle: (
+        <>
+          <strong className="font-bold text-white">POLYESTER STAPLE FIBRE (POLY)</strong> memberikan isian yang lembut, gebu dan ringan, dengan keanjalan yang baik serta mampu mengekalkan bentuk. Sesuai untuk{' '}
+          <strong className="font-bold text-white">bantal dan tilam</strong>, tahan lama, mudah dijaga dan memberikan keselesaan optimum ketika tidur.
+        </>
+      ),
       tag: 'PALING LARIS',
       link: '/collections/tilam-toto',
       imageUrl: '/images/products/toto-single-poly.png',
     },
     {
       title: 'KEKABU ASLI',
-      subtitle:
-        'Dihasilkan daripada serat kekabu semula jadi yang ringan dan gebu, memberikan sokongan lembut, pengudaraan yang baik serta rasa nyaman ketika tidur. Pilihan semula jadi untuk tidur yang lebih selesa setiap malam.',
+      subtitle: (
+        <>
+          Dihasilkan daripada serat kekabu semula jadi yang ringan dan gebu, memberikan sokongan lembut, pengudaraan yang baik serta rasa nyaman ketika tidur.{' '}
+          <strong className="font-bold text-white">Pilihan semula jadi untuk tidur yang lebih selesa setiap malam.</strong>
+        </>
+      ),
       tag: 'ORGANIK',
       link: '/collections/tilam-kekabu',
       imageUrl: '/images/products/tilam-gulung-kekabu-asli.png',
     },
     {
       title: 'JELAJAH PROMOSI & JUALAN GUDANG',
-      subtitle:
-        'Kami bawakan pelbagai produk KAMAAR seperti bantal, tilam, selimut dan pelbagai produk berkualiti terus dari kilang, ditawarkan pada harga promosi istimewa di tempat anda.',
+      subtitle: (
+        <>
+          Kami bawakan pelbagai produk <strong className="font-bold text-white">KAMAAR</strong> seperti bantal, tilam, selimut dan pelbagai produk berkualiti{' '}
+          <strong className="font-bold text-white">terus dari kilang</strong>, ditawarkan pada{' '}
+          <strong className="font-bold text-white">harga promosi istimewa di tempat anda.</strong>
+        </>
+      ),
       tag: 'KAMI KE TEMPAT ANDA',
       link: '/jelajah-promosi',
-      imageUrl: '/images/promosi/PROMOSI 1.png',
+      imageUrl: '/images/promosi/PROMOSI 2.png',
     },
   ]
 
@@ -118,7 +143,7 @@ export function CategoryGrid() {
             <Link
               key={idx}
               href={type.link}
-              className={`group relative h-[320px] sm:h-[380px] rounded-2xl overflow-hidden shadow-card border border-borderLight flex flex-col justify-end p-6 sm:p-8 luxury-card-hover animate-fade-in-up ${
+              className={`group relative min-h-[380px] sm:min-h-[440px] rounded-2xl overflow-hidden shadow-card border border-borderLight flex flex-col justify-end p-6 sm:p-8 luxury-card-hover animate-fade-in-up ${
                 idx === 0 ? 'delay-50' : idx === 1 ? 'delay-100' : idx === 2 ? 'delay-150' : 'delay-200'
               }`}
             >
@@ -126,18 +151,19 @@ export function CategoryGrid() {
                 src={type.imageUrl}
                 alt={type.title}
                 fill
-                className="object-cover transition-transform duration-700 group-hover:scale-105"
+                sizes="(max-width: 768px) 100vw, 50vw"
+                className="object-cover object-center transition-transform duration-700 group-hover:scale-105"
               />
-              <div className="absolute inset-0 bg-gradient-to-t from-forest-dark/95 via-forest-dark/50 to-transparent" />
+              <div className="absolute inset-0 bg-gradient-to-t from-forest-dark/95 via-forest-dark/60 to-transparent" />
 
-              <div className="relative z-10 space-y-2">
+              <div className="relative z-10 space-y-2.5">
                 <span className="inline-block px-2.5 py-0.5 rounded text-[10px] font-bold uppercase tracking-wider bg-gold text-forest-dark shadow-xs">
                   {type.tag}
                 </span>
                 <h3 className="font-serif text-2xl sm:text-3xl font-bold text-warmwhite group-hover:text-gold-light transition-colors">
                   {type.title}
                 </h3>
-                <p className="text-xs sm:text-sm text-warmwhite/80 line-clamp-2 max-w-md">
+                <p className="text-xs sm:text-sm text-warmwhite/95 leading-relaxed">
                   {type.subtitle}
                 </p>
                 <div className="pt-2 flex items-center space-x-2 text-xs font-bold text-gold uppercase tracking-wider">
