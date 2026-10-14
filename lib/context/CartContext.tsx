@@ -6,6 +6,7 @@ import { calculateTieredPrice } from '@/lib/utils/pricing'
 
 interface CartContextType {
   items: CartItem[]
+  isLoaded: boolean
   isDrawerOpen: boolean
   openDrawer: () => void
   closeDrawer: () => void
@@ -193,6 +194,7 @@ export function CartProvider({ children }: { children: React.ReactNode }) {
     <CartContext.Provider
       value={{
         items,
+        isLoaded,
         isDrawerOpen,
         openDrawer,
         closeDrawer,

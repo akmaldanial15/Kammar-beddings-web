@@ -73,9 +73,13 @@ const MALAYSIAN_BANKS = [
   { id: 'bankrakyat', name: 'Bank Rakyat' },
 ]
 
+// Fallback product image if missing or empty
+const defaultProductImage = '/images/products/tilam-toto-queen.jpg'
+
 export function CheckoutClient({ initialPaymentSettings, initialSiteSettings, availableProducts }: CheckoutClientProps) {
   const {
     items,
+    isLoaded,
     addItem,
     subtotalSen,
     couponCode,
@@ -308,6 +312,83 @@ export function CheckoutClient({ initialPaymentSettings, initialSiteSettings, av
     }
   }, [])
 
+  // Reassurance banner if customer navigated back or returned from uncompleted gateway session
+  const [showRestoredNotice, setShowRestoredNotice] = useState(false)
+  useEffect(() => {
+    try {
+      const lastOrderId = sessionStorage.getItem('kamaar_last_order_id')
+      const completedOrderId = sessionStorage.getItem('kamaar_completed_order_id')
+      if (lastOrderId && lastOrderId !== completedOrderId && !isCancelled) {
+        setShowRestoredNotice(true)
+      }
+    } catch (_) {}
+  }, [isCancelled])
+
+  // Handle browser Back / bfcache restore: always ensure isSubmitting is reset so buttons remain active
+  useEffect(() => {
+    setIsSubmitting(false)
+    const handlePageShow = () => {
+      setIsSubmitting(false)
+    }
+    window.addEventListener('pageshow', handlePageShow)
+    return () => window.removeEventListener('pageshow', handlePageShow)
+  }, [])
+
+  // Auto-restore items from sessionStorage if cart was somehow cleared or customer returns from payment gateway
+  useEffect(() => {
+    if (isLoaded && items.length === 0) {
+      try {
+        const saved = sessionStorage.getItem('kamaar_last_checkout_items')
+        if (saved) {
+          const parsed = JSON.parse(saved)
+          if (Array.isArray(parsed) && parsed.length > 0) {
+            parsed.forEach((it: any) => {
+              addItem({
+                productId: it.productId,
+                variantId: it.variantId,
+                productName: it.productName,
+                sizeName: it.sizeName || 'Standard',
+                sku: it.sku || 'KAMAAR-PROD',
+                dimensions: it.dimensions || '',
+                priceSen: it.unitPriceSen || it.priceSen || 0,
+                quantity: it.quantity || 1,
+                stockAvailable: it.stockAvailable || 99,
+                imageUrl: it.imageUrl || defaultProductImage,
+                quantityTiers: it.quantityTiers,
+              })
+            })
+          }
+        }
+      } catch (_) {}
+    }
+  }, [isLoaded, items.length, addItem])
+
+  // Restore customer form fields on mount from sessionStorage draft or localStorage saved customer info
+  useEffect(() => {
+    try {
+      const savedSession = sessionStorage.getItem('kamaar_last_checkout_form')
+      const savedLocal = localStorage.getItem('kamaar_saved_customer_info')
+      const source = savedSession ? JSON.parse(savedSession) : (savedLocal ? JSON.parse(savedLocal) : null)
+      if (source && typeof source === 'object') {
+        if (source.contactInfo) setContactInfo(source.contactInfo)
+        if (source.firstName) setFirstName(source.firstName)
+        if (source.lastName) setLastName(source.lastName)
+        if (source.company) setCompany(source.company)
+        if (source.addressLine1) setAddressLine1(source.addressLine1)
+        if (source.addressLine2) setAddressLine2(source.addressLine2)
+        if (source.city) setCity(source.city)
+        if (source.state) setState(source.state)
+        if (source.postcode) setPostcode(source.postcode)
+        if (source.phone) setPhone(source.phone)
+        if (source.fulfillmentType) setFulfillmentType(source.fulfillmentType)
+        if (source.deliveryNotes) setDeliveryNotes(source.deliveryNotes)
+        if (typeof source.hasLiftAccess === 'boolean') setHasLiftAccess(source.hasLiftAccess)
+        if (source.floorLevel) setFloorLevel(source.floorLevel)
+        if (source.selectedMethodId) setSelectedMethodId(source.selectedMethodId)
+      }
+    } catch (_) {}
+  }, [])
+
   // Check if any item is a mattress
   const hasBulkyMattress = items.some(
     (i) =>
@@ -500,14 +581,53 @@ export function CheckoutClient({ initialPaymentSettings, initialSiteSettings, av
         return
       }
 
-      // Save order snapshot in session storage for instant recovery if payment fails/cancels
+      // Save order snapshot and form state in session storage for instant recovery if payment fails/cancels or user presses back
       try {
         if (data.orderId) sessionStorage.setItem('kamaar_last_order_id', data.orderId)
         sessionStorage.setItem('kamaar_last_checkout_items', JSON.stringify(items))
+        sessionStorage.setItem(
+          'kamaar_last_checkout_form',
+          JSON.stringify({
+            contactInfo: effectiveEmail,
+            firstName,
+            lastName,
+            company,
+            addressLine1,
+            addressLine2,
+            city,
+            state,
+            postcode,
+            phone: effectivePhone,
+            fulfillmentType,
+            deliveryNotes,
+            hasLiftAccess,
+            floorLevel,
+            selectedMethodId: selectedMethodId || selectedMethod?.id,
+          })
+        )
+        if (saveInfoForNextTime) {
+          localStorage.setItem(
+            'kamaar_saved_customer_info',
+            JSON.stringify({
+              contactInfo: effectiveEmail,
+              firstName,
+              lastName,
+              company,
+              addressLine1,
+              addressLine2,
+              city,
+              state,
+              postcode,
+              phone: effectivePhone,
+            })
+          )
+        }
       } catch (_) {}
 
-      // Clear client cart after session persistence
-      clearCart()
+      // NOTE: We deliberately do NOT call clearCart() here.
+      // Cart items and customer state are preserved so if the customer presses the browser's "Back" button
+      // or cancels at the gateway, their items and inputs are not lost.
+      // Cart clearing is performed on /order/confirmed/[orderId] after the purchase is confirmed.
 
       // Redirect to payment gateway URL or local development sandbox
       window.location.href = data.checkoutUrl
@@ -601,9 +721,6 @@ export function CheckoutClient({ initialPaymentSettings, initialSiteSettings, av
         )
     }
   }
-
-  // Fallback product image if missing or empty
-  const defaultProductImage = '/images/products/tilam-toto-queen.jpg'
 
   const handleRetryPayment = () => {
     // If cart is currently empty, restore items from cancelledOrder or sessionStorage
@@ -811,6 +928,26 @@ export function CheckoutClient({ initialPaymentSettings, initialSiteSettings, av
     )
   }
 
+  const hasSavedDraft =
+    typeof window !== 'undefined' &&
+    Boolean(sessionStorage.getItem('kamaar_last_checkout_items'))
+
+  if (!isLoaded || (items.length === 0 && hasSavedDraft)) {
+    return (
+      <div className="min-h-screen bg-[#FAF7F2] text-[#222] font-sans flex flex-col justify-center items-center py-20 px-4">
+        <div className="w-full max-w-md bg-white rounded-3xl p-8 sm:p-10 border border-[#E8E2D8] shadow-sm text-center space-y-4">
+          <div className="w-10 h-10 border-2 border-forest border-t-transparent rounded-full animate-spin mx-auto" />
+          <h2 className="font-serif text-lg font-bold text-forest">
+            Memuatkan Sesi Tempahan Anda...
+          </h2>
+          <p className="text-xs text-charcoal-muted leading-relaxed">
+            Sila tunggu sebentar sementara kami memulihkan barangan dan troli anda.
+          </p>
+        </div>
+      </div>
+    )
+  }
+
   if (items.length === 0 && !isSubmitting) {
     return (
       <div className="min-h-screen bg-[#FAF7F2] text-[#222] font-sans flex flex-col justify-center items-center py-20 px-4">
@@ -911,6 +1048,28 @@ export function CheckoutClient({ initialPaymentSettings, initialSiteSettings, av
           </nav>
         </div>
       </div>
+
+      {/* Reassurance banner when returning to checkout after navigating back */}
+      {showRestoredNotice && (
+        <div className="bg-amber-50 border-b border-amber-200/90 px-4 py-3 transition-all animate-fadeIn">
+          <div className="max-w-7xl mx-auto flex items-center justify-between gap-3 text-xs text-amber-950">
+            <div className="flex items-center gap-2">
+              <CheckCircle2 className="w-4 h-4 text-emerald-700 shrink-0" />
+              <span>
+                <strong>Sesi Tempahan Anda Dikekalkan:</strong> Barangan troli dan maklumat penghantaran anda masih tersimpan rapi. Anda boleh menyemak semula butiran pesanan anda di bawah atau teruskan pembayaran.
+              </span>
+            </div>
+            <button
+              type="button"
+              onClick={() => setShowRestoredNotice(false)}
+              className="p-1 hover:bg-amber-100 rounded text-amber-800 hover:text-amber-950 transition-colors"
+              title="Tutup notis"
+            >
+              <X className="w-3.5 h-3.5" />
+            </button>
+          </div>
+        </div>
+      )}
 
       {/* ========================================================================= */}
       {/* 3. TWO-COLUMN BESPOKE CHECKOUT LAYOUT                                    */}

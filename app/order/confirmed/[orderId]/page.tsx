@@ -7,6 +7,7 @@ import { getOrderById, updateOrderStatus } from '@/lib/db'
 import { chipProvider } from '@/lib/payment/chip'
 import { formatMYR, formatDateTimeMY } from '@/lib/utils/format'
 import { PrintButton } from '@/components/order/PrintButton'
+import { ClearCartOnSuccess } from '@/components/order/ClearCartOnSuccess'
 
 interface Props {
   params: { orderId: string }
@@ -40,6 +41,7 @@ export default async function OrderConfirmedPage({ params }: Props) {
 
   return (
     <div className="bg-cream-light py-8 sm:py-16 min-h-[85vh] print:bg-white print:py-0 print:min-h-0 print:text-black">
+      <ClearCartOnSuccess orderId={order.id} />
       <div className="max-w-3xl mx-auto px-4 sm:px-6 print:max-w-none print:px-0 print:mx-0">
         {/* Status Header: Web only (Hidden in Print) */}
         <div className="bg-warmwhite rounded-3xl p-6 sm:p-10 border border-borderLight shadow-card text-center mb-8 print:hidden">
