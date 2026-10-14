@@ -231,7 +231,16 @@ export async function POST(request: NextRequest) {
     })
 
     // 6. Create Payment Session via CHIP (FPX / Touch 'n Go eWallet)
-    const appUrl = process.env.NEXT_PUBLIC_APP_URL || 'http://localhost:3000'
+    const originHeader = request.headers.get('origin')
+    const forwardedHost = request.headers.get('x-forwarded-host') || request.headers.get('host')
+    const forwardedProto = request.headers.get('x-forwarded-proto') || 'https'
+    const dynamicOrigin = originHeader || (forwardedHost ? `${forwardedProto}://${forwardedHost}` : undefined)
+    const appUrl =
+      process.env.NEXT_PUBLIC_APP_URL ||
+      (process.env.VERCEL_URL ? `https://${process.env.VERCEL_URL}` : undefined) ||
+      dynamicOrigin ||
+      'http://localhost:3000'
+
     const preferredMethod =
       paymentMethodId === 'pay-tng' || reqProvider === 'tng' ? 'tng' : 'fpx'
 

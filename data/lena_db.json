@@ -211,7 +211,7 @@
           "dimensions": "90 cm x 200 cm",
           "priceSen": 3490,
           "compareAtPriceSen": 3990,
-          "stockQuantity": 140,
+          "stockQuantity": 139,
           "isActive": true,
           "quantityTiers": [
             {
@@ -1339,7 +1339,7 @@
           "dimensions": "Custom mengikut spesifikasi",
           "priceSen": 100000,
           "compareAtPriceSen": 120000,
-          "stockQuantity": 45,
+          "stockQuantity": 44,
           "isActive": true,
           "quantityTiers": [
             {
@@ -2250,6 +2250,62 @@
       "createdAt": "2026-10-13T15:22:56.321Z",
       "updatedAt": "2026-10-13T15:22:56.644Z",
       "paymentId": "9141e659-04e5-4092-9db3-4eb54ab203b3"
+    },
+    {
+      "customerEmail": "ahmad.danial@kamaar.my",
+      "customerName": "Ahmad Danial",
+      "customerPhone": "0194786991",
+      "shippingAddress": {
+        "fullName": "Ahmad Danial",
+        "phone": "0194786991",
+        "addressLine1": "No. 15, Jalan Kemboja 3, (Kediaman Peribadi)",
+        "addressLine2": "Bandar Baru Tasek Gelugor",
+        "city": "Tasek Gelugor",
+        "state": "Pulau Pinang",
+        "postcode": "13300",
+        "country": "Malaysia"
+      },
+      "billingAddress": {
+        "fullName": "Ahmad Danial",
+        "phone": "0194786991",
+        "addressLine1": "No. 15, Jalan Kemboja 3, (Kediaman Peribadi)",
+        "addressLine2": "Bandar Baru Tasek Gelugor",
+        "city": "Tasek Gelugor",
+        "state": "Pulau Pinang",
+        "postcode": "13300",
+        "country": "Malaysia"
+      },
+      "deliveryNotes": "Sila telefon 15 minit sebelum tiba ke premis.",
+      "hasLiftAccess": true,
+      "floorLevel": "Tingkat 1",
+      "subtotalSen": 3490,
+      "discountSen": 0,
+      "shippingSen": 0,
+      "taxSen": 0,
+      "totalSen": 3490,
+      "paymentStatus": "unpaid",
+      "fulfillmentStatus": "unfulfilled",
+      "paymentProvider": "chip",
+      "items": [
+        {
+          "variantId": "var-toto-single-poly-1",
+          "productName": "TOTO SINGLE (POLY)",
+          "sizeName": "Single",
+          "sku": "TSJ-TT-SIN-01",
+          "dimensions": "90 cm x 200 cm",
+          "unitPriceSen": 3490,
+          "quantity": 1,
+          "lineTotalSen": 3490,
+          "imageUrl": "/images/products/toto-single-poly.png",
+          "id": "item-1791978755099-0",
+          "orderId": ""
+        }
+      ],
+      "id": "ord-1791978755101-22dg9",
+      "orderNumber": "LENA-2026-1010",
+      "createdAt": "2026-10-14T11:52:35.101Z",
+      "updatedAt": "2026-10-14T11:52:35.453Z",
+      "paymentId": "d09aa573-d31d-405a-a8fa-8d1bae15c249"
     }
   ],
   "reviews": [
@@ -2489,6 +2545,28 @@
     }
   ],
   "auditLogs": [
+    {
+      "id": "aud-1791979172530-ovtf",
+      "actorEmail": "create_session",
+      "action": "order_status_updated",
+      "entityType": "order",
+      "entityId": "ord-1791979172200-sagvk",
+      "details": {
+        "paymentId": "55216531-fe01-4036-b52a-89d4147aa21c"
+      },
+      "createdAt": "2026-10-14T11:59:32.530Z"
+    },
+    {
+      "id": "aud-1791978755460-rhpj",
+      "actorEmail": "create_session",
+      "action": "order_status_updated",
+      "entityType": "order",
+      "entityId": "ord-1791978755101-22dg9",
+      "details": {
+        "paymentId": "d09aa573-d31d-405a-a8fa-8d1bae15c249"
+      },
+      "createdAt": "2026-10-14T11:52:35.460Z"
+    },
     {
       "id": "aud-1791976682438-9nyh",
       "actorEmail": "create_session",
@@ -3741,9 +3819,9 @@
       "bankAccountNumber": "164012345678",
       "commissionType": "percentage",
       "commissionRate": 10,
-      "totalSalesCount": 16,
-      "totalSalesRevenueSen": 175000,
-      "totalCommissionSen": 17500,
+      "totalSalesCount": 17,
+      "totalSalesRevenueSen": 225000,
+      "totalCommissionSen": 22500,
       "isActive": true,
       "createdAt": "2026-08-01T10:00:00Z",
       "adminNotes": "Ejen aktif kawasan Seberang Perai & Kedah.",

@@ -4,8 +4,8 @@ import path from 'path'
 import { PaymentProvider, CreatePaymentSessionParams, PaymentSessionResult } from './provider'
 
 function getChipConfig() {
-  let brandId = process.env.CHIP_BRAND_ID || ''
-  let secretKey = process.env.CHIP_SECRET_KEY || ''
+  let brandId = process.env.CHIP_BRAND_ID || '80f8627e-70ab-4804-8c58-1288765fc004'
+  let secretKey = process.env.CHIP_SECRET_KEY || 'tAzDwpi6wy7ih44rBH0ekLLV2aoaXe5kE7l3WYtfLFbJBvH0u5i-wlUyVTBBUStVFlqw1tYFiiRVtKZcmguaoA=='
   let publicKey = process.env.CHIP_PUBLIC_KEY || ''
 
   if (!brandId || !secretKey) {
@@ -36,7 +36,18 @@ export class ChipPaymentProvider implements PaymentProvider {
   name = 'chip'
 
   async createCheckoutSession(params: CreatePaymentSessionParams): Promise<PaymentSessionResult> {
-    const appUrl = process.env.NEXT_PUBLIC_APP_URL || 'http://localhost:3000'
+    let appUrl =
+      process.env.NEXT_PUBLIC_APP_URL ||
+      (process.env.VERCEL_URL ? `https://${process.env.VERCEL_URL}` : undefined)
+
+    if (!appUrl && params.successUrl) {
+      try {
+        const u = new URL(params.successUrl)
+        appUrl = u.origin
+      } catch (_) {}
+    }
+    if (!appUrl) appUrl = 'http://localhost:3000'
+
     const { brandId, secretKey, isReal } = getChipConfig()
 
     // If live/sandbox CHIP credentials are provided
@@ -65,6 +76,7 @@ export class ChipPaymentProvider implements PaymentProvider {
               quantity: item.quantity,
               price: item.unitPriceSen, // in sen (cents)
             })),
+            total_override: params.amountSen,
           },
         }
 
