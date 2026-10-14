@@ -375,7 +375,7 @@ export function Header() {
                       onMouseEnter={() => handleKeepMega('toto')}
                       onMouseLeave={handleCloseMega}
                     >
-                      <div className="w-[820px] bg-warmwhite rounded-2xl shadow-[0_25px_50px_-12px_rgba(19,50,91,0.18)] border border-borderLight p-5 grid grid-cols-12 gap-5 animate-[fadeIn_0.15s_ease-out]">
+                      <div className="w-[min(calc(100vw-3rem),820px)] max-w-[820px] bg-warmwhite rounded-2xl shadow-[0_25px_50px_-12px_rgba(19,50,91,0.18)] border border-borderLight p-4 sm:p-5 grid grid-cols-12 gap-3 sm:gap-4 lg:gap-5 animate-[fadeIn_0.15s_ease-out]">
                         {/* Col 1: Pilihan Saiz & Corak (4 cols) */}
                         <div className="col-span-4 border-r border-borderLight/80 pr-3">
                           <h4 className="text-[11px] font-bold uppercase tracking-wider text-gold-dark pb-2 border-b border-borderLight mb-2.5 flex items-center justify-between">
@@ -527,11 +527,11 @@ export function Header() {
                   {/* Mega Menu: Tilam Gulung */}
                   {activeMega === 'gulung' && (
                     <div
-                      className="absolute top-full left-1/2 -translate-x-1/2 pt-2 z-50 pointer-events-auto"
+                      className="absolute top-full left-0 pt-2 z-50 pointer-events-auto"
                       onMouseEnter={() => handleKeepMega('gulung')}
                       onMouseLeave={handleCloseMega}
                     >
-                      <div className="w-[760px] bg-warmwhite rounded-2xl shadow-[0_25px_50px_-12px_rgba(19,50,91,0.18)] border border-borderLight p-5 grid grid-cols-12 gap-5 animate-[fadeIn_0.15s_ease-out]">
+                      <div className="w-[min(calc(100vw-3rem),720px)] max-w-[720px] bg-warmwhite rounded-2xl shadow-[0_25px_50px_-12px_rgba(19,50,91,0.18)] border border-borderLight p-4 sm:p-5 grid grid-cols-12 gap-3 sm:gap-4 lg:gap-5 animate-[fadeIn_0.15s_ease-out]">
                         <div className="col-span-7">
                           <h4 className="text-[11px] font-bold uppercase tracking-wider text-gold-dark pb-2 border-b border-borderLight mb-2.5">
                             Koleksi Tilam Gulung Kilang Tunas Sinar Jaya
@@ -650,7 +650,7 @@ export function Header() {
                       onMouseEnter={() => handleKeepMega('bantal')}
                       onMouseLeave={handleCloseMega}
                     >
-                      <div className="w-[840px] bg-warmwhite rounded-2xl shadow-[0_25px_50px_-12px_rgba(19,50,91,0.18)] border border-borderLight p-5 grid grid-cols-12 gap-5 animate-[fadeIn_0.15s_ease-out]">
+                      <div className="w-[min(calc(100vw-3rem),820px)] max-w-[820px] bg-warmwhite rounded-2xl shadow-[0_25px_50px_-12px_rgba(19,50,91,0.18)] border border-borderLight p-4 sm:p-5 grid grid-cols-12 gap-3 sm:gap-4 lg:gap-5 animate-[fadeIn_0.15s_ease-out]">
                         {/* Col 1: Bantal Tidur */}
                         <div className="col-span-4 border-r border-borderLight/80 pr-3">
                           <h4 className="text-[11px] font-bold uppercase tracking-wider text-gold-dark pb-2 border-b border-borderLight mb-2.5 flex items-center justify-between">
@@ -837,7 +837,7 @@ export function Header() {
                       onMouseEnter={() => handleKeepMega('khas')}
                       onMouseLeave={handleCloseMega}
                     >
-                      <div className="w-[660px] bg-warmwhite rounded-2xl shadow-[0_20px_45px_-10px_rgba(19,50,91,0.18)] border border-borderLight p-4 animate-[fadeIn_0.15s_ease-out]">
+                      <div className="w-[min(calc(100vw-3rem),660px)] max-w-[660px] bg-warmwhite rounded-2xl shadow-[0_20px_45px_-10px_rgba(19,50,91,0.18)] border border-borderLight p-4 animate-[fadeIn_0.15s_ease-out]">
                         <h4 className="text-[11px] font-bold uppercase tracking-wider text-gold-dark pb-1.5 border-b border-borderLight mb-3">
                           Koleksi Jahitan Khas & Produk Terus Dari Kilang
                         </h4>
@@ -943,7 +943,7 @@ export function Header() {
                       onMouseEnter={() => handleKeepMega('oem')}
                       onMouseLeave={handleCloseMega}
                     >
-                      <div className="w-[660px] bg-warmwhite rounded-2xl shadow-[0_20px_45px_-10px_rgba(19,50,91,0.18)] border border-borderLight p-4 animate-[fadeIn_0.15s_ease-out]">
+                      <div className="w-[min(calc(100vw-3rem),660px)] max-w-[660px] bg-warmwhite rounded-2xl shadow-[0_20px_45px_-10px_rgba(19,50,91,0.18)] border border-borderLight p-4 animate-[fadeIn_0.15s_ease-out]">
                         <div className="flex items-center justify-between pb-2 border-b border-borderLight mb-3">
                           <h4 className="text-[11px] font-bold uppercase tracking-wider text-gold-dark">
                             Tempahan Pukal & Jahitan Custom (OEM)
@@ -1045,11 +1045,11 @@ export function Header() {
                   {/* Mega Menu: Jelajah Promosi */}
                   {activeMega === 'promosi' && (
                     <div
-                      className="absolute top-full left-1/2 -translate-x-1/2 pt-2 z-50 pointer-events-auto"
+                      className="absolute top-full right-0 pt-2 z-50 pointer-events-auto"
                       onMouseEnter={() => handleKeepMega('promosi')}
                       onMouseLeave={handleCloseMega}
                     >
-                      <div className="w-[660px] bg-warmwhite rounded-2xl shadow-[0_25px_50px_-12px_rgba(19,50,91,0.22)] border border-amber-200 p-5 grid grid-cols-12 gap-5 animate-[fadeIn_0.15s_ease-out]">
+                      <div className="w-[min(calc(100vw-3rem),660px)] max-w-[660px] bg-warmwhite rounded-2xl shadow-[0_25px_50px_-12px_rgba(19,50,91,0.22)] border border-amber-200 p-4 sm:p-5 grid grid-cols-12 gap-3 sm:gap-4 lg:gap-5 animate-[fadeIn_0.15s_ease-out]">
                         <div className="col-span-6 border-r border-borderLight pr-4">
                           <div className="inline-flex items-center gap-1.5 text-[10px] font-black uppercase tracking-wider text-amber-800 bg-amber-100 px-2 py-0.5 rounded mb-2">
                             <Flame className="w-3 h-3 text-amber-600" />
@@ -1150,7 +1150,7 @@ export function Header() {
                       onMouseEnter={() => handleKeepMega('kilang')}
                       onMouseLeave={handleCloseMega}
                     >
-                      <div className="w-[360px] bg-warmwhite rounded-2xl shadow-[0_20px_45px_-10px_rgba(19,50,91,0.18)] border border-borderLight p-4 animate-[fadeIn_0.15s_ease-out]">
+                      <div className="w-[min(calc(100vw-3rem),360px)] max-w-[360px] bg-warmwhite rounded-2xl shadow-[0_20px_45px_-10px_rgba(19,50,91,0.18)] border border-borderLight p-4 animate-[fadeIn_0.15s_ease-out]">
                         <h4 className="text-[11px] font-bold uppercase tracking-wider text-gold-dark pb-1.5 border-b border-borderLight mb-2.5">
                           Tunas Sinar Jaya Enterprise
                         </h4>
