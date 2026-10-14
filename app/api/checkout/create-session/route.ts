@@ -264,13 +264,40 @@ export async function POST(request: NextRequest) {
 
     if (session.sessionId) {
       await updateOrderStatus(order.id, { paymentId: session.sessionId }, 'create_session')
+      order.paymentId = session.sessionId
     }
 
-    return NextResponse.json({
+    const resData = {
       orderId: order.id,
       orderNumber: order.orderNumber,
       checkoutUrl: session.checkoutUrl,
-    })
+      order,
+    }
+
+    const response = NextResponse.json(resData)
+
+    // Set server cookie backup so cold lambdas on /order/confirmed/[orderId] can recover the order immediately
+    try {
+      const orderPayload = Buffer.from(JSON.stringify(order)).toString('base64')
+      response.cookies.set(`kamaar_order_${order.id}`, orderPayload, {
+        path: '/',
+        maxAge: 60 * 60 * 24 * 7, // 7 days
+        sameSite: 'lax',
+        secure: process.env.NODE_ENV === 'production',
+        httpOnly: false,
+      })
+      response.cookies.set('kamaar_last_order', orderPayload, {
+        path: '/',
+        maxAge: 60 * 60 * 24 * 7,
+        sameSite: 'lax',
+        secure: process.env.NODE_ENV === 'production',
+        httpOnly: false,
+      })
+    } catch (cookieErr) {
+      console.warn('Failed to set order cookies in create-session:', cookieErr)
+    }
+
+    return response
   } catch (err: any) {
     console.error('Checkout error:', err)
     return NextResponse.json(

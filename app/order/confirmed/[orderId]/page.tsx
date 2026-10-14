@@ -1,39 +1,76 @@
 import React from 'react'
 import Link from 'next/link'
 import Image from 'next/image'
-import { notFound } from 'next/navigation'
+import { cookies } from 'next/headers'
 import { CheckCircle2, Clock, AlertCircle, Printer, ArrowRight, Truck, ShieldCheck, Mail } from 'lucide-react'
-import { getOrderById, updateOrderStatus } from '@/lib/db'
+import { getOrderById, updateOrderStatus, upsertOrder } from '@/lib/db'
 import { chipProvider } from '@/lib/payment/chip'
 import { formatMYR, formatDateTimeMY } from '@/lib/utils/format'
 import { PrintButton } from '@/components/order/PrintButton'
 import { ClearCartOnSuccess } from '@/components/order/ClearCartOnSuccess'
+import { OrderConfirmedClientRecovery } from '@/components/order/OrderConfirmedClientRecovery'
 
 interface Props {
   params: { orderId: string }
+  searchParams?: { payment_id?: string; [key: string]: string | string[] | undefined }
 }
 
-export default async function OrderConfirmedPage({ params }: Props) {
+export default async function OrderConfirmedPage({ params, searchParams }: Props) {
   let order = await getOrderById(params.orderId)
 
+  // 1. If not in DB, check server cookie backup (sent by browser upon return from CHIP)
   if (!order) {
-    notFound()
+    try {
+      const cookieStore = cookies()
+      const rawCookie =
+        cookieStore.get(`kamaar_order_${params.orderId}`) ||
+        cookieStore.get('kamaar_last_order')
+      if (rawCookie?.value) {
+        const decoded = Buffer.from(rawCookie.value, 'base64').toString('utf-8')
+        const parsed = JSON.parse(decoded)
+        if (parsed) {
+          parsed.id = params.orderId
+          order = await upsertOrder(parsed)
+        }
+      }
+    } catch (cookieParseErr) {
+      console.warn('Failed to recover order from server cookie:', cookieParseErr)
+    }
   }
 
-  // Auto-verify with CHIP gateway if paymentStatus is not yet confirmed as paid
-  if (order.paymentStatus !== 'paid' && order.paymentId) {
-    const purchase = await chipProvider.getPurchase(order.paymentId)
-    if (purchase && (purchase.status === 'paid' || purchase.status === 'cleared')) {
-      await updateOrderStatus(
-        order.id,
-        {
-          paymentStatus: 'paid',
-          fulfillmentStatus: 'processing',
-        },
-        'chip_sync'
-      )
-      const refreshed = await getOrderById(params.orderId)
-      if (refreshed) order = refreshed
+  // 2. If STILL not found in DB or server cookies:
+  // Render client recovery component (recovers from client sessionStorage and verifies with CHIP)
+  // NEVER throw notFound() which causes 404!
+  const paymentIdParam = typeof searchParams?.payment_id === 'string' ? searchParams.payment_id : undefined
+  if (!order) {
+    return (
+      <OrderConfirmedClientRecovery
+        orderId={params.orderId}
+        paymentId={paymentIdParam}
+      />
+    )
+  }
+
+  // 3. Auto-verify with CHIP gateway if paymentStatus is not yet confirmed as paid
+  const effectivePaymentId = order.paymentId || paymentIdParam
+  if (order.paymentStatus !== 'paid' && effectivePaymentId) {
+    try {
+      const purchase = await chipProvider.getPurchase(effectivePaymentId)
+      if (purchase && (purchase.status === 'paid' || purchase.status === 'cleared')) {
+        await updateOrderStatus(
+          order.id,
+          {
+            paymentStatus: 'paid',
+            fulfillmentStatus: 'processing',
+            paymentId: effectivePaymentId,
+          },
+          'chip_sync'
+        )
+        const refreshed = await getOrderById(params.orderId)
+        if (refreshed) order = refreshed
+      }
+    } catch (chipVerifyErr) {
+      console.warn('CHIP verification error on confirmed page:', chipVerifyErr)
     }
   }
 

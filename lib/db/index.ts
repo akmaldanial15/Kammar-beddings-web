@@ -57,20 +57,56 @@ interface DatabaseSchema {
   paymentSettings?: PaymentSettings
 }
 
-const DATA_DIR = path.join(process.cwd(), 'data')
-const DB_FILE = path.join(DATA_DIR, 'lena_db.json')
+const IS_SERVERLESS = Boolean(
+  process.env.VERCEL ||
+  process.env.AWS_LAMBDA_FUNCTION_NAME ||
+  process.env.NOW_REGION ||
+  process.env.VERCEL_ENV
+)
 
-// In-memory cache with file-sync
+const BASE_DATA_DIR = path.join(process.cwd(), 'data')
+const BASE_DB_FILE = path.join(BASE_DATA_DIR, 'lena_db.json')
+
+const DATA_DIR = IS_SERVERLESS ? path.join('/tmp', 'kamaar_data') : BASE_DATA_DIR
+const DB_FILE = IS_SERVERLESS ? path.join(DATA_DIR, 'lena_db.json') : BASE_DB_FILE
+
+// In-memory cache with global preservation across serverless re-evaluations
+const globalForDb = globalThis as unknown as {
+  __kamaar_db?: DatabaseSchema
+}
+
 let dbCache: DatabaseSchema | null = null
+let lastReadTime = 0
+const CACHE_TTL_MS = process.env.NODE_ENV === 'production' ? Infinity : 1500
 
 function ensureDb(): DatabaseSchema {
-  if (process.env.NODE_ENV !== 'production') {
-    dbCache = null
+  if (globalForDb.__kamaar_db && process.env.NODE_ENV === 'production') {
+    return globalForDb.__kamaar_db
   }
-  if (dbCache) return dbCache
 
-  if (!fs.existsSync(DATA_DIR)) {
-    fs.mkdirSync(DATA_DIR, { recursive: true })
+  const now = Date.now()
+  if (dbCache && (now - lastReadTime < CACHE_TTL_MS)) {
+    return dbCache
+  }
+
+  try {
+    if (!fs.existsSync(DATA_DIR)) {
+      fs.mkdirSync(DATA_DIR, { recursive: true })
+    }
+  } catch (dirErr) {
+    console.warn('Could not ensure DATA_DIR exists:', dirErr)
+  }
+
+  // In serverless, if /tmp file does not exist yet, seed it from bundled baseline data file
+  if (IS_SERVERLESS && !fs.existsSync(DB_FILE)) {
+    try {
+      if (fs.existsSync(BASE_DB_FILE)) {
+        const seedDataStr = fs.readFileSync(BASE_DB_FILE, 'utf-8')
+        fs.writeFileSync(DB_FILE, seedDataStr, 'utf-8')
+      }
+    } catch (seedCopyErr) {
+      console.warn('Could not copy BASE_DB_FILE to /tmp:', seedCopyErr)
+    }
   }
 
   if (!fs.existsSync(DB_FILE)) {
@@ -93,8 +129,13 @@ function ensureDb(): DatabaseSchema {
       affiliates: initialAffiliates,
       websiteConfig: initialWebsiteConfig,
     }
-    fs.writeFileSync(DB_FILE, JSON.stringify(initialDb, null, 2), 'utf-8')
+    try {
+      fs.writeFileSync(DB_FILE, JSON.stringify(initialDb, null, 2), 'utf-8')
+    } catch (writeErr) {
+      console.warn('Failed to write initial DB_FILE:', writeErr)
+    }
     dbCache = initialDb
+    globalForDb.__kamaar_db = initialDb
     return initialDb
   }
 
@@ -197,6 +238,8 @@ function ensureDb(): DatabaseSchema {
       }
     }
 
+    lastReadTime = Date.now()
+    globalForDb.__kamaar_db = dbCache
     return dbCache!
   } catch (err) {
     console.error('Error reading db file, falling back to seed:', err)
@@ -221,17 +264,30 @@ function ensureDb(): DatabaseSchema {
       paymentSettings: initialPaymentSettings,
     }
     dbCache = initialDb
+    lastReadTime = Date.now()
+    globalForDb.__kamaar_db = initialDb
     return initialDb
   }
 }
 
 function saveDb(db: DatabaseSchema) {
   dbCache = db
+  lastReadTime = Date.now()
+  globalForDb.__kamaar_db = db
   try {
     if (!fs.existsSync(DATA_DIR)) {
       fs.mkdirSync(DATA_DIR, { recursive: true })
     }
-    fs.writeFileSync(DB_FILE, JSON.stringify(db, null, 2), 'utf-8')
+    const tempFile = path.join(DATA_DIR, `.lena_db.${process.pid}.${Date.now()}.tmp`)
+    fs.writeFileSync(tempFile, JSON.stringify(db, null, 2), 'utf-8')
+    try {
+      fs.renameSync(tempFile, DB_FILE)
+    } catch (_) {
+      fs.copyFileSync(tempFile, DB_FILE)
+      try {
+        fs.unlinkSync(tempFile)
+      } catch (_) {}
+    }
   } catch (err) {
     console.error('Failed to write database file:', err)
   }
@@ -608,6 +664,85 @@ export async function createOrder(orderData: Omit<Order, 'id' | 'orderNumber' | 
   return newOrder
 }
 
+export function applyAffiliateSaleToDb(
+  db: DatabaseSchema,
+  code: string,
+  saleRevenueSen: number,
+  commissionSen: number
+): boolean {
+  if (!db.affiliates) return false
+
+  const clean = code.trim().toUpperCase()
+  const affiliate = db.affiliates.find((a) => a.code.toUpperCase() === clean)
+  if (!affiliate) return false
+
+  affiliate.totalSalesCount = (affiliate.totalSalesCount || 0) + 1
+  affiliate.totalSalesRevenueSen = (affiliate.totalSalesRevenueSen || 0) + saleRevenueSen
+  affiliate.totalCommissionSen = (affiliate.totalCommissionSen || 0) + commissionSen
+  return true
+}
+
+export async function upsertOrder(orderData: Order): Promise<Order> {
+  const db = ensureDb()
+  const existingIdx = db.orders.findIndex(
+    (o) => o.id === orderData.id || (orderData.orderNumber && o.orderNumber === orderData.orderNumber)
+  )
+
+  let finalOrder: Order
+
+  if (existingIdx !== -1) {
+    const existing = db.orders[existingIdx]
+    const wasPaid = existing.paymentStatus === 'paid'
+    finalOrder = {
+      ...existing,
+      ...orderData,
+      updatedAt: new Date().toISOString(),
+    }
+
+    if (
+      finalOrder.paymentStatus === 'paid' &&
+      !wasPaid &&
+      finalOrder.affiliateCode &&
+      !finalOrder.affiliateCredited
+    ) {
+      applyAffiliateSaleToDb(
+        db,
+        finalOrder.affiliateCode,
+        finalOrder.totalSen,
+        finalOrder.affiliateCommissionSen || 0
+      )
+      finalOrder.affiliateCredited = true
+    }
+
+    db.orders[existingIdx] = finalOrder
+  } else {
+    finalOrder = {
+      ...orderData,
+      createdAt: orderData.createdAt || new Date().toISOString(),
+      updatedAt: new Date().toISOString(),
+    }
+
+    if (
+      finalOrder.paymentStatus === 'paid' &&
+      finalOrder.affiliateCode &&
+      !finalOrder.affiliateCredited
+    ) {
+      applyAffiliateSaleToDb(
+        db,
+        finalOrder.affiliateCode,
+        finalOrder.totalSen,
+        finalOrder.affiliateCommissionSen || 0
+      )
+      finalOrder.affiliateCredited = true
+    }
+
+    db.orders.push(finalOrder)
+  }
+
+  saveDb(db)
+  return finalOrder
+}
+
 export async function updateOrderStatus(
   orderId: string,
   updates: Partial<Pick<Order, 'paymentStatus' | 'fulfillmentStatus' | 'trackingNumber' | 'carrier' | 'internalNotes' | 'paymentId'>>,
@@ -620,7 +755,6 @@ export async function updateOrderStatus(
   const previousPaymentStatus = order.paymentStatus
   const previousFulfillmentStatus = order.fulfillmentStatus
   Object.assign(order, updates, { updatedAt: new Date().toISOString() })
-  saveDb(db)
 
   // If order is cancelled or payment fails, automatically return reserved stock back to inventory
   const isNowCancelledOrFailed =
@@ -633,19 +767,23 @@ export async function updateOrderStatus(
     }
   }
 
-  // When order becomes paid, credit affiliate if attributed
+  // When order becomes paid, credit affiliate if attributed (idempotent)
   if (
     updates.paymentStatus === 'paid' &&
     previousPaymentStatus !== 'paid' &&
-    order.affiliateCode
+    order.affiliateCode &&
+    !order.affiliateCredited
   ) {
-    await recordAffiliateSale(
+    applyAffiliateSaleToDb(
+      db,
       order.affiliateCode,
       order.totalSen,
       order.affiliateCommissionSen || 0
     )
+    order.affiliateCredited = true
   }
 
+  saveDb(db)
   logAdminAction(actorEmail, 'order_status_updated', 'order', orderId, updates)
   return order
 }
@@ -1480,17 +1618,10 @@ export async function recordAffiliateSale(
   commissionSen: number
 ): Promise<void> {
   const db = ensureDb()
-  if (!db.affiliates) return
-
-  const clean = code.trim().toUpperCase()
-  const affiliate = db.affiliates.find((a) => a.code.toUpperCase() === clean)
-  if (!affiliate) return
-
-  affiliate.totalSalesCount = (affiliate.totalSalesCount || 0) + 1
-  affiliate.totalSalesRevenueSen = (affiliate.totalSalesRevenueSen || 0) + saleRevenueSen
-  affiliate.totalCommissionSen = (affiliate.totalCommissionSen || 0) + commissionSen
-
-  saveDb(db)
+  const ok = applyAffiliateSaleToDb(db, code, saleRevenueSen, commissionSen)
+  if (ok) {
+    saveDb(db)
+  }
 }
 
 export async function requestAffiliatePasswordReset(

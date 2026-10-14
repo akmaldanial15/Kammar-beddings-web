@@ -298,6 +298,15 @@ export function CheckoutClient({ initialPaymentSettings, initialSiteSettings, av
   // Load affiliate referral attribution
   useEffect(() => {
     try {
+      const urlRef = searchParams.get('ref') || searchParams.get('aff')
+      if (urlRef) {
+        const clean = urlRef.trim().toUpperCase()
+        setAffiliateCode(clean)
+        localStorage.setItem('kamaar_ref', clean)
+        document.cookie = `kamaar_ref=${encodeURIComponent(clean)}; path=/; max-age=2592000; SameSite=Lax`
+        return
+      }
+
       const stored = localStorage.getItem('kamaar_ref')
       if (stored) {
         setAffiliateCode(stored.trim().toUpperCase())
@@ -310,7 +319,7 @@ export function CheckoutClient({ initialPaymentSettings, initialSiteSettings, av
     } catch {
       // Private browsing protection
     }
-  }, [])
+  }, [searchParams])
 
   // Reassurance banner if customer navigated back or returned from uncompleted gateway session
   const [showRestoredNotice, setShowRestoredNotice] = useState(false)
@@ -581,9 +590,19 @@ export function CheckoutClient({ initialPaymentSettings, initialSiteSettings, av
         return
       }
 
-      // Save order snapshot and form state in session storage for instant recovery if payment fails/cancels or user presses back
+      // Save order snapshot and form state in session storage and cookies for instant recovery
       try {
         if (data.orderId) sessionStorage.setItem('kamaar_last_order_id', data.orderId)
+        if (data.order) {
+          const snapshotJson = JSON.stringify(data.order)
+          sessionStorage.setItem('kamaar_order_snapshot_' + data.orderId, snapshotJson)
+          sessionStorage.setItem('kamaar_last_order_snapshot', snapshotJson)
+          try {
+            const b64 = btoa(unescape(encodeURIComponent(snapshotJson)))
+            document.cookie = `kamaar_order_${data.orderId}=${b64}; path=/; max-age=604800; SameSite=Lax`
+            document.cookie = `kamaar_last_order=${b64}; path=/; max-age=604800; SameSite=Lax`
+          } catch (_) {}
+        }
         sessionStorage.setItem('kamaar_last_checkout_items', JSON.stringify(items))
         sessionStorage.setItem(
           'kamaar_last_checkout_form',

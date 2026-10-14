@@ -221,6 +221,7 @@ export interface Order {
   affiliateName?: string
   affiliateCommissionSen?: number
   affiliateRemark?: string
+  affiliateCredited?: boolean
   createdAt: string
   updatedAt: string
 }
