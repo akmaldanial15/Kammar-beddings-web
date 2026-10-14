@@ -225,6 +225,29 @@ export function CheckoutClient({ initialPaymentSettings, initialSiteSettings, av
   const [couponError, setCouponError] = useState('')
   const [couponSuccess, setCouponSuccess] = useState('')
   const [copiedBank, setCopiedBank] = useState(false)
+  const [serverDiscountSen, setServerDiscountSen] = useState<number | null>(null)
+
+  // Sync server coupon validation when couponCode or subtotal changes
+  useEffect(() => {
+    if (!couponCode) {
+      setServerDiscountSen(0)
+      return
+    }
+    fetch('/api/coupons/validate', {
+      method: 'POST',
+      headers: { 'Content-Type': 'application/json' },
+      body: JSON.stringify({ code: couponCode, subtotalSen }),
+    })
+      .then((res) => res.json())
+      .then((data) => {
+        if (data.isValid) {
+          setServerDiscountSen(data.discountSen || 0)
+        } else {
+          setServerDiscountSen(0)
+        }
+      })
+      .catch(() => setServerDiscountSen(null))
+  }, [couponCode, subtotalSen])
 
   const [isSubmitting, setIsSubmitting] = useState(false)
   const [errorMessage, setErrorMessage] = useState('')
@@ -316,15 +339,23 @@ export function CheckoutClient({ initialPaymentSettings, initialSiteSettings, av
     freeShippingPromo: couponCode === 'FREESHIP',
   })
 
-  // Discount calculation
-  let discountSen = 0
-  if ((couponCode === 'KAMAAR100' || couponCode === 'TIER100') && subtotalSen >= 100000) {
-    discountSen = 10000
-  } else if (couponCode === 'LENAWELCOME' && subtotalSen >= 100000) {
-    discountSen = Math.min(50000, Math.round(subtotalSen * 0.1))
+  // Discount calculation with server precedence and local fallback
+  let localDiscountSen = 0
+  if (couponCode === 'KAMAAR5' && subtotalSen >= 5000) {
+    localDiscountSen = 500
+  } else if (couponCode === 'KAMAAR10' && subtotalSen >= 10000) {
+    localDiscountSen = 1000
+  } else if (couponCode === 'BORONGVIP' && subtotalSen >= 50000) {
+    localDiscountSen = 5000
+  } else if ((couponCode === 'KAMAAR100' || couponCode === 'TIER100') && subtotalSen >= 100000) {
+    localDiscountSen = 10000
+  } else if ((couponCode === 'LENAWELCOME' || couponCode === 'KAMAARWELCOME') && subtotalSen >= 10000) {
+    localDiscountSen = Math.min(5000, Math.round(subtotalSen * 0.1))
   } else if (couponCode === 'SLEEPVIP' && subtotalSen >= 300000) {
-    discountSen = Math.min(80000, Math.round(subtotalSen * 0.15))
+    localDiscountSen = Math.min(80000, Math.round(subtotalSen * 0.15))
   }
+
+  const discountSen = serverDiscountSen !== null ? serverDiscountSen : localDiscountSen
 
   const effectiveShippingSen = isPickup ? 0 : shippingInfo.shippingSen
   const finalTotalSen = Math.max(0, subtotalSen - discountSen + effectiveShippingSen)
@@ -333,7 +364,7 @@ export function CheckoutClient({ initialPaymentSettings, initialSiteSettings, av
   const selectedMethod = activeMethods.find((m) => m.id === selectedMethodId) || activeMethods[0]
 
   // Handle Apply Coupon
-  const handleApplyCoupon = (e: React.FormEvent) => {
+  const handleApplyCoupon = async (e: React.FormEvent) => {
     e.preventDefault()
     setCouponError('')
     setCouponSuccess('')
@@ -341,13 +372,30 @@ export function CheckoutClient({ initialPaymentSettings, initialSiteSettings, av
     const code = inputCoupon.trim().toUpperCase()
     if (!code) return
 
-    const validCodes = ['KAMAAR100', 'LENAWELCOME', 'TIER100', 'SLEEPVIP', 'FREESHIP']
-    if (validCodes.includes(code)) {
-      applyCoupon(code)
-      setCouponSuccess(`Baucar "${code}" berjaya ditebus!`)
-      setInputCoupon('')
-    } else {
-      setCouponError('Kod diskaun tidak sah atau telah tamat tempoh.')
+    try {
+      const res = await fetch('/api/coupons/validate', {
+        method: 'POST',
+        headers: { 'Content-Type': 'application/json' },
+        body: JSON.stringify({ code, subtotalSen }),
+      })
+      const data = await res.json()
+      if (data.isValid) {
+        applyCoupon(code)
+        setServerDiscountSen(data.discountSen || 0)
+        setCouponSuccess(data.message || `Baucar "${code}" berjaya ditebus!`)
+        setInputCoupon('')
+      } else {
+        setCouponError(data.message || 'Kod diskaun tidak sah atau tidak memenuhi syarat perbelanjaan.')
+      }
+    } catch {
+      const validCodes = ['KAMAAR5', 'KAMAAR10', 'BORONGVIP', 'KAMAAR100', 'LENAWELCOME', 'KAMAARWELCOME', 'TIER100', 'SLEEPVIP', 'FREESHIP']
+      if (validCodes.includes(code)) {
+        applyCoupon(code)
+        setCouponSuccess(`Baucar "${code}" berjaya ditebus!`)
+        setInputCoupon('')
+      } else {
+        setCouponError('Kod diskaun tidak sah atau telah tamat tempoh.')
+      }
     }
   }
 
@@ -2084,7 +2132,12 @@ export function CheckoutClient({ initialPaymentSettings, initialSiteSettings, av
                     </div>
                     <button
                       type="button"
-                      onClick={() => removeCoupon()}
+                      onClick={() => {
+                        removeCoupon()
+                        setServerDiscountSen(0)
+                        setCouponSuccess('')
+                        setCouponError('')
+                      }}
                       className="text-neutral-400 hover:text-neutral-700 p-1 cursor-pointer"
                       title="Buang kupon"
                     >
@@ -2098,9 +2151,28 @@ export function CheckoutClient({ initialPaymentSettings, initialSiteSettings, av
                     <span>Ada kod promosi pelancaran?</span>
                     <button
                       type="button"
-                      onClick={() => {
-                        applyCoupon('KAMAAR100')
-                        setCouponSuccess('Baucar "KAMAAR100" berjaya ditebus!')
+                      onClick={async () => {
+                        setCouponError('')
+                        setCouponSuccess('')
+                        try {
+                          const res = await fetch('/api/coupons/validate', {
+                            method: 'POST',
+                            headers: { 'Content-Type': 'application/json' },
+                            body: JSON.stringify({ code: 'KAMAAR100', subtotalSen }),
+                          })
+                          const data = await res.json()
+                          if (data.isValid) {
+                            applyCoupon('KAMAAR100')
+                            setServerDiscountSen(data.discountSen || 0)
+                            setCouponSuccess('Baucar "KAMAAR100" berjaya ditebus!')
+                          } else {
+                            applyCoupon('KAMAAR100')
+                            setCouponError(data.message || 'Pembelian minima RM1,000 diperlukan untuk menebus KAMAAR100.')
+                          }
+                        } catch {
+                          applyCoupon('KAMAAR100')
+                          setCouponSuccess('Baucar "KAMAAR100" berjaya ditebus!')
+                        }
                       }}
                       className="text-forest hover:text-gold font-bold underline cursor-pointer"
                     >

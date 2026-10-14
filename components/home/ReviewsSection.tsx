@@ -1,7 +1,5 @@
-'use client'
-
-import React, { useState } from 'react'
-import { Star, CheckCircle, Quote, ChevronLeft, ChevronRight, Sparkles } from 'lucide-react'
+import React from 'react'
+import { Star, CheckCircle, Quote, Sparkles } from 'lucide-react'
 import { Review } from '@/types'
 
 interface ReviewsSectionProps {
@@ -9,16 +7,6 @@ interface ReviewsSectionProps {
 }
 
 export function ReviewsSection({ reviews }: ReviewsSectionProps) {
-  const [currentIndex, setCurrentIndex] = useState(0)
-
-  const nextReview = () => {
-    setCurrentIndex((prev) => (prev + 1) % reviews.length)
-  }
-
-  const prevReview = () => {
-    setCurrentIndex((prev) => (prev - 1 + reviews.length) % reviews.length)
-  }
-
   if (reviews.length === 0) return null
 
   return (

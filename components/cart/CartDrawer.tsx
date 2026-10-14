@@ -8,6 +8,7 @@ import { X, Plus, Minus, Trash2, ShoppingBag, ArrowRight, ShieldCheck, Tag, Spar
 import { useCart } from '@/lib/context/CartContext'
 import { useLanguage } from '@/lib/i18n/LanguageContext'
 import { formatMYR } from '@/lib/utils/format'
+import { calculateTieredPrice } from '@/lib/utils/pricing'
 
 export function CartDrawer() {
   const {
@@ -179,6 +180,17 @@ export function CartDrawer() {
                           Size: {item.sizeName}
                         </p>
                         <p className="text-[11px] text-charcoal-muted">{item.dimensions}</p>
+                        {(() => {
+                          const tierCalc = calculateTieredPrice(item.priceSen, item.quantity, item.quantityTiers)
+                          if (!tierCalc.isTierApplied) return null
+                          return (
+                            <div className="mt-1">
+                              <span className="inline-flex items-center gap-1 text-[10px] font-bold text-emerald-800 bg-emerald-100/90 px-2 py-0.5 rounded-md">
+                                🎉 {tierCalc.appliedTier?.label || `Pakej Kombo (${tierCalc.appliedTier?.quantity} Unit)`}
+                              </span>
+                            </div>
+                          )
+                        })()}
                       </div>
 
                       <div className="flex items-center justify-between mt-2">
@@ -202,16 +214,30 @@ export function CartDrawer() {
                           </button>
                         </div>
 
-                        <div className="text-right">
-                          <span className="text-sm font-bold text-forest">
-                            {formatMYR(item.priceSen * item.quantity)}
-                          </span>
-                          {item.compareAtPriceSen && item.compareAtPriceSen > item.priceSen && (
-                            <span className="block text-[11px] line-through text-charcoal-muted">
-                              {formatMYR(item.compareAtPriceSen * item.quantity)}
-                            </span>
-                          )}
-                        </div>
+                        {(() => {
+                          const tierCalc = calculateTieredPrice(item.priceSen, item.quantity, item.quantityTiers)
+                          return (
+                            <div className="text-right">
+                              <span className="text-sm font-bold text-forest">
+                                {formatMYR(tierCalc.totalSen)}
+                              </span>
+                              {tierCalc.savingsSen > 0 ? (
+                                <div className="space-y-0.5">
+                                  <span className="block text-[10.5px] line-through text-charcoal-muted">
+                                    {formatMYR(tierCalc.regularTotalSen)}
+                                  </span>
+                                  <span className="inline-block text-[9.5px] font-bold text-emerald-700 bg-emerald-50 px-1.5 py-0.5 rounded border border-emerald-200">
+                                    Jimat {formatMYR(tierCalc.savingsSen)}
+                                  </span>
+                                </div>
+                              ) : item.compareAtPriceSen && item.compareAtPriceSen > item.priceSen ? (
+                                <span className="block text-[11px] line-through text-charcoal-muted">
+                                  {formatMYR(item.compareAtPriceSen * item.quantity)}
+                                </span>
+                              ) : null}
+                            </div>
+                          )
+                        })()}
                       </div>
                     </div>
                   </div>

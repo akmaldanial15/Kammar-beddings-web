@@ -163,6 +163,40 @@ function ensureDb(): DatabaseSchema {
       saveDb(dbCache)
     }
 
+    // Backwards compatibility migration for coupons
+    if (!dbCache.coupons || dbCache.coupons.length === 0) {
+      dbCache.coupons = initialCoupons
+      saveDb(dbCache)
+    } else {
+      let migratedCoupons = false
+      for (const ic of initialCoupons) {
+        if (!dbCache.coupons.some((c) => c.code.toUpperCase() === ic.code.toUpperCase())) {
+          dbCache.coupons.push(ic)
+          migratedCoupons = true
+        }
+      }
+      if (migratedCoupons) {
+        saveDb(dbCache)
+      }
+    }
+
+    // Backwards compatibility migration for products
+    if (!dbCache.products || dbCache.products.length === 0) {
+      dbCache.products = initialProducts
+      saveDb(dbCache)
+    } else {
+      let migratedProducts = false
+      for (const ip of initialProducts) {
+        if (!dbCache.products.some((p) => p.id === ip.id)) {
+          dbCache.products.push(ip)
+          migratedProducts = true
+        }
+      }
+      if (migratedProducts) {
+        saveDb(dbCache)
+      }
+    }
+
     return dbCache!
   } catch (err) {
     console.error('Error reading db file, falling back to seed:', err)
@@ -246,10 +280,10 @@ export async function getProducts(options?: {
     const q = options.search.toLowerCase()
     list = list.filter(
       (p) =>
-        p.name.toLowerCase().includes(q) ||
-        p.description.toLowerCase().includes(q) ||
-        p.material?.toLowerCase().includes(q) ||
-        p.features.some((f) => f.toLowerCase().includes(q))
+        (p.name?.toLowerCase().includes(q) ?? false) ||
+        (p.description?.toLowerCase().includes(q) ?? false) ||
+        (p.material?.toLowerCase().includes(q) ?? false) ||
+        (Array.isArray(p.features) && p.features.some((f) => f && f.toLowerCase().includes(q)))
     )
   }
 

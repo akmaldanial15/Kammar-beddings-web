@@ -9,6 +9,7 @@ import {
   updateOrderStatus,
 } from '@/lib/db'
 import { calculateShippingFee, validateMalaysianPostcode, validateMalaysianPhone } from '@/lib/utils/format'
+import { calculateTieredPrice } from '@/lib/utils/pricing'
 import { chipProvider } from '@/lib/payment/chip'
 
 const CheckoutRequestSchema = z.object({
@@ -97,7 +98,8 @@ export async function POST(request: NextRequest) {
         )
       }
 
-      const lineTotalSen = variant.priceSen * clientItem.quantity
+      const tierCalc = calculateTieredPrice(variant.priceSen, clientItem.quantity, variant.quantityTiers)
+      const lineTotalSen = tierCalc.totalSen
       subtotalSen += lineTotalSen
 
       if (product.productType === 'mattress') {
@@ -110,7 +112,7 @@ export async function POST(request: NextRequest) {
         sizeName: variant.sizeName,
         sku: variant.sku,
         dimensions: variant.dimensions,
-        unitPriceSen: variant.priceSen, // authoritative server price
+        unitPriceSen: tierCalc.unitPriceSen, // authoritative server price with tier discount
         quantity: clientItem.quantity,
         lineTotalSen,
         imageUrl: product.images[0]?.imageUrl || '',

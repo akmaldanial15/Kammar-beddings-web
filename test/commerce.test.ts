@@ -82,19 +82,19 @@ describe('Logistics & Shipping Fee Engine', () => {
     expect(res.shippingSen).toBe(6500) // RM65.00
   })
 
-  it('charges standard RM35 for Peninsular accessories below RM500 threshold', () => {
+  it('charges standard RM15 for Peninsular accessories below RM200 threshold', () => {
     const res = calculateShippingFee({
-      subtotalSen: 25000, // RM250.00
+      subtotalSen: 15000, // RM150.00
       state: 'WP Kuala Lumpur',
       hasBulkyItem: false,
     })
-    expect(res.shippingSen).toBe(3500) // RM35.00
+    expect(res.shippingSen).toBe(1500) // RM15.00
     expect(res.isFreeShipping).toBe(false)
   })
 
-  it('grants free shipping for Peninsular accessories at or above RM500 threshold', () => {
+  it('grants free shipping for Peninsular accessories at or above RM200 threshold', () => {
     const res = calculateShippingFee({
-      subtotalSen: 50000, // RM500.00
+      subtotalSen: 20000, // RM200.00
       state: 'Johor',
       hasBulkyItem: false,
     })
@@ -108,6 +108,24 @@ describe('Promotions & Server-Side Coupon Validation', () => {
     const res = await validateCoupon('FAKECODE999', 150000)
     expect(res.isValid).toBe(false)
     expect(res.discountSen).toBe(0)
+  })
+
+  it('validates KAMAAR5 with RM5 discount when minimum spend is met', async () => {
+    const res = await validateCoupon('KAMAAR5', 6000) // RM60 spend (min RM50)
+    expect(res.isValid).toBe(true)
+    expect(res.discountSen).toBe(500)
+  })
+
+  it('validates KAMAAR10 with RM10 discount when minimum spend is met', async () => {
+    const res = await validateCoupon('KAMAAR10', 12000) // RM120 spend (min RM100)
+    expect(res.isValid).toBe(true)
+    expect(res.discountSen).toBe(1000)
+  })
+
+  it('validates BORONGVIP with RM50 discount when minimum spend is met', async () => {
+    const res = await validateCoupon('BORONGVIP', 60000) // RM600 spend (min RM500)
+    expect(res.isValid).toBe(true)
+    expect(res.discountSen).toBe(5000)
   })
 
   it('validates TIER100 with RM100 discount when minimum spend is met', async () => {

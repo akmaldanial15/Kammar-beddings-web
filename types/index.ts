@@ -8,10 +8,18 @@ export type MattressMaterial = '100% Natural Latex' | 'Hybrid Pocket Spring' | '
 
 export type SizeName = 'Single' | 'Super Single' | 'Queen' | 'King' | 'Standard' | 'King Pillow'
 
+export interface QuantityTier {
+  id?: string
+  quantity: number        // e.g. 3
+  priceSen: number        // total package price for this quantity in sen (e.g. RM20.00 = 2000)
+  label?: string          // e.g. "Beli 3 Jimat RM10", "Pakej 3 Unit", "Harga Borong"
+}
+
 export interface ProductVariant {
   id: string
   productId: string
   sku: string
+  name?: string
   sizeName: SizeName | string
   dimensions: string
   priceSen: number         // RM1,299.00 = 129900
@@ -20,6 +28,7 @@ export interface ProductVariant {
   leadTimeDays?: number
   isActive: boolean
   isAvailable?: boolean
+  quantityTiers?: QuantityTier[]
 }
 
 export interface ProductImage {
@@ -57,20 +66,23 @@ export interface Product {
   firmness?: Firmness | string
   firmnessScale?: number // 1 to 10
   thicknessCm?: number
+  priceSen?: number
+  badge?: string
+  dimensions?: string
   warrantyYears: number
-  trialNights: number
-  features: string[]
-  layers: ProductLayer[]
-  specifications: Record<string, string>
-  faq: ProductFAQ[]
+  trialNights?: number
+  features?: string[]
+  layers?: ProductLayer[]
+  specifications?: Record<string, string>
+  faq?: ProductFAQ[]
   seoTitle?: string
   seoDescription?: string
   status: 'draft' | 'published' | 'archived'
   isFeatured: boolean
   variants: ProductVariant[]
   images: ProductImage[]
-  createdAt: string
-  updatedAt: string
+  createdAt?: string
+  updatedAt?: string
 }
 
 export interface Category {
@@ -112,6 +124,7 @@ export interface CartItem {
   title?: string
   image?: string
   variantName?: string
+  quantityTiers?: QuantityTier[]
 }
 
 export interface Cart {

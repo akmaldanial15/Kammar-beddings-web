@@ -19,7 +19,7 @@ export function AnnouncementBar() {
       .catch((err) => console.error('Failed to load announcement config:', err))
   }, [])
 
-  if (announcement.enabled === false) {
+  if (!announcement || announcement.enabled === false) {
     return null
   }
 

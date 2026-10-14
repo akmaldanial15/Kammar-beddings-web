@@ -2370,6 +2370,181 @@ export function ProductsClient({ initialProducts, categories }: ProductsClientPr
                               </span>
                             </div>
                           )}
+
+                          {/* Pakej Kuantiti / Diskaun Pukal (Tiered Bundle Pricing) */}
+                          <div className="pt-3 border-t border-borderLight/70 space-y-3">
+                            <div className="flex flex-wrap items-center justify-between gap-2">
+                              <div>
+                                <div className="flex items-center space-x-1.5">
+                                  <Sparkles className="w-3.5 h-3.5 text-gold-dark" />
+                                  <span className="text-xs font-bold text-forest-dark">
+                                    Pakej Kuantiti &amp; Harga Borong (Cth: Beli 1 RM10, Beli 3 RM20)
+                                  </span>
+                                </div>
+                                <p className="text-[10.5px] text-charcoal-muted mt-0.5">
+                                  Tetapkan harga istimewa bagi kuantiti berbilang (bundle). Sistem tolak harga automatik bila pelanggan beli kuantiti ini.
+                                </p>
+                              </div>
+
+                              <div className="flex items-center space-x-2">
+                                <button
+                                  type="button"
+                                  onClick={() => {
+                                    const next = [...editingProduct.variants]
+                                    const existingTiers = next[vIdx].quantityTiers || []
+                                    const defaultQty = existingTiers.length === 0 ? 3 : existingTiers[existingTiers.length - 1].quantity + 2
+                                    // Default suggested discount: 1 unit free (e.g. 3 unit at price of 2 unit)
+                                    const suggestedPrice = Math.max(100, Math.round(variant.priceSen * (defaultQty - 1)))
+                                    next[vIdx].quantityTiers = [
+                                      ...existingTiers,
+                                      {
+                                        quantity: defaultQty,
+                                        priceSen: suggestedPrice,
+                                        label: `Pakej ${defaultQty} Unit (Jimat)`,
+                                      },
+                                    ]
+                                    setEditingProduct({ ...editingProduct, variants: next })
+                                  }}
+                                  className="inline-flex items-center gap-1.5 px-3 py-1.5 rounded-xl text-xs font-bold bg-forest hover:bg-forest-dark text-warmwhite shadow-xs hover:shadow active:scale-95 transition-all cursor-pointer border border-forest-dark/20"
+                                >
+                                  <Plus className="w-3.5 h-3.5 text-gold stroke-[2.5]" />
+                                  <span>Tambah Pakej Kuantiti</span>
+                                </button>
+                              </div>
+                            </div>
+
+                            {/* Tiers List */}
+                            {variant.quantityTiers && variant.quantityTiers.length > 0 ? (
+                              <div className="space-y-2.5 bg-cream/40 p-3 rounded-xl border border-borderLight/80">
+                                {variant.quantityTiers.map((tier, tIdx) => {
+                                  const regularTotal = variant.priceSen * tier.quantity
+                                  const savings = regularTotal - tier.priceSen
+                                  const savingsPercent = regularTotal > 0 ? Math.round((savings / regularTotal) * 100) : 0
+                                  const perUnit = tier.quantity > 0 ? Math.round(tier.priceSen / tier.quantity) : 0
+
+                                  return (
+                                    <div
+                                      key={tIdx}
+                                      className="p-3 bg-warmwhite rounded-xl border border-borderLight shadow-2xs space-y-2"
+                                    >
+                                      <div className="flex flex-wrap items-center justify-between gap-2">
+                                        <span className="text-[11px] font-bold text-forest flex items-center gap-1.5">
+                                          <span className="w-4 h-4 rounded-full bg-gold/20 text-gold-dark flex items-center justify-center text-[9px] font-black">
+                                            {tIdx + 1}
+                                          </span>
+                                          <span>Pakej Tier: Beli {tier.quantity} Unit</span>
+                                        </span>
+
+                                        <div className="flex items-center space-x-2">
+                                          {savings > 0 ? (
+                                            <span className="text-[10.5px] font-bold text-emerald-700 bg-emerald-50 px-2 py-0.5 rounded-full border border-emerald-200">
+                                              Jimat {formatMYR(savings)} ({savingsPercent}% OFF) • {formatMYR(perUnit)}/unit
+                                            </span>
+                                          ) : (
+                                            <span className="text-[10px] text-amber-700 bg-amber-50 px-2 py-0.5 rounded">
+                                              Tiada penjimatan
+                                            </span>
+                                          )}
+
+                                          <button
+                                            type="button"
+                                            onClick={() => {
+                                              const next = [...editingProduct.variants]
+                                              next[vIdx].quantityTiers = (next[vIdx].quantityTiers || []).filter((_, idx) => idx !== tIdx)
+                                              setEditingProduct({ ...editingProduct, variants: next })
+                                            }}
+                                            className="p-1 rounded text-charcoal-muted hover:text-rose-600 hover:bg-rose-50 transition-colors"
+                                            title="Padam tier ini"
+                                          >
+                                            <Trash2 className="w-3.5 h-3.5" />
+                                          </button>
+                                        </div>
+                                      </div>
+
+                                      <div className="grid grid-cols-1 sm:grid-cols-3 gap-2.5">
+                                        {/* Kuantiti Bundle */}
+                                        <div className="space-y-0.5">
+                                          <label className="text-[10px] font-bold text-charcoal-muted block">
+                                            Kuantiti Pakej (Unit)
+                                          </label>
+                                          <div className="flex items-center">
+                                            <input
+                                              type="number"
+                                              min="2"
+                                              value={tier.quantity}
+                                              onChange={(e) => {
+                                                const val = parseInt(e.target.value) || 2
+                                                const next = [...editingProduct.variants]
+                                                const tiers = [...(next[vIdx].quantityTiers || [])]
+                                                tiers[tIdx].quantity = val
+                                                next[vIdx].quantityTiers = tiers
+                                                setEditingProduct({ ...editingProduct, variants: next })
+                                              }}
+                                              className="w-full px-2.5 py-1.5 text-xs rounded-lg bg-cream/40 border border-borderLight font-bold text-forest-dark focus:outline-none focus:ring-1 focus:ring-gold"
+                                            />
+                                            <span className="ml-1.5 text-[11px] text-charcoal-muted">Unit</span>
+                                          </div>
+                                        </div>
+
+                                        {/* Jumlah Harga Pakej (RM) */}
+                                        <div className="space-y-0.5">
+                                          <label className="text-[10px] font-bold text-charcoal-muted block">
+                                            Jumlah Harga Pakej (RM)
+                                          </label>
+                                          <div className="flex items-center">
+                                            <span className="px-2 py-1.5 bg-cream border border-r-0 border-borderLight rounded-l-lg text-xs font-bold text-forest">
+                                              RM
+                                            </span>
+                                            <input
+                                              type="number"
+                                              step="0.01"
+                                              value={(tier.priceSen / 100).toFixed(2)}
+                                              onChange={(e) => {
+                                                const val = parseFloat(e.target.value) || 0
+                                                const next = [...editingProduct.variants]
+                                                const tiers = [...(next[vIdx].quantityTiers || [])]
+                                                tiers[tIdx].priceSen = Math.round(val * 100)
+                                                next[vIdx].quantityTiers = tiers
+                                                setEditingProduct({ ...editingProduct, variants: next })
+                                              }}
+                                              className="w-full px-2 py-1.5 text-xs rounded-r-lg bg-cream/40 border border-borderLight font-bold text-forest-dark focus:outline-none focus:ring-1 focus:ring-gold"
+                                            />
+                                          </div>
+                                        </div>
+
+                                        {/* Label Pakej */}
+                                        <div className="space-y-0.5">
+                                          <label className="text-[10px] font-bold text-charcoal-muted block">
+                                            Label Pakej / Badge Promosi
+                                          </label>
+                                          <input
+                                            type="text"
+                                            placeholder="Contoh: Beli 3 Jimat RM10 / Paling Laris"
+                                            value={tier.label || ''}
+                                            onChange={(e) => {
+                                              const next = [...editingProduct.variants]
+                                              const tiers = [...(next[vIdx].quantityTiers || [])]
+                                              tiers[tIdx].label = e.target.value
+                                              next[vIdx].quantityTiers = tiers
+                                              setEditingProduct({ ...editingProduct, variants: next })
+                                            }}
+                                            className="w-full px-2.5 py-1.5 text-xs rounded-lg bg-cream/40 border border-borderLight text-charcoal focus:outline-none focus:ring-1 focus:ring-gold font-medium"
+                                          />
+                                        </div>
+                                      </div>
+                                    </div>
+                                  )
+                                })}
+                              </div>
+                            ) : (
+                              <div className="text-[11px] text-charcoal-muted bg-cream/20 p-2.5 rounded-xl border border-dashed border-borderLight flex items-center justify-between">
+                                <span>Tiada pakej kuantiti bertingkat. (Beli 1 atau 10 dikira pada harga seunit biasa).</span>
+                                <span className="text-[10px] font-bold text-forest bg-forest/10 px-2 py-0.5 rounded">
+                                  Klik "Tambah Pakej Kuantiti" untuk mula
+                                </span>
+                              </div>
+                            )}
+                          </div>
                         </div>
                       )
                     })}

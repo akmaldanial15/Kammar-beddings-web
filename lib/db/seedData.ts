@@ -202,827 +202,1414 @@ export const initialCollections: Collection[] = [
 
 export const initialProducts: Product[] = [
   {
-    "id": "prod-toto-asian-fibre",
-    "name": "Tilam Toto Asian Polyester Fibre (Paling Lariss!!)",
-    "slug": "tilam-toto-asian-polyester-fibre",
-    "subtitle": "Paling Lariss!! Tebal, Gebu & Isian Asian Fibre Padat",
-    "description": "Produk terlaris nombor satu keluaran Tunas Sinar Jaya Enterprise! Tilam toto tebal dan empuk dengan isian Asian Polyester Fibre bermutu tinggi. Jahitan quilting kemas yang mengunci fiber agar tidak berganjak atau bergumpal. Sesuai untuk tidur santai seisi keluarga di ruang tamu, tilam tambahan untuk tetamu, homestay, atau balik kampung.",
-    "shortDescription": "Tilam toto paling laris keluaran kilang Tunas Sinar Jaya Enterprise. Tebal, gebu, corak menarik dan tahan lasak.",
+    "id": "prod-toto-single-poly",
+    "name": "TOTO SINGLE (POLY)",
+    "slug": "toto-single-poly",
+    "subtitle": "Size 90 cm x 200 cm | Asian Polyester Fibre",
+    "description": "Tilam Toto Single dengan isian Asian Polyester Fibre bermutu tinggi keluaran kilang Tunas Sinar Jaya Sdn. Bhd. di Tasek Gelugor. Tebal, empuk, tidak mudah leper dan mudah digulung untuk kegunaan harian seisi keluarga.",
+    "shortDescription": "Size 90 cm x 200 cm | RM34.90 | Isian Asian Polyester Fibre tebal dan selesa.",
     "categoryId": "cat-tilam-toto",
     "productType": "mattress",
-    "material": "100% Asian Polyester Virgin Fibre & Fabrik Jahitan Berkualiti",
-    "firmness": "Medium Soft",
-    "firmnessScale": 4,
-    "thicknessCm": 8,
+    "material": "Asian Polyester Fibre",
+    "priceSen": 3490,
     "warrantyYears": 1,
-    "trialNights": 0,
-    "features": [
-      "Isian 100% Asian Polyester Fibre berkualiti tinggi & padat",
-      "Jahitan quilting mesin industri kilang sendiri di Tasek Gelugor",
-      "Corak menarik pelbagai pilihan (Random Floral Design & Geometrik)",
-      "Empuk, gebu dan tidak mudah kempis",
-      "Sesuai untuk seisi keluarga, homestay, dan tilam santai ruang tamu"
-    ],
-    "layers": [
-      {
-        "number": 1,
-        "name": "Fabrik Cotton Bercorak",
-        "description": "Kain sejuk lembut pelbagai corak floral yang ceria dan tahan lasak."
-      },
-      {
-        "number": 2,
-        "name": "Teras Isian Asian Polyester Fibre",
-        "description": "Lapisan fiber mampat gebu berkualiti yang mengekalkan ketebalan dan keselesaan."
-      }
-    ],
-    "specifications": {
-      "Isian": "Asian Polyester Fibre Berkualiti",
-      "Ketebalan": "Kira-kira 7cm - 10cm",
-      "Corak": "Random Floral & Geometric Design",
-      "Asal Kilang": "Tasek Gelugor, Pulau Pinang",
-      "Pengeluar": "Tunas Sinar Jaya Enterprise"
-    },
-    "faq": [
-      {
-        "question": "Apakah maksud Random Design?",
-        "answer": "Kilang kami menghasilkan pelbagai corak bunga moden dan geometri yang sentiasa diperbaharui mengikut stok fabrik terbaik semasa."
-      },
-      {
-        "question": "Bolehkah tilam toto ini digulung untuk disimpan?",
-        "answer": "Ya, tilam toto ini sangat fleksibel dan boleh digulung atau dilipat dengan mudah untuk disimpan dalam almari atau bonet kereta."
-      }
-    ],
-    "status": "published",
     "isFeatured": true,
-    "variants": [
-      {
-        "id": "var-toto-sgl",
-        "productId": "prod-toto-asian-fibre",
-        "sku": "TSJ-TOTO-SGL",
-        "sizeName": "Single (100cm x 190cm)",
-        "dimensions": "100cm x 190cm x 7cm",
-        "priceSen": 5900,
-        "compareAtPriceSen": 7900,
-        "stockQuantity": 80,
-        "leadTimeDays": 1,
-        "isActive": true
-      },
-      {
-        "id": "var-toto-qen",
-        "productId": "prod-toto-asian-fibre",
-        "sku": "TSJ-TOTO-QEN",
-        "sizeName": "Queen (150cm x 190cm)",
-        "dimensions": "150cm x 190cm x 8cm",
-        "priceSen": 8900,
-        "compareAtPriceSen": 11900,
-        "stockQuantity": 60,
-        "leadTimeDays": 1,
-        "isActive": true
-      },
-      {
-        "id": "var-toto-kng",
-        "productId": "prod-toto-asian-fibre",
-        "sku": "TSJ-TOTO-KNG",
-        "sizeName": "King (180cm x 190cm)",
-        "dimensions": "180cm x 190cm x 10cm",
-        "priceSen": 11900,
-        "compareAtPriceSen": 14900,
-        "stockQuantity": 40,
-        "leadTimeDays": 1,
-        "isActive": true
-      }
-    ],
+    "status": "published",
+    "badge": "PALING LARIS",
+    "dimensions": "90 cm x 200 cm",
     "images": [
       {
-        "id": "img-toto-1",
-        "productId": "prod-toto-asian-fibre",
-        "imageUrl": "/images/products/tilam-toto-queen.jpg",
-        "altText": "Tilam Toto Asian Polyester Fibre Paling Lariss Tunas Sinar Jaya",
+        "id": "img-toto-single-poly-1",
+        "productId": "prod-toto-single-poly",
+        "imageUrl": "/images/products/toto-single-poly.png",
+        "altText": "TOTO SINGLE (POLY) - RM34.90",
         "displayOrder": 1,
         "isPrimary": true
-      },
+      }
+    ],
+    "variants": [
       {
-        "id": "img-toto-2",
-        "productId": "prod-toto-asian-fibre",
-        "imageUrl": "/images/hero/hero-tilam-toto-lifestyle.jpg",
-        "altText": "Tilam Toto Ruang Tamu Kontemporari",
-        "displayOrder": 2,
-        "isPrimary": false
+        "id": "var-toto-single-poly-1",
+        "productId": "prod-toto-single-poly",
+        "sku": "TSJ-TT-SIN-01",
+        "name": "Single (90x200 cm)",
+        "sizeName": "Single",
+        "dimensions": "90 cm x 200 cm",
+        "priceSen": 3490,
+        "compareAtPriceSen": 3990,
+        "stockQuantity": 140,
+        "isActive": true,
+        "quantityTiers": [
+          {
+            "quantity": 3,
+            "priceSen": 9900,
+            "label": "Beli 3 Jimat"
+          },
+          {
+            "quantity": 5,
+            "priceSen": 15000,
+            "label": "Pakej Borong 5 Unit"
+          }
+        ]
       }
     ],
     "createdAt": "2026-09-01T00:00:00Z",
     "updatedAt": "2026-10-07T00:00:00Z"
   },
   {
-    "id": "prod-tilam-kekabu-asli",
-    "name": "Tilam Kekabu Asli Tradisi (Jahitan Tufted Butang)",
-    "slug": "tilam-kekabu-asli-tradisi",
-    "subtitle": "100% Isian Kekabu Tulen • Sejuk, Padat & Tradisi",
-    "description": "Tilam kekabu buatan tempatan dengan isian 100% kekabu asli terpilih. Dijahit secara manual dengan teknik tufted berbutang khas untuk memastikan kekabu mampat sekata dan memberi sokongan ortopedik semulajadi yang sangat sejuk untuk cuaca tropika Malaysia.",
-    "shortDescription": "Tilam kekabu asli tradisi buatan kilang Tunas Sinar Jaya. Sejuk, empuk dan padat.",
+    "id": "prod-toto-queen-poly",
+    "name": "TOTO QUEEN (POLY)",
+    "slug": "toto-queen-poly",
+    "subtitle": "Size 150 cm x 200 cm | Asian Polyester Fibre",
+    "description": "Tilam Toto Queen saiz kelamin yang luas dan empuk dengan isian Asian Polyester Fibre gred industri. Sangat sesuai untuk ruang santai keluarga, tetamu, atau homestay.",
+    "shortDescription": "Size 150 cm x 200 cm | RM59.90 | Isian Asian Polyester Fibre luas dan empuk.",
+    "categoryId": "cat-tilam-toto",
+    "productType": "mattress",
+    "material": "Asian Polyester Fibre",
+    "priceSen": 5990,
+    "warrantyYears": 1,
+    "isFeatured": true,
+    "status": "published",
+    "badge": "PILIHAN KELUARGA",
+    "dimensions": "150 cm x 200 cm",
+    "images": [
+      {
+        "id": "img-toto-queen-poly-1",
+        "productId": "prod-toto-queen-poly",
+        "imageUrl": "/images/products/toto-queen-poly.png",
+        "altText": "TOTO QUEEN (POLY) - RM59.90",
+        "displayOrder": 1,
+        "isPrimary": true
+      }
+    ],
+    "variants": [
+      {
+        "id": "var-toto-queen-poly-1",
+        "productId": "prod-toto-queen-poly",
+        "sku": "TSJ-TT-QUE-01",
+        "name": "Queen (150x200 cm)",
+        "sizeName": "Queen",
+        "dimensions": "150 cm x 200 cm",
+        "priceSen": 5990,
+        "compareAtPriceSen": 6990,
+        "stockQuantity": 119,
+        "isActive": true
+      }
+    ],
+    "createdAt": "2026-09-01T00:00:00Z",
+    "updatedAt": "2026-10-07T00:00:00Z"
+  },
+  {
+    "id": "prod-tilam-gulung-a-tc",
+    "name": "TILAM GULUNG A (TC)",
+    "slug": "tilam-gulung-a-tc",
+    "subtitle": "Size 90 cm x 180 cm | Poly Fibre / Kain TC",
+    "description": "Tilam Gulung Gred A buatan kemas dengan fabrik tahan lasak TC dan isian Poly Fibre padat. Ringan, mudah dibawa dan jimat ruang.",
+    "shortDescription": "Size 90 cm x 180 cm | RM39.90 | Isian Poly Fibre berkualiti.",
+    "categoryId": "cat-tilam-gulung",
+    "productType": "mattress",
+    "material": "Poly Fibre / TC Shoddy",
+    "priceSen": 3990,
+    "warrantyYears": 1,
+    "isFeatured": true,
+    "status": "published",
+    "badge": "LEBIH JIMAT",
+    "dimensions": "90 cm x 180 cm",
+    "images": [
+      {
+        "id": "img-tilam-gulung-a-tc-1",
+        "productId": "prod-tilam-gulung-a-tc",
+        "imageUrl": "/images/products/tilam-gulung-a-tc.png",
+        "altText": "TILAM GULUNG A (TC) - RM39.90",
+        "displayOrder": 1,
+        "isPrimary": true
+      }
+    ],
+    "variants": [
+      {
+        "id": "var-tilam-gulung-a-tc-1",
+        "productId": "prod-tilam-gulung-a-tc",
+        "sku": "TSJ-TG-A-01",
+        "name": "Standard (90x180 cm)",
+        "sizeName": "Single",
+        "dimensions": "90 cm x 180 cm",
+        "priceSen": 3990,
+        "compareAtPriceSen": 4500,
+        "stockQuantity": 150,
+        "isActive": true
+      }
+    ],
+    "createdAt": "2026-09-01T00:00:00Z",
+    "updatedAt": "2026-10-07T00:00:00Z"
+  },
+  {
+    "id": "prod-tilam-gulung-b-tc",
+    "name": "TILAM GULUNG B (TC)",
+    "slug": "tilam-gulung-b-tc",
+    "subtitle": "Size 90 cm x 180 cm | Poly Fibre / Kain TC",
+    "description": "Tilam Gulung Gred B dengan harga mampu milik terbaik untuk asrama, pekerja dan ruang tambahan. Isian Poly Fibre padat dan anjal.",
+    "shortDescription": "Size 90 cm x 180 cm | RM34.90 | Pilihan bajet paling jimat terus dari kilang.",
+    "categoryId": "cat-tilam-gulung",
+    "productType": "mattress",
+    "material": "Poly Fibre / TC Shoddy",
+    "priceSen": 3490,
+    "warrantyYears": 1,
+    "isFeatured": false,
+    "status": "published",
+    "badge": "HARGA KILANG",
+    "dimensions": "90 cm x 180 cm",
+    "images": [
+      {
+        "id": "img-tilam-gulung-b-tc-1",
+        "productId": "prod-tilam-gulung-b-tc",
+        "imageUrl": "/images/products/tilam-gulung-b-tc.png",
+        "altText": "TILAM GULUNG B (TC) - RM34.90",
+        "displayOrder": 1,
+        "isPrimary": true
+      }
+    ],
+    "variants": [
+      {
+        "id": "var-tilam-gulung-b-tc-1",
+        "productId": "prod-tilam-gulung-b-tc",
+        "sku": "TSJ-TG-B-01",
+        "name": "Standard (90x180 cm)",
+        "sizeName": "Single",
+        "dimensions": "90 cm x 180 cm",
+        "priceSen": 3490,
+        "compareAtPriceSen": 3990,
+        "stockQuantity": 150,
+        "isActive": true
+      }
+    ],
+    "createdAt": "2026-09-01T00:00:00Z",
+    "updatedAt": "2026-10-07T00:00:00Z"
+  },
+  {
+    "id": "prod-tilam-gulung-kekabu-asli",
+    "name": "TILAM GULUNG (KEKABU ASLI)",
+    "slug": "tilam-gulung-kekabu-asli",
+    "subtitle": "Size 90 cm x 180 cm | 100% Kekabu Asli Semulajadi",
+    "description": "Tilam gulung isian 100% Kekabu Asli tradisi terpilih. Sejuk semulajadi, padat, menyokong postur tulang belakang dan tahan mendap dengan jahitan butang tufting tradisi.",
+    "shortDescription": "Size 90 cm x 180 cm | RM99.90 | Isian 100% Kekabu Asli gred premium.",
     "categoryId": "cat-tilam-kekabu",
     "productType": "mattress",
-    "material": "100% Kekabu Asli Semulajadi & Fabrik Cotton Tebal",
-    "firmness": "Medium Firm",
-    "firmnessScale": 6,
-    "thicknessCm": 10,
+    "material": "100% Kekabu Asli",
+    "priceSen": 9990,
     "warrantyYears": 2,
+    "isFeatured": true,
+    "status": "published",
+    "badge": "ORGANIK TRADISI",
+    "dimensions": "90 cm x 180 cm",
+    "images": [
+      {
+        "id": "img-tilam-gulung-kekabu-asli-1",
+        "productId": "prod-tilam-gulung-kekabu-asli",
+        "imageUrl": "/images/products/tilam-gulung-kekabu-asli.png",
+        "altText": "TILAM GULUNG (KEKABU ASLI) - RM99.90",
+        "displayOrder": 1,
+        "isPrimary": true
+      }
+    ],
+    "variants": [
+      {
+        "id": "var-tilam-gulung-kekabu-asli-1",
+        "productId": "prod-tilam-gulung-kekabu-asli",
+        "sku": "TSJ-TG-KB-01",
+        "name": "Standard (90x180 cm)",
+        "sizeName": "Single",
+        "dimensions": "90 cm x 180 cm",
+        "priceSen": 9990,
+        "compareAtPriceSen": 11900,
+        "stockQuantity": 79,
+        "isActive": true
+      }
+    ],
+    "createdAt": "2026-09-01T00:00:00Z",
+    "updatedAt": "2026-10-07T00:00:00Z"
+  },
+  {
+    "id": "prod-bantal-m-tc",
+    "name": "BANTAL SIZE M (TC)",
+    "slug": "bantal-m-tc",
+    "subtitle": "Size 15 x 24 inch | Isian TC Shoddy",
+    "description": "Bantal tidur saiz M isian TC Shoddy kemas dan padat. Sesuai untuk asrama, penginapan bajet dan kegunaan harian dengan harga kilang yang amat berpatutan.",
+    "shortDescription": "Size 15 x 24 inch | RM4.90 | Bantal isian TC Shoddy ekonomi.",
+    "categoryId": "cat-bantal-tidur",
+    "productType": "pillow",
+    "material": "TC Shoddy Fibre",
+    "priceSen": 490,
+    "warrantyYears": 1,
+    "isFeatured": true,
+    "status": "published",
+    "badge": "SUPER JIMAT",
+    "dimensions": "15\" x 24\"",
+    "images": [
+      {
+        "id": "img-bantal-m-tc-1",
+        "productId": "prod-bantal-m-tc",
+        "imageUrl": "/images/products/bantal-tidur-m-tc.png",
+        "altText": "BANTAL SIZE M (TC) - RM4.90",
+        "displayOrder": 1,
+        "isPrimary": true
+      }
+    ],
+    "variants": [
+      {
+        "id": "var-bantal-m-tc-1",
+        "productId": "prod-bantal-m-tc",
+        "sku": "TSJ-B-M-TC",
+        "name": "Medium (15x24 inch)",
+        "sizeName": "Standard",
+        "dimensions": "15\" x 24\"",
+        "priceSen": 490,
+        "compareAtPriceSen": 590,
+        "stockQuantity": 299,
+        "isActive": true
+      }
+    ],
+    "createdAt": "2026-09-01T00:00:00Z",
+    "updatedAt": "2026-10-07T00:00:00Z"
+  },
+  {
+    "id": "prod-bantal-l-poly",
+    "name": "BANTAL SIZE L (POLY)",
+    "slug": "bantal-l-poly",
+    "subtitle": "Size 17 x 26 inch | Asian Polyester Fibre",
+    "description": "Bantal tidur saiz L dengan isian Asian Polyester Fibre gebu dan anjal. Memberikan sokongan leher yang selesa sepanjang malam tanpa mudah mendap.",
+    "shortDescription": "Size 17 x 26 inch | RM9.90 | Isian Asian Polyester Fibre gebu dan empuk.",
+    "categoryId": "cat-bantal-tidur",
+    "productType": "pillow",
+    "material": "Asian Polyester Fibre",
+    "priceSen": 990,
+    "warrantyYears": 1,
+    "isFeatured": true,
+    "status": "published",
+    "badge": "PILIHAN RAMAI",
+    "dimensions": "17\" x 26\"",
+    "images": [
+      {
+        "id": "img-bantal-l-poly-1",
+        "productId": "prod-bantal-l-poly",
+        "imageUrl": "/images/products/bantal-tidur-l-poly.png",
+        "altText": "BANTAL SIZE L (POLY) - RM9.90",
+        "displayOrder": 1,
+        "isPrimary": true
+      }
+    ],
+    "variants": [
+      {
+        "id": "var-bantal-l-poly-1",
+        "productId": "prod-bantal-l-poly",
+        "sku": "TSJ-B-L-POLY",
+        "name": "Large (17x26 inch)",
+        "sizeName": "Standard",
+        "dimensions": "17\" x 26\"",
+        "priceSen": 990,
+        "compareAtPriceSen": 1190,
+        "stockQuantity": 250,
+        "isActive": true
+      }
+    ],
+    "createdAt": "2026-09-01T00:00:00Z",
+    "updatedAt": "2026-10-07T00:00:00Z"
+  },
+  {
+    "id": "prod-bantal-l-kekabu-asli",
+    "name": "BANTAL SIZE L (KEKABU ASLI)",
+    "slug": "bantal-l-kekabu-asli",
+    "subtitle": "Size 17 x 26 inch | 100% Kekabu Asli",
+    "description": "Bantal tidur tradisional 100% Kekabu Asli saiz L. Terkenal dengan sifatnya yang sejuk, menyerap haba kepala, dan keanjalan semula jadi yang menyokong tulang leher.",
+    "shortDescription": "Size 17 x 26 inch | RM24.90 | Isian 100% Kekabu Asli gred asli tradisi.",
+    "categoryId": "cat-bantal-tidur",
+    "productType": "pillow",
+    "material": "100% Kekabu Asli",
+    "priceSen": 2490,
+    "warrantyYears": 2,
+    "isFeatured": true,
+    "status": "published",
+    "badge": "KEKABU ASLI",
+    "dimensions": "17\" x 26\"",
+    "images": [
+      {
+        "id": "img-bantal-l-kekabu-asli-1",
+        "productId": "prod-bantal-l-kekabu-asli",
+        "imageUrl": "/images/products/bantal-tidur-l-kekabu-asli.png",
+        "altText": "BANTAL SIZE L (KEKABU ASLI) - RM24.90",
+        "displayOrder": 1,
+        "isPrimary": true
+      }
+    ],
+    "variants": [
+      {
+        "id": "var-bantal-l-kekabu-asli-1",
+        "productId": "prod-bantal-l-kekabu-asli",
+        "sku": "TSJ-B-L-KB",
+        "name": "Large (17x26 inch)",
+        "sizeName": "Standard",
+        "dimensions": "17\" x 26\"",
+        "priceSen": 2490,
+        "compareAtPriceSen": 2800,
+        "stockQuantity": 100,
+        "isActive": true
+      }
+    ],
+    "createdAt": "2026-09-01T00:00:00Z",
+    "updatedAt": "2026-10-07T00:00:00Z"
+  },
+  {
+    "id": "prod-bantal-xl-kekabu-asli",
+    "name": "BANTAL SIZE XL (KEKABU ASLI)",
+    "slug": "bantal-xl-kekabu-asli",
+    "subtitle": "Size 18 x 28 inch | 100% Kekabu Asli",
+    "description": "Bantal tidur saiz XL ekstra besar isian padat 100% Kekabu Asli. Sangat empuk, sejuk, tahan lama dan memberi keselesaan tidur maksimum bertaraf hotel tradisi.",
+    "shortDescription": "Size 18 x 28 inch | RM34.90 | Saiz XL ekstra luas dan padat dengan kekabu asli.",
+    "categoryId": "cat-bantal-tidur",
+    "productType": "pillow",
+    "material": "100% Kekabu Asli",
+    "priceSen": 3490,
+    "warrantyYears": 2,
+    "isFeatured": false,
+    "status": "published",
+    "badge": "EKSTRA SELESA",
+    "dimensions": "18\" x 28\"",
+    "images": [
+      {
+        "id": "img-bantal-xl-kekabu-asli-1",
+        "productId": "prod-bantal-xl-kekabu-asli",
+        "imageUrl": "/images/products/bantal-tidur-xl-kekabu-asli.png",
+        "altText": "BANTAL SIZE XL (KEKABU ASLI) - RM34.90",
+        "displayOrder": 1,
+        "isPrimary": true
+      }
+    ],
+    "variants": [
+      {
+        "id": "var-bantal-xl-kekabu-asli-1",
+        "productId": "prod-bantal-xl-kekabu-asli",
+        "sku": "TSJ-B-XL-KB",
+        "name": "Extra Large (18x28 inch)",
+        "sizeName": "King Pillow",
+        "dimensions": "18\" x 28\"",
+        "priceSen": 3490,
+        "compareAtPriceSen": 3990,
+        "stockQuantity": 80,
+        "isActive": true
+      }
+    ],
+    "createdAt": "2026-09-01T00:00:00Z",
+    "updatedAt": "2026-10-07T00:00:00Z"
+  },
+  {
+    "id": "prod-bantal-peluk-m-poly",
+    "name": "BANTAL PELUK SIZE M (POLY)",
+    "slug": "bantal-peluk-m-poly",
+    "subtitle": "Asian Polyester Fibre",
+    "description": "Bantal peluk saiz M dengan isian Asian Polyester Fibre gebu. Ringan, lembut dan selesa untuk kanak-kanak dan remaja.",
+    "shortDescription": "RM13.90 | Bantal peluk saiz M isian Asian Polyester Fibre.",
+    "categoryId": "cat-bantal-peluk",
+    "productType": "pillow",
+    "material": "Asian Polyester Fibre",
+    "priceSen": 1390,
+    "warrantyYears": 1,
+    "isFeatured": false,
+    "status": "published",
+    "badge": "GEBU",
+    "dimensions": "36\" x 7\"",
+    "images": [
+      {
+        "id": "img-bantal-peluk-m-poly-1",
+        "productId": "prod-bantal-peluk-m-poly",
+        "imageUrl": "/images/products/bantal-peluk-m-poly.png",
+        "altText": "BANTAL PELUK SIZE M (POLY) - RM13.90",
+        "displayOrder": 1,
+        "isPrimary": true
+      }
+    ],
+    "variants": [
+      {
+        "id": "var-bantal-peluk-m-poly-1",
+        "productId": "prod-bantal-peluk-m-poly",
+        "sku": "TSJ-BP-M-POLY",
+        "name": "Medium",
+        "sizeName": "Standard",
+        "dimensions": "36\" x 7\"",
+        "priceSen": 1390,
+        "stockQuantity": 100,
+        "isActive": true
+      }
+    ],
+    "createdAt": "2026-09-01T00:00:00Z",
+    "updatedAt": "2026-10-07T00:00:00Z"
+  },
+  {
+    "id": "prod-bantal-peluk-l-tc",
+    "name": "BANTAL PELUK SIZE L (TC)",
+    "slug": "bantal-peluk-l-tc",
+    "subtitle": "Isian TC Shoddy",
+    "description": "Bantal peluk saiz L isian TC Shoddy padat dan tahan lasak. Jimat dan sesuai untuk kegunaan seharian.",
+    "shortDescription": "RM14.90 | Bantal peluk saiz L isian TC Shoddy jimat.",
+    "categoryId": "cat-bantal-peluk",
+    "productType": "pillow",
+    "material": "TC Shoddy Fibre",
+    "priceSen": 1490,
+    "warrantyYears": 1,
+    "isFeatured": false,
+    "status": "published",
+    "badge": "JIMAT",
+    "dimensions": "38\" x 8\"",
+    "images": [
+      {
+        "id": "img-bantal-peluk-l-tc-1",
+        "productId": "prod-bantal-peluk-l-tc",
+        "imageUrl": "/images/products/bantal-peluk-l-tc.png",
+        "altText": "BANTAL PELUK SIZE L (TC) - RM14.90",
+        "displayOrder": 1,
+        "isPrimary": true
+      }
+    ],
+    "variants": [
+      {
+        "id": "var-bantal-peluk-l-tc-1",
+        "productId": "prod-bantal-peluk-l-tc",
+        "sku": "TSJ-BP-L-TC",
+        "name": "Large",
+        "sizeName": "Standard",
+        "dimensions": "38\" x 8\"",
+        "priceSen": 1490,
+        "stockQuantity": 100,
+        "isActive": true
+      }
+    ],
+    "createdAt": "2026-09-01T00:00:00Z",
+    "updatedAt": "2026-10-07T00:00:00Z"
+  },
+  {
+    "id": "prod-bantal-peluk-l-poly",
+    "name": "BANTAL PELUK SIZE L (POLY)",
+    "slug": "bantal-peluk-l-poly",
+    "subtitle": "Asian Polyester Fibre",
+    "description": "Bantal peluk dewasa saiz L isian Asian Polyester Fibre gebu dan anjal. Sangat selesa dipeluk dan tidak mudah kempis.",
+    "shortDescription": "RM24.90 | Bantal peluk saiz L isian Asian Polyester Fibre gebu.",
+    "categoryId": "cat-bantal-peluk",
+    "productType": "pillow",
+    "material": "Asian Polyester Fibre",
+    "priceSen": 2490,
+    "warrantyYears": 1,
+    "isFeatured": true,
+    "status": "published",
+    "badge": "PREMIUM FIBRE",
+    "dimensions": "38\" x 8\"",
+    "images": [
+      {
+        "id": "img-bantal-peluk-l-poly-1",
+        "productId": "prod-bantal-peluk-l-poly",
+        "imageUrl": "/images/products/bantal-peluk-l-poly.png",
+        "altText": "BANTAL PELUK SIZE L (POLY) - RM24.90",
+        "displayOrder": 1,
+        "isPrimary": true
+      }
+    ],
+    "variants": [
+      {
+        "id": "var-bantal-peluk-l-poly-1",
+        "productId": "prod-bantal-peluk-l-poly",
+        "sku": "TSJ-BP-L-POLY",
+        "name": "Large",
+        "sizeName": "Standard",
+        "dimensions": "38\" x 8\"",
+        "priceSen": 2490,
+        "stockQuantity": 120,
+        "isActive": true
+      }
+    ],
+    "createdAt": "2026-09-01T00:00:00Z",
+    "updatedAt": "2026-10-07T00:00:00Z"
+  },
+  {
+    "id": "prod-bantal-peluk-l-kekabu-asli",
+    "name": "BANTAL PELUK SIZE L (KEKABU ASLI)",
+    "slug": "bantal-peluk-l-kekabu-asli",
+    "subtitle": "100% Kekabu Asli",
+    "description": "Bantal peluk saiz L 100% Kekabu Asli gred tradisi. Sejuk semulajadi, padat dan menyokong postur tubuh dengan sempurna sepanjang malam.",
+    "shortDescription": "RM34.90 | Bantal peluk saiz L 100% Kekabu Asli sejuk dan padat.",
+    "categoryId": "cat-bantal-peluk",
+    "productType": "pillow",
+    "material": "100% Kekabu Asli",
+    "priceSen": 3490,
+    "warrantyYears": 2,
+    "isFeatured": true,
+    "status": "published",
+    "badge": "ORGANIK TRADISI",
+    "dimensions": "38\" x 8\"",
+    "images": [
+      {
+        "id": "img-bantal-peluk-l-kekabu-asli-1",
+        "productId": "prod-bantal-peluk-l-kekabu-asli",
+        "imageUrl": "/images/products/bantal-peluk-l-kekabu-asli.png",
+        "altText": "BANTAL PELUK SIZE L (KEKABU ASLI) - RM34.90",
+        "displayOrder": 1,
+        "isPrimary": true
+      }
+    ],
+    "variants": [
+      {
+        "id": "var-bantal-peluk-l-kekabu-asli-1",
+        "productId": "prod-bantal-peluk-l-kekabu-asli",
+        "sku": "TSJ-BP-L-KB",
+        "name": "Large",
+        "sizeName": "Standard",
+        "dimensions": "38\" x 8\"",
+        "priceSen": 3490,
+        "stockQuantity": 80,
+        "isActive": true
+      }
+    ],
+    "createdAt": "2026-09-01T00:00:00Z",
+    "updatedAt": "2026-10-07T00:00:00Z"
+  },
+  {
+    "id": "prod-bantal-baby-kekabu-asli",
+    "name": "BANTAL BABY (KEKABU ASLI)",
+    "slug": "bantal-baby-kekabu-asli",
+    "subtitle": "Size 12 x 17 inch | 100% Kekabu Asli",
+    "description": "Bantal bayi isian 100% Kekabu Asli semulajadi. Sangat lembut, sejuk, bebas bahan kimia dan selamat untuk kulit sensitif bayi.",
+    "shortDescription": "Size 12 x 17 inch | RM9.90 | Bantal bayi 100% Kekabu Asli lembut & sejuk.",
+    "categoryId": "cat-produk-baby",
+    "productType": "pillow",
+    "material": "100% Kekabu Asli",
+    "priceSen": 990,
+    "warrantyYears": 1,
+    "isFeatured": true,
+    "status": "published",
+    "badge": "LEMBUT & SEJUK",
+    "dimensions": "12\" x 17\"",
+    "images": [
+      {
+        "id": "img-bantal-baby-kekabu-asli-1",
+        "productId": "prod-bantal-baby-kekabu-asli",
+        "imageUrl": "/images/products/bantal-baby-kekabu-asli.png",
+        "altText": "BANTAL BABY (KEKABU ASLI) - RM9.90",
+        "displayOrder": 1,
+        "isPrimary": true
+      }
+    ],
+    "variants": [
+      {
+        "id": "var-bantal-baby-kekabu-asli-1",
+        "productId": "prod-bantal-baby-kekabu-asli",
+        "sku": "TSJ-BB-P-01",
+        "name": "Standard (12x17 inch)",
+        "sizeName": "Standard",
+        "dimensions": "12\" x 17\"",
+        "priceSen": 990,
+        "stockQuantity": 150,
+        "isActive": true
+      }
+    ],
+    "createdAt": "2026-09-01T00:00:00Z",
+    "updatedAt": "2026-10-07T00:00:00Z"
+  },
+  {
+    "id": "prod-set-tilam-baby-a-kekabu-asli",
+    "name": "SET TILAM BABY A (KEKABU ASLI)",
+    "slug": "set-tilam-baby-a-kekabu-asli",
+    "subtitle": "Size 28 x 40 inch | 100% Kekabu Asli",
+    "description": "Set tilam bayi Saiz A lengkap isian 100% Kekabu Asli semulajadi. Menjamin tidur lena si manja dengan sokongan postur badan yang optimum.",
+    "shortDescription": "Size 28 x 40 inch | RM69.90 | Set tilam bayi A isian kekabu asli tradisi.",
+    "categoryId": "cat-produk-baby",
+    "productType": "mattress",
+    "material": "100% Kekabu Asli",
+    "priceSen": 6990,
+    "warrantyYears": 1,
+    "isFeatured": true,
+    "status": "published",
+    "badge": "SET LENGKAP",
+    "dimensions": "28\" x 40\"",
+    "images": [
+      {
+        "id": "img-set-tilam-baby-a-kekabu-asli-1",
+        "productId": "prod-set-tilam-baby-a-kekabu-asli",
+        "imageUrl": "/images/products/set-tilam-baby-a-kekabu-asli.png",
+        "altText": "SET TILAM BABY A (KEKABU ASLI) - RM69.90",
+        "displayOrder": 1,
+        "isPrimary": true
+      }
+    ],
+    "variants": [
+      {
+        "id": "var-set-tilam-baby-a-kekabu-asli-1",
+        "productId": "prod-set-tilam-baby-a-kekabu-asli",
+        "sku": "TSJ-BB-STA-01",
+        "name": "Size A (28x40 inch)",
+        "sizeName": "Single",
+        "dimensions": "28\" x 40\"",
+        "priceSen": 6990,
+        "stockQuantity": 60,
+        "isActive": true
+      }
+    ],
+    "createdAt": "2026-09-01T00:00:00Z",
+    "updatedAt": "2026-10-07T00:00:00Z"
+  },
+  {
+    "id": "prod-set-tilam-baby-b-kekabu-asli",
+    "name": "SET TILAM BABY B (KEKABU ASLI)",
+    "slug": "set-tilam-baby-b-kekabu-asli",
+    "subtitle": "Size 20 x 30 inch | 100% Kekabu Asli",
+    "description": "Set tilam bayi Saiz B kompak isian 100% Kekabu Asli. Sesuai untuk katil bayi kecil, 'travel baby cot' atau kegunaan di ruang tamu.",
+    "shortDescription": "Size 20 x 30 inch | RM49.90 | Set tilam bayi B kompak 100% kekabu asli.",
+    "categoryId": "cat-produk-baby",
+    "productType": "mattress",
+    "material": "100% Kekabu Asli",
+    "priceSen": 4990,
+    "warrantyYears": 1,
+    "isFeatured": false,
+    "status": "published",
+    "badge": "PILIHAN IBU",
+    "dimensions": "20\" x 30\"",
+    "images": [
+      {
+        "id": "img-set-tilam-baby-b-kekabu-asli-1",
+        "productId": "prod-set-tilam-baby-b-kekabu-asli",
+        "imageUrl": "/images/products/set-tilam-baby-b-kekabu-asli.png",
+        "altText": "SET TILAM BABY B (KEKABU ASLI) - RM49.90",
+        "displayOrder": 1,
+        "isPrimary": true
+      }
+    ],
+    "variants": [
+      {
+        "id": "var-set-tilam-baby-b-kekabu-asli-1",
+        "productId": "prod-set-tilam-baby-b-kekabu-asli",
+        "sku": "TSJ-BB-STB-01",
+        "name": "Size B (20x30 inch)",
+        "sizeName": "Single",
+        "dimensions": "20\" x 30\"",
+        "priceSen": 4990,
+        "stockQuantity": 80,
+        "isActive": true
+      }
+    ],
+    "createdAt": "2026-09-01T00:00:00Z",
+    "updatedAt": "2026-10-07T00:00:00Z"
+  },
+  {
+    "id": "prod-selimut-legend-m",
+    "name": "SELIMUT LEGEND SIZE M",
+    "slug": "selimut-legend-m",
+    "subtitle": "Size 60 x 80 inch | Corak Berjalur Legend",
+    "description": "Selimut legend berjalur klasik saiz M buatan tempatan berkualiti. Tebal, menyerap peluh, selesa dipakai di bilik berhawa dingin dan tahan basuh bertahun-tahun.",
+    "shortDescription": "Size 60 x 80 inch | RM14.90 | Selimut legend klasik buatan tempatan.",
+    "categoryId": "cat-selimut",
+    "productType": "bedding",
+    "material": "Poly & Cotton Berjalur",
+    "priceSen": 1490,
+    "warrantyYears": 1,
+    "isFeatured": true,
+    "status": "published",
+    "badge": "LEGEND",
+    "dimensions": "60\" x 80\"",
+    "images": [
+      {
+        "id": "img-selimut-legend-m-1",
+        "productId": "prod-selimut-legend-m",
+        "imageUrl": "/images/products/selimut-legend-m.png",
+        "altText": "SELIMUT LEGEND SIZE M - RM14.90",
+        "displayOrder": 1,
+        "isPrimary": true
+      }
+    ],
+    "variants": [
+      {
+        "id": "var-selimut-legend-m-1",
+        "productId": "prod-selimut-legend-m",
+        "sku": "TSJ-SL-M-01",
+        "name": "Size M (60x80 inch)",
+        "sizeName": "Single",
+        "dimensions": "60\" x 80\"",
+        "priceSen": 1490,
+        "compareAtPriceSen": 1690,
+        "stockQuantity": 200,
+        "isActive": true
+      }
+    ],
+    "createdAt": "2026-09-01T00:00:00Z",
+    "updatedAt": "2026-10-07T00:00:00Z"
+  },
+  {
+    "id": "prod-selimut-legend-l",
+    "name": "SELIMUT LEGEND SIZE L",
+    "slug": "selimut-legend-l",
+    "subtitle": "Size 70 x 90 inch | Corak Berjalur Legend",
+    "description": "Selimut legend berjalur saiz L saiz besar untuk katil Queen atau seisi keluarga. Material kapas berkualiti yang lembut, hangat dan tahan lama.",
+    "shortDescription": "Size 70 x 90 inch | RM24.90 | Selimut legend saiz L besar dan selesa.",
+    "categoryId": "cat-selimut",
+    "productType": "bedding",
+    "material": "Poly & Cotton Berjalur",
+    "priceSen": 2490,
+    "warrantyYears": 1,
+    "isFeatured": false,
+    "status": "published",
+    "badge": "SAIZ BESAR",
+    "dimensions": "70\" x 90\"",
+    "images": [
+      {
+        "id": "img-selimut-legend-l-1",
+        "productId": "prod-selimut-legend-l",
+        "imageUrl": "/images/products/selimut-legend-l.png",
+        "altText": "SELIMUT LEGEND SIZE L - RM24.90",
+        "displayOrder": 1,
+        "isPrimary": true
+      }
+    ],
+    "variants": [
+      {
+        "id": "var-selimut-legend-l-1",
+        "productId": "prod-selimut-legend-l",
+        "sku": "TSJ-SL-L-01",
+        "name": "Size L (70x90 inch)",
+        "sizeName": "Queen",
+        "dimensions": "70\" x 90\"",
+        "priceSen": 2490,
+        "compareAtPriceSen": 2800,
+        "stockQuantity": 150,
+        "isActive": true
+      }
+    ],
+    "createdAt": "2026-09-01T00:00:00Z",
+    "updatedAt": "2026-10-07T00:00:00Z"
+  },
+  {
+    "id": "prod-bantal-sofa-14x14",
+    "name": "BANTAL SOFA SIZE 14X14 INCH",
+    "slug": "bantal-sofa-14x14",
+    "subtitle": "Size 14 x 14 inch | Poly Fibre",
+    "description": "Bantal sofa saiz 14x14 inci isian Asian Polyester Fibre gebu. Sesuai untuk kusyen kerusi ruang tamu, pejabat, kafe atau dekorasi rumah.",
+    "shortDescription": "Size 14 x 14 inch | RM9.90 | Bantal sofa kusyen isian Poly Fibre.",
+    "categoryId": "cat-kusyen-sofa",
+    "productType": "pillow",
+    "material": "Asian Polyester Fibre",
+    "priceSen": 990,
+    "warrantyYears": 1,
+    "isFeatured": true,
+    "status": "published",
+    "badge": "KUSYEN RUANG TAMU",
+    "dimensions": "14\" x 14\"",
+    "images": [
+      {
+        "id": "img-bantal-sofa-14x14-1",
+        "productId": "prod-bantal-sofa-14x14",
+        "imageUrl": "/images/products/bantal-sofa-14x14-poly.png",
+        "altText": "BANTAL SOFA SIZE 14X14 INCH - RM9.90",
+        "displayOrder": 1,
+        "isPrimary": true
+      }
+    ],
+    "variants": [
+      {
+        "id": "var-bantal-sofa-14x14-1",
+        "productId": "prod-bantal-sofa-14x14",
+        "sku": "TSJ-BS-1414-01",
+        "name": "14x14 inch",
+        "sizeName": "Standard",
+        "dimensions": "14\" x 14\"",
+        "priceSen": 990,
+        "compareAtPriceSen": 1290,
+        "stockQuantity": 150,
+        "isActive": true
+      }
+    ],
+    "createdAt": "2026-09-01T00:00:00Z",
+    "updatedAt": "2026-10-07T00:00:00Z"
+  },
+  {
+    "id": "prod-bantal-sofa-12x17",
+    "name": "BANTAL SOFA SIZE 12X17 INCH",
+    "slug": "bantal-sofa-12x17",
+    "subtitle": "Size 12 x 17 inch | Poly Fibre",
+    "description": "Bantal kusyen sofa memanjang bentuk rektangular saiz 12x17 inci. Isian Poly Fibre anjal memberi sokongan pinggang yang selesa di kerusi.",
+    "shortDescription": "Size 12 x 17 inch | RM9.90 | Kusyen sokongan pinggang sofa ruang tamu.",
+    "categoryId": "cat-kusyen-sofa",
+    "productType": "pillow",
+    "material": "Asian Polyester Fibre",
+    "priceSen": 990,
+    "warrantyYears": 1,
+    "isFeatured": false,
+    "status": "published",
+    "badge": "BENTUK RECTANGLE",
+    "dimensions": "12\" x 17\"",
+    "images": [
+      {
+        "id": "img-bantal-sofa-12x17-1",
+        "productId": "prod-bantal-sofa-12x17",
+        "imageUrl": "/images/products/bantal-sofa-12x17-poly.png",
+        "altText": "BANTAL SOFA SIZE 12X17 INCH - RM9.90",
+        "displayOrder": 1,
+        "isPrimary": true
+      }
+    ],
+    "variants": [
+      {
+        "id": "var-bantal-sofa-12x17-1",
+        "productId": "prod-bantal-sofa-12x17",
+        "sku": "TSJ-BS-1217-01",
+        "name": "12x17 inch",
+        "sizeName": "Standard",
+        "dimensions": "12\" x 17\"",
+        "priceSen": 990,
+        "stockQuantity": 120,
+        "isActive": true
+      }
+    ],
+    "createdAt": "2026-09-01T00:00:00Z",
+    "updatedAt": "2026-10-07T00:00:00Z"
+  },
+  {
+    "id": "prod-bantal-sofa-17x17",
+    "name": "BANTAL SOFA SIZE 17X17 INCH",
+    "slug": "bantal-sofa-17x17",
+    "subtitle": "Size 17 x 17 inch | Poly Fibre",
+    "description": "Bantal sofa saiz standard 17x17 inci. Tebal dan padat dengan isian Asian Polyester Fibre untuk keselesaan optimum di set sofa ruang tamu.",
+    "shortDescription": "Size 17 x 17 inch | RM14.90 | Bantal kusyen saiz standard 17x17 inci.",
+    "categoryId": "cat-kusyen-sofa",
+    "productType": "pillow",
+    "material": "Asian Polyester Fibre",
+    "priceSen": 1490,
+    "warrantyYears": 1,
+    "isFeatured": false,
+    "status": "published",
+    "badge": "STANDARD KUSYEN",
+    "dimensions": "17\" x 17\"",
+    "images": [
+      {
+        "id": "img-bantal-sofa-17x17-1",
+        "productId": "prod-bantal-sofa-17x17",
+        "imageUrl": "/images/products/bantal-sofa-17x17-poly.png",
+        "altText": "BANTAL SOFA SIZE 17X17 INCH - RM14.90",
+        "displayOrder": 1,
+        "isPrimary": true
+      }
+    ],
+    "variants": [
+      {
+        "id": "var-bantal-sofa-17x17-1",
+        "productId": "prod-bantal-sofa-17x17",
+        "sku": "TSJ-BS-1717-01",
+        "name": "17x17 inch",
+        "sizeName": "Standard",
+        "dimensions": "17\" x 17\"",
+        "priceSen": 1490,
+        "stockQuantity": 150,
+        "isActive": true
+      }
+    ],
+    "createdAt": "2026-09-01T00:00:00Z",
+    "updatedAt": "2026-10-07T00:00:00Z"
+  },
+  {
+    "id": "prod-bantal-kusyen-20x20",
+    "name": "BANTAL KUSYEN SIZE 20X20 INCH",
+    "slug": "bantal-kusyen-20x20",
+    "subtitle": "Size 20 x 20 inch | Poly Fibre",
+    "description": "Bantal kusyen saiz besar 20x20 inci. Sangat empuk untuk santai di ruang tamu, kerusi rehat atau ruang rekreasi keluarga.",
+    "shortDescription": "Size 20 x 20 inch | RM19.90 | Bantal kusyen besar 20x20 inci empuk dan padat.",
+    "categoryId": "cat-kusyen-sofa",
+    "productType": "pillow",
+    "material": "Asian Polyester Fibre",
+    "priceSen": 1990,
+    "warrantyYears": 1,
+    "isFeatured": true,
+    "status": "published",
+    "badge": "KUSYEN BESAR",
+    "dimensions": "20\" x 20\"",
+    "images": [
+      {
+        "id": "img-bantal-kusyen-20x20-1",
+        "productId": "prod-bantal-kusyen-20x20",
+        "imageUrl": "/images/products/bantal-kusyen-20x20-poly.png",
+        "altText": "BANTAL KUSYEN SIZE 20X20 INCH - RM19.90",
+        "displayOrder": 1,
+        "isPrimary": true
+      }
+    ],
+    "variants": [
+      {
+        "id": "var-bantal-kusyen-20x20-1",
+        "productId": "prod-bantal-kusyen-20x20",
+        "sku": "TSJ-BK-2020-01",
+        "name": "20x20 inch",
+        "sizeName": "Standard",
+        "dimensions": "20\" x 20\"",
+        "priceSen": 1990,
+        "stockQuantity": 120,
+        "isActive": true
+      }
+    ],
+    "createdAt": "2026-09-01T00:00:00Z",
+    "updatedAt": "2026-10-07T00:00:00Z"
+  },
+  {
+    "id": "prod-bantal-kusyen-25x25",
+    "name": "BANTAL KUSYEN SIZE 25X25 INCH",
+    "slug": "bantal-kusyen-25x25",
+    "subtitle": "Size 25 x 25 inch | Poly Fibre",
+    "description": "Bantal kusyen ekstra besar saiz 25x25 inci. Sesuai untuk kusyen lantai tatami, kerusi rotan atau sofa sudut keluarga.",
+    "shortDescription": "Size 25 x 25 inch | RM24.90 | Kusyen ekstra besar 25x25 inci isian poly fibre.",
+    "categoryId": "cat-kusyen-sofa",
+    "productType": "pillow",
+    "material": "Asian Polyester Fibre",
+    "priceSen": 2490,
+    "warrantyYears": 1,
+    "isFeatured": false,
+    "status": "published",
+    "badge": "EXTRA LARGE",
+    "dimensions": "25\" x 25\"",
+    "images": [
+      {
+        "id": "img-bantal-kusyen-25x25-1",
+        "productId": "prod-bantal-kusyen-25x25",
+        "imageUrl": "/images/products/bantal-kusyen-25x25-poly.png",
+        "altText": "BANTAL KUSYEN SIZE 25X25 INCH - RM24.90",
+        "displayOrder": 1,
+        "isPrimary": true
+      }
+    ],
+    "variants": [
+      {
+        "id": "var-bantal-kusyen-25x25-1",
+        "productId": "prod-bantal-kusyen-25x25",
+        "sku": "TSJ-BK-2525-01",
+        "name": "25x25 inch",
+        "sizeName": "Standard",
+        "dimensions": "25\" x 25\"",
+        "priceSen": 2490,
+        "stockQuantity": 80,
+        "isActive": true
+      }
+    ],
+    "createdAt": "2026-09-01T00:00:00Z",
+    "updatedAt": "2026-10-07T00:00:00Z"
+  },
+  {
+    "id": "prod-bantal-kusyen-30x30",
+    "name": "BANTAL KUSYEN SIZE 30X30 INCH",
+    "slug": "bantal-kusyen-30x30",
+    "subtitle": "Size 30 x 30 inch | Poly Fibre",
+    "description": "Bantal kusyen gergasi jumbo saiz 30x30 inci. Sangat empuk sebagai kusyen rehat santai atas lantai, surau atau ruang istirahat.",
+    "shortDescription": "Size 30 x 30 inch | RM29.90 | Kusyen saiz jumbo 30x30 inci paling mewah.",
+    "categoryId": "cat-kusyen-sofa",
+    "productType": "pillow",
+    "material": "Asian Polyester Fibre",
+    "priceSen": 2990,
+    "warrantyYears": 1,
+    "isFeatured": false,
+    "status": "published",
+    "badge": "JUMBO SIZE",
+    "dimensions": "30\" x 30\"",
+    "images": [
+      {
+        "id": "img-bantal-kusyen-30x30-1",
+        "productId": "prod-bantal-kusyen-30x30",
+        "imageUrl": "/images/products/bantal-kusyen-30x30-poly.png",
+        "altText": "BANTAL KUSYEN SIZE 30X30 INCH - RM29.90",
+        "displayOrder": 1,
+        "isPrimary": true
+      }
+    ],
+    "variants": [
+      {
+        "id": "var-bantal-kusyen-30x30-1",
+        "productId": "prod-bantal-kusyen-30x30",
+        "sku": "TSJ-BK-3030-01",
+        "name": "30x30 inch",
+        "sizeName": "Standard",
+        "dimensions": "30\" x 30\"",
+        "priceSen": 2990,
+        "stockQuantity": 60,
+        "isActive": true
+      }
+    ],
+    "createdAt": "2026-09-01T00:00:00Z",
+    "updatedAt": "2026-10-07T00:00:00Z"
+  },
+  {
+    "id": "prod-sarung-tilam-single",
+    "name": "SARUNG TILAM SINGLE",
+    "slug": "sarung-tilam-single",
+    "subtitle": "Size 90 cm x 200 cm | Berzip Kemas",
+    "description": "Sarung tilam single berzip keliling kemas. Melindungi tilam toto atau tilam bujang daripada habuk dan kotoran. Mudah dibuka untuk dicuci.",
+    "shortDescription": "Size 90 cm x 200 cm | RM14.90 | Sarung tilam bujang berzip praktikal.",
+    "categoryId": "cat-sarung-tilam",
+    "productType": "bedding",
+    "material": "Kain Cotton & Poly Berzip",
+    "priceSen": 1490,
+    "warrantyYears": 1,
+    "isFeatured": true,
+    "status": "published",
+    "badge": "BERZIP KEMAS",
+    "dimensions": "90 cm x 200 cm",
+    "images": [
+      {
+        "id": "img-sarung-tilam-single-1",
+        "productId": "prod-sarung-tilam-single",
+        "imageUrl": "/images/products/sarung-tilam-single.png",
+        "altText": "SARUNG TILAM SINGLE - RM14.90",
+        "displayOrder": 1,
+        "isPrimary": true
+      }
+    ],
+    "variants": [
+      {
+        "id": "var-sarung-tilam-single-1",
+        "productId": "prod-sarung-tilam-single",
+        "sku": "TSJ-ST-SIN-01",
+        "name": "Single (90x200 cm)",
+        "sizeName": "Single",
+        "dimensions": "90 cm x 200 cm",
+        "priceSen": 1490,
+        "stockQuantity": 200,
+        "isActive": true
+      }
+    ],
+    "createdAt": "2026-09-01T00:00:00Z",
+    "updatedAt": "2026-10-07T00:00:00Z"
+  },
+  {
+    "id": "prod-sarung-tilam-queen",
+    "name": "SARUNG TILAM QUEEN",
+    "slug": "sarung-tilam-queen",
+    "subtitle": "Size 150 cm x 200 cm | Berzip Kemas",
+    "description": "Sarung tilam queen berzip keliling dengan kemasan jahitan kemas terus dari kilang. Memastikan tilam toto queen anda sentiasa bersih dan segar.",
+    "shortDescription": "Size 150 cm x 200 cm | RM19.90 | Sarung tilam queen berzip tahan lasak.",
+    "categoryId": "cat-sarung-tilam",
+    "productType": "bedding",
+    "material": "Kain Cotton & Poly Berzip",
+    "priceSen": 1990,
+    "warrantyYears": 1,
+    "isFeatured": false,
+    "status": "published",
+    "badge": "BERZIP KEMAS",
+    "dimensions": "150 cm x 200 cm",
+    "images": [
+      {
+        "id": "img-sarung-tilam-queen-1",
+        "productId": "prod-sarung-tilam-queen",
+        "imageUrl": "/images/products/sarung-tilam-queen.png",
+        "altText": "SARUNG TILAM QUEEN - RM19.90",
+        "displayOrder": 1,
+        "isPrimary": true
+      }
+    ],
+    "variants": [
+      {
+        "id": "var-sarung-tilam-queen-1",
+        "productId": "prod-sarung-tilam-queen",
+        "sku": "TSJ-ST-QUE-01",
+        "name": "Queen (150x200 cm)",
+        "sizeName": "Queen",
+        "dimensions": "150 cm x 200 cm",
+        "priceSen": 1990,
+        "stockQuantity": 150,
+        "isActive": true
+      }
+    ],
+    "createdAt": "2026-09-01T00:00:00Z",
+    "updatedAt": "2026-10-07T00:00:00Z"
+  },
+  {
+    "id": "prod-custom-oem-bantal-tidur",
+    "name": "CUSTOM (OEM) - BANTAL TIDUR",
+    "slug": "custom-oem-bantal-tidur",
+    "subtitle": "Pakej Tempahan Pukal & Jenama Sendiri (OEM) | RM1,000",
+    "description": "Perkhidmatan pengilangan dan tempahan pukal bantal tidur custom OEM terus dari kilang Tunas Sinar Jaya Enterprise di Tasek Gelugor. Boleh disesuaikan dengan isian Asian Polyester Fibre, TC Shoddy atau Kekabu Asli mengikut spesifikasi hotel, homestay, asrama, hospital dan peniaga tekstil dengan label jenama anda sendiri.",
+    "shortDescription": "Pakej Tempahan Pukal & Jahit Jenama Sendiri (OEM) Bantal Tidur | RM1,000.00.",
+    "categoryId": "cat-custom-oem",
+    "productType": "pillow",
+    "material": "Asian Polyester Fibre / TC Shoddy / Kekabu Asli (Pilihan Pelanggan)",
+    "warrantyYears": 1,
     "trialNights": 0,
     "features": [
-      "100% Kekabu asli gred A bebas habuk & bahan kimia",
-      "Sangat sejuk dan tidak menyerap haba panas bilik",
-      "Jahitan butang tufted kemas untuk ketahanan bentuk",
-      "Boleh dijemur di bawah matahari untuk kesegaran berpanjangan",
-      "Kualiti pertukangan tekstil Bumiputera warisan turun-temurun"
+      "Tempahan pukal & pengeluaran custom OEM terus dari kilang",
+      "Pilihan isian Asian Polyester Fibre, TC Shoddy atau Kekabu Asli",
+      "Boleh sertakan label jenama sendiri untuk hotel, asrama & peniaga",
+      "Kualiti jahitan kilang berpengalaman lebih 20 tahun"
     ],
     "layers": [],
     "specifications": {
-      "Isian": "100% Kekabu Asli Tulen",
-      "Jahitan": "Tufting Butang Kemas",
-      "Fabrik": "Kapas Tahan Lasak",
-      "Pengeluar": "Tunas Sinar Jaya Enterprise (Tasek Gelugor)"
+      "Kategori": "Custom (OEM) Tempahan Pukal",
+      "Isian": "Asian Polyester Fibre / TC Shoddy / Kekabu Asli",
+      "Kain Sarung": "100% Cotton / Microfibre Berzip atau Berjahit Rapi",
+      "Minimum Tempahan": "Pakej Nilai RM1,000 mengikut kuantiti unit dipersetujui",
+      "Label": "Boleh sertakan label jenama sendiri (OEM Woven Label)",
+      "Pengeluar": "Tunas Sinar Jaya Sdn. Bhd. (Tasek Gelugor, Pulau Pinang)"
     },
     "faq": [
       {
-        "question": "Bagaimanakah cara penjagaan tilam kekabu?",
-        "answer": "Jemur di bawah cahaya matahari sekurang-kurangnya sekali sebulan untuk memastikan kekabu sentiasa mekar, gebu dan bebas lembapan."
-      }
-    ],
-    "status": "published",
-    "isFeatured": true,
-    "variants": [
-      {
-        "id": "var-kekabu-sgl",
-        "productId": "prod-tilam-kekabu-asli",
-        "sku": "TSJ-KB-SGL",
-        "sizeName": "Single (90cm x 190cm)",
-        "dimensions": "90cm x 190cm x 10cm",
-        "priceSen": 9500,
-        "compareAtPriceSen": 13500,
-        "stockQuantity": 30,
-        "leadTimeDays": 2,
-        "isActive": true
+        "question": "Bolehkah saya meletakkan jenama atau logo syarikat sendiri pada bantal?",
+        "answer": "Ya, kami menyediakan perkhidmatan jahitan label jenama anda sendiri (OEM) untuk tempahan pukal."
       },
       {
-        "id": "var-kekabu-qen",
-        "productId": "prod-tilam-kekabu-asli",
-        "sku": "TSJ-KB-QEN",
-        "sizeName": "Queen (150cm x 190cm)",
-        "dimensions": "150cm x 190cm x 12cm",
-        "priceSen": 15900,
-        "compareAtPriceSen": 19900,
-        "stockQuantity": 25,
-        "leadTimeDays": 2,
-        "isActive": true
+        "question": "Berapa lama tempoh siap untuk tempahan OEM bantal ini?",
+        "answer": "Biasanya mengambil masa 5 hingga 10 hari bekerja bergantung kepada kuantiti dan spesifikasi isian."
       }
     ],
-    "images": [
-      {
-        "id": "img-kb-1",
-        "productId": "prod-tilam-kekabu-asli",
-        "imageUrl": "/images/products/tilam-kekabu-asli.jpg",
-        "altText": "Tilam Kekabu Asli Tradisi Tunas Sinar Jaya",
-        "displayOrder": 1,
-        "isPrimary": true
-      }
-    ],
-    "createdAt": "2026-09-01T00:00:00Z",
-    "updatedAt": "2026-10-07T00:00:00Z"
-  },
-  {
-    "id": "prod-tilam-lipat-3",
-    "name": "Tilam Lipat 3 Berzip Fabrik Tahan Lasak",
-    "slug": "tilam-lipat-3-berzip",
-    "subtitle": "Sarung Berzip Boleh Buka Cuci • Jimat Ruang & Praktikal",
-    "description": "Tilam lipat 3 bahagian yang menjimatkan ruang penyimpanan. Isian busa/fiber mampat yang tahan lasak dan tidak mudah penyek. Sarung berzip mudah ditanggalkan untuk dicuci. Pilihan terbaik untuk rumah sewa, asrama, dan tilam tetamu.",
-    "shortDescription": "Tilam lipat 3 bahagian berzip yang boleh dicuci sarungnya. Jimat ruang dan selesa.",
-    "categoryId": "cat-tilam-lipat",
-    "productType": "mattress",
-    "material": "Fiber / Busa Mampat Berketumpatan Tinggi",
-    "firmness": "Medium Firm",
-    "firmnessScale": 6,
-    "thicknessCm": 7,
-    "warrantyYears": 1,
-    "trialNights": 0,
-    "features": [
-      "Rekaan 3 lipatan mudah simpan dalam almari atau sudut bilik",
-      "Sarung kain tebal dilengkapi zip penuh untuk mudah dicuci",
-      "Isian mampat yang menyokong tulang belakang dengan baik",
-      "Jahitan piping kemas di Unit Jahitan Tunas Sinar Jaya"
-    ],
-    "layers": [],
-    "specifications": {
-      "Jenis": "Tilam Lipat 3 Bahagian",
-      "Saiz Buka": "Single (90cm x 190cm)",
-      "Sarung": "Fabrik Berzip Boleh Dicuci",
-      "Pengeluar": "Tunas Sinar Jaya Enterprise"
-    },
-    "faq": [],
     "status": "published",
     "isFeatured": true,
     "variants": [
       {
-        "id": "var-lipat-2in",
-        "productId": "prod-tilam-lipat-3",
-        "sku": "TSJ-LIPAT-2IN",
-        "sizeName": "Single 2 Inci Tebal",
-        "dimensions": "90cm x 190cm x 5cm",
-        "priceSen": 6900,
-        "compareAtPriceSen": 8900,
-        "stockQuantity": 40,
-        "leadTimeDays": 1,
-        "isActive": true
-      },
-      {
-        "id": "var-lipat-3in",
-        "productId": "prod-tilam-lipat-3",
-        "sku": "TSJ-LIPAT-3IN",
-        "sizeName": "Single 3 Inci Extra Tebal",
-        "dimensions": "90cm x 190cm x 8cm",
-        "priceSen": 8900,
-        "compareAtPriceSen": 11000,
-        "stockQuantity": 35,
-        "leadTimeDays": 1,
-        "isActive": true
-      }
-    ],
-    "images": [
-      {
-        "id": "img-lipat-1",
-        "productId": "prod-tilam-lipat-3",
-        "imageUrl": "/images/products/tilam-lipat-bujang.jpg",
-        "altText": "Tilam Lipat 3 Berzip Tunas Sinar Jaya",
-        "displayOrder": 1,
-        "isPrimary": true
-      }
-    ],
-    "createdAt": "2026-09-01T00:00:00Z",
-    "updatedAt": "2026-10-07T00:00:00Z"
-  },
-  {
-    "id": "prod-tilam-single-asrama",
-    "name": "Tilam Single 3 Kaki Asrama & Homestay (Heavy Duty)",
-    "slug": "tilam-single-3-kaki-asrama",
-    "subtitle": "Pilihan Utama Asrama Sekolah, Pusat Tahfiz & Homestay Bajet",
-    "description": "Tilam bujang saiz standard 3 kaki x 6 kaki keluaran Unit Bantal & Tilam Tunas Sinar Jaya. Jahitan tepi tebal dan fabrik berkualiti tinggi yang tahan penggunaan harian lasak. Sesuai untuk asrama sekolah harian, universiti, maahad tahfiz, dan rumah sewa.",
-    "shortDescription": "Tilam bujang 3 kaki heavy duty untuk asrama, tahfiz dan homestay. Tahan kemek.",
-    "categoryId": "cat-tilam-lipat",
-    "productType": "mattress",
-    "material": "Rebonded Padat & Asian Polyester Fibre",
-    "firmness": "Firm",
-    "firmnessScale": 7,
-    "thicknessCm": 10,
-    "warrantyYears": 2,
-    "trialNights": 0,
-    "features": [
-      "Ketumpatan tinggi tidak mudah melendut atau kemek",
-      "Fabrik jacquard/damask tahan geseran dan lasak",
-      "Jahitan tepi piping bertetulang untuk ketahanan bertahun",
-      "Saiz tepat untuk katil bujang asrama (Single 3x6 kaki)",
-      "Harga kilang untuk belian individu mahupun pukal"
-    ],
-    "layers": [],
-    "specifications": {
-      "Saiz": "Single Standard (90cm x 190cm)",
-      "Tinggi / Ketebalan": "4 Inci atau 5 Inci",
-      "Sesuai Untuk": "Asrama, Homestay, Bilik Pekerja, Pusat Tahfiz",
-      "Pengeluar": "Tunas Sinar Jaya Enterprise"
-    },
-    "faq": [],
-    "status": "published",
-    "isFeatured": true,
-    "variants": [
-      {
-        "id": "var-asrama-4in",
-        "productId": "prod-tilam-single-asrama",
-        "sku": "TSJ-ASRAMA-4IN",
-        "sizeName": "Single 4 Inci Standard",
-        "dimensions": "90cm x 190cm x 10cm",
-        "priceSen": 9900,
-        "compareAtPriceSen": 13000,
+        "id": "var-custom-oem-bantal-1",
+        "productId": "prod-custom-oem-bantal-tidur",
+        "sku": "TSJ-OEM-BTL-1000",
+        "sizeName": "Pakej Tempahan Pukal RM1,000",
+        "dimensions": "Custom mengikut spesifikasi",
+        "priceSen": 100000,
+        "compareAtPriceSen": 120000,
         "stockQuantity": 50,
-        "leadTimeDays": 2,
-        "isActive": true
-      },
-      {
-        "id": "var-asrama-5in",
-        "productId": "prod-tilam-single-asrama",
-        "sku": "TSJ-ASRAMA-5IN",
-        "sizeName": "Single 5 Inci Extra Padat",
-        "dimensions": "90cm x 190cm x 13cm",
-        "priceSen": 12900,
-        "compareAtPriceSen": 16900,
-        "stockQuantity": 40,
-        "leadTimeDays": 2,
-        "isActive": true
+        "isActive": true,
+        "quantityTiers": [
+          {
+            "quantity": 2,
+            "priceSen": 190000,
+            "label": "2 Pakej Jimat RM100"
+          },
+          {
+            "quantity": 5,
+            "priceSen": 450000,
+            "label": "5 Pakej Borong Kilang (Jimat RM500)"
+          }
+        ]
       }
     ],
     "images": [
       {
-        "id": "img-asrama-1",
-        "productId": "prod-tilam-single-asrama",
-        "imageUrl": "/images/products/tilam-lipat-bujang.jpg",
-        "altText": "Tilam Single Asrama Tunas Sinar Jaya",
+        "id": "img-custom-oem-bantal-1",
+        "productId": "prod-custom-oem-bantal-tidur",
+        "imageUrl": "/images/products/custom-oem-bantal-tidur.jpg",
+        "altText": "CUSTOM (OEM) - BANTAL TIDUR - RM1,000",
         "displayOrder": 1,
         "isPrimary": true
       }
     ],
-    "createdAt": "2026-09-01T00:00:00Z",
-    "updatedAt": "2026-10-07T00:00:00Z"
+    "createdAt": "2026-10-14T10:00:00Z",
+    "updatedAt": "2026-10-14T10:00:00Z"
   },
   {
-    "id": "prod-bantal-gebu-asian",
-    "name": "Bantal Tidur Gebu Asian Polyester Fibre",
-    "slug": "bantal-tidur-gebu-asian-fibre",
-    "subtitle": "Isian Fiber Anjal & Sejuk • Sokongan Leher Maksimum",
-    "description": "Bantal tidur empuk dan anjal diisi terus di Unit Bantal & Tilam kilang kami. Menggunakan Asian Polyester Fibre bermutu tinggi yang gebu, tidak mudah berketul, dan memberikan sokongan leher yang selesa untuk tidur yang lena.",
-    "shortDescription": "Bantal tidur gebu berkualiti tinggi dari Unit Bantal & Tilam KAMAAR. Lembut dan anjal.",
-    "categoryId": "cat-bantal",
-    "productType": "pillow",
-    "material": "100% Asian Polyester Virgin Fibre",
-    "firmness": "Medium Soft",
-    "firmnessScale": 4,
-    "warrantyYears": 1,
-    "trialNights": 0,
-    "features": [
-      "Isian Asian Polyester Virgin Fibre gred A yang gebu & anjal",
-      "Kain sarung kapas mikrofiber yang sejuk dan lembut",
-      "Boleh dibasuh dan cepat kering",
-      "Hypoallergenic dan bebas habuk fabrik",
-      "Harga jimat terus dari kilang"
-    ],
-    "layers": [],
-    "specifications": {
-      "Saiz": "Standard Dewasa (48cm x 74cm)",
-      "Isian": "Asian Polyester Fibre Gred A",
-      "Pengeluar": "Tunas Sinar Jaya Enterprise"
-    },
-    "faq": [],
-    "status": "published",
-    "isFeatured": true,
-    "variants": [
-      {
-        "id": "var-bantal-2pc",
-        "productId": "prod-bantal-gebu-asian",
-        "sku": "TSJ-BANTAL-2PC",
-        "sizeName": "Pakej Kombo 2 Biji",
-        "dimensions": "48cm x 74cm",
-        "priceSen": 3200,
-        "compareAtPriceSen": 5000,
-        "stockQuantity": 100,
-        "leadTimeDays": 1,
-        "isActive": true
-      },
-      {
-        "id": "var-bantal-4pc",
-        "productId": "prod-bantal-gebu-asian",
-        "sku": "TSJ-BANTAL-4PC",
-        "sizeName": "Pakej Keluarga 4 Biji (Super Jimat)",
-        "dimensions": "48cm x 74cm",
-        "priceSen": 5900,
-        "compareAtPriceSen": 10000,
-        "stockQuantity": 80,
-        "leadTimeDays": 1,
-        "isActive": true
-      }
-    ],
-    "images": [
-      {
-        "id": "img-bantal-1",
-        "productId": "prod-bantal-gebu-asian",
-        "imageUrl": "/images/products/bantal-gebu-asian-fibre.jpg",
-        "altText": "Bantal Tidur Gebu Asian Polyester Fibre",
-        "displayOrder": 1,
-        "isPrimary": true
-      }
-    ],
-    "createdAt": "2026-09-01T00:00:00Z",
-    "updatedAt": "2026-10-07T00:00:00Z"
-  },
-  {
-    "id": "prod-bantal-peluk-gebu",
-    "name": "Bantal Peluk (Bolster) Gebu Jahitan Kemas",
-    "slug": "bantal-peluk-bolster-gebu",
-    "subtitle": "Panjang & Gemuk • Isian Padat Tidak Mudah Leper",
-    "description": "Bantal peluk panjang dengan isian fiber padat gebu. Jahitan kemas dan fabrik lembut yang memberikan pelukan empuk setiap malam untuk tidur yang lebih selesa.",
-    "shortDescription": "Bantal peluk gebu panjang keluaran kilang KAMAAR. Isian padat dan sedap dipeluk.",
-    "categoryId": "cat-bantal",
-    "productType": "pillow",
-    "material": "Asian Polyester Fibre Padat",
-    "firmness": "Medium Soft",
-    "firmnessScale": 4,
-    "warrantyYears": 1,
-    "trialNights": 0,
-    "features": [
-      "Isian padat dan tidak mudah penyek bila dipeluk",
-      "Jahitan piping keliling yang kukuh",
-      "Saiz panjang standard muat semua sarung bantal peluk pasaran"
-    ],
-    "layers": [],
-    "specifications": {
-      "Saiz": "Standard Dewasa (22cm x 92cm)",
-      "Berat": "Kira-kira 950g",
-      "Pengeluar": "Tunas Sinar Jaya Enterprise"
-    },
-    "faq": [],
-    "status": "published",
-    "isFeatured": true,
-    "variants": [
-      {
-        "id": "var-peluk-1pc",
-        "productId": "prod-bantal-peluk-gebu",
-        "sku": "TSJ-PELUK-1PC",
-        "sizeName": "1 Unit Bantal Peluk",
-        "dimensions": "22cm x 92cm",
-        "priceSen": 2400,
-        "compareAtPriceSen": 3500,
-        "stockQuantity": 80,
-        "leadTimeDays": 1,
-        "isActive": true
-      },
-      {
-        "id": "var-peluk-2pc",
-        "productId": "prod-bantal-peluk-gebu",
-        "sku": "TSJ-PELUK-2PC",
-        "sizeName": "Kombo 2 Unit Bantal Peluk",
-        "dimensions": "22cm x 92cm",
-        "priceSen": 4500,
-        "compareAtPriceSen": 7000,
-        "stockQuantity": 50,
-        "leadTimeDays": 1,
-        "isActive": true
-      }
-    ],
-    "images": [
-      {
-        "id": "img-peluk-1",
-        "productId": "prod-bantal-peluk-gebu",
-        "imageUrl": "/images/products/bantal-peluk-roll-pack.jpg",
-        "altText": "Bantal Peluk Gebu Tunas Sinar Jaya",
-        "displayOrder": 1,
-        "isPrimary": true
-      }
-    ],
-    "createdAt": "2026-09-01T00:00:00Z",
-    "updatedAt": "2026-10-07T00:00:00Z"
-  },
-  {
-    "id": "prod-comforter-tebal-quilting",
-    "name": "Set Comforter Tebal Quilting Corak Menarik",
-    "slug": "set-comforter-tebal-quilting",
-    "subtitle": "Jahitan Quilting Kilang Sendiri • Lembut & Sejuk Dipakai",
-    "description": "Comforter tebal dijahit dengan mesin quilting khas Unit Jahitan Tunas Sinar Jaya. Fabrik mikrofiber sejuk dengan isian fiber lembut dan kemas. Pilihan pelbagai corak menarik untuk menceriakan bilik tidur anda.",
-    "shortDescription": "Set comforter tebal jahitan quilting kilang sendiri. Lembut, sejuk dan tahan basuh.",
-    "categoryId": "cat-cadang-comforter",
-    "productType": "bedding",
-    "material": "Mikrofiber Sejuk & Isian Fiber Quilting",
-    "warrantyYears": 1,
-    "trialNights": 0,
-    "features": [
-      "Jahitan quilting kemas mengelakkan fiber bergumpal",
-      "Kain sejuk lembut, tidak berbulu selepas dibasuh",
-      "Pakej lengkap comforter tebal bersama 2 sarung bantal"
-    ],
-    "layers": [],
-    "specifications": {
-      "Kandungan Set": "1 Comforter Tebal + 2 Sarung Bantal",
-      "Material": "Mikrofiber Lembut Berquilting",
-      "Pengeluar": "Tunas Sinar Jaya Enterprise"
-    },
-    "faq": [],
-    "status": "published",
-    "isFeatured": true,
-    "variants": [
-      {
-        "id": "var-comf-queen",
-        "productId": "prod-comforter-tebal-quilting",
-        "sku": "TSJ-COMF-QEN",
-        "sizeName": "Queen (200cm x 230cm)",
-        "dimensions": "200cm x 230cm",
-        "priceSen": 7900,
-        "compareAtPriceSen": 11000,
-        "stockQuantity": 40,
-        "leadTimeDays": 1,
-        "isActive": true
-      },
-      {
-        "id": "var-comf-king",
-        "productId": "prod-comforter-tebal-quilting",
-        "sku": "TSJ-COMF-KNG",
-        "sizeName": "King (220cm x 240cm)",
-        "dimensions": "220cm x 240cm",
-        "priceSen": 9900,
-        "compareAtPriceSen": 13900,
-        "stockQuantity": 30,
-        "leadTimeDays": 1,
-        "isActive": true
-      }
-    ],
-    "images": [
-      {
-        "id": "img-comf-1",
-        "productId": "prod-comforter-tebal-quilting",
-        "imageUrl": "/images/hero/hero-tilam-toto-lifestyle.jpg",
-        "altText": "Set Comforter Quilting KAMAAR",
-        "displayOrder": 1,
-        "isPrimary": true
-      }
-    ],
-    "createdAt": "2026-09-01T00:00:00Z",
-    "updatedAt": "2026-10-07T00:00:00Z"
-  },
-  {
-    "id": "prod-selimut-patchwork",
-    "name": "Selimut Patchwork Eksklusif Berquilting",
-    "slug": "selimut-patchwork-eksklusif",
-    "subtitle": "Cantuman Corak Klasik & Moden • Sejuk & Lembut",
-    "description": "Selimut patchwork istimewa hasil seni jahitan cantuman fabrik berkualiti Unit Jahitan Tunas Sinar Jaya. Setiap helaian diquilting rapi dengan isian fiber nipis yang sejuk dan menyelesakan, sesuai untuk cuaca berhawa dingin mahupun kipas biasa.",
-    "shortDescription": "Selimut patchwork berquilting kemas keluaran Tunas Sinar Jaya. Sejuk dan bergaya.",
-    "categoryId": "cat-selimut-patchwork",
-    "productType": "bedding",
-    "material": "Kapas Mikrofiber Cantuman & Fiber Quilting",
-    "warrantyYears": 1,
-    "trialNights": 0,
-    "features": [
-      "Jahitan patchwork seni kemas dan teliti",
-      "Lapisan berquilting yang tidak panas dipakai",
-      "Kain tidak berbulu dan warna tidak luntur",
-      "Mudah dibasuh dalam mesin basuh"
-    ],
-    "layers": [],
-    "specifications": {
-      "Saiz": "Queen / King Standard",
-      "Teknik": "Machine Patchwork Quilting",
-      "Pengeluar": "Tunas Sinar Jaya Enterprise"
-    },
-    "faq": [],
-    "status": "published",
-    "isFeatured": true,
-    "variants": [
-      {
-        "id": "var-patch-qen",
-        "productId": "prod-selimut-patchwork",
-        "sku": "TSJ-PATCH-QEN",
-        "sizeName": "Queen (200cm x 230cm)",
-        "dimensions": "200cm x 230cm",
-        "priceSen": 6900,
-        "compareAtPriceSen": 9500,
-        "stockQuantity": 35,
-        "leadTimeDays": 1,
-        "isActive": true
-      }
-    ],
-    "images": [
-      {
-        "id": "img-patch-1",
-        "productId": "prod-selimut-patchwork",
-        "imageUrl": "/images/products/selimut-patchwork.jpg",
-        "altText": "Selimut Patchwork Eksklusif KAMAAR Beddings",
-        "displayOrder": 1,
-        "isPrimary": true
-      }
-    ],
-    "createdAt": "2026-09-01T00:00:00Z",
-    "updatedAt": "2026-10-07T00:00:00Z"
-  },
-  {
-    "id": "prod-set-bayi-gebu",
-    "name": "Set Tilam Bayi Gebu (Tilam + Bantal Lekuk + 2 Bantal Peluk)",
-    "slug": "set-tilam-bayi-gebu",
-    "subtitle": "Pakej Lengkap Si Manja • Lembut, Selamat & Hypoallergenic",
-    "description": "Set tilam bayi comel lengkap dengan tilam empuk berquilting lembut, bantal lekuk kepala bayi ergonomik, serta dua biji bantal peluk mini bertali comel. Menggunakan fabrik kapas lembut yang selamat untuk kulit bayi yang sensitif.",
-    "shortDescription": "Set tilam bayi lengkap buatan kilang KAMAAR. Lembut, sejuk dan selamat untuk si manja.",
-    "categoryId": "cat-set-bayi",
-    "productType": "bedding",
-    "material": "100% Kapas Lembut & Isian Fiber Bayi Hypoallergenic",
-    "warrantyYears": 1,
-    "trialNights": 0,
-    "features": [
-      "Pakej 4 Dalam 1: 1 Tilam + 1 Bantal Lekuk + 2 Bantal Peluk Mini",
-      "Fabrik kapas lembut tidak panas dan tidak memerangkap haba",
-      "Bantal lekuk membantu bentuk kepala bayi yang cantik",
-      "Mudah dicuci dan cepat kering",
-      "Pilihan hadiah terbaik untuk kelahiran bayi (Newborn Gift)"
-    ],
-    "layers": [],
-    "specifications": {
-      "Kandungan": "1 Tilam (60x90cm) + 1 Bantal Lekuk + 2 Bolster",
-      "Material": "Kapas Halus Hypoallergenic",
-      "Pengeluar": "Tunas Sinar Jaya Enterprise"
-    },
-    "faq": [],
-    "status": "published",
-    "isFeatured": true,
-    "variants": [
-      {
-        "id": "var-bayi-set",
-        "productId": "prod-set-bayi-gebu",
-        "sku": "TSJ-BAYI-SET",
-        "sizeName": "Set Lengkap 4-in-1",
-        "dimensions": "Tilam 60cm x 90cm",
-        "priceSen": 5500,
-        "compareAtPriceSen": 7900,
-        "stockQuantity": 40,
-        "leadTimeDays": 1,
-        "isActive": true
-      }
-    ],
-    "images": [
-      {
-        "id": "img-bayi-1",
-        "productId": "prod-set-bayi-gebu",
-        "imageUrl": "/images/products/set-tilam-bayi.jpg",
-        "altText": "Set Tilam Bayi Gebu Tunas Sinar Jaya",
-        "displayOrder": 1,
-        "isPrimary": true
-      }
-    ],
-    "createdAt": "2026-09-01T00:00:00Z",
-    "updatedAt": "2026-10-07T00:00:00Z"
-  },
-  {
-    "id": "prod-kusyen-sofa-eksklusif",
-    "name": "Set Sarung Kusyen Sofa Eksklusif (Termasuk Corak Aidilfitri)",
-    "slug": "set-sarung-kusyen-sofa-eksklusif",
-    "subtitle": "Fabrik Tebal Berkilat • Piping Tepi & Zip Sorok Tahan Karat",
-    "description": "Set sarung kusyen sofa ruang tamu dengan rekaan eksklusif keluaran Unit Jahitan kilang kami. Menampilkan pelbagai pilihan corak songket tenun, geometrik moden, dan rekaan khas Aidilfitri untuk menyerlahkan keanggunan ruang tamu anda.",
-    "shortDescription": "Sarung kusyen sofa eksklusif jahitan kilang. Fabrik berkualiti tinggi pelbagai corak mewah.",
-    "categoryId": "cat-kusyen-sofa",
-    "productType": "bedding",
-    "material": "Jacquard Songket & Baldu Mikrofiber",
-    "warrantyYears": 1,
-    "trialNights": 0,
-    "features": [
-      "Jahitan piping keliling tebal dan kemas",
-      "Zip sorok (invisible zipper) tahan karat",
-      "Fabrik mewah tidak luntur dan tahan basuhan mesin",
-      "Sesuai untuk semua kusyen sofa standard (45cm x 45cm)"
-    ],
-    "layers": [],
-    "specifications": {
-      "Saiz": "Standard Kusyen (45cm x 45cm)",
-      "Pakej": "Pilihan 5 Keping Sedondon",
-      "Pengeluar": "Tunas Sinar Jaya Enterprise"
-    },
-    "faq": [],
-    "status": "published",
-    "isFeatured": true,
-    "variants": [
-      {
-        "id": "var-kusyen-5pc",
-        "productId": "prod-kusyen-sofa-eksklusif",
-        "sku": "TSJ-KSYN-5PC",
-        "sizeName": "Set Kombo 5 Keping Sedondon",
-        "dimensions": "45cm x 45cm",
-        "priceSen": 4900,
-        "compareAtPriceSen": 7500,
-        "stockQuantity": 50,
-        "leadTimeDays": 1,
-        "isActive": true
-      }
-    ],
-    "images": [
-      {
-        "id": "img-kusyen-1",
-        "productId": "prod-kusyen-sofa-eksklusif",
-        "imageUrl": "/images/products/kusyen-sofa-eksklusif.jpg",
-        "altText": "Sarung Kusyen Sofa Eksklusif KAMAAR",
-        "displayOrder": 1,
-        "isPrimary": true
-      }
-    ],
-    "createdAt": "2026-09-01T00:00:00Z",
-    "updatedAt": "2026-10-07T00:00:00Z"
-  },
-  {
-    "id": "prod-sarung-toto-berzip",
-    "name": "Cadar & Sarung Tilam Toto Berzip Pelbagai Corak",
-    "slug": "cadar-sarung-tilam-toto-berzip",
-    "subtitle": "Zip Penuh Tahan Karat • Kain Sejuk Tidak Luntur",
-    "description": "Sarung gantian berzip penuh untuk tilam toto anda. Senang dibuka untuk dibasuh, kain tebal tidak mudah koyak dan corak tidak luntur.",
-    "shortDescription": "Sarung ganti berzip penuh untuk tilam toto. Senang buka basuh dan kain berkualiti.",
-    "categoryId": "cat-cadang-comforter",
-    "productType": "bedding",
-    "material": "Kapas Mikrofiber Sejuk Berzip",
-    "warrantyYears": 1,
-    "trialNights": 0,
-    "features": [
-      "Zip panjang memudahkan proses memasukkan dan mengeluarkan tilam toto",
-      "Kain sejuk lembut yang selesa bila berbaring",
-      "Corak moden dan floral bunga ceria"
-    ],
-    "layers": [],
-    "specifications": {
-      "Jenis": "Sarung Berzip Tilam Toto",
-      "Pengeluar": "Tunas Sinar Jaya Enterprise"
-    },
-    "faq": [],
-    "status": "published",
-    "isFeatured": true,
-    "variants": [
-      {
-        "id": "var-sarung-sgl",
-        "productId": "prod-sarung-toto-berzip",
-        "sku": "TSJ-SRG-SGL",
-        "sizeName": "Single (90x190cm)",
-        "dimensions": "90cm x 190cm",
-        "priceSen": 2500,
-        "compareAtPriceSen": 3500,
-        "stockQuantity": 60,
-        "leadTimeDays": 1,
-        "isActive": true
-      },
-      {
-        "id": "var-sarung-qen",
-        "productId": "prod-sarung-toto-berzip",
-        "sku": "TSJ-SRG-QEN",
-        "sizeName": "Queen (150x190cm)",
-        "dimensions": "150cm x 190cm",
-        "priceSen": 3500,
-        "compareAtPriceSen": 4500,
-        "stockQuantity": 70,
-        "leadTimeDays": 1,
-        "isActive": true
-      }
-    ],
-    "images": [
-      {
-        "id": "img-sarung-1",
-        "productId": "prod-sarung-toto-berzip",
-        "imageUrl": "/images/products/tilam-toto-queen.jpg",
-        "altText": "Sarung Tilam Toto Berzip KAMAAR",
-        "displayOrder": 1,
-        "isPrimary": true
-      }
-    ],
-    "createdAt": "2026-09-01T00:00:00Z",
-    "updatedAt": "2026-10-07T00:00:00Z"
-  },
-  {
-    "id": "prod-pakej-borong-10set",
-    "name": "Pakej Tempahan Pukal Asrama & Homestay (Jualan Gudang)",
-    "slug": "pakej-pukal-asrama-homestay",
-    "subtitle": "Harga Borong Terus Kilang • Termasuk Tilam + Bantal Gebu",
-    "description": "Pakej jualan gudang paling jimat untuk pengusaha asrama sekolah, tahfiz, homestay, atau kem latihan. Jimat sehingga ratusan ringgit bila membeli terus dari kilang pengeluar Tunas Sinar Jaya di Tasek Gelugor.",
-    "shortDescription": "Pakej borong jualan gudang terus dari kilang untuk homestay dan asrama.",
-    "categoryId": "cat-borong-gudang",
+    "id": "prod-custom-oem-tilam-toto",
+    "name": "CUSTOM (OEM) - TILAM TOTO",
+    "slug": "custom-oem-tilam-toto",
+    "subtitle": "Pengilangan Pukal Tilam Toto OEM | RM1,000",
+    "description": "Pengeluaran pukal tilam toto jenama sendiri (OEM) terus dari kilang jahitan Tunas Sinar Jaya. Kami menawarkan pembuatan mengikut ukuran, ketebalan, jenis fabrik (cotton, microfibre, quilting eksklusif) serta isian Asian Polyester Fibre bermutu tinggi yang empuk dan tahan leper.",
+    "shortDescription": "Pakej Pengilangan Pukal Tilam Toto OEM | RM1,000.00 | Pilihan Fabrik & Ketebalan.",
+    "categoryId": "cat-custom-oem",
     "productType": "mattress",
-    "material": "Tilam & Bantal Lengkap Terus Kilang",
+    "material": "Asian Polyester Fibre Tebal & Fabrik Quilting Pilihan",
     "warrantyYears": 1,
     "trialNights": 0,
     "features": [
-      "Harga borong jimat gila terus dari kilang",
-      "Termasuk pakej tilam bujang/toto dan bantal tidur gebu",
-      "Boleh runding penghantaran lori terus ke lokasi anda",
-      "Sokongan invois rasmi syarikat untuk tuntutan pentadbiran"
+      "Pembuatan OEM tilam toto secara pukal dengan spesifikasi tersendiri",
+      "Pilihan corak fabrik, ketebalan dan isian Asian Polyester Fibre padat",
+      "Jahitan quilting kemas dan piping tahan lasak",
+      "Harga borong terus dari kilang pengeluar Tasek Gelugor"
     ],
     "layers": [],
     "specifications": {
-      "Pakej": "10 Set Lengkap (10 Tilam + 10 Bantal Gebu)",
-      "Pengeluar": "Tunas Sinar Jaya Enterprise (Tasek Gelugor)",
-      "Pesanan Khas": "WhatsApp 011-6444 7908"
+      "Kategori": "Custom (OEM) Tilam Toto",
+      "Isian Utama": "Asian Polyester Fibre Padat & Anjal",
+      "Pilihan Saiz": "Single (90x200cm), Queen (150x200cm), King atau Saiz Khas",
+      "Fabrik": "Pelbagai corak moden, jalur hotel atau plain eksklusif",
+      "Kemasan": "Jahitan piping keliling kukuh & quilting tidak mudah tercabut",
+      "Pengeluar": "Tunas Sinar Jaya Sdn. Bhd. (Tasek Gelugor, Pulau Pinang)"
     },
-    "faq": [],
+    "faq": [
+      {
+        "question": "Bolehkah saya memilih ketebalan isian fiber toto?",
+        "answer": "Boleh, ketebalan dan berat isian boleh disesuaikan mengikut bajet dan keperluan anda."
+      }
+    ],
     "status": "published",
     "isFeatured": true,
     "variants": [
       {
-        "id": "var-borong-10set",
-        "productId": "prod-pakej-borong-10set",
-        "sku": "TSJ-BORONG-10",
-        "sizeName": "Pakej 10 Set Lengkap",
-        "dimensions": "10 Tilam + 10 Bantal",
-        "priceSen": 65000,
-        "compareAtPriceSen": 85000,
-        "stockQuantity": 20,
-        "leadTimeDays": 3,
-        "isActive": true
-      },
-      {
-        "id": "var-borong-20set",
-        "productId": "prod-pakej-borong-10set",
-        "sku": "TSJ-BORONG-20",
-        "sizeName": "Pakej 20 Set Lengkap (Super Jimat)",
-        "dimensions": "20 Tilam + 20 Bantal",
-        "priceSen": 120000,
-        "compareAtPriceSen": 170000,
-        "stockQuantity": 10,
-        "leadTimeDays": 3,
-        "isActive": true
+        "id": "var-custom-oem-toto-1",
+        "productId": "prod-custom-oem-tilam-toto",
+        "sku": "TSJ-OEM-TTO-1000",
+        "sizeName": "Pakej Tempahan Pukal RM1,000",
+        "dimensions": "Custom mengikut spesifikasi",
+        "priceSen": 100000,
+        "compareAtPriceSen": 120000,
+        "stockQuantity": 50,
+        "isActive": true,
+        "quantityTiers": [
+          {
+            "quantity": 2,
+            "priceSen": 190000,
+            "label": "2 Pakej Jimat RM100"
+          },
+          {
+            "quantity": 5,
+            "priceSen": 450000,
+            "label": "5 Pakej Borong Kilang (Jimat RM500)"
+          }
+        ]
       }
     ],
     "images": [
       {
-        "id": "img-borong-1",
-        "productId": "prod-pakej-borong-10set",
-        "imageUrl": "/images/products/bantal-peluk-roll-pack.jpg",
-        "altText": "Jualan Gudang Tekstil Tunas Sinar Jaya",
+        "id": "img-custom-oem-toto-1",
+        "productId": "prod-custom-oem-tilam-toto",
+        "imageUrl": "/images/products/custom-oem-tilam-toto.jpg",
+        "altText": "CUSTOM (OEM) - TILAM TOTO - RM1,000",
         "displayOrder": 1,
         "isPrimary": true
       }
     ],
-    "createdAt": "2026-09-01T00:00:00Z",
-    "updatedAt": "2026-10-07T00:00:00Z"
+    "createdAt": "2026-10-14T10:00:00Z",
+    "updatedAt": "2026-10-14T10:00:00Z"
+  },
+  {
+    "id": "prod-custom-oem-tilam-gulung",
+    "name": "CUSTOM (OEM) - TILAM GULUNG",
+    "slug": "custom-oem-tilam-gulung",
+    "subtitle": "Pengilangan Pukal Tilam Gulung Mudah Alih OEM | RM1,000",
+    "description": "Perkhidmatan OEM tilam gulung mudah alih dengan tali pengikat (straps) dan beg mudah alih untuk kegunaan asrama sekolah, pusat latihan, kem tentera, agensi bencana dan homestay. Menggunakan isian Poly Fibre padat atau TC Shoddy dengan sarung berzip tahan lasak.",
+    "shortDescription": "Pakej Pengilangan Pukal Tilam Gulung OEM | RM1,000.00 | Tali Pengikat & Sarung Berzip.",
+    "categoryId": "cat-custom-oem",
+    "productType": "mattress",
+    "material": "High Density Poly Fibre / TC Shoddy & Heavy Duty Fabric",
+    "warrantyYears": 1,
+    "trialNights": 0,
+    "features": [
+      "Pengeluaran pukal tilam gulung mudah alih OEM lengkap tali pengikat",
+      "Sarung berzip tahan lasak dan fabrik tebal kalis habuk",
+      "Sesuai untuk asrama sekolah, pusat latihan, homestay dan kem",
+      "Jimat ruang dan mudah disimpan atau diagihkan"
+    ],
+    "layers": [],
+    "specifications": {
+      "Kategori": "Custom (OEM) Tilam Gulung",
+      "Isian": "Poly Fibre Berketumpatan Tinggi / TC Shoddy",
+      "Sarung": "Fabrik Tebal Kalis Habuk dengan Zip Tahan Lasak",
+      "Ciri Khas": "Tali webbing pengikat berkualiti tinggi untuk mudah simpan dan bawa",
+      "Pengeluar": "Tunas Sinar Jaya Sdn. Bhd. (Tasek Gelugor, Pulau Pinang)"
+    },
+    "faq": [
+      {
+        "question": "Adakah tilam gulung ini sesuai untuk asrama pelajar?",
+        "answer": "Sangat sesuai kerana jimat ruang, mudah disimpan dan tahan lasak untuk kegunaan harian."
+      }
+    ],
+    "status": "published",
+    "isFeatured": true,
+    "variants": [
+      {
+        "id": "var-custom-oem-gulung-1",
+        "productId": "prod-custom-oem-tilam-gulung",
+        "sku": "TSJ-OEM-GLG-1000",
+        "sizeName": "Pakej Tempahan Pukal RM1,000",
+        "dimensions": "Custom mengikut spesifikasi",
+        "priceSen": 100000,
+        "compareAtPriceSen": 120000,
+        "stockQuantity": 50,
+        "isActive": true,
+        "quantityTiers": [
+          {
+            "quantity": 2,
+            "priceSen": 190000,
+            "label": "2 Pakej Jimat RM100"
+          },
+          {
+            "quantity": 5,
+            "priceSen": 450000,
+            "label": "5 Pakej Borong Kilang (Jimat RM500)"
+          }
+        ]
+      }
+    ],
+    "images": [
+      {
+        "id": "img-custom-oem-gulung-1",
+        "productId": "prod-custom-oem-tilam-gulung",
+        "imageUrl": "/images/products/custom-oem-tilam-gulung.jpg",
+        "altText": "CUSTOM (OEM) - TILAM GULUNG - RM1,000",
+        "displayOrder": 1,
+        "isPrimary": true
+      }
+    ],
+    "createdAt": "2026-10-14T10:00:00Z",
+    "updatedAt": "2026-10-14T10:00:00Z"
+  },
+  {
+    "id": "prod-custom-oem-kusyen-sofa",
+    "name": "CUSTOM (OEM) - KUSYEN SOFA",
+    "slug": "custom-oem-kusyen-sofa",
+    "subtitle": "Jahitan & Isian Kusyen Sofa OEM | RM1,000",
+    "description": "Perkhidmatan tempahan jahitan dan isian kusyen sofa custom OEM untuk pengusaha perabot kayu, sofa palet, kusyen kerusi rotan, kafe, homestay dan ruang rehat korporat. Menggunakan span berketumpatan tinggi (rebond/high density foam) dan sarung fabrik upholstery premium tahan lasak.",
+    "shortDescription": "Pakej Jahitan & Isian Kusyen Sofa OEM | RM1,000.00 | Upholstery & High Density Foam.",
+    "categoryId": "cat-custom-oem",
+    "productType": "bedding",
+    "material": "High Density Rebond Foam / Polyester & Premium Upholstery Fabric",
+    "warrantyYears": 1,
+    "trialNights": 0,
+    "features": [
+      "Jahitan kusyen sofa dan kerusi custom OEM pelbagai saiz",
+      "Pilihan isian span berketumpatan tinggi (rebond/high density foam)",
+      "Fabrik upholstery berkualiti tinggi dengan zip panjang tersembunyi",
+      "Sesuai untuk pengusaha perabot, kafe, resort dan homestay"
+    ],
+    "layers": [],
+    "specifications": {
+      "Kategori": "Custom (OEM) Kusyen & Bantal Sofa",
+      "Isian Span": "Rebond Foam Ketumpatan Tinggi / Span D28-D35",
+      "Sarung Fabrik": "Fabrik Upholstery Textured, Velvet, Canvas atau PVC Kalis Air",
+      "Kemasan": "Zip panjang tersembunyi & jahitan piping kemas",
+      "Pengeluar": "Tunas Sinar Jaya Sdn. Bhd. (Tasek Gelugor, Pulau Pinang)"
+    },
+    "faq": [
+      {
+        "question": "Bolehkah saya menghantar ukuran rangka kerusi untuk dibuat kusyen?",
+        "answer": "Boleh, berikan ukuran tepat (panjang, lebar, tebal) atau hantar contoh untuk kami tiru dan hasilkan secara pukal."
+      }
+    ],
+    "status": "published",
+    "isFeatured": true,
+    "variants": [
+      {
+        "id": "var-custom-oem-kusyen-1",
+        "productId": "prod-custom-oem-kusyen-sofa",
+        "sku": "TSJ-OEM-KSN-1000",
+        "sizeName": "Pakej Tempahan Pukal RM1,000",
+        "dimensions": "Custom mengikut spesifikasi",
+        "priceSen": 100000,
+        "compareAtPriceSen": 120000,
+        "stockQuantity": 50,
+        "isActive": true,
+        "quantityTiers": [
+          {
+            "quantity": 2,
+            "priceSen": 190000,
+            "label": "2 Pakej Jimat RM100"
+          },
+          {
+            "quantity": 5,
+            "priceSen": 450000,
+            "label": "5 Pakej Borong Kilang (Jimat RM500)"
+          }
+        ]
+      }
+    ],
+    "images": [
+      {
+        "id": "img-custom-oem-kusyen-1",
+        "productId": "prod-custom-oem-kusyen-sofa",
+        "imageUrl": "/images/products/custom-oem-kusyen-sofa.jpg",
+        "altText": "CUSTOM (OEM) - KUSYEN SOFA - RM1,000",
+        "displayOrder": 1,
+        "isPrimary": true
+      }
+    ],
+    "createdAt": "2026-10-14T10:00:00Z",
+    "updatedAt": "2026-10-14T10:00:00Z"
   }
 ]
 
@@ -1106,6 +1693,109 @@ export const initialCoupons: Coupon[] = [
     "customBadge": "FREE POSTAGE",
     "customerRestriction": "all",
     "applicableCategory": "all"
+  },
+  {
+    "id": "coup-kamaar100",
+    "code": "KAMAAR100",
+    "description": "Diskaun istimewa RM100 untuk pembelian melebihi RM1,000",
+    "discountType": "fixed_amount",
+    "discountValue": 10000,
+    "minSpendSen": 100000,
+    "usageLimit": 200,
+    "usageCount": 5,
+    "perCustomerLimit": 1,
+    "startsAt": "2026-01-01T00:00:00Z",
+    "endsAt": "2026-12-31T23:59:59Z",
+    "isActive": true,
+    "showOnHomepage": false,
+    "featuredOrder": 5,
+    "customTitle": "Diskaun Pelancaran RM100",
+    "customBadge": "RM100 OFF",
+    "customerRestriction": "all",
+    "applicableCategory": "all"
+  },
+  {
+    "id": "coup-tier100",
+    "code": "TIER100",
+    "description": "Diskaun pukal RM100 untuk pesanan melebihi RM1,500",
+    "discountType": "fixed_amount",
+    "discountValue": 10000,
+    "minSpendSen": 150000,
+    "usageLimit": 200,
+    "usageCount": 3,
+    "perCustomerLimit": 1,
+    "startsAt": "2026-01-01T00:00:00Z",
+    "endsAt": "2026-12-31T23:59:59Z",
+    "isActive": true,
+    "showOnHomepage": false,
+    "featuredOrder": 6,
+    "customTitle": "Diskaun Pukal RM100",
+    "customBadge": "RM100 OFF",
+    "customerRestriction": "all",
+    "applicableCategory": "all"
+  },
+  {
+    "id": "coup-sleepvip",
+    "code": "SLEEPVIP",
+    "description": "Diskaun VIP 15% untuk tempahan melebihi RM3,000 (had diskaun RM800)",
+    "discountType": "percentage",
+    "discountValue": 15,
+    "maxDiscountSen": 80000,
+    "minSpendSen": 300000,
+    "usageLimit": 100,
+    "usageCount": 2,
+    "perCustomerLimit": 1,
+    "startsAt": "2026-01-01T00:00:00Z",
+    "endsAt": "2026-12-31T23:59:59Z",
+    "isActive": true,
+    "showOnHomepage": false,
+    "featuredOrder": 7,
+    "customTitle": "Diskaun VIP 15%",
+    "customBadge": "15% OFF",
+    "customerRestriction": "all",
+    "applicableCategory": "all"
+  },
+  {
+    "id": "coup-kamaarwelcome",
+    "code": "KAMAARWELCOME",
+    "description": "Diskaun 10% pelanggan baharu (had diskaun RM50) untuk pesanan RM100 ke atas",
+    "discountType": "percentage",
+    "discountValue": 10,
+    "maxDiscountSen": 5000,
+    "minSpendSen": 10000,
+    "usageLimit": 500,
+    "usageCount": 10,
+    "perCustomerLimit": 1,
+    "startsAt": "2026-01-01T00:00:00Z",
+    "endsAt": "2026-12-31T23:59:59Z",
+    "isActive": true,
+    "showOnHomepage": false,
+    "featuredOrder": 8,
+    "customTitle": "Selamat Datang 10% OFF",
+    "customBadge": "10% OFF",
+    "customerRestriction": "all",
+    "applicableCategory": "all"
+  },
+  {
+    "id": "coup-lenawelcome",
+    "code": "LENAWELCOME",
+    "description": "Diskaun 10% pelanggan setia (had diskaun RM50) untuk pesanan RM100 ke atas",
+    "discountType": "percentage",
+    "discountValue": 10,
+    "maxDiscountSen": 5000,
+    "minSpendSen": 10000,
+    "usageLimit": 500,
+    "usageCount": 10,
+    "perCustomerLimit": 1,
+    "startsAt": "2026-01-01T00:00:00Z",
+    "endsAt": "2026-12-31T23:59:59Z",
+    "isActive": true,
+    "showOnHomepage": false,
+    "featuredOrder": 9,
+    "customTitle": "Diskaun 10% OFF",
+    "customBadge": "10% OFF",
+    "customerRestriction": "all",
+    "applicableCategory": "all"
   }
 ]
 
@@ -1134,7 +1824,7 @@ export const initialBlogPosts: BlogPost[] = [
     "excerpt": "Petua mudah daripada tukang jahit kilang kami untuk mengekalkan keempukan dan kebersihan tilam toto seisi keluarga.",
     "content": "Tilam toto Asian Polyester Fibre keluaran Tunas Sinar Jaya direka untuk ketahanan maksimum. Untuk memastikan ia sentiasa empuk dan bersih:\n1. Jemur di bawah cahaya matahari pagi setiap 2 minggu untuk mematikan hama dan mengembalikan kegebuan fiber.\n2. Gunakan sarung berzip gantian untuk memudahkan cucian sarung luar.\n3. Elakkan melipat tilam toto secara kasar; lebih baik digulung secara kemas bagi menjaga struktur jahitan quilting.",
     "author": "Tunas Sinar Jaya Enterprise",
-    "imageUrl": "/images/hero/hero-tilam-toto-lifestyle.jpg",
+    "imageUrl": "/images/hiasan/KUALITI PREMIUM.png",
     "tags": [
       "Panduan",
       "Tilam Toto",
@@ -1150,7 +1840,7 @@ export const initialBlogPosts: BlogPost[] = [
     "excerpt": "Ketahui kelebihan gentian kekabu semulajadi yang sejuk, bebas kimia dan memberikan sokongan terbaik untuk rehat anda.",
     "content": "Kekabu asli terkenal dengan sifat semulajadinya yang sejuk dan tidak memerangkap haba, menjadikannya pilihan ideal untuk iklim Malaysia. Ditambah dengan jahitan butang tufted kemas dari kilang Tunas Sinar Jaya, tilam kekabu memberikan sokongan sekata yang melegakan ketegangan otot belakang.",
     "author": "Tunas Sinar Jaya Enterprise",
-    "imageUrl": "/images/products/tilam-kekabu-asli.jpg",
+    "imageUrl": "/images/proses/PROSES ISI KEKABU KE DALAM BANTAL.png",
     "tags": [
       "Kekabu",
       "Tradisi",
@@ -1166,7 +1856,7 @@ export const initialBlogPosts: BlogPost[] = [
     "excerpt": "Bagaimana pakej jualan gudang dan tilam bujang heavy duty kilang menjimatkan kos operasi pengusaha asrama dan homestay.",
     "content": "Bagi pengusaha asrama, tahfiz dan homestay, ketahanan tilam adalah kunci penjimatan. Tilam bujang dengan jahitan bertetulang dan teras padat rebonded memastikan tilam tidak mudah melendut walau digunakan setiap hari oleh penghuni berbeza.",
     "author": "Tunas Sinar Jaya Enterprise",
-    "imageUrl": "/images/products/tilam-lipat-bujang.jpg",
+    "imageUrl": "/images/proses/PROSES PACKING.png",
     "tags": [
       "Asrama",
       "Borong",
@@ -1520,7 +2210,7 @@ export const initialWebsiteConfig: WebsiteConfig = {
         "ctaLink": "/collections/borong-gudang",
         "secondaryCtaText": "WhatsApp 019-478 6991",
         "secondaryCtaLink": "https://wa.me/60194786991",
-        "imageUrl": "/images/hero/hero-jualan-gudang-crowd.jpg",
+        "imageUrl": "/images/promosi/PROMOSI 2.png",
         "isActive": true
       }
     ]

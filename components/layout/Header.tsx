@@ -1080,7 +1080,7 @@ export function Header() {
                         <div className="col-span-6 flex flex-col justify-between">
                           <div className="relative h-28 w-full rounded-lg overflow-hidden mb-2">
                             <Image
-                              src="/images/hero/hero-jualan-gudang-crowd.jpg"
+                              src="/images/promosi/PROMOSI 2.png"
                               alt="Jelajah Promosi KAMAAR Beddings"
                               fill
                               className="object-cover"

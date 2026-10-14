@@ -25,6 +25,7 @@ import {
 } from 'lucide-react'
 import { Product, ProductVariant, Review } from '@/types'
 import { formatMYR } from '@/lib/utils/format'
+import { calculateTieredPrice } from '@/lib/utils/pricing'
 import { useCart } from '@/lib/context/CartContext'
 import { useWishlist } from '@/lib/context/WishlistContext'
 import { useCompare } from '@/lib/context/CompareContext'
@@ -101,6 +102,7 @@ export function ProductDetailClient({
       imageUrl: product.images[0]?.imageUrl || '',
       quantity,
       stockAvailable: selectedVariant.stockQuantity,
+      quantityTiers: selectedVariant.quantityTiers,
     })
   }
 
@@ -242,25 +244,49 @@ export function ProductDetailClient({
             </div>
 
             {/* Live Pricing Breakdown */}
-            <div className="p-4 bg-cream rounded-xl border border-borderLight space-y-1">
-              <span className="text-[11px] uppercase tracking-wider text-charcoal-muted block">
-                Selected Size Price:
-              </span>
-              <div className="flex items-baseline space-x-3">
-                <span className="text-3xl sm:text-4xl font-bold text-forest">
-                  {formatMYR(selectedVariant.priceSen)}
-                </span>
-                {hasCompareAt && (
-                  <span className="text-base text-charcoal-muted line-through">
-                    {formatMYR(selectedVariant.compareAtPriceSen)}
-                  </span>
-                )}
-              </div>
-              <p className="text-xs text-blue-950 font-semibold pt-1 flex items-center space-x-1">
-                <Truck className="w-3.5 h-3.5 text-blue-700" />
-                <span>Complimentary White-Glove Peninsular Delivery & Room Setup</span>
-              </p>
-            </div>
+            {(() => {
+              const tierCalc = calculateTieredPrice(selectedVariant.priceSen, quantity, selectedVariant.quantityTiers)
+              return (
+                <div className="p-4 bg-cream rounded-xl border border-borderLight space-y-1.5">
+                  <div className="flex items-center justify-between">
+                    <span className="text-[11px] uppercase tracking-wider text-charcoal-muted block">
+                      {tierCalc.isTierApplied ? 'Jumlah Harga Pakej Jimat:' : 'Selected Size Price:'}
+                    </span>
+                    {tierCalc.isTierApplied && (
+                      <span className="text-[10px] font-bold text-emerald-800 bg-emerald-100 px-2 py-0.5 rounded-full border border-emerald-200">
+                        🎉 Pakej Kuantiti Diaktifkan
+                      </span>
+                    )}
+                  </div>
+                  <div className="flex items-baseline space-x-3">
+                    <span className="text-3xl sm:text-4xl font-bold text-forest">
+                      {formatMYR(tierCalc.totalSen)}
+                    </span>
+                    {tierCalc.savingsSen > 0 ? (
+                      <span className="text-base text-charcoal-muted line-through">
+                        {formatMYR(tierCalc.regularTotalSen)}
+                      </span>
+                    ) : hasCompareAt ? (
+                      <span className="text-base text-charcoal-muted line-through">
+                        {formatMYR(selectedVariant.compareAtPriceSen)}
+                      </span>
+                    ) : null}
+                  </div>
+                  {tierCalc.isTierApplied && (
+                    <div className="text-xs text-emerald-800 font-semibold flex items-center gap-1.5">
+                      <Sparkles className="w-3.5 h-3.5 text-gold-dark" />
+                      <span>
+                        Purata {formatMYR(tierCalc.unitPriceSen)} seunit &bull; Anda Jimat {formatMYR(tierCalc.savingsSen)} ({tierCalc.savingsPercent}% OFF)
+                      </span>
+                    </div>
+                  )}
+                  <p className="text-xs text-blue-950 font-semibold pt-1 flex items-center space-x-1">
+                    <Truck className="w-3.5 h-3.5 text-blue-700" />
+                    <span>Complimentary White-Glove Peninsular Delivery & Room Setup</span>
+                  </p>
+                </div>
+              )
+            })()}
 
             {/* Mattress Core Attributes Quick-Strip */}
             <div className="grid grid-cols-3 gap-3 p-3 bg-cream-light rounded-xl border border-borderLight text-center text-xs">
@@ -322,6 +348,81 @@ export function ProductDetailClient({
               <span>&bull;</span>
               <span>Est. {selectedVariant.leadTimeDays}-5 working days</span>
             </div>
+
+            {/* Pakej Kuantiti / Tiered Pricing Selector (Jika Ada) */}
+            {selectedVariant.quantityTiers && selectedVariant.quantityTiers.length > 0 && (
+              <div className="p-3.5 bg-warmwhite rounded-2xl border border-gold/40 shadow-xs space-y-2.5">
+                <div className="flex items-center justify-between">
+                  <span className="text-xs font-bold text-forest flex items-center gap-1.5">
+                    <Sparkles className="w-3.5 h-3.5 text-gold-dark" />
+                    <span>Pilihan Pakej Kuantiti (Beli Banyak Jimat)</span>
+                  </span>
+                  <span className="text-[10px] text-gold-dark font-bold bg-gold/15 px-2 py-0.5 rounded-full">
+                    Jimat Terus di Troli
+                  </span>
+                </div>
+
+                <div className="grid grid-cols-1 sm:grid-cols-3 gap-2">
+                  {/* Option 1: 1 Unit Normal */}
+                  <button
+                    type="button"
+                    onClick={() => setQuantity(1)}
+                    className={`p-2.5 rounded-xl border text-left transition-all ${
+                      quantity === 1
+                        ? 'bg-cream border-gold ring-2 ring-gold/20 shadow-xs'
+                        : 'bg-cream/30 border-borderLight hover:bg-cream/60'
+                    }`}
+                  >
+                    <div className="flex justify-between items-center">
+                      <span className="text-xs font-bold text-forest-dark">1 Unit</span>
+                      {quantity === 1 && <Check className="w-3 h-3 text-gold-dark" />}
+                    </div>
+                    <span className="text-xs font-bold text-forest block mt-0.5">
+                      {formatMYR(selectedVariant.priceSen)}
+                    </span>
+                    <span className="text-[10px] text-charcoal-muted block">Harga Biasa</span>
+                  </button>
+
+                  {/* Tiers defined by admin */}
+                  {selectedVariant.quantityTiers.map((tier) => {
+                    const isSelected = quantity === tier.quantity
+                    const singleRate = Math.round(tier.priceSen / tier.quantity)
+                    const savings = selectedVariant.priceSen * tier.quantity - tier.priceSen
+
+                    return (
+                      <button
+                        key={tier.quantity}
+                        type="button"
+                        onClick={() => setQuantity(tier.quantity)}
+                        className={`p-2.5 rounded-xl border text-left transition-all relative ${
+                          isSelected
+                            ? 'bg-forest text-warmwhite border-forest ring-2 ring-forest/20 shadow-xs'
+                            : 'bg-cream/40 border-gold/40 hover:bg-cream/70 text-charcoal'
+                        }`}
+                      >
+                        {tier.label && (
+                          <span className="absolute -top-2 right-2 text-[8.5px] font-black uppercase tracking-wider bg-gold text-forest-dark px-1.5 py-0.5 rounded shadow-2xs">
+                            {tier.label}
+                          </span>
+                        )}
+                        <div className="flex justify-between items-center">
+                          <span className={`text-xs font-bold ${isSelected ? 'text-warmwhite' : 'text-forest-dark'}`}>
+                            Pakej {tier.quantity} Unit
+                          </span>
+                          {isSelected && <Check className="w-3 h-3 text-gold" />}
+                        </div>
+                        <span className={`text-xs font-bold block mt-0.5 ${isSelected ? 'text-gold' : 'text-forest'}`}>
+                          {formatMYR(tier.priceSen)}
+                        </span>
+                        <span className={`text-[10px] block ${isSelected ? 'text-warmwhite/80' : 'text-charcoal-muted'}`}>
+                          ~{formatMYR(singleRate)}/unit {savings > 0 && `(Jimat ${formatMYR(savings)})`}
+                        </span>
+                      </button>
+                    )
+                  })}
+                </div>
+              </div>
+            )}
 
             {/* Quantity Selector */}
             <div className="flex items-center space-x-3">

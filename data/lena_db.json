@@ -211,10 +211,24 @@
           "dimensions": "90 cm x 200 cm",
           "priceSen": 3490,
           "compareAtPriceSen": 3990,
-          "stockQuantity": 146,
-          "isActive": true
+          "stockQuantity": 140,
+          "isActive": true,
+          "quantityTiers": [
+            {
+              "quantity": 3,
+              "priceSen": 9900,
+              "label": "Beli 3 Jimat"
+            },
+            {
+              "quantity": 5,
+              "priceSen": 15000,
+              "label": "Pakej Borong 5 Unit"
+            }
+          ]
         }
-      ]
+      ],
+      "createdAt": "2026-09-01T00:00:00Z",
+      "updatedAt": "2026-10-07T00:00:00Z"
     },
     {
       "id": "prod-toto-queen-poly",
@@ -252,10 +266,12 @@
           "dimensions": "150 cm x 200 cm",
           "priceSen": 5990,
           "compareAtPriceSen": 6990,
-          "stockQuantity": 120,
+          "stockQuantity": 119,
           "isActive": true
         }
-      ]
+      ],
+      "createdAt": "2026-09-01T00:00:00Z",
+      "updatedAt": "2026-10-07T00:00:00Z"
     },
     {
       "id": "prod-tilam-gulung-a-tc",
@@ -296,7 +312,9 @@
           "stockQuantity": 150,
           "isActive": true
         }
-      ]
+      ],
+      "createdAt": "2026-09-01T00:00:00Z",
+      "updatedAt": "2026-10-07T00:00:00Z"
     },
     {
       "id": "prod-tilam-gulung-b-tc",
@@ -337,7 +355,9 @@
           "stockQuantity": 150,
           "isActive": true
         }
-      ]
+      ],
+      "createdAt": "2026-09-01T00:00:00Z",
+      "updatedAt": "2026-10-07T00:00:00Z"
     },
     {
       "id": "prod-tilam-gulung-kekabu-asli",
@@ -378,7 +398,9 @@
           "stockQuantity": 79,
           "isActive": true
         }
-      ]
+      ],
+      "createdAt": "2026-09-01T00:00:00Z",
+      "updatedAt": "2026-10-07T00:00:00Z"
     },
     {
       "id": "prod-bantal-m-tc",
@@ -419,7 +441,9 @@
           "stockQuantity": 299,
           "isActive": true
         }
-      ]
+      ],
+      "createdAt": "2026-09-01T00:00:00Z",
+      "updatedAt": "2026-10-07T00:00:00Z"
     },
     {
       "id": "prod-bantal-l-poly",
@@ -460,7 +484,9 @@
           "stockQuantity": 250,
           "isActive": true
         }
-      ]
+      ],
+      "createdAt": "2026-09-01T00:00:00Z",
+      "updatedAt": "2026-10-07T00:00:00Z"
     },
     {
       "id": "prod-bantal-l-kekabu-asli",
@@ -501,7 +527,9 @@
           "stockQuantity": 100,
           "isActive": true
         }
-      ]
+      ],
+      "createdAt": "2026-09-01T00:00:00Z",
+      "updatedAt": "2026-10-07T00:00:00Z"
     },
     {
       "id": "prod-bantal-xl-kekabu-asli",
@@ -542,7 +570,9 @@
           "stockQuantity": 80,
           "isActive": true
         }
-      ]
+      ],
+      "createdAt": "2026-09-01T00:00:00Z",
+      "updatedAt": "2026-10-07T00:00:00Z"
     },
     {
       "id": "prod-bantal-peluk-m-poly",
@@ -582,7 +612,9 @@
           "stockQuantity": 100,
           "isActive": true
         }
-      ]
+      ],
+      "createdAt": "2026-09-01T00:00:00Z",
+      "updatedAt": "2026-10-07T00:00:00Z"
     },
     {
       "id": "prod-bantal-peluk-l-tc",
@@ -622,7 +654,9 @@
           "stockQuantity": 100,
           "isActive": true
         }
-      ]
+      ],
+      "createdAt": "2026-09-01T00:00:00Z",
+      "updatedAt": "2026-10-07T00:00:00Z"
     },
     {
       "id": "prod-bantal-peluk-l-poly",
@@ -662,7 +696,9 @@
           "stockQuantity": 120,
           "isActive": true
         }
-      ]
+      ],
+      "createdAt": "2026-09-01T00:00:00Z",
+      "updatedAt": "2026-10-07T00:00:00Z"
     },
     {
       "id": "prod-bantal-peluk-l-kekabu-asli",
@@ -702,7 +738,9 @@
           "stockQuantity": 80,
           "isActive": true
         }
-      ]
+      ],
+      "createdAt": "2026-09-01T00:00:00Z",
+      "updatedAt": "2026-10-07T00:00:00Z"
     },
     {
       "id": "prod-bantal-baby-kekabu-asli",
@@ -742,7 +780,9 @@
           "stockQuantity": 150,
           "isActive": true
         }
-      ]
+      ],
+      "createdAt": "2026-09-01T00:00:00Z",
+      "updatedAt": "2026-10-07T00:00:00Z"
     },
     {
       "id": "prod-set-tilam-baby-a-kekabu-asli",
@@ -782,7 +822,9 @@
           "stockQuantity": 60,
           "isActive": true
         }
-      ]
+      ],
+      "createdAt": "2026-09-01T00:00:00Z",
+      "updatedAt": "2026-10-07T00:00:00Z"
     },
     {
       "id": "prod-set-tilam-baby-b-kekabu-asli",
@@ -822,7 +864,9 @@
           "stockQuantity": 80,
           "isActive": true
         }
-      ]
+      ],
+      "createdAt": "2026-09-01T00:00:00Z",
+      "updatedAt": "2026-10-07T00:00:00Z"
     },
     {
       "id": "prod-selimut-legend-m",
@@ -863,7 +907,9 @@
           "stockQuantity": 200,
           "isActive": true
         }
-      ]
+      ],
+      "createdAt": "2026-09-01T00:00:00Z",
+      "updatedAt": "2026-10-07T00:00:00Z"
     },
     {
       "id": "prod-selimut-legend-l",
@@ -904,7 +950,9 @@
           "stockQuantity": 150,
           "isActive": true
         }
-      ]
+      ],
+      "createdAt": "2026-09-01T00:00:00Z",
+      "updatedAt": "2026-10-07T00:00:00Z"
     },
     {
       "id": "prod-bantal-sofa-14x14",
@@ -945,7 +993,9 @@
           "stockQuantity": 150,
           "isActive": true
         }
-      ]
+      ],
+      "createdAt": "2026-09-01T00:00:00Z",
+      "updatedAt": "2026-10-07T00:00:00Z"
     },
     {
       "id": "prod-bantal-sofa-12x17",
@@ -985,7 +1035,9 @@
           "stockQuantity": 120,
           "isActive": true
         }
-      ]
+      ],
+      "createdAt": "2026-09-01T00:00:00Z",
+      "updatedAt": "2026-10-07T00:00:00Z"
     },
     {
       "id": "prod-bantal-sofa-17x17",
@@ -1025,7 +1077,9 @@
           "stockQuantity": 150,
           "isActive": true
         }
-      ]
+      ],
+      "createdAt": "2026-09-01T00:00:00Z",
+      "updatedAt": "2026-10-07T00:00:00Z"
     },
     {
       "id": "prod-bantal-kusyen-20x20",
@@ -1065,7 +1119,9 @@
           "stockQuantity": 120,
           "isActive": true
         }
-      ]
+      ],
+      "createdAt": "2026-09-01T00:00:00Z",
+      "updatedAt": "2026-10-07T00:00:00Z"
     },
     {
       "id": "prod-bantal-kusyen-25x25",
@@ -1105,7 +1161,9 @@
           "stockQuantity": 80,
           "isActive": true
         }
-      ]
+      ],
+      "createdAt": "2026-09-01T00:00:00Z",
+      "updatedAt": "2026-10-07T00:00:00Z"
     },
     {
       "id": "prod-bantal-kusyen-30x30",
@@ -1145,7 +1203,9 @@
           "stockQuantity": 60,
           "isActive": true
         }
-      ]
+      ],
+      "createdAt": "2026-09-01T00:00:00Z",
+      "updatedAt": "2026-10-07T00:00:00Z"
     },
     {
       "id": "prod-sarung-tilam-single",
@@ -1185,7 +1245,9 @@
           "stockQuantity": 200,
           "isActive": true
         }
-      ]
+      ],
+      "createdAt": "2026-09-01T00:00:00Z",
+      "updatedAt": "2026-10-07T00:00:00Z"
     },
     {
       "id": "prod-sarung-tilam-queen",
@@ -1225,7 +1287,303 @@
           "stockQuantity": 150,
           "isActive": true
         }
-      ]
+      ],
+      "createdAt": "2026-09-01T00:00:00Z",
+      "updatedAt": "2026-10-07T00:00:00Z"
+    },
+    {
+      "id": "prod-custom-oem-bantal-tidur",
+      "name": "CUSTOM (OEM) - BANTAL TIDUR",
+      "slug": "custom-oem-bantal-tidur",
+      "subtitle": "Pakej Tempahan Pukal & Jenama Sendiri (OEM) | RM1,000",
+      "description": "Perkhidmatan pengilangan dan tempahan pukal bantal tidur custom OEM terus dari kilang Tunas Sinar Jaya Enterprise di Tasek Gelugor. Boleh disesuaikan dengan isian Asian Polyester Fibre, TC Shoddy atau Kekabu Asli mengikut spesifikasi hotel, homestay, asrama, hospital dan peniaga tekstil dengan label jenama anda sendiri.",
+      "shortDescription": "Pakej Tempahan Pukal & Jahit Jenama Sendiri (OEM) Bantal Tidur | RM1,000.00.",
+      "categoryId": "cat-custom-oem",
+      "productType": "pillow",
+      "material": "Asian Polyester Fibre / TC Shoddy / Kekabu Asli (Pilihan Pelanggan)",
+      "warrantyYears": 1,
+      "trialNights": 0,
+      "features": [
+        "Tempahan pukal & pengeluaran custom OEM terus dari kilang",
+        "Pilihan isian Asian Polyester Fibre, TC Shoddy atau Kekabu Asli",
+        "Boleh sertakan label jenama sendiri untuk hotel, asrama & peniaga",
+        "Kualiti jahitan kilang berpengalaman lebih 20 tahun"
+      ],
+      "layers": [],
+      "specifications": {
+        "Kategori": "Custom (OEM) Tempahan Pukal",
+        "Isian": "Asian Polyester Fibre / TC Shoddy / Kekabu Asli",
+        "Kain Sarung": "100% Cotton / Microfibre Berzip atau Berjahit Rapi",
+        "Minimum Tempahan": "Pakej Nilai RM1,000 mengikut kuantiti unit dipersetujui",
+        "Label": "Boleh sertakan label jenama sendiri (OEM Woven Label)",
+        "Pengeluar": "Tunas Sinar Jaya Sdn. Bhd. (Tasek Gelugor, Pulau Pinang)"
+      },
+      "faq": [
+        {
+          "question": "Bolehkah saya meletakkan jenama atau logo syarikat sendiri pada bantal?",
+          "answer": "Ya, kami menyediakan perkhidmatan jahitan label jenama anda sendiri (OEM) untuk tempahan pukal."
+        },
+        {
+          "question": "Berapa lama tempoh siap untuk tempahan OEM bantal ini?",
+          "answer": "Biasanya mengambil masa 5 hingga 10 hari bekerja bergantung kepada kuantiti dan spesifikasi isian."
+        }
+      ],
+      "status": "published",
+      "isFeatured": true,
+      "variants": [
+        {
+          "id": "var-custom-oem-bantal-1",
+          "productId": "prod-custom-oem-bantal-tidur",
+          "sku": "TSJ-OEM-BTL-1000",
+          "sizeName": "Pakej Tempahan Pukal RM1,000",
+          "dimensions": "Custom mengikut spesifikasi",
+          "priceSen": 100000,
+          "compareAtPriceSen": 120000,
+          "stockQuantity": 45,
+          "isActive": true,
+          "quantityTiers": [
+            {
+              "quantity": 2,
+              "priceSen": 190000,
+              "label": "2 Pakej Jimat RM100"
+            },
+            {
+              "quantity": 5,
+              "priceSen": 450000,
+              "label": "5 Pakej Borong Kilang (Jimat RM500)"
+            }
+          ]
+        }
+      ],
+      "images": [
+        {
+          "id": "img-custom-oem-bantal-1",
+          "productId": "prod-custom-oem-bantal-tidur",
+          "imageUrl": "/images/products/custom-oem-bantal-tidur.jpg",
+          "altText": "CUSTOM (OEM) - BANTAL TIDUR - RM1,000",
+          "displayOrder": 1,
+          "isPrimary": true
+        }
+      ],
+      "createdAt": "2026-10-14T10:00:00Z",
+      "updatedAt": "2026-10-14T10:00:00Z"
+    },
+    {
+      "id": "prod-custom-oem-tilam-toto",
+      "name": "CUSTOM (OEM) - TILAM TOTO",
+      "slug": "custom-oem-tilam-toto",
+      "subtitle": "Pengilangan Pukal Tilam Toto OEM | RM1,000",
+      "description": "Pengeluaran pukal tilam toto jenama sendiri (OEM) terus dari kilang jahitan Tunas Sinar Jaya. Kami menawarkan pembuatan mengikut ukuran, ketebalan, jenis fabrik (cotton, microfibre, quilting eksklusif) serta isian Asian Polyester Fibre bermutu tinggi yang empuk dan tahan leper.",
+      "shortDescription": "Pakej Pengilangan Pukal Tilam Toto OEM | RM1,000.00 | Pilihan Fabrik & Ketebalan.",
+      "categoryId": "cat-custom-oem",
+      "productType": "mattress",
+      "material": "Asian Polyester Fibre Tebal & Fabrik Quilting Pilihan",
+      "warrantyYears": 1,
+      "trialNights": 0,
+      "features": [
+        "Pembuatan OEM tilam toto secara pukal dengan spesifikasi tersendiri",
+        "Pilihan corak fabrik, ketebalan dan isian Asian Polyester Fibre padat",
+        "Jahitan quilting kemas dan piping tahan lasak",
+        "Harga borong terus dari kilang pengeluar Tasek Gelugor"
+      ],
+      "layers": [],
+      "specifications": {
+        "Kategori": "Custom (OEM) Tilam Toto",
+        "Isian Utama": "Asian Polyester Fibre Padat & Anjal",
+        "Pilihan Saiz": "Single (90x200cm), Queen (150x200cm), King atau Saiz Khas",
+        "Fabrik": "Pelbagai corak moden, jalur hotel atau plain eksklusif",
+        "Kemasan": "Jahitan piping keliling kukuh & quilting tidak mudah tercabut",
+        "Pengeluar": "Tunas Sinar Jaya Sdn. Bhd. (Tasek Gelugor, Pulau Pinang)"
+      },
+      "faq": [
+        {
+          "question": "Bolehkah saya memilih ketebalan isian fiber toto?",
+          "answer": "Boleh, ketebalan dan berat isian boleh disesuaikan mengikut bajet dan keperluan anda."
+        }
+      ],
+      "status": "published",
+      "isFeatured": true,
+      "variants": [
+        {
+          "id": "var-custom-oem-toto-1",
+          "productId": "prod-custom-oem-tilam-toto",
+          "sku": "TSJ-OEM-TTO-1000",
+          "sizeName": "Pakej Tempahan Pukal RM1,000",
+          "dimensions": "Custom mengikut spesifikasi",
+          "priceSen": 100000,
+          "compareAtPriceSen": 120000,
+          "stockQuantity": 50,
+          "isActive": true,
+          "quantityTiers": [
+            {
+              "quantity": 2,
+              "priceSen": 190000,
+              "label": "2 Pakej Jimat RM100"
+            },
+            {
+              "quantity": 5,
+              "priceSen": 450000,
+              "label": "5 Pakej Borong Kilang (Jimat RM500)"
+            }
+          ]
+        }
+      ],
+      "images": [
+        {
+          "id": "img-custom-oem-toto-1",
+          "productId": "prod-custom-oem-tilam-toto",
+          "imageUrl": "/images/products/custom-oem-tilam-toto.jpg",
+          "altText": "CUSTOM (OEM) - TILAM TOTO - RM1,000",
+          "displayOrder": 1,
+          "isPrimary": true
+        }
+      ],
+      "createdAt": "2026-10-14T10:00:00Z",
+      "updatedAt": "2026-10-14T10:00:00Z"
+    },
+    {
+      "id": "prod-custom-oem-tilam-gulung",
+      "name": "CUSTOM (OEM) - TILAM GULUNG",
+      "slug": "custom-oem-tilam-gulung",
+      "subtitle": "Pengilangan Pukal Tilam Gulung Mudah Alih OEM | RM1,000",
+      "description": "Perkhidmatan OEM tilam gulung mudah alih dengan tali pengikat (straps) dan beg mudah alih untuk kegunaan asrama sekolah, pusat latihan, kem tentera, agensi bencana dan homestay. Menggunakan isian Poly Fibre padat atau TC Shoddy dengan sarung berzip tahan lasak.",
+      "shortDescription": "Pakej Pengilangan Pukal Tilam Gulung OEM | RM1,000.00 | Tali Pengikat & Sarung Berzip.",
+      "categoryId": "cat-custom-oem",
+      "productType": "mattress",
+      "material": "High Density Poly Fibre / TC Shoddy & Heavy Duty Fabric",
+      "warrantyYears": 1,
+      "trialNights": 0,
+      "features": [
+        "Pengeluaran pukal tilam gulung mudah alih OEM lengkap tali pengikat",
+        "Sarung berzip tahan lasak dan fabrik tebal kalis habuk",
+        "Sesuai untuk asrama sekolah, pusat latihan, homestay dan kem",
+        "Jimat ruang dan mudah disimpan atau diagihkan"
+      ],
+      "layers": [],
+      "specifications": {
+        "Kategori": "Custom (OEM) Tilam Gulung",
+        "Isian": "Poly Fibre Berketumpatan Tinggi / TC Shoddy",
+        "Sarung": "Fabrik Tebal Kalis Habuk dengan Zip Tahan Lasak",
+        "Ciri Khas": "Tali webbing pengikat berkualiti tinggi untuk mudah simpan dan bawa",
+        "Pengeluar": "Tunas Sinar Jaya Sdn. Bhd. (Tasek Gelugor, Pulau Pinang)"
+      },
+      "faq": [
+        {
+          "question": "Adakah tilam gulung ini sesuai untuk asrama pelajar?",
+          "answer": "Sangat sesuai kerana jimat ruang, mudah disimpan dan tahan lasak untuk kegunaan harian."
+        }
+      ],
+      "status": "published",
+      "isFeatured": true,
+      "variants": [
+        {
+          "id": "var-custom-oem-gulung-1",
+          "productId": "prod-custom-oem-tilam-gulung",
+          "sku": "TSJ-OEM-GLG-1000",
+          "sizeName": "Pakej Tempahan Pukal RM1,000",
+          "dimensions": "Custom mengikut spesifikasi",
+          "priceSen": 100000,
+          "compareAtPriceSen": 120000,
+          "stockQuantity": 50,
+          "isActive": true,
+          "quantityTiers": [
+            {
+              "quantity": 2,
+              "priceSen": 190000,
+              "label": "2 Pakej Jimat RM100"
+            },
+            {
+              "quantity": 5,
+              "priceSen": 450000,
+              "label": "5 Pakej Borong Kilang (Jimat RM500)"
+            }
+          ]
+        }
+      ],
+      "images": [
+        {
+          "id": "img-custom-oem-gulung-1",
+          "productId": "prod-custom-oem-tilam-gulung",
+          "imageUrl": "/images/products/custom-oem-tilam-gulung.jpg",
+          "altText": "CUSTOM (OEM) - TILAM GULUNG - RM1,000",
+          "displayOrder": 1,
+          "isPrimary": true
+        }
+      ],
+      "createdAt": "2026-10-14T10:00:00Z",
+      "updatedAt": "2026-10-14T10:00:00Z"
+    },
+    {
+      "id": "prod-custom-oem-kusyen-sofa",
+      "name": "CUSTOM (OEM) - KUSYEN SOFA",
+      "slug": "custom-oem-kusyen-sofa",
+      "subtitle": "Jahitan & Isian Kusyen Sofa OEM | RM1,000",
+      "description": "Perkhidmatan tempahan jahitan dan isian kusyen sofa custom OEM untuk pengusaha perabot kayu, sofa palet, kusyen kerusi rotan, kafe, homestay dan ruang rehat korporat. Menggunakan span berketumpatan tinggi (rebond/high density foam) dan sarung fabrik upholstery premium tahan lasak.",
+      "shortDescription": "Pakej Jahitan & Isian Kusyen Sofa OEM | RM1,000.00 | Upholstery & High Density Foam.",
+      "categoryId": "cat-custom-oem",
+      "productType": "bedding",
+      "material": "High Density Rebond Foam / Polyester & Premium Upholstery Fabric",
+      "warrantyYears": 1,
+      "trialNights": 0,
+      "features": [
+        "Jahitan kusyen sofa dan kerusi custom OEM pelbagai saiz",
+        "Pilihan isian span berketumpatan tinggi (rebond/high density foam)",
+        "Fabrik upholstery berkualiti tinggi dengan zip panjang tersembunyi",
+        "Sesuai untuk pengusaha perabot, kafe, resort dan homestay"
+      ],
+      "layers": [],
+      "specifications": {
+        "Kategori": "Custom (OEM) Kusyen & Bantal Sofa",
+        "Isian Span": "Rebond Foam Ketumpatan Tinggi / Span D28-D35",
+        "Sarung Fabrik": "Fabrik Upholstery Textured, Velvet, Canvas atau PVC Kalis Air",
+        "Kemasan": "Zip panjang tersembunyi & jahitan piping kemas",
+        "Pengeluar": "Tunas Sinar Jaya Sdn. Bhd. (Tasek Gelugor, Pulau Pinang)"
+      },
+      "faq": [
+        {
+          "question": "Bolehkah saya menghantar ukuran rangka kerusi untuk dibuat kusyen?",
+          "answer": "Boleh, berikan ukuran tepat (panjang, lebar, tebal) atau hantar contoh untuk kami tiru dan hasilkan secara pukal."
+        }
+      ],
+      "status": "published",
+      "isFeatured": true,
+      "variants": [
+        {
+          "id": "var-custom-oem-kusyen-1",
+          "productId": "prod-custom-oem-kusyen-sofa",
+          "sku": "TSJ-OEM-KSN-1000",
+          "sizeName": "Pakej Tempahan Pukal RM1,000",
+          "dimensions": "Custom mengikut spesifikasi",
+          "priceSen": 100000,
+          "compareAtPriceSen": 120000,
+          "stockQuantity": 50,
+          "isActive": true,
+          "quantityTiers": [
+            {
+              "quantity": 2,
+              "priceSen": 190000,
+              "label": "2 Pakej Jimat RM100"
+            },
+            {
+              "quantity": 5,
+              "priceSen": 450000,
+              "label": "5 Pakej Borong Kilang (Jimat RM500)"
+            }
+          ]
+        }
+      ],
+      "images": [
+        {
+          "id": "img-custom-oem-kusyen-1",
+          "productId": "prod-custom-oem-kusyen-sofa",
+          "imageUrl": "/images/products/custom-oem-kusyen-sofa.jpg",
+          "altText": "CUSTOM (OEM) - KUSYEN SOFA - RM1,000",
+          "displayOrder": 1,
+          "isPrimary": true
+        }
+      ],
+      "createdAt": "2026-10-14T10:00:00Z",
+      "updatedAt": "2026-10-14T10:00:00Z"
     }
   ],
   "coupons": [
@@ -1308,263 +1666,112 @@
       "customBadge": "FREE POSTAGE",
       "customerRestriction": "all",
       "applicableCategory": "all"
+    },
+    {
+      "id": "coup-kamaar100",
+      "code": "KAMAAR100",
+      "description": "Diskaun istimewa RM100 untuk pembelian melebihi RM1,000",
+      "discountType": "fixed_amount",
+      "discountValue": 10000,
+      "minSpendSen": 100000,
+      "usageLimit": 200,
+      "usageCount": 5,
+      "perCustomerLimit": 1,
+      "startsAt": "2026-01-01T00:00:00Z",
+      "endsAt": "2026-12-31T23:59:59Z",
+      "isActive": true,
+      "showOnHomepage": false,
+      "featuredOrder": 5,
+      "customTitle": "Diskaun Pelancaran RM100",
+      "customBadge": "RM100 OFF",
+      "customerRestriction": "all",
+      "applicableCategory": "all"
+    },
+    {
+      "id": "coup-tier100",
+      "code": "TIER100",
+      "description": "Diskaun pukal RM100 untuk pesanan melebihi RM1,500",
+      "discountType": "fixed_amount",
+      "discountValue": 10000,
+      "minSpendSen": 150000,
+      "usageLimit": 200,
+      "usageCount": 3,
+      "perCustomerLimit": 1,
+      "startsAt": "2026-01-01T00:00:00Z",
+      "endsAt": "2026-12-31T23:59:59Z",
+      "isActive": true,
+      "showOnHomepage": false,
+      "featuredOrder": 6,
+      "customTitle": "Diskaun Pukal RM100",
+      "customBadge": "RM100 OFF",
+      "customerRestriction": "all",
+      "applicableCategory": "all"
+    },
+    {
+      "id": "coup-sleepvip",
+      "code": "SLEEPVIP",
+      "description": "Diskaun VIP 15% untuk tempahan melebihi RM3,000 (had diskaun RM800)",
+      "discountType": "percentage",
+      "discountValue": 15,
+      "maxDiscountSen": 80000,
+      "minSpendSen": 300000,
+      "usageLimit": 100,
+      "usageCount": 2,
+      "perCustomerLimit": 1,
+      "startsAt": "2026-01-01T00:00:00Z",
+      "endsAt": "2026-12-31T23:59:59Z",
+      "isActive": true,
+      "showOnHomepage": false,
+      "featuredOrder": 7,
+      "customTitle": "Diskaun VIP 15%",
+      "customBadge": "15% OFF",
+      "customerRestriction": "all",
+      "applicableCategory": "all"
+    },
+    {
+      "id": "coup-kamaarwelcome",
+      "code": "KAMAARWELCOME",
+      "description": "Diskaun 10% pelanggan baharu (had diskaun RM50) untuk pesanan RM100 ke atas",
+      "discountType": "percentage",
+      "discountValue": 10,
+      "maxDiscountSen": 5000,
+      "minSpendSen": 10000,
+      "usageLimit": 500,
+      "usageCount": 10,
+      "perCustomerLimit": 1,
+      "startsAt": "2026-01-01T00:00:00Z",
+      "endsAt": "2026-12-31T23:59:59Z",
+      "isActive": true,
+      "showOnHomepage": false,
+      "featuredOrder": 8,
+      "customTitle": "Selamat Datang 10% OFF",
+      "customBadge": "10% OFF",
+      "customerRestriction": "all",
+      "applicableCategory": "all"
+    },
+    {
+      "id": "coup-lenawelcome",
+      "code": "LENAWELCOME",
+      "description": "Diskaun 10% pelanggan setia (had diskaun RM50) untuk pesanan RM100 ke atas",
+      "discountType": "percentage",
+      "discountValue": 10,
+      "maxDiscountSen": 5000,
+      "minSpendSen": 10000,
+      "usageLimit": 500,
+      "usageCount": 10,
+      "perCustomerLimit": 1,
+      "startsAt": "2026-01-01T00:00:00Z",
+      "endsAt": "2026-12-31T23:59:59Z",
+      "isActive": true,
+      "showOnHomepage": false,
+      "featuredOrder": 9,
+      "customTitle": "Diskaun 10% OFF",
+      "customBadge": "10% OFF",
+      "customerRestriction": "all",
+      "applicableCategory": "all"
     }
   ],
   "orders": [
-    {
-      "customerEmail": "danial@example.com.my",
-      "customerName": "Ahmad Danial",
-      "customerPhone": "+60123456789",
-      "shippingAddress": {
-        "fullName": "Ahmad Danial",
-        "phone": "+60123456789",
-        "addressLine1": "No. 18, Jalan Telawi 3, Bangsar",
-        "city": "Kuala Lumpur",
-        "state": "WP Kuala Lumpur",
-        "postcode": "59100",
-        "country": "Malaysia"
-      },
-      "billingAddress": {
-        "fullName": "Ahmad Danial",
-        "phone": "+60123456789",
-        "addressLine1": "No. 18, Jalan Telawi 3, Bangsar",
-        "city": "Kuala Lumpur",
-        "state": "WP Kuala Lumpur",
-        "postcode": "59100",
-        "country": "Malaysia"
-      },
-      "hasLiftAccess": true,
-      "floorLevel": "Ground Floor",
-      "subtotalSen": 539900,
-      "discountSen": 50000,
-      "shippingSen": 0,
-      "taxSen": 0,
-      "totalSen": 489900,
-      "appliedCoupon": "LENAWELCOME",
-      "paymentStatus": "paid",
-      "fulfillmentStatus": "processing",
-      "paymentProvider": "stripe",
-      "items": [
-        {
-          "variantId": "var-rh-king",
-          "productName": "Kamaar Royal Heritage 100% Natural Latex Mattress",
-          "sizeName": "King",
-          "sku": "KAMAAR-RH-KNG",
-          "dimensions": "183cm x 190cm x 30cm",
-          "unitPriceSen": 539900,
-          "quantity": 1,
-          "lineTotalSen": 539900,
-          "imageUrl": "https://images.unsplash.com/photo-1631049307264-da0ec9d70304?auto=format&fit=crop&w=1000&q=80",
-          "id": "item-1790765872396-0",
-          "orderId": ""
-        }
-      ],
-      "id": "ord-1790765872396-zbu5x",
-      "orderNumber": "KAMAAR-2026-1001",
-      "createdAt": "2026-09-30T10:57:52.396Z",
-      "updatedAt": "2026-10-01T14:37:39.946Z",
-      "paymentId": "pi_sim_1790765889082",
-      "carrier": "LENA White-Glove Fleet",
-      "trackingNumber": "",
-      "internalNotes": ""
-    },
-    {
-      "customerEmail": "rr@aa.com",
-      "customerName": "aaalslwi2mef fvjdiwe evjklfem",
-      "customerPhone": "01222029272",
-      "shippingAddress": {
-        "fullName": "aaalslwi2mef fvjdiwe evjklfem",
-        "phone": "01222029272",
-        "addressLine1": "34re",
-        "addressLine2": "brfvd",
-        "city": "vrde",
-        "state": "Selangor",
-        "postcode": "11921",
-        "country": "Malaysia"
-      },
-      "billingAddress": {
-        "fullName": "aaalslwi2mef fvjdiwe evjklfem",
-        "phone": "01222029272",
-        "addressLine1": "34re",
-        "addressLine2": "brfvd",
-        "city": "vrde",
-        "state": "Selangor",
-        "postcode": "11921",
-        "country": "Malaysia"
-      },
-      "deliveryNotes": "dfe",
-      "preferredDeliveryDate": "2026-10-07",
-      "hasLiftAccess": true,
-      "floorLevel": "Ground Floor",
-      "subtotalSen": 339900,
-      "discountSen": 0,
-      "shippingSen": 0,
-      "taxSen": 0,
-      "totalSen": 339900,
-      "paymentStatus": "unpaid",
-      "fulfillmentStatus": "unfulfilled",
-      "paymentProvider": "stripe",
-      "items": [
-        {
-          "variantId": "var-rh-supersingle",
-          "productName": "Kamaar Royal Heritage 100% Natural Latex Mattress",
-          "sizeName": "Super Single",
-          "sku": "KAMAAR-RH-SSG",
-          "dimensions": "107cm x 190cm x 30cm",
-          "unitPriceSen": 339900,
-          "quantity": 1,
-          "lineTotalSen": 339900,
-          "imageUrl": "https://images.unsplash.com/photo-1631049307264-da0ec9d70304?auto=format&fit=crop&w=1000&q=80",
-          "id": "item-1791195317783-0",
-          "orderId": ""
-        }
-      ],
-      "id": "ord-1791195317783-q01ud",
-      "orderNumber": "LENA-2026-1002",
-      "createdAt": "2026-10-05T10:15:17.783Z",
-      "updatedAt": "2026-10-05T10:15:17.783Z"
-    },
-    {
-      "customerEmail": "ahmad.danial@kamaar.my",
-      "customerName": "Ahmad Danial",
-      "customerPhone": "0194786991",
-      "shippingAddress": {
-        "fullName": "Ahmad Danial",
-        "phone": "0194786991",
-        "addressLine1": "No. 15, Jalan Kemboja 3, (Kediaman Peribadi)",
-        "addressLine2": "Bandar Baru Tasek Gelugor",
-        "city": "Tasek Gelugor",
-        "state": "Pulau Pinang",
-        "postcode": "13300",
-        "country": "Malaysia"
-      },
-      "billingAddress": {
-        "fullName": "Ahmad Danial",
-        "phone": "0194786991",
-        "addressLine1": "No. 15, Jalan Kemboja 3, (Kediaman Peribadi)",
-        "addressLine2": "Bandar Baru Tasek Gelugor",
-        "city": "Tasek Gelugor",
-        "state": "Pulau Pinang",
-        "postcode": "13300",
-        "country": "Malaysia"
-      },
-      "deliveryNotes": "Sila telefon 15 minit sebelum tiba ke premis.",
-      "hasLiftAccess": true,
-      "floorLevel": "Tingkat 1",
-      "subtotalSen": 6900,
-      "discountSen": 0,
-      "shippingSen": 0,
-      "taxSen": 0,
-      "totalSen": 6900,
-      "paymentStatus": "paid",
-      "fulfillmentStatus": "processing",
-      "paymentProvider": "chip",
-      "items": [
-        {
-          "variantId": "var-lipat-2in",
-          "productName": "Tilam Lipat 3 Berzip Fabrik Tahan Lasak",
-          "sizeName": "Single 2 Inci Tebal",
-          "sku": "TSJ-LIPAT-2IN",
-          "dimensions": "90cm x 190cm x 5cm",
-          "unitPriceSen": 6900,
-          "quantity": 1,
-          "lineTotalSen": 6900,
-          "imageUrl": "/images/products/tilam-lipat-bujang.jpg",
-          "id": "item-1791468338486-0",
-          "orderId": ""
-        }
-      ],
-      "id": "ord-1791468338486-ubwz7",
-      "orderNumber": "LENA-2026-1003",
-      "createdAt": "2026-10-08T14:05:38.486Z",
-      "updatedAt": "2026-10-08T14:11:42.392Z",
-      "paymentId": "chip_sim_1791468357962",
-      "carrier": "LENA White-Glove Fleet",
-      "trackingNumber": "",
-      "internalNotes": ""
-    },
-    {
-      "customerEmail": "ahmad.danial@kamaar.my",
-      "customerName": "Ahmad Danial",
-      "customerPhone": "0194786991",
-      "shippingAddress": {
-        "fullName": "Ahmad Danial",
-        "phone": "0194786991",
-        "addressLine1": "No. 15, Jalan Kemboja 3, (Kediaman Peribadi)",
-        "addressLine2": "Bandar Baru Tasek Gelugor",
-        "city": "Tasek Gelugor",
-        "state": "Pulau Pinang",
-        "postcode": "13300",
-        "country": "Malaysia"
-      },
-      "billingAddress": {
-        "fullName": "Ahmad Danial",
-        "phone": "0194786991",
-        "addressLine1": "No. 15, Jalan Kemboja 3, (Kediaman Peribadi)",
-        "addressLine2": "Bandar Baru Tasek Gelugor",
-        "city": "Tasek Gelugor",
-        "state": "Pulau Pinang",
-        "postcode": "13300",
-        "country": "Malaysia"
-      },
-      "deliveryNotes": "Sila telefon 15 minit sebelum tiba ke premis.",
-      "hasLiftAccess": true,
-      "floorLevel": "Tingkat 1",
-      "subtotalSen": 25300,
-      "discountSen": 0,
-      "shippingSen": 0,
-      "taxSen": 0,
-      "totalSen": 25300,
-      "paymentStatus": "paid",
-      "fulfillmentStatus": "processing",
-      "paymentProvider": "chip",
-      "items": [
-        {
-          "variantId": "var-toto-qen",
-          "productName": "Tilam Toto Asian Polyester Fibre (Paling Lariss!!)",
-          "sizeName": "Queen (150cm x 190cm)",
-          "sku": "TSJ-TOTO-QEN",
-          "dimensions": "150cm x 190cm x 8cm",
-          "unitPriceSen": 8900,
-          "quantity": 1,
-          "lineTotalSen": 8900,
-          "imageUrl": "/images/products/tilam-toto-queen.jpg",
-          "id": "item-1791468699469-0",
-          "orderId": ""
-        },
-        {
-          "variantId": "var-kekabu-sgl",
-          "productName": "Tilam Kekabu Asli Tradisi (Jahitan Tufted Butang)",
-          "sizeName": "Single (90cm x 190cm)",
-          "sku": "TSJ-KB-SGL",
-          "dimensions": "90cm x 190cm x 10cm",
-          "unitPriceSen": 9500,
-          "quantity": 1,
-          "lineTotalSen": 9500,
-          "imageUrl": "/images/products/tilam-kekabu-asli.jpg",
-          "id": "item-1791468699469-1",
-          "orderId": ""
-        },
-        {
-          "variantId": "var-lipat-2in",
-          "productName": "Tilam Lipat 3 Berzip Fabrik Tahan Lasak",
-          "sizeName": "Single 2 Inci Tebal",
-          "sku": "TSJ-LIPAT-2IN",
-          "dimensions": "90cm x 190cm x 5cm",
-          "unitPriceSen": 6900,
-          "quantity": 1,
-          "lineTotalSen": 6900,
-          "imageUrl": "/images/products/tilam-lipat-bujang.jpg",
-          "id": "item-1791468699469-2",
-          "orderId": ""
-        }
-      ],
-      "id": "ord-1791468699470-l60yq",
-      "orderNumber": "LENA-2026-1004",
-      "createdAt": "2026-10-08T14:11:39.470Z",
-      "updatedAt": "2026-10-08T14:12:13.444Z",
-      "paymentId": "chip_sim_1791468732920"
-    },
     {
       "customerEmail": "ahmad.danial@kamaar.my",
       "customerName": "Ahmad Danial",
@@ -1885,6 +2092,164 @@
       "createdAt": "2026-10-12T09:08:34.789Z",
       "updatedAt": "2026-10-12T09:08:35.052Z",
       "paymentId": "36475cb6-c72c-4ae7-9bc8-b064fc29a3ee"
+    },
+    {
+      "customerEmail": "ahmad.danial@kamaar.my",
+      "customerName": "Ahmad Danial",
+      "customerPhone": "0194786991",
+      "shippingAddress": {
+        "fullName": "Ahmad Danial",
+        "phone": "0194786991",
+        "addressLine1": "No. 15, Jalan Kemboja 3, (Kediaman Peribadi)",
+        "addressLine2": "Bandar Baru Tasek Gelugor",
+        "city": "Tasek Gelugor",
+        "state": "Pulau Pinang",
+        "postcode": "13300",
+        "country": "Malaysia"
+      },
+      "billingAddress": {
+        "fullName": "Ahmad Danial",
+        "phone": "0194786991",
+        "addressLine1": "No. 15, Jalan Kemboja 3, (Kediaman Peribadi)",
+        "addressLine2": "Bandar Baru Tasek Gelugor",
+        "city": "Tasek Gelugor",
+        "state": "Pulau Pinang",
+        "postcode": "13300",
+        "country": "Malaysia"
+      },
+      "deliveryNotes": "Sila telefon 15 minit sebelum tiba ke premis.",
+      "hasLiftAccess": true,
+      "floorLevel": "Tingkat 1",
+      "subtotalSen": 5990,
+      "discountSen": 0,
+      "shippingSen": 0,
+      "taxSen": 0,
+      "totalSen": 5990,
+      "paymentStatus": "paid",
+      "fulfillmentStatus": "processing",
+      "paymentProvider": "chip",
+      "items": [
+        {
+          "variantId": "var-toto-queen-poly-1",
+          "productName": "TOTO QUEEN (POLY)",
+          "sizeName": "Queen",
+          "sku": "TSJ-TT-QUE-01",
+          "dimensions": "150 cm x 200 cm",
+          "unitPriceSen": 5990,
+          "quantity": 1,
+          "lineTotalSen": 5990,
+          "imageUrl": "/images/products/toto-queen-poly.png",
+          "id": "item-1791904698551-0",
+          "orderId": ""
+        }
+      ],
+      "id": "ord-1791904698554-vn4hk",
+      "orderNumber": "LENA-2026-1011",
+      "createdAt": "2026-10-13T15:18:18.553Z",
+      "updatedAt": "2026-10-13T15:18:41.332Z",
+      "paymentId": "931ee0db-6b78-47ac-90bd-932888b6b4fb"
+    },
+    {
+      "customerEmail": "ahmad@example.com",
+      "customerName": "Ahmad Albab",
+      "customerPhone": "+60123456789",
+      "shippingAddress": {
+        "fullName": "Ahmad Albab",
+        "phone": "+60123456789",
+        "addressLine1": "No 123 Jalan Makmur",
+        "city": "Kota Bharu",
+        "state": "Kelantan",
+        "postcode": "15000",
+        "country": "Malaysia"
+      },
+      "billingAddress": {
+        "fullName": "Ahmad Albab",
+        "phone": "+60123456789",
+        "addressLine1": "No 123 Jalan Makmur",
+        "city": "Kota Bharu",
+        "state": "Kelantan",
+        "postcode": "15000",
+        "country": "Malaysia"
+      },
+      "subtotalSen": 9900,
+      "discountSen": 0,
+      "shippingSen": 0,
+      "taxSen": 0,
+      "totalSen": 9900,
+      "paymentStatus": "unpaid",
+      "fulfillmentStatus": "unfulfilled",
+      "paymentProvider": "chip",
+      "items": [
+        {
+          "variantId": "var-toto-single-poly-1",
+          "productName": "TOTO SINGLE (POLY)",
+          "sizeName": "Single",
+          "sku": "TSJ-TT-SIN-01",
+          "dimensions": "90 cm x 200 cm",
+          "unitPriceSen": 3300,
+          "quantity": 3,
+          "lineTotalSen": 9900,
+          "imageUrl": "/images/products/toto-single-poly.png",
+          "id": "item-1791904859791-0",
+          "orderId": ""
+        }
+      ],
+      "id": "ord-1791904859793-wmd9s",
+      "orderNumber": "LENA-2026-1012",
+      "createdAt": "2026-10-13T15:20:59.793Z",
+      "updatedAt": "2026-10-13T15:21:00.200Z",
+      "paymentId": "9e656422-4be7-4df0-8278-023914bcd6ab"
+    },
+    {
+      "customerEmail": "ahmad@example.com",
+      "customerName": "Ahmad Albab",
+      "customerPhone": "+60123456789",
+      "shippingAddress": {
+        "fullName": "Ahmad Albab",
+        "phone": "+60123456789",
+        "addressLine1": "No 123 Jalan Makmur",
+        "city": "Kota Bharu",
+        "state": "Kelantan",
+        "postcode": "15000",
+        "country": "Malaysia"
+      },
+      "billingAddress": {
+        "fullName": "Ahmad Albab",
+        "phone": "+60123456789",
+        "addressLine1": "No 123 Jalan Makmur",
+        "city": "Kota Bharu",
+        "state": "Kelantan",
+        "postcode": "15000",
+        "country": "Malaysia"
+      },
+      "subtotalSen": 9900,
+      "discountSen": 0,
+      "shippingSen": 0,
+      "taxSen": 0,
+      "totalSen": 9900,
+      "paymentStatus": "unpaid",
+      "fulfillmentStatus": "unfulfilled",
+      "paymentProvider": "chip",
+      "items": [
+        {
+          "variantId": "var-toto-single-poly-1",
+          "productName": "TOTO SINGLE (POLY)",
+          "sizeName": "Single",
+          "sku": "TSJ-TT-SIN-01",
+          "dimensions": "90 cm x 200 cm",
+          "unitPriceSen": 3300,
+          "quantity": 3,
+          "lineTotalSen": 9900,
+          "imageUrl": "/images/products/toto-single-poly.png",
+          "id": "item-1791904976319-0",
+          "orderId": ""
+        }
+      ],
+      "id": "ord-1791904976321-3k1e3",
+      "orderNumber": "LENA-2026-1013",
+      "createdAt": "2026-10-13T15:22:56.321Z",
+      "updatedAt": "2026-10-13T15:22:56.644Z",
+      "paymentId": "9141e659-04e5-4092-9db3-4eb54ab203b3"
     }
   ],
   "reviews": [
@@ -1989,7 +2354,7 @@
       "excerpt": "Petua mudah daripada tukang jahit kilang kami untuk mengekalkan keempukan dan kebersihan tilam toto seisi keluarga.",
       "content": "Tilam toto Asian Polyester Fibre keluaran Tunas Sinar Jaya direka untuk ketahanan maksimum. Untuk memastikan ia sentiasa empuk dan bersih:\n1. Jemur di bawah cahaya matahari pagi setiap 2 minggu untuk mematikan hama dan mengembalikan kegebuan fiber.\n2. Gunakan sarung berzip gantian untuk memudahkan cucian sarung luar.\n3. Elakkan melipat tilam toto secara kasar; lebih baik digulung secara kemas bagi menjaga struktur jahitan quilting.",
       "author": "Tunas Sinar Jaya Enterprise",
-      "imageUrl": "/images/hero/hero-tilam-toto-lifestyle.jpg",
+      "imageUrl": "/images/hiasan/KUALITI PREMIUM.png",
       "tags": [
         "Panduan",
         "Tilam Toto",
@@ -2005,7 +2370,7 @@
       "excerpt": "Ketahui kelebihan gentian kekabu semulajadi yang sejuk, bebas kimia dan memberikan sokongan terbaik untuk rehat anda.",
       "content": "Kekabu asli terkenal dengan sifat semulajadinya yang sejuk dan tidak memerangkap haba, menjadikannya pilihan ideal untuk iklim Malaysia. Ditambah dengan jahitan butang tufted kemas dari kilang Tunas Sinar Jaya, tilam kekabu memberikan sokongan sekata yang melegakan ketegangan otot belakang.",
       "author": "Tunas Sinar Jaya Enterprise",
-      "imageUrl": "/images/products/tilam-kekabu-asli.jpg",
+      "imageUrl": "/images/proses/PROSES ISI KEKABU KE DALAM BANTAL.png",
       "tags": [
         "Kekabu",
         "Tradisi",
@@ -2021,7 +2386,7 @@
       "excerpt": "Bagaimana pakej jualan gudang dan tilam bujang heavy duty kilang menjimatkan kos operasi pengusaha asrama dan homestay.",
       "content": "Bagi pengusaha asrama, tahfiz dan homestay, ketahanan tilam adalah kunci penjimatan. Tilam bujang dengan jahitan bertetulang dan teras padat rebonded memastikan tilam tidak mudah melendut walau digunakan setiap hari oleh penghuni berbeza.",
       "author": "Tunas Sinar Jaya Enterprise",
-      "imageUrl": "/images/hero/hero-jualan-gudang-crowd.jpg",
+      "imageUrl": "/images/proses/PROSES PACKING.png",
       "tags": [
         "Asrama",
         "Borong",
@@ -2124,6 +2489,100 @@
     }
   ],
   "auditLogs": [
+    {
+      "id": "aud-1791976682438-9nyh",
+      "actorEmail": "create_session",
+      "action": "order_status_updated",
+      "entityType": "order",
+      "entityId": "ord-1791976682069-ozl9k",
+      "details": {
+        "paymentId": "749b32fb-fd33-4ae9-870a-c993496a41de"
+      },
+      "createdAt": "2026-10-14T11:18:02.438Z"
+    },
+    {
+      "id": "aud-1791976616176-5e4e",
+      "actorEmail": "create_session",
+      "action": "order_status_updated",
+      "entityType": "order",
+      "entityId": "ord-1791976615788-7hj4t",
+      "details": {
+        "paymentId": "bd66e9ec-4e87-4f75-9116-d5f0a909f2e6"
+      },
+      "createdAt": "2026-10-14T11:16:56.176Z"
+    },
+    {
+      "id": "aud-1791976415895-y6ja",
+      "actorEmail": "create_session",
+      "action": "order_status_updated",
+      "entityType": "order",
+      "entityId": "ord-1791976415522-uvb90",
+      "details": {
+        "paymentId": "707d9366-afe4-4da6-92fb-9ddc8f8149a9"
+      },
+      "createdAt": "2026-10-14T11:13:35.895Z"
+    },
+    {
+      "id": "aud-1791973528306-bcca",
+      "actorEmail": "admin@kamaarbeddings.com",
+      "action": "orders_bulk_deleted",
+      "entityType": "order",
+      "details": {
+        "count": 4,
+        "orderNumbers": [
+          "KAMAAR-2026-1001",
+          "LENA-2026-1002",
+          "LENA-2026-1003",
+          "LENA-2026-1004"
+        ]
+      },
+      "createdAt": "2026-10-14T10:25:28.306Z"
+    },
+    {
+      "id": "aud-1791904976648-15pr",
+      "actorEmail": "create_session",
+      "action": "order_status_updated",
+      "entityType": "order",
+      "entityId": "ord-1791904976321-3k1e3",
+      "details": {
+        "paymentId": "9141e659-04e5-4092-9db3-4eb54ab203b3"
+      },
+      "createdAt": "2026-10-13T15:22:56.648Z"
+    },
+    {
+      "id": "aud-1791904860204-r1j8",
+      "actorEmail": "create_session",
+      "action": "order_status_updated",
+      "entityType": "order",
+      "entityId": "ord-1791904859793-wmd9s",
+      "details": {
+        "paymentId": "9e656422-4be7-4df0-8278-023914bcd6ab"
+      },
+      "createdAt": "2026-10-13T15:21:00.204Z"
+    },
+    {
+      "id": "aud-1791904721336-fgwz",
+      "actorEmail": "chip_sync",
+      "action": "order_status_updated",
+      "entityType": "order",
+      "entityId": "ord-1791904698554-vn4hk",
+      "details": {
+        "paymentStatus": "paid",
+        "fulfillmentStatus": "processing"
+      },
+      "createdAt": "2026-10-13T15:18:41.336Z"
+    },
+    {
+      "id": "aud-1791904698934-qu5g",
+      "actorEmail": "create_session",
+      "action": "order_status_updated",
+      "entityType": "order",
+      "entityId": "ord-1791904698554-vn4hk",
+      "details": {
+        "paymentId": "931ee0db-6b78-47ac-90bd-932888b6b4fb"
+      },
+      "createdAt": "2026-10-13T15:18:18.934Z"
+    },
     {
       "id": "aud-1791796115056-q9yj",
       "actorEmail": "create_session",
@@ -2507,7 +2966,7 @@
               "ctaLink": "/collections/borong-gudang",
               "secondaryCtaText": "WhatsApp 019-478 6991",
               "secondaryCtaLink": "https://wa.me/60194786991",
-              "imageUrl": "/images/hero/hero-jualan-gudang-crowd.jpg",
+              "imageUrl": "/images/promosi/PROMOSI 2.png",
               "isActive": true
             }
           ]
@@ -3282,9 +3741,9 @@
       "bankAccountNumber": "164012345678",
       "commissionType": "percentage",
       "commissionRate": 10,
-      "totalSalesCount": 15,
-      "totalSalesRevenueSen": 125000,
-      "totalCommissionSen": 12500,
+      "totalSalesCount": 16,
+      "totalSalesRevenueSen": 175000,
+      "totalCommissionSen": 17500,
       "isActive": true,
       "createdAt": "2026-08-01T10:00:00Z",
       "adminNotes": "Ejen aktif kawasan Seberang Perai & Kedah.",

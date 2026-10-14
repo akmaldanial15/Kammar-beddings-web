@@ -78,6 +78,7 @@ export function QuickViewModal({ product, isOpen, onClose }: QuickViewModalProps
       imageUrl: product.images[0]?.imageUrl || '',
       quantity,
       stockAvailable: selectedVariant.stockQuantity,
+      quantityTiers: selectedVariant.quantityTiers,
     })
     onClose()
   }

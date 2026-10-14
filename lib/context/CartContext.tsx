@@ -1,7 +1,8 @@
 'use client'
 
 import React, { createContext, useContext, useState, useEffect } from 'react'
-import { CartItem } from '@/types'
+import { CartItem, QuantityTier } from '@/types'
+import { calculateTieredPrice } from '@/lib/utils/pricing'
 
 interface CartContextType {
   items: CartItem[]
@@ -128,6 +129,7 @@ export function CartProvider({ children }: { children: React.ReactNode }) {
       priceSen: number
       compareAtPriceSen?: number
       stockAvailable?: number
+      quantityTiers?: QuantityTier[]
     }
   ) => {
     setItems((prev) => {
@@ -143,6 +145,7 @@ export function CartProvider({ children }: { children: React.ReactNode }) {
               ? {
                   ...item,
                   quantity: Math.min(item.quantity + oldQty, newVariant.stockAvailable || 99),
+                  quantityTiers: newVariant.quantityTiers ?? item.quantityTiers,
                 }
               : item
           )
@@ -160,6 +163,7 @@ export function CartProvider({ children }: { children: React.ReactNode }) {
             compareAtPriceSen: newVariant.compareAtPriceSen,
             stockAvailable: newVariant.stockAvailable ?? item.stockAvailable,
             variantName: newVariant.sizeName,
+            quantityTiers: newVariant.quantityTiers ?? item.quantityTiers,
           }
         }
         return item
@@ -180,7 +184,10 @@ export function CartProvider({ children }: { children: React.ReactNode }) {
   const removeCoupon = () => setCouponCode('')
 
   const itemCount = items.reduce((sum, i) => sum + i.quantity, 0)
-  const subtotalSen = items.reduce((sum, i) => sum + i.priceSen * i.quantity, 0)
+  const subtotalSen = items.reduce(
+    (sum, i) => sum + calculateTieredPrice(i.priceSen, i.quantity, i.quantityTiers).totalSen,
+    0
+  )
 
   return (
     <CartContext.Provider
