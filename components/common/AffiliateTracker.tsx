@@ -38,6 +38,9 @@ function ReferralHandler() {
         // User arrived explicitly via an affiliate link in this tab
         codeToUse = cleanUrlRef
         sessionStorage.setItem('kamaar_session_ref', codeToUse)
+        try {
+          sessionStorage.removeItem('kamaar_session_badge_hidden')
+        } catch (_) {}
         setIsDismissed(false)
       } else {
         // Normal URL (no ?ref= in URL):
@@ -46,6 +49,11 @@ function ReferralHandler() {
         const tabSession = sessionStorage.getItem('kamaar_session_ref')
         if (tabSession) {
           codeToUse = tabSession.trim().toUpperCase()
+          try {
+            if (sessionStorage.getItem('kamaar_session_badge_hidden') === 'true') {
+              setIsDismissed(true)
+            }
+          } catch (_) {}
         } else {
           setActiveAffiliate(null)
           return
@@ -87,17 +95,12 @@ function ReferralHandler() {
   }, [searchParams])
 
   const handleDismiss = () => {
-    // Immediately clear all affiliate session tracking when dismissed with (X)
+    // Sembunyikan paparan terapung (UI) sahaja untuk tab ini agar tidak menghalang skrin,
+    // TETAPI KEKALKAN rujukan affiliate dalam session supaya komisen/earnings ejen TIDAK HILANG!
     try {
-      sessionStorage.removeItem('kamaar_session_ref')
-      sessionStorage.removeItem('kamaar_session_ref_name')
-      localStorage.removeItem('kamaar_ref')
-      localStorage.removeItem('kamaar_ref_name')
-      document.cookie = 'kamaar_ref=; path=/; max-age=0; SameSite=Lax'
-      document.cookie = 'kamaar_ref_name=; path=/; max-age=0; SameSite=Lax'
+      sessionStorage.setItem('kamaar_session_badge_hidden', 'true')
     } catch (_) {}
     setIsDismissed(true)
-    setActiveAffiliate(null)
   }
 
   if (!activeAffiliate || isDismissed) {
@@ -148,7 +151,7 @@ function ReferralHandler() {
                   type="button"
                   onClick={handleDismiss}
                   className="text-white/40 hover:text-white p-1 rounded-lg hover:bg-white/10"
-                  title="Batal rujukan sesi ini"
+                  title="Tutup paparan rujukan (komisen ejen tetap aktif)"
                 >
                   <X className="w-3.5 h-3.5" />
                 </button>
@@ -219,7 +222,7 @@ function ReferralHandler() {
               type="button"
               onClick={handleDismiss}
               className="text-white/40 hover:text-white transition-colors p-1 -mr-1 rounded-full hover:bg-white/10"
-              title="Padam dan batalkan rujukan ejen ini"
+              title="Tutup paparan badge (rujukan komisen tetap aktif)"
             >
               <X className="w-3 h-3" />
             </button>
