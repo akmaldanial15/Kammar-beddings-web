@@ -231,6 +231,35 @@ export function CheckoutClient({ initialPaymentSettings, initialSiteSettings, av
   const [copiedBank, setCopiedBank] = useState(false)
   const [serverDiscountSen, setServerDiscountSen] = useState<number | null>(null)
 
+  // Interactive tooltips state for hover & click/tap
+  const [showShippingTooltip, setShowShippingTooltip] = useState(false)
+  const [showContactTooltip, setShowContactTooltip] = useState(false)
+  const [showPhoneTooltip, setShowPhoneTooltip] = useState(false)
+  const shippingTooltipRef = React.useRef<HTMLDivElement>(null)
+  const contactTooltipRef = React.useRef<HTMLDivElement>(null)
+  const phoneTooltipRef = React.useRef<HTMLDivElement>(null)
+
+  useEffect(() => {
+    function handleClickOutside(event: MouseEvent | TouchEvent) {
+      const target = event.target as Node
+      if (shippingTooltipRef.current && !shippingTooltipRef.current.contains(target)) {
+        setShowShippingTooltip(false)
+      }
+      if (contactTooltipRef.current && !contactTooltipRef.current.contains(target)) {
+        setShowContactTooltip(false)
+      }
+      if (phoneTooltipRef.current && !phoneTooltipRef.current.contains(target)) {
+        setShowPhoneTooltip(false)
+      }
+    }
+    document.addEventListener('mousedown', handleClickOutside)
+    document.addEventListener('touchstart', handleClickOutside)
+    return () => {
+      document.removeEventListener('mousedown', handleClickOutside)
+      document.removeEventListener('touchstart', handleClickOutside)
+    }
+  }, [])
+
   // Sync server coupon validation when couponCode or subtotal changes
   useEffect(() => {
     if (!couponCode) {
@@ -1317,11 +1346,32 @@ export function CheckoutClient({ initialPaymentSettings, initialSiteSettings, av
                       placeholder="cth: nama@kamaar.my atau 012 345 6789"
                       className="w-full px-4 py-3 rounded-xl border border-[#D5CEC2] bg-[#FAF7F2]/40 text-sm text-[#222] placeholder-neutral-400 outline-none focus:border-forest focus:ring-2 focus:ring-forest/10 transition-all font-sans"
                     />
-                    <div
-                      className="absolute right-3.5 top-1/2 -translate-y-1/2 text-neutral-400 cursor-help"
-                      title="Kami akan menghantar nombor penjejakan lori dan resit pesanan rasmi ke sini."
-                    >
-                      <HelpCircle className="w-4 h-4" />
+                    <div ref={contactTooltipRef} className="absolute right-3.5 top-1/2 -translate-y-1/2">
+                      <button
+                        type="button"
+                        onClick={(e) => {
+                          e.preventDefault()
+                          e.stopPropagation()
+                          setShowContactTooltip((prev) => !prev)
+                        }}
+                        onMouseEnter={() => setShowContactTooltip(true)}
+                        aria-label="Maklumat alamat emel atau telefon"
+                        className="text-neutral-400 hover:text-forest p-1 rounded-full hover:bg-forest/5 transition-colors focus:outline-none"
+                      >
+                        <HelpCircle className="w-4 h-4" />
+                      </button>
+
+                      {showContactTooltip && (
+                        <div
+                          onMouseLeave={() => setShowContactTooltip(false)}
+                          className="absolute bottom-full right-0 mb-2 w-64 sm:w-72 bg-white rounded-xl p-3 border border-[#D5CEC2] shadow-xl z-50 text-left text-xs text-charcoal animate-in fade-in duration-150"
+                        >
+                          <p className="text-[11px] leading-relaxed">
+                            Kami akan menghantar nombor penjejakan lori dan salinan rasmi resit pesanan anda ke sini.
+                          </p>
+                          <div className="absolute -bottom-1 right-3 w-2 h-2 bg-white border-b border-r border-[#D5CEC2] rotate-45" />
+                        </div>
+                      )}
                     </div>
                   </div>
                   <p className="text-[11px] text-charcoal-muted">
@@ -1546,11 +1596,34 @@ export function CheckoutClient({ initialPaymentSettings, initialSiteSettings, av
                       placeholder="012 345 6789"
                       className="w-full px-4 py-3 rounded-xl border border-[#D5CEC2] bg-[#FAF7F2]/40 text-sm text-[#222] placeholder-neutral-400 outline-none focus:border-forest focus:ring-2 focus:ring-forest/10 transition-all"
                     />
-                    <div
-                      className="absolute right-3.5 top-1/2 -translate-y-1/2 text-neutral-400 cursor-help"
-                      title="Diperlukan untuk kru atau kaunter kilang menghubungi anda."
-                    >
-                      <HelpCircle className="w-4 h-4" />
+                    <div ref={phoneTooltipRef} className="absolute right-3.5 top-1/2 -translate-y-1/2">
+                      <button
+                        type="button"
+                        onClick={(e) => {
+                          e.preventDefault()
+                          e.stopPropagation()
+                          setShowPhoneTooltip((prev) => !prev)
+                        }}
+                        onMouseEnter={() => setShowPhoneTooltip(true)}
+                        aria-label="Maklumat nombor telefon penerima"
+                        className="text-neutral-400 hover:text-forest p-1 rounded-full hover:bg-forest/5 transition-colors focus:outline-none"
+                      >
+                        <HelpCircle className="w-4 h-4" />
+                      </button>
+
+                      {showPhoneTooltip && (
+                        <div
+                          onMouseLeave={() => setShowPhoneTooltip(false)}
+                          className="absolute bottom-full right-0 mb-2 w-64 sm:w-72 bg-white rounded-xl p-3 border border-[#D5CEC2] shadow-xl z-50 text-left text-xs text-charcoal animate-in fade-in duration-150"
+                        >
+                          <p className="text-[11px] leading-relaxed">
+                            {isPickup
+                              ? 'Diperlukan untuk staf kaunter kilang menghubungi anda apabila barangan siap diambil.'
+                              : 'Pemandu lori KAMAAR akan menelefon nombor ini sebelum tiba di alamat anda.'}
+                          </p>
+                          <div className="absolute -bottom-1 right-3 w-2 h-2 bg-white border-b border-r border-[#D5CEC2] rotate-45" />
+                        </div>
+                      )}
                     </div>
                   </div>
                   <p className="text-[11px] text-charcoal-muted">
@@ -2506,21 +2579,109 @@ export function CheckoutClient({ initialPaymentSettings, initialSiteSettings, av
                 </div>
 
                 <div className="flex items-center justify-between text-charcoal-muted">
-                  <span className="flex items-center space-x-1.5">
-                    <span>
+                  <div className="flex items-center space-x-1.5">
+                    <span className="font-medium">
                       {isPickup ? 'Ambil Sendiri di Kilang' : 'Penghantaran White-Glove'}
                     </span>
-                    <span
-                      title={
-                        isPickup
-                          ? 'Ambil sendiri terus di kilang KAMAAR Beddings, Tasek Gelugor, Pulau Pinang (Percuma)'
-                          : 'Penghantaran & pemasangan percuma di bilik tidur anda di seluruh Semenanjung Malaysia'
-                      }
-                      className="cursor-help inline-flex text-neutral-400"
-                    >
-                      <HelpCircle className="w-3.5 h-3.5" />
-                    </span>
-                  </span>
+                    
+                    {/* Interactive White-Glove Popover Note */}
+                    <div ref={shippingTooltipRef} className="relative inline-flex items-center">
+                      <button
+                        type="button"
+                        onClick={(e) => {
+                          e.preventDefault()
+                          e.stopPropagation()
+                          setShowShippingTooltip((prev) => !prev)
+                        }}
+                        onMouseEnter={() => setShowShippingTooltip(true)}
+                        aria-label="Maklumat Penghantaran White-Glove"
+                        aria-expanded={showShippingTooltip}
+                        className={`p-1 rounded-full transition-all cursor-pointer focus:outline-none ${
+                          showShippingTooltip
+                            ? 'text-forest bg-forest/15 ring-2 ring-forest/20'
+                            : 'text-neutral-400 hover:text-forest hover:bg-forest/10'
+                        }`}
+                      >
+                        <HelpCircle className="w-4 h-4" />
+                      </button>
+
+                      {showShippingTooltip && (
+                        <div
+                          onMouseLeave={() => setShowShippingTooltip(false)}
+                          className="absolute bottom-full right-0 sm:-right-8 mb-2 w-72 sm:w-84 bg-white rounded-2xl p-4 border border-[#D5CEC2] shadow-2xl z-50 text-left text-charcoal animate-in fade-in zoom-in-95 duration-150"
+                          role="tooltip"
+                        >
+                          {/* Close button */}
+                          <button
+                            type="button"
+                            onClick={(e) => {
+                              e.preventDefault()
+                              e.stopPropagation()
+                              setShowShippingTooltip(false)
+                            }}
+                            className="absolute top-2.5 right-2.5 text-neutral-400 hover:text-charcoal p-1 rounded-full hover:bg-neutral-100 transition-colors"
+                            aria-label="Tutup"
+                          >
+                            <X className="w-3.5 h-3.5" />
+                          </button>
+
+                          <div className="flex items-center gap-2 mb-2.5">
+                            <span className="p-1.5 rounded-lg bg-gold/15 text-gold-dark shrink-0">
+                              <Truck className="w-4 h-4" />
+                            </span>
+                            <div>
+                              <span className="text-[10px] font-bold uppercase tracking-wider text-gold-dark block">
+                                {isPickup ? 'Pengambilan Sendiri' : 'Servis Logistik Eksklusif'}
+                              </span>
+                              <h4 className="text-xs font-bold text-forest">
+                                {isPickup ? 'Ambil Sendiri di Kilang' : 'Apa Itu Penghantaran White-Glove?'}
+                              </h4>
+                            </div>
+                          </div>
+
+                          {isPickup ? (
+                            <div className="space-y-2 text-[11px] text-charcoal-muted leading-relaxed">
+                              <p>
+                                Ambil pesanan terus di atelier kilang kami: <strong>Tunas Sinar Jaya Enterprise</strong>, No. 15, Jalan Kemboja 3, Bandar Baru Tasek Gelugor, Pulau Pinang.
+                              </p>
+                              <div className="p-2 bg-emerald-50 rounded-lg text-emerald-800 font-medium text-[10.5px]">
+                                ✓ Kos: <strong>RM0.00 (Percuma)</strong>
+                              </div>
+                            </div>
+                          ) : (
+                            <div className="space-y-2 text-[11px] text-charcoal-muted leading-relaxed">
+                              <p>
+                                Perkhidmatan penghantaran premium terus dari kilang KAMAAR ke kediaman anda:
+                              </p>
+                              <ul className="space-y-1.5 text-[10.5px]">
+                                <li className="flex items-start gap-1.5">
+                                  <span className="text-forest font-bold shrink-0">✓</span>
+                                  <span><strong>Masuk Bilik Tidur:</strong> 2 krew khas angkat barangan terus ke bilik tidur anda (bukan tinggal di luar pagar).</span>
+                                </li>
+                                <li className="flex items-start gap-1.5">
+                                  <span className="text-forest font-bold shrink-0">✓</span>
+                                  <span><strong>Pemasangan &amp; Unboxing:</strong> Untuk tilam, krew buka bungkusan &amp; pasang tilam di katil anda secara kemas.</span>
+                                </li>
+                                <li className="flex items-start gap-1.5">
+                                  <span className="text-forest font-bold shrink-0">✓</span>
+                                  <span><strong>Bantal &amp; Aksesori:</strong> Bungkusan kalis cuaca selamat dihantar dengan insurans penuh kilang.</span>
+                                </li>
+                              </ul>
+                              <div className="mt-2.5 pt-2 border-t border-[#E8E2D8] flex items-center justify-between text-[11px]">
+                                <span className="text-charcoal font-semibold">Caj Semasa:</span>
+                                <span className="font-bold text-forest">
+                                  {effectiveShippingSen === 0 ? 'PERCUMA (Ditaja Penuh)' : `${formatMYR(effectiveShippingSen)} (Kurier Kilang)`}
+                                </span>
+                              </div>
+                            </div>
+                          )}
+
+                          {/* Arrow pointer */}
+                          <div className="absolute -bottom-1.5 right-3 sm:right-10 w-3 h-3 bg-white border-b border-r border-[#D5CEC2] rotate-45 transform" />
+                        </div>
+                      )}
+                    </div>
+                  </div>
                   <span className="font-bold text-forest">
                     {effectiveShippingSen === 0 ? 'PERCUMA' : formatMYR(effectiveShippingSen)}
                   </span>
