@@ -1,5 +1,6 @@
 import { redirect } from 'next/navigation'
 import { getAffiliateSession } from '@/lib/affiliate/auth'
+import { getAdminSession } from '@/lib/admin/auth'
 import { getAffiliateById, getAffiliateOrders } from '@/lib/db'
 import { AffiliatePortalClient } from './AffiliatePortalClient'
 import { Metadata } from 'next'
@@ -21,6 +22,7 @@ export default async function AffiliateDashboardPage() {
   // Refetch fresh from db
   const affiliate = (await getAffiliateById(sessionAffiliate.id)) || sessionAffiliate
   const orders = await getAffiliateOrders(affiliate.code)
+  const adminSession = await getAdminSession()
 
   const sanitizedOrders = orders.map((o) => ({
     id: o.id,
@@ -35,5 +37,12 @@ export default async function AffiliateDashboardPage() {
     itemsSummary: o.items.map((it) => `${it.productName} (${it.sizeName || 'Standard'}) x${it.quantity}`).join(', '),
   }))
 
-  return <AffiliatePortalClient affiliate={affiliate} initialOrders={sanitizedOrders} />
+  return (
+    <AffiliatePortalClient
+      affiliate={affiliate}
+      initialOrders={sanitizedOrders}
+      initialIsAdmin={Boolean(adminSession)}
+    />
+  )
 }
+

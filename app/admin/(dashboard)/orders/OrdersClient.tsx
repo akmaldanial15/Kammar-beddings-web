@@ -2,7 +2,7 @@
 
 import React, { useState } from 'react'
 import { Order } from '@/types'
-import { formatMYR, formatKLDate } from '@/lib/utils/format'
+import { formatMYR, formatKLDate, formatKLTime, formatKLDateTime } from '@/lib/utils/format'
 import {
   Search,
   ShoppingBag,
@@ -473,7 +473,7 @@ export function OrdersClient({ initialOrders }: OrdersClientProps) {
                         {order.orderNumber}
                       </Link>
                       <span className="text-[10px] text-charcoal-muted block mt-0.5">
-                        {formatKLDate(order.createdAt)}
+                        {formatKLDate(order.createdAt)} • {formatKLTime(order.createdAt)}
                       </span>
                     </div>
                   </div>
@@ -655,7 +655,7 @@ export function OrdersClient({ initialOrders }: OrdersClientProps) {
                           {order.orderNumber}
                         </Link>
                         <span className="text-[10px] text-secondary block mt-0.5">
-                          {formatKLDate(order.createdAt)}
+                          {formatKLDate(order.createdAt)} • {formatKLTime(order.createdAt)}
                         </span>
                       </td>
                       <td className="py-4 px-4">

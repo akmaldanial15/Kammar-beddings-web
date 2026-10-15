@@ -70,8 +70,23 @@ export function formatDateTimeMY(dateStr: string | Date | undefined): string {
   }).format(d)
 }
 
+/**
+ * Format time only in Asia/Kuala_Lumpur timezone
+ */
+export function formatTimeMY(dateStr: string | Date | undefined): string {
+  if (!dateStr) return '-'
+  const d = typeof dateStr === 'string' ? new Date(dateStr) : dateStr
+  return new Intl.DateTimeFormat('en-MY', {
+    timeZone: 'Asia/Kuala_Lumpur',
+    hour: '2-digit',
+    minute: '2-digit',
+    hour12: true,
+  }).format(d)
+}
+
 export const formatKLDate = formatDateMY
 export const formatKLDateTime = formatDateTimeMY
+export const formatKLTime = formatTimeMY
 
 /**
  * Validate 5-digit Malaysian postcode (including leading zeroes, e.g. 05000, 50480, 88000)

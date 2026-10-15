@@ -2283,8 +2283,8 @@
       "shippingSen": 0,
       "taxSen": 0,
       "totalSen": 3490,
-      "paymentStatus": "unpaid",
-      "fulfillmentStatus": "unfulfilled",
+      "paymentStatus": "paid",
+      "fulfillmentStatus": "processing",
       "paymentProvider": "chip",
       "items": [
         {
@@ -2304,7 +2304,7 @@
       "id": "ord-1791978755101-22dg9",
       "orderNumber": "LENA-2026-1010",
       "createdAt": "2026-10-14T11:52:35.101Z",
-      "updatedAt": "2026-10-14T11:52:35.453Z",
+      "updatedAt": "2026-10-15T10:37:21.927Z",
       "paymentId": "d09aa573-d31d-405a-a8fa-8d1bae15c249"
     },
     {
@@ -2822,6 +2822,354 @@
       "createdAt": "2026-10-15T00:01:13.056Z",
       "updatedAt": "2026-10-15T00:01:13.059Z",
       "affiliateCredited": true
+    },
+    {
+      "id": "ord-test-recover-1792060257354",
+      "orderNumber": "LENA-TEST-7354",
+      "customerEmail": "customer@kamaar.my",
+      "customerName": "Ahmad Pelanggan",
+      "customerPhone": "0191234567",
+      "shippingAddress": {
+        "fullName": "Ahmad Pelanggan",
+        "phone": "0191234567",
+        "addressLine1": "No 1, Jalan Bunga",
+        "city": "Tasek Gelugor",
+        "state": "Pulau Pinang",
+        "postcode": "13300",
+        "country": "Malaysia"
+      },
+      "billingAddress": {
+        "fullName": "Ahmad Pelanggan",
+        "phone": "0191234567",
+        "addressLine1": "No 1, Jalan Bunga",
+        "city": "Tasek Gelugor",
+        "state": "Pulau Pinang",
+        "postcode": "13300",
+        "country": "Malaysia"
+      },
+      "subtotalSen": 45000,
+      "discountSen": 0,
+      "shippingSen": 0,
+      "taxSen": 0,
+      "totalSen": 45000,
+      "paymentStatus": "unpaid",
+      "fulfillmentStatus": "unfulfilled",
+      "paymentProvider": "chip",
+      "items": [
+        {
+          "id": "item-1",
+          "orderId": "",
+          "variantId": "var-1",
+          "productName": "Tilam Lipat Kekabu Asli",
+          "sizeName": "Single 3ft",
+          "sku": "TL-SGL",
+          "dimensions": "3ft x 6ft",
+          "unitPriceSen": 45000,
+          "quantity": 1,
+          "lineTotalSen": 45000
+        }
+      ],
+      "affiliateCode": "AFF-DANIAL",
+      "affiliateCommissionSen": 4500,
+      "createdAt": "2026-10-15T10:30:57.354Z",
+      "updatedAt": "2026-10-15T10:30:57.357Z"
+    },
+    {
+      "id": "ord-aff-test-1792060257360",
+      "orderNumber": "LENA-AFF-7360",
+      "customerEmail": "aff.buyer@kamaar.my",
+      "customerName": "Pembeli Affiliate",
+      "customerPhone": "0191234567",
+      "shippingAddress": {
+        "fullName": "Pembeli Affiliate",
+        "phone": "0191234567",
+        "addressLine1": "No 2, Jalan Mawar",
+        "city": "Tasek Gelugor",
+        "state": "Pulau Pinang",
+        "postcode": "13300",
+        "country": "Malaysia"
+      },
+      "billingAddress": {
+        "fullName": "Pembeli Affiliate",
+        "phone": "0191234567",
+        "addressLine1": "No 2, Jalan Mawar",
+        "city": "Tasek Gelugor",
+        "state": "Pulau Pinang",
+        "postcode": "13300",
+        "country": "Malaysia"
+      },
+      "subtotalSen": 30000,
+      "discountSen": 0,
+      "shippingSen": 0,
+      "taxSen": 0,
+      "totalSen": 30000,
+      "paymentStatus": "paid",
+      "fulfillmentStatus": "processing",
+      "paymentProvider": "chip",
+      "affiliateCode": "AFF-DANIAL",
+      "affiliateCommissionSen": 3000,
+      "items": [],
+      "createdAt": "2026-10-15T10:30:57.360Z",
+      "updatedAt": "2026-10-15T10:30:57.368Z",
+      "affiliateCredited": true
+    },
+    {
+      "id": "ord-recovery-paid-1792060257372",
+      "orderNumber": "LENA-REC-7372",
+      "customerEmail": "recovery.buyer@kamaar.my",
+      "customerName": "Pembeli Recovery",
+      "customerPhone": "0191234567",
+      "shippingAddress": {
+        "fullName": "Pembeli Recovery",
+        "phone": "0191234567",
+        "addressLine1": "No 3, Jalan Melati",
+        "city": "Tasek Gelugor",
+        "state": "Pulau Pinang",
+        "postcode": "13300",
+        "country": "Malaysia"
+      },
+      "billingAddress": {
+        "fullName": "Pembeli Recovery",
+        "phone": "0191234567",
+        "addressLine1": "No 3, Jalan Melati",
+        "city": "Tasek Gelugor",
+        "state": "Pulau Pinang",
+        "postcode": "13300",
+        "country": "Malaysia"
+      },
+      "subtotalSen": 20000,
+      "discountSen": 0,
+      "shippingSen": 0,
+      "taxSen": 0,
+      "totalSen": 20000,
+      "paymentStatus": "paid",
+      "fulfillmentStatus": "processing",
+      "paymentProvider": "chip",
+      "affiliateCode": "AFF-DANIAL",
+      "affiliateCommissionSen": 2000,
+      "items": [],
+      "createdAt": "2026-10-15T10:30:57.372Z",
+      "updatedAt": "2026-10-15T10:30:57.378Z",
+      "affiliateCredited": true
+    },
+    {
+      "id": "ord-test-recover-1792060439839",
+      "orderNumber": "LENA-TEST-9839",
+      "customerEmail": "customer@kamaar.my",
+      "customerName": "Ahmad Pelanggan",
+      "customerPhone": "0191234567",
+      "shippingAddress": {
+        "fullName": "Ahmad Pelanggan",
+        "phone": "0191234567",
+        "addressLine1": "No 1, Jalan Bunga",
+        "city": "Tasek Gelugor",
+        "state": "Pulau Pinang",
+        "postcode": "13300",
+        "country": "Malaysia"
+      },
+      "billingAddress": {
+        "fullName": "Ahmad Pelanggan",
+        "phone": "0191234567",
+        "addressLine1": "No 1, Jalan Bunga",
+        "city": "Tasek Gelugor",
+        "state": "Pulau Pinang",
+        "postcode": "13300",
+        "country": "Malaysia"
+      },
+      "subtotalSen": 45000,
+      "discountSen": 0,
+      "shippingSen": 0,
+      "taxSen": 0,
+      "totalSen": 45000,
+      "paymentStatus": "unpaid",
+      "fulfillmentStatus": "unfulfilled",
+      "paymentProvider": "chip",
+      "items": [
+        {
+          "id": "item-1",
+          "orderId": "",
+          "variantId": "var-1",
+          "productName": "Tilam Lipat Kekabu Asli",
+          "sizeName": "Single 3ft",
+          "sku": "TL-SGL",
+          "dimensions": "3ft x 6ft",
+          "unitPriceSen": 45000,
+          "quantity": 1,
+          "lineTotalSen": 45000
+        }
+      ],
+      "affiliateCode": "AFF-DANIAL",
+      "affiliateCommissionSen": 4500,
+      "createdAt": "2026-10-15T10:33:59.839Z",
+      "updatedAt": "2026-10-15T10:33:59.841Z"
+    },
+    {
+      "id": "ord-aff-test-1792060439844",
+      "orderNumber": "LENA-AFF-9844",
+      "customerEmail": "aff.buyer@kamaar.my",
+      "customerName": "Pembeli Affiliate",
+      "customerPhone": "0191234567",
+      "shippingAddress": {
+        "fullName": "Pembeli Affiliate",
+        "phone": "0191234567",
+        "addressLine1": "No 2, Jalan Mawar",
+        "city": "Tasek Gelugor",
+        "state": "Pulau Pinang",
+        "postcode": "13300",
+        "country": "Malaysia"
+      },
+      "billingAddress": {
+        "fullName": "Pembeli Affiliate",
+        "phone": "0191234567",
+        "addressLine1": "No 2, Jalan Mawar",
+        "city": "Tasek Gelugor",
+        "state": "Pulau Pinang",
+        "postcode": "13300",
+        "country": "Malaysia"
+      },
+      "subtotalSen": 30000,
+      "discountSen": 0,
+      "shippingSen": 0,
+      "taxSen": 0,
+      "totalSen": 30000,
+      "paymentStatus": "paid",
+      "fulfillmentStatus": "processing",
+      "paymentProvider": "chip",
+      "affiliateCode": "AFF-DANIAL",
+      "affiliateCommissionSen": 3000,
+      "items": [],
+      "createdAt": "2026-10-15T10:33:59.844Z",
+      "updatedAt": "2026-10-15T10:33:59.852Z",
+      "affiliateCredited": true
+    },
+    {
+      "id": "ord-test-recover-1792060599682",
+      "orderNumber": "LENA-TEST-9682",
+      "customerEmail": "customer@kamaar.my",
+      "customerName": "Ahmad Pelanggan",
+      "customerPhone": "0191234567",
+      "shippingAddress": {
+        "fullName": "Ahmad Pelanggan",
+        "phone": "0191234567",
+        "addressLine1": "No 1, Jalan Bunga",
+        "city": "Tasek Gelugor",
+        "state": "Pulau Pinang",
+        "postcode": "13300",
+        "country": "Malaysia"
+      },
+      "billingAddress": {
+        "fullName": "Ahmad Pelanggan",
+        "phone": "0191234567",
+        "addressLine1": "No 1, Jalan Bunga",
+        "city": "Tasek Gelugor",
+        "state": "Pulau Pinang",
+        "postcode": "13300",
+        "country": "Malaysia"
+      },
+      "subtotalSen": 45000,
+      "discountSen": 0,
+      "shippingSen": 0,
+      "taxSen": 0,
+      "totalSen": 45000,
+      "paymentStatus": "unpaid",
+      "fulfillmentStatus": "unfulfilled",
+      "paymentProvider": "chip",
+      "items": [
+        {
+          "id": "item-1",
+          "orderId": "",
+          "variantId": "var-1",
+          "productName": "Tilam Lipat Kekabu Asli",
+          "sizeName": "Single 3ft",
+          "sku": "TL-SGL",
+          "dimensions": "3ft x 6ft",
+          "unitPriceSen": 45000,
+          "quantity": 1,
+          "lineTotalSen": 45000
+        }
+      ],
+      "affiliateCode": "AFF-DANIAL",
+      "affiliateCommissionSen": 4500,
+      "createdAt": "2026-10-15T10:36:39.682Z",
+      "updatedAt": "2026-10-15T10:36:39.684Z"
+    },
+    {
+      "id": "ord-aff-test-1792060599688",
+      "orderNumber": "LENA-AFF-9688",
+      "customerEmail": "aff.buyer@kamaar.my",
+      "customerName": "Pembeli Affiliate",
+      "customerPhone": "0191234567",
+      "shippingAddress": {
+        "fullName": "Pembeli Affiliate",
+        "phone": "0191234567",
+        "addressLine1": "No 2, Jalan Mawar",
+        "city": "Tasek Gelugor",
+        "state": "Pulau Pinang",
+        "postcode": "13300",
+        "country": "Malaysia"
+      },
+      "billingAddress": {
+        "fullName": "Pembeli Affiliate",
+        "phone": "0191234567",
+        "addressLine1": "No 2, Jalan Mawar",
+        "city": "Tasek Gelugor",
+        "state": "Pulau Pinang",
+        "postcode": "13300",
+        "country": "Malaysia"
+      },
+      "subtotalSen": 30000,
+      "discountSen": 0,
+      "shippingSen": 0,
+      "taxSen": 0,
+      "totalSen": 30000,
+      "paymentStatus": "paid",
+      "fulfillmentStatus": "processing",
+      "paymentProvider": "chip",
+      "affiliateCode": "AFF-DANIAL",
+      "affiliateCommissionSen": 3000,
+      "items": [],
+      "createdAt": "2026-10-15T10:36:39.688Z",
+      "updatedAt": "2026-10-15T10:36:39.695Z",
+      "affiliateCredited": true
+    },
+    {
+      "id": "ord-recovery-paid-1792060599700",
+      "orderNumber": "LENA-REC-9700",
+      "customerEmail": "recovery.buyer@kamaar.my",
+      "customerName": "Pembeli Recovery",
+      "customerPhone": "0191234567",
+      "shippingAddress": {
+        "fullName": "Pembeli Recovery",
+        "phone": "0191234567",
+        "addressLine1": "No 3, Jalan Melati",
+        "city": "Tasek Gelugor",
+        "state": "Pulau Pinang",
+        "postcode": "13300",
+        "country": "Malaysia"
+      },
+      "billingAddress": {
+        "fullName": "Pembeli Recovery",
+        "phone": "0191234567",
+        "addressLine1": "No 3, Jalan Melati",
+        "city": "Tasek Gelugor",
+        "state": "Pulau Pinang",
+        "postcode": "13300",
+        "country": "Malaysia"
+      },
+      "subtotalSen": 20000,
+      "discountSen": 0,
+      "shippingSen": 0,
+      "taxSen": 0,
+      "totalSen": 20000,
+      "paymentStatus": "paid",
+      "fulfillmentStatus": "processing",
+      "paymentProvider": "chip",
+      "affiliateCode": "AFF-DANIAL",
+      "affiliateCommissionSen": 2000,
+      "items": [],
+      "createdAt": "2026-10-15T10:36:39.700Z",
+      "updatedAt": "2026-10-15T10:36:39.704Z",
+      "affiliateCredited": true
     }
   ],
   "reviews": [
@@ -3061,6 +3409,148 @@
     }
   ],
   "auditLogs": [
+    {
+      "id": "aud-1792060641931-nh1y",
+      "actorEmail": "chip_sync",
+      "action": "order_status_updated",
+      "entityType": "order",
+      "entityId": "ord-1791978755101-22dg9",
+      "details": {
+        "paymentStatus": "paid",
+        "fulfillmentStatus": "processing",
+        "paymentId": "d09aa573-d31d-405a-a8fa-8d1bae15c249"
+      },
+      "createdAt": "2026-10-15T10:37:21.931Z"
+    },
+    {
+      "id": "aud-1792060599723-c5t5",
+      "actorEmail": "admin",
+      "action": "affiliate_updated",
+      "entityType": "affiliate",
+      "entityId": "aff-danial",
+      "details": {
+        "commissionRate": 15,
+        "commissionType": "percentage",
+        "bankName": "CIMB Bank",
+        "bankAccountNumber": "888123456789",
+        "adminNotes": "Ujian komisen dinaikkan kepada 15%"
+      },
+      "createdAt": "2026-10-15T10:36:39.723Z"
+    },
+    {
+      "id": "aud-1792060599698-84ms",
+      "actorEmail": "system",
+      "action": "order_status_updated",
+      "entityType": "order",
+      "entityId": "ord-aff-test-1792060599688",
+      "details": {
+        "paymentStatus": "paid",
+        "fulfillmentStatus": "processing"
+      },
+      "createdAt": "2026-10-15T10:36:39.698Z"
+    },
+    {
+      "id": "aud-1792060599693-wmve",
+      "actorEmail": "system",
+      "action": "order_status_updated",
+      "entityType": "order",
+      "entityId": "ord-aff-test-1792060599688",
+      "details": {
+        "paymentStatus": "paid"
+      },
+      "createdAt": "2026-10-15T10:36:39.693Z"
+    },
+    {
+      "id": "aud-1792060592300-h9cn",
+      "actorEmail": "admin@kamaarbeddings.com",
+      "action": "order_deleted",
+      "entityType": "order",
+      "entityId": "ord-recovery-paid-1792060439857",
+      "details": {
+        "orderNumber": "LENA-REC-9857",
+        "customerName": "Pembeli Recovery",
+        "customerEmail": "recovery.buyer@kamaar.my",
+        "totalSen": 20000,
+        "affiliateCode": "AFF-DANIAL"
+      },
+      "createdAt": "2026-10-15T10:36:32.300Z"
+    },
+    {
+      "id": "aud-1792060439878-c6ue",
+      "actorEmail": "admin",
+      "action": "affiliate_updated",
+      "entityType": "affiliate",
+      "entityId": "aff-danial",
+      "details": {
+        "commissionRate": 15,
+        "commissionType": "percentage",
+        "bankName": "CIMB Bank",
+        "bankAccountNumber": "888123456789",
+        "adminNotes": "Ujian komisen dinaikkan kepada 15%"
+      },
+      "createdAt": "2026-10-15T10:33:59.878Z"
+    },
+    {
+      "id": "aud-1792060439854-j5in",
+      "actorEmail": "system",
+      "action": "order_status_updated",
+      "entityType": "order",
+      "entityId": "ord-aff-test-1792060439844",
+      "details": {
+        "paymentStatus": "paid",
+        "fulfillmentStatus": "processing"
+      },
+      "createdAt": "2026-10-15T10:33:59.854Z"
+    },
+    {
+      "id": "aud-1792060439849-9ubm",
+      "actorEmail": "system",
+      "action": "order_status_updated",
+      "entityType": "order",
+      "entityId": "ord-aff-test-1792060439844",
+      "details": {
+        "paymentStatus": "paid"
+      },
+      "createdAt": "2026-10-15T10:33:59.849Z"
+    },
+    {
+      "id": "aud-1792060257756-ducv",
+      "actorEmail": "admin",
+      "action": "affiliate_updated",
+      "entityType": "affiliate",
+      "entityId": "aff-danial",
+      "details": {
+        "commissionRate": 15,
+        "commissionType": "percentage",
+        "bankName": "CIMB Bank",
+        "bankAccountNumber": "888123456789",
+        "adminNotes": "Ujian komisen dinaikkan kepada 15%"
+      },
+      "createdAt": "2026-10-15T10:30:57.756Z"
+    },
+    {
+      "id": "aud-1792060257370-h5kr",
+      "actorEmail": "system",
+      "action": "order_status_updated",
+      "entityType": "order",
+      "entityId": "ord-aff-test-1792060257360",
+      "details": {
+        "paymentStatus": "paid",
+        "fulfillmentStatus": "processing"
+      },
+      "createdAt": "2026-10-15T10:30:57.370Z"
+    },
+    {
+      "id": "aud-1792060257365-o09n",
+      "actorEmail": "system",
+      "action": "order_status_updated",
+      "entityType": "order",
+      "entityId": "ord-aff-test-1792060257360",
+      "details": {
+        "paymentStatus": "paid"
+      },
+      "createdAt": "2026-10-15T10:30:57.365Z"
+    },
     {
       "id": "aud-1792022473087-r7qr",
       "actorEmail": "admin",
@@ -4472,9 +4962,9 @@
       "bankAccountNumber": "888123456789",
       "commissionType": "percentage",
       "commissionRate": 15,
-      "totalSalesCount": 8,
-      "totalSalesRevenueSen": 200000,
-      "totalCommissionSen": 20000,
+      "totalSalesCount": 13,
+      "totalSalesRevenueSen": 330000,
+      "totalCommissionSen": 33000,
       "isActive": true,
       "createdAt": "2026-08-01T10:00:00Z",
       "adminNotes": "Ujian komisen dinaikkan kepada 15%",

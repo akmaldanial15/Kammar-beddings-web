@@ -3,7 +3,7 @@
 import React, { useState, useEffect } from 'react'
 import { createPortal } from 'react-dom'
 import { Affiliate } from '@/types'
-import { formatMYR } from '@/lib/utils/format'
+import { formatMYR, formatKLDate, formatKLTime, formatKLDateTime } from '@/lib/utils/format'
 import {
   Users,
   Plus,
@@ -26,6 +26,10 @@ import {
   Sparkles,
   BellRing,
   RotateCcw,
+  ShoppingBag,
+  Package,
+  AlertCircle,
+  Loader2,
 } from 'lucide-react'
 import Link from 'next/link'
 
@@ -118,8 +122,17 @@ export function AffiliatesClient({ initialAffiliates }: Props) {
   const [editSuccessMessage, setEditSuccessMessage] = useState('')
   const [isRecalculatingSingle, setIsRecalculatingSingle] = useState(false)
 
+  // Orders / Commissions List Modal State (Admin manage & delete affiliate orders)
+  const [isOrdersModalOpen, setIsOrdersModalOpen] = useState(false)
+  const [ordersTargetAffiliate, setOrdersTargetAffiliate] = useState<Affiliate | null>(null)
+  const [targetAffiliateOrders, setTargetAffiliateOrders] = useState<any[]>([])
+  const [isLoadingOrders, setIsLoadingOrders] = useState(false)
+  const [isDeletingOrder, setIsDeletingOrder] = useState<string | null>(null)
+  const [isClearingAffiliateOrders, setIsClearingAffiliateOrders] = useState(false)
+  const [ordersModalFeedback, setOrdersModalFeedback] = useState<{ type: 'success' | 'error'; message: string } | null>(null)
+
   useEffect(() => {
-    if (isModalOpen || isNoteModalOpen || isResetModalOpen || isEditModalOpen) {
+    if (isModalOpen || isNoteModalOpen || isResetModalOpen || isEditModalOpen || isOrdersModalOpen) {
       document.body.style.overflow = 'hidden'
     } else {
       document.body.style.overflow = 'unset'
@@ -127,7 +140,7 @@ export function AffiliatesClient({ initialAffiliates }: Props) {
     return () => {
       document.body.style.overflow = 'unset'
     }
-  }, [isModalOpen, isNoteModalOpen, isResetModalOpen, isEditModalOpen])
+  }, [isModalOpen, isNoteModalOpen, isResetModalOpen, isEditModalOpen, isOrdersModalOpen])
 
   // Aggregated KPI Metrics & Pending Resets
   const activeCount = affiliates.filter((a) => a.isActive).length
@@ -475,6 +488,141 @@ export function AffiliatesClient({ initialAffiliates }: Props) {
       setEditError(err.message || 'Ralat sambungan pelayan.')
     } finally {
       setIsSavingEdit(false)
+    }
+  }
+
+  // Open Orders / Commissions Management Modal
+  const handleOpenOrdersModal = async (aff: Affiliate) => {
+    setOrdersTargetAffiliate(aff)
+    setIsOrdersModalOpen(true)
+    setIsLoadingOrders(true)
+    setOrdersModalFeedback(null)
+    setTargetAffiliateOrders([])
+
+    try {
+      const res = await fetch(`/api/admin/affiliates/${aff.id}/orders`)
+      const data = await res.json()
+      if (res.ok && data.orders) {
+        setTargetAffiliateOrders(data.orders)
+        if (data.affiliate) {
+          setOrdersTargetAffiliate(data.affiliate)
+          setAffiliates((prev) =>
+            prev.map((a) => (a.id === data.affiliate.id ? data.affiliate : a))
+          )
+        }
+      } else {
+        setOrdersModalFeedback({
+          type: 'error',
+          message: data.error || 'Gagal memuat turun rekod pesanan.',
+        })
+      }
+    } catch (err: any) {
+      setOrdersModalFeedback({
+        type: 'error',
+        message: err.message || 'Ralat sambungan pelayan.',
+      })
+    } finally {
+      setIsLoadingOrders(false)
+    }
+  }
+
+  const handleDeleteAffiliateOrder = async (orderId: string, orderNumber: string) => {
+    if (!ordersTargetAffiliate) return
+    if (
+      !confirm(
+        `Padam pesanan "${orderNumber}" daripada rekod rujukan ejen ini?\n\nNilai jualan dan komisen ejen akan dikira semula secara automatik.`
+      )
+    ) {
+      return
+    }
+
+    setIsDeletingOrder(orderId)
+    setOrdersModalFeedback(null)
+
+    try {
+      const res = await fetch(`/api/admin/affiliates/${ordersTargetAffiliate.id}/orders`, {
+        method: 'DELETE',
+        headers: { 'Content-Type': 'application/json' },
+        body: JSON.stringify({ orderId }),
+      })
+
+      const data = await res.json()
+      if (res.ok && data.success) {
+        setTargetAffiliateOrders(data.orders || [])
+        if (data.affiliate) {
+          setOrdersTargetAffiliate(data.affiliate)
+          setAffiliates((prev) =>
+            prev.map((a) => (a.id === data.affiliate.id ? data.affiliate : a))
+          )
+        }
+        setOrdersModalFeedback({
+          type: 'success',
+          message: `Pesanan ${orderNumber} berjaya dipadam.`,
+        })
+        setTimeout(() => setOrdersModalFeedback(null), 3500)
+      } else {
+        setOrdersModalFeedback({
+          type: 'error',
+          message: data.error || 'Gagal memadam pesanan.',
+        })
+      }
+    } catch (err: any) {
+      setOrdersModalFeedback({
+        type: 'error',
+        message: err.message || 'Ralat sambungan pelayan.',
+      })
+    } finally {
+      setIsDeletingOrder(null)
+    }
+  }
+
+  const handleClearAllAffiliateOrders = async () => {
+    if (!ordersTargetAffiliate) return
+    if (
+      !confirm(
+        `PERHATIAN PENTADBIR:\n\nAdakah anda pasti ingin memadam KESEMUA ${targetAffiliateOrders.length} pesanan rujukan untuk ejen "${ordersTargetAffiliate.name}"?\n\nStatistik jualan dan komisen akan diset semula ke 0.`
+      )
+    ) {
+      return
+    }
+
+    setIsClearingAffiliateOrders(true)
+    setOrdersModalFeedback(null)
+
+    try {
+      const res = await fetch(`/api/admin/affiliates/${ordersTargetAffiliate.id}/orders`, {
+        method: 'DELETE',
+        headers: { 'Content-Type': 'application/json' },
+        body: JSON.stringify({ clearAll: true }),
+      })
+
+      const data = await res.json()
+      if (res.ok && data.success) {
+        setTargetAffiliateOrders([])
+        if (data.affiliate) {
+          setOrdersTargetAffiliate(data.affiliate)
+          setAffiliates((prev) =>
+            prev.map((a) => (a.id === data.affiliate.id ? data.affiliate : a))
+          )
+        }
+        setOrdersModalFeedback({
+          type: 'success',
+          message: data.message || 'Semua rekod pesanan rujukan berjaya dipadam.',
+        })
+        setTimeout(() => setOrdersModalFeedback(null), 3500)
+      } else {
+        setOrdersModalFeedback({
+          type: 'error',
+          message: data.error || 'Gagal memadam semua pesanan.',
+        })
+      }
+    } catch (err: any) {
+      setOrdersModalFeedback({
+        type: 'error',
+        message: err.message || 'Ralat sambungan pelayan.',
+      })
+    } finally {
+      setIsClearingAffiliateOrders(false)
     }
   }
 
@@ -852,13 +1000,22 @@ export function AffiliatesClient({ initialAffiliates }: Props) {
                     </button>
                   </div>
 
-                  <div className="grid grid-cols-2 gap-1.5">
+                  <div className="grid grid-cols-3 gap-1.5">
+                    <button
+                      onClick={() => handleOpenOrdersModal(aff)}
+                      className="flex items-center justify-center gap-1 py-1.5 px-1.5 rounded-xl text-[11px] font-bold bg-[#1E4E8C]/10 border border-[#1E4E8C]/20 text-[#1E4E8C] hover:bg-[#1E4E8C]/20 transition-all cursor-pointer"
+                      title="Lihat & Urus Rekod Pesanan / Komisen Ejen Ini"
+                    >
+                      <ShoppingBag className="w-3.5 h-3.5 shrink-0" />
+                      <span className="truncate">Rekod</span>
+                    </button>
+
                     <button
                       onClick={() => handleOpenNoteModal(aff)}
                       className="flex items-center justify-center gap-1 py-1.5 px-1.5 rounded-xl text-[11px] font-bold bg-warmwhite border border-borderLight text-secondary hover:text-forest-dark hover:bg-forest/10 transition-all cursor-pointer"
                     >
                       <MessageSquare className="w-3.5 h-3.5 text-[#1E4E8C] shrink-0" />
-                      <span className="truncate">Tulis Nota</span>
+                      <span className="truncate">Nota</span>
                     </button>
 
                     <button
@@ -1022,6 +1179,14 @@ export function AffiliatesClient({ initialAffiliates }: Props) {
                             title="Kira Semula & Segarkan Jualan/Komisen Ejen Ini"
                           >
                             <RotateCcw className={`w-3.5 h-3.5 ${isRecalculating ? 'animate-spin' : ''}`} />
+                          </button>
+
+                          <button
+                            onClick={() => handleOpenOrdersModal(aff)}
+                            className="p-1.5 text-secondary hover:text-[#1E4E8C] rounded-lg hover:bg-[#1E4E8C]/10 transition-colors inline-flex items-center cursor-pointer"
+                            title="Lihat & Padam Rekod Pesanan / Komisen Ejen Ini"
+                          >
+                            <ShoppingBag className="w-3.5 h-3.5 text-[#1E4E8C]" />
                           </button>
 
                           <button
@@ -1930,6 +2095,208 @@ export function AffiliatesClient({ initialAffiliates }: Props) {
                 </button>
               </div>
             </form>
+          </div>
+        </div>,
+        document.body
+      )}
+
+      {/* Modal: View & Delete Affiliate Referral Orders */}
+      {isOrdersModalOpen && mounted && createPortal(
+        <div className="fixed inset-0 z-[100] bg-forest-dark/60 backdrop-blur-sm flex items-center justify-center p-2 sm:p-4 overscroll-contain">
+          <div className="bg-warmwhite w-full max-w-4xl max-h-[92dvh] sm:max-h-[88dvh] rounded-2xl sm:rounded-3xl border border-borderLight shadow-2xl flex flex-col overflow-hidden animate-in fade-in zoom-in-95 duration-200">
+            {/* Header */}
+            <div className="p-4 sm:p-6 bg-[#13325B] text-white flex items-center justify-between flex-shrink-0 border-b border-[#B49A58]/30">
+              <div className="flex items-center space-x-3">
+                <div className="w-10 h-10 rounded-xl bg-gradient-to-br from-[#1E4E8C] to-[#2A6DB5] border border-[#B49A58]/40 flex items-center justify-center shadow-md">
+                  <ShoppingBag className="w-5 h-5 text-[#D4AF37]" />
+                </div>
+                <div>
+                  <div className="flex items-center space-x-2">
+                    <span className="text-[10px] font-bold uppercase tracking-wider text-[#D4AF37]">
+                      REKOD KOMISEN & RUJUKAN
+                    </span>
+                    <span className="font-mono text-[10px] font-bold px-1.5 py-0.5 rounded bg-white/10 text-white">
+                      {ordersTargetAffiliate?.code}
+                    </span>
+                  </div>
+                  <h3 className="font-serif text-lg sm:text-xl font-bold text-white">
+                    {ordersTargetAffiliate?.name}
+                  </h3>
+                </div>
+              </div>
+
+              <button
+                onClick={() => setIsOrdersModalOpen(false)}
+                className="p-1.5 text-white/80 hover:text-white rounded-lg hover:bg-white/10 shrink-0 cursor-pointer"
+              >
+                <X className="w-5 h-5" />
+              </button>
+            </div>
+
+            {/* KPI Summary Bar */}
+            <div className="bg-[#1E4E8C]/5 border-b border-borderLight p-3.5 sm:px-6 sm:py-4 flex flex-wrap items-center justify-between gap-3">
+              <div className="flex items-center gap-2 sm:gap-4 flex-wrap">
+                <div className="bg-white px-3 py-1.5 rounded-xl border border-borderLight shadow-2xs">
+                  <span className="text-[10px] text-secondary uppercase font-bold block">Pesanan</span>
+                  <span className="text-xs sm:text-sm font-mono font-bold text-forest-dark">
+                    {targetAffiliateOrders.length} order
+                  </span>
+                </div>
+                <div className="bg-white px-3 py-1.5 rounded-xl border border-borderLight shadow-2xs">
+                  <span className="text-[10px] text-secondary uppercase font-bold block">Jumlah Nilai Jualan</span>
+                  <span className="text-xs sm:text-sm font-mono font-bold text-forest">
+                    {formatMYR(ordersTargetAffiliate?.totalSalesRevenueSen || 0)}
+                  </span>
+                </div>
+                <div className="bg-white px-3 py-1.5 rounded-xl border border-borderLight shadow-2xs">
+                  <span className="text-[10px] text-secondary uppercase font-bold block">Komisen Terkumpul</span>
+                  <span className="text-xs sm:text-sm font-mono font-bold text-sale">
+                    {formatMYR(ordersTargetAffiliate?.totalCommissionSen || 0)}
+                  </span>
+                </div>
+              </div>
+
+              {targetAffiliateOrders.length > 0 && (
+                <button
+                  onClick={handleClearAllAffiliateOrders}
+                  disabled={isClearingAffiliateOrders}
+                  className="px-3.5 py-2 bg-rose-600 hover:bg-rose-700 text-white text-xs font-bold rounded-xl shadow-xs transition-all flex items-center gap-1.5 cursor-pointer disabled:opacity-50"
+                  title="Padam semua pesanan rujukan dan kosongkan rekod komisen ejen ini"
+                >
+                  <Trash2 className="w-3.5 h-3.5" />
+                  <span>{isClearingAffiliateOrders ? 'Memadam...' : 'Padam Semua Rekod'}</span>
+                </button>
+              )}
+            </div>
+
+            {/* Notification alert inside modal */}
+            {ordersModalFeedback && (
+              <div
+                className={`m-3.5 sm:mx-6 sm:mt-4 p-3 rounded-xl border text-xs font-semibold flex items-center justify-between ${
+                  ordersModalFeedback.type === 'success'
+                    ? 'bg-emerald-50 text-emerald-900 border-emerald-200'
+                    : 'bg-rose-50 text-rose-900 border-rose-200'
+                }`}
+              >
+                <div className="flex items-center gap-2">
+                  {ordersModalFeedback.type === 'success' ? (
+                    <Check className="w-4 h-4 text-emerald-600 shrink-0" />
+                  ) : (
+                    <AlertCircle className="w-4 h-4 text-rose-600 shrink-0" />
+                  )}
+                  <span>{ordersModalFeedback.message}</span>
+                </div>
+                <button
+                  onClick={() => setOrdersModalFeedback(null)}
+                  className="p-0.5 text-neutral-500 hover:text-neutral-800 cursor-pointer"
+                >
+                  <X className="w-3.5 h-3.5" />
+                </button>
+              </div>
+            )}
+
+            {/* Content Body */}
+            <div className="p-3.5 sm:p-6 overflow-y-auto flex-1">
+              {isLoadingOrders ? (
+                <div className="py-16 text-center space-y-2">
+                  <Loader2 className="w-8 h-8 text-[#1E4E8C] animate-spin mx-auto" />
+                  <p className="text-xs text-secondary font-medium">Memuat turun rekod pesanan rujukan...</p>
+                </div>
+              ) : targetAffiliateOrders.length === 0 ? (
+                <div className="py-16 text-center text-charcoal-muted border-2 border-dashed border-borderLight rounded-2xl bg-cream/20">
+                  <Package className="w-10 h-10 text-neutral-300 mx-auto mb-2" />
+                  <p className="text-sm font-bold text-forest-dark">Tiada rekod pesanan rujukan dijumpai.</p>
+                  <p className="text-xs text-secondary mt-1">
+                    Ejen ini belum mempunyai sebarang pesanan yang direkodkan melalui pautan atau kodnya.
+                  </p>
+                </div>
+              ) : (
+                <div className="overflow-x-auto rounded-xl border border-borderLight bg-white">
+                  <table className="w-full text-left text-xs border-collapse">
+                    <thead className="bg-cream/60 border-b border-borderLight text-secondary uppercase font-semibold text-[10px] tracking-wider">
+                      <tr>
+                        <th className="py-3 px-3.5">No. Pesanan</th>
+                        <th className="py-3 px-3.5">Tarikh & Masa</th>
+                        <th className="py-3 px-3.5">Pelanggan & Item</th>
+                        <th className="py-3 px-3.5 text-right">Nilai Jualan</th>
+                        <th className="py-3 px-3.5 text-right">Komisen Ejen</th>
+                        <th className="py-3 px-3.5 text-center">Status</th>
+                        <th className="py-3 px-3.5 text-center">Tindakan</th>
+                      </tr>
+                    </thead>
+                    <tbody className="divide-y divide-borderLight/60">
+                      {targetAffiliateOrders.map((ord) => (
+                        <tr key={ord.id} className="hover:bg-cream/20 transition-colors">
+                          <td className="py-3.5 px-3.5 font-mono font-bold text-[#1E4E8C]">
+                            {ord.orderNumber}
+                          </td>
+                          <td className="py-3.5 px-3.5 whitespace-nowrap">
+                            <span className="font-semibold text-charcoal block">
+                              {formatKLDate(ord.createdAt)}
+                            </span>
+                            <span className="text-[10.5px] font-mono text-secondary block mt-0.5">
+                              {formatKLTime(ord.createdAt)}
+                            </span>
+                          </td>
+                          <td className="py-3.5 px-3.5 max-w-xs">
+                            <span className="font-bold text-charcoal block text-[11px] truncate">
+                              {ord.customerName || 'Pelanggan'}
+                            </span>
+                            <span
+                              className="text-[10.5px] text-secondary truncate block"
+                              title={ord.itemsSummary}
+                            >
+                              {ord.itemsSummary || `${ord.itemCount} item`}
+                            </span>
+                          </td>
+                          <td className="py-3.5 px-3.5 text-right font-mono font-semibold text-charcoal">
+                            {formatMYR(ord.totalSen)}
+                          </td>
+                          <td className="py-3.5 px-3.5 text-right font-mono font-bold text-sale">
+                            {formatMYR(ord.affiliateCommissionSen)}
+                          </td>
+                          <td className="py-3.5 px-3.5 text-center">
+                            <span
+                              className={`inline-block px-2 py-0.5 rounded-full text-[10px] font-bold capitalize ${
+                                ord.paymentStatus === 'paid'
+                                  ? 'bg-emerald-100 text-emerald-800'
+                                  : 'bg-amber-100 text-amber-800'
+                              }`}
+                            >
+                              {ord.paymentStatus}
+                            </span>
+                          </td>
+                          <td className="py-3.5 px-3.5 text-center whitespace-nowrap">
+                            <button
+                              onClick={() => handleDeleteAffiliateOrder(ord.id, ord.orderNumber)}
+                              disabled={isDeletingOrder === ord.id}
+                              className="inline-flex items-center gap-1 px-2.5 py-1 rounded-lg text-xs font-bold bg-rose-50 hover:bg-rose-100 text-rose-700 border border-rose-200 transition-colors cursor-pointer disabled:opacity-50"
+                              title={`Padam pesanan ${ord.orderNumber} ini`}
+                            >
+                              <Trash2 className="w-3.5 h-3.5" />
+                              <span>{isDeletingOrder === ord.id ? 'Memadam...' : 'Padam'}</span>
+                            </button>
+                          </td>
+                        </tr>
+                      ))}
+                    </tbody>
+                  </table>
+                </div>
+              )}
+            </div>
+
+            {/* Footer */}
+            <div className="p-3.5 sm:px-6 sm:py-3.5 bg-cream/30 border-t border-borderLight flex items-center justify-between flex-shrink-0 text-xs">
+              <span className="text-[11px] text-secondary">
+                Memadam rekod akan mengira semula statistik jualan & komisen ejen secara automatik.
+              </span>
+              <button
+                onClick={() => setIsOrdersModalOpen(false)}
+                className="px-4 py-2 bg-warmwhite border border-borderLight hover:bg-neutral-100 rounded-xl font-bold text-charcoal transition-colors cursor-pointer"
+              >
+                Tutup
+              </button>
+            </div>
           </div>
         </div>,
         document.body

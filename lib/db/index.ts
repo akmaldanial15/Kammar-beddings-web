@@ -826,6 +826,7 @@ export async function deleteOrder(
   }
 
   const order = db.orders[index]
+  const affiliateCode = order.affiliateCode
 
   // If order was active/unfulfilled, return reserved stock back to inventory
   if (order.fulfillmentStatus !== 'cancelled' && order.items && order.items.length > 0) {
@@ -837,6 +838,39 @@ export async function deleteOrder(
   }
 
   db.orders.splice(index, 1)
+
+  // Recalculate affiliate stats if order had an affiliate code
+  if (affiliateCode && db.affiliates) {
+    const cleanCode = affiliateCode.trim().toUpperCase()
+    const aff = db.affiliates.find((a) => a.code.toUpperCase() === cleanCode)
+    if (aff) {
+      const remainingOrders = db.orders.filter(
+        (o) =>
+          o.affiliateCode &&
+          o.affiliateCode.trim().toUpperCase() === cleanCode &&
+          (o.paymentStatus === 'paid' || (o.paymentStatus as string) === 'cleared')
+      )
+      let totalRevenue = 0
+      let totalComm = 0
+      for (const ord of remainingOrders) {
+        const orderRevenue = ord.totalSen || ord.subtotalSen || 0
+        totalRevenue += orderRevenue
+        if (ord.affiliateCommissionSen !== undefined && ord.affiliateCommissionSen > 0) {
+          totalComm += ord.affiliateCommissionSen
+        } else {
+          const comm =
+            aff.commissionType === 'fixed_amount'
+              ? aff.commissionRate * 100
+              : Math.round(((ord.subtotalSen || orderRevenue) * aff.commissionRate) / 100)
+          totalComm += comm
+        }
+      }
+      aff.totalSalesCount = remainingOrders.length
+      aff.totalSalesRevenueSen = totalRevenue
+      aff.totalCommissionSen = totalComm
+    }
+  }
+
   saveDb(db)
 
   logAdminAction(actorEmail, 'order_deleted', 'order', orderId, {
@@ -844,6 +878,7 @@ export async function deleteOrder(
     customerName: order.customerName,
     customerEmail: order.customerEmail,
     totalSen: order.totalSen,
+    affiliateCode: order.affiliateCode,
   })
 
   return { success: true, message: `Pesanan ${order.orderNumber} berjaya dipadam.` }
@@ -861,6 +896,8 @@ export async function deleteOrders(
     return { success: false, count: 0, message: 'Tiada pesanan dijumpai untuk dipadam' }
   }
 
+  const affectedAffiliateCodes = new Set<string>()
+
   for (const order of ordersToDelete) {
     if (order.fulfillmentStatus !== 'cancelled' && order.items && order.items.length > 0) {
       for (const item of order.items) {
@@ -869,9 +906,46 @@ export async function deleteOrders(
         }
       }
     }
+    if (order.affiliateCode) {
+      affectedAffiliateCodes.add(order.affiliateCode.trim().toUpperCase())
+    }
   }
 
   db.orders = db.orders.filter((o) => !idsSet.has(o.id))
+
+  // Recalculate each affected affiliate
+  if (db.affiliates && affectedAffiliateCodes.size > 0) {
+    for (const code of Array.from(affectedAffiliateCodes)) {
+      const aff = db.affiliates.find((a) => a.code.toUpperCase() === code)
+      if (aff) {
+        const remainingOrders = db.orders.filter(
+          (o) =>
+            o.affiliateCode &&
+            o.affiliateCode.trim().toUpperCase() === code &&
+            (o.paymentStatus === 'paid' || (o.paymentStatus as string) === 'cleared')
+        )
+        let totalRevenue = 0
+        let totalComm = 0
+        for (const ord of remainingOrders) {
+          const orderRevenue = ord.totalSen || ord.subtotalSen || 0
+          totalRevenue += orderRevenue
+          if (ord.affiliateCommissionSen !== undefined && ord.affiliateCommissionSen > 0) {
+            totalComm += ord.affiliateCommissionSen
+          } else {
+            const comm =
+              aff.commissionType === 'fixed_amount'
+                ? aff.commissionRate * 100
+                : Math.round(((ord.subtotalSen || orderRevenue) * aff.commissionRate) / 100)
+            totalComm += comm
+          }
+        }
+        aff.totalSalesCount = remainingOrders.length
+        aff.totalSalesRevenueSen = totalRevenue
+        aff.totalCommissionSen = totalComm
+      }
+    }
+  }
+
   saveDb(db)
 
   logAdminAction(actorEmail, 'orders_bulk_deleted', 'order', undefined, {
@@ -884,6 +958,22 @@ export async function deleteOrders(
     count: ordersToDelete.length,
     message: `${ordersToDelete.length} pesanan berjaya dipadam.`,
   }
+}
+
+export async function deleteAffiliateOrders(
+  affiliateCode: string,
+  actorEmail: string = 'admin'
+): Promise<{ success: boolean; count: number; message: string }> {
+  const db = ensureDb()
+  const cleanCode = affiliateCode.trim().toUpperCase()
+  const ordersToDelete = db.orders.filter(
+    (o) => o.affiliateCode && o.affiliateCode.trim().toUpperCase() === cleanCode
+  )
+  if (ordersToDelete.length === 0) {
+    return { success: true, count: 0, message: 'Tiada pesanan untuk dipadam' }
+  }
+  const orderIds = ordersToDelete.map((o) => o.id)
+  return deleteOrders(orderIds, actorEmail)
 }
 
 // ==========================================

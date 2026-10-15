@@ -3,7 +3,7 @@
 import React, { useState } from 'react'
 import { useRouter } from 'next/navigation'
 import { Order } from '@/types'
-import { formatMYR, formatKLDate } from '@/lib/utils/format'
+import { formatMYR, formatKLDate, formatKLDateTime } from '@/lib/utils/format'
 import {
   ArrowLeft,
   Truck,
@@ -183,7 +183,7 @@ export function OrderDetailAdminClient({ initialOrder }: OrderDetailAdminClientP
               </span>
             </div>
             <p className="text-xs text-secondary mt-1">
-              Placed on {formatKLDate(order.createdAt)} (Asia/Kuala_Lumpur)
+              Placed on {formatKLDateTime(order.createdAt)} (Asia/Kuala_Lumpur)
             </p>
           </div>
         </div>

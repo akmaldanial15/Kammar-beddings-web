@@ -2,7 +2,7 @@
 
 import React, { useState } from 'react'
 import { Affiliate } from '@/types'
-import { formatMYR, formatKLDate } from '@/lib/utils/format'
+import { formatMYR, formatKLDate, formatKLTime } from '@/lib/utils/format'
 import {
   Crown,
   DollarSign,
@@ -23,6 +23,11 @@ import {
   Calendar,
   AlertCircle,
   Package,
+  Trash2,
+  Lock,
+  Unlock,
+  KeyRound,
+  X,
 } from 'lucide-react'
 import Link from 'next/link'
 import { useRouter } from 'next/navigation'
@@ -43,17 +48,32 @@ interface SafeOrder {
 interface Props {
   affiliate: Affiliate
   initialOrders: SafeOrder[]
+  initialIsAdmin?: boolean
 }
 
-export function AffiliatePortalClient({ affiliate, initialOrders }: Props) {
+export function AffiliatePortalClient({ affiliate, initialOrders, initialIsAdmin = false }: Props) {
   const router = useRouter()
+  const [orders, setOrders] = useState<SafeOrder[]>(initialOrders)
+  const [currentAffiliate, setCurrentAffiliate] = useState<Affiliate>(affiliate)
+  const [isAdmin, setIsAdmin] = useState<boolean>(initialIsAdmin)
+  const [isDeletingId, setIsDeletingId] = useState<string | null>(null)
+  const [isClearingAll, setIsClearingAll] = useState(false)
+  const [actionFeedback, setActionFeedback] = useState<{ type: 'success' | 'error'; message: string } | null>(null)
+
+  // Admin Unlock Modal State
+  const [showAdminModal, setShowAdminModal] = useState(false)
+  const [adminEmail, setAdminEmail] = useState('danial@kamaar.my')
+  const [adminSecretKey, setAdminSecretKey] = useState('')
+  const [isVerifyingAdmin, setIsVerifyingAdmin] = useState(false)
+  const [adminModalError, setAdminModalError] = useState('')
+
   const [copiedLink, setCopiedLink] = useState(false)
   const [copiedCode, setCopiedCode] = useState(false)
   const [showQr, setShowQr] = useState(false)
   const [isLoggingOut, setIsLoggingOut] = useState(false)
 
   const origin = typeof window !== 'undefined' ? window.location.origin : 'https://kamaar.my'
-  const referralUrl = `${origin}/?ref=${encodeURIComponent(affiliate.code)}`
+  const referralUrl = `${origin}/?ref=${encodeURIComponent(currentAffiliate.code)}`
 
   const handleCopyLink = () => {
     navigator.clipboard.writeText(referralUrl)
@@ -62,9 +82,121 @@ export function AffiliatePortalClient({ affiliate, initialOrders }: Props) {
   }
 
   const handleCopyCode = () => {
-    navigator.clipboard.writeText(affiliate.code)
+    navigator.clipboard.writeText(currentAffiliate.code)
     setCopiedCode(true)
     setTimeout(() => setCopiedCode(false), 2000)
+  }
+
+  const handleDeleteOrder = async (orderId: string, orderNumber: string) => {
+    if (
+      !window.confirm(
+        `Adakah anda pasti ingin memadam pesanan "${orderNumber}"?\n\nNilai jualan dan komisen ejen akan dikira semula secara automatik.`
+      )
+    ) {
+      return
+    }
+
+    setIsDeletingId(orderId)
+    setActionFeedback(null)
+
+    try {
+      const res = await fetch(`/api/admin/affiliates/${affiliate.id}/orders`, {
+        method: 'DELETE',
+        headers: { 'Content-Type': 'application/json' },
+        body: JSON.stringify({ orderId }),
+      })
+
+      const data = await res.json()
+      if (res.ok && data.success) {
+        setOrders(data.orders || [])
+        if (data.affiliate) {
+          setCurrentAffiliate(data.affiliate)
+        }
+        setActionFeedback({ type: 'success', message: `Pesanan ${orderNumber} berjaya dipadam.` })
+        setTimeout(() => setActionFeedback(null), 4000)
+      } else {
+        setActionFeedback({ type: 'error', message: data.error || 'Gagal memadam pesanan.' })
+      }
+    } catch (err: any) {
+      setActionFeedback({ type: 'error', message: err.message || 'Ralat sambungan pelayan.' })
+    } finally {
+      setIsDeletingId(null)
+    }
+  }
+
+  const handleClearAllOrders = async () => {
+    if (
+      !window.confirm(
+        `PERHATIAN PENTADBIR:\n\nAdakah anda pasti ingin memadam KESEMUA ${orders.length} pesanan rujukan untuk ejen ini?\n\nStatistik jualan dan komisen akan diset semula ke 0. Tindakan ini tidak boleh diundur.`
+      )
+    ) {
+      return
+    }
+
+    setIsClearingAll(true)
+    setActionFeedback(null)
+
+    try {
+      const res = await fetch(`/api/admin/affiliates/${affiliate.id}/orders`, {
+        method: 'DELETE',
+        headers: { 'Content-Type': 'application/json' },
+        body: JSON.stringify({ clearAll: true }),
+      })
+
+      const data = await res.json()
+      if (res.ok && data.success) {
+        setOrders([])
+        if (data.affiliate) {
+          setCurrentAffiliate(data.affiliate)
+        }
+        setActionFeedback({
+          type: 'success',
+          message: data.message || 'Semua rekod pesanan rujukan berjaya dipadam.',
+        })
+        setTimeout(() => setActionFeedback(null), 4000)
+      } else {
+        setActionFeedback({ type: 'error', message: data.error || 'Gagal memadam semua pesanan.' })
+      }
+    } catch (err: any) {
+      setActionFeedback({ type: 'error', message: err.message || 'Ralat sambungan pelayan.' })
+    } finally {
+      setIsClearingAll(false)
+    }
+  }
+
+  const handleVerifyAdmin = async (e: React.FormEvent) => {
+    e.preventDefault()
+    setIsVerifyingAdmin(true)
+    setAdminModalError('')
+
+    try {
+      const res = await fetch('/api/admin/login', {
+        method: 'POST',
+        headers: { 'Content-Type': 'application/json' },
+        body: JSON.stringify({
+          email: adminEmail.trim(),
+          secretKey: adminSecretKey.trim(),
+        }),
+      })
+
+      const data = await res.json()
+      if (res.ok && data.success) {
+        setIsAdmin(true)
+        setShowAdminModal(false)
+        setAdminSecretKey('')
+        setActionFeedback({
+          type: 'success',
+          message: 'Akses Pentadbir disahkan! Pilihan padam rekod kini diaktifkan.',
+        })
+        setTimeout(() => setActionFeedback(null), 4000)
+      } else {
+        setAdminModalError(data.error || 'Pengesahan gagal. Sila semak kunci keselamatan atau emel.')
+      }
+    } catch (err: any) {
+      setAdminModalError(err.message || 'Ralat sambungan pelayan.')
+    } finally {
+      setIsVerifyingAdmin(false)
+    }
   }
 
   const handleLogout = async () => {
@@ -184,7 +316,7 @@ export function AffiliatePortalClient({ affiliate, initialOrders }: Props) {
               </div>
             </div>
             <div className="text-xl sm:text-2xl font-bold text-emerald-700 font-mono">
-              {formatMYR(affiliate.totalCommissionSen || 0)}
+              {formatMYR(currentAffiliate.totalCommissionSen || 0)}
             </div>
             <p className="text-[11px] text-charcoal-muted mt-1">
               Pendapatan bersih hasil jualan anda
@@ -202,7 +334,7 @@ export function AffiliatePortalClient({ affiliate, initialOrders }: Props) {
               </div>
             </div>
             <div className="text-xl sm:text-2xl font-bold text-[#1E4E8C] font-mono">
-              {formatMYR(affiliate.totalSalesRevenueSen || 0)}
+              {formatMYR(currentAffiliate.totalSalesRevenueSen || 0)}
             </div>
             <p className="text-[11px] text-charcoal-muted mt-1">
               Nilai kasar pembelian oleh pelanggan anda
@@ -220,7 +352,7 @@ export function AffiliatePortalClient({ affiliate, initialOrders }: Props) {
               </div>
             </div>
             <div className="text-xl sm:text-2xl font-bold text-charcoal font-mono">
-              {affiliate.totalSalesCount || 0}
+              {currentAffiliate.totalSalesCount || 0}
             </div>
             <p className="text-[11px] text-charcoal-muted mt-1">
               Tempahan disahkan melalui kod anda
@@ -238,12 +370,12 @@ export function AffiliatePortalClient({ affiliate, initialOrders }: Props) {
               </div>
             </div>
             <div className="text-xl sm:text-2xl font-bold text-indigo-700 font-mono">
-              {affiliate.commissionType === 'percentage'
-                ? `${affiliate.commissionRate}%`
-                : formatMYR(affiliate.commissionRate * 100)}
+              {currentAffiliate.commissionType === 'percentage'
+                ? `${currentAffiliate.commissionRate}%`
+                : formatMYR(currentAffiliate.commissionRate * 100)}
             </div>
             <p className="text-[11px] text-charcoal-muted mt-1">
-              {affiliate.commissionType === 'percentage' ? 'Per peratusan nilai tilam' : 'Kadar tetap per pesanan'}
+              {currentAffiliate.commissionType === 'percentage' ? 'Per peratusan nilai tilam' : 'Kadar tetap per pesanan'}
             </p>
           </div>
         </div>
@@ -412,21 +544,80 @@ export function AffiliatePortalClient({ affiliate, initialOrders }: Props) {
 
         {/* 4. RECENT ORDERS TIED TO THIS AGENT */}
         <div className="bg-white rounded-3xl p-6 sm:p-8 border border-borderLight shadow-sm space-y-5">
-          <div className="flex flex-wrap items-center justify-between gap-2">
+          {actionFeedback && (
+            <div
+              className={`p-3.5 rounded-2xl border text-xs sm:text-sm font-semibold flex items-center justify-between ${
+                actionFeedback.type === 'success'
+                  ? 'bg-emerald-50 text-emerald-900 border-emerald-200'
+                  : 'bg-rose-50 text-rose-900 border-rose-200'
+              }`}
+            >
+              <div className="flex items-center gap-2">
+                {actionFeedback.type === 'success' ? (
+                  <Check className="w-4 h-4 text-emerald-600 shrink-0" />
+                ) : (
+                  <AlertCircle className="w-4 h-4 text-rose-600 shrink-0" />
+                )}
+                <span>{actionFeedback.message}</span>
+              </div>
+              <button
+                onClick={() => setActionFeedback(null)}
+                className="text-neutral-500 hover:text-neutral-800 p-1 cursor-pointer"
+              >
+                <X className="w-4 h-4" />
+              </button>
+            </div>
+          )}
+
+          <div className="flex flex-wrap items-center justify-between gap-3">
             <div>
               <span className="text-xs uppercase tracking-wider text-[#B49A58] font-bold">
                 Rekod Transaksi
               </span>
-              <h3 className="font-serif text-xl sm:text-2xl font-bold text-charcoal">
-                Sejarah Pesanan & Komisen Dirujuk
-              </h3>
+              <div className="flex items-center gap-2 flex-wrap">
+                <h3 className="font-serif text-xl sm:text-2xl font-bold text-charcoal">
+                  Sejarah Pesanan & Komisen Dirujuk
+                </h3>
+                {isAdmin && (
+                  <span className="inline-flex items-center gap-1 px-2.5 py-0.5 rounded-full text-[10.5px] font-bold bg-emerald-100 text-emerald-800 border border-emerald-300">
+                    <ShieldCheck className="w-3.5 h-3.5 text-emerald-600" />
+                    <span>Mod Pentadbir Aktif</span>
+                  </span>
+                )}
+              </div>
             </div>
-            <span className="text-xs text-charcoal-muted font-medium">
-              Jumlah: {initialOrders.length} Pesanan
-            </span>
+
+            <div className="flex items-center gap-2.5 flex-wrap">
+              <span className="text-xs text-charcoal-muted font-medium bg-neutral-100 px-3 py-1.5 rounded-xl border border-neutral-200">
+                Jumlah: <strong>{orders.length}</strong> Pesanan
+              </span>
+
+              {isAdmin ? (
+                orders.length > 0 && (
+                  <button
+                    onClick={handleClearAllOrders}
+                    disabled={isClearingAll}
+                    className="px-3.5 py-1.5 rounded-xl text-xs font-bold bg-rose-600 hover:bg-rose-700 text-white transition-all flex items-center gap-1.5 shadow-sm cursor-pointer disabled:opacity-50 hover:scale-[1.02]"
+                    title="Padam semua pesanan rujukan dan kosongkan rekod komisen ejen ini"
+                  >
+                    <Trash2 className="w-3.5 h-3.5" />
+                    <span>{isClearingAll ? 'Memadam...' : 'Padam Semua Rekod'}</span>
+                  </button>
+                )
+              ) : (
+                <button
+                  onClick={() => setShowAdminModal(true)}
+                  className="px-3 py-1.5 rounded-xl text-xs font-semibold bg-neutral-50 hover:bg-[#1E4E8C]/10 text-[#1E4E8C] border border-[#1E4E8C]/30 transition-all flex items-center gap-1.5 cursor-pointer"
+                  title="Buka akses pengurusan admin untuk memadam rekod pesanan"
+                >
+                  <KeyRound className="w-3.5 h-3.5 text-[#B49A58]" />
+                  <span>Akses Admin (Padam Rekod)</span>
+                </button>
+              )}
+            </div>
           </div>
 
-          {initialOrders.length === 0 ? (
+          {orders.length === 0 ? (
             <div className="py-12 text-center text-charcoal-muted border-2 border-dashed border-borderLight rounded-2xl">
               <Package className="w-8 h-8 text-neutral-300 mx-auto mb-2" />
               <p className="text-sm font-medium">Belum ada pesanan yang direkodkan melalui pautan ini.</p>
@@ -440,21 +631,29 @@ export function AffiliatePortalClient({ affiliate, initialOrders }: Props) {
                 <thead>
                   <tr className="border-b border-borderLight bg-neutral-50/50 text-charcoal-muted font-semibold uppercase tracking-wider">
                     <th className="py-3 px-4">No. Pesanan</th>
-                    <th className="py-3 px-4">Tarikh</th>
+                    <th className="py-3 px-4">Tarikh & Masa</th>
                     <th className="py-3 px-4">Ringkasan Item</th>
                     <th className="py-3 px-4 text-right">Nilai Jualan</th>
                     <th className="py-3 px-4 text-right">Komisen Anda</th>
                     <th className="py-3 px-4 text-center">Status Bayaran</th>
+                    {isAdmin && (
+                      <th className="py-3 px-4 text-center">Tindakan Admin</th>
+                    )}
                   </tr>
                 </thead>
                 <tbody className="divide-y divide-borderLight">
-                  {initialOrders.map((ord) => (
+                  {orders.map((ord) => (
                     <tr key={ord.id} className="hover:bg-neutral-50/80 transition-colors">
                       <td className="py-3.5 px-4 font-mono font-bold text-[#1E4E8C]">
                         {ord.orderNumber}
                       </td>
-                      <td className="py-3.5 px-4 text-charcoal-muted whitespace-nowrap">
-                        {formatKLDate(ord.createdAt)}
+                      <td className="py-3.5 px-4 whitespace-nowrap">
+                        <span className="font-semibold text-charcoal block">
+                          {formatKLDate(ord.createdAt)}
+                        </span>
+                        <span className="text-[11px] font-mono text-neutral-500 block mt-0.5">
+                          {formatKLTime(ord.createdAt)}
+                        </span>
                       </td>
                       <td className="py-3.5 px-4 max-w-xs text-charcoal truncate" title={ord.itemsSummary}>
                         {ord.itemsSummary || `${ord.itemCount} item`}
@@ -476,6 +675,19 @@ export function AffiliatePortalClient({ affiliate, initialOrders }: Props) {
                           {ord.paymentStatus}
                         </span>
                       </td>
+                      {isAdmin && (
+                        <td className="py-3.5 px-4 text-center whitespace-nowrap">
+                          <button
+                            onClick={() => handleDeleteOrder(ord.id, ord.orderNumber)}
+                            disabled={isDeletingId === ord.id}
+                            className="inline-flex items-center gap-1 px-3 py-1.5 rounded-xl text-xs font-bold bg-rose-50 hover:bg-rose-100 text-rose-700 border border-rose-200 hover:border-rose-300 transition-all cursor-pointer disabled:opacity-50 hover:scale-[1.02]"
+                            title={`Padam pesanan ${ord.orderNumber} ini`}
+                          >
+                            <Trash2 className="w-3.5 h-3.5" />
+                            <span>{isDeletingId === ord.id ? 'Memadam...' : 'Padam'}</span>
+                          </button>
+                        </td>
+                      )}
                     </tr>
                   ))}
                 </tbody>
@@ -544,6 +756,84 @@ export function AffiliatePortalClient({ affiliate, initialOrders }: Props) {
           </p>
         </footer>
       </main>
+
+      {/* Quick Admin Verification Modal */}
+      {showAdminModal && (
+        <div className="fixed inset-0 z-50 bg-black/60 backdrop-blur-xs flex items-center justify-center p-4">
+          <div className="bg-white rounded-3xl max-w-md w-full p-6 sm:p-7 shadow-2xl border border-borderLight animate-in fade-in zoom-in-95 space-y-5">
+            <div className="flex items-center justify-between pb-3 border-b border-borderLight">
+              <div className="flex items-center space-x-2.5">
+                <div className="w-9 h-9 rounded-xl bg-amber-500/10 text-amber-700 flex items-center justify-center font-bold">
+                  <ShieldCheck className="w-5 h-5 text-amber-600" />
+                </div>
+                <div>
+                  <h3 className="font-serif text-lg font-bold text-charcoal">Akses Pentadbir (Admin)</h3>
+                  <p className="text-xs text-charcoal-muted">Sahkan identiti untuk memadam senarai pesanan rujukan</p>
+                </div>
+              </div>
+              <button
+                onClick={() => setShowAdminModal(false)}
+                className="p-1 rounded-lg text-neutral-400 hover:text-charcoal cursor-pointer"
+              >
+                <X className="w-5 h-5" />
+              </button>
+            </div>
+
+            {adminModalError && (
+              <div className="p-3 rounded-xl bg-rose-50 border border-rose-200 text-xs text-rose-800 font-semibold flex items-center gap-2">
+                <AlertCircle className="w-4 h-4 text-rose-600 shrink-0" />
+                <span>{adminModalError}</span>
+              </div>
+            )}
+
+            <form onSubmit={handleVerifyAdmin} className="space-y-4">
+              <div>
+                <label className="block text-xs font-bold text-charcoal mb-1">Emel Kakitangan / Pentadbir</label>
+                <input
+                  type="email"
+                  required
+                  value={adminEmail}
+                  onChange={(e) => setAdminEmail(e.target.value)}
+                  className="w-full px-3.5 py-2.5 bg-neutral-50 border border-borderLight rounded-xl text-xs text-charcoal focus:bg-white focus:outline-none focus:border-[#1E4E8C]"
+                  placeholder="admin@kamaar.my"
+                />
+              </div>
+
+              <div>
+                <label className="block text-xs font-bold text-charcoal mb-1">Kunci Keselamatan (Passkey)</label>
+                <input
+                  type="password"
+                  required
+                  value={adminSecretKey}
+                  onChange={(e) => setAdminSecretKey(e.target.value)}
+                  className="w-full px-3.5 py-2.5 bg-neutral-50 border border-borderLight rounded-xl text-xs text-charcoal focus:bg-white focus:outline-none focus:border-[#1E4E8C]"
+                  placeholder="Masukkan kata laluan pentadbir..."
+                />
+                <span className="text-[10.5px] text-neutral-400 block mt-1">
+                  Kunci laluan utama: <code>kamaar_admin_2026</code> / <code>admin</code>
+                </span>
+              </div>
+
+              <div className="flex items-center justify-end space-x-2 pt-2">
+                <button
+                  type="button"
+                  onClick={() => setShowAdminModal(false)}
+                  className="px-4 py-2 rounded-xl text-xs font-semibold text-neutral-600 hover:bg-neutral-100 transition-colors cursor-pointer"
+                >
+                  Batal
+                </button>
+                <button
+                  type="submit"
+                  disabled={isVerifyingAdmin}
+                  className="px-5 py-2 rounded-xl text-xs font-bold bg-[#1E4E8C] hover:bg-[#2A6DB5] text-white shadow-md transition-all cursor-pointer disabled:opacity-50"
+                >
+                  {isVerifyingAdmin ? 'Mengesahkan...' : 'Sahkan & Buka Pilihan Padam'}
+                </button>
+              </div>
+            </form>
+          </div>
+        </div>
+      )}
     </div>
   )
 }
