@@ -18,6 +18,7 @@ import { Order } from '@/types'
 import { formatMYR, formatDateTimeMY } from '@/lib/utils/format'
 import { PrintButton } from '@/components/order/PrintButton'
 import { ClearCartOnSuccess } from '@/components/order/ClearCartOnSuccess'
+import { OrderSyncProgressBar } from '@/components/order/OrderSyncProgressBar'
 
 interface Props {
   orderId: string
@@ -217,6 +218,13 @@ export function OrderConfirmedClientRecovery({ orderId, paymentId }: Props) {
           <div className="mt-6 inline-flex items-center space-x-2 px-4 py-2 bg-cream rounded-full border border-borderLight text-xs font-mono font-bold text-forest">
             <span>Order Number: {order.orderNumber}</span>
           </div>
+
+          {/* Realtime Vercel Cloud Sync Progress & Estimation */}
+          <OrderSyncProgressBar
+            orderId={order.id}
+            orderNumber={order.orderNumber}
+            initialIsPaid={isPaid}
+          />
         </div>
 
         {/* OFFICIAL RECEIPT CONTAINER */}

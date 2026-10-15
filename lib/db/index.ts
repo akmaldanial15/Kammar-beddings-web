@@ -77,15 +77,11 @@ const globalForDb = globalThis as unknown as {
 
 let dbCache: DatabaseSchema | null = null
 let lastReadTime = 0
-const CACHE_TTL_MS = process.env.NODE_ENV === 'production' ? Infinity : 1500
+const CACHE_TTL_MS = 2000
 
-function ensureDb(): DatabaseSchema {
-  if (globalForDb.__kamaar_db && process.env.NODE_ENV === 'production') {
-    return globalForDb.__kamaar_db
-  }
-
+function ensureDb(forceRefresh = false): DatabaseSchema {
   const now = Date.now()
-  if (dbCache && (now - lastReadTime < CACHE_TTL_MS)) {
+  if (!forceRefresh && dbCache && (now - lastReadTime < CACHE_TTL_MS)) {
     return dbCache
   }
 
@@ -624,19 +620,29 @@ export async function recordCouponUsage(code: string): Promise<void> {
 // ORDERS REPOSITORY
 // ==========================================
 
-export async function getOrders(): Promise<Order[]> {
-  const db = ensureDb()
+export async function getOrders(forceFresh = true): Promise<Order[]> {
+  const db = ensureDb(forceFresh)
   return [...db.orders].sort((a, b) => new Date(b.createdAt).getTime() - new Date(a.createdAt).getTime())
 }
 
 export async function getOrderById(id: string): Promise<Order | null> {
-  const db = ensureDb()
-  return db.orders.find((o) => o.id === id) || null
+  let db = ensureDb()
+  let order = db.orders.find((o) => o.id === id) || null
+  if (!order) {
+    db = ensureDb(true)
+    order = db.orders.find((o) => o.id === id) || null
+  }
+  return order
 }
 
 export async function getOrderByNumber(orderNumber: string): Promise<Order | null> {
-  const db = ensureDb()
-  return db.orders.find((o) => o.orderNumber === orderNumber) || null
+  let db = ensureDb()
+  let order = db.orders.find((o) => o.orderNumber === orderNumber) || null
+  if (!order) {
+    db = ensureDb(true)
+    order = db.orders.find((o) => o.orderNumber === orderNumber) || null
+  }
+  return order
 }
 
 export async function createOrder(orderData: Omit<Order, 'id' | 'orderNumber' | 'createdAt' | 'updatedAt'>): Promise<Order> {

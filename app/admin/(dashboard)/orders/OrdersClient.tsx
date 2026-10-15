@@ -20,6 +20,7 @@ import {
   Trash2,
   Loader2,
   CheckCircle,
+  RefreshCw,
 } from 'lucide-react'
 import Link from 'next/link'
 
@@ -37,6 +38,72 @@ export function OrdersClient({ initialOrders }: OrdersClientProps) {
   const [isBulkDeleting, setIsBulkDeleting] = useState<boolean>(false)
   const [isDeleting, setIsDeleting] = useState<boolean>(false)
   const [toast, setToast] = useState<{ type: 'success' | 'error'; message: string } | null>(null)
+  const [isManualSyncing, setIsManualSyncing] = useState<boolean>(false)
+  const [syncCountdown, setSyncCountdown] = useState<number>(8)
+  const [lastSyncedAt, setLastSyncedAt] = useState<string>('Baru sahaja')
+
+  // Live Auto-Polling Loop (Every 8 seconds) for Vercel Cloud Sync
+  React.useEffect(() => {
+    let isMounted = true
+
+    // Countdown timer tick every second
+    const countTimer = setInterval(() => {
+      setSyncCountdown((prev) => (prev <= 1 ? 8 : prev - 1))
+    }, 1000)
+
+    // Poll endpoint every 8 seconds
+    const pollTimer = setInterval(async () => {
+      try {
+        const res = await fetch('/api/admin/orders', { cache: 'no-store' })
+        if (!res.ok) return
+        const data = await res.json()
+        if (data && Array.isArray(data.orders) && isMounted) {
+          setOrders((prev) => {
+            if (data.orders.length > prev.length) {
+              const newOrders = data.orders.filter(
+                (no: Order) => !prev.some((po) => po.id === no.id)
+              )
+              if (newOrders.length > 0) {
+                const newest = newOrders[0]
+                setToast({
+                  type: 'success',
+                  message: `🔔 Pesanan Baharu Vercel Dikesan: ${newest.orderNumber} (RM${(newest.totalSen / 100).toFixed(2)}) oleh ${newest.customerName}!`,
+                })
+              }
+            }
+            return data.orders
+          })
+          setLastSyncedAt(new Date().toLocaleTimeString('ms-MY', { hour: '2-digit', minute: '2-digit', second: '2-digit' }))
+        }
+      } catch (_) {}
+    }, 8000)
+
+    return () => {
+      isMounted = false
+      clearInterval(countTimer)
+      clearInterval(pollTimer)
+    }
+  }, [])
+
+  const handleManualSync = async () => {
+    setIsManualSyncing(true)
+    try {
+      const res = await fetch('/api/admin/orders', { cache: 'no-store' })
+      if (res.ok) {
+        const data = await res.json()
+        if (data && Array.isArray(data.orders)) {
+          setOrders(data.orders)
+          setLastSyncedAt(new Date().toLocaleTimeString('ms-MY', { hour: '2-digit', minute: '2-digit', second: '2-digit' }))
+          setSyncCountdown(8)
+          setToast({ type: 'success', message: 'Penyegerakan awan Vercel berjaya dikemaskini.' })
+        }
+      }
+    } catch (_) {
+      setToast({ type: 'error', message: 'Ralat sambungan semasa menyegerak.' })
+    } finally {
+      setIsManualSyncing(false)
+    }
+  }
 
   const handleDeleteSingle = async () => {
     if (!orderToDelete) return
@@ -360,6 +427,40 @@ export function OrdersClient({ initialOrders }: OrdersClientProps) {
           </div>
         </div>
       )}
+
+      {/* Realtime Vercel Cloud Sync Live Radar Bar */}
+      <div className="bg-gradient-to-r from-slate-900 via-navy-dark to-slate-950 text-white p-3 sm:px-4 sm:py-2.5 rounded-2xl border border-gold/30 flex flex-wrap items-center justify-between gap-2 text-xs shadow-sm">
+        <div className="flex items-center space-x-2.5 min-w-0">
+          <span className="relative flex h-2.5 w-2.5 flex-shrink-0">
+            <span className="animate-ping absolute inline-flex h-full w-full rounded-full bg-emerald-400 opacity-75"></span>
+            <span className="relative inline-flex rounded-full h-2.5 w-2.5 bg-emerald-500"></span>
+          </span>
+          <div className="truncate">
+            <span className="font-semibold text-warmwhite">Penyegerakan Awan Vercel (Live Sync): </span>
+            <span className="text-slate-300 hidden sm:inline">
+              Memantau pesanan baharu secara automatik (Semakan seterusnya: {syncCountdown}s)
+            </span>
+            <span className="text-slate-300 sm:hidden">
+              Semak auto: {syncCountdown}s
+            </span>
+            <span className="text-slate-400 text-[10px] ml-2 hidden md:inline">
+              • Terakhir: {lastSyncedAt}
+            </span>
+          </div>
+        </div>
+
+        <div className="flex items-center space-x-2 flex-shrink-0">
+          <button
+            type="button"
+            onClick={handleManualSync}
+            disabled={isManualSyncing}
+            className="inline-flex items-center space-x-1.5 px-3 py-1.5 bg-white/10 hover:bg-white/20 text-white rounded-xl transition-all text-[11px] font-semibold border border-white/15 cursor-pointer disabled:opacity-50"
+          >
+            <RefreshCw className={`w-3.5 h-3.5 ${isManualSyncing ? 'animate-spin' : ''}`} />
+            <span>{isManualSyncing ? 'Menyegerak...' : 'Segerak Sekarang'}</span>
+          </button>
+        </div>
+      </div>
 
       {/* Search and Filters */}
       <div className="bg-warmwhite p-3 sm:p-4 rounded-2xl border border-borderLight flex flex-col md:flex-row gap-2.5 sm:gap-3 items-stretch md:items-center justify-between shadow-xs animate-fade-in-up delay-100">
