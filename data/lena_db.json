@@ -2010,6 +2010,30 @@
   ],
   "auditLogs": [
     {
+      "id": "aud-1792062900471-pi3b",
+      "actorEmail": "admin@kamaarbeddings.com",
+      "action": "affiliate_updated",
+      "entityType": "affiliate",
+      "entityId": "aff-danial",
+      "details": {
+        "name": "Ahmad Danial",
+        "code": "AFF-DANIAL",
+        "email": "danial@kamaar.my",
+        "phone": "019-478 6991",
+        "bankName": "CIMB Bank",
+        "bankAccountNumber": "888123456789",
+        "commissionType": "percentage",
+        "commissionRate": 10,
+        "adminNotes": "Ujian komisen dinaikkan kepada 15%",
+        "accessKey": "kamaar123",
+        "isActive": true,
+        "totalSalesCount": 0,
+        "totalSalesRevenueSen": 0,
+        "totalCommissionSen": 0
+      },
+      "createdAt": "2026-10-15T11:15:00.471Z"
+    },
+    {
       "id": "aud-1792061149470-my74",
       "actorEmail": "admin@kamaarbeddings.com",
       "action": "order_deleted",
@@ -3693,7 +3717,7 @@
       "bankName": "CIMB Bank",
       "bankAccountNumber": "888123456789",
       "commissionType": "percentage",
-      "commissionRate": 15,
+      "commissionRate": 10,
       "totalSalesCount": 0,
       "totalSalesRevenueSen": 0,
       "totalCommissionSen": 0,
