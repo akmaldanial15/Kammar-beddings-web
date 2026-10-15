@@ -23,7 +23,7 @@ export function CartDrawer() {
     notes,
     setNotes,
   } = useCart()
-  const { t } = useLanguage()
+  const { t, locale } = useLanguage()
   const router = useRouter()
 
   const [inputCoupon, setInputCoupon] = useState('')
@@ -32,6 +32,24 @@ export function CartDrawer() {
   const [isValidating, setIsValidating] = useState(false)
   const [activeRefCode, setActiveRefCode] = useState<string | null>(null)
   const [activeRefName, setActiveRefName] = useState<string | null>(null)
+  const [thresholdSen, setThresholdSen] = useState(20000)
+
+  React.useEffect(() => {
+    let isMounted = true
+    try {
+      fetch('/api/site-settings')
+        .then((r) => r.json())
+        .then((d) => {
+          if (isMounted && d?.settings?.freeShippingThresholdSen) {
+            setThresholdSen(d.settings.freeShippingThresholdSen)
+          }
+        })
+        .catch(() => {})
+    } catch (_) {}
+    return () => {
+      isMounted = false
+    }
+  }, [isDrawerOpen])
 
   React.useEffect(() => {
     try {
@@ -47,8 +65,8 @@ export function CartDrawer() {
     } catch (_) {}
   }, [isDrawerOpen])
 
-  // Free shipping calculation threshold (RM500 = 50000 sen)
-  const FREE_SHIPPING_THRESHOLD = 50000
+  // Free shipping calculation threshold (dynamically linked to Admin Settings - defaults to RM200 = 20000 sen)
+  const FREE_SHIPPING_THRESHOLD = thresholdSen || 20000
   const hasMattress = items.some((i) => i.sku.includes('RH') || i.sku.includes('CN') || i.sku.includes('OR') || i.sku.includes('EC') || i.sku.includes('SL') || i.sku.includes('CS') || i.sku.includes('NF') || i.sku.includes('LC') || i.sku.includes('CP') || i.sku.includes('MS') || i.sku.includes('DS') || i.sku.includes('CF'))
   const isFreeShipping = hasMattress || subtotalSen >= FREE_SHIPPING_THRESHOLD
   const amountToFreeShipping = Math.max(0, FREE_SHIPPING_THRESHOLD - subtotalSen)
@@ -134,8 +152,12 @@ export function CartDrawer() {
                 <Sparkles className="w-3.5 h-3.5 text-gold" />
                 <span>
                   {isFreeShipping
-                    ? 'Qualified for Free White-Glove Peninsular Delivery!'
-                    : `Add ${formatMYR(amountToFreeShipping)} more for Free Delivery`}
+                    ? (locale === 'bm'
+                        ? 'Tahniah! Pesanan Anda Layak Penghantaran Percuma!'
+                        : 'Qualified for Free White-Glove Peninsular Delivery!')
+                    : (locale === 'bm'
+                        ? `Tambah ${formatMYR(amountToFreeShipping)} lagi untuk Penghantaran Percuma`
+                        : `Add ${formatMYR(amountToFreeShipping)} more for Free Delivery`)}
                 </span>
               </span>
               <span className="text-gold font-bold">{progressPercent}%</span>
