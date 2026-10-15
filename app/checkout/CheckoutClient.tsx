@@ -2116,25 +2116,77 @@ export function CheckoutClient({ initialPaymentSettings, initialSiteSettings, av
               </div>
 
               {/* PRIMARY SUBMIT CTA */}
-              <div className="space-y-4 pt-2">
-                <button
-                  type="submit"
-                  disabled={isSubmitting}
-                  className="w-full py-4.5 px-8 bg-forest hover:bg-forest-dark active:scale-[0.99] text-warmwhite text-base font-bold rounded-2xl transition-all shadow-lg hover:shadow-xl flex items-center justify-center space-x-3 disabled:opacity-50 cursor-pointer border border-forest/20"
-                >
-                  <Lock className="w-5 h-5 text-gold shrink-0" />
-                  <span className="tracking-wide">
-                    {isSubmitting ? 'Memproses Pesanan Anda...' : `Bayar Sekarang • ${formatMYR(finalTotalSen)}`}
-                  </span>
-                </button>
+              <div className="space-y-3.5 pt-3">
+                {(() => {
+                  const selectedBankObj = MALAYSIAN_BANKS.find((b) => b.id === selectedBank)
+                  return (
+                    <button
+                      type="submit"
+                      disabled={isSubmitting}
+                      className="group relative w-full py-4 sm:py-5 px-5 sm:px-8 bg-gradient-to-r from-[#0C1E36] via-[#1A457A] to-[#0C1E36] hover:from-[#102747] hover:via-[#205295] hover:to-[#102747] text-white rounded-2xl transition-all duration-300 shadow-[0_12px_28px_-6px_rgba(26,69,122,0.45)] hover:shadow-[0_18px_38px_-4px_rgba(26,69,122,0.55)] hover:-translate-y-0.5 active:translate-y-0 active:scale-[0.99] border border-[#D4AF37]/45 hover:border-[#D4AF37]/80 disabled:opacity-50 disabled:pointer-events-none cursor-pointer overflow-hidden ring-1 ring-white/10 hover:ring-4 hover:ring-[#B49A58]/20"
+                    >
+                      {/* Subtle luxury light sweep on hover */}
+                      <div className="absolute inset-0 -translate-x-full group-hover:translate-x-full transition-transform duration-1000 bg-gradient-to-r from-transparent via-white/15 to-transparent pointer-events-none" />
 
-                <div className="flex flex-col sm:flex-row items-center justify-center gap-2 sm:gap-4 text-[11px] text-charcoal-muted text-center pt-1">
-                  <div className="flex items-center space-x-1.5 text-emerald-700 font-semibold">
+                      <div className="relative flex items-center justify-between gap-3 sm:gap-4">
+                        {/* Left: Lock Icon Badge & Dynamic Method Name */}
+                        <div className="flex items-center gap-3 sm:gap-3.5 min-w-0">
+                          <div className="w-10 h-10 sm:w-11 sm:h-11 rounded-xl bg-white/10 backdrop-blur-md border border-white/20 flex items-center justify-center shrink-0 shadow-inner group-hover:scale-105 group-hover:bg-white/15 group-hover:border-[#D4AF37]/50 transition-all">
+                            {isSubmitting ? (
+                              <RefreshCw className="w-5 h-5 text-amber-300 animate-spin" />
+                            ) : (
+                              <Lock className="w-5 h-5 text-amber-300 group-hover:text-amber-200 transition-colors drop-shadow-xs" />
+                            )}
+                          </div>
+
+                          <div className="text-left min-w-0">
+                            <span className="text-[10px] font-bold uppercase tracking-[0.16em] text-amber-200/90 block font-sans truncate">
+                              {isSubmitting
+                                ? 'MENGHUBUNGKAN GERBANG...'
+                                : selectedMethodId === 'pay-tng'
+                                ? "TOUCH 'N GO EWALLET • CHIP PAY"
+                                : selectedMethodId === 'pay-fpx'
+                                ? `FPX • ${selectedBankObj?.name || 'BANK TEMPATAN'}`
+                                : 'PEMBAYARAN SELAMAT TERJAMIN'}
+                            </span>
+                            <span className="text-base sm:text-xl font-bold text-white tracking-wide block leading-tight truncate">
+                              {isSubmitting ? 'Memproses Pesanan Anda...' : 'Sahkan & Bayar Sekarang'}
+                            </span>
+                          </div>
+                        </div>
+
+                        {/* Right: Price Badge & Animated Arrow */}
+                        <div className="flex items-center gap-2 sm:gap-3 shrink-0">
+                          <div className="px-3.5 sm:px-4 py-1.5 sm:py-2 rounded-xl bg-white/15 backdrop-blur-md border border-white/25 shadow-xs flex items-center">
+                            <span className="font-serif text-base sm:text-xl font-black text-white tracking-tight whitespace-nowrap">
+                              {formatMYR(finalTotalSen)}
+                            </span>
+                          </div>
+                          <div className="w-8 h-8 sm:w-9 sm:h-9 rounded-full bg-white/10 border border-white/15 flex items-center justify-center group-hover:bg-[#B49A58]/35 group-hover:border-[#D4AF37]/60 group-hover:translate-x-1 transition-all shrink-0">
+                            <ArrowRight className="w-4 h-4 sm:w-4.5 sm:h-4.5 text-amber-200" />
+                          </div>
+                        </div>
+                      </div>
+                    </button>
+                  )
+                })()}
+
+                {/* Trust & Guarantee Badges Card */}
+                <div className="bg-[#FAF7F2] rounded-2xl p-3 sm:p-3.5 border border-[#E8E2D8] flex flex-wrap items-center justify-center gap-3 sm:gap-5 text-xs text-charcoal-muted shadow-2xs">
+                  <div className="flex items-center space-x-1.5 text-emerald-700 font-semibold text-[11.5px]">
                     <ShieldCheck className="w-4 h-4 text-emerald-600 shrink-0" />
-                    <span>Perlindungan Bayaran Penuh PCI-DSS &amp; Bank Negara</span>
+                    <span>Perlindungan PCI-DSS &amp; Bank Negara</span>
                   </div>
-                  <span className="hidden sm:inline text-neutral-300">•</span>
-                  <span>100% Hak Pemulangan Duit Terjamin</span>
+                  <span className="hidden sm:inline text-[#D5CEC2]">•</span>
+                  <div className="flex items-center space-x-1.5 text-forest font-semibold text-[11.5px]">
+                    <CheckCircle2 className="w-4 h-4 text-gold shrink-0" />
+                    <span>100% Hak Pemulangan Duit Terjamin</span>
+                  </div>
+                  <span className="hidden sm:inline text-[#D5CEC2]">•</span>
+                  <div className="flex items-center space-x-1.5 text-charcoal-muted text-[11.5px]">
+                    <Lock className="w-3.5 h-3.5 text-neutral-400 shrink-0" />
+                    <span>Enkripsi 256-Bit SSL</span>
+                  </div>
                 </div>
               </div>
 
