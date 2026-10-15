@@ -2,7 +2,7 @@
 
 import React, { useEffect, useState, Suspense } from 'react'
 import { useSearchParams } from 'next/navigation'
-import { CheckCircle2, UserCheck, ChevronUp, ChevronDown, Sparkles, X } from 'lucide-react'
+import { CheckCircle2, UserCheck, ChevronUp, ChevronDown, Sparkles, X, Minimize2 } from 'lucide-react'
 
 interface AffiliateInfo {
   code: string
@@ -14,6 +14,7 @@ function ReferralHandler() {
   const searchParams = useSearchParams()
   const [activeAffiliate, setActiveAffiliate] = useState<AffiliateInfo | null>(null)
   const [isExpanded, setIsExpanded] = useState(false)
+  const [isMobileOpen, setIsMobileOpen] = useState(false)
   const [isDismissed, setIsDismissed] = useState(false)
 
   // Initialize and synchronize referral strictly per browser tab session
@@ -105,68 +106,146 @@ function ReferralHandler() {
 
   return (
     <div className="fixed bottom-4 left-4 z-40 print:hidden transition-all duration-300">
-      <div className="bg-[#13325B] text-white rounded-2xl shadow-2xl border border-white/15 backdrop-blur-md overflow-hidden max-w-sm sm:max-w-md">
-        {/* Pill / Header Bar */}
-        <div className="flex items-center justify-between px-3.5 py-2.5 gap-2.5">
-          <div
-            onClick={() => setIsExpanded(!isExpanded)}
-            className="flex items-center gap-2 cursor-pointer select-none group"
-            title="Klik untuk melihat maklumat rujukan ejen rasmi"
+      {/* =========================================================================
+          1. PHONE / MOBILE VIEW (< sm): Sleek Minimized Floating Icon
+         ========================================================================= */}
+      <div className="block sm:hidden">
+        {!isMobileOpen ? (
+          <button
+            type="button"
+            onClick={() => setIsMobileOpen(true)}
+            className="relative w-11 h-11 rounded-full bg-[#13325B] text-white border border-[#B49A58]/60 shadow-xl shadow-black/50 flex items-center justify-center transition-all active:scale-95 hover:scale-105 cursor-pointer backdrop-blur-md"
+            aria-label={`Rujukan Ejen: ${activeAffiliate.name}`}
+            title={`Rujukan Ejen: ${activeAffiliate.name} (${activeAffiliate.code}) - Klik untuk maklumat`}
           >
-            <span className="relative flex h-2.5 w-2.5 flex-shrink-0">
+            {/* Live Pulsing Dot */}
+            <span className="absolute -top-0.5 -right-0.5 flex h-3 w-3">
               <span className="animate-ping absolute inline-flex h-full w-full rounded-full bg-emerald-400 opacity-75"></span>
-              <span className="relative inline-flex rounded-full h-2.5 w-2.5 bg-emerald-500"></span>
+              <span className="relative inline-flex rounded-full h-3 w-3 bg-emerald-500 ring-2 ring-[#13325B]"></span>
             </span>
+            <UserCheck className="w-5 h-5 text-[#D4AF37]" />
+          </button>
+        ) : (
+          <div className="bg-[#13325B] text-white rounded-2xl shadow-2xl border border-white/15 backdrop-blur-md p-3 max-w-[280px] animate-in fade-in slide-in-from-bottom-2">
+            <div className="flex items-center justify-between pb-2 border-b border-white/10 gap-2">
+              <div className="flex items-center gap-1.5 min-w-0">
+                <span className="w-2 h-2 rounded-full bg-emerald-500 flex-shrink-0" />
+                <span className="text-[11px] font-semibold text-white/80">Rujukan:</span>
+                <span className="text-xs text-[#B49A58] font-bold truncate">
+                  {activeAffiliate.name}
+                </span>
+              </div>
+              <div className="flex items-center gap-1 flex-shrink-0">
+                <button
+                  type="button"
+                  onClick={() => setIsMobileOpen(false)}
+                  className="text-white/60 hover:text-white p-1 rounded-lg hover:bg-white/10"
+                  title="Kecilkan ke ikon semula"
+                >
+                  <Minimize2 className="w-3.5 h-3.5" />
+                </button>
+                <button
+                  type="button"
+                  onClick={handleDismiss}
+                  className="text-white/40 hover:text-white p-1 rounded-lg hover:bg-white/10"
+                  title="Batal rujukan sesi ini"
+                >
+                  <X className="w-3.5 h-3.5" />
+                </button>
+              </div>
+            </div>
+            <div className="pt-2 text-[10.5px] text-white/80 space-y-1.5">
+              <div className="flex items-center justify-between">
+                <span className="text-emerald-400 font-medium text-[10px] flex items-center gap-1">
+                  <CheckCircle2 className="w-3 h-3" />
+                  Sesi Aktif
+                </span>
+                <span className="font-mono text-[10px] bg-white/10 px-1.5 py-0.5 rounded text-white/90">
+                  {activeAffiliate.code}
+                </span>
+              </div>
+              <p className="text-[10px] text-white/60 leading-tight">
+                Pembelian anda dalam sesi ini dikreditkan terus kepada rakan niaga ini.
+              </p>
+              <button
+                type="button"
+                onClick={() => setIsMobileOpen(false)}
+                className="w-full mt-1 py-1.5 text-center text-[10px] font-medium text-white/70 hover:text-white bg-white/5 hover:bg-white/10 rounded-lg transition-colors border border-white/10"
+              >
+                Kecilkan ke Ikon
+              </button>
+            </div>
+          </div>
+        )}
+      </div>
 
-            <div className="flex items-center gap-1.5 text-xs font-semibold leading-tight">
-              <span className="text-white/80 hidden xs:inline">Rujukan Ejen:</span>
-              <span className="text-[#B49A58] font-bold group-hover:underline">
-                {activeAffiliate.name}
+      {/* =========================================================================
+          2. DESKTOP VIEW (>= sm): Full Floating Pill
+         ========================================================================= */}
+      <div className="hidden sm:block">
+        <div className="bg-[#13325B] text-white rounded-2xl shadow-2xl border border-white/15 backdrop-blur-md overflow-hidden max-w-sm sm:max-w-md">
+          {/* Pill / Header Bar */}
+          <div className="flex items-center justify-between px-3.5 py-2.5 gap-2.5">
+            <div
+              onClick={() => setIsExpanded(!isExpanded)}
+              className="flex items-center gap-2 cursor-pointer select-none group"
+              title="Klik untuk melihat maklumat rujukan ejen rasmi"
+            >
+              <span className="relative flex h-2.5 w-2.5 flex-shrink-0">
+                <span className="animate-ping absolute inline-flex h-full w-full rounded-full bg-emerald-400 opacity-75"></span>
+                <span className="relative inline-flex rounded-full h-2.5 w-2.5 bg-emerald-500"></span>
               </span>
-              <span className="text-[10px] bg-white/10 px-1.5 py-0.5 rounded font-mono font-bold tracking-wider text-white/90">
-                {activeAffiliate.code}
-              </span>
+
+              <div className="flex items-center gap-1.5 text-xs font-semibold leading-tight">
+                <span className="text-white/80">Rujukan Ejen:</span>
+                <span className="text-[#B49A58] font-bold group-hover:underline">
+                  {activeAffiliate.name}
+                </span>
+                <span className="text-[10px] bg-white/10 px-1.5 py-0.5 rounded font-mono font-bold tracking-wider text-white/90">
+                  {activeAffiliate.code}
+                </span>
+              </div>
+
+              <button
+                type="button"
+                className="text-white/60 hover:text-white transition-colors ml-0.5"
+                aria-label={isExpanded ? 'Tutup maklumat' : 'Buka maklumat'}
+              >
+                {isExpanded ? <ChevronDown className="w-3.5 h-3.5" /> : <ChevronUp className="w-3.5 h-3.5" />}
+              </button>
             </div>
 
             <button
               type="button"
-              className="text-white/60 hover:text-white transition-colors ml-0.5"
-              aria-label={isExpanded ? 'Tutup maklumat' : 'Buka maklumat'}
+              onClick={handleDismiss}
+              className="text-white/40 hover:text-white transition-colors p-1 -mr-1 rounded-full hover:bg-white/10"
+              title="Padam dan batalkan rujukan ejen ini"
             >
-              {isExpanded ? <ChevronDown className="w-3.5 h-3.5" /> : <ChevronUp className="w-3.5 h-3.5" />}
+              <X className="w-3 h-3" />
             </button>
           </div>
 
-          <button
-            type="button"
-            onClick={handleDismiss}
-            className="text-white/40 hover:text-white transition-colors p-1 -mr-1 rounded-full hover:bg-white/10"
-            title="Padam dan batalkan rujukan ejen ini"
-          >
-            <X className="w-3 h-3" />
-          </button>
+          {/* Expanded Info Drawer */}
+          {isExpanded && (
+            <div className="px-4 pb-3.5 pt-1 text-xs border-t border-white/10 space-y-2 bg-[#0E2442]/90">
+              <div className="flex items-start gap-2 text-white/90">
+                <Sparkles className="w-4 h-4 text-[#B49A58] flex-shrink-0 mt-0.5" />
+                <p className="text-[11px] leading-relaxed">
+                  Anda kini sedang membeli-belah melalui pautan rujukan khas rakan niaga{' '}
+                  <strong className="text-white font-bold">{activeAffiliate.name}</strong>. Semua pembelian anda dalam sesi ini dikreditkan secara automatik kepada ejen.
+                </p>
+              </div>
+
+              <div className="flex items-center justify-between pt-1 text-[10px] text-white/70">
+                <span className="flex items-center gap-1 text-emerald-400 font-medium">
+                  <CheckCircle2 className="w-3 h-3" />
+                  Penjejakan Sesi Aktif
+                </span>
+                <span className="font-mono text-white/50">Kod: {activeAffiliate.code}</span>
+              </div>
+            </div>
+          )}
         </div>
-
-        {/* Expanded Info Drawer */}
-        {isExpanded && (
-          <div className="px-4 pb-3.5 pt-1 text-xs border-t border-white/10 space-y-2 bg-[#0E2442]/90">
-            <div className="flex items-start gap-2 text-white/90">
-              <Sparkles className="w-4 h-4 text-[#B49A58] flex-shrink-0 mt-0.5" />
-              <p className="text-[11px] leading-relaxed">
-                Anda kini sedang membeli-belah melalui pautan rujukan khas rakan niaga{' '}
-                <strong className="text-white font-bold">{activeAffiliate.name}</strong>. Semua pembelian anda dalam sesi ini dikreditkan secara automatik kepada ejen.
-              </p>
-            </div>
-
-            <div className="flex items-center justify-between pt-1 text-[10px] text-white/70">
-              <span className="flex items-center gap-1 text-emerald-400 font-medium">
-                <CheckCircle2 className="w-3 h-3" />
-                Penjejakan Sesi Aktif
-              </span>
-              <span className="font-mono text-white/50">Kod: {activeAffiliate.code}</span>
-            </div>
-          </div>
-        )}
       </div>
     </div>
   )
