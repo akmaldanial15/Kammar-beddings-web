@@ -16,23 +16,9 @@ export async function GET(
 
   const response = NextResponse.redirect(redirectUrl)
 
-  if (affiliate && affiliate.isActive) {
-    const maxAge = 30 * 24 * 60 * 60 // 30 days
-    response.cookies.set('kamaar_ref', cleanCode, {
-      path: '/',
-      maxAge,
-      sameSite: 'lax',
-      secure: process.env.NODE_ENV === 'production',
-      httpOnly: false,
-    })
-    response.cookies.set('kamaar_ref_name', encodeURIComponent(affiliate.name), {
-      path: '/',
-      maxAge,
-      sameSite: 'lax',
-      secure: process.env.NODE_ENV === 'production',
-      httpOnly: false,
-    })
-  }
+  // Clear legacy persistent cookies so affiliate tracking remains strictly tab-session based via ?ref=
+  response.cookies.delete('kamaar_ref')
+  response.cookies.delete('kamaar_ref_name')
 
   return response
 }

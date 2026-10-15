@@ -16,32 +16,43 @@ function ReferralHandler() {
   const [isExpanded, setIsExpanded] = useState(false)
   const [isDismissed, setIsDismissed] = useState(false)
 
-  // Initialize and synchronize referral across URL, LocalStorage, SessionStorage & Cookies
+  // Initialize and synchronize referral strictly per browser tab session
   useEffect(() => {
     try {
+      // 1. Check if referral query exists in current URL (e.g. ?ref=AFF-DANIAL or ?aff=AFF-DANIAL)
       const urlRef = searchParams?.get('ref') || searchParams?.get('aff')
-      let codeToUse = urlRef ? urlRef.trim().toUpperCase() : null
+      const cleanUrlRef = urlRef?.trim().toUpperCase()
 
-      if (codeToUse && codeToUse.length >= 2 && codeToUse.length <= 30) {
-        localStorage.setItem('kamaar_ref', codeToUse)
-        sessionStorage.setItem('kamaar_ref', codeToUse)
-        const maxAge = 30 * 24 * 60 * 60 // 30 days
-        document.cookie = `kamaar_ref=${encodeURIComponent(codeToUse)}; path=/; max-age=${maxAge}; SameSite=Lax`
+      // Immediately purge any legacy 30-day persistent cookies or localStorage from previous visits
+      try {
+        localStorage.removeItem('kamaar_ref')
+        localStorage.removeItem('kamaar_ref_name')
+        document.cookie = 'kamaar_ref=; path=/; max-age=0; SameSite=Lax'
+        document.cookie = 'kamaar_ref_name=; path=/; max-age=0; SameSite=Lax'
+      } catch (_) {}
+
+      let codeToUse: string | null = null
+
+      if (cleanUrlRef && cleanUrlRef.length >= 2 && cleanUrlRef.length <= 30) {
+        // User arrived explicitly via an affiliate link in this tab
+        codeToUse = cleanUrlRef
+        sessionStorage.setItem('kamaar_session_ref', codeToUse)
+        setIsDismissed(false)
       } else {
-        const stored = localStorage.getItem('kamaar_ref') || sessionStorage.getItem('kamaar_ref')
-        if (stored) {
-          codeToUse = stored.trim().toUpperCase()
+        // Normal URL (no ?ref= in URL):
+        // Only retain affiliate if THIS SPECIFIC TAB already had an active session!
+        // In a new tab, sessionStorage is completely empty, so no affiliate is detected.
+        const tabSession = sessionStorage.getItem('kamaar_session_ref')
+        if (tabSession) {
+          codeToUse = tabSession.trim().toUpperCase()
         } else {
-          const match = document.cookie.match(/(?:^|;\s*)kamaar_ref=([^;]+)/)
-          if (match && match[1]) {
-            codeToUse = decodeURIComponent(match[1]).trim().toUpperCase()
-          }
+          setActiveAffiliate(null)
+          return
         }
       }
 
       if (codeToUse) {
-        // Cached name in localStorage
-        const cachedName = localStorage.getItem(`kamaar_ref_name_${codeToUse}`)
+        const cachedName = sessionStorage.getItem('kamaar_session_ref_name')
         if (cachedName) {
           setActiveAffiliate({ code: codeToUse, name: cachedName })
         } else {
@@ -59,16 +70,34 @@ function ReferralHandler() {
                 commissionRate: data.commissionRate,
               })
               try {
-                localStorage.setItem(`kamaar_ref_name_${data.code}`, data.name)
-                sessionStorage.setItem('kamaar_ref_name', data.name)
-                document.cookie = `kamaar_ref_name=${encodeURIComponent(data.name)}; path=/; max-age=2592000; SameSite=Lax`
+                sessionStorage.setItem('kamaar_session_ref', data.code)
+                sessionStorage.setItem('kamaar_session_ref_name', data.name)
               } catch (_) {}
+            } else {
+              // Invalid code: clear session
+              sessionStorage.removeItem('kamaar_session_ref')
+              sessionStorage.removeItem('kamaar_session_ref_name')
+              setActiveAffiliate(null)
             }
           })
           .catch(() => {})
       }
     } catch (_) {}
   }, [searchParams])
+
+  const handleDismiss = () => {
+    // Immediately clear all affiliate session tracking when dismissed with (X)
+    try {
+      sessionStorage.removeItem('kamaar_session_ref')
+      sessionStorage.removeItem('kamaar_session_ref_name')
+      localStorage.removeItem('kamaar_ref')
+      localStorage.removeItem('kamaar_ref_name')
+      document.cookie = 'kamaar_ref=; path=/; max-age=0; SameSite=Lax'
+      document.cookie = 'kamaar_ref_name=; path=/; max-age=0; SameSite=Lax'
+    } catch (_) {}
+    setIsDismissed(true)
+    setActiveAffiliate(null)
+  }
 
   if (!activeAffiliate || isDismissed) {
     return null
@@ -110,9 +139,9 @@ function ReferralHandler() {
 
           <button
             type="button"
-            onClick={() => setIsDismissed(true)}
+            onClick={handleDismiss}
             className="text-white/40 hover:text-white transition-colors p-1 -mr-1 rounded-full hover:bg-white/10"
-            title="Sorokkan notis ini"
+            title="Padam dan batalkan rujukan ejen ini"
           >
             <X className="w-3 h-3" />
           </button>

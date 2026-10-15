@@ -329,31 +329,33 @@ export function CheckoutClient({ initialPaymentSettings, initialSiteSettings, av
     setCardExpiry(raw)
   }
 
-  // Load affiliate referral attribution
+  // Load affiliate referral attribution strictly per browser tab session
   useEffect(() => {
     try {
+      // Actively clean up any lingering 30-day legacy cookie or localStorage
+      try {
+        localStorage.removeItem('kamaar_ref')
+        localStorage.removeItem('kamaar_ref_name')
+        document.cookie = 'kamaar_ref=; path=/; max-age=0; SameSite=Lax'
+        document.cookie = 'kamaar_ref_name=; path=/; max-age=0; SameSite=Lax'
+      } catch (_) {}
+
       let codeToUse = ''
       const urlRef = searchParams.get('ref') || searchParams.get('aff')
       if (urlRef) {
         codeToUse = urlRef.trim().toUpperCase()
-        localStorage.setItem('kamaar_ref', codeToUse)
-        sessionStorage.setItem('kamaar_ref', codeToUse)
-        document.cookie = `kamaar_ref=${encodeURIComponent(codeToUse)}; path=/; max-age=2592000; SameSite=Lax`
+        sessionStorage.setItem('kamaar_session_ref', codeToUse)
       } else {
-        const stored = localStorage.getItem('kamaar_ref') || sessionStorage.getItem('kamaar_ref')
-        if (stored) {
-          codeToUse = stored.trim().toUpperCase()
-        } else {
-          const match = document.cookie.match(/(?:^|;\s*)kamaar_ref=([^;]+)/)
-          if (match && match[1]) {
-            codeToUse = decodeURIComponent(match[1]).trim().toUpperCase()
-          }
+        // Only retain affiliate if THIS SPECIFIC TAB already had an active session!
+        const tabSession = sessionStorage.getItem('kamaar_session_ref')
+        if (tabSession) {
+          codeToUse = tabSession.trim().toUpperCase()
         }
       }
 
       if (codeToUse) {
         setAffiliateCode(codeToUse)
-        const cachedName = localStorage.getItem(`kamaar_ref_name_${codeToUse}`)
+        const cachedName = sessionStorage.getItem('kamaar_session_ref_name')
         if (cachedName) setAffiliateName(cachedName)
 
         fetch(`/api/affiliate/info?code=${encodeURIComponent(codeToUse)}`)
@@ -361,10 +363,19 @@ export function CheckoutClient({ initialPaymentSettings, initialSiteSettings, av
           .then((d) => {
             if (d.isValid && d.name) {
               setAffiliateName(d.name)
-              localStorage.setItem(`kamaar_ref_name_${codeToUse}`, d.name)
+              sessionStorage.setItem('kamaar_session_ref', d.code)
+              sessionStorage.setItem('kamaar_session_ref_name', d.name)
+            } else {
+              setAffiliateCode('')
+              setAffiliateName('')
+              sessionStorage.removeItem('kamaar_session_ref')
+              sessionStorage.removeItem('kamaar_session_ref_name')
             }
           })
           .catch(() => {})
+      } else {
+        setAffiliateCode('')
+        setAffiliateName('')
       }
     } catch {
       // Private browsing protection
@@ -383,9 +394,12 @@ export function CheckoutClient({ initialPaymentSettings, initialSiteSettings, av
       if (data.isValid) {
         setAffiliateCode(data.code)
         setAffiliateName(data.name)
-        localStorage.setItem('kamaar_ref', data.code)
-        sessionStorage.setItem('kamaar_ref', data.code)
-        document.cookie = `kamaar_ref=${encodeURIComponent(data.code)}; path=/; max-age=2592000; SameSite=Lax`
+        sessionStorage.setItem('kamaar_session_ref', data.code)
+        sessionStorage.setItem('kamaar_session_ref_name', data.name)
+        localStorage.removeItem('kamaar_ref')
+        localStorage.removeItem('kamaar_ref_name')
+        document.cookie = 'kamaar_ref=; path=/; max-age=0; SameSite=Lax'
+        document.cookie = 'kamaar_ref_name=; path=/; max-age=0; SameSite=Lax'
         setAffiliateSuccess(`Rujukan ejen ${data.name} (${data.code}) berjaya dihubungkan!`)
         setInputAffiliateCode('')
       } else {
@@ -2506,9 +2520,13 @@ export function CheckoutClient({ initialPaymentSettings, initialSiteSettings, av
                         onClick={() => {
                           setAffiliateCode('')
                           setAffiliateName('')
-                          localStorage.removeItem('kamaar_ref')
+                          sessionStorage.removeItem('kamaar_session_ref')
+                          sessionStorage.removeItem('kamaar_session_ref_name')
                           sessionStorage.removeItem('kamaar_ref')
-                          document.cookie = 'kamaar_ref=; path=/; max-age=0'
+                          localStorage.removeItem('kamaar_ref')
+                          localStorage.removeItem('kamaar_ref_name')
+                          document.cookie = 'kamaar_ref=; path=/; max-age=0; SameSite=Lax'
+                          document.cookie = 'kamaar_ref_name=; path=/; max-age=0; SameSite=Lax'
                         }}
                         className="text-[10px] text-charcoal-muted hover:text-red-600 underline cursor-pointer"
                         title="Tukar kod rujukan"

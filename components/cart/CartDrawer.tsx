@@ -35,11 +35,14 @@ export function CartDrawer() {
 
   React.useEffect(() => {
     try {
-      const code = localStorage.getItem('kamaar_ref') || sessionStorage.getItem('kamaar_ref')
+      const code = sessionStorage.getItem('kamaar_session_ref')
       if (code) {
         setActiveRefCode(code)
-        const name = localStorage.getItem(`kamaar_ref_name_${code}`) || sessionStorage.getItem('kamaar_ref_name')
+        const name = sessionStorage.getItem('kamaar_session_ref_name')
         if (name) setActiveRefName(name)
+      } else {
+        setActiveRefCode(null)
+        setActiveRefName(null)
       }
     } catch (_) {}
   }, [isDrawerOpen])
