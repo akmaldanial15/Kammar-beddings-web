@@ -351,8 +351,10 @@ export function OrderConfirmedClientRecovery({ orderId, paymentId }: Props) {
               {(order.hasLiftAccess !== undefined || order.deliveryNotes) && (
                 <p className="text-[10px] text-charcoal-muted print:text-gray-600 mt-1">
                   Logistik: {order.hasLiftAccess ? 'Lif Ada' : 'Tangga'}
-                  {order.floorLevel ? ` (${order.floorLevel})` : ''}
-                  {order.deliveryNotes ? ` &bull; "${order.deliveryNotes}"` : ''}
+                  {order.floorLevel
+                    ? ` (${order.floorLevel.toLowerCase().includes('tingkat') ? order.floorLevel : `Tingkat ${order.floorLevel}`})`
+                    : ''}
+                  {order.deliveryNotes ? ` • "${order.deliveryNotes}"` : ''}
                 </p>
               )}
             </div>
