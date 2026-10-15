@@ -1605,7 +1605,19 @@ export async function getAffiliateByCode(code: string): Promise<Affiliate | null
   const db = ensureDb()
   if (!code) return null
   const clean = code.trim().toUpperCase()
-  return db.affiliates?.find((a) => a.code.toUpperCase() === clean && a.isActive) || null
+  const cleanWithoutPrefix = clean.replace(/^AFF-/, '')
+  return (
+    db.affiliates?.find((a) => {
+      if (!a.isActive) return false
+      const aCode = a.code.toUpperCase()
+      const aWithoutPrefix = aCode.replace(/^AFF-/, '')
+      return (
+        aCode === clean ||
+        aCode === `AFF-${clean}` ||
+        aWithoutPrefix === cleanWithoutPrefix
+      )
+    }) || null
+  )
 }
 
 export async function getAffiliateByIdentifier(identifier: string): Promise<Affiliate | null> {
