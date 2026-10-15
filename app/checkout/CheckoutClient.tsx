@@ -256,6 +256,11 @@ export function CheckoutClient({ initialPaymentSettings, initialSiteSettings, av
   const [isSubmitting, setIsSubmitting] = useState(false)
   const [errorMessage, setErrorMessage] = useState('')
   const [affiliateCode, setAffiliateCode] = useState('')
+  const [affiliateName, setAffiliateName] = useState('')
+  const [inputAffiliateCode, setInputAffiliateCode] = useState('')
+  const [isManualAffiliateOpen, setIsManualAffiliateOpen] = useState(false)
+  const [affiliateSuccess, setAffiliateSuccess] = useState('')
+  const [affiliateError, setAffiliateError] = useState('')
   const [isAutofilled, setIsAutofilled] = useState(false)
 
   // Demo Autofill for quick payment gateway testing
@@ -298,28 +303,69 @@ export function CheckoutClient({ initialPaymentSettings, initialSiteSettings, av
   // Load affiliate referral attribution
   useEffect(() => {
     try {
+      let codeToUse = ''
       const urlRef = searchParams.get('ref') || searchParams.get('aff')
       if (urlRef) {
-        const clean = urlRef.trim().toUpperCase()
-        setAffiliateCode(clean)
-        localStorage.setItem('kamaar_ref', clean)
-        document.cookie = `kamaar_ref=${encodeURIComponent(clean)}; path=/; max-age=2592000; SameSite=Lax`
-        return
+        codeToUse = urlRef.trim().toUpperCase()
+        localStorage.setItem('kamaar_ref', codeToUse)
+        sessionStorage.setItem('kamaar_ref', codeToUse)
+        document.cookie = `kamaar_ref=${encodeURIComponent(codeToUse)}; path=/; max-age=2592000; SameSite=Lax`
+      } else {
+        const stored = localStorage.getItem('kamaar_ref') || sessionStorage.getItem('kamaar_ref')
+        if (stored) {
+          codeToUse = stored.trim().toUpperCase()
+        } else {
+          const match = document.cookie.match(/(?:^|;\s*)kamaar_ref=([^;]+)/)
+          if (match && match[1]) {
+            codeToUse = decodeURIComponent(match[1]).trim().toUpperCase()
+          }
+        }
       }
 
-      const stored = localStorage.getItem('kamaar_ref')
-      if (stored) {
-        setAffiliateCode(stored.trim().toUpperCase())
-      } else {
-        const match = document.cookie.match(/(?:^|;\s*)kamaar_ref=([^;]+)/)
-        if (match && match[1]) {
-          setAffiliateCode(decodeURIComponent(match[1]).trim().toUpperCase())
-        }
+      if (codeToUse) {
+        setAffiliateCode(codeToUse)
+        const cachedName = localStorage.getItem(`kamaar_ref_name_${codeToUse}`)
+        if (cachedName) setAffiliateName(cachedName)
+
+        fetch(`/api/affiliate/info?code=${encodeURIComponent(codeToUse)}`)
+          .then((r) => r.json())
+          .then((d) => {
+            if (d.isValid && d.name) {
+              setAffiliateName(d.name)
+              localStorage.setItem(`kamaar_ref_name_${codeToUse}`, d.name)
+            }
+          })
+          .catch(() => {})
       }
     } catch {
       // Private browsing protection
     }
   }, [searchParams])
+
+  const handleApplyManualAffiliate = async (e: React.FormEvent) => {
+    e.preventDefault()
+    if (!inputAffiliateCode.trim()) return
+    setAffiliateError('')
+    setAffiliateSuccess('')
+    try {
+      const codeClean = inputAffiliateCode.trim().toUpperCase()
+      const res = await fetch(`/api/affiliate/info?code=${encodeURIComponent(codeClean)}`)
+      const data = await res.json()
+      if (data.isValid) {
+        setAffiliateCode(data.code)
+        setAffiliateName(data.name)
+        localStorage.setItem('kamaar_ref', data.code)
+        sessionStorage.setItem('kamaar_ref', data.code)
+        document.cookie = `kamaar_ref=${encodeURIComponent(data.code)}; path=/; max-age=2592000; SameSite=Lax`
+        setAffiliateSuccess(`Rujukan ejen ${data.name} (${data.code}) berjaya dihubungkan!`)
+        setInputAffiliateCode('')
+      } else {
+        setAffiliateError('Kod ejen rujukan tidak sah atau tidak aktif.')
+      }
+    } catch {
+      setAffiliateError('Gagal mengesahkan kod ejen rujukan.')
+    }
+  }
 
   // Reassurance banner if customer navigated back or returned from uncompleted gateway session
   const [showRestoredNotice, setShowRestoredNotice] = useState(false)
@@ -2356,6 +2402,98 @@ export function CheckoutClient({ initialPaymentSettings, initialSiteSettings, av
                     >
                       Cuba KAMAAR100
                     </button>
+                  </div>
+                )}
+              </div>
+
+              {/* Affiliate Referral Attribution Section */}
+              <div className="pt-3 border-t border-[#E8E2D8] space-y-2">
+                {affiliateCode ? (
+                  <div className="p-3 rounded-xl bg-blue-50/70 border border-[#1E4E8C]/25 text-xs shadow-2xs space-y-1">
+                    <div className="flex items-center justify-between">
+                      <div className="flex items-center gap-1.5 text-[10px] font-bold uppercase tracking-wider text-[#1E4E8C]">
+                        <Sparkles className="w-3.5 h-3.5 text-[#B49A58]" />
+                        <span>Rujukan Ejen Rasmi KAMAAR</span>
+                      </div>
+                      <span className="inline-flex items-center gap-1 text-[10px] font-bold text-emerald-700 bg-emerald-100/90 px-2 py-0.5 rounded-full">
+                        <CheckCircle2 className="w-3 h-3" />
+                        Aktif
+                      </span>
+                    </div>
+
+                    <div className="flex items-baseline justify-between pt-0.5">
+                      <div className="font-semibold text-charcoal text-xs">
+                        {affiliateName || 'Ejen Rujukan'}{' '}
+                        <span className="font-mono text-[11px] font-bold text-[#1E4E8C]">
+                          ({affiliateCode})
+                        </span>
+                      </div>
+                      <button
+                        type="button"
+                        onClick={() => {
+                          setAffiliateCode('')
+                          setAffiliateName('')
+                          localStorage.removeItem('kamaar_ref')
+                          sessionStorage.removeItem('kamaar_ref')
+                          document.cookie = 'kamaar_ref=; path=/; max-age=0'
+                        }}
+                        className="text-[10px] text-charcoal-muted hover:text-red-600 underline cursor-pointer"
+                        title="Tukar kod rujukan"
+                      >
+                        Tukar
+                      </button>
+                    </div>
+
+                    <p className="text-[10px] text-charcoal-muted leading-tight">
+                      Pembelian anda dalam sesi ini dikreditkan secara automatik kepada rakan niaga ini.
+                    </p>
+                  </div>
+                ) : (
+                  <div>
+                    {!isManualAffiliateOpen ? (
+                      <button
+                        type="button"
+                        onClick={() => setIsManualAffiliateOpen(true)}
+                        className="text-[11px] text-[#1E4E8C] hover:text-forest font-semibold hover:underline flex items-center gap-1 cursor-pointer"
+                      >
+                        <Tag className="w-3 h-3" />
+                        <span>Mempunyai kod rujukan ejen affiliate? Masukkan di sini</span>
+                      </button>
+                    ) : (
+                      <form onSubmit={handleApplyManualAffiliate} className="space-y-1.5 p-2.5 rounded-xl bg-cream/60 border border-borderLight animate-in fade-in duration-150">
+                        <div className="flex items-center justify-between text-[11px] font-bold text-forest">
+                          <span>Masukkan Kod Rujukan Ejen:</span>
+                          <button
+                            type="button"
+                            onClick={() => setIsManualAffiliateOpen(false)}
+                            className="text-[10px] text-charcoal-muted hover:text-charcoal cursor-pointer"
+                          >
+                            ✕ Tutup
+                          </button>
+                        </div>
+                        <div className="flex items-center space-x-1.5">
+                          <input
+                            type="text"
+                            value={inputAffiliateCode}
+                            onChange={(e) => setInputAffiliateCode(e.target.value.toUpperCase())}
+                            placeholder="Contoh: AFF-DANIAL"
+                            className="w-full px-3 py-1.5 rounded-lg border border-[#D5CEC2] text-xs font-mono font-bold uppercase bg-white outline-none focus:border-forest"
+                          />
+                          <button
+                            type="submit"
+                            className="px-3 py-1.5 rounded-lg bg-[#1E4E8C] hover:bg-forest text-warmwhite text-xs font-bold shrink-0 transition-colors shadow-2xs cursor-pointer"
+                          >
+                            Guna
+                          </button>
+                        </div>
+                        {affiliateError && (
+                          <p className="text-[11px] text-red-600 font-medium">{affiliateError}</p>
+                        )}
+                        {affiliateSuccess && (
+                          <p className="text-[11px] text-emerald-700 font-medium">{affiliateSuccess}</p>
+                        )}
+                      </form>
+                    )}
                   </div>
                 )}
               </div>

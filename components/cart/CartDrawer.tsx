@@ -30,6 +30,19 @@ export function CartDrawer() {
   const [couponError, setCouponError] = useState('')
   const [couponSuccess, setCouponSuccess] = useState('')
   const [isValidating, setIsValidating] = useState(false)
+  const [activeRefCode, setActiveRefCode] = useState<string | null>(null)
+  const [activeRefName, setActiveRefName] = useState<string | null>(null)
+
+  React.useEffect(() => {
+    try {
+      const code = localStorage.getItem('kamaar_ref') || sessionStorage.getItem('kamaar_ref')
+      if (code) {
+        setActiveRefCode(code)
+        const name = localStorage.getItem(`kamaar_ref_name_${code}`) || sessionStorage.getItem('kamaar_ref_name')
+        if (name) setActiveRefName(name)
+      }
+    } catch (_) {}
+  }, [isDrawerOpen])
 
   // Free shipping calculation threshold (RM500 = 50000 sen)
   const FREE_SHIPPING_THRESHOLD = 50000
@@ -317,6 +330,24 @@ export function CartDrawer() {
                   <span>{formatMYR(subtotalSen)}</span>
                 </div>
               </div>
+
+              {/* Active Affiliate Indicator in Cart */}
+              {activeRefCode && (
+                <div className="p-2.5 rounded-lg bg-blue-50/80 border border-[#1E4E8C]/20 text-[11px] flex items-center justify-between shadow-2xs">
+                  <div className="flex items-center gap-1.5 min-w-0">
+                    <Sparkles className="w-3.5 h-3.5 text-[#B49A58] shrink-0" />
+                    <span className="truncate text-charcoal font-medium">
+                      Rujukan:{' '}
+                      <strong className="text-[#1E4E8C]">
+                        {activeRefName || activeRefCode} ({activeRefCode})
+                      </strong>
+                    </span>
+                  </div>
+                  <span className="text-[9px] font-bold text-emerald-700 bg-emerald-100 px-1.5 py-0.5 rounded shrink-0">
+                    Aktif
+                  </span>
+                </div>
+              )}
 
               {/* CTAs */}
               <div className="space-y-2 pt-1">

@@ -177,3 +177,38 @@ describe('Affiliate Portal Session & Auth Tokens', () => {
     expect(decoded).toBe('aff-danial:AFF-DANIAL')
   })
 })
+
+describe('Admin Affiliate Management & Recalculation Engine', () => {
+  it('allows admin to edit affiliate commission rate, type and details', async () => {
+    const { updateAffiliate, getAffiliateByCode } = await import('../lib/db')
+    const aff = await getAffiliateByCode('AFF-DANIAL')
+    expect(aff).not.toBeNull()
+
+    const updated = await updateAffiliate(aff!.id, {
+      commissionRate: 15,
+      commissionType: 'percentage',
+      bankName: 'CIMB Bank',
+      bankAccountNumber: '888123456789',
+      adminNotes: 'Ujian komisen dinaikkan kepada 15%',
+    })
+
+    expect(updated).not.toBeNull()
+    expect(updated!.commissionRate).toBe(15)
+    expect(updated!.bankName).toBe('CIMB Bank')
+    expect(updated!.bankAccountNumber).toBe('888123456789')
+    expect(updated!.adminNotes).toBe('Ujian komisen dinaikkan kepada 15%')
+  })
+
+  it('recalculates affiliate stats accurately from orders in database', async () => {
+    const { recalculateAffiliateStats, getAffiliateByCode } = await import('../lib/db')
+    const result = await recalculateAffiliateStats()
+    expect(result.updatedCount).toBeGreaterThan(0)
+
+    const aff = await getAffiliateByCode('AFF-DANIAL')
+    expect(aff).not.toBeNull()
+    expect(typeof aff!.totalSalesCount).toBe('number')
+    expect(typeof aff!.totalSalesRevenueSen).toBe('number')
+    expect(typeof aff!.totalCommissionSen).toBe('number')
+  })
+})
+

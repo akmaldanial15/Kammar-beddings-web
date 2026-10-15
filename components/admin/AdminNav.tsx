@@ -414,12 +414,13 @@ export function AdminNav({ session }: AdminNavProps) {
                           className="block flex-1 mr-2"
                         >
                           <div className="bg-white rounded-2xl p-2.5 px-3 border border-white/40 shadow-sm flex items-center justify-between">
-                            <div className="relative h-10 w-44">
+                            <div className="relative h-10 w-44 overflow-hidden flex items-center">
                               <Image
                                 src="/images/kamaar-logo-clean.png"
                                 alt="KAMAAR Beddings"
-                                fill
-                                className="object-contain object-left"
+                                width={176}
+                                height={40}
+                                className="h-9 w-auto max-w-[160px] object-contain object-left"
                                 priority
                               />
                             </div>
@@ -551,12 +552,13 @@ export function AdminNav({ session }: AdminNavProps) {
                 <div className="p-4 border-b border-white/10 relative">
                   <Link href="/admin" className="block group">
                     <div className="bg-white rounded-2xl p-3 px-3.5 border border-white/50 shadow-md flex items-center justify-between transition-all group-hover:border-gold/80 group-hover:shadow-lg">
-                      <div className="relative h-11 w-44">
+                      <div className="relative h-11 w-44 overflow-hidden flex items-center">
                         <Image
                           src="/images/kamaar-logo-clean.png"
                           alt="KAMAAR Beddings (Tunas Sinar Jaya)"
-                          fill
-                          className="object-contain object-left"
+                          width={176}
+                          height={44}
+                          className="h-10 w-auto max-w-[160px] object-contain object-left"
                           priority
                         />
                       </div>

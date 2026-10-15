@@ -291,6 +291,20 @@ export function OrderConfirmedClientRecovery({ orderId, paymentId }: Props) {
             <PrintButton />
           </div>
 
+          {/* Referral attribution banner if referred by affiliate */}
+          {order.affiliateCode && (
+            <div className="flex items-center justify-between p-3 bg-emerald-50 border border-emerald-200/80 rounded-xl text-xs text-emerald-950 print:bg-gray-50 print:border-gray-300 print:text-black">
+              <div className="flex items-center gap-2">
+                <span className="w-2 h-2 rounded-full bg-emerald-600 print:hidden" />
+                <span className="font-medium text-emerald-800 print:text-gray-700">Rujukan Rakan Niaga / Ejen Rasmi KAMAAR:</span>
+                <span className="font-mono font-bold bg-white px-2.5 py-0.5 rounded-md border border-emerald-300 text-emerald-900 print:border-gray-400 print:text-black">
+                  {order.affiliateCode}
+                </span>
+              </div>
+              <span className="text-[10px] text-emerald-700 font-semibold print:hidden">Pesanan Direkod Kepada Ejen</span>
+            </div>
+          )}
+
           {/* 3. ORDER TIMELINE STRIP */}
           <div className="grid grid-cols-1 sm:grid-cols-2 gap-4 p-4 bg-cream-light rounded-xl border border-borderLight text-xs print:hidden">
             <div>

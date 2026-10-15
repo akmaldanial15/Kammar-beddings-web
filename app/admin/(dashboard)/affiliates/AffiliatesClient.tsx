@@ -71,9 +71,14 @@ export function AffiliatesClient({ initialAffiliates }: Props) {
   const [phone, setPhone] = useState('')
   const [bankName, setBankName] = useState('Maybank')
   const [bankAccountNumber, setBankAccountNumber] = useState('')
+  const [commissionType, setCommissionType] = useState<'percentage' | 'fixed_amount'>('percentage')
   const [commissionRate, setCommissionRate] = useState(10)
   const [newAdminNotes, setNewAdminNotes] = useState('')
   const [newAccessKey, setNewAccessKey] = useState('')
+
+  // Global recalculate state
+  const [isRecalculating, setIsRecalculating] = useState(false)
+  const [toastMessage, setToastMessage] = useState<string | null>(null)
 
   // Note Modal State (For Admin sending direct notes to affiliate)
   const [isNoteModalOpen, setIsNoteModalOpen] = useState(false)
@@ -91,8 +96,30 @@ export function AffiliatesClient({ initialAffiliates }: Props) {
   const [isResetting, setIsResetting] = useState(false)
   const [resetToastMessage, setResetToastMessage] = useState('')
 
+  // Edit Affiliate Modal State (Admin full edit power & commission determination)
+  const [isEditModalOpen, setIsEditModalOpen] = useState(false)
+  const [editAffiliateId, setEditAffiliateId] = useState('')
+  const [editName, setEditName] = useState('')
+  const [editCode, setEditCode] = useState('')
+  const [editEmail, setEditEmail] = useState('')
+  const [editPhone, setEditPhone] = useState('')
+  const [editBankName, setEditBankName] = useState('Maybank')
+  const [editBankAccountNumber, setEditBankAccountNumber] = useState('')
+  const [editCommissionType, setEditCommissionType] = useState<'percentage' | 'fixed_amount'>('percentage')
+  const [editCommissionRate, setEditCommissionRate] = useState<number>(10)
+  const [editAdminNotes, setEditAdminNotes] = useState('')
+  const [editAccessKey, setEditAccessKey] = useState('')
+  const [editIsActive, setEditIsActive] = useState(true)
+  const [editSalesCount, setEditSalesCount] = useState<number>(0)
+  const [editSalesRevenueSen, setEditSalesRevenueSen] = useState<number>(0)
+  const [editCommissionSen, setEditCommissionSen] = useState<number>(0)
+  const [isSavingEdit, setIsSavingEdit] = useState(false)
+  const [editError, setEditError] = useState('')
+  const [editSuccessMessage, setEditSuccessMessage] = useState('')
+  const [isRecalculatingSingle, setIsRecalculatingSingle] = useState(false)
+
   useEffect(() => {
-    if (isModalOpen || isNoteModalOpen || isResetModalOpen) {
+    if (isModalOpen || isNoteModalOpen || isResetModalOpen || isEditModalOpen) {
       document.body.style.overflow = 'hidden'
     } else {
       document.body.style.overflow = 'unset'
@@ -100,7 +127,7 @@ export function AffiliatesClient({ initialAffiliates }: Props) {
     return () => {
       document.body.style.overflow = 'unset'
     }
-  }, [isModalOpen, isNoteModalOpen, isResetModalOpen])
+  }, [isModalOpen, isNoteModalOpen, isResetModalOpen, isEditModalOpen])
 
   // Aggregated KPI Metrics & Pending Resets
   const activeCount = affiliates.filter((a) => a.isActive).length
@@ -284,7 +311,7 @@ export function AffiliatesClient({ initialAffiliates }: Props) {
           phone: phone.trim(),
           bankName,
           bankAccountNumber: bankAccountNumber.trim(),
-          commissionType: 'percentage',
+          commissionType,
           commissionRate: Number(commissionRate) || 10,
           adminNotes: newAdminNotes.trim(),
           accessKey: newAccessKey.trim() || 'kamaar123',
@@ -307,6 +334,7 @@ export function AffiliatesClient({ initialAffiliates }: Props) {
       setEmail('')
       setPhone('')
       setBankAccountNumber('')
+      setCommissionType('percentage')
       setCommissionRate(10)
       setNewAdminNotes('')
       setNewAccessKey('')
@@ -314,6 +342,139 @@ export function AffiliatesClient({ initialAffiliates }: Props) {
       setErrorMessage(err.message || 'Ralat sambungan pelayan.')
     } finally {
       setIsSubmitting(false)
+    }
+  }
+
+  // Recalculate affiliate stats from actual confirmed paid orders in database
+  const handleRecalculate = async (targetAffiliateId?: string) => {
+    setIsRecalculating(true)
+    try {
+      const res = await fetch('/api/admin/affiliates/recalculate', {
+        method: 'POST',
+        headers: { 'Content-Type': 'application/json' },
+        body: JSON.stringify(targetAffiliateId ? { affiliateId: targetAffiliateId } : {}),
+      })
+      const data = await res.json()
+      if (res.ok && data.affiliates) {
+        setAffiliates(data.affiliates)
+        setToastMessage(data.message || 'Semua metrik jualan & komisen berjaya dikira semula dari data pesanan terkini!')
+        setTimeout(() => setToastMessage(null), 4000)
+      } else {
+        alert(data.error || 'Gagal mengira semula statistik affiliate.')
+      }
+    } catch (err) {
+      console.error('Failed to recalculate affiliate stats:', err)
+      alert('Ralat sambungan pelayan.')
+    } finally {
+      setIsRecalculating(false)
+    }
+  }
+
+  // Open Full Edit Affiliate Modal
+  const handleOpenEditModal = (aff: Affiliate) => {
+    setEditAffiliateId(aff.id)
+    setEditName(aff.name)
+    setEditCode(aff.code)
+    setEditEmail(aff.email || '')
+    setEditPhone(aff.phone || '')
+    setEditBankName(aff.bankName || 'Maybank')
+    setEditBankAccountNumber(aff.bankAccountNumber || '')
+    setEditCommissionType(aff.commissionType || 'percentage')
+    setEditCommissionRate(aff.commissionRate !== undefined ? aff.commissionRate : 10)
+    setEditAdminNotes(aff.adminNotes || '')
+    setEditAccessKey(aff.accessKey || 'kamaar123')
+    setEditIsActive(aff.isActive)
+    setEditSalesCount(aff.totalSalesCount || 0)
+    setEditSalesRevenueSen(aff.totalSalesRevenueSen || 0)
+    setEditCommissionSen(aff.totalCommissionSen || 0)
+    setEditError('')
+    setEditSuccessMessage('')
+    setIsEditModalOpen(true)
+  }
+
+  // Quick single affiliate recalculation inside edit modal
+  const handleRecalculateCurrentEditing = async () => {
+    if (!editAffiliateId) return
+    setIsRecalculatingSingle(true)
+    setEditError('')
+    try {
+      const res = await fetch('/api/admin/affiliates/recalculate', {
+        method: 'POST',
+        headers: { 'Content-Type': 'application/json' },
+        body: JSON.stringify({ affiliateId: editAffiliateId }),
+      })
+      const data = await res.json()
+      if (res.ok && data.affiliates) {
+        setAffiliates(data.affiliates)
+        const updated = data.affiliates.find((a: Affiliate) => a.id === editAffiliateId)
+        if (updated) {
+          setEditSalesCount(updated.totalSalesCount || 0)
+          setEditSalesRevenueSen(updated.totalSalesRevenueSen || 0)
+          setEditCommissionSen(updated.totalCommissionSen || 0)
+          setEditSuccessMessage('Metrik jualan & komisen berjaya dikira semula dari rekod pesanan yang dibayar!')
+          setTimeout(() => setEditSuccessMessage(''), 3500)
+        }
+      } else {
+        setEditError(data.error || 'Gagal mengira semula pesanan ejen.')
+      }
+    } catch (err: any) {
+      setEditError(err.message || 'Ralat sambungan pelayan.')
+    } finally {
+      setIsRecalculatingSingle(false)
+    }
+  }
+
+  // Save full affiliate edits (Admin Power)
+  const handleSaveEditAffiliate = async (e: React.FormEvent) => {
+    e.preventDefault()
+    if (!editAffiliateId) return
+
+    setIsSavingEdit(true)
+    setEditError('')
+    setEditSuccessMessage('')
+
+    try {
+      const payload = {
+        name: editName.trim(),
+        code: editCode.trim().toUpperCase(),
+        email: editEmail.trim(),
+        phone: editPhone.trim(),
+        bankName: editBankName,
+        bankAccountNumber: editBankAccountNumber.trim(),
+        commissionType: editCommissionType,
+        commissionRate: Number(editCommissionRate),
+        adminNotes: editAdminNotes.trim(),
+        accessKey: editAccessKey.trim() || 'kamaar123',
+        isActive: editIsActive,
+        totalSalesCount: Number(editSalesCount),
+        totalSalesRevenueSen: Number(editSalesRevenueSen),
+        totalCommissionSen: Number(editCommissionSen),
+      }
+
+      const res = await fetch(`/api/admin/affiliates/${editAffiliateId}`, {
+        method: 'PATCH',
+        headers: { 'Content-Type': 'application/json' },
+        body: JSON.stringify(payload),
+      })
+
+      const data = await res.json()
+      if (res.ok && data.affiliate) {
+        setAffiliates((prev) =>
+          prev.map((a) => (a.id === editAffiliateId ? data.affiliate : a))
+        )
+        setEditSuccessMessage('Maklumat ejen affiliate dan kadar komisen berjaya dikemas kini!')
+        setTimeout(() => {
+          setIsEditModalOpen(false)
+          setEditSuccessMessage('')
+        }, 1200)
+      } else {
+        setEditError(data.error || 'Gagal mengemas kini maklumat ejen.')
+      }
+    } catch (err: any) {
+      console.error('Failed to update affiliate:', err)
+      setEditError(err.message || 'Ralat sambungan pelayan.')
+    } finally {
+      setIsSavingEdit(false)
     }
   }
 
@@ -429,7 +590,20 @@ export function AffiliatesClient({ initialAffiliates }: Props) {
         </div>
       </div>
 
-      {/* Controls: Search + Portal Log Masuk + Daftar Ejen Baru */}
+      {/* Toast Notification Alert for Recalculate */}
+      {toastMessage && (
+        <div className="bg-emerald-700 text-white px-4 py-3 rounded-2xl shadow-lg flex items-center justify-between text-xs font-bold animate-in fade-in slide-in-from-top-2">
+          <div className="flex items-center gap-2">
+            <Check className="w-4 h-4 text-emerald-200 shrink-0" />
+            <span>{toastMessage}</span>
+          </div>
+          <button onClick={() => setToastMessage(null)} className="text-white/80 hover:text-white p-1 cursor-pointer">
+            <X className="w-4 h-4" />
+          </button>
+        </div>
+      )}
+
+      {/* Controls: Search + Refresh Komisen + Portal Log Masuk + Daftar Ejen Baru */}
       <div className="flex flex-col sm:flex-row items-stretch sm:items-center justify-between gap-3 sm:gap-4 animate-fade-in-up delay-250">
         <div className="relative w-full sm:w-80">
           <Search className="w-4 h-4 absolute left-3.5 top-1/2 -translate-y-1/2 text-secondary" />
@@ -442,11 +616,21 @@ export function AffiliatesClient({ initialAffiliates }: Props) {
           />
         </div>
 
-        <div className="grid grid-cols-2 sm:flex sm:items-center gap-2 sm:gap-2.5 w-full sm:w-auto">
+        <div className="flex flex-wrap items-center gap-2 sm:gap-2.5 w-full sm:w-auto">
+          <button
+            onClick={() => handleRecalculate()}
+            disabled={isRecalculating}
+            className="flex-1 sm:flex-none flex items-center justify-center space-x-1.5 px-3 sm:px-4 py-2.5 bg-warmwhite border border-[#1E4E8C] text-[#1E4E8C] hover:bg-[#1E4E8C]/10 text-xs font-bold rounded-xl transition-all shadow-xs text-center cursor-pointer disabled:opacity-50"
+            title="Kira semula statistik jualan & komisen semua ejen affiliate dari rekod pesanan yang dibayar"
+          >
+            <RotateCcw className={`w-3.5 h-3.5 text-[#1E4E8C] shrink-0 ${isRecalculating ? 'animate-spin' : ''}`} />
+            <span className="truncate">{isRecalculating ? 'Mengira...' : 'Refresh Komisen'}</span>
+          </button>
+
           <Link
             href="/affiliate/login"
             target="_blank"
-            className="flex items-center justify-center space-x-1.5 px-3 sm:px-4 py-2.5 bg-warmwhite border border-[#B49A58] text-[#1E4E8C] hover:bg-[#B49A58]/10 text-xs font-bold rounded-xl transition-all shadow-xs text-center"
+            className="flex-1 sm:flex-none flex items-center justify-center space-x-1.5 px-3 sm:px-4 py-2.5 bg-warmwhite border border-[#B49A58] text-[#1E4E8C] hover:bg-[#B49A58]/10 text-xs font-bold rounded-xl transition-all shadow-xs text-center"
           >
             <KeyRound className="w-3.5 h-3.5 text-[#B49A58] shrink-0" />
             <span className="truncate">Portal Log Masuk</span>
@@ -455,7 +639,7 @@ export function AffiliatesClient({ initialAffiliates }: Props) {
 
           <button
             onClick={() => setIsModalOpen(true)}
-            className="flex items-center justify-center space-x-1.5 sm:space-x-2 px-3 sm:px-5 py-2.5 bg-forest text-warmwhite text-xs font-bold rounded-xl hover:bg-forest-dark transition-all duration-200 hover:scale-[1.02] shadow-sm text-center cursor-pointer"
+            className="w-full sm:w-auto flex items-center justify-center space-x-1.5 sm:space-x-2 px-3 sm:px-5 py-2.5 bg-forest text-warmwhite text-xs font-bold rounded-xl hover:bg-forest-dark transition-all duration-200 hover:scale-[1.02] shadow-sm text-center cursor-pointer"
           >
             <Plus className="w-4 h-4 shrink-0" />
             <span className="truncate">Daftar Ejen</span>
@@ -509,7 +693,9 @@ export function AffiliatesClient({ initialAffiliates }: Props) {
                         )}
                       </div>
                       <div className="flex items-center gap-1.5 text-[10.5px] text-secondary mt-0.5">
-                        <span className="font-bold text-charcoal">{aff.commissionRate}% {aff.commissionType === 'percentage' ? 'Komisen' : 'Tetap'}</span>
+                        <span className="font-bold text-charcoal">
+                          {aff.commissionType === 'fixed_amount' ? `RM${aff.commissionRate} Tetap` : `${aff.commissionRate}% Komisen`}
+                        </span>
                         <span>•</span>
                         <span>{aff.totalSalesCount || 0} Jualan</span>
                       </div>
@@ -632,34 +818,57 @@ export function AffiliatesClient({ initialAffiliates }: Props) {
                 )}
 
                 {/* Card Action Buttons */}
-                <div className="grid grid-cols-3 gap-2 pt-1 border-t border-borderLight/60">
-                  <button
-                    onClick={() => handleOpenResetModal(aff)}
-                    className={`flex items-center justify-center gap-1 py-2 px-1.5 rounded-xl text-[11px] font-bold transition-all cursor-pointer ${
-                      aff.passwordResetRequested
-                        ? 'bg-amber-500 text-white shadow-xs animate-pulse ring-2 ring-amber-300'
-                        : 'bg-warmwhite border border-borderLight text-[#1E4E8C] hover:bg-[#1E4E8C]/10'
-                    }`}
-                  >
-                    <KeyRound className="w-3.5 h-3.5 shrink-0" />
-                    <span className="truncate">Kata Laluan</span>
-                  </button>
+                <div className="space-y-1.5 pt-1 border-t border-borderLight/60">
+                  <div className="grid grid-cols-3 gap-1.5">
+                    <button
+                      onClick={() => handleOpenEditModal(aff)}
+                      className="flex items-center justify-center gap-1 py-2 px-1.5 rounded-xl text-[11px] font-bold bg-forest/10 border border-forest/20 text-forest-dark hover:bg-forest/20 transition-all cursor-pointer"
+                      title="Edit Semua Maklumat & Kadar Komisen"
+                    >
+                      <Edit2 className="w-3.5 h-3.5 text-forest shrink-0" />
+                      <span className="truncate">Edit Ejen</span>
+                    </button>
 
-                  <button
-                    onClick={() => handleOpenNoteModal(aff)}
-                    className="flex items-center justify-center gap-1 py-2 px-1.5 rounded-xl text-[11px] font-bold bg-warmwhite border border-borderLight text-forest-dark hover:bg-forest/10 transition-all cursor-pointer"
-                  >
-                    <MessageSquare className="w-3.5 h-3.5 text-[#1E4E8C] shrink-0" />
-                    <span className="truncate">Tulis Nota</span>
-                  </button>
+                    <button
+                      onClick={() => handleRecalculate(aff.id)}
+                      disabled={isRecalculating}
+                      className="flex items-center justify-center gap-1 py-2 px-1.5 rounded-xl text-[11px] font-bold bg-warmwhite border border-[#1E4E8C]/30 text-[#1E4E8C] hover:bg-[#1E4E8C]/10 transition-all cursor-pointer disabled:opacity-50"
+                      title="Kira Semula Pesanan Ejen Ini"
+                    >
+                      <RotateCcw className={`w-3.5 h-3.5 shrink-0 ${isRecalculating ? 'animate-spin' : ''}`} />
+                      <span className="truncate">Refresh</span>
+                    </button>
 
-                  <button
-                    onClick={() => handleDelete(aff.id, aff.name)}
-                    className="flex items-center justify-center gap-1 py-2 px-1.5 rounded-xl text-[11px] font-bold bg-warmwhite border border-borderLight text-sale hover:bg-sale/10 transition-all cursor-pointer"
-                  >
-                    <Trash2 className="w-3.5 h-3.5 shrink-0" />
-                    <span className="truncate">Padam</span>
-                  </button>
+                    <button
+                      onClick={() => handleOpenResetModal(aff)}
+                      className={`flex items-center justify-center gap-1 py-2 px-1.5 rounded-xl text-[11px] font-bold transition-all cursor-pointer ${
+                        aff.passwordResetRequested
+                          ? 'bg-amber-500 text-white shadow-xs animate-pulse ring-2 ring-amber-300'
+                          : 'bg-warmwhite border border-borderLight text-[#1E4E8C] hover:bg-[#1E4E8C]/10'
+                      }`}
+                    >
+                      <KeyRound className="w-3.5 h-3.5 shrink-0" />
+                      <span className="truncate">Laluan</span>
+                    </button>
+                  </div>
+
+                  <div className="grid grid-cols-2 gap-1.5">
+                    <button
+                      onClick={() => handleOpenNoteModal(aff)}
+                      className="flex items-center justify-center gap-1 py-1.5 px-1.5 rounded-xl text-[11px] font-bold bg-warmwhite border border-borderLight text-secondary hover:text-forest-dark hover:bg-forest/10 transition-all cursor-pointer"
+                    >
+                      <MessageSquare className="w-3.5 h-3.5 text-[#1E4E8C] shrink-0" />
+                      <span className="truncate">Tulis Nota</span>
+                    </button>
+
+                    <button
+                      onClick={() => handleDelete(aff.id, aff.name)}
+                      className="flex items-center justify-center gap-1 py-1.5 px-1.5 rounded-xl text-[11px] font-bold bg-warmwhite border border-borderLight text-sale hover:bg-sale/10 transition-all cursor-pointer"
+                    >
+                      <Trash2 className="w-3.5 h-3.5 shrink-0" />
+                      <span className="truncate">Padam</span>
+                    </button>
+                  </div>
                 </div>
               </div>
             )
@@ -751,7 +960,9 @@ export function AffiliatesClient({ initialAffiliates }: Props) {
                       </td>
 
                       <td className="py-4 px-4 font-bold text-charcoal">
-                        {aff.commissionRate}% {aff.commissionType === 'percentage' ? 'Per Sale' : 'Tetap'}
+                        {aff.commissionType === 'fixed_amount'
+                          ? `RM${aff.commissionRate} Tetap`
+                          : `${aff.commissionRate}% Per Sale`}
                       </td>
 
                       <td className="py-4 px-4 font-bold text-forest-dark">
@@ -804,6 +1015,23 @@ export function AffiliatesClient({ initialAffiliates }: Props) {
 
                       <td className="py-4 px-4 text-right">
                         <div className="flex items-center justify-end space-x-1">
+                          <button
+                            onClick={() => handleRecalculate(aff.id)}
+                            disabled={isRecalculating}
+                            className="p-1.5 text-secondary hover:text-[#1E4E8C] rounded-lg hover:bg-[#1E4E8C]/10 transition-colors inline-flex items-center cursor-pointer disabled:opacity-40"
+                            title="Kira Semula & Segarkan Jualan/Komisen Ejen Ini"
+                          >
+                            <RotateCcw className={`w-3.5 h-3.5 ${isRecalculating ? 'animate-spin' : ''}`} />
+                          </button>
+
+                          <button
+                            onClick={() => handleOpenEditModal(aff)}
+                            className="p-1.5 text-secondary hover:text-emerald-700 rounded-lg hover:bg-emerald-50 transition-colors inline-flex items-center cursor-pointer"
+                            title="Edit Semua Maklumat & Kadar Komisen Ejen Ini"
+                          >
+                            <Edit2 className="w-3.5 h-3.5 text-emerald-700" />
+                          </button>
+
                           <button
                             onClick={() => handleOpenResetModal(aff)}
                             className={`p-1.5 rounded-lg transition-all inline-flex items-center relative cursor-pointer ${
@@ -941,19 +1169,45 @@ export function AffiliatesClient({ initialAffiliates }: Props) {
 
                 <div>
                   <label className="text-xs font-bold text-charcoal block mb-1">
-                    Kadar Komisen (% Peratusan Jualan)
+                    Jenis &amp; Kadar Komisen Ejen
                   </label>
+                  <div className="grid grid-cols-2 gap-2 mb-2">
+                    <button
+                      type="button"
+                      onClick={() => setCommissionType('percentage')}
+                      className={`py-1.5 px-3 text-xs font-bold rounded-xl border text-center transition-all cursor-pointer ${
+                        commissionType === 'percentage'
+                          ? 'bg-forest text-warmwhite border-forest shadow-xs'
+                          : 'bg-cream-light text-secondary border-borderLight hover:bg-cream'
+                      }`}
+                    >
+                      Peratusan (%)
+                    </button>
+                    <button
+                      type="button"
+                      onClick={() => setCommissionType('fixed_amount')}
+                      className={`py-1.5 px-3 text-xs font-bold rounded-xl border text-center transition-all cursor-pointer ${
+                        commissionType === 'fixed_amount'
+                          ? 'bg-forest text-warmwhite border-forest shadow-xs'
+                          : 'bg-cream-light text-secondary border-borderLight hover:bg-cream'
+                      }`}
+                    >
+                      Amaun Tetap (RM)
+                    </button>
+                  </div>
                   <div className="flex items-center space-x-2">
                     <input
                       type="number"
                       min="1"
-                      max="50"
+                      max={commissionType === 'percentage' ? 100 : 5000}
                       value={commissionRate}
                       onChange={(e) => setCommissionRate(Number(e.target.value))}
                       className="w-24 sm:w-28 px-3.5 py-2 text-xs bg-cream-light border border-borderLight rounded-xl outline-none focus:border-forest font-bold"
                     />
                     <span className="text-[11px] sm:text-xs text-secondary font-medium">
-                      % daripada nilai jualan bersih
+                      {commissionType === 'percentage'
+                        ? '% daripada nilai jualan bersih (subtotal)'
+                        : 'RM setiap pesanan sah yang berjaya'}
                     </span>
                   </div>
                 </div>
@@ -1305,6 +1559,375 @@ export function AffiliatesClient({ initialAffiliates }: Props) {
                     {isResetting ? 'Menetapkan...' : 'Sahkan Reset'}
                   </button>
                 </div>
+              </div>
+            </form>
+          </div>
+        </div>,
+        document.body
+      )}
+
+      {/* Modal 4: Comprehensive Edit Affiliate Details & Commission */}
+      {isEditModalOpen && mounted && createPortal(
+        <div className="fixed inset-0 z-[100] bg-forest-dark/60 backdrop-blur-sm flex items-center justify-center p-2 sm:p-4 overscroll-contain">
+          <div className="bg-warmwhite w-full max-w-xl max-h-[94dvh] sm:max-h-[90dvh] rounded-2xl sm:rounded-3xl border border-borderLight shadow-2xl flex flex-col overflow-hidden animate-in fade-in zoom-in-95 duration-200">
+            {/* Sticky Header */}
+            <div className="p-4 sm:p-5 bg-gradient-to-r from-forest-dark via-forest to-[#1E4E8C] text-warmwhite flex items-center justify-between flex-shrink-0">
+              <div className="flex items-center space-x-3">
+                <div className="w-9 h-9 sm:w-10 sm:h-10 rounded-xl bg-gold/20 border border-gold/40 flex items-center justify-center text-gold shrink-0">
+                  <Edit2 className="w-4 h-4 sm:w-5 sm:h-5" />
+                </div>
+                <div className="min-w-0">
+                  <div className="flex items-center gap-2">
+                    <h3 className="font-serif text-base sm:text-lg font-bold truncate">Edit Maklumat Ejen Affiliate</h3>
+                    <span className="font-mono text-[10px] bg-white/20 text-white px-2 py-0.5 rounded-full font-bold">
+                      {editCode}
+                    </span>
+                  </div>
+                  <p className="text-xs text-warmwhite/80 mt-0.5 truncate">
+                    Ubah kadar komisen, status, pautan rujukan, bank payout, dan kata laluan.
+                  </p>
+                </div>
+              </div>
+              <button
+                onClick={() => setIsEditModalOpen(false)}
+                className="p-1.5 text-warmwhite/80 hover:text-warmwhite rounded-lg hover:bg-warmwhite/10 shrink-0 cursor-pointer"
+              >
+                <X className="w-5 h-5" />
+              </button>
+            </div>
+
+            {/* Scrollable Form Body */}
+            <form onSubmit={handleSaveEditAffiliate} className="flex flex-col flex-1 min-h-0 overflow-hidden">
+              <div className="p-4 sm:p-6 space-y-4 flex-1 min-h-0 overflow-y-auto overscroll-contain">
+                {editError && (
+                  <div className="p-3 bg-sale/10 border border-sale/20 rounded-xl text-sale text-xs font-semibold">
+                    {editError}
+                  </div>
+                )}
+                {editSuccessMessage && (
+                  <div className="p-3 bg-emerald-100 border border-emerald-300 rounded-xl text-emerald-800 text-xs font-bold flex items-center gap-2">
+                    <Check className="w-4 h-4 text-emerald-600 shrink-0" />
+                    <span>{editSuccessMessage}</span>
+                  </div>
+                )}
+
+                {/* Section 1: Profil & Kod Rujukan */}
+                <div className="space-y-3">
+                  <span className="text-xs font-bold text-forest-dark uppercase tracking-wider block">
+                    1. Maklumat Profil &amp; Pautan Rujukan
+                  </span>
+                  
+                  <div className="grid grid-cols-1 sm:grid-cols-2 gap-3">
+                    <div>
+                      <label className="text-xs font-bold text-charcoal block mb-1">
+                        Nama Penuh Ejen <span className="text-sale">*</span>
+                      </label>
+                      <input
+                        type="text"
+                        required
+                        value={editName}
+                        onChange={(e) => setEditName(e.target.value)}
+                        className="w-full px-3.5 py-2 text-xs bg-cream-light border border-borderLight rounded-xl outline-none focus:border-forest"
+                      />
+                    </div>
+
+                    <div>
+                      <label className="text-xs font-bold text-charcoal block mb-1">
+                        Kod Khas Affiliate <span className="text-sale">*</span>
+                      </label>
+                      <input
+                        type="text"
+                        required
+                        value={editCode}
+                        onChange={(e) => setEditCode(e.target.value.toUpperCase())}
+                        className="w-full px-3.5 py-2 text-xs bg-cream-light border border-borderLight rounded-xl uppercase font-mono outline-none focus:border-forest font-bold"
+                      />
+                      <span className="text-[10px] text-secondary mt-0.5 block truncate">
+                        Pautan: ?ref={editCode.trim().toUpperCase()} atau /r/{editCode.trim().toUpperCase()}
+                      </span>
+                    </div>
+                  </div>
+
+                  <div className="grid grid-cols-1 sm:grid-cols-2 gap-3">
+                    <div>
+                      <label className="text-xs font-bold text-charcoal block mb-1">
+                        Nombor Telefon / WhatsApp
+                      </label>
+                      <input
+                        type="text"
+                        placeholder="012 345 6789"
+                        value={editPhone}
+                        onChange={(e) => setEditPhone(e.target.value)}
+                        className="w-full px-3.5 py-2 text-xs bg-cream-light border border-borderLight rounded-xl outline-none focus:border-forest"
+                      />
+                    </div>
+
+                    <div>
+                      <label className="text-xs font-bold text-charcoal block mb-1">
+                        Alamat Emel
+                      </label>
+                      <input
+                        type="email"
+                        placeholder="ejen@gmail.com"
+                        value={editEmail}
+                        onChange={(e) => setEditEmail(e.target.value)}
+                        className="w-full px-3.5 py-2 text-xs bg-cream-light border border-borderLight rounded-xl outline-none focus:border-forest"
+                      />
+                    </div>
+                  </div>
+                </div>
+
+                {/* Section 2: Penentuan Kadar Komisen (Admin Power) */}
+                <div className="p-3.5 sm:p-4 bg-amber-50/60 border border-amber-200/80 rounded-2xl space-y-3">
+                  <div className="flex items-center justify-between">
+                    <span className="text-xs font-bold text-amber-950 flex items-center gap-1.5">
+                      <DollarSign className="w-3.5 h-3.5 text-amber-700 shrink-0" />
+                      2. Struktur &amp; Kadar Komisen Ejen
+                    </span>
+                    <span className="text-[10.5px] font-bold text-amber-800 bg-amber-200/60 px-2 py-0.5 rounded-full">
+                      Kawalan Pentadbir
+                    </span>
+                  </div>
+
+                  <div className="grid grid-cols-2 gap-2">
+                    <button
+                      type="button"
+                      onClick={() => setEditCommissionType('percentage')}
+                      className={`py-2 px-3 text-xs font-bold rounded-xl border text-center transition-all cursor-pointer ${
+                        editCommissionType === 'percentage'
+                          ? 'bg-amber-600 text-white border-amber-600 shadow-xs'
+                          : 'bg-white text-secondary border-amber-200 hover:bg-amber-50'
+                      }`}
+                    >
+                      Peratusan (%) Per Sale
+                    </button>
+                    <button
+                      type="button"
+                      onClick={() => setEditCommissionType('fixed_amount')}
+                      className={`py-2 px-3 text-xs font-bold rounded-xl border text-center transition-all cursor-pointer ${
+                        editCommissionType === 'fixed_amount'
+                          ? 'bg-amber-600 text-white border-amber-600 shadow-xs'
+                          : 'bg-white text-secondary border-amber-200 hover:bg-amber-50'
+                      }`}
+                    >
+                      Amaun Tetap (RM) Per Order
+                    </button>
+                  </div>
+
+                  <div>
+                    <label className="text-[11px] font-bold text-charcoal block mb-1">
+                      Kadar Komisen ({editCommissionType === 'percentage' ? '%' : 'RM'})
+                    </label>
+                    <div className="flex items-center space-x-2">
+                      <input
+                        type="number"
+                        min="0"
+                        max={editCommissionType === 'percentage' ? 100 : 5000}
+                        step={editCommissionType === 'percentage' ? '1' : '0.5'}
+                        value={editCommissionRate}
+                        onChange={(e) => setEditCommissionRate(Number(e.target.value))}
+                        className="w-28 px-3.5 py-2 text-xs bg-white border border-amber-300 rounded-xl outline-none focus:border-amber-600 font-bold text-charcoal"
+                      />
+                      <span className="text-[11px] text-amber-900 font-medium">
+                        {editCommissionType === 'percentage'
+                          ? '% daripada nilai bersih jualan (subtotal pesanan)'
+                          : 'RM tunai untuk setiap pesanan sah yang berjaya dibayar'}
+                      </span>
+                    </div>
+                  </div>
+                </div>
+
+                {/* Section 3: Akaun Bank (Payout) */}
+                <div className="p-3.5 sm:p-4 bg-cream/50 border border-borderLight rounded-2xl space-y-3">
+                  <span className="text-xs font-bold text-forest-dark block">
+                    3. Maklumat Pembayaran Bank (Payout Komisen)
+                  </span>
+                  <div className="grid grid-cols-1 sm:grid-cols-2 gap-3">
+                    <div>
+                      <label className="text-[11px] font-medium text-secondary block mb-1">
+                        Bank Malaysia
+                      </label>
+                      <select
+                        value={editBankName}
+                        onChange={(e) => setEditBankName(e.target.value)}
+                        className="w-full px-3 py-2 text-xs bg-warmwhite border border-borderLight rounded-xl outline-none focus:border-forest"
+                      >
+                        {MALAYSIAN_BANKS.map((b) => (
+                          <option key={b} value={b}>
+                            {b}
+                          </option>
+                        ))}
+                      </select>
+                    </div>
+
+                    <div>
+                      <label className="text-[11px] font-medium text-secondary block mb-1">
+                        Nombor Akaun Bank
+                      </label>
+                      <input
+                        type="text"
+                        placeholder="164012345678"
+                        value={editBankAccountNumber}
+                        onChange={(e) => setEditBankAccountNumber(e.target.value)}
+                        className="w-full px-3 py-2 text-xs bg-warmwhite border border-borderLight rounded-xl font-mono outline-none focus:border-forest"
+                      />
+                    </div>
+                  </div>
+                </div>
+
+                {/* Section 4: Keselamatan, Status & Nota Rasmi */}
+                <div className="p-3.5 sm:p-4 bg-emerald-50/60 border border-emerald-200/80 rounded-2xl space-y-3">
+                  <span className="text-xs font-bold text-emerald-950 flex items-center gap-1.5">
+                    <Sparkles className="w-3.5 h-3.5 text-emerald-600 shrink-0" />
+                    4. Akses Portal, Status &amp; Nota Pentadbir
+                  </span>
+
+                  <div className="grid grid-cols-1 sm:grid-cols-2 gap-3">
+                    <div>
+                      <label className="text-[11px] font-medium text-charcoal block mb-1">
+                        Kata Laluan Portal Ejen
+                      </label>
+                      <input
+                        type="text"
+                        value={editAccessKey}
+                        onChange={(e) => setEditAccessKey(e.target.value)}
+                        className="w-full px-3 py-2 text-xs bg-white border border-emerald-200 rounded-xl outline-none focus:border-forest font-mono"
+                      />
+                    </div>
+
+                    <div>
+                      <label className="text-[11px] font-medium text-charcoal block mb-1">
+                        Status Keahlian Ejen
+                      </label>
+                      <div className="flex items-center space-x-2 pt-1">
+                        <button
+                          type="button"
+                          onClick={() => setEditIsActive(true)}
+                          className={`px-3 py-1.5 text-xs font-bold rounded-lg border transition-all cursor-pointer ${
+                            editIsActive
+                              ? 'bg-forest text-white border-forest shadow-xs'
+                              : 'bg-white text-secondary border-borderLight'
+                          }`}
+                        >
+                          Aktif (Boleh Jana Komisen)
+                        </button>
+                        <button
+                          type="button"
+                          onClick={() => setEditIsActive(false)}
+                          className={`px-3 py-1.5 text-xs font-bold rounded-lg border transition-all cursor-pointer ${
+                            !editIsActive
+                              ? 'bg-sale text-white border-sale shadow-xs'
+                              : 'bg-white text-secondary border-borderLight'
+                          }`}
+                        >
+                          Nyahaktif
+                        </button>
+                      </div>
+                    </div>
+                  </div>
+
+                  <div>
+                    <label className="text-[11px] font-medium text-charcoal block mb-1">
+                      Nota Pentadbir (Dipaparkan terus dalam portal ejen)
+                    </label>
+                    <textarea
+                      rows={2}
+                      value={editAdminNotes}
+                      onChange={(e) => setEditAdminNotes(e.target.value)}
+                      placeholder="Contoh: Payout komisen bulan ini telah dimasukkan ke akaun anda."
+                      className="w-full px-3 py-2 text-xs bg-white border border-emerald-200 rounded-xl outline-none focus:border-forest"
+                    />
+                  </div>
+                </div>
+
+                {/* Section 5: Metrik Jualan & Komisen (Dengan Butang Kira Semula Automatik) */}
+                <div className="p-3.5 sm:p-4 bg-blue-50/60 border border-blue-200/80 rounded-2xl space-y-3">
+                  <div className="flex items-center justify-between flex-wrap gap-2">
+                    <span className="text-xs font-bold text-blue-950 flex items-center gap-1.5">
+                      <TrendingUp className="w-3.5 h-3.5 text-blue-700 shrink-0" />
+                      5. Statistik Jualan &amp; Komisen Terkumpul
+                    </span>
+                    <button
+                      type="button"
+                      onClick={handleRecalculateCurrentEditing}
+                      disabled={isRecalculatingSingle}
+                      className="inline-flex items-center gap-1 px-2.5 py-1 bg-blue-700 hover:bg-blue-800 text-white text-[10.5px] font-bold rounded-lg transition-colors cursor-pointer disabled:opacity-50"
+                      title="Kira semula jualan dan komisen dari pesanan sebenar yang dibayar"
+                    >
+                      <RotateCcw className={`w-3 h-3 ${isRecalculatingSingle ? 'animate-spin' : ''}`} />
+                      <span>{isRecalculatingSingle ? 'Mengira...' : 'Kira Semula Dari Pesanan'}</span>
+                    </button>
+                  </div>
+
+                  <div className="grid grid-cols-3 gap-2">
+                    <div>
+                      <label className="text-[10px] text-secondary font-medium block mb-0.5">
+                        Bil Pesanan (Order)
+                      </label>
+                      <input
+                        type="number"
+                        min="0"
+                        value={editSalesCount}
+                        onChange={(e) => setEditSalesCount(Number(e.target.value))}
+                        className="w-full px-2.5 py-1.5 text-xs bg-white border border-blue-200 rounded-lg font-bold text-forest-dark"
+                      />
+                    </div>
+                    <div>
+                      <label className="text-[10px] text-secondary font-medium block mb-0.5">
+                        Hasil Jualan (RM)
+                      </label>
+                      <input
+                        type="number"
+                        min="0"
+                        step="0.01"
+                        value={(editSalesRevenueSen / 100).toFixed(2)}
+                        onChange={(e) => setEditSalesRevenueSen(Math.round(Number(e.target.value) * 100))}
+                        className="w-full px-2.5 py-1.5 text-xs bg-white border border-blue-200 rounded-lg font-bold text-forest"
+                      />
+                    </div>
+                    <div>
+                      <label className="text-[10px] text-secondary font-medium block mb-0.5">
+                        Komisen Terkumpul (RM)
+                      </label>
+                      <input
+                        type="number"
+                        min="0"
+                        step="0.01"
+                        value={(editCommissionSen / 100).toFixed(2)}
+                        onChange={(e) => setEditCommissionSen(Math.round(Number(e.target.value) * 100))}
+                        className="w-full px-2.5 py-1.5 text-xs bg-white border border-blue-200 rounded-lg font-bold text-sale"
+                      />
+                    </div>
+                  </div>
+                </div>
+              </div>
+
+              {/* Sticky Footer */}
+              <div className="p-3.5 sm:px-6 sm:py-4 pb-[max(0.875rem,env(safe-area-inset-bottom))] bg-cream/30 border-t border-borderLight flex items-center justify-end space-x-3 flex-shrink-0 z-20">
+                <button
+                  type="button"
+                  onClick={() => setIsEditModalOpen(false)}
+                  className="px-4 py-2 text-xs font-bold text-secondary hover:text-charcoal transition-colors cursor-pointer"
+                >
+                  Batal
+                </button>
+                <button
+                  type="submit"
+                  disabled={isSavingEdit}
+                  className="px-6 py-2 bg-forest hover:bg-forest-dark text-warmwhite text-xs font-bold rounded-xl transition-all shadow-sm disabled:opacity-50 cursor-pointer flex items-center gap-1.5"
+                >
+                  {isSavingEdit ? (
+                    <>
+                      <RotateCcw className="w-3.5 h-3.5 animate-spin" />
+                      <span>Menyimpan...</span>
+                    </>
+                  ) : (
+                    <>
+                      <Check className="w-3.5 h-3.5" />
+                      <span>Simpan Semua Maklumat</span>
+                    </>
+                  )}
+                </button>
               </div>
             </form>
           </div>

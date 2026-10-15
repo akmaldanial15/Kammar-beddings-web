@@ -1624,6 +1624,55 @@ export async function recordAffiliateSale(
   }
 }
 
+export async function recalculateAffiliateStats(
+  targetAffiliateId?: string
+): Promise<{ updatedCount: number; affiliates: Affiliate[] }> {
+  const db = ensureDb()
+  if (!db.affiliates) db.affiliates = []
+
+  const targets = targetAffiliateId
+    ? db.affiliates.filter((a) => a.id === targetAffiliateId)
+    : db.affiliates
+
+  let updatedCount = 0
+
+  for (const aff of targets) {
+    const cleanCode = aff.code.trim().toUpperCase()
+    // Find all paid orders for this affiliate
+    const matchingOrders = (db.orders || []).filter(
+      (o) =>
+        o.affiliateCode &&
+        o.affiliateCode.trim().toUpperCase() === cleanCode &&
+        (o.paymentStatus === 'paid' || (o.paymentStatus as string) === 'cleared')
+    )
+
+    let totalRevenue = 0
+    let totalComm = 0
+
+    for (const order of matchingOrders) {
+      const orderRevenue = order.totalSen || order.subtotalSen || 0
+      totalRevenue += orderRevenue
+      if (order.affiliateCommissionSen !== undefined && order.affiliateCommissionSen > 0) {
+        totalComm += order.affiliateCommissionSen
+      } else {
+        const comm =
+          aff.commissionType === 'fixed_amount'
+            ? aff.commissionRate * 100
+            : Math.round(((order.subtotalSen || orderRevenue) * aff.commissionRate) / 100)
+        totalComm += comm
+      }
+    }
+
+    aff.totalSalesCount = matchingOrders.length
+    aff.totalSalesRevenueSen = totalRevenue
+    aff.totalCommissionSen = totalComm
+    updatedCount++
+  }
+
+  saveDb(db)
+  return { updatedCount, affiliates: db.affiliates }
+}
+
 export async function requestAffiliatePasswordReset(
   identifier: string,
   method: 'email' | 'phone'

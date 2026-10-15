@@ -151,8 +151,10 @@ export async function POST(request: NextRequest) {
       remark: string
     } | undefined = undefined
 
-    if (affiliateCode) {
-      const affiliate = await getAffiliateByCode(affiliateCode)
+    const rawAffCode = (affiliateCode || request.cookies.get('kamaar_ref')?.value || '').trim()
+
+    if (rawAffCode) {
+      const affiliate = await getAffiliateByCode(rawAffCode)
       if (affiliate && affiliate.isActive) {
         const commSen =
           affiliate.commissionType === 'fixed_amount'
@@ -163,7 +165,7 @@ export async function POST(request: NextRequest) {
           code: affiliate.code,
           name: affiliate.name,
           commissionSen: commSen,
-          remark: `Sale dirujuk oleh Affiliate: ${affiliate.name} (Kod: ${affiliate.code}) | Komisen: RM ${(commSen / 100).toFixed(2)} (${affiliate.commissionRate}%)`,
+          remark: `Sale dirujuk oleh Affiliate: ${affiliate.name} (Kod: ${affiliate.code}) | Komisen: RM ${(commSen / 100).toFixed(2)} (${affiliate.commissionType === 'fixed_amount' ? 'Tetap' : `${affiliate.commissionRate}%`})`,
         }
       }
     }
