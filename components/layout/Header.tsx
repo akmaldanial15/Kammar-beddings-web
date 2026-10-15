@@ -1328,182 +1328,80 @@ export function Header() {
                 </button>
               </div>
 
-              {/* 3 SLIDE 1 PROMINENT DISCOVERY CARDS */}
-              <div className="p-3 bg-gradient-to-b from-cream/20 to-warmwhite border-b border-borderLight/60">
+              {/* 3 SLEEK QUICK-ACCESS PILLS (Compact & Modern) */}
+              <div className="px-3.5 py-2.5 bg-warmwhite border-b border-borderLight/60">
                 <div className="grid grid-cols-3 gap-2">
-                  {/* Showroom */}
                   <Link
                     href="/showrooms"
                     onClick={() => setIsMobileMenuOpen(false)}
-                    className="p-2.5 rounded-2xl bg-warmwhite border border-borderLight shadow-2xs hover:border-[#1E4E8C] transition-all group flex flex-col justify-between"
+                    className="flex items-center justify-center space-x-1.5 py-2 px-1 rounded-xl bg-cream/60 hover:bg-cream border border-borderLight text-forest font-bold text-[11px] transition-all shadow-2xs group"
                   >
-                    <div className="w-6 h-6 rounded-lg bg-[#B49A58]/15 flex items-center justify-center text-[#B49A58] mb-1.5">
-                      <MapPin className="w-3.5 h-3.5" />
-                    </div>
-                    <div>
-                      <span className="text-[11px] font-bold text-forest-dark block leading-tight">
-                        SHOWROOM
-                      </span>
-                      <span className="text-[9px] text-secondary">
-                        Tasek Gelugor
-                      </span>
-                    </div>
+                    <MapPin className="w-3.5 h-3.5 text-[#B49A58] flex-shrink-0" />
+                    <span className="truncate">{locale === 'bm' ? 'Showroom' : 'Showrooms'}</span>
                   </Link>
 
-                  {/* Jelajah Promosi Card */}
                   <Link
                     href="/jelajah-promosi"
                     onClick={() => setIsMobileMenuOpen(false)}
-                    className="p-2.5 rounded-2xl bg-amber-50 border border-amber-200 shadow-2xs hover:border-amber-400 transition-all group flex flex-col justify-between"
+                    className="flex items-center justify-center space-x-1.5 py-2 px-1 rounded-xl bg-amber-50 hover:bg-amber-100/70 border border-amber-200/80 text-amber-900 font-bold text-[11px] transition-all shadow-2xs group"
                   >
-                    <div className="w-6 h-6 rounded-lg bg-amber-500/15 flex items-center justify-center text-amber-700 mb-1.5">
-                      <Flame className="w-3.5 h-3.5" />
-                    </div>
-                    <div>
-                      <span className="text-[11px] font-bold text-amber-900 block leading-tight">
-                        JELAJAH PROMOSI
-                      </span>
-                      <span className="text-[9px] text-amber-700 font-semibold">
-                        Lokasi Terkini
-                      </span>
-                    </div>
+                    <Flame className="w-3.5 h-3.5 text-amber-600 flex-shrink-0" />
+                    <span className="truncate">{locale === 'bm' ? 'Promosi' : 'Offers'}</span>
                   </Link>
 
-                  {/* Profil Kilang Card */}
                   <Link
                     href="/profil"
                     onClick={() => setIsMobileMenuOpen(false)}
-                    className="p-2.5 rounded-2xl bg-warmwhite border border-borderLight shadow-2xs hover:border-[#1E4E8C] transition-all group flex flex-col justify-between"
+                    className="flex items-center justify-center space-x-1.5 py-2 px-1 rounded-xl bg-cream/60 hover:bg-cream border border-borderLight text-forest font-bold text-[11px] transition-all shadow-2xs group"
                   >
-                    <div className="w-6 h-6 rounded-lg bg-[#1E4E8C]/10 flex items-center justify-center text-[#1E4E8C] mb-1.5">
-                      <Building2 className="w-3.5 h-3.5" />
-                    </div>
-                    <div>
-                      <span className="text-[11px] font-bold text-forest-dark block leading-tight">
-                        PROFIL SYARIKAT
-                      </span>
-                      <span className="text-[9px] text-secondary">
-                        Fasiliti Kilang
-                      </span>
-                    </div>
+                    <Building2 className="w-3.5 h-3.5 text-[#1E4E8C] flex-shrink-0" />
+                    <span className="truncate">{locale === 'bm' ? 'Kilang TSJ' : 'Factory'}</span>
                   </Link>
                 </div>
               </div>
 
-              {/* SECTION: STORE COLLECTIONS */}
-              <div className="p-3.5 space-y-1">
-                <div className="px-2 pb-1.5 flex items-center justify-between">
+              {/* 4. KOLEKSI PRODUK KILANG (Clean, Flat, Non-Cluttered List) */}
+              <div className="p-3.5 space-y-2">
+                <div className="px-1 flex items-center justify-between">
                   <span className="text-[10px] font-bold tracking-widest uppercase text-secondary">
-                    {locale === 'bm' ? 'Koleksi Utama' : 'Store Collections'}
+                    {locale === 'bm' ? 'Koleksi Produk Kilang' : 'Factory Collections'}
                   </span>
                   <span className="text-[10px] font-semibold text-gold-dark">
-                    100% Terus Dari Kilang
+                    {locale === 'bm' ? 'Terus Dari Kilang' : 'Direct From Factory'}
                   </span>
                 </div>
 
-                <nav className="space-y-1">
+                {/* Explore All Products Card */}
+                <Link
+                  href="/collections"
+                  onClick={() => setIsMobileMenuOpen(false)}
+                  className="flex items-center justify-between p-2.5 rounded-xl bg-gradient-to-r from-[#1E4E8C] to-[#2A6DB5] text-white shadow-xs hover:opacity-95 transition-all text-xs font-bold"
+                >
+                  <div className="flex items-center space-x-2">
+                    <span className="text-base">✨</span>
+                    <span>{locale === 'bm' ? 'Lihat Semua Produk & Saiz' : 'Explore All Collections'}</span>
+                  </div>
+                  <span className="text-xs opacity-90">&rarr;</span>
+                </Link>
+
+                {/* Clean Category Rows */}
+                <nav className="space-y-1 pt-1">
                   {navCategories.map((cat) => {
                     const targetUrl = cat.customUrl || `/collections/${cat.slug}`
                     const label = getCategoryLabel(cat)
                     const isSaleCategory = cat.badge?.toUpperCase() === 'SALE' || cat.slug === 'offers' || cat.badge?.toUpperCase() === 'HARGA KILANG'
-                    const isMattress = cat.slug === 'tilam-toto' || cat.slug === 'mattress'
 
-                    if (cat.hasMegaMenu) {
-                      const isExpanded = mobileExpandedSection === cat.id || (mobileExpandedSection === 'mattresses' && isMattress)
-
-                      return (
-                        <div key={cat.id} className="rounded-2xl transition-colors overflow-hidden">
-                          <button
-                            type="button"
-                            onClick={() => setMobileExpandedSection(isExpanded ? null : cat.id)}
-                            className={`w-full flex items-center justify-between p-2.5 rounded-2xl text-xs font-bold transition-all text-left cursor-pointer ${
-                              isExpanded
-                                ? 'bg-[#1E4E8C] text-white shadow-xs'
-                                : 'text-forest-dark hover:bg-cream/80'
-                            }`}
-                          >
-                            <div className="flex items-center space-x-2.5">
-                              <span className={`w-7 h-7 rounded-xl flex items-center justify-center text-xs ${
-                                isExpanded ? 'bg-white/15 text-[#D4AF37]' : 'bg-cream text-forest'
-                              }`}>
-                                🛏️
-                              </span>
-                              <div>
-                                <span className="block">{label}</span>
-                                <span className={`text-[10px] font-normal ${isExpanded ? 'text-white/80' : 'text-secondary'}`}>
-                                  {locale === 'bm' ? 'Asian Polyester Fibre Gebu & Tebal' : 'Thick Asian Polyester Fibre Toto'}
-                                </span>
-                              </div>
-                            </div>
-                            <ChevronDown
-                              className={`w-4 h-4 transition-transform duration-200 ${
-                                isExpanded ? 'rotate-180 text-[#D4AF37]' : 'text-secondary'
-                              }`}
-                            />
-                          </button>
-
-                          {/* Smooth Collapsible Content */}
-                          {isExpanded && (
-                            <div className="p-2.5 mt-1 bg-cream/50 rounded-2xl border border-borderLight/60 space-y-2.5 animate-in fade-in duration-200">
-                              <Link
-                                href={targetUrl}
-                                onClick={() => setIsMobileMenuOpen(false)}
-                                className="flex items-center justify-between px-3 py-2 bg-warmwhite rounded-xl border border-borderLight text-xs font-bold text-forest hover:bg-forest hover:text-white transition-all shadow-2xs"
-                              >
-                                <span>{locale === 'bm' ? 'Terokai Semua Koleksi Tilam' : 'Explore All Mattresses'}</span>
-                                <span>&rarr;</span>
-                              </Link>
-
-                              {megaMenuConfig.columns?.map((col, idx) => {
-                                const colTitle = locale === 'bm' && col.titleBm ? col.titleBm : col.title
-                                return (
-                                  <div key={col.id} className={idx > 0 ? 'pt-2 border-t border-borderLight/60' : ''}>
-                                    <span className="text-[10px] font-bold uppercase tracking-wider text-secondary px-2 block mb-1.5">
-                                      {colTitle}
-                                    </span>
-                                    <div className="space-y-1">
-                                      {col.items?.map((item) => {
-                                        const itemLabel = locale === 'bm' && item.labelBm ? item.labelBm : item.label
-                                        return (
-                                          <Link
-                                            key={item.id}
-                                            href={item.href}
-                                            onClick={() => setIsMobileMenuOpen(false)}
-                                            className="flex items-center justify-between px-3 py-1.5 rounded-xl text-xs text-charcoal hover:bg-warmwhite hover:text-forest transition-colors"
-                                          >
-                                            <span>{itemLabel}</span>
-                                          </Link>
-                                        )
-                                      })}
-                                    </div>
-                                  </div>
-                                )
-                              })}
-
-                              {megaMenuConfig.promoCard?.enabled !== false && (
-                                <div className="pt-2 border-t border-borderLight/60">
-                                  <Link
-                                    href={megaMenuConfig.promoCard?.buttonUrl || '/finder'}
-                                    onClick={() => setIsMobileMenuOpen(false)}
-                                    className="flex items-center justify-between p-2.5 bg-gold/15 rounded-xl border border-gold/30 text-xs font-bold text-forest hover:bg-gold/25 transition-all"
-                                  >
-                                    <div className="flex items-center space-x-1.5">
-                                      <Sparkles className="w-3.5 h-3.5 text-gold-dark" />
-                                      <span>{megaMenuConfig.promoCard?.title || 'Personalized Fit Quiz'}</span>
-                                    </div>
-                                    <span>&rarr;</span>
-                                  </Link>
-                                </div>
-                              )}
-                            </div>
-                          )}
-                        </div>
-                      )
-                    }
-
-                    // Standard category item
                     const categoryIcons: Record<string, string> = {
                       'tilam-toto': '🛏️',
+                      'tilam-gulung': '🌀',
+                      'tilam-kekabu': '🌿',
+                      'bantal-tidur': '🪶',
+                      'bantal-peluk': '🛋️',
+                      'produk-baby': '👶',
+                      selimut: '🧵',
+                      'kusyen-sofa': '🛋️',
+                      'sarung-tilam': '🛡️',
+                      'custom-oem': '🏭',
                       'tilam-lipat': '🛋️',
                       bantal: '🪶',
                       'cadang-comforter': '🧵',
@@ -1521,32 +1419,32 @@ export function Header() {
                         key={cat.id}
                         href={targetUrl}
                         onClick={() => setIsMobileMenuOpen(false)}
-                        className={`flex items-center justify-between p-2.5 rounded-2xl text-xs font-bold transition-all ${
+                        className={`flex items-center justify-between px-3 py-2.5 rounded-xl text-xs font-semibold transition-all ${
                           isSaleCategory
-                            ? 'bg-sale/5 border border-sale/20 text-sale hover:bg-sale/10'
-                            : 'text-charcoal hover:bg-cream/80'
+                            ? 'bg-amber-50/60 border border-amber-200/50 text-amber-900 hover:bg-amber-100/60'
+                            : 'text-charcoal hover:bg-cream/80 hover:text-forest'
                         }`}
                       >
                         <div className="flex items-center space-x-2.5">
-                          <span className="w-7 h-7 rounded-xl bg-cream flex items-center justify-center text-xs">
+                          <span className="w-7 h-7 rounded-lg bg-cream/70 flex items-center justify-center text-xs flex-shrink-0">
                             {categoryIcons[cat.slug] || '✨'}
                           </span>
-                          <span>{label}</span>
+                          <span className="leading-snug">{label}</span>
                         </div>
 
-                        <div className="flex items-center space-x-1.5">
+                        <div className="flex items-center space-x-1.5 flex-shrink-0">
                           {cat.badge && (
                             <span
-                              className={`text-[9px] uppercase tracking-wider px-2 py-0.5 rounded-full font-extrabold ${
+                              className={`text-[9px] uppercase tracking-wider px-1.5 py-0.5 rounded font-extrabold ${
                                 isSaleCategory
-                                  ? 'bg-sale text-white shadow-2xs'
+                                  ? 'bg-amber-600 text-white shadow-2xs'
                                   : 'bg-[#B49A58]/20 text-[#8C6B1C]'
                               }`}
                             >
                               {cat.badge}
                             </span>
                           )}
-                          <span className="text-secondary text-sm">&rsaquo;</span>
+                          <span className="text-secondary text-base leading-none">&rsaquo;</span>
                         </div>
                       </Link>
                     )
@@ -1554,28 +1452,56 @@ export function Header() {
                 </nav>
               </div>
 
-              {/* SECTION: CARE & SERVICES */}
-              <div className="p-3.5 pt-0 space-y-1">
-                <div className="px-2 pb-1.5">
+              {/* 5. PERKHIDMATAN & MAKLUMAT (Clean & Organized) */}
+              <div className="px-3.5 pb-3.5 space-y-1 border-t border-borderLight/60 pt-3">
+                <div className="px-1 pb-1">
                   <span className="text-[10px] font-bold tracking-widest uppercase text-secondary">
-                    {locale === 'bm' ? 'Perkhidmatan & Panduan' : 'Services & Care'}
+                    {locale === 'bm' ? 'Perkhidmatan & Maklumat' : 'Services & Support'}
                   </span>
                 </div>
 
-                <div className="space-y-1">
+                <div className="space-y-0.5">
+                  <Link
+                    href="/account/orders"
+                    onClick={() => setIsMobileMenuOpen(false)}
+                    className="flex items-center justify-between px-3 py-2 rounded-xl text-xs font-medium text-charcoal hover:bg-cream hover:text-forest transition-colors"
+                  >
+                    <div className="flex items-center space-x-2.5">
+                      <span className="w-6 h-6 rounded-lg bg-cream flex items-center justify-center text-xs text-gold-dark">
+                        <Package className="w-3.5 h-3.5" />
+                      </span>
+                      <span>{locale === 'bm' ? 'Jejak Status Tempahan' : 'Track Order Status'}</span>
+                    </div>
+                    <span className="text-secondary text-sm">&rsaquo;</span>
+                  </Link>
+
+                  <Link
+                    href="/warranty"
+                    onClick={() => setIsMobileMenuOpen(false)}
+                    className="flex items-center justify-between px-3 py-2 rounded-xl text-xs font-medium text-charcoal hover:bg-cream hover:text-forest transition-colors"
+                  >
+                    <div className="flex items-center space-x-2.5">
+                      <span className="w-6 h-6 rounded-lg bg-cream flex items-center justify-center text-xs text-gold-dark">
+                        <ShieldCheck className="w-3.5 h-3.5" />
+                      </span>
+                      <span>{locale === 'bm' ? 'Daftar & Semak Waranti' : 'Warranty Registration'}</span>
+                    </div>
+                    <span className="text-secondary text-sm">&rsaquo;</span>
+                  </Link>
+
                   <Link
                     href="/compare"
                     onClick={() => setIsMobileMenuOpen(false)}
-                    className="flex items-center justify-between p-2.5 rounded-2xl text-xs font-medium text-charcoal hover:bg-cream transition-colors"
+                    className="flex items-center justify-between px-3 py-2 rounded-xl text-xs font-medium text-charcoal hover:bg-cream hover:text-forest transition-colors"
                   >
                     <div className="flex items-center space-x-2.5">
-                      <span className="w-7 h-7 rounded-xl bg-cream flex items-center justify-center text-xs">
-                        <Scale className="w-3.5 h-3.5 text-gold-dark" />
+                      <span className="w-6 h-6 rounded-lg bg-cream flex items-center justify-center text-xs text-gold-dark">
+                        <Scale className="w-3.5 h-3.5" />
                       </span>
                       <span>{locale === 'bm' ? 'Bandingkan Tilam' : 'Compare Mattresses'}</span>
                     </div>
                     {compareCount > 0 ? (
-                      <span className="px-2 py-0.5 rounded-full bg-gold text-forest-dark text-[10px] font-bold">
+                      <span className="px-1.5 py-0.5 rounded-full bg-gold text-forest-dark text-[10px] font-bold">
                         {compareCount}
                       </span>
                     ) : (
@@ -1584,29 +1510,15 @@ export function Header() {
                   </Link>
 
                   <Link
-                    href="/blog"
+                    href="/affiliate"
                     onClick={() => setIsMobileMenuOpen(false)}
-                    className="flex items-center justify-between p-2.5 rounded-2xl text-xs font-medium text-charcoal hover:bg-cream transition-colors"
+                    className="flex items-center justify-between px-3 py-2 rounded-xl text-xs font-medium text-charcoal hover:bg-cream hover:text-forest transition-colors"
                   >
                     <div className="flex items-center space-x-2.5">
-                      <span className="w-7 h-7 rounded-xl bg-cream flex items-center justify-center text-xs">
-                        <BookOpen className="w-3.5 h-3.5 text-gold-dark" />
+                      <span className="w-6 h-6 rounded-lg bg-cream flex items-center justify-center text-xs text-gold-dark">
+                        <Sparkles className="w-3.5 h-3.5" />
                       </span>
-                      <span>{locale === 'bm' ? 'Jurnal Sains Tidur' : 'Sleep Science Journal'}</span>
-                    </div>
-                    <span className="text-secondary text-sm">&rsaquo;</span>
-                  </Link>
-
-                  <Link
-                    href="/warranty"
-                    onClick={() => setIsMobileMenuOpen(false)}
-                    className="flex items-center justify-between p-2.5 rounded-2xl text-xs font-medium text-charcoal hover:bg-cream transition-colors"
-                  >
-                    <div className="flex items-center space-x-2.5">
-                      <span className="w-7 h-7 rounded-xl bg-cream flex items-center justify-center text-xs">
-                        <ShieldCheck className="w-3.5 h-3.5 text-gold-dark" />
-                      </span>
-                      <span>{locale === 'bm' ? 'Jaminan Kualiti Kilang & QC' : 'Factory Quality & QC Warranty'}</span>
+                      <span>{locale === 'bm' ? 'Program Ejen Affiliate' : 'Affiliate Partner Program'}</span>
                     </div>
                     <span className="text-secondary text-sm">&rsaquo;</span>
                   </Link>
@@ -1614,16 +1526,16 @@ export function Header() {
               </div>
             </div>
 
-            {/* STICKY BOTTOM ACTION FOOTER (Thumb Zone) */}
-            <div className="p-3.5 border-t border-borderLight bg-warmwhite/95 backdrop-blur-md space-y-2.5 pb-[max(1rem,env(safe-area-inset-bottom))] shadow-lg">
+            {/* 6. STICKY BOTTOM ACTION FOOTER (Thumb Zone) */}
+            <div className="p-3 border-t border-borderLight bg-warmwhite/95 backdrop-blur-md space-y-2 pb-[max(0.75rem,env(safe-area-inset-bottom))] shadow-lg">
               {/* Language & Account bar */}
-              <div className="flex items-center justify-between text-xs">
+              <div className="flex items-center justify-between text-xs px-1">
                 <div className="flex items-center space-x-1.5">
                   <Globe className="w-3.5 h-3.5 text-gold-dark" />
                   <div className="inline-flex p-0.5 bg-cream rounded-full border border-borderLight text-[11px]">
                     <button
                       onClick={() => setLocale('en')}
-                      className={`px-2.5 py-1 rounded-full font-bold transition-all ${
+                      className={`px-2.5 py-0.5 rounded-full font-bold transition-all ${
                         locale === 'en' ? 'bg-[#1E4E8C] text-white shadow-xs' : 'text-secondary hover:text-charcoal'
                       }`}
                     >
@@ -1631,7 +1543,7 @@ export function Header() {
                     </button>
                     <button
                       onClick={() => setLocale('bm')}
-                      className={`px-2.5 py-1 rounded-full font-bold transition-all ${
+                      className={`px-2.5 py-0.5 rounded-full font-bold transition-all ${
                         locale === 'bm' ? 'bg-[#1E4E8C] text-white shadow-xs' : 'text-secondary hover:text-charcoal'
                       }`}
                     >
@@ -1655,10 +1567,10 @@ export function Header() {
                 href="https://wa.me/60194786991?text=Salam%20Tunas%20Sinar%20Jaya%20Kamaar%20Beddings,%20saya%20ingin%20bertanya%20tentang%20produk%20dan%20borong."
                 target="_blank"
                 rel="noopener noreferrer"
-                className="w-full py-2.5 px-4 bg-gradient-to-r from-forest to-forest-light hover:from-forest-dark hover:to-forest text-white text-xs font-bold rounded-xl flex items-center justify-center space-x-2 transition-all shadow-sm"
+                className="w-full py-2.5 px-3 bg-gradient-to-r from-forest to-forest-light hover:from-forest-dark hover:to-forest text-white text-xs font-bold rounded-xl flex items-center justify-center space-x-2 transition-all shadow-sm"
               >
                 <Phone className="w-3.5 h-3.5 text-sky-200" />
-                <span>{locale === 'bm' ? 'WhatsApp Kilang (019-478 6991)' : 'Official WhatsApp (019-478 6991)'}</span>
+                <span>{locale === 'bm' ? 'WhatsApp Kilang (019-478 6991)' : 'WhatsApp (019-478 6991)'}</span>
               </a>
             </div>
           </div>

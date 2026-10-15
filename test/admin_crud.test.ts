@@ -102,32 +102,40 @@ describe('Comprehensive Admin CRUD & Editing Automation Suite', () => {
         slug: `tilam-ujian-crud-${testIdSuffix}`,
         subtitle: 'Tilam prototaip bagi pengesahan kualiti',
         description: 'Penerangan tilam ujian berkualiti tinggi terus dari kilang TSJ.',
-        category: 'tilam-toto',
-        categorySlug: 'tilam-toto',
+        categoryId: 'cat-tilam-toto',
+        productType: 'mattress',
         badge: 'BARU & EKSKLUSIF',
-        isBestSeller: true,
         isFeatured: true,
         status: 'published',
-        rating: 5,
-        reviewCount: 1,
+        warrantyYears: 2,
         features: ['100% Cotton Padat', 'Mudah Dicuci'],
         specifications: {
           material: 'Polyester TC & Cotton',
           thickness: '4 Inci',
-          warrantyYears: 2,
+          warrantyYears: '2 Tahun',
         },
-        images: ['/images/products/toto-single-poly.png'],
+        images: [
+          {
+            id: `img-${cleanup.productId}-1`,
+            productId: cleanup.productId,
+            imageUrl: '/images/products/toto-single-poly.png',
+            altText: 'Tilam Ujian',
+            displayOrder: 1,
+            isPrimary: true,
+          },
+        ],
         variants: [
           {
             id: `var-${cleanup.productId}-1`,
+            productId: cleanup.productId,
             sku: `SKU-CRUD-${testIdSuffix.slice(-4)}`,
             name: 'Single 3ft',
             sizeName: 'Single',
             dimensions: '90 cm x 200 cm',
             priceSen: 4990,
-            originalPriceSen: 6990,
+            compareAtPriceSen: 6990,
             stockQuantity: 25,
-            isDefault: true,
+            isActive: true,
           },
         ],
         createdAt: new Date().toISOString(),
@@ -220,7 +228,7 @@ describe('Comprehensive Admin CRUD & Editing Automation Suite', () => {
         },
         actorEmail
       )
-      expect(updated.name).toBe('Kategori Ujian CRUD (Dikemaskini)')
+      expect(updated?.name).toBe('Kategori Ujian CRUD (Dikemaskini)')
 
       // 4. Reorder
       const reorderResult = await reorderCategories(
@@ -317,7 +325,7 @@ describe('Comprehensive Admin CRUD & Editing Automation Suite', () => {
         {
           paymentStatus: 'paid',
           fulfillmentStatus: 'processing',
-          notes: 'Disahkan oleh Kamaar Admin melalui panggilan telefon.',
+          internalNotes: 'Disahkan oleh Kamaar Admin melalui panggilan telefon.',
         },
         actorEmail
       )
@@ -430,7 +438,7 @@ describe('Comprehensive Admin CRUD & Editing Automation Suite', () => {
         },
         actorEmail
       )
-      expect(updated.commissionRate).toBe(18)
+      expect(updated?.commissionRate).toBe(18)
 
       // 4. Delete
       const deleted = await deleteAffiliate(newAff.id, actorEmail)
@@ -456,15 +464,10 @@ describe('Comprehensive Admin CRUD & Editing Automation Suite', () => {
         state: 'Pulau Pinang',
         postcode: '13300',
         phone: '019-478 6991',
-        email: 'tasek.showroom@kamaar.my',
-        operatingHours: '9:00 AM - 6:00 PM',
-        latitude: 5.4833,
-        longitude: 100.4933,
-        googleMapsUrl: 'https://maps.google.com',
-        wazeUrl: 'https://waze.com',
-        images: ['/images/showroom/showroom-main.jpg'],
-        features: ['Bilik Ujian Tilam', 'Parkir Percuma'],
-        isMain: false,
+        openingHours: '9:00 AM - 6:00 PM',
+        mapUrl: 'https://maps.google.com',
+        imageUrl: '/images/showroom/showroom-main.jpg',
+        displayOrder: 99,
         isActive: true,
       }
 
@@ -480,12 +483,12 @@ describe('Comprehensive Admin CRUD & Editing Automation Suite', () => {
         {
           ...newShowroom,
           name: 'Showroom TSJ Cawangan Ujian (VIP Studio)',
-          operatingHours: '8:30 AM - 7:00 PM',
+          openingHours: '8:30 AM - 7:00 PM',
         },
         actorEmail
       )
       expect(updated.name).toContain('VIP Studio')
-      expect(updated.operatingHours).toBe('8:30 AM - 7:00 PM')
+      expect(updated.openingHours).toBe('8:30 AM - 7:00 PM')
 
       // 4. Delete
       const del = await deleteShowroom(cleanup.showroomId, actorEmail)
@@ -562,13 +565,12 @@ describe('Comprehensive Admin CRUD & Editing Automation Suite', () => {
       // 1. Create custom payment method
       const newMethod: PaymentMethodConfig = {
         id: cleanup.paymentMethodId,
-        providerId: 'manual_transfer',
+        providerType: 'custom',
         name: 'Pindahan Bank Manual (Ujian CRUD)',
         description: 'Bayar secara manual ke akaun kilang TSJ',
-        badge: 'MANUAL',
         enabled: true,
-        isCustom: true,
-        displayOrder: 99,
+        sortOrder: 99,
+        badgeIcons: ['duitnow', 'fpx'],
       }
 
       const saved = await savePaymentMethod(newMethod, actorEmail)
