@@ -11,6 +11,7 @@ import {
 import { calculateShippingFee, validateMalaysianPostcode, validateMalaysianPhone } from '@/lib/utils/format'
 import { calculateTieredPrice } from '@/lib/utils/pricing'
 import { chipProvider } from '@/lib/payment/chip'
+import { resolvePublicAppUrl } from '@/lib/utils/url'
 
 const CheckoutRequestSchema = z.object({
   items: z.array(
@@ -45,6 +46,7 @@ const CheckoutRequestSchema = z.object({
   affiliateCode: z.string().optional(),
   paymentMethodId: z.string().optional(),
   paymentProvider: z.string().optional(),
+  clientOrigin: z.string().optional(),
 })
 
 export async function POST(request: NextRequest) {
@@ -59,7 +61,7 @@ export async function POST(request: NextRequest) {
       )
     }
 
-    const { items, customer, shippingAddress, deliveryDetails, couponCode, affiliateCode, paymentMethodId, paymentProvider: reqProvider } = parseResult.data
+    const { items, customer, shippingAddress, deliveryDetails, couponCode, affiliateCode, paymentMethodId, paymentProvider: reqProvider, clientOrigin } = parseResult.data
 
     // 1. Re-validate each item price and stock against server database (Never trust client)
     let subtotalSen = 0
@@ -236,12 +238,8 @@ export async function POST(request: NextRequest) {
     const originHeader = request.headers.get('origin')
     const forwardedHost = request.headers.get('x-forwarded-host') || request.headers.get('host')
     const forwardedProto = request.headers.get('x-forwarded-proto') || 'https'
-    const dynamicOrigin = originHeader || (forwardedHost ? `${forwardedProto}://${forwardedHost}` : undefined)
-    const appUrl =
-      process.env.NEXT_PUBLIC_APP_URL ||
-      (process.env.VERCEL_URL ? `https://${process.env.VERCEL_URL}` : undefined) ||
-      dynamicOrigin ||
-      'http://localhost:3000'
+    const dynamicOrigin = clientOrigin || originHeader || (forwardedHost ? `${forwardedProto}://${forwardedHost}` : undefined)
+    const appUrl = resolvePublicAppUrl(dynamicOrigin)
 
     const preferredMethod =
       paymentMethodId === 'pay-tng' || reqProvider === 'tng' ? 'tng' : 'fpx'

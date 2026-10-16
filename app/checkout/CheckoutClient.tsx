@@ -924,6 +924,7 @@ export function CheckoutClient({ initialPaymentSettings, initialSiteSettings, av
           affiliateCode: affiliateCode.trim() || undefined,
           paymentMethodId: selectedMethodId || selectedMethod?.id,
           paymentProvider: 'chip',
+          clientOrigin: typeof window !== 'undefined' ? window.location.origin : undefined,
         }),
       })
 

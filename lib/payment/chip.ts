@@ -32,21 +32,39 @@ function getChipConfig() {
   return { brandId, secretKey, publicKey, isReal }
 }
 
+import { resolvePublicAppUrl } from '@/lib/utils/url'
+
 export class ChipPaymentProvider implements PaymentProvider {
   name = 'chip'
 
   async createCheckoutSession(params: CreatePaymentSessionParams): Promise<PaymentSessionResult> {
-    let appUrl =
-      process.env.NEXT_PUBLIC_APP_URL ||
-      (process.env.VERCEL_URL ? `https://${process.env.VERCEL_URL}` : undefined)
-
-    if (!appUrl && params.successUrl) {
+    const normalizeUrl = (rawUrl?: string): string | undefined => {
+      if (!rawUrl) return undefined
       try {
-        const u = new URL(params.successUrl)
-        appUrl = u.origin
-      } catch (_) {}
+        const u = new URL(rawUrl)
+        if (u.hostname.includes('.vercel.app') && u.hostname !== 'kammar-beddings-web.vercel.app') {
+          return `https://kammar-beddings-web.vercel.app${u.pathname}${u.search}${u.hash}`
+        }
+        return rawUrl
+      } catch (_) {
+        return rawUrl
+      }
     }
-    if (!appUrl) appUrl = 'http://localhost:3000'
+
+    const safeSuccessUrl = normalizeUrl(params.successUrl)
+    const safeCancelUrl = normalizeUrl(params.cancelUrl)
+
+    const appUrl = resolvePublicAppUrl(
+      safeSuccessUrl
+        ? (() => {
+            try {
+              return new URL(safeSuccessUrl).origin
+            } catch (_) {
+              return undefined
+            }
+          })()
+        : undefined
+    )
 
     const { brandId, secretKey, isReal } = getChipConfig()
 
@@ -57,9 +75,9 @@ export class ChipPaymentProvider implements PaymentProvider {
         const callbackUrl = isLocalOrCustomPort ? undefined : `${appUrl}/api/webhooks/chip`
 
         const purchasePayload: any = {
-          success_redirect: params.successUrl,
-          failure_redirect: params.cancelUrl,
-          cancel_redirect: params.cancelUrl,
+          success_redirect: safeSuccessUrl,
+          failure_redirect: safeCancelUrl,
+          cancel_redirect: safeCancelUrl,
           creator_agent: 'KAMAAR Beddings',
           reference: params.orderId,
           platform: 'web',
