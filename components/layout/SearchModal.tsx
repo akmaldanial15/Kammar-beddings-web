@@ -28,8 +28,13 @@ export function SearchModal({ isOpen, onClose }: SearchModalProps) {
       document.body.style.overflow = 'hidden'
     } else {
       document.body.style.overflow = ''
-      setQuery('')
-      setResults([])
+      // Crucial for mobile: Keep results mounted while the 300ms slide-up animation runs
+      // so the tapped <Link> is never destroyed mid-tap!
+      const timer = setTimeout(() => {
+        setQuery('')
+        setResults([])
+      }, 350)
+      return () => clearTimeout(timer)
     }
     return () => {
       document.body.style.overflow = ''
@@ -72,11 +77,23 @@ export function SearchModal({ isOpen, onClose }: SearchModalProps) {
 
   const handleSelectQuick = (tag: string) => {
     setQuery(tag)
+    inputRef.current?.focus()
+  }
+
+  const handleNavigateToProduct = (e: React.MouseEvent, slug: string) => {
+    e.preventDefault()
+    // Explicitly blur on phone to close mobile keyboard cleanly
+    inputRef.current?.blur()
+    // Navigate via router immediately
+    router.push(`/products/${slug}`)
+    // Trigger modal close
+    onClose()
   }
 
   const handleSubmit = (e: React.FormEvent) => {
     e.preventDefault()
     if (query.trim()) {
+      inputRef.current?.blur()
       router.push(`/collections/mattress?search=${encodeURIComponent(query.trim())}`)
       onClose()
     }
@@ -110,7 +127,7 @@ export function SearchModal({ isOpen, onClose }: SearchModalProps) {
             </span>
             <button
               onClick={onClose}
-              className="text-charcoal-muted hover:text-charcoal p-1 rounded-full hover:bg-cream transition-colors"
+              className="text-charcoal-muted hover:text-charcoal p-1.5 rounded-full hover:bg-cream active:bg-cream-dark transition-colors touch-manipulation cursor-pointer"
               aria-label="Close search"
             >
               <X className="w-5 h-5" />
@@ -118,20 +135,25 @@ export function SearchModal({ isOpen, onClose }: SearchModalProps) {
           </div>
 
           <form onSubmit={handleSubmit} className="relative mt-4">
-            <Search className="absolute left-4 top-1/2 -translate-y-1/2 w-6 h-6 text-gold-dark" />
+            <Search className="absolute left-4 top-1/2 -translate-y-1/2 w-6 h-6 text-gold-dark pointer-events-none" />
             <input
               ref={inputRef}
               type="text"
               value={query}
               onChange={(e) => setQuery(e.target.value)}
               placeholder={t.searchPlaceholder}
-              className="w-full pl-14 pr-12 py-3.5 text-lg md:text-xl bg-cream-light rounded-lg border border-borderLight focus:border-gold focus:ring-2 focus:ring-gold/20 outline-none text-charcoal placeholder-charcoal-muted/60 transition-all"
+              autoComplete="off"
+              autoCorrect="off"
+              spellCheck="false"
+              className="w-full pl-14 pr-12 py-3.5 text-base sm:text-lg md:text-xl bg-cream-light rounded-xl border border-borderLight focus:border-gold focus:ring-2 focus:ring-gold/20 outline-none text-charcoal placeholder-charcoal-muted/60 transition-all touch-manipulation"
             />
             {query && (
               <button
                 type="button"
+                onMouseDown={(e) => e.preventDefault()}
                 onClick={() => setQuery('')}
-                className="absolute right-4 top-1/2 -translate-y-1/2 text-charcoal-muted hover:text-charcoal"
+                className="absolute right-4 top-1/2 -translate-y-1/2 text-charcoal-muted hover:text-charcoal p-1 rounded-full touch-manipulation"
+                aria-label="Clear query"
               >
                 <X className="w-5 h-5" />
               </button>
@@ -145,8 +167,12 @@ export function SearchModal({ isOpen, onClose }: SearchModalProps) {
               <button
                 key={tag}
                 type="button"
+                onMouseDown={(e) => {
+                  // Prevent search input from blurring and collapsing virtual keyboard
+                  e.preventDefault()
+                }}
                 onClick={() => handleSelectQuick(tag)}
-                className="text-xs px-2.5 py-1 bg-cream hover:bg-cream-dark text-charcoal border border-borderLight rounded-full transition-colors"
+                className="text-xs px-3 py-1.5 bg-cream hover:bg-cream-dark active:scale-95 text-charcoal border border-borderLight rounded-full transition-all touch-manipulation cursor-pointer"
               >
                 {tag}
               </button>
@@ -154,7 +180,7 @@ export function SearchModal({ isOpen, onClose }: SearchModalProps) {
           </div>
 
           {/* Results Area */}
-          <div className="mt-6 max-h-[60vh] overflow-y-auto divide-y divide-borderLight">
+          <div className="mt-6 max-h-[55vh] sm:max-h-[60vh] overflow-y-auto divide-y divide-borderLight overscroll-contain">
             {isLoading && (
               <div className="py-8 text-center text-charcoal-muted text-sm animate-pulse">
                 Mencari produk kilang Tunas Sinar Jaya...
@@ -169,9 +195,10 @@ export function SearchModal({ isOpen, onClose }: SearchModalProps) {
             )}
 
             {!isLoading && results.length > 0 && (
-              <div className="py-2 space-y-3">
-                <div className="text-xs font-semibold text-charcoal-muted uppercase tracking-wider mb-2">
-                  Matching Products ({results.length})
+              <div className="py-2 space-y-2.5">
+                <div className="text-xs font-semibold text-charcoal-muted uppercase tracking-wider mb-2 flex items-center justify-between">
+                  <span>Matching Products ({results.length})</span>
+                  <span className="text-[11px] font-normal text-gold-dark lowercase hidden sm:inline">tekan untuk lihat</span>
                 </div>
                 {results.map((product) => {
                   const minPrice = Math.min(...product.variants.map((v) => v.priceSen))
@@ -179,10 +206,15 @@ export function SearchModal({ isOpen, onClose }: SearchModalProps) {
                     <Link
                       key={product.id}
                       href={`/products/${product.slug}`}
-                      onClick={onClose}
-                      className="flex items-center space-x-4 p-2.5 rounded-lg hover:bg-cream transition-colors group"
+                      prefetch={true}
+                      onMouseDown={(e) => {
+                        // Crucial for mobile: prevent search input blur from collapsing the keyboard and shifting layout
+                        e.preventDefault()
+                      }}
+                      onClick={(e) => handleNavigateToProduct(e, product.slug)}
+                      className="flex items-center space-x-3.5 p-3 rounded-xl hover:bg-cream active:bg-cream-dark active:scale-[0.99] transition-all group cursor-pointer touch-manipulation border border-transparent hover:border-borderLight"
                     >
-                      <div className="relative w-16 h-16 rounded overflow-hidden flex-shrink-0 bg-cream-dark">
+                      <div className="relative w-16 h-16 rounded-lg overflow-hidden flex-shrink-0 bg-cream-dark shadow-2xs">
                         <Image
                           src={product.images[0]?.imageUrl || 'https://images.unsplash.com/photo-1631049307264-da0ec9d70304?auto=format&fit=crop&w=400&q=80'}
                           alt={product.name}
@@ -191,7 +223,7 @@ export function SearchModal({ isOpen, onClose }: SearchModalProps) {
                         />
                       </div>
                       <div className="flex-1 min-w-0">
-                        <h4 className="text-sm font-semibold text-charcoal group-hover:text-forest transition-colors truncate">
+                        <h4 className="text-sm font-bold text-charcoal group-hover:text-forest transition-colors truncate">
                           {product.name}
                         </h4>
                         <div className="flex items-center space-x-2 text-xs text-charcoal-muted mt-0.5">
@@ -208,13 +240,23 @@ export function SearchModal({ isOpen, onClose }: SearchModalProps) {
                         <div className="text-sm font-bold text-forest">
                           {formatMYR(minPrice)}
                         </div>
-                        <span className="text-[10px] text-charcoal-muted">
+                        <span className="text-[10px] text-charcoal-muted block">
                           {product.variants.length} sizes
                         </span>
                       </div>
                     </Link>
                   )
                 })}
+
+                <button
+                  type="button"
+                  onMouseDown={(e) => e.preventDefault()}
+                  onClick={handleSubmit}
+                  className="w-full mt-3 py-3 px-4 bg-cream hover:bg-cream-dark active:bg-borderLight text-forest text-xs font-bold rounded-xl border border-borderLight flex items-center justify-center gap-2 transition-all touch-manipulation cursor-pointer shadow-2xs"
+                >
+                  <span>Lihat Semua Hasil Untuk &ldquo;{query}&rdquo;</span>
+                  <ArrowRight className="w-3.5 h-3.5" />
+                </button>
               </div>
             )}
           </div>
