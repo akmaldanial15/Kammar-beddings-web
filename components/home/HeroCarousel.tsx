@@ -105,26 +105,39 @@ export function HeroCarousel() {
     return () => clearInterval(timer)
   }, [isPlaying, nextSlide])
 
-  const [touchStart, setTouchStart] = useState<number | null>(null)
-  const [touchEnd, setTouchEnd] = useState<number | null>(null)
+  const [touchStartX, setTouchStartX] = useState<number | null>(null)
+  const [dragOffset, setDragOffset] = useState<number>(0)
+  const [isDragging, setIsDragging] = useState<boolean>(false)
 
   const handleTouchStart = (e: React.TouchEvent) => {
-    setTouchEnd(null)
-    setTouchStart(e.targetTouches[0].clientX)
+    setTouchStartX(e.targetTouches[0].clientX)
+    setDragOffset(0)
+    setIsDragging(true)
   }
 
   const handleTouchMove = (e: React.TouchEvent) => {
-    setTouchEnd(e.targetTouches[0].clientX)
+    if (touchStartX === null) return
+    const currentX = e.targetTouches[0].clientX
+    const diff = currentX - touchStartX
+    // Add rubber-band resistance at boundary edges
+    if ((currentSlide === 0 && diff > 0) || (currentSlide === activeSlides.length - 1 && diff < 0)) {
+      setDragOffset(diff * 0.25)
+    } else {
+      setDragOffset(diff)
+    }
   }
 
   const handleTouchEnd = () => {
-    if (!touchStart || !touchEnd) return
-    const distance = touchStart - touchEnd
-    if (distance > 50) {
+    if (touchStartX === null) return
+    setIsDragging(false)
+    const threshold = 45 // drag distance in px to trigger slide change
+    if (dragOffset < -threshold) {
       nextSlide()
-    } else if (distance < -50) {
+    } else if (dragOffset > threshold) {
       prevSlide()
     }
+    setDragOffset(0)
+    setTouchStartX(null)
   }
 
   return (
@@ -245,102 +258,118 @@ export function HeroCarousel() {
       </div>
 
       {/* ================= MOBILE PHONE VIEW LAYOUT (md:hidden) ================= */}
-      {/* Allows the full product poster to be seen cleanly in proper 4:3 proportions without awkward cropping */}
+      {/* Allows the full product poster to be seen cleanly in proper 4:3 proportions with silky smooth horizontal animation */}
       <div
-        className="block md:hidden relative w-full bg-forest-dark select-none"
+        className="block md:hidden relative w-full bg-forest-dark select-none overflow-hidden touch-pan-y"
         onTouchStart={handleTouchStart}
         onTouchMove={handleTouchMove}
         onTouchEnd={handleTouchEnd}
       >
-        {activeSlides.map((slide, index) => (
-          <div
-            key={slide.id}
-            className={`transition-opacity duration-500 ease-in-out ${
-              index === currentSlide ? 'block opacity-100' : 'hidden opacity-0 pointer-events-none'
-            }`}
-          >
-            {/* 1. Dedicated Image Showcase - Shows the full product banner properly */}
-            <div className="relative w-full aspect-[4/3] bg-black/40 overflow-hidden">
-              <Image
-                src={slide.imageUrl}
-                alt={slide.title}
-                fill
-                priority={index === 0}
-                className="object-cover object-center"
-                sizes="(max-width: 768px) 100vw, 50vw"
-              />
-              
-              {/* Subtle top & bottom ambient shadow */}
-              <div className="absolute inset-0 bg-gradient-to-t from-forest-dark via-transparent to-black/25 pointer-events-none" />
+        {/* Horizontal Sliding Track with Buttery Smooth Transition */}
+        <div
+          className={`flex w-full ${
+            isDragging ? 'transition-none' : 'transition-transform duration-600 ease-[cubic-bezier(0.22,1,0.36,1)]'
+          }`}
+          style={{
+            transform: `translateX(calc(-${currentSlide * 100}% + ${dragOffset}px))`,
+          }}
+        >
+          {activeSlides.map((slide, index) => (
+            <div key={slide.id} className="w-full flex-shrink-0 flex flex-col">
+              {/* 1. Dedicated Image Showcase - Shows the full product banner properly */}
+              <div className="relative w-full aspect-[4/3] bg-black/40 overflow-hidden">
+                <Image
+                  src={slide.imageUrl}
+                  alt={slide.title}
+                  fill
+                  priority={index === 0}
+                  className={`object-cover object-center transition-transform duration-[6000ms] ease-out ${
+                    index === currentSlide ? 'scale-105' : 'scale-100'
+                  }`}
+                  sizes="(max-width: 768px) 100vw, 50vw"
+                />
+                
+                {/* Subtle top & bottom ambient shadow */}
+                <div className="absolute inset-0 bg-gradient-to-t from-forest-dark via-transparent to-black/25 pointer-events-none" />
 
-              {/* Floating Badge */}
-              <div className="absolute top-3 left-3 z-10 inline-flex items-center space-x-1.5 bg-forest-dark/90 backdrop-blur-md px-3 py-1 rounded-full border border-gold/40 text-gold text-[10px] font-bold tracking-wider uppercase shadow-xs">
-                <Sparkles className="w-3 h-3 text-gold flex-shrink-0" />
-                <span className="truncate max-w-[220px]">{slide.badge}</span>
+                {/* Floating Badge */}
+                <div className="absolute top-3 left-3 z-10 inline-flex items-center space-x-1.5 bg-forest-dark/90 backdrop-blur-md px-3 py-1 rounded-full border border-gold/40 text-gold text-[10px] font-bold tracking-wider uppercase shadow-xs">
+                  <Sparkles className="w-3 h-3 text-gold flex-shrink-0 animate-pulse" />
+                  <span className="truncate max-w-[220px]">{slide.badge}</span>
+                </div>
+
+                {/* Mini Prev/Next Chevron Controls on image */}
+                <div className="absolute bottom-3 right-3 z-10 flex items-center space-x-1.5">
+                  <button
+                    type="button"
+                    onClick={(e) => {
+                      e.stopPropagation()
+                      prevSlide()
+                    }}
+                    className="p-2.5 rounded-full bg-black/60 hover:bg-black/80 active:scale-90 text-white backdrop-blur-md border border-white/25 transition-all shadow-md cursor-pointer"
+                    aria-label="Previous slide"
+                  >
+                    <ChevronLeft className="w-4 h-4" />
+                  </button>
+                  <button
+                    type="button"
+                    onClick={(e) => {
+                      e.stopPropagation()
+                      nextSlide()
+                    }}
+                    className="p-2.5 rounded-full bg-black/60 hover:bg-black/80 active:scale-90 text-white backdrop-blur-md border border-white/25 transition-all shadow-md cursor-pointer"
+                    aria-label="Next slide"
+                  >
+                    <ChevronRight className="w-4 h-4" />
+                  </button>
+                </div>
               </div>
 
-              {/* Mini Prev/Next Chevron Controls on image */}
-              <div className="absolute bottom-3 right-3 z-10 flex items-center space-x-1.5">
-                <button
-                  type="button"
-                  onClick={prevSlide}
-                  className="p-2 rounded-full bg-black/60 hover:bg-black/80 text-white backdrop-blur-md border border-white/20 transition-all active:scale-95"
-                  aria-label="Previous slide"
-                >
-                  <ChevronLeft className="w-4 h-4" />
-                </button>
-                <button
-                  type="button"
-                  onClick={nextSlide}
-                  className="p-2 rounded-full bg-black/60 hover:bg-black/80 text-white backdrop-blur-md border border-white/20 transition-all active:scale-95"
-                  aria-label="Next slide"
-                >
-                  <ChevronRight className="w-4 h-4" />
-                </button>
+              {/* 2. Structured Content Card below image - High contrast, no collision with graphic */}
+              <div className="p-4 sm:p-5 flex flex-col space-y-3 bg-forest-dark">
+                <h1 className="font-serif text-2xl font-bold text-warmwhite leading-snug">
+                  {slide.title}
+                </h1>
+
+                <p className="text-xs text-warmwhite/80 leading-relaxed font-light line-clamp-3">
+                  {slide.subtitle}
+                </p>
+
+                {/* Action Buttons */}
+                <div className="pt-1 flex flex-col gap-2.5">
+                  <Link
+                    href={slide.ctaLink}
+                    className="w-full py-3 bg-forest hover:bg-forest/90 active:scale-98 text-warmwhite text-xs font-bold tracking-wider uppercase rounded-xl shadow-md border border-gold/40 flex items-center justify-center space-x-2 transition-all"
+                  >
+                    <span>{slide.ctaText}</span>
+                    <ArrowRight className="w-3.5 h-3.5 text-gold" />
+                  </Link>
+
+                  <Link
+                    href={slide.secondaryCtaLink}
+                    className="w-full py-2.5 bg-warmwhite/10 hover:bg-warmwhite/20 active:scale-98 text-warmwhite text-xs font-semibold tracking-wide rounded-xl backdrop-blur-md border border-warmwhite/15 flex items-center justify-center transition-all"
+                  >
+                    <span>{slide.secondaryCtaText}</span>
+                  </Link>
+                </div>
               </div>
             </div>
+          ))}
+        </div>
 
-            {/* 2. Structured Content Card below image - High contrast, no collision with graphic */}
-            <div className="p-4 sm:p-5 flex flex-col space-y-3 bg-forest-dark">
-              <h1 className="font-serif text-2xl font-bold text-warmwhite leading-snug">
-                {slide.title}
-              </h1>
-
-              <p className="text-xs text-warmwhite/80 leading-relaxed font-light line-clamp-3">
-                {slide.subtitle}
-              </p>
-
-              {/* Action Buttons */}
-              <div className="pt-1 flex flex-col gap-2.5">
-                <Link
-                  href={slide.ctaLink}
-                  className="w-full py-3 bg-forest hover:bg-forest/90 text-warmwhite text-xs font-bold tracking-wider uppercase rounded-xl shadow-md border border-gold/40 flex items-center justify-center space-x-2 transition-all active:scale-98"
-                >
-                  <span>{slide.ctaText}</span>
-                  <ArrowRight className="w-3.5 h-3.5 text-gold" />
-                </Link>
-
-                <Link
-                  href={slide.secondaryCtaLink}
-                  className="w-full py-2.5 bg-warmwhite/10 hover:bg-warmwhite/20 text-warmwhite text-xs font-semibold tracking-wide rounded-xl backdrop-blur-md border border-warmwhite/15 flex items-center justify-center transition-all active:scale-98"
-                >
-                  <span>{slide.secondaryCtaText}</span>
-                </Link>
-              </div>
-            </div>
-          </div>
-        ))}
-
-        {/* Mobile Navigation Status & Dots */}
+        {/* Mobile Navigation Status & Animated Dots */}
         <div className="px-4 pb-4 pt-1 flex items-center justify-between border-t border-white/10">
           <div className="flex items-center space-x-2">
             {activeSlides.map((_, idx) => (
               <button
                 key={idx}
                 type="button"
-                onClick={() => setCurrentSlide(idx)}
-                className={`h-1.5 rounded-full transition-all duration-300 ${
-                  currentSlide === idx ? 'w-6 bg-gold' : 'w-2 bg-warmwhite/40'
+                onClick={() => {
+                  setIsPlaying(false)
+                  setCurrentSlide(idx)
+                }}
+                className={`h-1.5 rounded-full transition-all duration-500 ease-out cursor-pointer ${
+                  currentSlide === idx ? 'w-8 bg-gradient-to-r from-gold to-gold-light shadow-xs' : 'w-2 bg-warmwhite/30 hover:bg-warmwhite/50'
                 }`}
                 aria-label={`Go to slide ${idx + 1}`}
               />
@@ -350,7 +379,7 @@ export function HeroCarousel() {
           <button
             type="button"
             onClick={() => setIsPlaying(!isPlaying)}
-            className="p-1 text-warmwhite/60 hover:text-warmwhite flex items-center gap-1 text-[11px]"
+            className="p-1 text-warmwhite/60 hover:text-warmwhite flex items-center gap-1 text-[11px] transition-colors cursor-pointer"
             title={isPlaying ? 'Pause slideshow' : 'Play slideshow'}
           >
             {isPlaying ? (
