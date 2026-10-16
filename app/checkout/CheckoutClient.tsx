@@ -13,6 +13,7 @@ import {
   AlertTriangle,
   RefreshCw,
   ChevronDown,
+  ChevronRight,
   Tag,
   CreditCard as CardIcon,
   ShieldCheck,
@@ -231,9 +232,10 @@ export function CheckoutClient({ initialPaymentSettings, initialSiteSettings, av
   const [copiedBank, setCopiedBank] = useState(false)
   const [serverDiscountSen, setServerDiscountSen] = useState<number | null>(null)
 
-  // Interactive tooltips state with smooth appear & disappear animations
-  const [isShippingMounted, setIsShippingMounted] = useState(false)
-  const [isShippingVisible, setIsShippingVisible] = useState(false)
+  // Interactive tooltips & detailed modal state with smooth appear & disappear animations
+  const [isShippingMiniMounted, setIsShippingMiniMounted] = useState(false)
+  const [isShippingMiniVisible, setIsShippingMiniVisible] = useState(false)
+  const [isShippingDetailedOpen, setIsShippingDetailedOpen] = useState(false)
   const [showContactTooltip, setShowContactTooltip] = useState(false)
   const [showPhoneTooltip, setShowPhoneTooltip] = useState(false)
   const shippingTooltipRef = React.useRef<HTMLDivElement>(null)
@@ -241,48 +243,48 @@ export function CheckoutClient({ initialPaymentSettings, initialSiteSettings, av
   const contactTooltipRef = React.useRef<HTMLDivElement>(null)
   const phoneTooltipRef = React.useRef<HTMLDivElement>(null)
 
-  const openShippingTooltip = useCallback(() => {
+  const openShippingMini = useCallback(() => {
     if (shippingCloseTimerRef.current) {
       clearTimeout(shippingCloseTimerRef.current)
       shippingCloseTimerRef.current = null
     }
-    setIsShippingMounted(true)
+    setIsShippingMiniMounted(true)
     requestAnimationFrame(() => {
       requestAnimationFrame(() => {
-        setIsShippingVisible(true)
+        setIsShippingMiniVisible(true)
       })
     })
   }, [])
 
-  const closeShippingTooltip = useCallback(() => {
-    setIsShippingVisible(false)
+  const closeShippingMini = useCallback(() => {
+    setIsShippingMiniVisible(false)
     if (shippingCloseTimerRef.current) {
       clearTimeout(shippingCloseTimerRef.current)
     }
     shippingCloseTimerRef.current = setTimeout(() => {
-      setIsShippingMounted(false)
+      setIsShippingMiniMounted(false)
       shippingCloseTimerRef.current = null
-    }, 280)
+    }, 240)
   }, [])
 
-  const toggleShippingTooltip = useCallback(() => {
-    if (isShippingVisible) {
-      closeShippingTooltip()
+  const toggleShippingMini = useCallback(() => {
+    if (isShippingMiniVisible) {
+      closeShippingMini()
     } else {
-      openShippingTooltip()
+      openShippingMini()
     }
-  }, [isShippingVisible, closeShippingTooltip, openShippingTooltip])
+  }, [isShippingMiniVisible, closeShippingMini, openShippingMini])
 
   // Hover handlers for White-Glove info (PC / mouse only; phone uses click only)
   const handleShippingMouseEnter = () => {
     if (typeof window !== 'undefined' && window.matchMedia('(hover: hover) and (pointer: fine)').matches) {
-      openShippingTooltip()
+      openShippingMini()
     }
   }
 
   const handleShippingMouseLeave = () => {
     if (typeof window !== 'undefined' && window.matchMedia('(hover: hover) and (pointer: fine)').matches) {
-      closeShippingTooltip()
+      closeShippingMini()
     }
   }
 
@@ -290,7 +292,7 @@ export function CheckoutClient({ initialPaymentSettings, initialSiteSettings, av
     function handleClickOutside(event: MouseEvent | TouchEvent) {
       const target = event.target as Node
       if (shippingTooltipRef.current && !shippingTooltipRef.current.contains(target)) {
-        closeShippingTooltip()
+        closeShippingMini()
       }
       if (contactTooltipRef.current && !contactTooltipRef.current.contains(target)) {
         setShowContactTooltip(false)
@@ -299,16 +301,24 @@ export function CheckoutClient({ initialPaymentSettings, initialSiteSettings, av
         setShowPhoneTooltip(false)
       }
     }
+    function handleKeyDown(e: KeyboardEvent) {
+      if (e.key === 'Escape') {
+        closeShippingMini()
+        setIsShippingDetailedOpen(false)
+      }
+    }
     document.addEventListener('mousedown', handleClickOutside)
     document.addEventListener('touchstart', handleClickOutside)
+    document.addEventListener('keydown', handleKeyDown)
     return () => {
       document.removeEventListener('mousedown', handleClickOutside)
       document.removeEventListener('touchstart', handleClickOutside)
+      document.removeEventListener('keydown', handleKeyDown)
       if (shippingCloseTimerRef.current) {
         clearTimeout(shippingCloseTimerRef.current)
       }
     }
-  }, [closeShippingTooltip])
+  }, [closeShippingMini])
 
   // Sync server coupon validation when couponCode or subtotal changes
   useEffect(() => {
@@ -2762,7 +2772,7 @@ export function CheckoutClient({ initialPaymentSettings, initialSiteSettings, av
                       {isPickup ? 'Ambil Sendiri di Kilang' : (siteSettings?.whiteGloveTitle || 'Penghantaran White-Glove')}
                     </span>
                     
-                    {/* Interactive White-Glove Popover Note */}
+                    {/* Interactive White-Glove Popover & Modal */}
                     <div
                       ref={shippingTooltipRef}
                       className="relative inline-flex items-center"
@@ -2774,12 +2784,12 @@ export function CheckoutClient({ initialPaymentSettings, initialSiteSettings, av
                         onClick={(e) => {
                           e.preventDefault()
                           e.stopPropagation()
-                          toggleShippingTooltip()
+                          toggleShippingMini()
                         }}
-                        aria-label="Maklumat Penghantaran White-Glove"
-                        aria-expanded={isShippingVisible}
+                        aria-label="Maklumat Penghantaran"
+                        aria-expanded={isShippingMiniVisible}
                         className={`p-1 rounded-full transition-all cursor-pointer focus:outline-none ${
-                          isShippingVisible
+                          isShippingMiniVisible
                             ? 'text-forest bg-forest/15 ring-2 ring-forest/20'
                             : 'text-neutral-400 hover:text-forest hover:bg-forest/10'
                         }`}
@@ -2787,180 +2797,64 @@ export function CheckoutClient({ initialPaymentSettings, initialSiteSettings, av
                         <HelpCircle className="w-4 h-4" />
                       </button>
 
-                      {isShippingMounted && (
-                        <>
-                          {/* ========================================================= */}
-                          {/* 1. MOBILE BOTTOM SHEET (Smooth Appear & Disappear)        */}
-                          {/* ========================================================= */}
-                          <div className="sm:hidden">
-                            {/* Backdrop with smooth fade in / fade out */}
-                            <div
-                              className={`fixed inset-0 bg-black/50 backdrop-blur-xs z-50 transition-opacity duration-300 ease-out ${
-                                isShippingVisible ? 'opacity-100' : 'opacity-0 pointer-events-none'
-                              }`}
+                      {/* 1. MINI BOX POPOVER (Kotak Kecil di Tepi ?) */}
+                      {isShippingMiniMounted && (
+                        <div
+                          className={`absolute left-1/2 -translate-x-1/2 bottom-full mb-2.5 w-72 max-w-[calc(100vw-2.5rem)] bg-white rounded-2xl p-3.5 border border-[#D5CEC2] shadow-xl text-left text-charcoal z-40 transition-all duration-200 transform ${
+                            isShippingMiniVisible
+                              ? 'opacity-100 scale-100 translate-y-0 ease-out pointer-events-auto'
+                              : 'opacity-0 scale-95 translate-y-1.5 ease-in pointer-events-none'
+                          }`}
+                          role="tooltip"
+                        >
+                          <div className="flex items-start justify-between gap-2 mb-1.5">
+                            <div className="flex items-center gap-1.5">
+                              <span className="p-1 rounded-md bg-gold/15 text-gold-dark shrink-0">
+                                <Truck className="w-3.5 h-3.5" />
+                              </span>
+                              <h5 className="font-bold text-forest text-xs leading-snug">
+                                {isPickup
+                                  ? 'Pengambilan di Kilang'
+                                  : (siteSettings?.whiteGloveMiniTitle || 'Servis Kurier & Pasang Kilang')}
+                              </h5>
+                            </div>
+                            <button
+                              type="button"
                               onClick={(e) => {
                                 e.preventDefault()
                                 e.stopPropagation()
-                                closeShippingTooltip()
+                                closeShippingMini()
                               }}
-                            />
-
-                            {/* Bottom Sheet with smooth slide up / slide down */}
-                            <div
-                              className={`fixed inset-x-0 bottom-0 z-50 bg-white rounded-t-3xl p-5 border-t border-[#D5CEC2] shadow-2xl text-left text-charcoal pb-8 transition-all duration-300 transform ${
-                                isShippingVisible
-                                  ? 'translate-y-0 opacity-100 ease-out'
-                                  : 'translate-y-full opacity-0 ease-in pointer-events-none'
-                              }`}
-                              role="dialog"
-                              aria-modal="true"
+                              className="text-neutral-400 hover:text-charcoal p-0.5 rounded-full hover:bg-neutral-100 transition-colors cursor-pointer shrink-0"
+                              aria-label="Tutup"
                             >
-                              {/* Grab Handle */}
-                              <div className="w-10 h-1 bg-neutral-300 rounded-full mx-auto mb-3.5" />
-
-                              {/* Header */}
-                              <div className="flex items-center justify-between mb-3">
-                                <div className="flex items-center gap-2">
-                                  <span className="p-1.5 rounded-lg bg-gold/15 text-gold-dark shrink-0">
-                                    <Truck className="w-4 h-4" />
-                                  </span>
-                                  <h4 className="font-bold text-forest text-sm">
-                                    {isPickup ? 'Ambil Sendiri di Kilang' : (siteSettings?.whiteGloveTitle || 'Penghantaran White-Glove')}
-                                  </h4>
-                                </div>
-                                <button
-                                  type="button"
-                                  onClick={(e) => {
-                                    e.preventDefault()
-                                    e.stopPropagation()
-                                    closeShippingTooltip()
-                                  }}
-                                  className="w-7 h-7 text-neutral-400 hover:text-charcoal rounded-full hover:bg-neutral-100 flex items-center justify-center transition-colors cursor-pointer"
-                                  aria-label="Tutup"
-                                >
-                                  <X className="w-4 h-4" />
-                                </button>
-                              </div>
-
-                              {isPickup ? (
-                                <div className="space-y-3 text-xs text-charcoal-muted">
-                                  <p>
-                                    Ambil terus di atelier kilang kami: <strong>{siteSettings?.pickupLocationName || 'Kilang KAMAAR Beddings (Tunas Sinar Jaya Enterprise)'}</strong>, {[siteSettings?.pickupAddress, siteSettings?.pickupCityState].filter(Boolean).join(', ') || 'Bandar Baru Tasek Gelugor, Pulau Pinang'}.
-                                  </p>
-                                  <div className="p-2.5 bg-emerald-50 rounded-xl text-emerald-800 font-medium text-xs flex items-center justify-between">
-                                    <span>Kos Pengambilan:</span>
-                                    <span className="font-bold">RM0.00 (Percuma)</span>
-                                  </div>
-                                </div>
-                              ) : (
-                                <div className="space-y-3 text-xs text-charcoal-muted">
-                                  <p className="text-neutral-500 text-[11.5px]">
-                                    {siteSettings?.whiteGloveSubtitle || 'Servis logistik premium khas terus dari kilang KAMAAR ke kediaman anda:'}
-                                  </p>
-                                  <ul className="space-y-2 text-xs">
-                                    <li className="flex items-center gap-2">
-                                      <span className="w-4 h-4 rounded-full bg-forest/10 text-forest flex items-center justify-center font-bold text-[10px] shrink-0">✓</span>
-                                      <span>{siteSettings?.whiteGloveFeature1 || 'Masuk Bilik Tidur — 2 krew angkat terus ke bilik'}</span>
-                                    </li>
-                                    <li className="flex items-center gap-2">
-                                      <span className="w-4 h-4 rounded-full bg-forest/10 text-forest flex items-center justify-center font-bold text-[10px] shrink-0">✓</span>
-                                      <span>{siteSettings?.whiteGloveFeature2 || 'Unboxing & Pasang — Buka & pasang tilam di katil'}</span>
-                                    </li>
-                                    <li className="flex items-center gap-2">
-                                      <span className="w-4 h-4 rounded-full bg-forest/10 text-forest flex items-center justify-center font-bold text-[10px] shrink-0">✓</span>
-                                      <span>{siteSettings?.whiteGloveFeature3 || 'Insurans Kilang — Kalis cuaca & dilindungi penuh'}</span>
-                                    </li>
-                                  </ul>
-                                  <div className="pt-2.5 border-t border-[#E8E2D8] flex items-center justify-between text-xs">
-                                    <span className="font-semibold text-charcoal">Caj:</span>
-                                    <span className="font-bold text-forest text-sm">
-                                      {effectiveShippingSen === 0 ? 'PERCUMA (Ditaja Penuh)' : `${formatMYR(effectiveShippingSen)} (${siteSettings?.whiteGloveNotice || 'Kurier Kilang'})`}
-                                    </span>
-                                  </div>
-                                </div>
-                              )}
-
-                              {/* Big simple "Faham & Tutup" button */}
-                              <button
-                                type="button"
-                                onClick={(e) => {
-                                  e.preventDefault()
-                                  e.stopPropagation()
-                                  closeShippingTooltip()
-                                }}
-                                className="mt-4 w-full py-2.5 bg-forest hover:bg-forest-light text-white font-medium text-xs rounded-xl shadow-xs transition-colors cursor-pointer text-center active:scale-[0.99]"
-                              >
-                                Faham &amp; Tutup
-                              </button>
-                            </div>
+                              <X className="w-3.5 h-3.5" />
+                            </button>
                           </div>
 
-                          {/* ========================================================= */}
-                          {/* 2. DESKTOP FLOATING TOOLTIP (Smooth Appear & Disappear)    */}
-                          {/* ========================================================= */}
-                          <div
-                            className={`hidden sm:block absolute bottom-full -right-8 mb-2 w-80 bg-white rounded-2xl p-4.5 border border-[#D5CEC2] shadow-xl text-left text-charcoal z-40 transition-all duration-200 transform ${
-                              isShippingVisible
-                                ? 'opacity-100 scale-100 translate-y-0 ease-out'
-                                : 'opacity-0 scale-95 translate-y-2 ease-in pointer-events-none'
-                            }`}
-                            role="tooltip"
+                          <p className="text-[11px] text-slate-600 leading-relaxed mb-2.5">
+                            {isPickup
+                              ? `Ambil terus di ${siteSettings?.pickupLocationName || 'Kilang KAMAAR Beddings, Tasek Gelugor'}. Kos: Percuma.`
+                              : (siteSettings?.whiteGloveMiniDesc || 'Dihantar terus oleh krew terlatih KAMAAR ke bilik tidur anda berserta jaminan keselamatan kilang.')}
+                          </p>
+
+                          <button
+                            type="button"
+                            onClick={(e) => {
+                              e.preventDefault()
+                              e.stopPropagation()
+                              closeShippingMini()
+                              setIsShippingDetailedOpen(true)
+                            }}
+                            className="w-full py-1.5 px-3 bg-forest hover:bg-forest-light text-white font-medium text-[11px] rounded-xl transition-all flex items-center justify-between cursor-pointer shadow-xs active:scale-[0.99] group"
                           >
-                            <div className="flex items-center gap-2 mb-2.5">
-                              <span className="p-1.5 rounded-lg bg-gold/15 text-gold-dark shrink-0">
-                                <Truck className="w-4 h-4" />
-                              </span>
-                              <div>
-                                <span className="text-[10px] font-bold uppercase tracking-wider text-gold-dark block">
-                                  {isPickup ? 'Pengambilan Sendiri' : 'Servis Logistik Eksklusif'}
-                                </span>
-                                <h4 className="text-xs font-bold text-forest">
-                                  {isPickup ? 'Ambil Sendiri di Kilang' : (siteSettings?.whiteGloveTitle || 'Penghantaran White-Glove')}
-                                </h4>
-                              </div>
-                            </div>
+                            <span>{siteSettings?.whiteGloveMiniButtonText || 'Maklumat Lanjut'}</span>
+                            <ChevronRight className="w-3.5 h-3.5 transition-transform group-hover:translate-x-0.5" />
+                          </button>
 
-                            {isPickup ? (
-                              <div className="space-y-2 text-xs text-charcoal-muted leading-relaxed">
-                                <p>
-                                  Ambil pesanan terus di atelier kilang kami: <strong>{siteSettings?.pickupLocationName || 'Kilang KAMAAR Beddings'}</strong>, {[siteSettings?.pickupAddress, siteSettings?.pickupCityState].filter(Boolean).join(', ') || 'Bandar Baru Tasek Gelugor, Pulau Pinang'}.
-                                </p>
-                                <div className="p-2 bg-emerald-50 rounded-lg text-emerald-800 font-medium text-xs">
-                                  ✓ Kos: <strong>RM0.00 (Percuma)</strong>
-                                </div>
-                              </div>
-                            ) : (
-                              <div className="space-y-2 text-xs text-charcoal-muted leading-relaxed">
-                                <p className="text-[11px] text-neutral-500">
-                                  {siteSettings?.whiteGloveSubtitle || 'Perkhidmatan penghantaran premium terus dari kilang KAMAAR ke kediaman anda:'}
-                                </p>
-                                <ul className="space-y-1.5 text-xs">
-                                  <li className="flex items-start gap-1.5">
-                                    <span className="text-forest font-bold shrink-0">✓</span>
-                                    <span>{siteSettings?.whiteGloveFeature1 || 'Masuk Bilik Tidur — 2 krew angkat terus ke bilik'}</span>
-                                  </li>
-                                  <li className="flex items-start gap-1.5">
-                                    <span className="text-forest font-bold shrink-0">✓</span>
-                                    <span>{siteSettings?.whiteGloveFeature2 || 'Unboxing & Pasang — Buka & pasang tilam di katil'}</span>
-                                  </li>
-                                  <li className="flex items-start gap-1.5">
-                                    <span className="text-forest font-bold shrink-0">✓</span>
-                                    <span>{siteSettings?.whiteGloveFeature3 || 'Insurans Penuh — Kalis cuaca & diinsuranskan'}</span>
-                                  </li>
-                                </ul>
-                                <div className="mt-2.5 pt-2 border-t border-[#E8E2D8] flex items-center justify-between text-xs">
-                                  <span className="text-charcoal font-semibold">Caj Semasa:</span>
-                                  <span className="font-bold text-forest">
-                                    {effectiveShippingSen === 0 ? 'PERCUMA (Ditaja Penuh)' : `${formatMYR(effectiveShippingSen)} (${siteSettings?.whiteGloveNotice || 'Kurier Kilang'})`}
-                                  </span>
-                                </div>
-                              </div>
-                            )}
-
-                            {/* Arrow pointer */}
-                            <div className="absolute -bottom-1.5 right-10 w-3 h-3 bg-white border-b border-r border-[#D5CEC2] rotate-45 transform" />
-                          </div>
-                        </>
+                          {/* Pointer Arrow */}
+                          <div className="absolute -bottom-1.5 left-1/2 -translate-x-1/2 w-3 h-3 bg-white border-b border-r border-[#D5CEC2] rotate-45" />
+                        </div>
                       )}
                     </div>
                   </div>
@@ -3018,6 +2912,103 @@ export function CheckoutClient({ initialPaymentSettings, initialSiteSettings, av
           </div>
         </div>
       </main>
+
+      {/* ========================================================= */}
+      {/* DETAILED WHITE-GLOVE MODAL / WINDOW (Mobile Bottom-Sheet & Desktop Dialog) */}
+      {/* ========================================================= */}
+      {isShippingDetailedOpen && (
+        <div className="fixed inset-0 z-50 flex items-end sm:items-center justify-center">
+          {/* Backdrop */}
+          <div
+            className="fixed inset-0 bg-black/60 backdrop-blur-xs transition-opacity duration-300 ease-out animate-in fade-in"
+            onClick={() => setIsShippingDetailedOpen(false)}
+          />
+
+          {/* Dialog Container */}
+          <div
+            className="relative z-50 w-full sm:max-w-md bg-white rounded-t-3xl sm:rounded-3xl p-5 sm:p-6 border-t sm:border border-[#D5CEC2] shadow-2xl text-left text-charcoal pb-8 sm:pb-6 transition-all duration-300 max-h-[90vh] overflow-y-auto animate-in fade-in slide-in-from-bottom-4 sm:zoom-in-95"
+            role="dialog"
+            aria-modal="true"
+          >
+            {/* Grab Handle (Phone only) */}
+            <div className="sm:hidden w-10 h-1 bg-neutral-300 rounded-full mx-auto mb-3.5" />
+
+            {/* Header */}
+            <div className="flex items-center justify-between mb-3.5 border-b border-[#E8E2D8] pb-3">
+              <div className="flex items-center gap-2.5">
+                <span className="p-2 rounded-xl bg-gold/15 text-gold-dark shrink-0">
+                  <Truck className="w-5 h-5" />
+                </span>
+                <div>
+                  <span className="text-[10px] font-bold uppercase tracking-wider text-gold-dark block">
+                    {isPickup ? 'Pengambilan Sendiri' : 'Servis Logistik Eksklusif'}
+                  </span>
+                  <h4 className="font-bold text-forest text-sm sm:text-base">
+                    {isPickup ? 'Ambil Sendiri di Kilang' : (siteSettings?.whiteGloveTitle || 'Penghantaran White-Glove')}
+                  </h4>
+                </div>
+              </div>
+              <button
+                type="button"
+                onClick={() => setIsShippingDetailedOpen(false)}
+                className="w-8 h-8 text-neutral-400 hover:text-charcoal rounded-full hover:bg-neutral-100 flex items-center justify-center transition-colors cursor-pointer"
+                aria-label="Tutup"
+              >
+                <X className="w-4 h-4" />
+              </button>
+            </div>
+
+            {isPickup ? (
+              <div className="space-y-3 text-xs text-charcoal-muted">
+                <p>
+                  Ambil terus di atelier kilang kami: <strong>{siteSettings?.pickupLocationName || 'Kilang KAMAAR Beddings (Tunas Sinar Jaya Enterprise)'}</strong>, {[siteSettings?.pickupAddress, siteSettings?.pickupCityState].filter(Boolean).join(', ') || 'Bandar Baru Tasek Gelugor, Pulau Pinang'}.
+                </p>
+                <div className="p-3 bg-emerald-50 rounded-xl text-emerald-800 font-medium text-xs flex items-center justify-between">
+                  <span>Kos Pengambilan:</span>
+                  <span className="font-bold">RM0.00 (Percuma)</span>
+                </div>
+              </div>
+            ) : (
+              <div className="space-y-3.5 text-xs text-charcoal-muted">
+                <p className="text-neutral-600 text-xs leading-relaxed">
+                  {siteSettings?.whiteGloveSubtitle || 'Servis logistik premium khas terus dari kilang KAMAAR ke kediaman anda:'}
+                </p>
+
+                <ul className="space-y-2.5 text-xs bg-slate-50/70 p-3.5 rounded-2xl border border-slate-200/70">
+                  <li className="flex items-start gap-2.5">
+                    <span className="w-5 h-5 rounded-full bg-forest text-white flex items-center justify-center font-bold text-[11px] shrink-0 mt-0.5">✓</span>
+                    <span className="text-charcoal font-medium leading-relaxed">{siteSettings?.whiteGloveFeature1 || 'Masuk Bilik Tidur — 2 krew angkat terus ke bilik'}</span>
+                  </li>
+                  <li className="flex items-start gap-2.5">
+                    <span className="w-5 h-5 rounded-full bg-forest text-white flex items-center justify-center font-bold text-[11px] shrink-0 mt-0.5">✓</span>
+                    <span className="text-charcoal font-medium leading-relaxed">{siteSettings?.whiteGloveFeature2 || 'Unboxing & Pasang — Buka & pasang tilam di katil'}</span>
+                  </li>
+                  <li className="flex items-start gap-2.5">
+                    <span className="w-5 h-5 rounded-full bg-forest text-white flex items-center justify-center font-bold text-[11px] shrink-0 mt-0.5">✓</span>
+                    <span className="text-charcoal font-medium leading-relaxed">{siteSettings?.whiteGloveFeature3 || 'Insurans Kilang — Kalis cuaca & dilindungi penuh'}</span>
+                  </li>
+                </ul>
+
+                <div className="p-3 bg-[#F9F7F3] rounded-xl border border-[#E8E2D8] flex items-center justify-between text-xs">
+                  <span className="font-semibold text-charcoal">Kadar Caj Logistik:</span>
+                  <span className="font-bold text-forest text-sm">
+                    {effectiveShippingSen === 0 ? 'PERCUMA (Ditaja Penuh)' : `${formatMYR(effectiveShippingSen)} (${siteSettings?.whiteGloveNotice || 'Kurier Kilang'})`}
+                  </span>
+                </div>
+              </div>
+            )}
+
+            {/* Action / Close button */}
+            <button
+              type="button"
+              onClick={() => setIsShippingDetailedOpen(false)}
+              className="mt-4 w-full py-2.5 bg-forest hover:bg-forest-light text-white font-semibold text-xs rounded-xl shadow-xs transition-colors cursor-pointer text-center active:scale-[0.99]"
+            >
+              {siteSettings?.whiteGloveModalCloseText || 'Faham & Tutup'}
+            </button>
+          </div>
+        </div>
+      )}
     </div>
   )
 }

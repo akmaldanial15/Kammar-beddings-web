@@ -1859,7 +1859,11 @@ export const initialSiteSettings: SiteSettings = {
   "whiteGloveFeature1": "Masuk Bilik Tidur — 2 krew angkat terus ke bilik",
   "whiteGloveFeature2": "Unboxing & Pasang — Buka & pasang tilam di katil",
   "whiteGloveFeature3": "Insurans Kilang — Kalis cuaca & dilindungi penuh",
-  "whiteGloveNotice": "Kurier Kilang"
+  "whiteGloveNotice": "Kurier Kilang",
+  "whiteGloveMiniTitle": "Servis Kurier & Pasang Kilang",
+  "whiteGloveMiniDesc": "Dihantar terus oleh krew terlatih KAMAAR ke bilik tidur anda berserta jaminan keselamatan kilang.",
+  "whiteGloveMiniButtonText": "Maklumat Lanjut",
+  "whiteGloveModalCloseText": "Faham & Tutup"
 }
 
 export const initialStaffMembers: StaffMember[] = [
