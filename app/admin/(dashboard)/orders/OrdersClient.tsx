@@ -41,7 +41,8 @@ export function OrdersClient({ initialOrders }: OrdersClientProps) {
   const [isDeleting, setIsDeleting] = useState<boolean>(false)
   const [toast, setToast] = useState<{ type: 'success' | 'error'; message: string } | null>(null)
   const [isManualSyncing, setIsManualSyncing] = useState<boolean>(false)
-  const [syncCountdown, setSyncCountdown] = useState<number>(25)
+  const [isAutoSyncEnabled, setIsAutoSyncEnabled] = useState<boolean>(false) // Default OFF: 0 background requests, saves 100% Vercel quota
+  const [syncCountdown, setSyncCountdown] = useState<number>(30)
   const [lastSyncedAt, setLastSyncedAt] = useState<string>('Baru sahaja')
 
   // Helper to persist orders to browser storage
@@ -81,17 +82,19 @@ export function OrdersClient({ initialOrders }: OrdersClientProps) {
     } catch (_) {}
   }, [initialOrders])
 
-  // 2. Smart Auto-Polling Loop (Every 25 seconds & paused when tab/phone is locked to save Vercel quota)
+  // 2. Optional Auto-Polling Loop (ONLY runs if user explicitly turns it ON)
   React.useEffect(() => {
+    if (!isAutoSyncEnabled) return // Auto-polling is completely disabled to save Vercel bandwidth!
+
     let isMounted = true
 
-    // Countdown timer tick every second - pauses automatically when tab is hidden / phone locked
+    // Countdown timer tick every second - pauses automatically when tab is hidden
     const countTimer = setInterval(() => {
       if (typeof document !== 'undefined' && document.hidden) return
-      setSyncCountdown((prev) => (prev <= 1 ? 25 : prev - 1))
+      setSyncCountdown((prev) => (prev <= 1 ? 30 : prev - 1))
     }, 1000)
 
-    // Poll endpoint every 25 seconds - paused when tab is inactive
+    // Poll endpoint every 30 seconds
     const pollTimer = setInterval(async () => {
       if (typeof document !== 'undefined' && document.hidden) return
       try {
@@ -100,11 +103,9 @@ export function OrdersClient({ initialOrders }: OrdersClientProps) {
         const data = await res.json()
         if (data && Array.isArray(data.orders) && isMounted) {
           setOrders((prev) => {
-            // Case A: Server has orders -> merge & update cache
             if (data.orders.length > 0) {
               const map = new Map<string, Order>()
               data.orders.forEach((no: Order) => map.set(no.id, no))
-              // Preserve any verified orders previously present
               prev.forEach((po: Order) => {
                 if (!map.has(po.id)) map.set(po.id, po)
               })
@@ -127,32 +128,19 @@ export function OrdersClient({ initialOrders }: OrdersClientProps) {
               }
               return merged
             }
-
-            // Case B: Server returned empty, but client has verified orders
-            // (Vercel serverless cold-container split-brain protection)
-            if (prev.length > 0) {
-              // Back-fill this serverless container in background so it never stays empty
-              fetch('/api/admin/orders', {
-                method: 'POST',
-                headers: { 'Content-Type': 'application/json' },
-                body: JSON.stringify({ syncOrders: prev }),
-              }).catch(() => {})
-              return prev // NEVER wipe orders to empty on cold-boot glitches!
-            }
-
-            return []
+            return prev
           })
           setLastSyncedAt(new Date().toLocaleTimeString('ms-MY', { hour: '2-digit', minute: '2-digit', second: '2-digit' }))
         }
       } catch (_) {}
-    }, 25000)
+    }, 30000)
 
     return () => {
       isMounted = false
       clearInterval(countTimer)
       clearInterval(pollTimer)
     }
-  }, [])
+  }, [isAutoSyncEnabled])
 
   const handleManualSync = async () => {
     setIsManualSyncing(true)
@@ -584,17 +572,23 @@ export function OrdersClient({ initialOrders }: OrdersClientProps) {
       <div className="bg-gradient-to-r from-slate-900 via-navy-dark to-slate-950 text-white p-3 sm:px-4 sm:py-2.5 rounded-2xl border border-gold/30 flex flex-wrap items-center justify-between gap-2 text-xs shadow-sm">
         <div className="flex items-center space-x-2.5 min-w-0">
           <span className="relative flex h-2.5 w-2.5 flex-shrink-0">
-            <span className="animate-ping absolute inline-flex h-full w-full rounded-full bg-emerald-400 opacity-75"></span>
-            <span className="relative inline-flex rounded-full h-2.5 w-2.5 bg-emerald-500"></span>
+            {isAutoSyncEnabled ? (
+              <>
+                <span className="animate-ping absolute inline-flex h-full w-full rounded-full bg-emerald-400 opacity-75"></span>
+                <span className="relative inline-flex rounded-full h-2.5 w-2.5 bg-emerald-500"></span>
+              </>
+            ) : (
+              <span className="relative inline-flex rounded-full h-2.5 w-2.5 bg-slate-500"></span>
+            )}
           </span>
           <div className="truncate">
             <div className="flex items-center space-x-2 flex-wrap gap-1">
-              <span className="font-semibold text-warmwhite">Penyegerakan Awan Vercel (Live Sync):</span>
+              <span className="font-semibold text-warmwhite">Penyegerakan Awan:</span>
               <span className="px-2 py-0.5 rounded-full bg-emerald-500/20 text-emerald-300 border border-emerald-400/40 text-[10px] font-bold">
                 {orders.filter((o) => o.paymentStatus === 'paid').length} Dimuktamadkan
               </span>
-              <span className="text-slate-400 text-[10px] hidden md:inline">
-                • Terakhir: {lastSyncedAt} (Semakan auto: {syncCountdown}s)
+              <span className="text-slate-400 text-[10px]">
+                • Terakhir: {lastSyncedAt} {isAutoSyncEnabled ? `(Auto: ${syncCountdown}s)` : '(Mod Jimat Kuota)'}
               </span>
             </div>
             <div className="text-slate-300 text-[11px] mt-0.5 truncate">
@@ -602,20 +596,29 @@ export function OrdersClient({ initialOrders }: OrdersClientProps) {
                 <span className="text-amber-300 font-medium animate-pulse">
                   🔄 Menyemak &amp; memuktamadkan pesanan merentas nod awan Vercel...
                 </span>
-              ) : orders.length > 0 ? (
-                <span>
-                  Semua rekod pesanan kekal terpelihara dalam simpanan pantas dan disegerakkan dengan selamat.
-                </span>
+              ) : isAutoSyncEnabled ? (
+                <span>Auto-sync aktif. Boleh matikan bila-bila masa untuk jimat kuota Vercel.</span>
               ) : (
-                <span>
-                  Pangkalan data sedia menerima pesanan baharu dari gerbang CHIP.
-                </span>
+                <span>Mod jimat kuota Vercel aktif (tiada panggilan latar belakang berulang).</span>
               )}
             </div>
           </div>
         </div>
 
         <div className="flex items-center space-x-2 flex-shrink-0">
+          <button
+            type="button"
+            onClick={() => setIsAutoSyncEnabled(!isAutoSyncEnabled)}
+            className={`inline-flex items-center space-x-1.5 px-3 py-1.5 rounded-xl transition-all text-[11px] font-semibold border cursor-pointer ${
+              isAutoSyncEnabled
+                ? 'bg-emerald-600/30 hover:bg-emerald-600/50 text-emerald-200 border-emerald-500/40'
+                : 'bg-white/5 hover:bg-white/15 text-slate-300 hover:text-white border-white/10'
+            }`}
+            title={isAutoSyncEnabled ? 'Matikan semakan automatik untuk jimat kuota Vercel' : 'Aktifkan semakan automatik setiap 30s'}
+          >
+            <span>{isAutoSyncEnabled ? '⚡ Auto: ON' : '💤 Auto: OFF'}</span>
+          </button>
+
           {orders.length > 0 && (
             <button
               type="button"
@@ -625,7 +628,7 @@ export function OrdersClient({ initialOrders }: OrdersClientProps) {
               title="Padam dan kosongkan semua pesanan dalam sistem"
             >
               <Trash2 className="w-3.5 h-3.5 text-rose-400" />
-              <span>Kosongkan Semua</span>
+              <span className="hidden sm:inline">Kosongkan Semua</span>
             </button>
           )}
 
@@ -633,7 +636,7 @@ export function OrdersClient({ initialOrders }: OrdersClientProps) {
             type="button"
             onClick={handleManualSync}
             disabled={isManualSyncing}
-            className="inline-flex items-center space-x-1.5 px-3 py-1.5 bg-white/10 hover:bg-white/20 text-white rounded-xl transition-all text-[11px] font-semibold border border-white/15 cursor-pointer disabled:opacity-50"
+            className="inline-flex items-center space-x-1.5 px-3 py-1.5 bg-gold/20 hover:bg-gold/30 text-gold-light hover:text-white rounded-xl transition-all text-[11px] font-semibold border border-gold/40 cursor-pointer disabled:opacity-50"
             title="Segerak dan sahkan semua status pesanan terkini"
           >
             <RefreshCw className={`w-3.5 h-3.5 ${isManualSyncing ? 'animate-spin text-[#FAD02C]' : ''}`} />
