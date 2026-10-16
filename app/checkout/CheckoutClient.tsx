@@ -1,6 +1,6 @@
 'use client'
 
-import React, { useState, useEffect } from 'react'
+import React, { useState, useEffect, useCallback } from 'react'
 import Link from 'next/link'
 import Image from 'next/image'
 import { useRouter, useSearchParams } from 'next/navigation'
@@ -231,24 +231,58 @@ export function CheckoutClient({ initialPaymentSettings, initialSiteSettings, av
   const [copiedBank, setCopiedBank] = useState(false)
   const [serverDiscountSen, setServerDiscountSen] = useState<number | null>(null)
 
-  // Interactive tooltips state for hover & click/tap
-  const [showShippingTooltip, setShowShippingTooltip] = useState(false)
+  // Interactive tooltips state with smooth appear & disappear animations
+  const [isShippingMounted, setIsShippingMounted] = useState(false)
+  const [isShippingVisible, setIsShippingVisible] = useState(false)
   const [showContactTooltip, setShowContactTooltip] = useState(false)
   const [showPhoneTooltip, setShowPhoneTooltip] = useState(false)
   const shippingTooltipRef = React.useRef<HTMLDivElement>(null)
+  const shippingCloseTimerRef = React.useRef<NodeJS.Timeout | null>(null)
   const contactTooltipRef = React.useRef<HTMLDivElement>(null)
   const phoneTooltipRef = React.useRef<HTMLDivElement>(null)
+
+  const openShippingTooltip = useCallback(() => {
+    if (shippingCloseTimerRef.current) {
+      clearTimeout(shippingCloseTimerRef.current)
+      shippingCloseTimerRef.current = null
+    }
+    setIsShippingMounted(true)
+    requestAnimationFrame(() => {
+      requestAnimationFrame(() => {
+        setIsShippingVisible(true)
+      })
+    })
+  }, [])
+
+  const closeShippingTooltip = useCallback(() => {
+    setIsShippingVisible(false)
+    if (shippingCloseTimerRef.current) {
+      clearTimeout(shippingCloseTimerRef.current)
+    }
+    shippingCloseTimerRef.current = setTimeout(() => {
+      setIsShippingMounted(false)
+      shippingCloseTimerRef.current = null
+    }, 280)
+  }, [])
+
+  const toggleShippingTooltip = useCallback(() => {
+    if (isShippingVisible) {
+      closeShippingTooltip()
+    } else {
+      openShippingTooltip()
+    }
+  }, [isShippingVisible, closeShippingTooltip, openShippingTooltip])
 
   // Hover handlers for White-Glove info (PC / mouse only; phone uses click only)
   const handleShippingMouseEnter = () => {
     if (typeof window !== 'undefined' && window.matchMedia('(hover: hover) and (pointer: fine)').matches) {
-      setShowShippingTooltip(true)
+      openShippingTooltip()
     }
   }
 
   const handleShippingMouseLeave = () => {
     if (typeof window !== 'undefined' && window.matchMedia('(hover: hover) and (pointer: fine)').matches) {
-      setShowShippingTooltip(false)
+      closeShippingTooltip()
     }
   }
 
@@ -256,7 +290,7 @@ export function CheckoutClient({ initialPaymentSettings, initialSiteSettings, av
     function handleClickOutside(event: MouseEvent | TouchEvent) {
       const target = event.target as Node
       if (shippingTooltipRef.current && !shippingTooltipRef.current.contains(target)) {
-        setShowShippingTooltip(false)
+        closeShippingTooltip()
       }
       if (contactTooltipRef.current && !contactTooltipRef.current.contains(target)) {
         setShowContactTooltip(false)
@@ -270,8 +304,11 @@ export function CheckoutClient({ initialPaymentSettings, initialSiteSettings, av
     return () => {
       document.removeEventListener('mousedown', handleClickOutside)
       document.removeEventListener('touchstart', handleClickOutside)
+      if (shippingCloseTimerRef.current) {
+        clearTimeout(shippingCloseTimerRef.current)
+      }
     }
-  }, [])
+  }, [closeShippingTooltip])
 
   // Sync server coupon validation when couponCode or subtotal changes
   useEffect(() => {
@@ -2680,12 +2717,12 @@ export function CheckoutClient({ initialPaymentSettings, initialSiteSettings, av
                         onClick={(e) => {
                           e.preventDefault()
                           e.stopPropagation()
-                          setShowShippingTooltip((prev) => !prev)
+                          toggleShippingTooltip()
                         }}
                         aria-label="Maklumat Penghantaran White-Glove"
-                        aria-expanded={showShippingTooltip}
+                        aria-expanded={isShippingVisible}
                         className={`p-1 rounded-full transition-all cursor-pointer focus:outline-none ${
-                          showShippingTooltip
+                          isShippingVisible
                             ? 'text-forest bg-forest/15 ring-2 ring-forest/20'
                             : 'text-neutral-400 hover:text-forest hover:bg-forest/10'
                         }`}
@@ -2693,25 +2730,31 @@ export function CheckoutClient({ initialPaymentSettings, initialSiteSettings, av
                         <HelpCircle className="w-4 h-4" />
                       </button>
 
-                      {showShippingTooltip && (
+                      {isShippingMounted && (
                         <>
                           {/* ========================================================= */}
-                          {/* 1. MOBILE BOTTOM SHEET (Ringkas, Kemas & Mesra Sentuhan) */}
+                          {/* 1. MOBILE BOTTOM SHEET (Smooth Appear & Disappear)        */}
                           {/* ========================================================= */}
                           <div className="sm:hidden">
-                            {/* Backdrop */}
+                            {/* Backdrop with smooth fade in / fade out */}
                             <div
-                              className="fixed inset-0 bg-black/50 backdrop-blur-xs z-50 animate-in fade-in duration-200"
+                              className={`fixed inset-0 bg-black/50 backdrop-blur-xs z-50 transition-opacity duration-300 ease-out ${
+                                isShippingVisible ? 'opacity-100' : 'opacity-0 pointer-events-none'
+                              }`}
                               onClick={(e) => {
                                 e.preventDefault()
                                 e.stopPropagation()
-                                setShowShippingTooltip(false)
+                                closeShippingTooltip()
                               }}
                             />
 
-                            {/* Bottom Sheet Drawer */}
+                            {/* Bottom Sheet with smooth slide up / slide down */}
                             <div
-                              className="fixed inset-x-0 bottom-0 z-50 bg-white rounded-t-3xl p-5 border-t border-[#D5CEC2] shadow-2xl animate-in slide-in-from-bottom duration-200 text-left text-charcoal pb-8"
+                              className={`fixed inset-x-0 bottom-0 z-50 bg-white rounded-t-3xl p-5 border-t border-[#D5CEC2] shadow-2xl text-left text-charcoal pb-8 transition-all duration-300 transform ${
+                                isShippingVisible
+                                  ? 'translate-y-0 opacity-100 ease-out'
+                                  : 'translate-y-full opacity-0 ease-in pointer-events-none'
+                              }`}
                               role="dialog"
                               aria-modal="true"
                             >
@@ -2733,7 +2776,7 @@ export function CheckoutClient({ initialPaymentSettings, initialSiteSettings, av
                                   onClick={(e) => {
                                     e.preventDefault()
                                     e.stopPropagation()
-                                    setShowShippingTooltip(false)
+                                    closeShippingTooltip()
                                   }}
                                   className="w-7 h-7 text-neutral-400 hover:text-charcoal rounded-full hover:bg-neutral-100 flex items-center justify-center transition-colors cursor-pointer"
                                   aria-label="Tutup"
@@ -2786,9 +2829,9 @@ export function CheckoutClient({ initialPaymentSettings, initialSiteSettings, av
                                 onClick={(e) => {
                                   e.preventDefault()
                                   e.stopPropagation()
-                                  setShowShippingTooltip(false)
+                                  closeShippingTooltip()
                                 }}
-                                className="mt-4 w-full py-2.5 bg-forest hover:bg-forest-light text-white font-medium text-xs rounded-xl shadow-xs transition-colors cursor-pointer text-center"
+                                className="mt-4 w-full py-2.5 bg-forest hover:bg-forest-light text-white font-medium text-xs rounded-xl shadow-xs transition-colors cursor-pointer text-center active:scale-[0.99]"
                               >
                                 Faham &amp; Tutup
                               </button>
@@ -2796,10 +2839,14 @@ export function CheckoutClient({ initialPaymentSettings, initialSiteSettings, av
                           </div>
 
                           {/* ========================================================= */}
-                          {/* 2. DESKTOP FLOATING TOOLTIP (Kekal Hover & Arrow di PC)  */}
+                          {/* 2. DESKTOP FLOATING TOOLTIP (Smooth Appear & Disappear)    */}
                           {/* ========================================================= */}
                           <div
-                            className="hidden sm:block absolute bottom-full -right-8 mb-2 w-80 bg-white rounded-2xl p-4.5 border border-[#D5CEC2] shadow-xl text-left text-charcoal animate-in fade-in zoom-in-95 duration-150 z-40"
+                            className={`hidden sm:block absolute bottom-full -right-8 mb-2 w-80 bg-white rounded-2xl p-4.5 border border-[#D5CEC2] shadow-xl text-left text-charcoal z-40 transition-all duration-200 transform ${
+                              isShippingVisible
+                                ? 'opacity-100 scale-100 translate-y-0 ease-out'
+                                : 'opacity-0 scale-95 translate-y-2 ease-in pointer-events-none'
+                            }`}
                             role="tooltip"
                           >
                             <div className="flex items-center gap-2 mb-2.5">
