@@ -205,6 +205,33 @@ export class ChipPaymentProvider implements PaymentProvider {
     }
     return null
   }
+
+  async findPurchaseByReference(reference: string): Promise<any> {
+    const { secretKey } = getChipConfig()
+    if (!secretKey || !reference) return null
+    try {
+      const res = await fetch(
+        `https://gate.chip-in.asia/api/v1/purchases/?reference=${encodeURIComponent(reference)}`,
+        {
+          headers: {
+            Authorization: `Bearer ${secretKey}`,
+          },
+        }
+      )
+      if (res.ok) {
+        const data = await res.json()
+        if (data && Array.isArray(data.results) && data.results.length > 0) {
+          return data.results[0]
+        }
+        if (data && Array.isArray(data) && data.length > 0) {
+          return data[0]
+        }
+      }
+    } catch (err) {
+      console.error('CHIP findPurchaseByReference error:', err)
+    }
+    return null
+  }
 }
 
 export const chipProvider = new ChipPaymentProvider()

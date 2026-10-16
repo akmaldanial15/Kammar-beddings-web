@@ -10,6 +10,7 @@ import { PrintButton } from '@/components/order/PrintButton'
 import { ClearCartOnSuccess } from '@/components/order/ClearCartOnSuccess'
 import { OrderConfirmedClientRecovery } from '@/components/order/OrderConfirmedClientRecovery'
 import { OrderSyncProgressBar } from '@/components/order/OrderSyncProgressBar'
+import { RefreshPaymentStatusButton } from '@/components/order/RefreshPaymentStatusButton'
 
 interface Props {
   params: { orderId: string }
@@ -115,6 +116,13 @@ export default async function OrderConfirmedPage({ params, searchParams }: Props
           <OrderSyncProgressBar
             orderId={order.id}
             orderNumber={order.orderNumber}
+            initialIsPaid={isPaid}
+          />
+
+          {/* Refresh Payment Status Button (Real-time verification with CHIP & Vercel) */}
+          <RefreshPaymentStatusButton
+            orderId={order.id}
+            paymentId={effectivePaymentId}
             initialIsPaid={isPaid}
           />
         </div>

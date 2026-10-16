@@ -29,6 +29,91 @@ export function OrderConfirmedClientRecovery({ orderId, paymentId }: Props) {
   const [order, setOrder] = useState<Order | null>(null)
   const [isLoading, setIsLoading] = useState(true)
   const [errorMessage, setErrorMessage] = useState('')
+  const [isManualRefreshing, setIsManualRefreshing] = useState(false)
+  const [manualRefreshFeedback, setManualRefreshFeedback] = useState<{
+    text: string
+    type: 'info' | 'success' | 'error'
+  } | null>(null)
+  const [lastCheckedTime, setLastCheckedTime] = useState<string | null>(null)
+
+  const handleManualRefresh = async (isSilent = false) => {
+    if (isManualRefreshing) return
+    setIsManualRefreshing(true)
+    if (!isSilent) {
+      setManualRefreshFeedback({
+        text: 'Menghubungi pelayan Vercel & gerbang bayaran CHIP...',
+        type: 'info',
+      })
+    }
+
+    try {
+      let candidateOrder: any = null
+      try {
+        const raw =
+          sessionStorage.getItem(`kamaar_order_snapshot_${orderId}`) ||
+          sessionStorage.getItem('kamaar_last_order_snapshot')
+        if (raw) candidateOrder = JSON.parse(raw)
+      } catch (_) {}
+
+      if (!candidateOrder && typeof document !== 'undefined') {
+        try {
+          const match =
+            document.cookie.match(new RegExp(`(?:^|;\\s*)kamaar_order_${orderId}=([^;]+)`)) ||
+            document.cookie.match(/(?:^|;\s*)kamaar_last_order=([^;]+)/)
+          if (match && match[1]) {
+            const b64 = decodeURIComponent(match[1])
+            const decoded = decodeURIComponent(escape(atob(b64)))
+            candidateOrder = JSON.parse(decoded)
+          }
+        } catch (_) {}
+      }
+
+      const res = await fetch(`/api/orders/${orderId}/refresh`, {
+        method: 'POST',
+        headers: { 'Content-Type': 'application/json' },
+        body: JSON.stringify({
+          orderSnapshot: candidateOrder,
+          paymentId,
+        }),
+      })
+
+      const data = await res.json()
+      const nowStr = new Date().toLocaleTimeString('ms-MY', { hour: '2-digit', minute: '2-digit', second: '2-digit' })
+      setLastCheckedTime(nowStr)
+
+      if (data && data.success && data.order) {
+        setOrder(data.order)
+        setIsLoading(false)
+        if (data.isPaid) {
+          setManualRefreshFeedback({
+            text: 'Alhamdulillah! Bayaran telah disahkan berjaya. Resit rasmi anda dimuatkan di bawah.',
+            type: 'success',
+          })
+        } else {
+          setManualRefreshFeedback({
+            text: data.message || 'Pesanan dijumpai, bayaran masih dalam proses perbankan.',
+            type: 'info',
+          })
+        }
+      } else {
+        if (!isSilent) {
+          setManualRefreshFeedback({
+            text: data.message || 'Status bayaran belum dikemaskini oleh pihak bank. Sila cuba tekan butang ini semula dalam beberapa saat.',
+            type: 'error',
+          })
+        }
+      }
+    } catch {
+      if (!isSilent) {
+        setManualRefreshFeedback({
+          text: 'Ralat sambungan rangkaian. Sila tekan butang semak sekali lagi.',
+          type: 'error',
+        })
+      }
+    } finally {
+      setIsManualRefreshing(false)
+    }
+  }
 
   useEffect(() => {
     let isMounted = true
@@ -84,7 +169,27 @@ export function OrderConfirmedClientRecovery({ orderId, paymentId }: Props) {
           }
         }
 
-        // 4. If recovery endpoint didn't succeed but we have candidateOrder in client memory
+        // 4. Try refresh API directly with CHIP reference search
+        try {
+          const refreshRes = await fetch(`/api/orders/${orderId}/refresh`, {
+            method: 'POST',
+            headers: { 'Content-Type': 'application/json' },
+            body: JSON.stringify({
+              orderSnapshot: candidateOrder,
+              paymentId,
+            }),
+          })
+          if (refreshRes.ok) {
+            const refreshData = await refreshRes.json()
+            if (refreshData && refreshData.order && isMounted) {
+              setOrder(refreshData.order)
+              setIsLoading(false)
+              return
+            }
+          }
+        } catch (_) {}
+
+        // 5. If recovery endpoint didn't succeed but we have candidateOrder in client memory
         if (candidateOrder && isMounted) {
           setOrder(candidateOrder)
           setIsLoading(false)
@@ -104,8 +209,18 @@ export function OrderConfirmedClientRecovery({ orderId, paymentId }: Props) {
     }
 
     recover()
+
+    // Gentle auto-poll in background every 4s for first 24s
+    const pollTimers = [
+      setTimeout(() => handleManualRefresh(true), 3500),
+      setTimeout(() => handleManualRefresh(true), 8000),
+      setTimeout(() => handleManualRefresh(true), 15000),
+      setTimeout(() => handleManualRefresh(true), 24000),
+    ]
+
     return () => {
       isMounted = false
+      pollTimers.forEach(clearTimeout)
     }
   }, [orderId, paymentId])
 
@@ -160,6 +275,42 @@ export function OrderConfirmedClientRecovery({ orderId, paymentId }: Props) {
 
           <div className="bg-cream p-4 rounded-xl border border-borderLight text-xs font-mono font-bold text-forest mb-6">
             Rujukan Pesanan: {orderId}
+          </div>
+
+          {/* DEDICATED REFRESH PAYMENT STATUS BUTTON (OPTIMIZED FOR VERCEL) */}
+          <div className="space-y-3 mb-6 pt-1 text-left sm:text-center">
+            <button
+              type="button"
+              onClick={() => handleManualRefresh(false)}
+              disabled={isManualRefreshing}
+              className="w-full py-4 px-6 bg-gradient-to-r from-[#0F2D59] via-[#1B4B8A] to-[#0F2D59] hover:from-[#13386D] hover:via-[#225CA8] hover:to-[#13386D] text-white text-xs sm:text-sm font-extrabold uppercase tracking-wider rounded-2xl transition-all shadow-md hover:shadow-xl hover:-translate-y-0.5 active:translate-y-0 active:scale-[0.99] border-2 border-[#E5B54F]/80 flex items-center justify-center gap-2.5 cursor-pointer disabled:opacity-60"
+            >
+              <RefreshCw className={`w-4 h-4 text-[#FAD02C] ${isManualRefreshing ? 'animate-spin' : ''}`} />
+              <span>{isManualRefreshing ? 'Menyemak Status Terkini...' : '🔄 Semak & Muat Semula Status Bayaran'}</span>
+            </button>
+
+            {manualRefreshFeedback && (
+              <div
+                className={`p-3 rounded-xl text-xs text-center border animate-in fade-in duration-200 ${
+                  manualRefreshFeedback.type === 'success'
+                    ? 'bg-emerald-50 text-emerald-800 border-emerald-300 font-bold'
+                    : manualRefreshFeedback.type === 'error'
+                    ? 'bg-amber-50 text-amber-900 border-amber-300'
+                    : 'bg-blue-50 text-blue-800 border-blue-200'
+                }`}
+              >
+                <p>{manualRefreshFeedback.text}</p>
+                {lastCheckedTime && (
+                  <span className="text-[10px] opacity-75 block mt-1 font-mono">
+                    Disemak pada: {lastCheckedTime}
+                  </span>
+                )}
+              </div>
+            )}
+
+            <p className="text-[11px] text-charcoal-muted leading-relaxed">
+              Tekan butang di atas untuk menyegerak dan mengesahkan status transaksi terus dengan gerbang CHIP (FPX / TNG) &amp; pelayan awan Vercel.
+            </p>
           </div>
 
           <div className="flex flex-col sm:flex-row items-center justify-center gap-3">
@@ -225,6 +376,34 @@ export function OrderConfirmedClientRecovery({ orderId, paymentId }: Props) {
             orderNumber={order.orderNumber}
             initialIsPaid={isPaid}
           />
+
+          {/* Refresh Payment Status Button when order is awaiting confirmation */}
+          {!isPaid && (
+            <div className="mt-5 max-w-md mx-auto space-y-2">
+              <button
+                type="button"
+                onClick={() => handleManualRefresh(false)}
+                disabled={isManualRefreshing}
+                className="w-full py-3.5 px-5 bg-gradient-to-r from-[#0F2D59] via-[#1B4B8A] to-[#0F2D59] hover:from-[#13386D] hover:via-[#225CA8] hover:to-[#13386D] text-white text-xs font-bold uppercase tracking-wider rounded-xl transition-all shadow-sm hover:shadow-md flex items-center justify-center gap-2 cursor-pointer border border-[#E5B54F]/70 disabled:opacity-60"
+              >
+                <RefreshCw className={`w-3.5 h-3.5 text-[#FAD02C] ${isManualRefreshing ? 'animate-spin' : ''}`} />
+                <span>{isManualRefreshing ? 'Menyemak Status...' : '🔄 Semak & Muat Semula Status Bayaran'}</span>
+              </button>
+              {manualRefreshFeedback && (
+                <div
+                  className={`p-2.5 rounded-xl text-xs text-center border animate-in fade-in duration-200 ${
+                    manualRefreshFeedback.type === 'success'
+                      ? 'bg-emerald-50 text-emerald-800 border-emerald-300 font-semibold'
+                      : manualRefreshFeedback.type === 'error'
+                      ? 'bg-amber-50 text-amber-900 border-amber-300'
+                      : 'bg-blue-50 text-blue-800 border-blue-200'
+                  }`}
+                >
+                  <p>{manualRefreshFeedback.text}</p>
+                </div>
+              )}
+            </div>
+          )}
         </div>
 
         {/* OFFICIAL RECEIPT CONTAINER */}

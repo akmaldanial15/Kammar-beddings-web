@@ -2064,6 +2064,54 @@
       ],
       "createdAt": "2026-10-16T10:17:27.492Z",
       "updatedAt": "2026-10-16T10:17:27.498Z"
+    },
+    {
+      "id": "prod-crud-test-1792153406688",
+      "name": "Tilam Ujian CRUD (Dikemaskini)",
+      "slug": "tilam-ujian-crud-test-1792153406688",
+      "subtitle": "Tilam prototaip bagi pengesahan kualiti",
+      "description": "Penerangan tilam ujian berkualiti tinggi terus dari kilang TSJ.",
+      "categoryId": "cat-tilam-toto",
+      "productType": "mattress",
+      "badge": "BARU & EKSKLUSIF",
+      "isFeatured": true,
+      "status": "archived",
+      "warrantyYears": 2,
+      "features": [
+        "100% Cotton Padat",
+        "Mudah Dicuci"
+      ],
+      "specifications": {
+        "material": "Polyester TC & Cotton",
+        "thickness": "4 Inci",
+        "warrantyYears": "2 Tahun"
+      },
+      "images": [
+        {
+          "id": "img-prod-crud-test-1792153406688-1",
+          "productId": "prod-crud-test-1792153406688",
+          "imageUrl": "/images/products/toto-single-poly.png",
+          "altText": "Tilam Ujian",
+          "displayOrder": 1,
+          "isPrimary": true
+        }
+      ],
+      "variants": [
+        {
+          "id": "var-prod-crud-test-1792153406688-1",
+          "productId": "prod-crud-test-1792153406688",
+          "sku": "SKU-CRUD-6688",
+          "name": "Single 3ft",
+          "sizeName": "Single",
+          "dimensions": "90 cm x 200 cm",
+          "priceSen": 5500,
+          "compareAtPriceSen": 6990,
+          "stockQuantity": 40,
+          "isActive": true
+        }
+      ],
+      "createdAt": "2026-10-16T12:23:26.694Z",
+      "updatedAt": "2026-10-16T12:23:26.700Z"
     }
   ],
   "coupons": [
@@ -3241,6 +3289,135 @@
       "createdAt": "2026-10-16T10:17:28.307Z",
       "updatedAt": "2026-10-16T10:17:28.310Z",
       "affiliateCredited": true
+    },
+    {
+      "id": "ord-test-recover-1792153407629",
+      "orderNumber": "LENA-TEST-7629",
+      "customerEmail": "customer@kamaar.my",
+      "customerName": "Ahmad Pelanggan",
+      "customerPhone": "0191234567",
+      "shippingAddress": {
+        "fullName": "Ahmad Pelanggan",
+        "phone": "0191234567",
+        "addressLine1": "No 1, Jalan Bunga",
+        "city": "Tasek Gelugor",
+        "state": "Pulau Pinang",
+        "postcode": "13300",
+        "country": "Malaysia"
+      },
+      "billingAddress": {
+        "fullName": "Ahmad Pelanggan",
+        "phone": "0191234567",
+        "addressLine1": "No 1, Jalan Bunga",
+        "city": "Tasek Gelugor",
+        "state": "Pulau Pinang",
+        "postcode": "13300",
+        "country": "Malaysia"
+      },
+      "subtotalSen": 45000,
+      "discountSen": 0,
+      "shippingSen": 0,
+      "taxSen": 0,
+      "totalSen": 45000,
+      "paymentStatus": "unpaid",
+      "fulfillmentStatus": "unfulfilled",
+      "paymentProvider": "chip",
+      "items": [
+        {
+          "id": "item-1",
+          "orderId": "",
+          "variantId": "var-1",
+          "productName": "Tilam Lipat Kekabu Asli",
+          "sizeName": "Single 3ft",
+          "sku": "TL-SGL",
+          "dimensions": "3ft x 6ft",
+          "unitPriceSen": 45000,
+          "quantity": 1,
+          "lineTotalSen": 45000
+        }
+      ],
+      "affiliateCode": "AFF-DANIAL",
+      "affiliateCommissionSen": 4500,
+      "createdAt": "2026-10-16T12:23:27.629Z",
+      "updatedAt": "2026-10-16T12:23:27.631Z"
+    },
+    {
+      "id": "ord-aff-test-1792153407634",
+      "orderNumber": "LENA-AFF-7634",
+      "customerEmail": "aff.buyer@kamaar.my",
+      "customerName": "Pembeli Affiliate",
+      "customerPhone": "0191234567",
+      "shippingAddress": {
+        "fullName": "Pembeli Affiliate",
+        "phone": "0191234567",
+        "addressLine1": "No 2, Jalan Mawar",
+        "city": "Tasek Gelugor",
+        "state": "Pulau Pinang",
+        "postcode": "13300",
+        "country": "Malaysia"
+      },
+      "billingAddress": {
+        "fullName": "Pembeli Affiliate",
+        "phone": "0191234567",
+        "addressLine1": "No 2, Jalan Mawar",
+        "city": "Tasek Gelugor",
+        "state": "Pulau Pinang",
+        "postcode": "13300",
+        "country": "Malaysia"
+      },
+      "subtotalSen": 30000,
+      "discountSen": 0,
+      "shippingSen": 0,
+      "taxSen": 0,
+      "totalSen": 30000,
+      "paymentStatus": "paid",
+      "fulfillmentStatus": "processing",
+      "paymentProvider": "chip",
+      "affiliateCode": "AFF-DANIAL",
+      "affiliateCommissionSen": 3000,
+      "items": [],
+      "createdAt": "2026-10-16T12:23:27.634Z",
+      "updatedAt": "2026-10-16T12:23:27.640Z",
+      "affiliateCredited": true
+    },
+    {
+      "id": "ord-recovery-paid-1792153407644",
+      "orderNumber": "LENA-REC-7644",
+      "customerEmail": "recovery.buyer@kamaar.my",
+      "customerName": "Pembeli Recovery",
+      "customerPhone": "0191234567",
+      "shippingAddress": {
+        "fullName": "Pembeli Recovery",
+        "phone": "0191234567",
+        "addressLine1": "No 3, Jalan Melati",
+        "city": "Tasek Gelugor",
+        "state": "Pulau Pinang",
+        "postcode": "13300",
+        "country": "Malaysia"
+      },
+      "billingAddress": {
+        "fullName": "Pembeli Recovery",
+        "phone": "0191234567",
+        "addressLine1": "No 3, Jalan Melati",
+        "city": "Tasek Gelugor",
+        "state": "Pulau Pinang",
+        "postcode": "13300",
+        "country": "Malaysia"
+      },
+      "subtotalSen": 20000,
+      "discountSen": 0,
+      "shippingSen": 0,
+      "taxSen": 0,
+      "totalSen": 20000,
+      "paymentStatus": "paid",
+      "fulfillmentStatus": "processing",
+      "paymentProvider": "chip",
+      "affiliateCode": "AFF-DANIAL",
+      "affiliateCommissionSen": 2000,
+      "items": [],
+      "createdAt": "2026-10-16T12:23:27.644Z",
+      "updatedAt": "2026-10-16T12:23:27.646Z",
+      "affiliateCredited": true
     }
   ],
   "reviews": [
@@ -3388,6 +3565,19 @@
     }
   ],
   "warranties": [
+    {
+      "customerName": "Ahmad Pelanggan Warranty",
+      "customerEmail": "warranty.test@kamaar.my",
+      "customerPhone": "0191234567",
+      "productName": "Tilam Lipat Kekabu Asli (3ft)",
+      "invoiceNumber": "WAR-CRUD-406688",
+      "purchaseDate": "2026-10-01",
+      "retailer": "Showroom Kilang Tasek Gelugor",
+      "id": "war-1792153406804",
+      "status": "verified",
+      "createdAt": "2026-10-16T12:23:26.804Z",
+      "internalNotes": "Disahkan admin"
+    },
     {
       "customerName": "Ahmad Pelanggan Warranty",
       "customerEmail": "warranty.test@kamaar.my",
@@ -3631,6 +3821,388 @@
     }
   ],
   "auditLogs": [
+    {
+      "id": "aud-1792153407641-2dfz",
+      "actorEmail": "system",
+      "action": "order_status_updated",
+      "entityType": "order",
+      "entityId": "ord-aff-test-1792153407634",
+      "details": {
+        "paymentStatus": "paid",
+        "fulfillmentStatus": "processing"
+      },
+      "createdAt": "2026-10-16T12:23:27.641Z"
+    },
+    {
+      "id": "aud-1792153407638-7ott",
+      "actorEmail": "system",
+      "action": "order_status_updated",
+      "entityType": "order",
+      "entityId": "ord-aff-test-1792153407634",
+      "details": {
+        "paymentStatus": "paid"
+      },
+      "createdAt": "2026-10-16T12:23:27.638Z"
+    },
+    {
+      "id": "aud-1792153407442-owiv",
+      "actorEmail": "admin",
+      "action": "affiliate_updated",
+      "entityType": "affiliate",
+      "entityId": "aff-danial",
+      "details": {
+        "commissionRate": 15,
+        "commissionType": "percentage",
+        "bankName": "CIMB Bank",
+        "bankAccountNumber": "888123456789",
+        "adminNotes": "Ujian komisen dinaikkan kepada 15%"
+      },
+      "createdAt": "2026-10-16T12:23:27.442Z"
+    },
+    {
+      "id": "aud-1792153406810-44z5",
+      "actorEmail": "admin@kamaarbeddings.com",
+      "action": "product_archived",
+      "entityType": "product",
+      "entityId": "prod-crud-test-1792153406688",
+      "createdAt": "2026-10-16T12:23:26.810Z"
+    },
+    {
+      "id": "aud-1792153406802-4cwv",
+      "actorEmail": "admin@kamaarbeddings.com",
+      "action": "payment_method_deleted",
+      "entityType": "payment_method",
+      "entityId": "pay-crud-test-1792153406688",
+      "createdAt": "2026-10-16T12:23:26.802Z"
+    },
+    {
+      "id": "aud-1792153406799-q0vc",
+      "actorEmail": "admin@kamaarbeddings.com",
+      "action": "payment_method_saved",
+      "entityType": "payment_method",
+      "entityId": "pay-crud-test-1792153406688",
+      "details": {
+        "name": "Pindahan Bank Manual (Ujian CRUD)",
+        "enabled": false,
+        "providerType": "custom"
+      },
+      "createdAt": "2026-10-16T12:23:26.799Z"
+    },
+    {
+      "id": "aud-1792153406795-emyz",
+      "actorEmail": "admin@kamaarbeddings.com",
+      "action": "payment_method_saved",
+      "entityType": "payment_method",
+      "entityId": "pay-crud-test-1792153406688",
+      "details": {
+        "name": "Pindahan Bank Manual (Ujian CRUD)",
+        "enabled": true,
+        "providerType": "custom"
+      },
+      "createdAt": "2026-10-16T12:23:26.795Z"
+    },
+    {
+      "id": "aud-1792153406790-rk60",
+      "actorEmail": "admin@kamaarbeddings.com",
+      "action": "website_config_updated",
+      "entityType": "website_config",
+      "entityId": "websiteConfig",
+      "details": {
+        "announcement": {
+          "enabled": true,
+          "leftBenefit": "PENGHANTARAN SELURUH MALAYSIA",
+          "centerText": "PENGILANG & PEMASAR PRODUK JAHITAN TEKSTIL",
+          "highlightCode": "",
+          "url": "",
+          "rightGuarantee": "JAMINAN HARGA TERENDAH",
+          "bgColor": "#13325B",
+          "textColor": "#FFFFFF"
+        }
+      },
+      "createdAt": "2026-10-16T12:23:26.790Z"
+    },
+    {
+      "id": "aud-1792153406787-azjj",
+      "actorEmail": "admin@kamaarbeddings.com",
+      "action": "website_config_updated",
+      "entityType": "website_config",
+      "entityId": "websiteConfig",
+      "details": {
+        "announcement": {
+          "enabled": true,
+          "leftBenefit": "PENGHANTARAN SELURUH MALAYSIA",
+          "centerText": "PENGILANG & PEMASAR PRODUK JAHITAN TEKSTIL TERBAIK",
+          "highlightCode": "",
+          "url": "",
+          "rightGuarantee": "JAMINAN HARGA TERENDAH",
+          "bgColor": "#13325B",
+          "textColor": "#FFFFFF"
+        }
+      },
+      "createdAt": "2026-10-16T12:23:26.787Z"
+    },
+    {
+      "id": "aud-1792153406783-icq0",
+      "actorEmail": "admin@kamaarbeddings.com",
+      "action": "settings_updated",
+      "entityType": "settings",
+      "entityId": "siteSettings",
+      "details": {
+        "freeShippingThresholdSen": 20000
+      },
+      "createdAt": "2026-10-16T12:23:26.783Z"
+    },
+    {
+      "id": "aud-1792153406779-1qk6",
+      "actorEmail": "admin@kamaarbeddings.com",
+      "action": "settings_updated",
+      "entityType": "settings",
+      "entityId": "siteSettings",
+      "details": {
+        "freeShippingThresholdSen": 18800,
+        "announcementText": "KAMAAR BEDDINGS: PENGHANTARAN TERUS DARI KILANG TASEK GELUGOR"
+      },
+      "createdAt": "2026-10-16T12:23:26.779Z"
+    },
+    {
+      "id": "aud-1792153406775-lcfv",
+      "actorEmail": "admin@kamaarbeddings.com",
+      "action": "showroom_deleted",
+      "entityType": "showroom",
+      "entityId": "shw-crud-test-1792153406688",
+      "createdAt": "2026-10-16T12:23:26.775Z"
+    },
+    {
+      "id": "aud-1792153406770-rt36",
+      "actorEmail": "admin@kamaarbeddings.com",
+      "action": "showroom_updated",
+      "entityType": "showroom",
+      "entityId": "shw-crud-test-1792153406688",
+      "details": {
+        "name": "Showroom TSJ Cawangan Ujian (VIP Studio)"
+      },
+      "createdAt": "2026-10-16T12:23:26.770Z"
+    },
+    {
+      "id": "aud-1792153406767-h7cw",
+      "actorEmail": "admin@kamaarbeddings.com",
+      "action": "showroom_created",
+      "entityType": "showroom",
+      "entityId": "shw-crud-test-1792153406688",
+      "details": {
+        "name": "Showroom TSJ Cawangan Ujian"
+      },
+      "createdAt": "2026-10-16T12:23:26.767Z"
+    },
+    {
+      "id": "aud-1792153406764-v3lv",
+      "actorEmail": "admin@kamaarbeddings.com",
+      "action": "affiliate_deleted",
+      "entityType": "affiliate",
+      "entityId": "aff-1792153406755-1b6m",
+      "details": {
+        "code": "AFF-CRUD-406688"
+      },
+      "createdAt": "2026-10-16T12:23:26.764Z"
+    },
+    {
+      "id": "aud-1792153406761-xj5v",
+      "actorEmail": "admin@kamaarbeddings.com",
+      "action": "affiliate_updated",
+      "entityType": "affiliate",
+      "entityId": "aff-1792153406755-1b6m",
+      "details": {
+        "commissionRate": 18,
+        "adminNotes": "Komisen dinaikkan kepada 18% atas prestasi cemerlang."
+      },
+      "createdAt": "2026-10-16T12:23:26.761Z"
+    },
+    {
+      "id": "aud-1792153406757-ur77",
+      "actorEmail": "admin@kamaarbeddings.com",
+      "action": "affiliate_created",
+      "entityType": "affiliate",
+      "entityId": "aff-1792153406755-1b6m",
+      "details": {
+        "code": "AFF-CRUD-406688",
+        "name": "Ejen Ujian Automasi CRUD"
+      },
+      "createdAt": "2026-10-16T12:23:26.757Z"
+    },
+    {
+      "id": "aud-1792153406753-7nis",
+      "actorEmail": "admin@kamaarbeddings.com",
+      "action": "coupon_deleted",
+      "entityType": "coupon",
+      "entityId": "cpn-crud-test-1792153406688",
+      "createdAt": "2026-10-16T12:23:26.753Z"
+    },
+    {
+      "id": "aud-1792153406747-hdx3",
+      "actorEmail": "admin@kamaarbeddings.com",
+      "action": "coupon_updated",
+      "entityType": "coupon",
+      "entityId": "cpn-crud-test-1792153406688",
+      "details": {
+        "code": "CPN-CRUD-406688"
+      },
+      "createdAt": "2026-10-16T12:23:26.747Z"
+    },
+    {
+      "id": "aud-1792153406743-w4ea",
+      "actorEmail": "admin@kamaarbeddings.com",
+      "action": "coupon_created",
+      "entityType": "coupon",
+      "entityId": "cpn-crud-test-1792153406688",
+      "details": {
+        "code": "CPN-CRUD-406688"
+      },
+      "createdAt": "2026-10-16T12:23:26.743Z"
+    },
+    {
+      "id": "aud-1792153406739-5e0x",
+      "actorEmail": "admin@kamaarbeddings.com",
+      "action": "order_deleted",
+      "entityType": "order",
+      "entityId": "ord-1792153406732-9ujy2",
+      "details": {
+        "orderNumber": "LENA-2026-1025",
+        "customerName": "Ahmad Pelanggan CRUD",
+        "customerEmail": "admin.crud.test@kamaar.my",
+        "totalSen": 9900
+      },
+      "createdAt": "2026-10-16T12:23:26.739Z"
+    },
+    {
+      "id": "aud-1792153406736-y9uo",
+      "actorEmail": "admin@kamaarbeddings.com",
+      "action": "order_status_updated",
+      "entityType": "order",
+      "entityId": "ord-1792153406732-9ujy2",
+      "details": {
+        "paymentStatus": "paid",
+        "fulfillmentStatus": "processing",
+        "internalNotes": "Disahkan oleh Kamaar Admin melalui panggilan telefon."
+      },
+      "createdAt": "2026-10-16T12:23:26.736Z"
+    },
+    {
+      "id": "aud-1792153406730-sga6",
+      "actorEmail": "admin@kamaarbeddings.com",
+      "action": "stock_adjusted",
+      "entityType": "variant",
+      "entityId": "var-toto-single-poly-1",
+      "details": {
+        "product": "TOTO SINGLE (POLY)",
+        "size": "Single",
+        "oldQty": 149,
+        "newQty": 139,
+        "reason": "Pembalikkan ujian"
+      },
+      "createdAt": "2026-10-16T12:23:26.730Z"
+    },
+    {
+      "id": "aud-1792153406726-lydc",
+      "actorEmail": "admin@kamaarbeddings.com",
+      "action": "stock_adjusted",
+      "entityType": "variant",
+      "entityId": "var-toto-single-poly-1",
+      "details": {
+        "product": "TOTO SINGLE (POLY)",
+        "size": "Single",
+        "oldQty": 139,
+        "newQty": 149,
+        "reason": "Penambahan stok stokis ujian automasi"
+      },
+      "createdAt": "2026-10-16T12:23:26.726Z"
+    },
+    {
+      "id": "aud-1792153406722-6nqh",
+      "actorEmail": "admin@kamaarbeddings.com",
+      "action": "category_deleted",
+      "entityType": "category",
+      "entityId": "cat-1792153406709-rc3x",
+      "details": {
+        "name": "Kategori Ujian CRUD (Dikemaskini)"
+      },
+      "createdAt": "2026-10-16T12:23:26.722Z"
+    },
+    {
+      "id": "aud-1792153406719-aru4",
+      "actorEmail": "admin@kamaarbeddings.com",
+      "action": "categories_reordered",
+      "entityType": "category",
+      "details": {
+        "orderedIds": [
+          "cat-1792153406709-rc3x",
+          "cat-tilam-toto",
+          "cat-tilam-gulung",
+          "cat-tilam-kekabu",
+          "cat-bantal-tidur",
+          "cat-bantal-peluk",
+          "cat-produk-baby",
+          "cat-selimut",
+          "cat-kusyen-sofa",
+          "cat-sarung-tilam",
+          "cat-custom-oem"
+        ]
+      },
+      "createdAt": "2026-10-16T12:23:26.719Z"
+    },
+    {
+      "id": "aud-1792153406715-429f",
+      "actorEmail": "admin@kamaarbeddings.com",
+      "action": "category_updated",
+      "entityType": "category",
+      "entityId": "cat-1792153406709-rc3x",
+      "details": {
+        "name": "Kategori Ujian CRUD (Dikemaskini)",
+        "description": "Penerangan kategori yang telah diedit."
+      },
+      "createdAt": "2026-10-16T12:23:26.715Z"
+    },
+    {
+      "id": "aud-1792153406711-554t",
+      "actorEmail": "admin@kamaarbeddings.com",
+      "action": "category_created",
+      "entityType": "category",
+      "entityId": "cat-1792153406709-rc3x",
+      "details": {
+        "name": "Kategori Ujian CRUD",
+        "slug": "kategori-crud-test-1792153406688"
+      },
+      "createdAt": "2026-10-16T12:23:26.711Z"
+    },
+    {
+      "id": "aud-1792153406706-u7cq",
+      "actorEmail": "admin@kamaarbeddings.com",
+      "action": "product_archived",
+      "entityType": "product",
+      "entityId": "prod-crud-test-1792153406688",
+      "createdAt": "2026-10-16T12:23:26.706Z"
+    },
+    {
+      "id": "aud-1792153406700-yc0r",
+      "actorEmail": "admin@kamaarbeddings.com",
+      "action": "product_updated",
+      "entityType": "product",
+      "entityId": "prod-crud-test-1792153406688",
+      "details": {
+        "name": "Tilam Ujian CRUD (Dikemaskini)"
+      },
+      "createdAt": "2026-10-16T12:23:26.700Z"
+    },
+    {
+      "id": "aud-1792153406694-vrg3",
+      "actorEmail": "admin@kamaarbeddings.com",
+      "action": "product_created",
+      "entityType": "product",
+      "entityId": "prod-crud-test-1792153406688",
+      "details": {
+        "name": "Tilam Ujian CRUD Kilang"
+      },
+      "createdAt": "2026-10-16T12:23:26.694Z"
+    },
     {
       "id": "aud-1792146003228-c480",
       "actorEmail": "admin@kamaarbeddings.com",
@@ -4519,388 +5091,6 @@
         "providerType": "custom"
       },
       "createdAt": "2026-10-16T10:14:31.708Z"
-    },
-    {
-      "id": "aud-1792145671702-04xt",
-      "actorEmail": "admin@kamaarbeddings.com",
-      "action": "payment_method_saved",
-      "entityType": "payment_method",
-      "entityId": "pay-crud-test-1792145671567",
-      "details": {
-        "name": "Pindahan Bank Manual (Ujian CRUD)",
-        "enabled": true,
-        "providerType": "custom"
-      },
-      "createdAt": "2026-10-16T10:14:31.702Z"
-    },
-    {
-      "id": "aud-1792145671697-xipk",
-      "actorEmail": "admin@kamaarbeddings.com",
-      "action": "website_config_updated",
-      "entityType": "website_config",
-      "entityId": "websiteConfig",
-      "details": {
-        "announcement": {
-          "enabled": true,
-          "leftBenefit": "PENGHANTARAN SELURUH MALAYSIA",
-          "centerText": "PENGILANG & PEMASAR PRODUK JAHITAN TEKSTIL",
-          "highlightCode": "",
-          "url": "",
-          "rightGuarantee": "JAMINAN HARGA TERENDAH",
-          "bgColor": "#13325B",
-          "textColor": "#FFFFFF"
-        }
-      },
-      "createdAt": "2026-10-16T10:14:31.697Z"
-    },
-    {
-      "id": "aud-1792145671692-ua84",
-      "actorEmail": "admin@kamaarbeddings.com",
-      "action": "website_config_updated",
-      "entityType": "website_config",
-      "entityId": "websiteConfig",
-      "details": {
-        "announcement": {
-          "enabled": true,
-          "leftBenefit": "PENGHANTARAN SELURUH MALAYSIA",
-          "centerText": "PENGILANG & PEMASAR PRODUK JAHITAN TEKSTIL TERBAIK",
-          "highlightCode": "",
-          "url": "",
-          "rightGuarantee": "JAMINAN HARGA TERENDAH",
-          "bgColor": "#13325B",
-          "textColor": "#FFFFFF"
-        }
-      },
-      "createdAt": "2026-10-16T10:14:31.692Z"
-    },
-    {
-      "id": "aud-1792145671687-x33s",
-      "actorEmail": "admin@kamaarbeddings.com",
-      "action": "settings_updated",
-      "entityType": "settings",
-      "entityId": "siteSettings",
-      "details": {
-        "freeShippingThresholdSen": 20000
-      },
-      "createdAt": "2026-10-16T10:14:31.687Z"
-    },
-    {
-      "id": "aud-1792145671683-seit",
-      "actorEmail": "admin@kamaarbeddings.com",
-      "action": "settings_updated",
-      "entityType": "settings",
-      "entityId": "siteSettings",
-      "details": {
-        "freeShippingThresholdSen": 18800,
-        "announcementText": "KAMAAR BEDDINGS: PENGHANTARAN TERUS DARI KILANG TASEK GELUGOR"
-      },
-      "createdAt": "2026-10-16T10:14:31.683Z"
-    },
-    {
-      "id": "aud-1792145671678-r93t",
-      "actorEmail": "admin@kamaarbeddings.com",
-      "action": "showroom_deleted",
-      "entityType": "showroom",
-      "entityId": "shw-crud-test-1792145671567",
-      "createdAt": "2026-10-16T10:14:31.678Z"
-    },
-    {
-      "id": "aud-1792145671671-8ktn",
-      "actorEmail": "admin@kamaarbeddings.com",
-      "action": "showroom_updated",
-      "entityType": "showroom",
-      "entityId": "shw-crud-test-1792145671567",
-      "details": {
-        "name": "Showroom TSJ Cawangan Ujian (VIP Studio)"
-      },
-      "createdAt": "2026-10-16T10:14:31.671Z"
-    },
-    {
-      "id": "aud-1792145671666-aki7",
-      "actorEmail": "admin@kamaarbeddings.com",
-      "action": "showroom_created",
-      "entityType": "showroom",
-      "entityId": "shw-crud-test-1792145671567",
-      "details": {
-        "name": "Showroom TSJ Cawangan Ujian"
-      },
-      "createdAt": "2026-10-16T10:14:31.666Z"
-    },
-    {
-      "id": "aud-1792145671663-8fe2",
-      "actorEmail": "admin@kamaarbeddings.com",
-      "action": "affiliate_deleted",
-      "entityType": "affiliate",
-      "entityId": "aff-1792145671650-yhdd",
-      "details": {
-        "code": "AFF-CRUD-671567"
-      },
-      "createdAt": "2026-10-16T10:14:31.663Z"
-    },
-    {
-      "id": "aud-1792145671659-4o4b",
-      "actorEmail": "admin@kamaarbeddings.com",
-      "action": "affiliate_updated",
-      "entityType": "affiliate",
-      "entityId": "aff-1792145671650-yhdd",
-      "details": {
-        "commissionRate": 18,
-        "adminNotes": "Komisen dinaikkan kepada 18% atas prestasi cemerlang."
-      },
-      "createdAt": "2026-10-16T10:14:31.659Z"
-    },
-    {
-      "id": "aud-1792145671653-e8tv",
-      "actorEmail": "admin@kamaarbeddings.com",
-      "action": "affiliate_created",
-      "entityType": "affiliate",
-      "entityId": "aff-1792145671650-yhdd",
-      "details": {
-        "code": "AFF-CRUD-671567",
-        "name": "Ejen Ujian Automasi CRUD"
-      },
-      "createdAt": "2026-10-16T10:14:31.653Z"
-    },
-    {
-      "id": "aud-1792145671648-fttz",
-      "actorEmail": "admin@kamaarbeddings.com",
-      "action": "coupon_deleted",
-      "entityType": "coupon",
-      "entityId": "cpn-crud-test-1792145671567",
-      "createdAt": "2026-10-16T10:14:31.648Z"
-    },
-    {
-      "id": "aud-1792145671640-kad7",
-      "actorEmail": "admin@kamaarbeddings.com",
-      "action": "coupon_updated",
-      "entityType": "coupon",
-      "entityId": "cpn-crud-test-1792145671567",
-      "details": {
-        "code": "CPN-CRUD-671567"
-      },
-      "createdAt": "2026-10-16T10:14:31.640Z"
-    },
-    {
-      "id": "aud-1792145671635-np2o",
-      "actorEmail": "admin@kamaarbeddings.com",
-      "action": "coupon_created",
-      "entityType": "coupon",
-      "entityId": "cpn-crud-test-1792145671567",
-      "details": {
-        "code": "CPN-CRUD-671567"
-      },
-      "createdAt": "2026-10-16T10:14:31.635Z"
-    },
-    {
-      "id": "aud-1792145671631-r9hf",
-      "actorEmail": "admin@kamaarbeddings.com",
-      "action": "order_deleted",
-      "entityType": "order",
-      "entityId": "ord-1792145671621-17goo",
-      "details": {
-        "orderNumber": "LENA-2026-1016",
-        "customerName": "Ahmad Pelanggan CRUD",
-        "customerEmail": "admin.crud.test@kamaar.my",
-        "totalSen": 9900
-      },
-      "createdAt": "2026-10-16T10:14:31.631Z"
-    },
-    {
-      "id": "aud-1792145671626-dloy",
-      "actorEmail": "admin@kamaarbeddings.com",
-      "action": "order_status_updated",
-      "entityType": "order",
-      "entityId": "ord-1792145671621-17goo",
-      "details": {
-        "paymentStatus": "paid",
-        "fulfillmentStatus": "processing",
-        "internalNotes": "Disahkan oleh Kamaar Admin melalui panggilan telefon."
-      },
-      "createdAt": "2026-10-16T10:14:31.626Z"
-    },
-    {
-      "id": "aud-1792145671619-uuzl",
-      "actorEmail": "admin@kamaarbeddings.com",
-      "action": "stock_adjusted",
-      "entityType": "variant",
-      "entityId": "var-toto-single-poly-1",
-      "details": {
-        "product": "TOTO SINGLE (POLY)",
-        "size": "Single",
-        "oldQty": 149,
-        "newQty": 139,
-        "reason": "Pembalikkan ujian"
-      },
-      "createdAt": "2026-10-16T10:14:31.619Z"
-    },
-    {
-      "id": "aud-1792145671614-4al4",
-      "actorEmail": "admin@kamaarbeddings.com",
-      "action": "stock_adjusted",
-      "entityType": "variant",
-      "entityId": "var-toto-single-poly-1",
-      "details": {
-        "product": "TOTO SINGLE (POLY)",
-        "size": "Single",
-        "oldQty": 139,
-        "newQty": 149,
-        "reason": "Penambahan stok stokis ujian automasi"
-      },
-      "createdAt": "2026-10-16T10:14:31.614Z"
-    },
-    {
-      "id": "aud-1792145671609-vodp",
-      "actorEmail": "admin@kamaarbeddings.com",
-      "action": "category_deleted",
-      "entityType": "category",
-      "entityId": "cat-1792145671591-z64y",
-      "details": {
-        "name": "Kategori Ujian CRUD (Dikemaskini)"
-      },
-      "createdAt": "2026-10-16T10:14:31.609Z"
-    },
-    {
-      "id": "aud-1792145671605-aq62",
-      "actorEmail": "admin@kamaarbeddings.com",
-      "action": "categories_reordered",
-      "entityType": "category",
-      "details": {
-        "orderedIds": [
-          "cat-1792145671591-z64y",
-          "cat-tilam-toto",
-          "cat-tilam-gulung",
-          "cat-tilam-kekabu",
-          "cat-bantal-tidur",
-          "cat-bantal-peluk",
-          "cat-produk-baby",
-          "cat-selimut",
-          "cat-kusyen-sofa",
-          "cat-sarung-tilam",
-          "cat-custom-oem"
-        ]
-      },
-      "createdAt": "2026-10-16T10:14:31.605Z"
-    },
-    {
-      "id": "aud-1792145671600-rhjq",
-      "actorEmail": "admin@kamaarbeddings.com",
-      "action": "category_updated",
-      "entityType": "category",
-      "entityId": "cat-1792145671591-z64y",
-      "details": {
-        "name": "Kategori Ujian CRUD (Dikemaskini)",
-        "description": "Penerangan kategori yang telah diedit."
-      },
-      "createdAt": "2026-10-16T10:14:31.600Z"
-    },
-    {
-      "id": "aud-1792145671595-zdkf",
-      "actorEmail": "admin@kamaarbeddings.com",
-      "action": "category_created",
-      "entityType": "category",
-      "entityId": "cat-1792145671591-z64y",
-      "details": {
-        "name": "Kategori Ujian CRUD",
-        "slug": "kategori-crud-test-1792145671567"
-      },
-      "createdAt": "2026-10-16T10:14:31.595Z"
-    },
-    {
-      "id": "aud-1792145671588-4sxe",
-      "actorEmail": "admin@kamaarbeddings.com",
-      "action": "product_archived",
-      "entityType": "product",
-      "entityId": "prod-crud-test-1792145671567",
-      "createdAt": "2026-10-16T10:14:31.588Z"
-    },
-    {
-      "id": "aud-1792145671581-vtcq",
-      "actorEmail": "admin@kamaarbeddings.com",
-      "action": "product_updated",
-      "entityType": "product",
-      "entityId": "prod-crud-test-1792145671567",
-      "details": {
-        "name": "Tilam Ujian CRUD (Dikemaskini)"
-      },
-      "createdAt": "2026-10-16T10:14:31.581Z"
-    },
-    {
-      "id": "aud-1792145671574-2tzk",
-      "actorEmail": "admin@kamaarbeddings.com",
-      "action": "product_created",
-      "entityType": "product",
-      "entityId": "prod-crud-test-1792145671567",
-      "details": {
-        "name": "Tilam Ujian CRUD Kilang"
-      },
-      "createdAt": "2026-10-16T10:14:31.574Z"
-    },
-    {
-      "id": "aud-1792144909719-jmxe",
-      "actorEmail": "system",
-      "action": "order_status_updated",
-      "entityType": "order",
-      "entityId": "ord-aff-test-1792144909713",
-      "details": {
-        "paymentStatus": "paid",
-        "fulfillmentStatus": "processing"
-      },
-      "createdAt": "2026-10-16T10:01:49.719Z"
-    },
-    {
-      "id": "aud-1792144909716-9y5p",
-      "actorEmail": "system",
-      "action": "order_status_updated",
-      "entityType": "order",
-      "entityId": "ord-aff-test-1792144909713",
-      "details": {
-        "paymentStatus": "paid"
-      },
-      "createdAt": "2026-10-16T10:01:49.716Z"
-    },
-    {
-      "id": "aud-1792144909533-2ss9",
-      "actorEmail": "admin",
-      "action": "affiliate_updated",
-      "entityType": "affiliate",
-      "entityId": "aff-danial",
-      "details": {
-        "commissionRate": 15,
-        "commissionType": "percentage",
-        "bankName": "CIMB Bank",
-        "bankAccountNumber": "888123456789",
-        "adminNotes": "Ujian komisen dinaikkan kepada 15%"
-      },
-      "createdAt": "2026-10-16T10:01:49.533Z"
-    },
-    {
-      "id": "aud-1792144909321-g2kx",
-      "actorEmail": "admin@kamaarbeddings.com",
-      "action": "product_archived",
-      "entityType": "product",
-      "entityId": "prod-crud-test-1792144909211",
-      "createdAt": "2026-10-16T10:01:49.321Z"
-    },
-    {
-      "id": "aud-1792144909313-w2w2",
-      "actorEmail": "admin@kamaarbeddings.com",
-      "action": "payment_method_deleted",
-      "entityType": "payment_method",
-      "entityId": "pay-crud-test-1792144909211",
-      "createdAt": "2026-10-16T10:01:49.313Z"
-    },
-    {
-      "id": "aud-1792144909310-g5o0",
-      "actorEmail": "admin@kamaarbeddings.com",
-      "action": "payment_method_saved",
-      "entityType": "payment_method",
-      "entityId": "pay-crud-test-1792144909211",
-      "details": {
-        "name": "Pindahan Bank Manual (Ujian CRUD)",
-        "enabled": false,
-        "providerType": "custom"
-      },
-      "createdAt": "2026-10-16T10:01:49.310Z"
     }
   ],
   "affiliates": [
@@ -4914,9 +5104,9 @@
       "bankAccountNumber": "888123456789",
       "commissionType": "percentage",
       "commissionRate": 15,
-      "totalSalesCount": 16,
-      "totalSalesRevenueSen": 400000,
-      "totalCommissionSen": 40000,
+      "totalSalesCount": 18,
+      "totalSalesRevenueSen": 450000,
+      "totalCommissionSen": 45000,
       "isActive": true,
       "createdAt": "2026-08-01T10:00:00Z",
       "adminNotes": "Ujian komisen dinaikkan kepada 15%",
