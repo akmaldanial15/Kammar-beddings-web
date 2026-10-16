@@ -4,7 +4,7 @@ import React, { useState } from 'react'
 import Link from 'next/link'
 import Image from 'next/image'
 import { useRouter } from 'next/navigation'
-import { X, Plus, Minus, Trash2, ShoppingBag, ArrowRight, ShieldCheck, Tag, Sparkles } from 'lucide-react'
+import { X, Plus, Minus, Trash2, ShoppingBag, ArrowRight, ShieldCheck, Tag, Sparkles, FileText } from 'lucide-react'
 import { useCart } from '@/lib/context/CartContext'
 import { useLanguage } from '@/lib/i18n/LanguageContext'
 import { formatMYR } from '@/lib/utils/format'
@@ -33,6 +33,8 @@ export function CartDrawer() {
   const [activeRefCode, setActiveRefCode] = useState<string | null>(null)
   const [activeRefName, setActiveRefName] = useState<string | null>(null)
   const [thresholdSen, setThresholdSen] = useState(20000)
+  const [showCouponInput, setShowCouponInput] = useState(false)
+  const [showNotesInput, setShowNotesInput] = useState(false)
 
   React.useEffect(() => {
     let isMounted = true
@@ -91,6 +93,7 @@ export function CartDrawer() {
         setCouponCode(inputCoupon.trim().toUpperCase())
         setCouponSuccess(data.message || 'Coupon applied successfully.')
         setInputCoupon('')
+        setShowCouponInput(false)
       } else {
         setCouponError(data.message || 'Invalid coupon code.')
       }
@@ -122,23 +125,24 @@ export function CartDrawer() {
         onClick={closeDrawer}
       />
 
+      {/* Drawer slide-over wrapper: pl-0 on mobile eliminates the 40px rightward clipping overflow */}
       <div
-        className={`fixed inset-y-0 right-0 max-w-full flex pl-10 transform transition-transform duration-300 ease-out will-change-transform ${
-          isDrawerOpen ? 'translate-x-0' : 'translate-x-full'
+        className={`fixed inset-y-0 right-0 max-w-full flex pl-0 sm:pl-10 pointer-events-none transform transition-transform duration-300 ease-out will-change-transform ${
+          isDrawerOpen ? 'translate-x-0 pointer-events-auto' : 'translate-x-full'
         }`}
       >
-        <div className="w-screen max-w-md bg-white shadow-2xl flex flex-col">
+        <div className="w-screen max-w-full sm:w-[440px] sm:max-w-md bg-white shadow-2xl flex flex-col h-full max-h-[100dvh] overflow-hidden">
           {/* Header */}
-          <div className="p-4 sm:p-5 border-b border-borderLight flex items-center justify-between bg-cream-light">
+          <div className="p-4 sm:p-5 border-b border-borderLight flex items-center justify-between bg-cream-light flex-shrink-0">
             <div className="flex items-center space-x-2">
               <ShoppingBag className="w-5 h-5 text-forest" />
-              <h2 className="text-lg font-serif font-bold text-forest tracking-wide">
+              <h2 className="text-base sm:text-lg font-serif font-bold text-forest tracking-wide">
                 {t.cartTitle} ({items.reduce((s, i) => s + i.quantity, 0)})
               </h2>
             </div>
             <button
               onClick={closeDrawer}
-              className="p-1.5 text-charcoal-muted hover:text-charcoal rounded-full hover:bg-cream transition-colors"
+              className="p-1.5 text-charcoal-muted hover:text-charcoal rounded-full hover:bg-cream transition-colors cursor-pointer"
               aria-label="Close cart"
             >
               <X className="w-5 h-5" />
@@ -146,11 +150,11 @@ export function CartDrawer() {
           </div>
 
           {/* Free Shipping Reassurance Bar */}
-          <div className="p-3 bg-forest-dark text-warmwhite text-xs">
+          <div className="px-4 py-2.5 bg-forest-dark text-warmwhite text-xs flex-shrink-0">
             <div className="flex items-center justify-between font-medium mb-1.5">
-              <span className="flex items-center space-x-1.5">
-                <Sparkles className="w-3.5 h-3.5 text-gold" />
-                <span>
+              <span className="flex items-center space-x-1.5 truncate pr-2">
+                <Sparkles className="w-3.5 h-3.5 text-gold flex-shrink-0" />
+                <span className="truncate">
                   {isFreeShipping
                     ? (locale === 'bm'
                         ? 'Tahniah! Pesanan Anda Layak Penghantaran Percuma!'
@@ -160,7 +164,7 @@ export function CartDrawer() {
                         : `Add ${formatMYR(amountToFreeShipping)} more for Free Delivery`)}
                 </span>
               </span>
-              <span className="text-gold font-bold">{progressPercent}%</span>
+              <span className="text-gold font-bold flex-shrink-0">{progressPercent}%</span>
             </div>
             <div className="w-full bg-forest h-1.5 rounded-full overflow-hidden">
               <div
@@ -170,8 +174,8 @@ export function CartDrawer() {
             </div>
           </div>
 
-          {/* Items Area */}
-          <div className="flex-1 overflow-y-auto p-4 sm:p-5 divide-y divide-borderLight">
+          {/* Items Area with independent smooth scrolling */}
+          <div className="flex-1 min-h-0 overflow-y-auto overscroll-contain p-4 sm:p-5 divide-y divide-borderLight">
             {items.length === 0 ? (
               <div className="h-full flex flex-col items-center justify-center text-center py-16 px-4">
                 <div className="w-16 h-16 rounded-full bg-cream flex items-center justify-center text-gold-dark mb-4">
@@ -192,7 +196,7 @@ export function CartDrawer() {
               <div className="space-y-4">
                 {items.map((item) => (
                   <div key={item.variantId} className="flex space-x-3.5 pt-4 first:pt-0">
-                    <div className="relative w-20 h-20 rounded-md overflow-hidden bg-cream flex-shrink-0 border border-borderLight">
+                    <div className="relative w-18 h-18 sm:w-20 sm:h-20 rounded-lg overflow-hidden bg-cream flex-shrink-0 border border-borderLight">
                       <Image
                         src={item.imageUrl}
                         alt={item.productName}
@@ -202,13 +206,13 @@ export function CartDrawer() {
                     </div>
                     <div className="flex-1 min-w-0 flex flex-col justify-between">
                       <div>
-                        <div className="flex justify-between items-start">
-                          <h4 className="text-sm font-semibold text-charcoal truncate pr-2">
+                        <div className="flex justify-between items-start gap-1">
+                          <h4 className="text-xs sm:text-sm font-semibold text-charcoal line-clamp-2 pr-1">
                             {item.productName}
                           </h4>
                           <button
                             onClick={() => removeItem(item.variantId)}
-                            className="text-charcoal-muted hover:text-sale p-0.5 transition-colors"
+                            className="text-charcoal-muted hover:text-sale p-1 transition-colors flex-shrink-0 cursor-pointer"
                             aria-label="Remove item"
                           >
                             <Trash2 className="w-4 h-4" />
@@ -231,11 +235,11 @@ export function CartDrawer() {
                         })()}
                       </div>
 
-                      <div className="flex items-center justify-between mt-2">
-                        <div className="flex items-center border border-borderLight rounded bg-cream-light">
+                      <div className="flex items-center justify-between mt-2.5">
+                        <div className="flex items-center border border-borderLight rounded-md bg-cream-light">
                           <button
                             onClick={() => updateQuantity(item.variantId, item.quantity - 1)}
-                            className="p-1 text-charcoal hover:bg-cream transition-colors rounded-l"
+                            className="p-1 text-charcoal hover:bg-cream transition-colors rounded-l cursor-pointer"
                             aria-label="Decrease quantity"
                           >
                             <Minus className="w-3 h-3" />
@@ -245,7 +249,7 @@ export function CartDrawer() {
                           </span>
                           <button
                             onClick={() => updateQuantity(item.variantId, item.quantity + 1)}
-                            className="p-1 text-charcoal hover:bg-cream transition-colors rounded-r"
+                            className="p-1 text-charcoal hover:bg-cream transition-colors rounded-r cursor-pointer"
                             aria-label="Increase quantity"
                           >
                             <Plus className="w-3 h-3" />
@@ -284,62 +288,117 @@ export function CartDrawer() {
             )}
           </div>
 
-          {/* Footer Area with Promo Code & Checkout */}
+          {/* Footer Area with Collapsible Promo & Notes, Totals, and Checkout */}
           {items.length > 0 && (
-            <div className="p-4 sm:p-5 border-t border-borderLight bg-cream-light space-y-4">
-              {/* Voucher Code */}
-              <div>
+            <div className="p-4 sm:p-5 border-t border-borderLight bg-cream-light space-y-3 flex-shrink-0 max-h-[60vh] overflow-y-auto">
+              {/* Voucher Code & Notes Controls (Collapsible to save vertical screen space on mobile) */}
+              <div className="space-y-2">
                 {couponCode ? (
-                  <div className="flex items-center justify-between bg-gold/10 border border-gold/30 rounded p-2 text-xs">
+                  <div className="flex items-center justify-between bg-gold/15 border border-gold/40 rounded-lg p-2 text-xs">
                     <div className="flex items-center space-x-1.5 text-forest font-semibold">
                       <Tag className="w-3.5 h-3.5 text-gold-dark" />
-                      <span>Code &ldquo;{couponCode}&rdquo; Applied</span>
+                      <span>Kod &ldquo;{couponCode}&rdquo; Digunakan</span>
                     </div>
                     <button
+                      type="button"
                       onClick={() => {
                         setCouponCode('')
                         setCouponSuccess('')
                       }}
-                      className="text-sale hover:underline font-medium text-xs"
+                      className="text-sale hover:underline font-semibold text-xs cursor-pointer"
                     >
                       {t.removeCoupon}
                     </button>
                   </div>
                 ) : (
-                  <form onSubmit={handleApplyCoupon} className="flex space-x-2">
-                    <input
-                      type="text"
-                      value={inputCoupon}
-                      onChange={(e) => setInputCoupon(e.target.value.toUpperCase())}
-                      placeholder={t.couponCode}
-                      className="flex-1 px-3 py-1.5 text-xs bg-warmwhite border border-borderLight rounded outline-none focus:border-gold uppercase"
-                    />
-                    <button
-                      type="submit"
-                      disabled={isValidating || !inputCoupon.trim()}
-                      className="px-3 py-1.5 bg-forest text-warmwhite text-xs font-semibold rounded hover:bg-forest-dark disabled:opacity-50 transition-colors"
-                    >
-                      {isValidating ? '...' : t.applyCoupon}
-                    </button>
-                  </form>
+                  <div>
+                    {!showCouponInput ? (
+                      <button
+                        type="button"
+                        onClick={() => setShowCouponInput(true)}
+                        className="inline-flex items-center gap-1.5 text-xs font-semibold text-forest hover:text-gold-dark transition-colors py-0.5 cursor-pointer"
+                      >
+                        <Tag className="w-3.5 h-3.5 text-gold-dark" />
+                        <span>+ {locale === 'bm' ? 'Guna Kod Baucar / Kupon' : 'Add Coupon Code'}</span>
+                      </button>
+                    ) : (
+                      <div className="space-y-1.5 bg-white p-2.5 rounded-lg border border-borderLight shadow-2xs">
+                        <div className="flex items-center justify-between">
+                          <span className="text-[11px] font-semibold text-charcoal flex items-center gap-1">
+                            <Tag className="w-3 h-3 text-gold-dark" />
+                            {t.couponCode}
+                          </span>
+                          <button
+                            type="button"
+                            onClick={() => setShowCouponInput(false)}
+                            className="text-[11px] text-charcoal-muted hover:text-charcoal cursor-pointer"
+                          >
+                            Tutup
+                          </button>
+                        </div>
+                        <form onSubmit={handleApplyCoupon} className="flex space-x-2">
+                          <input
+                            type="text"
+                            value={inputCoupon}
+                            onChange={(e) => setInputCoupon(e.target.value.toUpperCase())}
+                            placeholder={t.couponCode}
+                            className="flex-1 px-3 py-1.5 text-xs bg-warmwhite border border-borderLight rounded-md outline-none focus:border-gold uppercase"
+                          />
+                          <button
+                            type="submit"
+                            disabled={isValidating || !inputCoupon.trim()}
+                            className="px-3 py-1.5 bg-forest text-warmwhite text-xs font-semibold rounded-md hover:bg-forest-dark disabled:opacity-50 transition-colors cursor-pointer"
+                          >
+                            {isValidating ? '...' : t.applyCoupon}
+                          </button>
+                        </form>
+                      </div>
+                    )}
+                    {couponError && <p className="text-[11px] text-sale mt-1">{couponError}</p>}
+                    {couponSuccess && <p className="text-[11px] text-forest font-medium mt-1">{couponSuccess}</p>}
+                  </div>
                 )}
-                {couponError && <p className="text-[11px] text-sale mt-1">{couponError}</p>}
-                {couponSuccess && <p className="text-[11px] text-forest font-medium mt-1">{couponSuccess}</p>}
-              </div>
 
-              {/* Delivery notes optional request */}
-              <div>
-                <textarea
-                  value={notes}
-                  onChange={(e) => setNotes(e.target.value)}
-                  placeholder="Special delivery notes (e.g. lift access, floor level)"
-                  rows={2}
-                  className="w-full px-3 py-1.5 text-xs bg-warmwhite border border-borderLight rounded outline-none focus:border-gold placeholder-charcoal-muted/70 resize-none"
-                />
+                {/* Delivery notes optional request */}
+                <div>
+                  {!showNotesInput && !notes.trim() ? (
+                    <button
+                      type="button"
+                      onClick={() => setShowNotesInput(true)}
+                      className="inline-flex items-center gap-1.5 text-xs font-semibold text-charcoal-muted hover:text-charcoal transition-colors py-0.5 cursor-pointer"
+                    >
+                      <FileText className="w-3.5 h-3.5 text-charcoal-muted" />
+                      <span>+ {locale === 'bm' ? 'Tambah Nota Pesanan / Penghantaran' : 'Add Delivery Note'}</span>
+                    </button>
+                  ) : (
+                    <div className="space-y-1.5 bg-white p-2.5 rounded-lg border border-borderLight shadow-2xs">
+                      <div className="flex items-center justify-between">
+                        <span className="text-[11px] font-semibold text-charcoal flex items-center gap-1">
+                          <FileText className="w-3 h-3 text-forest" />
+                          {locale === 'bm' ? 'Nota Penghantaran' : 'Delivery Note'}
+                        </span>
+                        <button
+                          type="button"
+                          onClick={() => setShowNotesInput(false)}
+                          className="text-[11px] text-charcoal-muted hover:text-charcoal cursor-pointer"
+                        >
+                          Tutup
+                        </button>
+                      </div>
+                      <textarea
+                        value={notes}
+                        onChange={(e) => setNotes(e.target.value)}
+                        placeholder="Contoh: Naik lif tingkat 3, letak di depan pintu"
+                        rows={2}
+                        className="w-full px-3 py-1.5 text-xs bg-warmwhite border border-borderLight rounded-md outline-none focus:border-gold placeholder-charcoal-muted/70 resize-none"
+                      />
+                    </div>
+                  )}
+                </div>
               </div>
 
               {/* Totals Breakdown */}
-              <div className="space-y-1.5 text-xs">
+              <div className="space-y-1.5 text-xs bg-white/80 p-3 rounded-lg border border-borderLight/60">
                 <div className="flex justify-between text-charcoal-muted">
                   <span>{t.subtotal}</span>
                   <span className="font-semibold text-charcoal">{formatMYR(subtotalSen)}</span>
@@ -347,12 +406,12 @@ export function CartDrawer() {
                 <div className="flex justify-between text-charcoal-muted">
                   <span>{t.estimatedShipping}</span>
                   <span className="font-semibold text-forest">
-                    {isFreeShipping ? 'FREE' : 'Calculated at Checkout'}
+                    {isFreeShipping ? (locale === 'bm' ? 'PERCUMA' : 'FREE') : 'Calculated at Checkout'}
                   </span>
                 </div>
-                <div className="flex justify-between text-sm font-bold text-forest pt-2 border-t border-borderLight">
+                <div className="flex justify-between text-sm font-bold text-forest pt-1.5 border-t border-borderLight/60">
                   <span>{t.total}</span>
-                  <span>{formatMYR(subtotalSen)}</span>
+                  <span className="text-base text-forest font-bold">{formatMYR(subtotalSen)}</span>
                 </div>
               </div>
 
@@ -375,10 +434,10 @@ export function CartDrawer() {
               )}
 
               {/* CTAs */}
-              <div className="space-y-2 pt-1">
+              <div className="space-y-2 pt-1 pb-1 sm:pb-0">
                 <button
                   onClick={handleCheckout}
-                  className="w-full py-3 bg-forest text-warmwhite text-sm font-bold tracking-wide rounded-lg hover:bg-forest-dark transition-all shadow-card flex items-center justify-center space-x-2"
+                  className="w-full py-3.5 bg-forest text-warmwhite text-xs sm:text-sm font-bold tracking-wider uppercase rounded-xl hover:bg-forest-dark active:scale-[0.99] transition-all shadow-md flex items-center justify-center space-x-2 luxury-btn cursor-pointer"
                 >
                   <ShieldCheck className="w-4 h-4 text-gold" />
                   <span>{t.proceedToCheckout}</span>
@@ -386,9 +445,9 @@ export function CartDrawer() {
                 <Link
                   href="/cart"
                   onClick={closeDrawer}
-                  className="w-full py-2.5 block text-center bg-warmwhite text-charcoal border border-borderLight text-xs font-semibold rounded-lg hover:bg-cream transition-colors"
+                  className="w-full py-2.5 block text-center bg-white text-charcoal border border-borderLight text-xs font-semibold rounded-xl hover:bg-cream transition-colors"
                 >
-                  View Full Shopping Cart
+                  {locale === 'bm' ? 'Lihat Troli Penuh' : 'View Full Shopping Cart'}
                 </Link>
               </div>
             </div>
@@ -398,3 +457,4 @@ export function CartDrawer() {
     </div>
   )
 }
+
