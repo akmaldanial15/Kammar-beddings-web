@@ -19,6 +19,8 @@ import {
   Sliders,
   MapPin,
   ExternalLink,
+  HelpCircle,
+  Eye,
 } from 'lucide-react'
 
 interface SettingsClientProps {
@@ -111,8 +113,10 @@ export function SettingsClient({
 
   const matchesShipping =
     !q ||
-    'shipping delivery penghantaran pos threshold percuma currency ringgit myr mata wang'.includes(q) ||
-    settings.currency.toLowerCase().includes(q)
+    'shipping delivery penghantaran pos threshold percuma currency ringgit myr mata wang white-glove white glove modal lori'.includes(q) ||
+    settings.currency.toLowerCase().includes(q) ||
+    (settings.whiteGloveTitle && settings.whiteGloveTitle.toLowerCase().includes(q)) ||
+    (settings.whiteGloveSubtitle && settings.whiteGloveSubtitle.toLowerCase().includes(q))
 
   const showBrand = (selectedSection === 'all' || selectedSection === 'brand') && matchesBrand
   const showAdmin = (selectedSection === 'all' || selectedSection === 'admin') && matchesAdmin
@@ -800,6 +804,179 @@ export function SettingsClient({
                       </div>
                     </div>
                   )}
+                </div>
+
+                {/* White-Glove Delivery Info Configuration (Checkout Popover & Bottom Sheet) */}
+                <div className="md:col-span-2 pt-6 border-t border-slate-100 space-y-4">
+                  <div className="flex items-center justify-between p-4 rounded-xl bg-gradient-to-r from-forest/5 via-gold/5 to-transparent border border-forest/15">
+                    <div className="flex items-start space-x-3">
+                      <div className="w-8 h-8 rounded-lg bg-forest/10 text-forest flex items-center justify-center shrink-0 mt-0.5">
+                        <Truck className="w-4 h-4" />
+                      </div>
+                      <div>
+                        <div className="flex items-center gap-2">
+                          <span className="font-bold text-forest-dark block text-xs sm:text-sm">
+                            Kandungan Mesej White-Glove (Pop-up Checkout)
+                          </span>
+                          <span className="px-2 py-0.5 rounded-full text-[10px] font-bold bg-emerald-100 text-emerald-800 border border-emerald-200">
+                            Live di Checkout
+                          </span>
+                        </div>
+                        <p className="text-[11px] text-slate-500 mt-0.5">
+                          Ubah suai tajuk, penerangan dan 3 poin keistimewaan servis yang dipaparkan dalam pop-up info White-Glove di halaman troli / checkout.
+                        </p>
+                      </div>
+                    </div>
+                  </div>
+
+                  <div className="grid grid-cols-1 lg:grid-cols-12 gap-5">
+                    {/* Form Controls (7 Columns) */}
+                    <div className="lg:col-span-7 space-y-4">
+                      <div className="grid grid-cols-1 sm:grid-cols-2 gap-4">
+                        <div>
+                          <label className="block font-bold text-forest-dark mb-1">
+                            Tajuk Servis (Title)
+                          </label>
+                          <input
+                            type="text"
+                            value={settings.whiteGloveTitle || ''}
+                            onChange={(e) =>
+                              setSettings({ ...settings, whiteGloveTitle: e.target.value })
+                            }
+                            placeholder="Penghantaran White-Glove"
+                            className="w-full px-3 py-2.5 rounded-xl border border-slate-200 focus:border-gold focus:ring-1 focus:ring-gold bg-white"
+                          />
+                        </div>
+
+                        <div>
+                          <label className="block font-bold text-forest-dark mb-1">
+                            Label Kurier / Caj (Notice)
+                          </label>
+                          <input
+                            type="text"
+                            value={settings.whiteGloveNotice || ''}
+                            onChange={(e) =>
+                              setSettings({ ...settings, whiteGloveNotice: e.target.value })
+                            }
+                            placeholder="Kurier Kilang"
+                            className="w-full px-3 py-2.5 rounded-xl border border-slate-200 focus:border-gold focus:ring-1 focus:ring-gold bg-white"
+                          />
+                        </div>
+                      </div>
+
+                      <div>
+                        <label className="block font-bold text-forest-dark mb-1">
+                          Ayat Pengenalan / Subtajuk (Subtitle)
+                        </label>
+                        <input
+                          type="text"
+                          value={settings.whiteGloveSubtitle || ''}
+                          onChange={(e) =>
+                            setSettings({ ...settings, whiteGloveSubtitle: e.target.value })
+                          }
+                          placeholder="Servis logistik premium khas terus dari kilang KAMAAR ke kediaman anda:"
+                          className="w-full px-3 py-2.5 rounded-xl border border-slate-200 focus:border-gold focus:ring-1 focus:ring-gold bg-white"
+                        />
+                      </div>
+
+                      <div className="space-y-3 pt-1">
+                        <label className="block font-bold text-forest-dark">
+                          3 Poin Keistimewaan Servis (Bullet Points):
+                        </label>
+                        <div>
+                          <span className="text-[10.5px] text-slate-500 font-semibold block mb-1">Poin 1:</span>
+                          <input
+                            type="text"
+                            value={settings.whiteGloveFeature1 || ''}
+                            onChange={(e) =>
+                              setSettings({ ...settings, whiteGloveFeature1: e.target.value })
+                            }
+                            placeholder="Masuk Bilik Tidur — 2 krew angkat terus ke bilik"
+                            className="w-full px-3 py-2 rounded-xl border border-slate-200 focus:border-gold focus:ring-1 focus:ring-gold bg-white"
+                          />
+                        </div>
+                        <div>
+                          <span className="text-[10.5px] text-slate-500 font-semibold block mb-1">Poin 2:</span>
+                          <input
+                            type="text"
+                            value={settings.whiteGloveFeature2 || ''}
+                            onChange={(e) =>
+                              setSettings({ ...settings, whiteGloveFeature2: e.target.value })
+                            }
+                            placeholder="Unboxing & Pasang — Buka & pasang tilam di katil"
+                            className="w-full px-3 py-2 rounded-xl border border-slate-200 focus:border-gold focus:ring-1 focus:ring-gold bg-white"
+                          />
+                        </div>
+                        <div>
+                          <span className="text-[10.5px] text-slate-500 font-semibold block mb-1">Poin 3:</span>
+                          <input
+                            type="text"
+                            value={settings.whiteGloveFeature3 || ''}
+                            onChange={(e) =>
+                              setSettings({ ...settings, whiteGloveFeature3: e.target.value })
+                            }
+                            placeholder="Insurans Kilang — Kalis cuaca & dilindungi penuh"
+                            className="w-full px-3 py-2 rounded-xl border border-slate-200 focus:border-gold focus:ring-1 focus:ring-gold bg-white"
+                          />
+                        </div>
+                      </div>
+                    </div>
+
+                    {/* Live Mobile Preview Box (5 Columns) */}
+                    <div className="lg:col-span-5 bg-slate-900/95 rounded-2xl p-4 text-white flex flex-col justify-between border border-slate-800 shadow-inner">
+                      <div>
+                        <div className="flex items-center justify-between border-b border-slate-800 pb-2 mb-3">
+                          <div className="flex items-center space-x-1.5 text-slate-400 text-[10px] uppercase font-bold tracking-wider">
+                            <Eye className="w-3.5 h-3.5 text-gold" />
+                            <span>Pratonton Langsung di Telefon</span>
+                          </div>
+                          <span className="text-[10px] text-emerald-400 font-mono">Live Preview</span>
+                        </div>
+
+                        {/* Simulated Phone Bottom Sheet Preview */}
+                        <div className="bg-white text-charcoal rounded-2xl p-4 border border-slate-200 shadow-xl space-y-3">
+                          <div className="w-8 h-1 bg-neutral-300 rounded-full mx-auto" />
+                          <div className="flex items-center gap-2">
+                            <span className="p-1 rounded-md bg-gold/15 text-gold-dark shrink-0">
+                              <Truck className="w-3.5 h-3.5" />
+                            </span>
+                            <h5 className="font-bold text-forest text-xs truncate">
+                              {settings.whiteGloveTitle || 'Penghantaran White-Glove'}
+                            </h5>
+                          </div>
+                          <p className="text-[10px] text-slate-500 leading-tight">
+                            {settings.whiteGloveSubtitle || 'Servis logistik premium khas terus dari kilang KAMAAR ke kediaman anda:'}
+                          </p>
+                          <ul className="space-y-1.5 text-[10.5px]">
+                            <li className="flex items-center gap-1.5">
+                              <span className="w-3.5 h-3.5 rounded-full bg-forest/10 text-forest flex items-center justify-center font-bold text-[9px] shrink-0">✓</span>
+                              <span className="truncate">{settings.whiteGloveFeature1 || 'Masuk Bilik Tidur — 2 krew angkat terus ke bilik'}</span>
+                            </li>
+                            <li className="flex items-center gap-1.5">
+                              <span className="w-3.5 h-3.5 rounded-full bg-forest/10 text-forest flex items-center justify-center font-bold text-[9px] shrink-0">✓</span>
+                              <span className="truncate">{settings.whiteGloveFeature2 || 'Unboxing & Pasang — Buka & pasang tilam di katil'}</span>
+                            </li>
+                            <li className="flex items-center gap-1.5">
+                              <span className="w-3.5 h-3.5 rounded-full bg-forest/10 text-forest flex items-center justify-center font-bold text-[9px] shrink-0">✓</span>
+                              <span className="truncate">{settings.whiteGloveFeature3 || 'Insurans Kilang — Kalis cuaca & dilindungi penuh'}</span>
+                            </li>
+                          </ul>
+                          <div className="pt-2 border-t border-slate-100 flex items-center justify-between text-[10px]">
+                            <span className="text-slate-500">Caj Semasa:</span>
+                            <span className="font-bold text-forest">
+                              RM15.00 ({settings.whiteGloveNotice || 'Kurier Kilang'})
+                            </span>
+                          </div>
+                          <div className="w-full py-1.5 bg-forest text-white font-medium text-[10px] rounded-lg text-center">
+                            Faham &amp; Tutup
+                          </div>
+                        </div>
+                      </div>
+                      <p className="text-[10px] text-slate-400 text-center mt-3">
+                        Paparan di atas dikemaskini serta-merta apabila anda menaip.
+                      </p>
+                    </div>
+                  </div>
                 </div>
               </div>
             </div>

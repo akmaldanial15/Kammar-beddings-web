@@ -390,6 +390,13 @@ export interface SiteSettings {
   pickupGoogleMapsUrl?: string
   pickupWazeUrl?: string
   pickupInstructions?: string
+  // White-Glove Delivery Info Configuration (Checkout Popover)
+  whiteGloveTitle?: string
+  whiteGloveSubtitle?: string
+  whiteGloveFeature1?: string
+  whiteGloveFeature2?: string
+  whiteGloveFeature3?: string
+  whiteGloveNotice?: string
 }
 
 export type StaffRole = 'owner' | 'catalog_manager' | 'order_manager' | 'content_editor'

@@ -1895,7 +1895,13 @@ export const initialSiteSettings: SiteSettings = {
   "pickupContactPhone": "019-478 6991",
   "pickupGoogleMapsUrl": "https://maps.google.com/?q=7878B+Jalan+Permatang+Berangan,+13300+Tasek+Gelugor+Pulau+Pinang",
   "pickupWazeUrl": "https://waze.com/ul?q=7878B%20Jalan%20Permatang%20Berangan%20Tasek%20Gelugor",
-  "pickupInstructions": "Sila bawa No. Pesanan / Resit semasa hadir di kilang untuk penyerahan pesanan."
+  "pickupInstructions": "Sila bawa No. Pesanan / Resit semasa hadir di kilang untuk penyerahan pesanan.",
+  "whiteGloveTitle": "Penghantaran White-Glove",
+  "whiteGloveSubtitle": "Servis logistik premium khas terus dari kilang KAMAAR ke kediaman anda:",
+  "whiteGloveFeature1": "Masuk Bilik Tidur — 2 krew angkat terus ke bilik",
+  "whiteGloveFeature2": "Unboxing & Pasang — Buka & pasang tilam di katil",
+  "whiteGloveFeature3": "Insurans Kilang — Kalis cuaca & dilindungi penuh",
+  "whiteGloveNotice": "Kurier Kilang"
 }
 
 export const initialStaffMembers: StaffMember[] = [

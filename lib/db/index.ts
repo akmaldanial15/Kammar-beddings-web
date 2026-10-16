@@ -1122,6 +1122,7 @@ export async function getBlogPostBySlug(slug: string): Promise<BlogPost | null> 
 
 export async function getSiteSettings(): Promise<SiteSettings> {
   const db = ensureDb()
+  let needsSave = false
   if (db.siteSettings.selfPickupEnabled === undefined) {
     db.siteSettings = {
       ...initialSiteSettings,
@@ -1137,6 +1138,18 @@ export async function getSiteSettings(): Promise<SiteSettings> {
       pickupWazeUrl: db.siteSettings.pickupWazeUrl || initialSiteSettings.pickupWazeUrl,
       pickupInstructions: db.siteSettings.pickupInstructions || initialSiteSettings.pickupInstructions,
     }
+    needsSave = true
+  }
+  if (!db.siteSettings.whiteGloveTitle) {
+    db.siteSettings.whiteGloveTitle = initialSiteSettings.whiteGloveTitle || 'Penghantaran White-Glove'
+    db.siteSettings.whiteGloveSubtitle = db.siteSettings.whiteGloveSubtitle || initialSiteSettings.whiteGloveSubtitle || 'Servis logistik premium khas terus dari kilang KAMAAR ke kediaman anda:'
+    db.siteSettings.whiteGloveFeature1 = db.siteSettings.whiteGloveFeature1 || initialSiteSettings.whiteGloveFeature1 || 'Masuk Bilik Tidur — 2 krew angkat terus ke bilik'
+    db.siteSettings.whiteGloveFeature2 = db.siteSettings.whiteGloveFeature2 || initialSiteSettings.whiteGloveFeature2 || 'Unboxing & Pasang — Buka & pasang tilam di katil'
+    db.siteSettings.whiteGloveFeature3 = db.siteSettings.whiteGloveFeature3 || initialSiteSettings.whiteGloveFeature3 || 'Insurans Kilang — Kalis cuaca & dilindungi penuh'
+    db.siteSettings.whiteGloveNotice = db.siteSettings.whiteGloveNotice || initialSiteSettings.whiteGloveNotice || 'Kurier Kilang'
+    needsSave = true
+  }
+  if (needsSave) {
     saveDb(db)
   }
   return db.siteSettings

@@ -2702,7 +2702,7 @@ export function CheckoutClient({ initialPaymentSettings, initialSiteSettings, av
                 <div className="flex items-center justify-between text-charcoal-muted">
                   <div className="flex items-center space-x-1.5">
                     <span className="font-medium">
-                      {isPickup ? 'Ambil Sendiri di Kilang' : 'Penghantaran White-Glove'}
+                      {isPickup ? 'Ambil Sendiri di Kilang' : (siteSettings?.whiteGloveTitle || 'Penghantaran White-Glove')}
                     </span>
                     
                     {/* Interactive White-Glove Popover Note */}
@@ -2768,7 +2768,7 @@ export function CheckoutClient({ initialPaymentSettings, initialSiteSettings, av
                                     <Truck className="w-4 h-4" />
                                   </span>
                                   <h4 className="font-bold text-forest text-sm">
-                                    {isPickup ? 'Ambil Sendiri di Kilang' : 'Penghantaran White-Glove'}
+                                    {isPickup ? 'Ambil Sendiri di Kilang' : (siteSettings?.whiteGloveTitle || 'Penghantaran White-Glove')}
                                   </h4>
                                 </div>
                                 <button
@@ -2788,7 +2788,7 @@ export function CheckoutClient({ initialPaymentSettings, initialSiteSettings, av
                               {isPickup ? (
                                 <div className="space-y-3 text-xs text-charcoal-muted">
                                   <p>
-                                    Ambil terus di atelier kilang kami di <strong>Bandar Baru Tasek Gelugor, Pulau Pinang</strong>.
+                                    Ambil terus di atelier kilang kami: <strong>{siteSettings?.pickupLocationName || 'Kilang KAMAAR Beddings (Tunas Sinar Jaya Enterprise)'}</strong>, {[siteSettings?.pickupAddress, siteSettings?.pickupCityState].filter(Boolean).join(', ') || 'Bandar Baru Tasek Gelugor, Pulau Pinang'}.
                                   </p>
                                   <div className="p-2.5 bg-emerald-50 rounded-xl text-emerald-800 font-medium text-xs flex items-center justify-between">
                                     <span>Kos Pengambilan:</span>
@@ -2798,26 +2798,26 @@ export function CheckoutClient({ initialPaymentSettings, initialSiteSettings, av
                               ) : (
                                 <div className="space-y-3 text-xs text-charcoal-muted">
                                   <p className="text-neutral-500 text-[11.5px]">
-                                    Servis logistik premium khas terus dari kilang KAMAAR ke kediaman anda:
+                                    {siteSettings?.whiteGloveSubtitle || 'Servis logistik premium khas terus dari kilang KAMAAR ke kediaman anda:'}
                                   </p>
                                   <ul className="space-y-2 text-xs">
                                     <li className="flex items-center gap-2">
                                       <span className="w-4 h-4 rounded-full bg-forest/10 text-forest flex items-center justify-center font-bold text-[10px] shrink-0">✓</span>
-                                      <span><strong>Masuk Bilik Tidur</strong> — 2 krew angkat terus ke bilik</span>
+                                      <span>{siteSettings?.whiteGloveFeature1 || 'Masuk Bilik Tidur — 2 krew angkat terus ke bilik'}</span>
                                     </li>
                                     <li className="flex items-center gap-2">
                                       <span className="w-4 h-4 rounded-full bg-forest/10 text-forest flex items-center justify-center font-bold text-[10px] shrink-0">✓</span>
-                                      <span><strong>Unboxing &amp; Pasang</strong> — Buka &amp; pasang tilam di katil</span>
+                                      <span>{siteSettings?.whiteGloveFeature2 || 'Unboxing & Pasang — Buka & pasang tilam di katil'}</span>
                                     </li>
                                     <li className="flex items-center gap-2">
                                       <span className="w-4 h-4 rounded-full bg-forest/10 text-forest flex items-center justify-center font-bold text-[10px] shrink-0">✓</span>
-                                      <span><strong>Insurans Kilang</strong> — Kalis cuaca &amp; dilindungi penuh</span>
+                                      <span>{siteSettings?.whiteGloveFeature3 || 'Insurans Kilang — Kalis cuaca & dilindungi penuh'}</span>
                                     </li>
                                   </ul>
                                   <div className="pt-2.5 border-t border-[#E8E2D8] flex items-center justify-between text-xs">
                                     <span className="font-semibold text-charcoal">Caj:</span>
                                     <span className="font-bold text-forest text-sm">
-                                      {effectiveShippingSen === 0 ? 'PERCUMA (Ditaja Penuh)' : `${formatMYR(effectiveShippingSen)} (Kurier Kilang)`}
+                                      {effectiveShippingSen === 0 ? 'PERCUMA (Ditaja Penuh)' : `${formatMYR(effectiveShippingSen)} (${siteSettings?.whiteGloveNotice || 'Kurier Kilang'})`}
                                     </span>
                                   </div>
                                 </div>
@@ -2858,7 +2858,7 @@ export function CheckoutClient({ initialPaymentSettings, initialSiteSettings, av
                                   {isPickup ? 'Pengambilan Sendiri' : 'Servis Logistik Eksklusif'}
                                 </span>
                                 <h4 className="text-xs font-bold text-forest">
-                                  {isPickup ? 'Ambil Sendiri di Kilang' : 'Apa Itu Penghantaran White-Glove?'}
+                                  {isPickup ? 'Ambil Sendiri di Kilang' : (siteSettings?.whiteGloveTitle || 'Penghantaran White-Glove')}
                                 </h4>
                               </div>
                             </div>
@@ -2866,7 +2866,7 @@ export function CheckoutClient({ initialPaymentSettings, initialSiteSettings, av
                             {isPickup ? (
                               <div className="space-y-2 text-xs text-charcoal-muted leading-relaxed">
                                 <p>
-                                  Ambil pesanan terus di atelier kilang kami: <strong>Tunas Sinar Jaya Enterprise</strong>, No. 15, Jalan Kemboja 3, Bandar Baru Tasek Gelugor, Pulau Pinang.
+                                  Ambil pesanan terus di atelier kilang kami: <strong>{siteSettings?.pickupLocationName || 'Kilang KAMAAR Beddings'}</strong>, {[siteSettings?.pickupAddress, siteSettings?.pickupCityState].filter(Boolean).join(', ') || 'Bandar Baru Tasek Gelugor, Pulau Pinang'}.
                                 </p>
                                 <div className="p-2 bg-emerald-50 rounded-lg text-emerald-800 font-medium text-xs">
                                   ✓ Kos: <strong>RM0.00 (Percuma)</strong>
@@ -2875,26 +2875,26 @@ export function CheckoutClient({ initialPaymentSettings, initialSiteSettings, av
                             ) : (
                               <div className="space-y-2 text-xs text-charcoal-muted leading-relaxed">
                                 <p className="text-[11px] text-neutral-500">
-                                  Perkhidmatan penghantaran premium terus dari kilang KAMAAR ke kediaman anda:
+                                  {siteSettings?.whiteGloveSubtitle || 'Perkhidmatan penghantaran premium terus dari kilang KAMAAR ke kediaman anda:'}
                                 </p>
                                 <ul className="space-y-1.5 text-xs">
                                   <li className="flex items-start gap-1.5">
                                     <span className="text-forest font-bold shrink-0">✓</span>
-                                    <span><strong>Masuk Bilik Tidur:</strong> 2 krew angkat barangan terus ke bilik tidur.</span>
+                                    <span>{siteSettings?.whiteGloveFeature1 || 'Masuk Bilik Tidur — 2 krew angkat terus ke bilik'}</span>
                                   </li>
                                   <li className="flex items-start gap-1.5">
                                     <span className="text-forest font-bold shrink-0">✓</span>
-                                    <span><strong>Unboxing &amp; Pasang:</strong> Krew buka bungkusan &amp; pasang di katil.</span>
+                                    <span>{siteSettings?.whiteGloveFeature2 || 'Unboxing & Pasang — Buka & pasang tilam di katil'}</span>
                                   </li>
                                   <li className="flex items-start gap-1.5">
                                     <span className="text-forest font-bold shrink-0">✓</span>
-                                    <span><strong>Insurans Penuh:</strong> Bungkusan kalis cuaca selamat &amp; diinsuranskan.</span>
+                                    <span>{siteSettings?.whiteGloveFeature3 || 'Insurans Penuh — Kalis cuaca & diinsuranskan'}</span>
                                   </li>
                                 </ul>
                                 <div className="mt-2.5 pt-2 border-t border-[#E8E2D8] flex items-center justify-between text-xs">
                                   <span className="text-charcoal font-semibold">Caj Semasa:</span>
                                   <span className="font-bold text-forest">
-                                    {effectiveShippingSen === 0 ? 'PERCUMA (Ditaja Penuh)' : `${formatMYR(effectiveShippingSen)} (Kurier Kilang)`}
+                                    {effectiveShippingSen === 0 ? 'PERCUMA (Ditaja Penuh)' : `${formatMYR(effectiveShippingSen)} (${siteSettings?.whiteGloveNotice || 'Kurier Kilang'})`}
                                   </span>
                                 </div>
                               </div>
