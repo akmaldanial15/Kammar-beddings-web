@@ -1,7 +1,7 @@
 'use client'
 
-import React, { useState } from 'react'
-import { SiteSettings } from '@/types'
+import React, { useState, useEffect } from 'react'
+import { SiteSettings, Coupon } from '@/types'
 import {
   Save,
   CheckCircle,
@@ -22,6 +22,7 @@ import {
   HelpCircle,
   Eye,
   ChevronRight,
+  Tag,
 } from 'lucide-react'
 
 interface SettingsClientProps {
@@ -30,7 +31,7 @@ interface SettingsClientProps {
   currentAdminEmail?: string
 }
 
-type SettingsSection = 'all' | 'brand' | 'admin' | 'announcement' | 'contact' | 'shipping'
+type SettingsSection = 'all' | 'brand' | 'admin' | 'announcement' | 'contact' | 'shipping' | 'vouchers'
 
 export function SettingsClient({
   initialSettings,
@@ -45,6 +46,43 @@ export function SettingsClient({
   const [search, setSearch] = useState('')
   const [selectedSection, setSelectedSection] = useState<SettingsSection>('all')
   const [whiteGlovePreviewTab, setWhiteGlovePreviewTab] = useState<'mini' | 'detailed'>('mini')
+  const [couponsFromDb, setCouponsFromDb] = useState<Coupon[]>([])
+
+  useEffect(() => {
+    fetch('/api/coupons')
+      .then((res) => res.json())
+      .then((data) => {
+        if (Array.isArray(data) && data.length > 0) {
+          setCouponsFromDb(data)
+        }
+      })
+      .catch(() => {})
+  }, [])
+
+  const defaultCouponOptions = [
+    { code: 'KAMAAR3', label: 'RM3 OFF', minText: 'Min RM20', description: 'Potongan RM3 untuk belian minima RM20' },
+    { code: 'KAMAAR5', label: 'RM5 OFF', minText: 'Min RM45', description: 'Potongan RM5 untuk belian minima RM45' },
+    { code: 'KAMAAR10', label: 'RM10 OFF', minText: 'Min RM90', description: 'Potongan RM10 untuk belian minima RM90' },
+    { code: 'KAMAAR15', label: 'RM15 OFF', minText: 'Min RM140', description: 'Potongan RM15 untuk belian minima RM140' },
+    { code: 'FREESHIP', label: 'Free Pos', minText: 'Min RM80', description: 'Penghantaran Percuma Semenanjung (Min RM80)' },
+    { code: 'BORONG20', label: 'RM20 OFF', minText: 'Min RM200', description: 'Diskaun Borong Kilang RM20 (Min RM200)' },
+    { code: 'WELCOME10', label: '10% OFF', minText: 'Min RM100', description: 'Diskaun 10% untuk pelanggan baharu (Min RM100)' },
+  ]
+
+  const allCouponOptions = couponsFromDb.length > 0
+    ? couponsFromDb.map((c) => {
+        let label = ''
+        if (c.discountType === 'percentage') label = `${c.discountValue}% OFF`
+        else if (c.discountType === 'fixed_amount') label = `RM${Math.round(c.discountValue / 100)} OFF`
+        else if (c.discountType === 'free_shipping') label = 'Free Pos'
+        return {
+          code: c.code,
+          label: c.customBadge || label || c.code,
+          minText: c.minSpendSen ? `Min RM${Math.round(c.minSpendSen / 100)}` : 'Tiada Minima',
+          description: c.description || '',
+        }
+      })
+    : defaultCouponOptions
 
   const handleSave = async (sectionName?: string) => {
     if (sectionName) {
@@ -122,14 +160,19 @@ export function SettingsClient({
     (settings.whiteGloveMiniTitle && settings.whiteGloveMiniTitle.toLowerCase().includes(q)) ||
     (settings.whiteGloveMiniDesc && settings.whiteGloveMiniDesc.toLowerCase().includes(q))
 
+  const matchesVouchers =
+    !q ||
+    'voucher baucar kupon coupon diskaun discount cadangan auto guna auto-apply chip chips promosi checkout'.includes(q)
+
   const showBrand = (selectedSection === 'all' || selectedSection === 'brand') && matchesBrand
   const showAdmin = (selectedSection === 'all' || selectedSection === 'admin') && matchesAdmin
   const showAnnouncement =
     (selectedSection === 'all' || selectedSection === 'announcement') && matchesAnnouncement
   const showContact = (selectedSection === 'all' || selectedSection === 'contact') && matchesContact
   const showShipping = (selectedSection === 'all' || selectedSection === 'shipping') && matchesShipping
+  const showVouchers = (selectedSection === 'all' || selectedSection === 'vouchers') && matchesVouchers
 
-  const anyMatch = showBrand || showAdmin || showAnnouncement || showContact || showShipping
+  const anyMatch = showBrand || showAdmin || showAnnouncement || showContact || showShipping || showVouchers
 
   return (
     <div className="space-y-6 max-w-5xl font-sans">
@@ -284,6 +327,17 @@ export function SettingsClient({
             }`}
           >
             Penghantaran & Mata Wang
+          </button>
+          <button
+            type="button"
+            onClick={() => setSelectedSection('vouchers')}
+            className={`px-3 py-1.5 rounded-xl font-medium transition-all cursor-pointer flex-shrink-0 ${
+              selectedSection === 'vouchers'
+                ? 'bg-forest-dark text-white font-bold shadow-xs'
+                : 'bg-slate-50 hover:bg-slate-100 text-slate-600 border border-slate-200/80'
+            }`}
+          >
+            Baucar & Diskaun Checkout
           </button>
         </div>
       </div>
@@ -1157,6 +1211,318 @@ export function SettingsClient({
                         Paparan di atas dikemaskini secara automatik semasa anda menyunting teks.
                       </p>
                     </div>
+                  </div>
+                </div>
+              </div>
+            </div>
+          )}
+
+          {/* SECTION: CHECKOUT VOUCHERS & AUTO-APPLY */}
+          {showVouchers && (
+            <div className="bg-white rounded-3xl border border-slate-200/90 shadow-xs overflow-hidden transition-all">
+              {/* Card Header */}
+              <div className="p-6 bg-gradient-to-r from-slate-50 via-white to-amber-50/20 border-b border-slate-100 flex flex-col sm:flex-row sm:items-center justify-between gap-4">
+                <div className="flex items-center space-x-3">
+                  <div className="w-10 h-10 rounded-2xl bg-forest/10 flex items-center justify-center text-forest shadow-xs">
+                    <Tag className="w-5 h-5 text-forest" />
+                  </div>
+                  <div>
+                    <h3 className="font-bold text-forest-dark text-base sm:text-lg flex items-center gap-2">
+                      <span>Tetapan Baucar & Diskaun Checkout</span>
+                      <span className="px-2 py-0.5 rounded-full text-[10px] font-bold bg-gold/15 text-gold-dark border border-gold/30">
+                        Cadangan & Auto-Guna
+                      </span>
+                    </h3>
+                    <p className="text-xs text-slate-500">
+                      Kawal pilihan auto-guna diskaun dan pilih baucar kilang yang dipaparkan kepada pelanggan di Checkout.
+                    </p>
+                  </div>
+                </div>
+                <button
+                  type="button"
+                  onClick={() => handleSave('Baucar & Diskaun Checkout')}
+                  disabled={isSaving}
+                  className="inline-flex items-center space-x-1.5 px-4 py-2 bg-forest-dark hover:bg-forest text-warmwhite rounded-xl text-xs font-bold transition-all shadow-xs cursor-pointer disabled:opacity-50 self-start sm:self-auto shrink-0"
+                >
+                  <Save className="w-3.5 h-3.5 text-gold" />
+                  <span>{savingSection === 'Baucar & Diskaun Checkout' ? 'Menyimpan...' : 'Simpan Bahagian Ini'}</span>
+                </button>
+              </div>
+
+              <div className="p-6 space-y-6">
+                {/* Bahagian 1: Auto-Guna Baucar di Checkout */}
+                <div className="space-y-4 p-5 rounded-2xl bg-slate-50/60 border border-slate-200/80">
+                  <div className="flex items-start justify-between gap-4">
+                    <div className="space-y-1">
+                      <h4 className="font-bold text-forest text-sm flex items-center gap-2">
+                        <Sparkles className="w-4 h-4 text-gold-dark" />
+                        <span>Bahagian 1: Auto-Guna Baucar di Checkout</span>
+                      </h4>
+                      <p className="text-xs text-slate-500 leading-relaxed">
+                        Apabila diaktifkan (tetapan lalai), sistem akan memilih dan menebus baucar yang paling menguntungkan pelanggan secara automatik tanpa pelanggan perlu menaip kod secara manual. Pelanggan masih boleh membatalkan atau menukar baucar jika mahu.
+                      </p>
+                    </div>
+                    <label className="relative inline-flex items-center cursor-pointer shrink-0">
+                      <input
+                        type="checkbox"
+                        checked={settings.checkoutAutoApplyVoucherEnabled !== false}
+                        onChange={(e) =>
+                          setSettings({
+                            ...settings,
+                            checkoutAutoApplyVoucherEnabled: e.target.checked,
+                          })
+                        }
+                        className="sr-only peer"
+                      />
+                      <div className="w-11 h-6 bg-slate-200 peer-focus:outline-none rounded-full peer peer-checked:after:translate-x-full peer-checked:after:border-white after:content-[''] after:absolute after:top-[2px] after:left-[2px] after:bg-white after:border-slate-300 after:border after:rounded-full after:h-5 after:w-5 after:transition-all peer-checked:bg-forest"></div>
+                    </label>
+                  </div>
+
+                  {/* Pilihan Baucar Auto-Guna */}
+                  {settings.checkoutAutoApplyVoucherEnabled !== false && (
+                    <div className="pt-3 border-t border-slate-200/60 space-y-2">
+                      <label className="block text-xs font-bold text-slate-700">
+                        Pilihan Baucar Yang Akan Digunakan Secara Automatik:
+                      </label>
+                      <select
+                        value={settings.checkoutAutoApplyVoucherCode || 'auto_best'}
+                        onChange={(e) =>
+                          setSettings({
+                            ...settings,
+                            checkoutAutoApplyVoucherCode: e.target.value,
+                          })
+                        }
+                        className="w-full sm:w-auto min-w-[280px] px-3.5 py-2.5 rounded-xl border border-slate-200 text-xs text-slate-800 bg-white font-medium outline-none focus:border-forest focus:ring-2 focus:ring-forest/10 cursor-pointer"
+                      >
+                        <option value="auto_best">
+                          🌟 Auto-Pilih Baucar Terbaik yang Layak (Diskaun Tertinggi) [Disyorkan]
+                        </option>
+                        {allCouponOptions.map((c) => (
+                          <option key={c.code} value={c.code}>
+                            Kod {c.code} — {c.label} ({c.minText})
+                          </option>
+                        ))}
+                      </select>
+                      <p className="text-[11px] text-slate-500">
+                        {settings.checkoutAutoApplyVoucherCode === 'auto_best' || !settings.checkoutAutoApplyVoucherCode
+                          ? 'Sistem akan mengira jumlah troli dan memilih baucar diskaun tertinggi yang layak untuk pelanggan secara automatik.'
+                          : `Sistem akan cuba menggunakan kod "${settings.checkoutAutoApplyVoucherCode}" terlebih dahulu jika troli pelanggan memenuhi syarat perbelanjaan minimumnya.`}
+                      </p>
+                    </div>
+                  )}
+                </div>
+
+                {/* Bahagian 2: Pilihan Cadangan Baucar Kilang yang Dipaparkan */}
+                <div className="space-y-4 p-5 rounded-2xl bg-slate-50/60 border border-slate-200/80">
+                  <div className="flex items-start justify-between gap-4">
+                    <div className="space-y-1">
+                      <h4 className="font-bold text-forest text-sm flex items-center gap-2">
+                        <Tag className="w-4 h-4 text-forest" />
+                        <span>Bahagian 2: Barisan Cip Cadangan Baucar Kilang di Checkout</span>
+                      </h4>
+                      <p className="text-xs text-slate-500 leading-relaxed">
+                        Tandakan baucar-baucar yang anda ingin paparkan sebagai butang cip cadangan pantas di bawah kotak baucar di Checkout.
+                      </p>
+                    </div>
+                    <label className="relative inline-flex items-center cursor-pointer shrink-0">
+                      <input
+                        type="checkbox"
+                        checked={settings.checkoutSuggestedVouchersEnabled !== false}
+                        onChange={(e) =>
+                          setSettings({
+                            ...settings,
+                            checkoutSuggestedVouchersEnabled: e.target.checked,
+                          })
+                        }
+                        className="sr-only peer"
+                      />
+                      <div className="w-11 h-6 bg-slate-200 peer-focus:outline-none rounded-full peer peer-checked:after:translate-x-full peer-checked:after:border-white after:content-[''] after:absolute after:top-[2px] after:left-[2px] after:bg-white after:border-slate-300 after:border after:rounded-full after:h-5 after:w-5 after:transition-all peer-checked:bg-forest"></div>
+                    </label>
+                  </div>
+
+                  {settings.checkoutSuggestedVouchersEnabled !== false && (
+                    <div className="pt-3 border-t border-slate-200/60 space-y-3">
+                      <div className="flex items-center justify-between">
+                        <span className="text-xs font-bold text-slate-700">
+                          Pilih Baucar Untuk Dipaparkan di Checkout:
+                        </span>
+                        <div className="flex items-center gap-2 text-[11px]">
+                          <button
+                            type="button"
+                            onClick={() =>
+                              setSettings({
+                                ...settings,
+                                checkoutSuggestedVoucherCodes: allCouponOptions.map((c) => c.code),
+                              })
+                            }
+                            className="text-forest hover:underline font-semibold cursor-pointer"
+                          >
+                            Pilih Semua
+                          </button>
+                          <span className="text-slate-300">•</span>
+                          <button
+                            type="button"
+                            onClick={() =>
+                              setSettings({
+                                ...settings,
+                                checkoutSuggestedVoucherCodes: ['KAMAAR3', 'KAMAAR5', 'KAMAAR10', 'FREESHIP'],
+                              })
+                            }
+                            className="text-forest hover:underline font-semibold cursor-pointer"
+                          >
+                            Lalai Standard
+                          </button>
+                          <span className="text-slate-300">•</span>
+                          <button
+                            type="button"
+                            onClick={() =>
+                              setSettings({
+                                ...settings,
+                                checkoutSuggestedVoucherCodes: [],
+                              })
+                            }
+                            className="text-slate-500 hover:underline cursor-pointer"
+                          >
+                            Kosongkan
+                          </button>
+                        </div>
+                      </div>
+
+                      {/* Checkboxes grid for each coupon */}
+                      <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 gap-2.5">
+                        {allCouponOptions.map((c) => {
+                          const currentCodes = settings.checkoutSuggestedVoucherCodes || ['KAMAAR3', 'KAMAAR5', 'KAMAAR10', 'FREESHIP']
+                          const isChecked = currentCodes.includes(c.code)
+                          return (
+                            <label
+                              key={c.code}
+                              className={`flex items-start gap-2.5 p-3 rounded-xl border text-xs cursor-pointer transition-all ${
+                                isChecked
+                                  ? 'bg-forest/5 border-forest/30 text-forest shadow-2xs'
+                                  : 'bg-white border-slate-200 text-slate-600 hover:border-slate-300'
+                              }`}
+                            >
+                              <input
+                                type="checkbox"
+                                checked={isChecked}
+                                onChange={(e) => {
+                                  const nextCodes = e.target.checked
+                                    ? [...currentCodes, c.code]
+                                    : currentCodes.filter((code) => code !== c.code)
+                                  setSettings({
+                                    ...settings,
+                                    checkoutSuggestedVoucherCodes: nextCodes,
+                                  })
+                                }}
+                                className="mt-0.5 rounded text-forest focus:ring-forest cursor-pointer"
+                              />
+                              <div className="min-w-0">
+                                <div className="flex items-center gap-1.5 font-bold font-mono">
+                                  <span>{c.code}</span>
+                                  <span className="px-1.5 py-0.2 rounded text-[10px] bg-gold/15 text-gold-dark font-sans font-semibold">
+                                    {c.label}
+                                  </span>
+                                </div>
+                                <p className="text-[11px] text-slate-500 leading-tight mt-0.5">
+                                  {c.description || c.minText}
+                                </p>
+                              </div>
+                            </label>
+                          )
+                        })}
+                      </div>
+                    </div>
+                  )}
+                </div>
+
+                {/* Bahagian 3: Pratonton Langsung Interaktif di Checkout */}
+                <div className="p-4 sm:p-5 rounded-2xl bg-amber-50/40 border border-amber-200/60 space-y-3">
+                  <div className="flex items-center justify-between">
+                    <div className="flex items-center gap-2">
+                      <Eye className="w-4 h-4 text-forest" />
+                      <h5 className="font-bold text-forest text-xs uppercase tracking-wider">
+                        Pratonton Langsung di Halaman Checkout Pelanggan
+                      </h5>
+                    </div>
+                    <span className="text-[10px] text-slate-500">Live Simulation</span>
+                  </div>
+
+                  <div className="p-4 bg-white rounded-2xl border border-[#D5CEC2] shadow-xs space-y-3 max-w-md mx-auto">
+                    {/* Input Box */}
+                    <div className="flex items-center space-x-2">
+                      <div className="flex-1 px-3 py-2 rounded-xl border border-[#D5CEC2] bg-[#FAF7F2]/50 text-xs font-mono uppercase text-slate-400">
+                        KOD DISKAUN / BAUCAR
+                      </div>
+                      <div className="px-4 py-2 rounded-xl bg-forest text-warmwhite text-xs font-bold shadow-xs">
+                        Tebus
+                      </div>
+                    </div>
+
+                    {/* Auto-applied badge */}
+                    {settings.checkoutAutoApplyVoucherEnabled !== false && (
+                      <div className="flex items-center justify-between p-2.5 rounded-xl bg-forest/5 border border-forest/20 text-xs">
+                        <div className="flex items-center space-x-2 text-forest font-bold">
+                          <Tag className="w-3.5 h-3.5 text-gold shrink-0" />
+                          <span className="font-mono text-xs">
+                            {settings.checkoutAutoApplyVoucherCode === 'auto_best' || !settings.checkoutAutoApplyVoucherCode
+                              ? 'KAMAAR3'
+                              : settings.checkoutAutoApplyVoucherCode}
+                          </span>
+                          <span className="px-1.5 py-0.5 rounded-full bg-emerald-100 text-emerald-800 text-[9px] font-bold tracking-wider uppercase flex items-center gap-0.5">
+                            <Sparkles className="w-2.5 h-2.5 text-emerald-600" />
+                            Auto-Guna
+                          </span>
+                          <span className="text-emerald-700 font-medium">(-RM3.00)</span>
+                        </div>
+                        <span className="text-xs text-red-600 underline font-medium cursor-pointer">
+                          Batalkan
+                        </span>
+                      </div>
+                    )}
+
+                    {/* Suggested chips */}
+                    {settings.checkoutSuggestedVouchersEnabled !== false && (
+                      <div className="space-y-1.5 pt-1">
+                        <div className="text-[11px] text-slate-500 flex items-center justify-between">
+                          <span>
+                            {settings.checkoutAutoApplyVoucherEnabled !== false
+                              ? 'Pilihan baucar lain (klik untuk tukar):'
+                              : 'Cadangan baucar kilang:'}
+                          </span>
+                          <span className="text-forest underline font-bold cursor-pointer">
+                            Cuba KAMAAR3 (-RM3)
+                          </span>
+                        </div>
+                        <div className="flex flex-wrap gap-1.5">
+                          {(settings.checkoutSuggestedVoucherCodes || ['KAMAAR3', 'KAMAAR5', 'KAMAAR10', 'FREESHIP']).map(
+                            (code) => {
+                              const found = allCouponOptions.find((c) => c.code === code)
+                              const label = found ? found.label : code
+                              const isSelected =
+                                settings.checkoutAutoApplyVoucherEnabled !== false &&
+                                (settings.checkoutAutoApplyVoucherCode === code ||
+                                  ((!settings.checkoutAutoApplyVoucherCode || settings.checkoutAutoApplyVoucherCode === 'auto_best') &&
+                                    code === 'KAMAAR3'))
+                              return (
+                                <span
+                                  key={code}
+                                  className={`inline-flex items-center gap-1 px-2.5 py-1 rounded-lg text-[10px] font-semibold border ${
+                                    isSelected
+                                      ? 'bg-forest text-warmwhite border-forest shadow-xs font-bold'
+                                      : 'bg-emerald-50 text-emerald-800 border-emerald-300'
+                                  }`}
+                                >
+                                  <Tag className="w-2.5 h-2.5" />
+                                  <span>{code}</span>
+                                  <span className="text-[9px] opacity-80 font-normal">({label})</span>
+                                  {isSelected && <span className="ml-0.5 font-bold text-gold">✓</span>}
+                                </span>
+                              )
+                            }
+                          )}
+                        </div>
+                      </div>
+                    )}
                   </div>
                 </div>
               </div>

@@ -1170,6 +1170,13 @@ export async function getSiteSettings(): Promise<SiteSettings> {
     db.siteSettings.whiteGloveModalCloseText = db.siteSettings.whiteGloveModalCloseText || initialSiteSettings.whiteGloveModalCloseText || 'Faham & Tutup'
     needsSave = true
   }
+  if (db.siteSettings.checkoutAutoApplyVoucherEnabled === undefined) {
+    db.siteSettings.checkoutAutoApplyVoucherEnabled = true
+    db.siteSettings.checkoutAutoApplyVoucherCode = db.siteSettings.checkoutAutoApplyVoucherCode || 'auto_best'
+    db.siteSettings.checkoutSuggestedVouchersEnabled = db.siteSettings.checkoutSuggestedVouchersEnabled !== undefined ? db.siteSettings.checkoutSuggestedVouchersEnabled : true
+    db.siteSettings.checkoutSuggestedVoucherCodes = db.siteSettings.checkoutSuggestedVoucherCodes || ['KAMAAR3', 'KAMAAR5', 'KAMAAR10', 'FREESHIP']
+    needsSave = true
+  }
   if (needsSave) {
     saveDb(db)
   }

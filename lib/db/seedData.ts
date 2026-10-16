@@ -1863,7 +1863,11 @@ export const initialSiteSettings: SiteSettings = {
   "whiteGloveMiniTitle": "Servis Kurier & Pasang Kilang",
   "whiteGloveMiniDesc": "Dihantar terus oleh krew terlatih KAMAAR ke bilik tidur anda berserta jaminan keselamatan kilang.",
   "whiteGloveMiniButtonText": "Maklumat Lanjut",
-  "whiteGloveModalCloseText": "Faham & Tutup"
+  "whiteGloveModalCloseText": "Faham & Tutup",
+  "checkoutAutoApplyVoucherEnabled": true,
+  "checkoutAutoApplyVoucherCode": "auto_best",
+  "checkoutSuggestedVouchersEnabled": true,
+  "checkoutSuggestedVoucherCodes": ["KAMAAR3", "KAMAAR5", "KAMAAR10", "FREESHIP"]
 }
 
 export const initialStaffMembers: StaffMember[] = [

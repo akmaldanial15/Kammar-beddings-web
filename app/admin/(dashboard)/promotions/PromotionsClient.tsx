@@ -27,6 +27,7 @@ import {
   Percent,
   Calendar,
   Sliders,
+  ChevronRight,
 } from 'lucide-react'
 
 interface PromotionsClientProps {
@@ -351,6 +352,33 @@ export function PromotionsClient({ initialCoupons }: PromotionsClientProps) {
           <div className="text-2xl font-bold font-mono text-neutral-500">{stats.inactiveCount}</div>
           <p className="text-[11px] text-charcoal-muted mt-1">Kupon disekat atau ditutup</p>
         </div>
+      </div>
+
+      {/* CHECKOUT SUGGESTED & AUTO-APPLY VOUCHER CONFIG BANNER */}
+      <div className="bg-gradient-to-r from-forest/10 via-forest/5 to-gold/10 p-4 rounded-2xl border border-forest/20 shadow-xs flex flex-col sm:flex-row sm:items-center justify-between gap-3 animate-fade-in">
+        <div className="flex items-center gap-3">
+          <div className="w-9 h-9 rounded-xl bg-forest text-warmwhite flex items-center justify-center shrink-0 shadow-xs">
+            <Sparkles className="w-4 h-4 text-gold" />
+          </div>
+          <div>
+            <div className="flex items-center gap-2">
+              <span className="font-bold text-forest text-xs sm:text-sm">Konfigurasi Baucar Checkout & Auto-Guna</span>
+              <span className="px-2 py-0.5 rounded-full text-[10px] font-bold bg-emerald-100 text-emerald-800">
+                Default: Auto-Guna Aktif
+              </span>
+            </div>
+            <p className="text-[11px] text-slate-600">
+              Urus pilihan kod baucar yang dipaparkan sebagai butang cadangan di Checkout dan tentukan baucar mana yang diguna secara automatik.
+            </p>
+          </div>
+        </div>
+        <Link
+          href="/admin/settings?section=vouchers"
+          className="inline-flex items-center gap-1.5 px-3.5 py-2 bg-forest hover:bg-forest-dark text-warmwhite rounded-xl text-xs font-bold transition-all shadow-xs shrink-0 self-start sm:self-auto cursor-pointer"
+        >
+          <span>Urus di Tetapan Sistem</span>
+          <ChevronRight className="w-3.5 h-3.5 text-gold" />
+        </Link>
       </div>
 
       {/* ACTION BAR: SEARCH, TABS & CREATE BUTTON */}

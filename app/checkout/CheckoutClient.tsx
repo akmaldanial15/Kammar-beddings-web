@@ -48,12 +48,13 @@ import {
   validateMalaysianPostcode,
   validateMalaysianPhone,
 } from '@/lib/utils/format'
-import { PaymentSettings, PaymentMethodConfig, SiteSettings, Product, ProductVariant } from '@/types'
+import { PaymentSettings, PaymentMethodConfig, SiteSettings, Product, ProductVariant, Coupon } from '@/types'
 
 interface CheckoutClientProps {
   initialPaymentSettings?: PaymentSettings
   initialSiteSettings?: SiteSettings
   availableProducts?: Product[]
+  initialCoupons?: Coupon[]
 }
 
 const MALAYSIAN_BANKS = [
@@ -77,7 +78,7 @@ const MALAYSIAN_BANKS = [
 // Fallback product image if missing or empty
 const defaultProductImage = '/images/products/tilam-toto-queen.jpg'
 
-export function CheckoutClient({ initialPaymentSettings, initialSiteSettings, availableProducts }: CheckoutClientProps) {
+export function CheckoutClient({ initialPaymentSettings, initialSiteSettings, availableProducts, initialCoupons }: CheckoutClientProps) {
   const {
     items,
     isLoaded,
@@ -231,6 +232,9 @@ export function CheckoutClient({ initialPaymentSettings, initialSiteSettings, av
   const [couponSuccess, setCouponSuccess] = useState('')
   const [copiedBank, setCopiedBank] = useState(false)
   const [serverDiscountSen, setServerDiscountSen] = useState<number | null>(null)
+  const [couponsList, setCouponsList] = useState<Coupon[]>(initialCoupons || [])
+  const [hasUserDismissedAutoCoupon, setHasUserDismissedAutoCoupon] = useState(false)
+  const [isAutoApplied, setIsAutoApplied] = useState(false)
 
   // Interactive tooltips & detailed modal state with smooth appear & disappear animations
   const [isShippingMiniMounted, setIsShippingMiniMounted] = useState(false)
@@ -392,6 +396,91 @@ export function CheckoutClient({ initialPaymentSettings, initialSiteSettings, av
       })
       .catch(() => setServerDiscountSen(null))
   }, [couponCode, subtotalSen])
+
+  // Load coupons list if not provided
+  useEffect(() => {
+    if (!initialCoupons || initialCoupons.length === 0) {
+      fetch('/api/coupons')
+        .then((res) => res.json())
+        .then((data) => {
+          if (Array.isArray(data) && data.length > 0) {
+            setCouponsList(data)
+          }
+        })
+        .catch(() => {})
+    }
+  }, [initialCoupons])
+
+  // Auto-apply voucher according to Admin Settings (default: ON)
+  useEffect(() => {
+    if (!isLoaded || items.length === 0 || subtotalSen <= 0) return
+    if (hasUserDismissedAutoCoupon) return
+    if (couponCode) return // A coupon is already active
+
+    const autoApplyEnabled = siteSettings?.checkoutAutoApplyVoucherEnabled !== false
+    if (!autoApplyEnabled) return
+
+    const preferredCode = siteSettings?.checkoutAutoApplyVoucherCode || 'auto_best'
+
+    if (preferredCode !== 'auto_best') {
+      // Admin chose a specific coupon
+      const specific = couponsList.find((c) => c.code.toUpperCase() === preferredCode.toUpperCase())
+      const minSpend = specific ? (specific.minSpendSen || 0) : 0
+      if (subtotalSen >= minSpend) {
+        applyCoupon(preferredCode.toUpperCase())
+        setIsAutoApplied(true)
+        setCouponSuccess(`Baucar "${preferredCode.toUpperCase()}" telah diguna secara automatik!`)
+      }
+    } else {
+      // Auto best discount: determine the highest savings among eligible coupons
+      const candidates = (couponsList.length > 0 ? couponsList : [
+        { code: 'KAMAAR15', discountType: 'fixed_amount', discountValue: 1500, minSpendSen: 14000 },
+        { code: 'KAMAAR10', discountType: 'fixed_amount', discountValue: 1000, minSpendSen: 9000 },
+        { code: 'KAMAAR5', discountType: 'fixed_amount', discountValue: 500, minSpendSen: 4500 },
+        { code: 'KAMAAR3', discountType: 'fixed_amount', discountValue: 300, minSpendSen: 2000 },
+      ] as Coupon[]).filter((c) => subtotalSen >= (c.minSpendSen || 0))
+
+      if (candidates.length > 0) {
+        let bestCoupon: Coupon | null = null
+        let maxSavingsSen = 0
+
+        for (const c of candidates) {
+          let savings = 0
+          if (c.discountType === 'percentage') {
+            savings = Math.round((subtotalSen * c.discountValue) / 100)
+            if (c.maxDiscountSen && savings > c.maxDiscountSen) {
+              savings = c.maxDiscountSen
+            }
+          } else if (c.discountType === 'fixed_amount') {
+            savings = Math.min(c.discountValue, subtotalSen)
+          } else if (c.discountType === 'free_shipping') {
+            savings = 1500 // Peninsular standard shipping value
+          }
+
+          if (savings > maxSavingsSen) {
+            maxSavingsSen = savings
+            bestCoupon = c
+          }
+        }
+
+        if (bestCoupon && maxSavingsSen > 0) {
+          applyCoupon(bestCoupon.code)
+          setIsAutoApplied(true)
+          setCouponSuccess(`Baucar "${bestCoupon.code}" telah diguna secara automatik (Jimat ${formatMYR(maxSavingsSen)})!`)
+        }
+      }
+    }
+  }, [
+    isLoaded,
+    items.length,
+    subtotalSen,
+    couponCode,
+    hasUserDismissedAutoCoupon,
+    siteSettings?.checkoutAutoApplyVoucherEnabled,
+    siteSettings?.checkoutAutoApplyVoucherCode,
+    couponsList,
+    applyCoupon,
+  ])
 
   const [isSubmitting, setIsSubmitting] = useState(false)
   const [errorMessage, setErrorMessage] = useState('')
@@ -631,7 +720,15 @@ export function CheckoutClient({ initialPaymentSettings, initialSiteSettings, av
 
   // Discount calculation with server precedence and local fallback
   let localDiscountSen = 0
-  if (couponCode === 'KAMAAR3' && subtotalSen >= 2000) {
+  const activeCoupon = couponsList.find((c) => c.code.toUpperCase() === (couponCode || '').toUpperCase())
+  if (activeCoupon) {
+    if (activeCoupon.discountType === 'percentage' && subtotalSen >= (activeCoupon.minSpendSen || 0)) {
+      const p = Math.round((subtotalSen * activeCoupon.discountValue) / 100)
+      localDiscountSen = activeCoupon.maxDiscountSen ? Math.min(p, activeCoupon.maxDiscountSen) : p
+    } else if (activeCoupon.discountType === 'fixed_amount' && subtotalSen >= (activeCoupon.minSpendSen || 0)) {
+      localDiscountSen = Math.min(activeCoupon.discountValue, subtotalSen)
+    }
+  } else if (couponCode === 'KAMAAR3' && subtotalSen >= 2000) {
     localDiscountSen = 300
   } else if (couponCode === 'KAMAAR5' && subtotalSen >= 4500) {
     localDiscountSen = 500
@@ -686,6 +783,33 @@ export function CheckoutClient({ initialPaymentSettings, initialSiteSettings, av
       } else {
         setCouponError('Kod diskaun tidak sah atau telah tamat tempoh.')
       }
+    }
+  }
+
+  const handleSelectSuggestedCoupon = async (code: string, minText: string, minSen: number) => {
+    setCouponError('')
+    setCouponSuccess('')
+    try {
+      const res = await fetch('/api/coupons/validate', {
+        method: 'POST',
+        headers: { 'Content-Type': 'application/json' },
+        body: JSON.stringify({ code, subtotalSen }),
+      })
+      const data = await res.json()
+      if (data.isValid) {
+        applyCoupon(code)
+        setIsAutoApplied(false)
+        setHasUserDismissedAutoCoupon(false)
+        setServerDiscountSen(data.discountSen || 0)
+        setCouponSuccess(data.message || `Baucar "${code}" berjaya ditebus!`)
+      } else {
+        setCouponError(data.message || `Syarat perbelanjaan ${minText} belum dicapai.`)
+      }
+    } catch {
+      applyCoupon(code)
+      setIsAutoApplied(false)
+      setHasUserDismissedAutoCoupon(false)
+      setCouponSuccess(`Baucar "${code}" berjaya ditebus!`)
     }
   }
 
@@ -2599,116 +2723,126 @@ export function CheckoutClient({ initialPaymentSettings, initialSiteSettings, av
 
                 {/* Applied coupon badge */}
                 {couponCode && (
-                  <div className="flex items-center justify-between p-2.5 rounded-xl bg-emerald-50 border border-emerald-200 text-xs shadow-2xs">
-                    <div className="flex items-center space-x-2 text-emerald-900 font-bold">
-                      <Tag className="w-3.5 h-3.5 text-emerald-700 shrink-0" />
+                  <div className="flex items-center justify-between p-2.5 rounded-xl bg-forest/5 border border-forest/20 text-xs shadow-2xs">
+                    <div className="flex items-center space-x-2 text-forest font-bold">
+                      <Tag className="w-3.5 h-3.5 text-gold shrink-0" />
                       <span className="font-mono text-xs">{couponCode}</span>
-                      <span className="text-emerald-700 font-medium">(-{formatMYR(discountSen)})</span>
+                      {isAutoApplied && (
+                        <span className="px-1.5 py-0.5 rounded-full bg-emerald-100 text-emerald-800 text-[9px] font-bold tracking-wider uppercase flex items-center gap-0.5">
+                          <Sparkles className="w-2.5 h-2.5 text-emerald-600" />
+                          Auto-Guna
+                        </span>
+                      )}
+                      <span className="text-emerald-700 font-medium">
+                        {effectiveShippingSen === 0 && couponCode === 'FREESHIP'
+                          ? '(Pos Percuma)'
+                          : discountSen > 0
+                          ? `(-${formatMYR(discountSen)})`
+                          : '(Aktif)'}
+                      </span>
                     </div>
                     <button
                       type="button"
                       onClick={() => {
                         removeCoupon()
+                        setHasUserDismissedAutoCoupon(true)
+                        setIsAutoApplied(false)
                         setServerDiscountSen(0)
                         setCouponSuccess('')
                         setCouponError('')
                       }}
-                      className="text-neutral-400 hover:text-neutral-700 p-1 cursor-pointer"
-                      title="Buang kupon"
+                      className="text-xs text-red-600 hover:text-red-700 underline font-medium cursor-pointer"
+                      title="Batalkan baucar ini"
                     >
-                      <X className="w-4 h-4" />
+                      Batalkan
                     </button>
                   </div>
                 )}
 
-                {!couponCode && (
+                {/* Suggested Vouchers (Cadangan Baucar Kilang) */}
+                {siteSettings?.checkoutSuggestedVouchersEnabled !== false && (
                   <div className="space-y-2 pt-0.5">
                     <div className="flex items-center justify-between text-[11px] text-charcoal-muted">
-                      <span>Cadangan baucar kilang:</span>
-                      <button
-                        type="button"
-                        onClick={async () => {
-                          const targetCode = subtotalSen >= 14000 ? 'KAMAAR15' : subtotalSen >= 9000 ? 'KAMAAR10' : subtotalSen >= 4500 ? 'KAMAAR5' : 'KAMAAR3'
-                          setCouponError('')
-                          setCouponSuccess('')
-                          try {
-                            const res = await fetch('/api/coupons/validate', {
-                              method: 'POST',
-                              headers: { 'Content-Type': 'application/json' },
-                              body: JSON.stringify({ code: targetCode, subtotalSen }),
-                            })
-                            const data = await res.json()
-                            if (data.isValid) {
-                              applyCoupon(targetCode)
-                              setServerDiscountSen(data.discountSen || 0)
-                              setCouponSuccess(data.message || `Baucar "${targetCode}" berjaya ditebus!`)
-                            } else {
-                              setCouponError(data.message || 'Syarat belian minima belum dipenuhi.')
-                            }
-                          } catch {
-                            applyCoupon(targetCode)
-                            setCouponSuccess(`Baucar "${targetCode}" berjaya ditebus!`)
-                          }
-                        }}
-                        className="text-forest hover:text-gold font-bold underline cursor-pointer"
-                      >
-                        {subtotalSen >= 14000
-                          ? 'Cuba KAMAAR15 (-RM15)'
-                          : subtotalSen >= 9000
-                          ? 'Cuba KAMAAR10 (-RM10)'
-                          : subtotalSen >= 4500
-                          ? 'Cuba KAMAAR5 (-RM5)'
-                          : 'Cuba KAMAAR3 (-RM3)'}
-                      </button>
+                      <span>{couponCode ? 'Pilihan baucar lain (klik untuk tukar):' : 'Cadangan baucar kilang:'}</span>
+                      {!couponCode && (
+                        <button
+                          type="button"
+                          onClick={() => {
+                            const targetCode = subtotalSen >= 14000 ? 'KAMAAR15' : subtotalSen >= 9000 ? 'KAMAAR10' : subtotalSen >= 4500 ? 'KAMAAR5' : 'KAMAAR3'
+                            handleSelectSuggestedCoupon(targetCode, 'Min RM20', 2000)
+                          }}
+                          className="text-forest hover:text-gold font-bold underline cursor-pointer"
+                        >
+                          {subtotalSen >= 14000
+                            ? 'Cuba KAMAAR15 (-RM15)'
+                            : subtotalSen >= 9000
+                            ? 'Cuba KAMAAR10 (-RM10)'
+                            : subtotalSen >= 4500
+                            ? 'Cuba KAMAAR5 (-RM5)'
+                            : 'Cuba KAMAAR3 (-RM3)'}
+                        </button>
+                      )}
                     </div>
 
                     {/* Voucher Quick Selector Chips */}
                     <div className="flex flex-wrap gap-1.5 pt-0.5">
-                      {[
-                        { code: 'KAMAAR3', label: 'RM3 OFF', minText: 'Min RM20', minSen: 2000 },
-                        { code: 'KAMAAR5', label: 'RM5 OFF', minText: 'Min RM45', minSen: 4500 },
-                        { code: 'KAMAAR10', label: 'RM10 OFF', minText: 'Min RM90', minSen: 9000 },
-                        { code: 'FREESHIP', label: 'Free Pos', minText: 'Min RM80', minSen: 8000 },
-                      ].map((v) => {
-                        const isEligible = subtotalSen >= v.minSen
-                        return (
-                          <button
-                            key={v.code}
-                            type="button"
-                            onClick={async () => {
-                              setCouponError('')
-                              setCouponSuccess('')
-                              try {
-                                const res = await fetch('/api/coupons/validate', {
-                                  method: 'POST',
-                                  headers: { 'Content-Type': 'application/json' },
-                                  body: JSON.stringify({ code: v.code, subtotalSen }),
-                                })
-                                const data = await res.json()
-                                if (data.isValid) {
-                                  applyCoupon(v.code)
-                                  setServerDiscountSen(data.discountSen || 0)
-                                  setCouponSuccess(data.message || `Baucar "${v.code}" berjaya ditebus!`)
-                                } else {
-                                  setCouponError(data.message || `Syarat perbelanjaan ${v.minText} belum dicapai.`)
-                                }
-                              } catch {
-                                applyCoupon(v.code)
-                                setCouponSuccess(`Baucar "${v.code}" berjaya ditebus!`)
-                              }
-                            }}
-                            className={`inline-flex items-center gap-1 px-2.5 py-1 rounded-lg text-[10px] font-semibold transition-all border cursor-pointer ${
-                              isEligible
-                                ? 'bg-emerald-50 text-emerald-800 border-emerald-300 hover:bg-emerald-100 shadow-2xs'
-                                : 'bg-stone-50 text-stone-500 border-stone-200 hover:border-stone-300'
-                            }`}
-                          >
-                            <Tag className="w-2.5 h-2.5 shrink-0" />
-                            <span>{v.code}</span>
-                            <span className="text-[9px] opacity-75 font-normal">({v.label})</span>
-                          </button>
-                        )
-                      })}
+                      {(() => {
+                        const suggestedCodes = (siteSettings?.checkoutSuggestedVoucherCodes && siteSettings.checkoutSuggestedVoucherCodes.length > 0)
+                          ? siteSettings.checkoutSuggestedVoucherCodes
+                          : ['KAMAAR3', 'KAMAAR5', 'KAMAAR10', 'FREESHIP']
+
+                        return suggestedCodes.map((code) => {
+                          const found = couponsList.find((c) => c.code.toUpperCase() === code.toUpperCase())
+                          let label = ''
+                          let minText = 'Tersedia'
+                          let minSen = 0
+
+                          if (found) {
+                            if (found.discountType === 'percentage') {
+                              label = `${found.discountValue}% OFF`
+                            } else if (found.discountType === 'fixed_amount') {
+                              label = `RM${Math.round(found.discountValue / 100)} OFF`
+                            } else if (found.discountType === 'free_shipping') {
+                              label = 'Free Pos'
+                            }
+                            label = found.customBadge || label || found.code
+                            minText = found.minSpendSen ? `Min RM${Math.round(found.minSpendSen / 100)}` : 'Tiada Minima'
+                            minSen = found.minSpendSen || 0
+                          } else {
+                            if (code === 'KAMAAR3') { label = 'RM3 OFF'; minText = 'Min RM20'; minSen = 2000 }
+                            else if (code === 'KAMAAR5') { label = 'RM5 OFF'; minText = 'Min RM45'; minSen = 4500 }
+                            else if (code === 'KAMAAR10') { label = 'RM10 OFF'; minText = 'Min RM90'; minSen = 9000 }
+                            else if (code === 'KAMAAR15') { label = 'RM15 OFF'; minText = 'Min RM140'; minSen = 14000 }
+                            else if (code === 'BORONG20') { label = 'RM20 OFF'; minText = 'Min RM200'; minSen = 20000 }
+                            else if (code === 'FREESHIP') { label = 'Free Pos'; minText = 'Min RM80'; minSen = 8000 }
+                            else if (code === 'WELCOME10') { label = '10% OFF'; minText = 'Min RM100'; minSen = 10000 }
+                            else { label = code; minText = 'Tersedia'; minSen = 0 }
+                          }
+
+                          const isSelected = (couponCode || '').toUpperCase() === code.toUpperCase()
+                          const isEligible = subtotalSen >= minSen
+
+                          return (
+                            <button
+                              key={code}
+                              type="button"
+                              onClick={() => handleSelectSuggestedCoupon(code, minText, minSen)}
+                              className={`inline-flex items-center gap-1 px-2.5 py-1 rounded-lg text-[10px] font-semibold transition-all border cursor-pointer active:scale-95 ${
+                                isSelected
+                                  ? 'bg-forest text-warmwhite border-forest shadow-xs font-bold'
+                                  : isEligible
+                                  ? 'bg-emerald-50 text-emerald-800 border-emerald-300 hover:bg-emerald-100 shadow-2xs'
+                                  : 'bg-stone-50 text-stone-500 border-stone-200 hover:border-stone-300'
+                              }`}
+                            >
+                              <Tag className="w-2.5 h-2.5 shrink-0" />
+                              <span>{code}</span>
+                              <span className="text-[9px] opacity-80 font-normal">({label})</span>
+                              {isSelected && <span className="ml-0.5 font-bold text-gold">✓</span>}
+                            </button>
+                          )
+                        })
+                      })()}
                     </div>
                   </div>
                 )}

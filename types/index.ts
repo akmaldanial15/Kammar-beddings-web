@@ -401,6 +401,11 @@ export interface SiteSettings {
   whiteGloveMiniDesc?: string
   whiteGloveMiniButtonText?: string
   whiteGloveModalCloseText?: string
+  // Checkout Voucher & Auto-Apply Configurations
+  checkoutAutoApplyVoucherEnabled?: boolean
+  checkoutAutoApplyVoucherCode?: string // 'auto_best' or specific code like 'KAMAAR3'
+  checkoutSuggestedVouchersEnabled?: boolean
+  checkoutSuggestedVoucherCodes?: string[]
 }
 
 export type StaffRole = 'owner' | 'catalog_manager' | 'order_manager' | 'content_editor'
