@@ -125,24 +125,31 @@ export function CartDrawer() {
         onClick={closeDrawer}
       />
 
-      {/* Drawer slide-over wrapper: pl-0 on mobile eliminates the 40px rightward clipping overflow */}
+      {/* Drawer slide-over container */}
       <div
         className={`fixed inset-y-0 right-0 max-w-full flex pl-0 sm:pl-10 pointer-events-none transform transition-transform duration-300 ease-out will-change-transform ${
           isDrawerOpen ? 'translate-x-0 pointer-events-auto' : 'translate-x-full'
         }`}
       >
-        <div className="w-screen max-w-full sm:w-[440px] sm:max-w-md bg-white shadow-2xl flex flex-col h-full max-h-[100dvh] overflow-hidden">
+        <div className="w-screen max-w-full sm:w-[440px] sm:max-w-md bg-[#F8FAFC] shadow-2xl flex flex-col h-full max-h-[100dvh] overflow-hidden">
           {/* Header */}
-          <div className="p-4 sm:p-5 border-b border-borderLight flex items-center justify-between bg-cream-light flex-shrink-0">
-            <div className="flex items-center space-x-2">
-              <ShoppingBag className="w-5 h-5 text-forest" />
-              <h2 className="text-base sm:text-lg font-serif font-bold text-forest tracking-wide">
-                {t.cartTitle} ({items.reduce((s, i) => s + i.quantity, 0)})
-              </h2>
+          <div className="px-4 py-3.5 sm:px-5 sm:py-4 border-b border-slate-200/80 flex items-center justify-between bg-white flex-shrink-0 shadow-2xs">
+            <div className="flex items-center space-x-2.5">
+              <div className="w-8 h-8 rounded-full bg-forest/10 flex items-center justify-center text-forest">
+                <ShoppingBag className="w-4 h-4" />
+              </div>
+              <div>
+                <h2 className="text-sm sm:text-base font-serif font-bold text-forest tracking-wide">
+                  {t.cartTitle}
+                </h2>
+                <span className="text-[11px] text-slate-500 font-medium">
+                  {items.reduce((s, i) => s + i.quantity, 0)} {locale === 'bm' ? 'barang dipilih' : 'items selected'}
+                </span>
+              </div>
             </div>
             <button
               onClick={closeDrawer}
-              className="p-1.5 text-charcoal-muted hover:text-charcoal rounded-full hover:bg-cream transition-colors cursor-pointer"
+              className="w-8 h-8 rounded-full flex items-center justify-center text-slate-400 hover:text-slate-700 hover:bg-slate-100 active:scale-95 transition-all cursor-pointer"
               aria-label="Close cart"
             >
               <X className="w-5 h-5" />
@@ -150,312 +157,339 @@ export function CartDrawer() {
           </div>
 
           {/* Free Shipping Reassurance Bar */}
-          <div className="px-4 py-2.5 bg-forest-dark text-warmwhite text-xs flex-shrink-0">
+          <div className="px-4 py-2.5 bg-forest-dark text-warmwhite text-xs flex-shrink-0 shadow-inner">
             <div className="flex items-center justify-between font-medium mb-1.5">
               <span className="flex items-center space-x-1.5 truncate pr-2">
                 <Sparkles className="w-3.5 h-3.5 text-gold flex-shrink-0" />
-                <span className="truncate">
+                <span className="truncate text-[11.5px]">
                   {isFreeShipping
                     ? (locale === 'bm'
-                        ? 'Tahniah! Pesanan Anda Layak Penghantaran Percuma!'
+                        ? 'Tahniah! Anda Layak Penghantaran Percuma!'
                         : 'Qualified for Free White-Glove Peninsular Delivery!')
                     : (locale === 'bm'
-                        ? `Tambah ${formatMYR(amountToFreeShipping)} lagi untuk Penghantaran Percuma`
+                        ? `Tambah ${formatMYR(amountToFreeShipping)} lagi untuk Free Pos`
                         : `Add ${formatMYR(amountToFreeShipping)} more for Free Delivery`)}
                 </span>
               </span>
-              <span className="text-gold font-bold flex-shrink-0">{progressPercent}%</span>
+              <span className="text-gold font-bold text-[11px] flex-shrink-0">{progressPercent}%</span>
             </div>
             <div className="w-full bg-forest h-1.5 rounded-full overflow-hidden">
               <div
-                className="bg-gold h-full transition-all duration-500 rounded-full"
+                className="bg-gradient-to-r from-gold-light to-gold h-full transition-all duration-500 rounded-full"
                 style={{ width: `${progressPercent}%` }}
               />
             </div>
           </div>
 
-          {/* Items Area with independent smooth scrolling */}
-          <div className="flex-1 min-h-0 overflow-y-auto overscroll-contain p-4 sm:p-5 divide-y divide-borderLight">
+          {/* Scrollable Items Body (70-75% screen height with smooth momentum scrolling) */}
+          <div
+            className="flex-1 min-h-0 overflow-y-auto overscroll-contain px-3.5 pt-3.5 pb-10 sm:px-5 sm:pt-5 sm:pb-10 space-y-3"
+            style={{ WebkitOverflowScrolling: 'touch' }}
+          >
             {items.length === 0 ? (
               <div className="h-full flex flex-col items-center justify-center text-center py-16 px-4">
-                <div className="w-16 h-16 rounded-full bg-cream flex items-center justify-center text-gold-dark mb-4">
+                <div className="w-16 h-16 rounded-full bg-white shadow-sm border border-slate-200 flex items-center justify-center text-gold-dark mb-4">
                   <ShoppingBag className="w-8 h-8" />
                 </div>
-                <h3 className="text-xl font-serif font-bold text-charcoal">{t.emptyCartTitle}</h3>
-                <p className="text-xs text-charcoal-muted mt-1 max-w-xs">{t.emptyCartText}</p>
+                <h3 className="text-lg font-serif font-bold text-slate-800">{t.emptyCartTitle}</h3>
+                <p className="text-xs text-slate-500 mt-1 max-w-xs">{t.emptyCartText}</p>
                 <Link
                   href="/collections/mattress"
                   onClick={closeDrawer}
-                  className="mt-6 px-6 py-2.5 bg-forest text-warmwhite rounded-lg text-sm font-medium hover:bg-forest-dark transition-colors shadow-subtle flex items-center space-x-2"
+                  className="mt-6 px-6 py-2.5 bg-forest text-warmwhite rounded-xl text-xs sm:text-sm font-bold hover:bg-forest-dark transition-all shadow-md flex items-center space-x-2"
                 >
                   <span>{t.startShopping}</span>
                   <ArrowRight className="w-4 h-4" />
                 </Link>
               </div>
             ) : (
-              <div className="space-y-4">
-                {items.map((item) => (
-                  <div key={item.variantId} className="flex space-x-3.5 pt-4 first:pt-0">
-                    <div className="relative w-20 h-20 rounded-lg overflow-hidden bg-cream flex-shrink-0 border border-borderLight shadow-2xs">
-                      {item.imageUrl ? (
-                        <Image
-                          src={item.imageUrl}
-                          alt={item.productName}
-                          fill
-                          sizes="80px"
-                          className="object-cover"
-                          unoptimized
-                        />
-                      ) : (
-                        <div className="w-full h-full flex items-center justify-center bg-cream text-forest">
-                          <ShoppingBag className="w-7 h-7 text-gold" />
-                        </div>
-                      )}
-                    </div>
-                    <div className="flex-1 min-w-0 flex flex-col justify-between">
-                      <div>
-                        <div className="flex justify-between items-start gap-1">
-                          <h4 className="text-xs sm:text-sm font-semibold text-charcoal line-clamp-2 pr-1">
-                            {item.productName}
-                          </h4>
-                          <button
-                            onClick={() => removeItem(item.variantId)}
-                            className="text-charcoal-muted hover:text-sale p-1 transition-colors flex-shrink-0 cursor-pointer"
-                            aria-label="Remove item"
-                          >
-                            <Trash2 className="w-4 h-4" />
-                          </button>
-                        </div>
-                        <p className="text-xs text-gold-dark font-medium mt-0.5">
-                          Size: {item.sizeName}
-                        </p>
-                        <p className="text-[11px] text-charcoal-muted">{item.dimensions}</p>
-                        {(() => {
-                          const tierCalc = calculateTieredPrice(item.priceSen, item.quantity, item.quantityTiers)
-                          if (!tierCalc.isTierApplied) return null
-                          return (
-                            <div className="mt-1">
-                              <span className="inline-flex items-center gap-1 text-[10px] font-bold text-emerald-800 bg-emerald-100/90 px-2 py-0.5 rounded-md">
-                                🎉 {tierCalc.appliedTier?.label || `Pakej Kombo (${tierCalc.appliedTier?.quantity} Unit)`}
-                              </span>
+              <>
+                {/* Product Items List (clean luxury cards) */}
+                <div className="space-y-2.5">
+                  {items.map((item) => {
+                    const tierCalc = calculateTieredPrice(item.priceSen, item.quantity, item.quantityTiers)
+                    return (
+                      <div
+                        key={item.variantId}
+                        className="bg-white rounded-2xl p-3 border border-slate-200/80 shadow-2xs hover:border-slate-300 transition-all flex gap-3"
+                      >
+                        {/* Thumbnail Image */}
+                        <div className="relative w-18 h-18 sm:w-20 sm:h-20 rounded-xl overflow-hidden bg-slate-50 flex-shrink-0 border border-slate-200/70" style={{ width: '72px', height: '72px' }}>
+                          {item.imageUrl ? (
+                            <Image
+                              src={item.imageUrl}
+                              alt={item.productName}
+                              fill
+                              sizes="80px"
+                              className="object-cover"
+                              unoptimized
+                            />
+                          ) : (
+                            <div className="w-full h-full flex items-center justify-center bg-slate-50 text-slate-400">
+                              <ShoppingBag className="w-6 h-6 text-gold" />
                             </div>
-                          )
-                        })()}
-                      </div>
-
-                      <div className="flex items-center justify-between mt-2.5">
-                        <div className="flex items-center border border-borderLight rounded-md bg-cream-light">
-                          <button
-                            onClick={() => updateQuantity(item.variantId, item.quantity - 1)}
-                            className="p-1 text-charcoal hover:bg-cream transition-colors rounded-l cursor-pointer"
-                            aria-label="Decrease quantity"
-                          >
-                            <Minus className="w-3 h-3" />
-                          </button>
-                          <span className="px-2.5 text-xs font-semibold text-charcoal">
-                            {item.quantity}
-                          </span>
-                          <button
-                            onClick={() => updateQuantity(item.variantId, item.quantity + 1)}
-                            className="p-1 text-charcoal hover:bg-cream transition-colors rounded-r cursor-pointer"
-                            aria-label="Increase quantity"
-                          >
-                            <Plus className="w-3 h-3" />
-                          </button>
+                          )}
                         </div>
 
-                        {(() => {
-                          const tierCalc = calculateTieredPrice(item.priceSen, item.quantity, item.quantityTiers)
-                          return (
+                        {/* Item Details */}
+                        <div className="flex-1 min-w-0 flex flex-col justify-between">
+                          <div>
+                            {/* Product Title & Delete Button */}
+                            <div className="flex items-start justify-between gap-1">
+                              <h4 className="text-xs sm:text-sm font-bold text-slate-800 line-clamp-2 leading-tight">
+                                {item.productName}
+                              </h4>
+                              <button
+                                type="button"
+                                onClick={() => removeItem(item.variantId)}
+                                className="w-6 h-6 -mr-1 -mt-1 flex items-center justify-center text-slate-400 hover:text-red-600 hover:bg-red-50 rounded-lg transition-colors flex-shrink-0 cursor-pointer"
+                                aria-label="Padam item"
+                                title="Padam item"
+                              >
+                                <Trash2 className="w-3.5 h-3.5" />
+                              </button>
+                            </div>
+
+                            {/* Size & Dimensions Badge */}
+                            <div className="mt-1 flex flex-wrap items-center gap-1.5">
+                              <span className="inline-flex items-center text-[10.5px] font-medium text-slate-600 bg-slate-100 px-2 py-0.5 rounded-md">
+                                Saiz: {item.sizeName}
+                              </span>
+                              {item.dimensions && (
+                                <span className="text-[10px] text-slate-400">
+                                  {item.dimensions}
+                                </span>
+                              )}
+                            </div>
+
+                            {/* Combo / Tier Applied Badge */}
+                            {tierCalc.isTierApplied && (
+                              <div className="mt-1">
+                                <span className="inline-flex items-center gap-1 text-[10px] font-bold text-emerald-800 bg-emerald-50 border border-emerald-200 px-1.5 py-0.5 rounded-md">
+                                  🎉 {tierCalc.appliedTier?.label || `Pakej Kombo (${tierCalc.appliedTier?.quantity} Unit)`}
+                                </span>
+                              </div>
+                            )}
+                          </div>
+
+                          {/* Bottom Row: Stepper + Price */}
+                          <div className="flex items-end justify-between mt-2 pt-1 border-t border-slate-100">
+                            {/* Quantity Stepper */}
+                            <div className="flex items-center border border-slate-200 rounded-lg bg-slate-50 shadow-2xs">
+                              <button
+                                type="button"
+                                onClick={() => updateQuantity(item.variantId, item.quantity - 1)}
+                                className="w-7 h-7 flex items-center justify-center text-slate-600 hover:text-slate-900 active:scale-90 transition-all rounded-l-lg cursor-pointer"
+                                aria-label="Kurangkan kuantiti"
+                              >
+                                <Minus className="w-3.5 h-3.5" />
+                              </button>
+                              <span className="w-7 text-center text-xs font-bold text-slate-800">
+                                {item.quantity}
+                              </span>
+                              <button
+                                type="button"
+                                onClick={() => updateQuantity(item.variantId, item.quantity + 1)}
+                                className="w-7 h-7 flex items-center justify-center text-slate-600 hover:text-slate-900 active:scale-90 transition-all rounded-r-lg cursor-pointer"
+                                aria-label="Tambah kuantiti"
+                              >
+                                <Plus className="w-3.5 h-3.5" />
+                              </button>
+                            </div>
+
+                            {/* Price */}
                             <div className="text-right">
-                              <span className="text-sm font-bold text-forest">
+                              <span className="text-sm sm:text-base font-bold text-forest">
                                 {formatMYR(tierCalc.totalSen)}
                               </span>
                               {tierCalc.savingsSen > 0 ? (
-                                <div className="space-y-0.5">
-                                  <span className="block text-[10.5px] line-through text-charcoal-muted">
+                                <div className="flex items-center justify-end gap-1 mt-0.5">
+                                  <span className="text-[10px] line-through text-slate-400">
                                     {formatMYR(tierCalc.regularTotalSen)}
                                   </span>
-                                  <span className="inline-block text-[9.5px] font-bold text-emerald-700 bg-emerald-50 px-1.5 py-0.5 rounded border border-emerald-200">
+                                  <span className="text-[9px] font-bold text-emerald-700 bg-emerald-50 px-1 py-0.2 rounded border border-emerald-200">
                                     Jimat {formatMYR(tierCalc.savingsSen)}
                                   </span>
                                 </div>
                               ) : item.compareAtPriceSen && item.compareAtPriceSen > item.priceSen ? (
-                                <span className="block text-[11px] line-through text-charcoal-muted">
+                                <span className="block text-[10.5px] line-through text-slate-400">
                                   {formatMYR(item.compareAtPriceSen * item.quantity)}
                                 </span>
                               ) : null}
                             </div>
-                          )
-                        })()}
+                          </div>
+                        </div>
                       </div>
+                    )
+                  })}
+                </div>
+
+                {/* Additional Options (Coupon & Notes inside the scroll container, NEVER clogging sticky footer!) */}
+                <div className="pt-2 space-y-2">
+                  {/* Referral Affiliate Pill if present */}
+                  {activeRefCode && (
+                    <div className="p-2.5 rounded-xl bg-blue-50/90 border border-blue-200/70 text-xs flex items-center justify-between shadow-2xs">
+                      <div className="flex items-center gap-1.5 min-w-0">
+                        <Sparkles className="w-3.5 h-3.5 text-gold shrink-0" />
+                        <span className="truncate text-slate-700 font-medium">
+                          Rujukan:{' '}
+                          <strong className="text-forest font-bold">
+                            {activeRefName || activeRefCode} ({activeRefCode})
+                          </strong>
+                        </span>
+                      </div>
+                      <span className="text-[9px] font-bold text-emerald-700 bg-emerald-100 px-1.5 py-0.5 rounded shrink-0">
+                        Aktif
+                      </span>
                     </div>
+                  )}
+
+                  {/* Coupon Code Accordion Box */}
+                  <div className="bg-white rounded-xl border border-slate-200/80 overflow-hidden shadow-2xs">
+                    {couponCode ? (
+                      <div className="p-2.5 flex items-center justify-between bg-gold/10 text-xs">
+                        <div className="flex items-center space-x-2 text-forest font-semibold">
+                          <Tag className="w-4 h-4 text-gold-dark" />
+                          <span>Kod &ldquo;{couponCode}&rdquo; Digunakan</span>
+                        </div>
+                        <button
+                          type="button"
+                          onClick={() => {
+                            setCouponCode('')
+                            setCouponSuccess('')
+                          }}
+                          className="text-red-600 hover:underline font-bold text-xs cursor-pointer"
+                        >
+                          {t.removeCoupon}
+                        </button>
+                      </div>
+                    ) : (
+                      <div>
+                        <button
+                          type="button"
+                          onClick={() => setShowCouponInput((v) => !v)}
+                          className="w-full px-3 py-2.5 flex items-center justify-between text-xs font-semibold text-slate-700 hover:text-forest transition-colors cursor-pointer"
+                        >
+                          <span className="flex items-center gap-2">
+                            <Tag className="w-3.5 h-3.5 text-gold-dark" />
+                            <span>{locale === 'bm' ? 'Ada Kod Baucar / Kupon Diskaun?' : 'Have a Promo or Coupon Code?'}</span>
+                          </span>
+                          <span className="text-slate-400 text-xs font-bold">
+                            {showCouponInput ? '−' : '+'}
+                          </span>
+                        </button>
+
+                        {showCouponInput && (
+                          <div className="px-3 pb-3 pt-1 border-t border-slate-100 space-y-2">
+                            <form onSubmit={handleApplyCoupon} className="flex gap-2">
+                              <input
+                                type="text"
+                                value={inputCoupon}
+                                onChange={(e) => setInputCoupon(e.target.value.toUpperCase())}
+                                placeholder="Masukkan kod kupon..."
+                                className="flex-1 px-3 py-2 text-xs bg-slate-50 border border-slate-200 rounded-lg outline-none focus:border-forest uppercase font-mono"
+                              />
+                              <button
+                                type="submit"
+                                disabled={isValidating || !inputCoupon.trim()}
+                                className="px-4 py-2 bg-forest text-warmwhite text-xs font-bold rounded-lg hover:bg-forest-dark disabled:opacity-50 transition-colors cursor-pointer"
+                              >
+                                {isValidating ? '...' : t.applyCoupon}
+                              </button>
+                            </form>
+                            {couponError && <p className="text-[11px] text-red-600 font-medium">{couponError}</p>}
+                            {couponSuccess && <p className="text-[11px] text-emerald-600 font-medium">{couponSuccess}</p>}
+                          </div>
+                        )}
+                      </div>
+                    )}
                   </div>
-                ))}
-              </div>
+
+                  {/* Delivery Notes Accordion Box */}
+                  <div className="bg-white rounded-xl border border-slate-200/80 overflow-hidden shadow-2xs">
+                    <button
+                      type="button"
+                      onClick={() => setShowNotesInput((v) => !v)}
+                      className="w-full px-3 py-2.5 flex items-center justify-between text-xs font-semibold text-slate-700 hover:text-forest transition-colors cursor-pointer"
+                    >
+                      <span className="flex items-center gap-2">
+                        <FileText className="w-3.5 h-3.5 text-slate-500" />
+                        <span>
+                          {notes.trim()
+                            ? (locale === 'bm' ? '✓ Nota Pesanan Disimpan' : '✓ Delivery Note Saved')
+                            : (locale === 'bm' ? 'Tambah Nota Penghantaran (Pilihan)' : 'Add Delivery Note (Optional)')}
+                        </span>
+                      </span>
+                      <span className="text-slate-400 text-xs font-bold">
+                        {showNotesInput ? '−' : '+'}
+                      </span>
+                    </button>
+
+                    {showNotesInput && (
+                      <div className="px-3 pb-3 pt-1 border-t border-slate-100">
+                        <textarea
+                          value={notes}
+                          onChange={(e) => setNotes(e.target.value)}
+                          placeholder="Contoh: Naik lif tingkat 3, letak di depan pintu jika tiada orang."
+                          rows={2}
+                          className="w-full p-2.5 text-xs bg-slate-50 border border-slate-200 rounded-lg outline-none focus:border-forest resize-none placeholder-slate-400"
+                        />
+                      </div>
+                    )}
+                  </div>
+
+                  {/* Trust Badges */}
+                  <div className="py-2 flex items-center justify-center gap-3 text-[10px] text-slate-400 font-medium">
+                    <span className="flex items-center gap-1">
+                      <ShieldCheck className="w-3.5 h-3.5 text-emerald-600" />
+                      Bayaran Selamat
+                    </span>
+                    <span>•</span>
+                    <span>Terus Dari Kilang</span>
+                    <span>•</span>
+                    <span>Jaminan Kualiti</span>
+                  </div>
+                </div>
+              </>
             )}
           </div>
 
-          {/* Footer Area with Collapsible Promo & Notes, Totals, and Checkout */}
+          {/* Sticky Checkout Footer (Compact & Clean - Never obstructs scrolling!) */}
           {items.length > 0 && (
-            <div className="p-4 sm:p-5 border-t border-borderLight bg-cream-light space-y-3 flex-shrink-0 max-h-[60vh] overflow-y-auto">
-              {/* Voucher Code & Notes Controls (Collapsible to save vertical screen space on mobile) */}
-              <div className="space-y-2">
-                {couponCode ? (
-                  <div className="flex items-center justify-between bg-gold/15 border border-gold/40 rounded-lg p-2 text-xs">
-                    <div className="flex items-center space-x-1.5 text-forest font-semibold">
-                      <Tag className="w-3.5 h-3.5 text-gold-dark" />
-                      <span>Kod &ldquo;{couponCode}&rdquo; Digunakan</span>
-                    </div>
-                    <button
-                      type="button"
-                      onClick={() => {
-                        setCouponCode('')
-                        setCouponSuccess('')
-                      }}
-                      className="text-sale hover:underline font-semibold text-xs cursor-pointer"
-                    >
-                      {t.removeCoupon}
-                    </button>
-                  </div>
-                ) : (
-                  <div>
-                    {!showCouponInput ? (
-                      <button
-                        type="button"
-                        onClick={() => setShowCouponInput(true)}
-                        className="inline-flex items-center gap-1.5 text-xs font-semibold text-forest hover:text-gold-dark transition-colors py-0.5 cursor-pointer"
-                      >
-                        <Tag className="w-3.5 h-3.5 text-gold-dark" />
-                        <span>+ {locale === 'bm' ? 'Guna Kod Baucar / Kupon' : 'Add Coupon Code'}</span>
-                      </button>
-                    ) : (
-                      <div className="space-y-1.5 bg-white p-2.5 rounded-lg border border-borderLight shadow-2xs">
-                        <div className="flex items-center justify-between">
-                          <span className="text-[11px] font-semibold text-charcoal flex items-center gap-1">
-                            <Tag className="w-3 h-3 text-gold-dark" />
-                            {t.couponCode}
-                          </span>
-                          <button
-                            type="button"
-                            onClick={() => setShowCouponInput(false)}
-                            className="text-[11px] text-charcoal-muted hover:text-charcoal cursor-pointer"
-                          >
-                            Tutup
-                          </button>
-                        </div>
-                        <form onSubmit={handleApplyCoupon} className="flex space-x-2">
-                          <input
-                            type="text"
-                            value={inputCoupon}
-                            onChange={(e) => setInputCoupon(e.target.value.toUpperCase())}
-                            placeholder={t.couponCode}
-                            className="flex-1 px-3 py-1.5 text-xs bg-warmwhite border border-borderLight rounded-md outline-none focus:border-gold uppercase"
-                          />
-                          <button
-                            type="submit"
-                            disabled={isValidating || !inputCoupon.trim()}
-                            className="px-3 py-1.5 bg-forest text-warmwhite text-xs font-semibold rounded-md hover:bg-forest-dark disabled:opacity-50 transition-colors cursor-pointer"
-                          >
-                            {isValidating ? '...' : t.applyCoupon}
-                          </button>
-                        </form>
-                      </div>
-                    )}
-                    {couponError && <p className="text-[11px] text-sale mt-1">{couponError}</p>}
-                    {couponSuccess && <p className="text-[11px] text-forest font-medium mt-1">{couponSuccess}</p>}
-                  </div>
-                )}
-
-                {/* Delivery notes optional request */}
+            <div className="p-3.5 sm:p-4 bg-white/98 backdrop-blur-md border-t border-slate-200/80 shadow-[0_-8px_25px_rgba(0,0,0,0.06)] flex-shrink-0 space-y-2.5">
+              {/* Summary Row */}
+              <div className="flex items-baseline justify-between">
                 <div>
-                  {!showNotesInput && !notes.trim() ? (
-                    <button
-                      type="button"
-                      onClick={() => setShowNotesInput(true)}
-                      className="inline-flex items-center gap-1.5 text-xs font-semibold text-charcoal-muted hover:text-charcoal transition-colors py-0.5 cursor-pointer"
-                    >
-                      <FileText className="w-3.5 h-3.5 text-charcoal-muted" />
-                      <span>+ {locale === 'bm' ? 'Tambah Nota Pesanan / Penghantaran' : 'Add Delivery Note'}</span>
-                    </button>
-                  ) : (
-                    <div className="space-y-1.5 bg-white p-2.5 rounded-lg border border-borderLight shadow-2xs">
-                      <div className="flex items-center justify-between">
-                        <span className="text-[11px] font-semibold text-charcoal flex items-center gap-1">
-                          <FileText className="w-3 h-3 text-forest" />
-                          {locale === 'bm' ? 'Nota Penghantaran' : 'Delivery Note'}
-                        </span>
-                        <button
-                          type="button"
-                          onClick={() => setShowNotesInput(false)}
-                          className="text-[11px] text-charcoal-muted hover:text-charcoal cursor-pointer"
-                        >
-                          Tutup
-                        </button>
-                      </div>
-                      <textarea
-                        value={notes}
-                        onChange={(e) => setNotes(e.target.value)}
-                        placeholder="Contoh: Naik lif tingkat 3, letak di depan pintu"
-                        rows={2}
-                        className="w-full px-3 py-1.5 text-xs bg-warmwhite border border-borderLight rounded-md outline-none focus:border-gold placeholder-charcoal-muted/70 resize-none"
-                      />
-                    </div>
-                  )}
+                  <span className="text-xs text-slate-500 font-medium">Jumlah Pesanan:</span>
+                  <span className="block text-[10.5px] text-emerald-600 font-semibold">
+                    {isFreeShipping ? '✓ Penghantaran Percuma' : '+ Kos pos di checkout'}
+                  </span>
+                </div>
+                <div className="text-right">
+                  <span className="text-lg sm:text-xl font-bold text-forest">
+                    {formatMYR(subtotalSen)}
+                  </span>
                 </div>
               </div>
 
-              {/* Totals Breakdown */}
-              <div className="space-y-1.5 text-xs bg-white/80 p-3 rounded-lg border border-borderLight/60">
-                <div className="flex justify-between text-charcoal-muted">
-                  <span>{t.subtotal}</span>
-                  <span className="font-semibold text-charcoal">{formatMYR(subtotalSen)}</span>
-                </div>
-                <div className="flex justify-between text-charcoal-muted">
-                  <span>{t.estimatedShipping}</span>
-                  <span className="font-semibold text-forest">
-                    {isFreeShipping ? (locale === 'bm' ? 'PERCUMA' : 'FREE') : 'Calculated at Checkout'}
-                  </span>
-                </div>
-                <div className="flex justify-between text-sm font-bold text-forest pt-1.5 border-t border-borderLight/60">
-                  <span>{t.total}</span>
-                  <span className="text-base text-forest font-bold">{formatMYR(subtotalSen)}</span>
-                </div>
-              </div>
+              {/* Primary Checkout Button */}
+              <button
+                onClick={handleCheckout}
+                className="w-full py-3.5 bg-forest text-warmwhite text-xs sm:text-sm font-bold tracking-wider uppercase rounded-xl hover:bg-forest-dark active:scale-[0.98] transition-all shadow-md flex items-center justify-center space-x-2 luxury-btn cursor-pointer"
+              >
+                <ShieldCheck className="w-4 h-4 text-gold" />
+                <span>{t.proceedToCheckout}</span>
+                <ArrowRight className="w-4 h-4 ml-1 text-gold" />
+              </button>
 
-              {/* Active Affiliate Indicator in Cart */}
-              {activeRefCode && (
-                <div className="p-2.5 rounded-lg bg-blue-50/80 border border-[#1E4E8C]/20 text-[11px] flex items-center justify-between shadow-2xs">
-                  <div className="flex items-center gap-1.5 min-w-0">
-                    <Sparkles className="w-3.5 h-3.5 text-[#B49A58] shrink-0" />
-                    <span className="truncate text-charcoal font-medium">
-                      Rujukan:{' '}
-                      <strong className="text-[#1E4E8C]">
-                        {activeRefName || activeRefCode} ({activeRefCode})
-                      </strong>
-                    </span>
-                  </div>
-                  <span className="text-[9px] font-bold text-emerald-700 bg-emerald-100 px-1.5 py-0.5 rounded shrink-0">
-                    Aktif
-                  </span>
-                </div>
-              )}
-
-              {/* CTAs */}
-              <div className="space-y-2 pt-1 pb-1 sm:pb-0">
-                <button
-                  onClick={handleCheckout}
-                  className="w-full py-3.5 bg-forest text-warmwhite text-xs sm:text-sm font-bold tracking-wider uppercase rounded-xl hover:bg-forest-dark active:scale-[0.99] transition-all shadow-md flex items-center justify-center space-x-2 luxury-btn cursor-pointer"
-                >
-                  <ShieldCheck className="w-4 h-4 text-gold" />
-                  <span>{t.proceedToCheckout}</span>
-                </button>
+              {/* View Full Cart Link */}
+              <div className="text-center pt-0.5">
                 <Link
                   href="/cart"
                   onClick={closeDrawer}
-                  className="w-full py-2.5 block text-center bg-white text-charcoal border border-borderLight text-xs font-semibold rounded-xl hover:bg-cream transition-colors"
+                  className="text-xs font-semibold text-slate-500 hover:text-forest transition-colors py-0.5 inline-block"
                 >
-                  {locale === 'bm' ? 'Lihat Troli Penuh' : 'View Full Shopping Cart'}
+                  {locale === 'bm' ? 'Lihat & Urus Troli Penuh →' : 'View Full Shopping Cart →'}
                 </Link>
               </div>
             </div>
@@ -465,4 +499,3 @@ export function CartDrawer() {
     </div>
   )
 }
-
