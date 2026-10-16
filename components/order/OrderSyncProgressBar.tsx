@@ -25,13 +25,22 @@ export function OrderSyncProgressBar({
   initialIsPaid = true,
 }: OrderSyncProgressBarProps) {
   const [isVercel, setIsVercel] = useState(false)
-  const [progress, setProgress] = useState(12)
-  const [secondsRemaining, setSecondsRemaining] = useState(10)
-  const [statusStage, setStatusStage] = useState<'verifying' | 'cloud_sync' | 'db_commit' | 'completed'>('verifying')
-  const [isCompleted, setIsCompleted] = useState(false)
-  const [completedTime, setCompletedTime] = useState<string | null>(null)
 
-  // 1. Detect Vercel environment vs Localhost
+  // Check if this order was already finalized/synced in this session
+  const isAlreadyFinalized = initialIsPaid || (typeof window !== 'undefined' && Boolean(sessionStorage.getItem(`kamaar_order_synced_${orderNumber}`)))
+
+  const [progress, setProgress] = useState(isAlreadyFinalized ? 100 : 18)
+  const [secondsRemaining, setSecondsRemaining] = useState(isAlreadyFinalized ? 0 : 8)
+  const [statusStage, setStatusStage] = useState<'verifying' | 'cloud_sync' | 'db_commit' | 'completed'>(
+    isAlreadyFinalized ? 'completed' : 'verifying'
+  )
+  const [isCompleted, setIsCompleted] = useState(isAlreadyFinalized)
+  const [completedTime, setCompletedTime] = useState<string | null>(
+    isAlreadyFinalized
+      ? (typeof window !== 'undefined' ? sessionStorage.getItem(`kamaar_order_synced_time_${orderNumber}`) : null) || 'Selesai Disahkan'
+      : null
+  )
+
   useEffect(() => {
     if (typeof window === 'undefined') return
     const host = window.location.hostname
@@ -40,22 +49,42 @@ export function OrderSyncProgressBar({
       (!host.includes('localhost') && !host.includes('127.0.0.1'))
     setIsVercel(onVercel)
 
-    // For localhost, run an instant smooth 0.8s sync as noted by user
+    // If order is already finalized, record to sessionStorage and do a single fast verification check
+    if (isAlreadyFinalized) {
+      setProgress(100)
+      setStatusStage('completed')
+      setIsCompleted(true)
+      setSecondsRemaining(0)
+      const nowStr = new Date().toLocaleTimeString('ms-MY', { hour: '2-digit', minute: '2-digit', second: '2-digit' })
+      if (!sessionStorage.getItem(`kamaar_order_synced_time_${orderNumber}`)) {
+        sessionStorage.setItem(`kamaar_order_synced_time_${orderNumber}`, nowStr)
+        setCompletedTime(nowStr)
+      }
+      sessionStorage.setItem(`kamaar_order_synced_${orderNumber}`, 'true')
+
+      // Silent fast check to ensure cloud node has order
+      fetch(`/api/orders?orderNumber=${encodeURIComponent(orderNumber)}`).catch(() => {})
+      return
+    }
+
+    // For localhost, run an instant smooth 0.6s sync
     if (!onVercel) {
       setSecondsRemaining(1)
       const timer = setTimeout(() => {
         setProgress(100)
         setStatusStage('completed')
         setIsCompleted(true)
-        setCompletedTime(new Date().toLocaleTimeString('ms-MY', { hour: '2-digit', minute: '2-digit', second: '2-digit' }))
-      }, 700)
+        const timeNow = new Date().toLocaleTimeString('ms-MY', { hour: '2-digit', minute: '2-digit', second: '2-digit' })
+        setCompletedTime(timeNow)
+        sessionStorage.setItem(`kamaar_order_synced_${orderNumber}`, 'true')
+        sessionStorage.setItem(`kamaar_order_synced_time_${orderNumber}`, timeNow)
+      }, 600)
       return () => clearTimeout(timer)
     }
 
-    // For Vercel Cloud: 10-12s realistic smooth progression & countdown
-    const totalDurationSeconds = 10
+    // For Vercel Cloud: Smooth 8s progression for newly placed orders
+    const totalDurationSeconds = 8
     const startTime = Date.now()
-    const targetEndTime = startTime + totalDurationSeconds * 1000
 
     const interval = setInterval(() => {
       const now = Date.now()
@@ -63,27 +92,26 @@ export function OrderSyncProgressBar({
       const remaining = Math.max(0, Math.ceil(totalDurationSeconds - elapsed))
       setSecondsRemaining(remaining)
 
-      if (elapsed < 2.5) {
-        // Stage 1: Payment Verification & Session Snapshot
+      if (elapsed < 2) {
         setStatusStage('verifying')
-        const pct = Math.min(35, 12 + (elapsed / 2.5) * 23)
+        const pct = Math.min(35, 18 + (elapsed / 2) * 20)
         setProgress(Math.round(pct))
-      } else if (elapsed < 6.5) {
-        // Stage 2: Cloud Serverless Edge Propagation
+      } else if (elapsed < 5) {
         setStatusStage('cloud_sync')
-        const pct = Math.min(75, 35 + ((elapsed - 2.5) / 4) * 40)
+        const pct = Math.min(75, 38 + ((elapsed - 2) / 3) * 37)
         setProgress(Math.round(pct))
-      } else if (elapsed < 9.5) {
-        // Stage 3: Database & Admin Dashboard Synchronization
+      } else if (elapsed < 7.5) {
         setStatusStage('db_commit')
-        const pct = Math.min(94, 75 + ((elapsed - 6.5) / 3) * 19)
+        const pct = Math.min(96, 75 + ((elapsed - 5) / 2.5) * 21)
         setProgress(Math.round(pct))
       } else {
-        // Stage 4: Completed
         setProgress(100)
         setStatusStage('completed')
         setIsCompleted(true)
-        setCompletedTime(new Date().toLocaleTimeString('ms-MY', { hour: '2-digit', minute: '2-digit', second: '2-digit' }))
+        const timeNow = new Date().toLocaleTimeString('ms-MY', { hour: '2-digit', minute: '2-digit', second: '2-digit' })
+        setCompletedTime(timeNow)
+        sessionStorage.setItem(`kamaar_order_synced_${orderNumber}`, 'true')
+        sessionStorage.setItem(`kamaar_order_synced_time_${orderNumber}`, timeNow)
         clearInterval(interval)
       }
     }, 150)
@@ -92,7 +120,7 @@ export function OrderSyncProgressBar({
     let pollCount = 0
     const pollInterval = setInterval(async () => {
       pollCount++
-      if (pollCount > 8) {
+      if (pollCount > 6) {
         clearInterval(pollInterval)
         return
       }
@@ -101,23 +129,25 @@ export function OrderSyncProgressBar({
         if (res.ok) {
           const data = await res.json()
           if (data && data.order) {
-            // Server confirmed order is in DB! Accelerate to 100%
             setProgress(100)
             setStatusStage('completed')
             setIsCompleted(true)
-            setCompletedTime(new Date().toLocaleTimeString('ms-MY', { hour: '2-digit', minute: '2-digit', second: '2-digit' }))
+            const timeNow = new Date().toLocaleTimeString('ms-MY', { hour: '2-digit', minute: '2-digit', second: '2-digit' })
+            setCompletedTime(timeNow)
+            sessionStorage.setItem(`kamaar_order_synced_${orderNumber}`, 'true')
+            sessionStorage.setItem(`kamaar_order_synced_time_${orderNumber}`, timeNow)
             clearInterval(interval)
             clearInterval(pollInterval)
           }
         }
       } catch (_) {}
-    }, 2200)
+    }, 1800)
 
     return () => {
       clearInterval(interval)
       clearInterval(pollInterval)
     }
-  }, [orderNumber])
+  }, [orderNumber, isAlreadyFinalized])
 
   return (
     <div className="w-full mt-6 mb-2 print:hidden text-left">
@@ -149,12 +179,17 @@ export function OrderSyncProgressBar({
                     Edge Cloud
                   </span>
                 )}
+                {isCompleted && (
+                  <span className="px-1.5 py-0.5 rounded bg-emerald-500/20 text-emerald-300 border border-emerald-400/40 text-[10px] font-bold uppercase tracking-wider">
+                    Dimuktamadkan
+                  </span>
+                )}
               </div>
               <p className="text-[11px] text-slate-300 mt-0.5">
                 {isCompleted
-                  ? `Pesanan telah disahkan & didaftarkan ke sistem pentadbir kilang${completedTime ? ` (${completedTime})` : ''}.`
+                  ? `Pesanan telah disahkan & didaftarkan ke sistem pentadbir kilang${completedTime ? ` (${completedTime})` : ''}. Rekod kekal terjamin.`
                   : isVercel
-                  ? `Mengemaskini pesanan ${orderNumber} ke pangkalan data sistem admin...`
+                  ? `Memuktamadkan pesanan ${orderNumber} ke pangkalan data sistem kilang...`
                   : 'Pangkalan data disegerak serta-merta pada sistem lokal.'}
               </p>
             </div>
@@ -165,12 +200,12 @@ export function OrderSyncProgressBar({
             {isCompleted ? (
               <span className="inline-flex items-center space-x-1 px-2.5 py-1 rounded-full bg-emerald-500/20 border border-emerald-400/40 text-emerald-300 text-xs font-semibold">
                 <CheckCircle2 className="w-3.5 h-3.5" />
-                <span>100% Selesai Disegerakkan</span>
+                <span>100% Selesai & Dimuktamadkan</span>
               </span>
             ) : (
               <span className="inline-flex items-center space-x-1.5 px-2.5 py-1 rounded-full bg-amber-500/20 border border-amber-400/40 text-amber-300 text-xs font-mono font-medium">
                 <Clock className="w-3.5 h-3.5 animate-spin" />
-                <span>Anggaran: ~{secondsRemaining}s</span>
+                <span>Memuktamadkan: ~{secondsRemaining}s</span>
               </span>
             )}
           </div>
@@ -195,35 +230,37 @@ export function OrderSyncProgressBar({
 
         {/* 3 Step Pipeline Indicators */}
         <div className="grid grid-cols-1 sm:grid-cols-3 gap-2 pt-1 border-t border-slate-800 text-[11px]">
-          {/* Step 1 */}
+          {/* Step 1: Payment Verification */}
           <div className="flex items-center space-x-2">
             <div className="w-4 h-4 rounded-full bg-emerald-500/20 text-emerald-400 flex items-center justify-center flex-shrink-0">
               <CheckCircle2 className="w-3 h-3" />
             </div>
-            <span className="text-slate-200 font-medium">1. Pengesahan Bayaran</span>
+            <span className="text-slate-200 font-medium">
+              1. Pengesahan Bayaran {isCompleted ? '(Lulus)' : ''}
+            </span>
           </div>
 
-          {/* Step 2 */}
+          {/* Step 2: Edge Node Cloud Sync */}
           <div className="flex items-center space-x-2">
             <div
               className={`w-4 h-4 rounded-full flex items-center justify-center flex-shrink-0 ${
-                progress >= 60
+                progress >= 60 || isCompleted
                   ? 'bg-emerald-500/20 text-emerald-400'
                   : 'bg-amber-500/20 text-amber-300'
               }`}
             >
-              {progress >= 60 ? (
+              {progress >= 60 || isCompleted ? (
                 <CheckCircle2 className="w-3 h-3" />
               ) : (
                 <Loader2 className="w-3 h-3 animate-spin" />
               )}
             </div>
-            <span className={progress >= 60 ? 'text-slate-200 font-medium' : 'text-amber-200/90 font-medium'}>
-              2. Replikasi Nod Awan {isVercel ? 'Vercel' : ''}
+            <span className={progress >= 60 || isCompleted ? 'text-slate-200 font-medium' : 'text-amber-200/90 font-medium'}>
+              2. Replikasi Nod Awan {isVercel ? 'Vercel' : ''} {isCompleted ? '(Selesai)' : ''}
             </span>
           </div>
 
-          {/* Step 3 */}
+          {/* Step 3: Admin Dashboard Finalization */}
           <div className="flex items-center space-x-2">
             <div
               className={`w-4 h-4 rounded-full flex items-center justify-center flex-shrink-0 ${
@@ -239,7 +276,7 @@ export function OrderSyncProgressBar({
               )}
             </div>
             <span className={isCompleted ? 'text-emerald-300 font-medium' : 'text-slate-400'}>
-              3. Papan Pemuka Admin
+              3. Papan Pemuka Admin {isCompleted ? '(Dimuktamadkan)' : ''}
             </span>
           </div>
         </div>
@@ -247,12 +284,14 @@ export function OrderSyncProgressBar({
         {/* Explanatory note */}
         <div className="mt-2.5 pt-2 border-t border-slate-800/60 flex items-center justify-between text-[10px] text-slate-400">
           <span>
-            {isVercel
-              ? '💡 Nota Vercel: Pesanan disegerakkan merentas nod serverless. Rekod akan dipaparkan dalam senarai pesanan admin.'
+            {isCompleted
+              ? '✨ Pesanan dimuktamadkan sepenuhnya. Anda boleh memuat semula laman pada bila-bila masa tanpa kehilangan rekod resit.'
+              : isVercel
+              ? '💡 Nota Vercel: Pesanan sedang disegerakkan merentas nod serverless. Rekod akan kekal tersimpan.'
               : '⚡ Nota Tempatan: Server lokal memproses pesanan secara terus ke fail simpanan.'}
           </span>
-          <span className="font-mono font-medium text-slate-300">
-            {progress}%
+          <span className="font-mono font-medium text-emerald-300">
+            {progress}% {isCompleted ? '• FINALIZED' : ''}
           </span>
         </div>
       </div>

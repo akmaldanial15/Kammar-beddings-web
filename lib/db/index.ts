@@ -100,22 +100,40 @@ function ensureDb(forceRefresh = false): DatabaseSchema {
   let shouldReseed = !fs.existsSync(DB_FILE)
   if (IS_SERVERLESS && fs.existsSync(DB_FILE)) {
     try {
-      const recordedVersion = fs.existsSync(versionMarkerFile)
-        ? fs.readFileSync(versionMarkerFile, 'utf-8').trim()
-        : ''
-      if (deploymentId !== 'dev' && recordedVersion !== deploymentId) {
-        shouldReseed = true
+      if (fs.existsSync(versionMarkerFile)) {
+        const recordedVersion = fs.readFileSync(versionMarkerFile, 'utf-8').trim()
+        if (deploymentId !== 'dev' && recordedVersion && recordedVersion !== deploymentId) {
+          shouldReseed = true
+        }
+      } else {
+        // First container start with existing DB_FILE: create marker without destroying DB
+        fs.writeFileSync(versionMarkerFile, deploymentId, 'utf-8')
       }
     } catch (_) {
-      shouldReseed = true
+      // Keep existing DB_FILE on any marker read error
     }
   }
 
   if (IS_SERVERLESS && shouldReseed) {
     try {
       if (fs.existsSync(BASE_DB_FILE)) {
+        // CRITICAL FIX: Preserve any placed customer orders across re-seedings
+        let existingOrders: Order[] = []
+        if (fs.existsSync(DB_FILE)) {
+          try {
+            const currentDb = JSON.parse(fs.readFileSync(DB_FILE, 'utf-8'))
+            if (Array.isArray(currentDb.orders) && currentDb.orders.length > 0) {
+              existingOrders = currentDb.orders
+            }
+          } catch (_) {}
+        }
+
         const seedDataStr = fs.readFileSync(BASE_DB_FILE, 'utf-8')
-        fs.writeFileSync(DB_FILE, seedDataStr, 'utf-8')
+        const seedDb = JSON.parse(seedDataStr)
+        if (existingOrders.length > 0) {
+          seedDb.orders = existingOrders
+        }
+        fs.writeFileSync(DB_FILE, JSON.stringify(seedDb, null, 2), 'utf-8')
         fs.writeFileSync(versionMarkerFile, deploymentId, 'utf-8')
       }
     } catch (seedCopyErr) {

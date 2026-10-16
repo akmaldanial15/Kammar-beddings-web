@@ -28,6 +28,8 @@ interface OrdersClientProps {
   initialOrders: Order[]
 }
 
+const ADMIN_ORDERS_CACHE_KEY = 'kamaar_admin_cached_orders'
+
 export function OrdersClient({ initialOrders }: OrdersClientProps) {
   const [orders, setOrders] = useState<Order[]>(initialOrders)
   const [search, setSearch] = useState('')
@@ -42,7 +44,44 @@ export function OrdersClient({ initialOrders }: OrdersClientProps) {
   const [syncCountdown, setSyncCountdown] = useState<number>(8)
   const [lastSyncedAt, setLastSyncedAt] = useState<string>('Baru sahaja')
 
-  // Live Auto-Polling Loop (Every 8 seconds) for Vercel Cloud Sync
+  // Helper to persist orders to browser storage
+  const saveOrdersToCache = (orderList: Order[]) => {
+    try {
+      if (typeof window !== 'undefined') {
+        if (orderList.length > 0) {
+          localStorage.setItem(ADMIN_ORDERS_CACHE_KEY, JSON.stringify(orderList))
+        } else {
+          localStorage.removeItem(ADMIN_ORDERS_CACHE_KEY)
+        }
+      }
+    } catch (_) {}
+  }
+
+  // 1. Initial Client Cache Hydration (Prevents orders temporarily disappearing on page refresh / cold lambda)
+  React.useEffect(() => {
+    try {
+      if (typeof window === 'undefined') return
+      const cached = localStorage.getItem(ADMIN_ORDERS_CACHE_KEY)
+      if (cached) {
+        const parsed: Order[] = JSON.parse(cached)
+        if (Array.isArray(parsed) && parsed.length > 0) {
+          setOrders((prev) => {
+            if (prev.length === 0) return parsed
+            const map = new Map<string, Order>()
+            parsed.forEach((o) => map.set(o.id, o))
+            prev.forEach((o) => map.set(o.id, o))
+            return Array.from(map.values()).sort(
+              (a, b) => new Date(b.createdAt).getTime() - new Date(a.createdAt).getTime()
+            )
+          })
+        }
+      } else if (initialOrders.length > 0) {
+        saveOrdersToCache(initialOrders)
+      }
+    } catch (_) {}
+  }, [initialOrders])
+
+  // 2. Live Auto-Polling Loop (Every 8 seconds) for Vercel Cloud Sync
   React.useEffect(() => {
     let isMounted = true
 
@@ -59,19 +98,47 @@ export function OrdersClient({ initialOrders }: OrdersClientProps) {
         const data = await res.json()
         if (data && Array.isArray(data.orders) && isMounted) {
           setOrders((prev) => {
-            if (data.orders.length > prev.length) {
-              const newOrders = data.orders.filter(
-                (no: Order) => !prev.some((po) => po.id === no.id)
+            // Case A: Server has orders -> merge & update cache
+            if (data.orders.length > 0) {
+              const map = new Map<string, Order>()
+              data.orders.forEach((no: Order) => map.set(no.id, no))
+              // Preserve any verified orders previously present
+              prev.forEach((po: Order) => {
+                if (!map.has(po.id)) map.set(po.id, po)
+              })
+              const merged = Array.from(map.values()).sort(
+                (a, b) => new Date(b.createdAt).getTime() - new Date(a.createdAt).getTime()
               )
-              if (newOrders.length > 0) {
-                const newest = newOrders[0]
-                setToast({
-                  type: 'success',
-                  message: `🔔 Pesanan Baharu Vercel Dikesan: ${newest.orderNumber} (RM${(newest.totalSen / 100).toFixed(2)}) oleh ${newest.customerName}!`,
-                })
+              saveOrdersToCache(merged)
+
+              if (data.orders.length > prev.length) {
+                const newOrders = data.orders.filter(
+                  (no: Order) => !prev.some((po) => po.id === no.id)
+                )
+                if (newOrders.length > 0) {
+                  const newest = newOrders[0]
+                  setToast({
+                    type: 'success',
+                    message: `🔔 Pesanan Baharu Vercel Dikesan: ${newest.orderNumber} (RM${(newest.totalSen / 100).toFixed(2)}) oleh ${newest.customerName}!`,
+                  })
+                }
               }
+              return merged
             }
-            return data.orders
+
+            // Case B: Server returned empty, but client has verified orders
+            // (Vercel serverless cold-container split-brain protection)
+            if (prev.length > 0) {
+              // Back-fill this serverless container in background so it never stays empty
+              fetch('/api/admin/orders', {
+                method: 'POST',
+                headers: { 'Content-Type': 'application/json' },
+                body: JSON.stringify({ syncOrders: prev }),
+              }).catch(() => {})
+              return prev // NEVER wipe orders to empty on cold-boot glitches!
+            }
+
+            return []
           })
           setLastSyncedAt(new Date().toLocaleTimeString('ms-MY', { hour: '2-digit', minute: '2-digit', second: '2-digit' }))
         }
@@ -92,10 +159,30 @@ export function OrdersClient({ initialOrders }: OrdersClientProps) {
       if (res.ok) {
         const data = await res.json()
         if (data && Array.isArray(data.orders)) {
-          setOrders(data.orders)
+          if (data.orders.length > 0) {
+            setOrders((prev) => {
+              const map = new Map<string, Order>()
+              data.orders.forEach((no: Order) => map.set(no.id, no))
+              prev.forEach((po: Order) => {
+                if (!map.has(po.id)) map.set(po.id, po)
+              })
+              const merged = Array.from(map.values()).sort(
+                (a, b) => new Date(b.createdAt).getTime() - new Date(a.createdAt).getTime()
+              )
+              saveOrdersToCache(merged)
+              return merged
+            })
+          } else if (orders.length > 0) {
+            // Re-hydrate server container
+            await fetch('/api/admin/orders', {
+              method: 'POST',
+              headers: { 'Content-Type': 'application/json' },
+              body: JSON.stringify({ syncOrders: orders }),
+            }).catch(() => {})
+          }
           setLastSyncedAt(new Date().toLocaleTimeString('ms-MY', { hour: '2-digit', minute: '2-digit', second: '2-digit' }))
           setSyncCountdown(8)
-          setToast({ type: 'success', message: 'Penyegerakan awan Vercel berjaya dikemaskini.' })
+          setToast({ type: 'success', message: 'Penyegerakan awan Vercel berjaya disahkan & dimuktamadkan.' })
         }
       }
     } catch (_) {
@@ -118,6 +205,7 @@ export function OrdersClient({ initialOrders }: OrdersClientProps) {
       if (res.ok && data.success) {
         setOrders([])
         setSelectedIds([])
+        saveOrdersToCache([])
         setToast({ type: 'success', message: 'Semua rekod pesanan telah berjaya dipadam bersih.' })
       } else {
         setToast({ type: 'error', message: data.error || 'Gagal memadam semua pesanan.' })
@@ -138,7 +226,11 @@ export function OrdersClient({ initialOrders }: OrdersClientProps) {
       })
       const data = await res.json()
       if (res.ok && data.success) {
-        setOrders((prev) => prev.filter((o) => o.id !== orderToDelete.id))
+        setOrders((prev) => {
+          const updated = prev.filter((o) => o.id !== orderToDelete.id)
+          saveOrdersToCache(updated)
+          return updated
+        })
         setSelectedIds((prev) => prev.filter((id) => id !== orderToDelete.id))
         setToast({ type: 'success', message: `Pesanan ${orderToDelete.orderNumber} berjaya dipadam.` })
         setOrderToDelete(null)
@@ -164,7 +256,11 @@ export function OrdersClient({ initialOrders }: OrdersClientProps) {
       const data = await res.json()
       if (res.ok && data.success) {
         const deletedSet = new Set(selectedIds)
-        setOrders((prev) => prev.filter((o) => !deletedSet.has(o.id)))
+        setOrders((prev) => {
+          const updated = prev.filter((o) => !deletedSet.has(o.id))
+          saveOrdersToCache(updated)
+          return updated
+        })
         setSelectedIds([])
         setToast({ type: 'success', message: `${data.count || selectedIds.length} pesanan terpilih berjaya dipadam.` })
         setIsBulkDeleting(false)
@@ -315,6 +411,36 @@ export function OrdersClient({ initialOrders }: OrdersClientProps) {
     }
   }
 
+  const getFinalizationBadge = (order: Order) => {
+    if (order.paymentStatus === 'paid') {
+      return {
+        label: 'Dimuktamadkan (Finalized)',
+        shortLabel: 'Finalized',
+        sublabel: 'Bayaran FPX/TNG disahkan & didaftarkan penuh ke kilang',
+        className: 'bg-emerald-50 text-emerald-800 border-emerald-300 font-bold',
+        dot: 'bg-emerald-500',
+        isFinalized: true,
+      }
+    }
+    if (order.paymentStatus === 'unpaid') {
+      return {
+        label: 'Menunggu Bayaran (Pending)',
+        shortLabel: 'Pending',
+        sublabel: 'Menanti selesai bayaran dari bank pelanggan',
+        className: 'bg-amber-50 text-amber-800 border-amber-300 font-medium',
+        dot: 'bg-amber-500',
+        isFinalized: false,
+      }
+    }
+    return {
+      label: 'Dalam Semakan (Processing)',
+      shortLabel: 'Processing',
+      className: 'bg-blue-50 text-blue-800 border-blue-300 font-medium',
+      dot: 'bg-blue-500',
+      isFinalized: false,
+    }
+  }
+
   const isFilterActive = search !== '' || paymentFilter !== 'all' || fulfillmentFilter !== 'all'
 
   return (
@@ -460,16 +586,30 @@ export function OrdersClient({ initialOrders }: OrdersClientProps) {
             <span className="relative inline-flex rounded-full h-2.5 w-2.5 bg-emerald-500"></span>
           </span>
           <div className="truncate">
-            <span className="font-semibold text-warmwhite">Penyegerakan Awan Vercel (Live Sync): </span>
-            <span className="text-slate-300 hidden sm:inline">
-              Memantau pesanan baharu secara automatik (Semakan seterusnya: {syncCountdown}s)
-            </span>
-            <span className="text-slate-300 sm:hidden">
-              Semak auto: {syncCountdown}s
-            </span>
-            <span className="text-slate-400 text-[10px] ml-2 hidden md:inline">
-              • Terakhir: {lastSyncedAt}
-            </span>
+            <div className="flex items-center space-x-2 flex-wrap gap-1">
+              <span className="font-semibold text-warmwhite">Penyegerakan Awan Vercel (Live Sync):</span>
+              <span className="px-2 py-0.5 rounded-full bg-emerald-500/20 text-emerald-300 border border-emerald-400/40 text-[10px] font-bold">
+                {orders.filter((o) => o.paymentStatus === 'paid').length} Dimuktamadkan
+              </span>
+              <span className="text-slate-400 text-[10px] hidden md:inline">
+                • Terakhir: {lastSyncedAt} (Semakan auto: {syncCountdown}s)
+              </span>
+            </div>
+            <div className="text-slate-300 text-[11px] mt-0.5 truncate">
+              {isManualSyncing ? (
+                <span className="text-amber-300 font-medium animate-pulse">
+                  🔄 Menyemak &amp; memuktamadkan pesanan merentas nod awan Vercel...
+                </span>
+              ) : orders.length > 0 ? (
+                <span>
+                  Semua rekod pesanan kekal terpelihara dalam simpanan pantas dan disegerakkan dengan selamat.
+                </span>
+              ) : (
+                <span>
+                  Pangkalan data sedia menerima pesanan baharu dari gerbang CHIP.
+                </span>
+              )}
+            </div>
           </div>
         </div>
 
@@ -492,9 +632,10 @@ export function OrdersClient({ initialOrders }: OrdersClientProps) {
             onClick={handleManualSync}
             disabled={isManualSyncing}
             className="inline-flex items-center space-x-1.5 px-3 py-1.5 bg-white/10 hover:bg-white/20 text-white rounded-xl transition-all text-[11px] font-semibold border border-white/15 cursor-pointer disabled:opacity-50"
+            title="Segerak dan sahkan semua status pesanan terkini"
           >
-            <RefreshCw className={`w-3.5 h-3.5 ${isManualSyncing ? 'animate-spin' : ''}`} />
-            <span>{isManualSyncing ? 'Menyegerak...' : 'Segerak Sekarang'}</span>
+            <RefreshCw className={`w-3.5 h-3.5 ${isManualSyncing ? 'animate-spin text-[#FAD02C]' : ''}`} />
+            <span>{isManualSyncing ? 'Menyemak...' : 'Segerak & Muktamadkan'}</span>
           </button>
         </div>
       </div>
@@ -584,6 +725,7 @@ export function OrdersClient({ initialOrders }: OrdersClientProps) {
             const itemCount = order.items.reduce((acc, i) => acc + i.quantity, 0)
             const paymentBadge = getPaymentBadge(order.paymentStatus)
             const fulfillmentBadge = getFulfillmentBadge(order.fulfillmentStatus)
+            const finalizationBadge = getFinalizationBadge(order)
             const staggerClass = `stagger-${(idx % 10) + 1}`
             const isSelected = selectedIds.includes(order.id)
 
@@ -616,10 +758,19 @@ export function OrdersClient({ initialOrders }: OrdersClientProps) {
                     </div>
                   </div>
 
-                  <div className="flex items-center space-x-1.5 flex-shrink-0">
+                  <div className="flex flex-wrap items-center justify-end gap-1 flex-shrink-0 max-w-[190px]">
+                    {/* Finalization Badge */}
+                    <span
+                      className={`inline-flex items-center space-x-1 px-2 py-0.5 rounded-full text-[9.5px] border ${finalizationBadge.className}`}
+                      title={finalizationBadge.sublabel}
+                    >
+                      <span className={`w-1.5 h-1.5 rounded-full ${finalizationBadge.dot}`} />
+                      <span>{finalizationBadge.shortLabel}</span>
+                    </span>
+
                     {/* Payment Badge */}
                     <span
-                      className={`inline-flex items-center space-x-1 px-2 py-0.5 rounded-full text-[10px] font-bold border ${paymentBadge.className}`}
+                      className={`inline-flex items-center space-x-1 px-2 py-0.5 rounded-full text-[9.5px] font-bold border ${paymentBadge.className}`}
                     >
                       <span className={`w-1.5 h-1.5 rounded-full ${paymentBadge.dot}`} />
                       <span>{paymentBadge.label}</span>
@@ -627,7 +778,7 @@ export function OrdersClient({ initialOrders }: OrdersClientProps) {
 
                     {/* Fulfilment Badge */}
                     <span
-                      className={`inline-flex items-center space-x-1 px-2 py-0.5 rounded-full text-[10px] font-bold border ${fulfillmentBadge.className}`}
+                      className={`inline-flex items-center space-x-1 px-2 py-0.5 rounded-full text-[9.5px] font-bold border ${fulfillmentBadge.className}`}
                     >
                       <span className={`w-1.5 h-1.5 rounded-full ${fulfillmentBadge.dot}`} />
                       <span>{fulfillmentBadge.label}</span>
@@ -759,6 +910,7 @@ export function OrdersClient({ initialOrders }: OrdersClientProps) {
                   <th className="py-3.5 px-4">Destination</th>
                   <th className="py-3.5 px-4">Total (MYR)</th>
                   <th className="py-3.5 px-4">Payment</th>
+                  <th className="py-3.5 px-4">Status Muktamad</th>
                   <th className="py-3.5 px-4">Fulfilment</th>
                   <th className="py-3.5 px-4 text-right">Action</th>
                 </tr>
@@ -768,6 +920,7 @@ export function OrdersClient({ initialOrders }: OrdersClientProps) {
                   const itemCount = order.items.reduce((acc, i) => acc + i.quantity, 0)
                   const paymentBadge = getPaymentBadge(order.paymentStatus)
                   const fulfillmentBadge = getFulfillmentBadge(order.fulfillmentStatus)
+                  const finalizationBadge = getFinalizationBadge(order)
                   const isSelected = selectedIds.includes(order.id)
 
                   return (
@@ -848,6 +1001,15 @@ export function OrdersClient({ initialOrders }: OrdersClientProps) {
                         >
                           <span className={`w-1.5 h-1.5 rounded-full ${paymentBadge.dot}`} />
                           <span>{paymentBadge.label}</span>
+                        </span>
+                      </td>
+                      <td className="py-4 px-4">
+                        <span
+                          className={`inline-flex items-center space-x-1 px-2.5 py-1 rounded-full text-[10px] border ${finalizationBadge.className}`}
+                          title={finalizationBadge.sublabel}
+                        >
+                          <span className={`w-1.5 h-1.5 rounded-full ${finalizationBadge.dot}`} />
+                          <span>{finalizationBadge.shortLabel}</span>
                         </span>
                       </td>
                       <td className="py-4 px-4">

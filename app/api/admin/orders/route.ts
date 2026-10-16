@@ -1,6 +1,6 @@
 import { NextRequest, NextResponse } from 'next/server'
 import { getAdminSession } from '@/lib/admin/auth'
-import { getOrders, deleteOrder, deleteOrders, clearAllOrders } from '@/lib/db'
+import { getOrders, deleteOrder, deleteOrders, clearAllOrders, upsertOrder } from '@/lib/db'
 
 export const dynamic = 'force-dynamic'
 
@@ -12,6 +12,34 @@ export async function GET() {
 
   const orders = await getOrders(true)
   return NextResponse.json({ orders })
+}
+
+export async function POST(req: NextRequest) {
+  const session = await getAdminSession()
+  if (!session) {
+    return NextResponse.json({ error: 'Unauthorized staff access' }, { status: 401 })
+  }
+
+  try {
+    const body = await req.json().catch(() => ({}))
+    const { syncOrders } = body
+
+    if (Array.isArray(syncOrders) && syncOrders.length > 0) {
+      let syncedCount = 0
+      for (const ord of syncOrders) {
+        if (ord && ord.id && ord.orderNumber) {
+          await upsertOrder(ord)
+          syncedCount++
+        }
+      }
+      const updatedOrders = await getOrders(true)
+      return NextResponse.json({ success: true, syncedCount, orders: updatedOrders })
+    }
+
+    return NextResponse.json({ error: 'syncOrders array required' }, { status: 400 })
+  } catch (err: any) {
+    return NextResponse.json({ error: err.message || 'Gagal menyegerak pesanan' }, { status: 500 })
+  }
 }
 
 export async function DELETE(req: NextRequest) {
