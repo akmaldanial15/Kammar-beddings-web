@@ -2278,7 +2278,7 @@ export function CheckoutClient({ initialPaymentSettings, initialSiteSettings, av
                       <div className="flex items-start justify-between gap-3">
                         {/* Left: Thumbnail */}
                         <div className="relative shrink-0">
-                          <div className="w-16 h-16 sm:w-18 sm:h-18 rounded-xl border border-[#E8E2D8] bg-cream/30 overflow-hidden relative shadow-2xs">
+                          <div className="w-16 h-16 sm:w-20 sm:h-20 rounded-xl border border-[#E8E2D8] bg-cream/30 overflow-hidden relative shadow-2xs">
                             <Image
                               src={resolvedImg}
                               alt={resolvedTitle}

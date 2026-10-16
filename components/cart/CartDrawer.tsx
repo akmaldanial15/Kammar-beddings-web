@@ -196,13 +196,21 @@ export function CartDrawer() {
               <div className="space-y-4">
                 {items.map((item) => (
                   <div key={item.variantId} className="flex space-x-3.5 pt-4 first:pt-0">
-                    <div className="relative w-18 h-18 sm:w-20 sm:h-20 rounded-lg overflow-hidden bg-cream flex-shrink-0 border border-borderLight">
-                      <Image
-                        src={item.imageUrl}
-                        alt={item.productName}
-                        fill
-                        className="object-cover"
-                      />
+                    <div className="relative w-20 h-20 rounded-lg overflow-hidden bg-cream flex-shrink-0 border border-borderLight shadow-2xs">
+                      {item.imageUrl ? (
+                        <Image
+                          src={item.imageUrl}
+                          alt={item.productName}
+                          fill
+                          sizes="80px"
+                          className="object-cover"
+                          unoptimized
+                        />
+                      ) : (
+                        <div className="w-full h-full flex items-center justify-center bg-cream text-forest">
+                          <ShoppingBag className="w-7 h-7 text-gold" />
+                        </div>
+                      )}
                     </div>
                     <div className="flex-1 min-w-0 flex flex-col justify-between">
                       <div>
