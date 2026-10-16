@@ -86,58 +86,52 @@ export function HeroCarousel() {
   }, [])
 
   const nextSlide = useCallback(() => {
-    setActiveSlides((currentSlides) => {
-      setCurrentSlide((prev) => (prev + 1) % currentSlides.length)
-      return currentSlides
-    })
-  }, [])
+    setCurrentSlide((prev) => (prev + 1) % (activeSlides.length || 1))
+  }, [activeSlides.length])
 
   const prevSlide = useCallback(() => {
-    setActiveSlides((currentSlides) => {
-      setCurrentSlide((prev) => (prev - 1 + currentSlides.length) % currentSlides.length)
-      return currentSlides
-    })
-  }, [])
+    setCurrentSlide((prev) => (prev - 1 + (activeSlides.length || 1)) % (activeSlides.length || 1))
+  }, [activeSlides.length])
 
   useEffect(() => {
-    if (!isPlaying) return
-    const timer = setInterval(nextSlide, 7000)
+    if (!isPlaying || activeSlides.length <= 1) return
+    const timer = setInterval(() => {
+      setCurrentSlide((prev) => (prev + 1) % activeSlides.length)
+    }, 6000)
     return () => clearInterval(timer)
-  }, [isPlaying, nextSlide])
+  }, [isPlaying, activeSlides.length])
 
-  const [touchStartX, setTouchStartX] = useState<number | null>(null)
   const [dragOffset, setDragOffset] = useState<number>(0)
   const [isDragging, setIsDragging] = useState<boolean>(false)
+  const dragStartX = React.useRef<number | null>(null)
 
-  const handleTouchStart = (e: React.TouchEvent) => {
-    setTouchStartX(e.targetTouches[0].clientX)
+  const onDragStart = (clientX: number) => {
+    dragStartX.current = clientX
     setDragOffset(0)
     setIsDragging(true)
   }
 
-  const handleTouchMove = (e: React.TouchEvent) => {
-    if (touchStartX === null) return
-    const currentX = e.targetTouches[0].clientX
-    const diff = currentX - touchStartX
-    // Add rubber-band resistance at boundary edges
+  const onDragMove = (clientX: number) => {
+    if (dragStartX.current === null) return
+    const diff = clientX - dragStartX.current
     if ((currentSlide === 0 && diff > 0) || (currentSlide === activeSlides.length - 1 && diff < 0)) {
-      setDragOffset(diff * 0.25)
+      setDragOffset(diff * 0.2)
     } else {
       setDragOffset(diff)
     }
   }
 
-  const handleTouchEnd = () => {
-    if (touchStartX === null) return
+  const onDragEnd = () => {
+    if (dragStartX.current === null) return
     setIsDragging(false)
-    const threshold = 45 // drag distance in px to trigger slide change
+    const threshold = 35 // px threshold to trigger slide change
     if (dragOffset < -threshold) {
       nextSlide()
     } else if (dragOffset > threshold) {
       prevSlide()
     }
     setDragOffset(0)
-    setTouchStartX(null)
+    dragStartX.current = null
   }
 
   return (
@@ -260,15 +254,55 @@ export function HeroCarousel() {
       {/* ================= MOBILE PHONE VIEW LAYOUT (md:hidden) ================= */}
       {/* Allows the full product poster to be seen cleanly in proper 4:3 proportions with silky smooth horizontal animation */}
       <div
-        className="block md:hidden relative w-full bg-forest-dark select-none overflow-hidden touch-pan-y"
-        onTouchStart={handleTouchStart}
-        onTouchMove={handleTouchMove}
-        onTouchEnd={handleTouchEnd}
+        className="block md:hidden relative w-full bg-forest-dark select-none overflow-hidden touch-pan-y cursor-grab active:cursor-grabbing"
+        onTouchStart={(e) => onDragStart(e.targetTouches[0].clientX)}
+        onTouchMove={(e) => onDragMove(e.targetTouches[0].clientX)}
+        onTouchEnd={onDragEnd}
+        onMouseDown={(e) => onDragStart(e.clientX)}
+        onMouseMove={(e) => {
+          if (isDragging) onDragMove(e.clientX)
+        }}
+        onMouseUp={onDragEnd}
+        onMouseLeave={onDragEnd}
       >
+        {/* Fixed mini Prev/Next Chevron Controls on image frame */}
+        <div className="absolute top-0 left-0 right-0 aspect-[4/3] pointer-events-none z-20 flex items-center justify-between px-2.5">
+          <button
+            type="button"
+            onClick={(e) => {
+              e.stopPropagation()
+              prevSlide()
+            }}
+            onTouchEnd={(e) => {
+              e.stopPropagation()
+              prevSlide()
+            }}
+            className="p-2.5 rounded-full bg-black/70 hover:bg-black/90 active:scale-90 text-white backdrop-blur-md border border-white/30 transition-all shadow-md cursor-pointer pointer-events-auto"
+            aria-label="Previous slide"
+          >
+            <ChevronLeft className="w-4 h-4" />
+          </button>
+          <button
+            type="button"
+            onClick={(e) => {
+              e.stopPropagation()
+              nextSlide()
+            }}
+            onTouchEnd={(e) => {
+              e.stopPropagation()
+              nextSlide()
+            }}
+            className="p-2.5 rounded-full bg-black/70 hover:bg-black/90 active:scale-90 text-white backdrop-blur-md border border-white/30 transition-all shadow-md cursor-pointer pointer-events-auto"
+            aria-label="Next slide"
+          >
+            <ChevronRight className="w-4 h-4" />
+          </button>
+        </div>
+
         {/* Horizontal Sliding Track with Buttery Smooth Transition */}
         <div
           className={`flex w-full ${
-            isDragging ? 'transition-none' : 'transition-transform duration-600 ease-[cubic-bezier(0.22,1,0.36,1)]'
+            isDragging ? 'transition-none' : 'transition-transform duration-500 ease-[cubic-bezier(0.25,1,0.5,1)]'
           }`}
           style={{
             transform: `translateX(calc(-${currentSlide * 100}% + ${dragOffset}px))`,
@@ -296,32 +330,6 @@ export function HeroCarousel() {
                 <div className="absolute top-3 left-3 z-10 inline-flex items-center space-x-1.5 bg-forest-dark/90 backdrop-blur-md px-3 py-1 rounded-full border border-gold/40 text-gold text-[10px] font-bold tracking-wider uppercase shadow-xs">
                   <Sparkles className="w-3 h-3 text-gold flex-shrink-0 animate-pulse" />
                   <span className="truncate max-w-[220px]">{slide.badge}</span>
-                </div>
-
-                {/* Mini Prev/Next Chevron Controls on image */}
-                <div className="absolute bottom-3 right-3 z-10 flex items-center space-x-1.5">
-                  <button
-                    type="button"
-                    onClick={(e) => {
-                      e.stopPropagation()
-                      prevSlide()
-                    }}
-                    className="p-2.5 rounded-full bg-black/60 hover:bg-black/80 active:scale-90 text-white backdrop-blur-md border border-white/25 transition-all shadow-md cursor-pointer"
-                    aria-label="Previous slide"
-                  >
-                    <ChevronLeft className="w-4 h-4" />
-                  </button>
-                  <button
-                    type="button"
-                    onClick={(e) => {
-                      e.stopPropagation()
-                      nextSlide()
-                    }}
-                    className="p-2.5 rounded-full bg-black/60 hover:bg-black/80 active:scale-90 text-white backdrop-blur-md border border-white/25 transition-all shadow-md cursor-pointer"
-                    aria-label="Next slide"
-                  >
-                    <ChevronRight className="w-4 h-4" />
-                  </button>
                 </div>
               </div>
 
@@ -364,11 +372,17 @@ export function HeroCarousel() {
               <button
                 key={idx}
                 type="button"
-                onClick={() => {
+                onClick={(e) => {
+                  e.stopPropagation()
                   setIsPlaying(false)
                   setCurrentSlide(idx)
                 }}
-                className={`h-1.5 rounded-full transition-all duration-500 ease-out cursor-pointer ${
+                onTouchEnd={(e) => {
+                  e.stopPropagation()
+                  setIsPlaying(false)
+                  setCurrentSlide(idx)
+                }}
+                className={`h-2 rounded-full transition-all duration-500 ease-out cursor-pointer ${
                   currentSlide === idx ? 'w-8 bg-gradient-to-r from-gold to-gold-light shadow-xs' : 'w-2 bg-warmwhite/30 hover:bg-warmwhite/50'
                 }`}
                 aria-label={`Go to slide ${idx + 1}`}
@@ -378,7 +392,14 @@ export function HeroCarousel() {
 
           <button
             type="button"
-            onClick={() => setIsPlaying(!isPlaying)}
+            onClick={(e) => {
+              e.stopPropagation()
+              setIsPlaying(!isPlaying)
+            }}
+            onTouchEnd={(e) => {
+              e.stopPropagation()
+              setIsPlaying(!isPlaying)
+            }}
             className="p-1 text-warmwhite/60 hover:text-warmwhite flex items-center gap-1 text-[11px] transition-colors cursor-pointer"
             title={isPlaying ? 'Pause slideshow' : 'Play slideshow'}
           >
