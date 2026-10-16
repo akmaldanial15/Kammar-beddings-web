@@ -76,18 +76,18 @@ export function CartClient() {
 
   // Calculate discount if coupon applied
   let discountSen = 0
-  if (couponCode === 'KAMAAR5' && subtotalSen >= 5000) {
+  if (couponCode === 'KAMAAR3' && subtotalSen >= 2000) {
+    discountSen = 300 // RM3 off
+  } else if (couponCode === 'KAMAAR5' && subtotalSen >= 4500) {
     discountSen = 500 // RM5 off
-  } else if (couponCode === 'KAMAAR10' && subtotalSen >= 10000) {
+  } else if (couponCode === 'KAMAAR10' && subtotalSen >= 9000) {
     discountSen = 1000 // RM10 off
-  } else if (couponCode === 'BORONGVIP' && subtotalSen >= 50000) {
-    discountSen = 5000 // RM50 off
-  } else if ((couponCode === 'KAMAAR100' || couponCode === 'TIER100') && subtotalSen >= 100000) {
-    discountSen = 10000 // RM100 off
-  } else if ((couponCode === 'LENAWELCOME' || couponCode === 'KAMAARWELCOME') && subtotalSen >= 10000) {
-    discountSen = Math.min(5000, Math.round(subtotalSen * 0.1))
-  } else if (couponCode === 'SLEEPVIP' && subtotalSen >= 300000) {
-    discountSen = Math.min(80000, Math.round(subtotalSen * 0.15))
+  } else if (couponCode === 'KAMAAR15' && subtotalSen >= 14000) {
+    discountSen = 1500 // RM15 off
+  } else if ((couponCode === 'BORONG20' || couponCode === 'BORONGVIP') && subtotalSen >= 20000) {
+    discountSen = 2000 // RM20 off
+  } else if ((couponCode === 'WELCOME10' || couponCode === 'KAMAARWELCOME' || couponCode === 'LENAWELCOME') && subtotalSen >= 5000) {
+    discountSen = Math.min(1500, Math.round(subtotalSen * 0.1)) // 10% off up to RM15
   }
 
   const finalTotalSen = Math.max(0, subtotalSen - discountSen + shippingInfo.shippingSen)

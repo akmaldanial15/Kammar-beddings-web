@@ -201,15 +201,32 @@ function ensureDb(forceRefresh = false): DatabaseSchema {
     }
 
     // Backwards compatibility migration for coupons
+    const obsoleteCodes = ['KAMAAR100', 'TIER100', 'SLEEPVIP', 'BORONGVIP', 'KAMAARWELCOME', 'LENAWELCOME']
     if (!dbCache.coupons || dbCache.coupons.length === 0) {
       dbCache.coupons = initialCoupons
       saveDb(dbCache)
     } else {
       let migratedCoupons = false
+      // Filter out obsolete/unrealistic coupons
+      const beforeLen = dbCache.coupons.length
+      dbCache.coupons = dbCache.coupons.filter(
+        (c) => !obsoleteCodes.includes(c.code.toUpperCase())
+      )
+      if (dbCache.coupons.length !== beforeLen) {
+        migratedCoupons = true
+      }
+      // Upsert new realistic coupons
       for (const ic of initialCoupons) {
-        if (!dbCache.coupons.some((c) => c.code.toUpperCase() === ic.code.toUpperCase())) {
+        const existingIdx = dbCache.coupons.findIndex((c) => c.code.toUpperCase() === ic.code.toUpperCase())
+        if (existingIdx === -1) {
           dbCache.coupons.push(ic)
           migratedCoupons = true
+        } else {
+          // Update min spend or descriptions if needed
+          if (dbCache.coupons[existingIdx].minSpendSen !== ic.minSpendSen || dbCache.coupons[existingIdx].discountValue !== ic.discountValue) {
+            dbCache.coupons[existingIdx] = { ...dbCache.coupons[existingIdx], ...ic }
+            migratedCoupons = true
+          }
         }
       }
       if (migratedCoupons) {

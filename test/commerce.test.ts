@@ -110,40 +110,40 @@ describe('Promotions & Server-Side Coupon Validation', () => {
     expect(res.discountSen).toBe(0)
   })
 
+  it('validates KAMAAR3 with RM3 discount when minimum spend is met', async () => {
+    const res = await validateCoupon('KAMAAR3', 2500) // RM25 spend (min RM20)
+    expect(res.isValid).toBe(true)
+    expect(res.discountSen).toBe(300)
+  })
+
   it('validates KAMAAR5 with RM5 discount when minimum spend is met', async () => {
-    const res = await validateCoupon('KAMAAR5', 6000) // RM60 spend (min RM50)
+    const res = await validateCoupon('KAMAAR5', 5000) // RM50 spend (min RM45)
     expect(res.isValid).toBe(true)
     expect(res.discountSen).toBe(500)
   })
 
   it('validates KAMAAR10 with RM10 discount when minimum spend is met', async () => {
-    const res = await validateCoupon('KAMAAR10', 12000) // RM120 spend (min RM100)
+    const res = await validateCoupon('KAMAAR10', 10000) // RM100 spend (min RM90)
     expect(res.isValid).toBe(true)
     expect(res.discountSen).toBe(1000)
   })
 
-  it('validates BORONGVIP with RM50 discount when minimum spend is met', async () => {
-    const res = await validateCoupon('BORONGVIP', 60000) // RM600 spend (min RM500)
+  it('validates BORONG20 with RM20 discount when minimum spend is met', async () => {
+    const res = await validateCoupon('BORONG20', 25000) // RM250 spend (min RM200)
     expect(res.isValid).toBe(true)
-    expect(res.discountSen).toBe(5000)
-  })
-
-  it('validates TIER100 with RM100 discount when minimum spend is met', async () => {
-    const res = await validateCoupon('TIER100', 150000) // RM1,500 spend
-    expect(res.isValid).toBe(true)
-    expect(res.discountSen).toBe(10000) // RM100.00 discount
+    expect(res.discountSen).toBe(2000)
   })
 
   it('rejects coupon when minimum spend is not met', async () => {
-    const res = await validateCoupon('TIER100', 100000) // TIER100 requires min RM1,500 spend
+    const res = await validateCoupon('KAMAAR10', 5000) // KAMAAR10 requires min RM90 spend
     expect(res.isValid).toBe(false)
     expect(res.discountSen).toBe(0)
     expect(res.message).toContain('Minimum spend')
   })
 
   it('applies percentage coupon with max cap constraint', async () => {
-    const res = await validateCoupon('SLEEPVIP', 400000) // 15% of RM4,000 = RM600, cap is RM800
+    const res = await validateCoupon('WELCOME10', 20000) // 10% of RM200 = RM20, cap is RM15 (1500 sen)
     expect(res.isValid).toBe(true)
-    expect(res.discountSen).toBe(60000) // RM600.00 discount
+    expect(res.discountSen).toBe(1500) // Capped at RM15.00
   })
 })

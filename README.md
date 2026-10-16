@@ -31,7 +31,7 @@
   - Role-Based Access Control (Owner, Catalog Manager, Order Manager, Content Editor).
   - Live revenue metrics, order fulfilment and courier tracking assignment.
   - Stock adjustments with mandatory operational audit logging.
-  - Promotion and voucher code management (`KAMAAR100`, `KAMAARWELCOME`).
+  - Promotion and voucher code management (`KAMAAR5`, `KAMAAR10`, `BORONG20`, `FREESHIP`).
 
 ---
 

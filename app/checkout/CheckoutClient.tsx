@@ -570,18 +570,18 @@ export function CheckoutClient({ initialPaymentSettings, initialSiteSettings, av
 
   // Discount calculation with server precedence and local fallback
   let localDiscountSen = 0
-  if (couponCode === 'KAMAAR5' && subtotalSen >= 5000) {
+  if (couponCode === 'KAMAAR3' && subtotalSen >= 2000) {
+    localDiscountSen = 300
+  } else if (couponCode === 'KAMAAR5' && subtotalSen >= 4500) {
     localDiscountSen = 500
-  } else if (couponCode === 'KAMAAR10' && subtotalSen >= 10000) {
+  } else if (couponCode === 'KAMAAR10' && subtotalSen >= 9000) {
     localDiscountSen = 1000
-  } else if (couponCode === 'BORONGVIP' && subtotalSen >= 50000) {
-    localDiscountSen = 5000
-  } else if ((couponCode === 'KAMAAR100' || couponCode === 'TIER100') && subtotalSen >= 100000) {
-    localDiscountSen = 10000
-  } else if ((couponCode === 'LENAWELCOME' || couponCode === 'KAMAARWELCOME') && subtotalSen >= 10000) {
-    localDiscountSen = Math.min(5000, Math.round(subtotalSen * 0.1))
-  } else if (couponCode === 'SLEEPVIP' && subtotalSen >= 300000) {
-    localDiscountSen = Math.min(80000, Math.round(subtotalSen * 0.15))
+  } else if (couponCode === 'KAMAAR15' && subtotalSen >= 14000) {
+    localDiscountSen = 1500
+  } else if ((couponCode === 'BORONG20' || couponCode === 'BORONGVIP') && subtotalSen >= 20000) {
+    localDiscountSen = 2000
+  } else if ((couponCode === 'WELCOME10' || couponCode === 'KAMAARWELCOME' || couponCode === 'LENAWELCOME') && subtotalSen >= 5000) {
+    localDiscountSen = Math.min(1500, Math.round(subtotalSen * 0.1))
   }
 
   const discountSen = serverDiscountSen !== null ? serverDiscountSen : localDiscountSen
@@ -617,7 +617,7 @@ export function CheckoutClient({ initialPaymentSettings, initialSiteSettings, av
         setCouponError(data.message || 'Kod diskaun tidak sah atau tidak memenuhi syarat perbelanjaan.')
       }
     } catch {
-      const validCodes = ['KAMAAR5', 'KAMAAR10', 'BORONGVIP', 'KAMAAR100', 'LENAWELCOME', 'KAMAARWELCOME', 'TIER100', 'SLEEPVIP', 'FREESHIP']
+      const validCodes = ['KAMAAR3', 'KAMAAR5', 'KAMAAR10', 'KAMAAR15', 'BORONG20', 'BORONGVIP', 'FREESHIP', 'WELCOME10', 'KAMAARWELCOME', 'LENAWELCOME']
       if (validCodes.includes(code)) {
         applyCoupon(code)
         setCouponSuccess(`Baucar "${code}" berjaya ditebus!`)
@@ -2561,37 +2561,94 @@ export function CheckoutClient({ initialPaymentSettings, initialSiteSettings, av
                 )}
 
                 {!couponCode && (
-                  <div className="flex items-center justify-between text-[11px] text-charcoal-muted pt-0.5">
-                    <span>Ada kod promosi pelancaran?</span>
-                    <button
-                      type="button"
-                      onClick={async () => {
-                        setCouponError('')
-                        setCouponSuccess('')
-                        try {
-                          const res = await fetch('/api/coupons/validate', {
-                            method: 'POST',
-                            headers: { 'Content-Type': 'application/json' },
-                            body: JSON.stringify({ code: 'KAMAAR100', subtotalSen }),
-                          })
-                          const data = await res.json()
-                          if (data.isValid) {
-                            applyCoupon('KAMAAR100')
-                            setServerDiscountSen(data.discountSen || 0)
-                            setCouponSuccess('Baucar "KAMAAR100" berjaya ditebus!')
-                          } else {
-                            applyCoupon('KAMAAR100')
-                            setCouponError(data.message || 'Pembelian minima RM1,000 diperlukan untuk menebus KAMAAR100.')
+                  <div className="space-y-2 pt-0.5">
+                    <div className="flex items-center justify-between text-[11px] text-charcoal-muted">
+                      <span>Cadangan baucar kilang:</span>
+                      <button
+                        type="button"
+                        onClick={async () => {
+                          const targetCode = subtotalSen >= 14000 ? 'KAMAAR15' : subtotalSen >= 9000 ? 'KAMAAR10' : subtotalSen >= 4500 ? 'KAMAAR5' : 'KAMAAR3'
+                          setCouponError('')
+                          setCouponSuccess('')
+                          try {
+                            const res = await fetch('/api/coupons/validate', {
+                              method: 'POST',
+                              headers: { 'Content-Type': 'application/json' },
+                              body: JSON.stringify({ code: targetCode, subtotalSen }),
+                            })
+                            const data = await res.json()
+                            if (data.isValid) {
+                              applyCoupon(targetCode)
+                              setServerDiscountSen(data.discountSen || 0)
+                              setCouponSuccess(data.message || `Baucar "${targetCode}" berjaya ditebus!`)
+                            } else {
+                              setCouponError(data.message || 'Syarat belian minima belum dipenuhi.')
+                            }
+                          } catch {
+                            applyCoupon(targetCode)
+                            setCouponSuccess(`Baucar "${targetCode}" berjaya ditebus!`)
                           }
-                        } catch {
-                          applyCoupon('KAMAAR100')
-                          setCouponSuccess('Baucar "KAMAAR100" berjaya ditebus!')
-                        }
-                      }}
-                      className="text-forest hover:text-gold font-bold underline cursor-pointer"
-                    >
-                      Cuba KAMAAR100
-                    </button>
+                        }}
+                        className="text-forest hover:text-gold font-bold underline cursor-pointer"
+                      >
+                        {subtotalSen >= 14000
+                          ? 'Cuba KAMAAR15 (-RM15)'
+                          : subtotalSen >= 9000
+                          ? 'Cuba KAMAAR10 (-RM10)'
+                          : subtotalSen >= 4500
+                          ? 'Cuba KAMAAR5 (-RM5)'
+                          : 'Cuba KAMAAR3 (-RM3)'}
+                      </button>
+                    </div>
+
+                    {/* Voucher Quick Selector Chips */}
+                    <div className="flex flex-wrap gap-1.5 pt-0.5">
+                      {[
+                        { code: 'KAMAAR3', label: 'RM3 OFF', minText: 'Min RM20', minSen: 2000 },
+                        { code: 'KAMAAR5', label: 'RM5 OFF', minText: 'Min RM45', minSen: 4500 },
+                        { code: 'KAMAAR10', label: 'RM10 OFF', minText: 'Min RM90', minSen: 9000 },
+                        { code: 'FREESHIP', label: 'Free Pos', minText: 'Min RM80', minSen: 8000 },
+                      ].map((v) => {
+                        const isEligible = subtotalSen >= v.minSen
+                        return (
+                          <button
+                            key={v.code}
+                            type="button"
+                            onClick={async () => {
+                              setCouponError('')
+                              setCouponSuccess('')
+                              try {
+                                const res = await fetch('/api/coupons/validate', {
+                                  method: 'POST',
+                                  headers: { 'Content-Type': 'application/json' },
+                                  body: JSON.stringify({ code: v.code, subtotalSen }),
+                                })
+                                const data = await res.json()
+                                if (data.isValid) {
+                                  applyCoupon(v.code)
+                                  setServerDiscountSen(data.discountSen || 0)
+                                  setCouponSuccess(data.message || `Baucar "${v.code}" berjaya ditebus!`)
+                                } else {
+                                  setCouponError(data.message || `Syarat perbelanjaan ${v.minText} belum dicapai.`)
+                                }
+                              } catch {
+                                applyCoupon(v.code)
+                                setCouponSuccess(`Baucar "${v.code}" berjaya ditebus!`)
+                              }
+                            }}
+                            className={`inline-flex items-center gap-1 px-2.5 py-1 rounded-lg text-[10px] font-semibold transition-all border cursor-pointer ${
+                              isEligible
+                                ? 'bg-emerald-50 text-emerald-800 border-emerald-300 hover:bg-emerald-100 shadow-2xs'
+                                : 'bg-stone-50 text-stone-500 border-stone-200 hover:border-stone-300'
+                            }`}
+                          >
+                            <Tag className="w-2.5 h-2.5 shrink-0" />
+                            <span>{v.code}</span>
+                            <span className="text-[9px] opacity-75 font-normal">({v.label})</span>
+                          </button>
+                        )
+                      })}
+                    </div>
                   </div>
                 )}
               </div>

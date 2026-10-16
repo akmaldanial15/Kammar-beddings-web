@@ -1264,7 +1264,7 @@ export function WebsiteEditorClient({ initialConfig }: Props) {
                         announcement: { ...config.announcement, highlightCode: e.target.value.toUpperCase() },
                       })
                     }
-                    placeholder="KAMAAR100"
+                    placeholder="KAMAAR10"
                     className="w-full px-3 py-2 bg-cream-light border border-borderLight rounded-xl uppercase font-mono font-bold outline-none focus:border-forest"
                   />
                 </div>
@@ -2919,7 +2919,7 @@ export function WebsiteEditorClient({ initialConfig }: Props) {
                             promotionsBanner: { ...config.promotionsBanner, couponCode: e.target.value.toUpperCase() },
                           })
                         }
-                        placeholder="KAMAAR100"
+                        placeholder="KAMAAR10"
                         className="w-full px-3 py-2 bg-cream-light border border-borderLight rounded-xl uppercase font-mono font-bold outline-none focus:border-forest"
                       />
                     </div>
