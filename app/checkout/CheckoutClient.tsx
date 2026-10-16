@@ -1187,7 +1187,7 @@ export function CheckoutClient({ initialPaymentSettings, initialSiteSettings, av
           {/* --------------------------------------------------------------------- */}
           {/* LEFT COLUMN: Checkout Form (7 Columns)                               */}
           {/* --------------------------------------------------------------------- */}
-          <div className="lg:col-span-7 space-y-8">
+          <div className="lg:col-span-7 order-2 lg:order-1 space-y-8">
             {/* Official Payment Guarantee Banner (Reassures customer upfront without duplicate buttons) */}
             <div className="bg-[#FAF7F2] rounded-2xl p-4 sm:p-4.5 border border-[#E8E2D8] flex flex-wrap items-center justify-between gap-3 shadow-2xs">
               <div className="flex items-center gap-3 min-w-0">
@@ -2215,7 +2215,7 @@ export function CheckoutClient({ initialPaymentSettings, initialSiteSettings, av
           {/* --------------------------------------------------------------------- */}
           {/* RIGHT COLUMN: Order Summary Card (5 Columns)                          */}
           {/* --------------------------------------------------------------------- */}
-          <div className="lg:col-span-5">
+          <div className="lg:col-span-5 order-1 lg:order-2">
             <div className="lg:sticky lg:top-24 bg-[#FAF7F2] rounded-3xl p-5 sm:p-6 border border-[#E8E2D8] shadow-sm space-y-5">
               {/* Order Summary Header */}
               <div className="flex items-center justify-between border-b border-[#E8E2D8] pb-3.5">
@@ -2677,79 +2677,93 @@ export function CheckoutClient({ initialPaymentSettings, initialSiteSettings, av
                       </button>
 
                       {showShippingTooltip && (
-                        <div
-                          onMouseLeave={() => setShowShippingTooltip(false)}
-                          className="absolute bottom-full right-0 sm:-right-8 mb-2 w-72 sm:w-84 bg-white rounded-2xl p-4 border border-[#D5CEC2] shadow-2xl z-50 text-left text-charcoal animate-in fade-in zoom-in-95 duration-150"
-                          role="tooltip"
-                        >
-                          {/* Close button */}
-                          <button
-                            type="button"
+                        <>
+                          {/* Mobile Backdrop */}
+                          <div
+                            className="fixed inset-0 bg-black/60 backdrop-blur-xs z-50 sm:hidden animate-in fade-in duration-200"
                             onClick={(e) => {
                               e.preventDefault()
                               e.stopPropagation()
                               setShowShippingTooltip(false)
                             }}
-                            className="absolute top-2.5 right-2.5 text-neutral-400 hover:text-charcoal p-1 rounded-full hover:bg-neutral-100 transition-colors"
-                            aria-label="Tutup"
+                          />
+
+                          {/* Modal on Mobile, Absolute Tooltip on Desktop */}
+                          <div
+                            onMouseLeave={() => setShowShippingTooltip(false)}
+                            className="fixed inset-x-4 top-1/2 -translate-y-1/2 max-w-sm mx-auto z-50 bg-white rounded-2xl p-5 border border-[#D5CEC2] shadow-2xl text-left text-charcoal animate-in fade-in zoom-in-95 duration-200 sm:fixed-none sm:translate-y-0 sm:max-w-none sm:mx-0 sm:absolute sm:inset-auto sm:bottom-full sm:-right-8 sm:mb-2 sm:w-84"
+                            role="dialog"
+                            aria-modal="true"
                           >
-                            <X className="w-3.5 h-3.5" />
-                          </button>
+                            {/* Close button */}
+                            <button
+                              type="button"
+                              onClick={(e) => {
+                                e.preventDefault()
+                                e.stopPropagation()
+                                setShowShippingTooltip(false)
+                              }}
+                              className="w-7 h-7 absolute top-3 right-3 text-neutral-400 hover:text-charcoal rounded-full hover:bg-neutral-100 flex items-center justify-center transition-colors cursor-pointer"
+                              aria-label="Tutup"
+                            >
+                              <X className="w-4 h-4" />
+                            </button>
 
-                          <div className="flex items-center gap-2 mb-2.5">
-                            <span className="p-1.5 rounded-lg bg-gold/15 text-gold-dark shrink-0">
-                              <Truck className="w-4 h-4" />
-                            </span>
-                            <div>
-                              <span className="text-[10px] font-bold uppercase tracking-wider text-gold-dark block">
-                                {isPickup ? 'Pengambilan Sendiri' : 'Servis Logistik Eksklusif'}
+                            <div className="flex items-center gap-2.5 mb-3 pr-6">
+                              <span className="p-2 rounded-xl bg-gold/15 text-gold-dark shrink-0">
+                                <Truck className="w-4 h-4" />
                               </span>
-                              <h4 className="text-xs font-bold text-forest">
-                                {isPickup ? 'Ambil Sendiri di Kilang' : 'Apa Itu Penghantaran White-Glove?'}
-                              </h4>
-                            </div>
-                          </div>
-
-                          {isPickup ? (
-                            <div className="space-y-2 text-[11px] text-charcoal-muted leading-relaxed">
-                              <p>
-                                Ambil pesanan terus di atelier kilang kami: <strong>Tunas Sinar Jaya Enterprise</strong>, No. 15, Jalan Kemboja 3, Bandar Baru Tasek Gelugor, Pulau Pinang.
-                              </p>
-                              <div className="p-2 bg-emerald-50 rounded-lg text-emerald-800 font-medium text-[10.5px]">
-                                ✓ Kos: <strong>RM0.00 (Percuma)</strong>
-                              </div>
-                            </div>
-                          ) : (
-                            <div className="space-y-2 text-[11px] text-charcoal-muted leading-relaxed">
-                              <p>
-                                Perkhidmatan penghantaran premium terus dari kilang KAMAAR ke kediaman anda:
-                              </p>
-                              <ul className="space-y-1.5 text-[10.5px]">
-                                <li className="flex items-start gap-1.5">
-                                  <span className="text-forest font-bold shrink-0">✓</span>
-                                  <span><strong>Masuk Bilik Tidur:</strong> 2 krew khas angkat barangan terus ke bilik tidur anda (bukan tinggal di luar pagar).</span>
-                                </li>
-                                <li className="flex items-start gap-1.5">
-                                  <span className="text-forest font-bold shrink-0">✓</span>
-                                  <span><strong>Pemasangan &amp; Unboxing:</strong> Untuk tilam, krew buka bungkusan &amp; pasang tilam di katil anda secara kemas.</span>
-                                </li>
-                                <li className="flex items-start gap-1.5">
-                                  <span className="text-forest font-bold shrink-0">✓</span>
-                                  <span><strong>Bantal &amp; Aksesori:</strong> Bungkusan kalis cuaca selamat dihantar dengan insurans penuh kilang.</span>
-                                </li>
-                              </ul>
-                              <div className="mt-2.5 pt-2 border-t border-[#E8E2D8] flex items-center justify-between text-[11px]">
-                                <span className="text-charcoal font-semibold">Caj Semasa:</span>
-                                <span className="font-bold text-forest">
-                                  {effectiveShippingSen === 0 ? 'PERCUMA (Ditaja Penuh)' : `${formatMYR(effectiveShippingSen)} (Kurier Kilang)`}
+                              <div>
+                                <span className="text-[10px] font-bold uppercase tracking-wider text-gold-dark block">
+                                  {isPickup ? 'Pengambilan Sendiri' : 'Servis Logistik Eksklusif'}
                                 </span>
+                                <h4 className="text-xs sm:text-sm font-bold text-forest">
+                                  {isPickup ? 'Ambil Sendiri di Kilang' : 'Apa Itu Penghantaran White-Glove?'}
+                                </h4>
                               </div>
                             </div>
-                          )}
 
-                          {/* Arrow pointer */}
-                          <div className="absolute -bottom-1.5 right-3 sm:right-10 w-3 h-3 bg-white border-b border-r border-[#D5CEC2] rotate-45 transform" />
-                        </div>
+                            {isPickup ? (
+                              <div className="space-y-2 text-xs text-charcoal-muted leading-relaxed">
+                                <p>
+                                  Ambil pesanan terus di atelier kilang kami: <strong>Tunas Sinar Jaya Enterprise</strong>, No. 15, Jalan Kemboja 3, Bandar Baru Tasek Gelugor, Pulau Pinang.
+                                </p>
+                                <div className="p-2 bg-emerald-50 rounded-lg text-emerald-800 font-medium text-xs">
+                                  ✓ Kos: <strong>RM0.00 (Percuma)</strong>
+                                </div>
+                              </div>
+                            ) : (
+                              <div className="space-y-2.5 text-xs text-charcoal-muted leading-relaxed">
+                                <p>
+                                  Perkhidmatan penghantaran premium terus dari kilang KAMAAR ke kediaman anda:
+                                </p>
+                                <ul className="space-y-2 text-xs">
+                                  <li className="flex items-start gap-2">
+                                    <span className="text-forest font-bold shrink-0">✓</span>
+                                    <span><strong>Masuk Bilik Tidur:</strong> 2 krew khas angkat barangan terus ke bilik tidur anda (bukan tinggal di luar pagar).</span>
+                                  </li>
+                                  <li className="flex items-start gap-2">
+                                    <span className="text-forest font-bold shrink-0">✓</span>
+                                    <span><strong>Pemasangan &amp; Unboxing:</strong> Untuk tilam, krew buka bungkusan &amp; pasang tilam di katil anda secara kemas.</span>
+                                  </li>
+                                  <li className="flex items-start gap-2">
+                                    <span className="text-forest font-bold shrink-0">✓</span>
+                                    <span><strong>Bantal &amp; Aksesori:</strong> Bungkusan kalis cuaca selamat dihantar dengan insurans penuh kilang.</span>
+                                  </li>
+                                </ul>
+                                <div className="mt-3 pt-2.5 border-t border-[#E8E2D8] flex items-center justify-between text-xs">
+                                  <span className="text-charcoal font-semibold">Caj Semasa:</span>
+                                  <span className="font-bold text-forest">
+                                    {effectiveShippingSen === 0 ? 'PERCUMA (Ditaja Penuh)' : `${formatMYR(effectiveShippingSen)} (Kurier Kilang)`}
+                                  </span>
+                                </div>
+                              </div>
+                            )}
+
+                            {/* Arrow pointer for Desktop only */}
+                            <div className="hidden sm:block absolute -bottom-1.5 right-10 w-3 h-3 bg-white border-b border-r border-[#D5CEC2] rotate-45 transform" />
+                          </div>
+                        </>
                       )}
                     </div>
                   </div>
