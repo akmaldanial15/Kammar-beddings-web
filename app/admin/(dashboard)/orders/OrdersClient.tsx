@@ -105,6 +105,30 @@ export function OrdersClient({ initialOrders }: OrdersClientProps) {
     }
   }
 
+  const handleClearAll = async () => {
+    if (!window.confirm('Adakah anda pasti ingin memadam dan mengosongkan SEMUA pesanan dalam sistem? Tindakan ini tidak boleh dibatalkan.')) {
+      return
+    }
+    setIsDeleting(true)
+    try {
+      const res = await fetch('/api/admin/orders?all=true', {
+        method: 'DELETE',
+      })
+      const data = await res.json()
+      if (res.ok && data.success) {
+        setOrders([])
+        setSelectedIds([])
+        setToast({ type: 'success', message: 'Semua rekod pesanan telah berjaya dipadam bersih.' })
+      } else {
+        setToast({ type: 'error', message: data.error || 'Gagal memadam semua pesanan.' })
+      }
+    } catch {
+      setToast({ type: 'error', message: 'Ralat sambungan semasa memadam pesanan.' })
+    } finally {
+      setIsDeleting(false)
+    }
+  }
+
   const handleDeleteSingle = async () => {
     if (!orderToDelete) return
     setIsDeleting(true)
@@ -450,6 +474,19 @@ export function OrdersClient({ initialOrders }: OrdersClientProps) {
         </div>
 
         <div className="flex items-center space-x-2 flex-shrink-0">
+          {orders.length > 0 && (
+            <button
+              type="button"
+              onClick={handleClearAll}
+              disabled={isDeleting}
+              className="inline-flex items-center space-x-1.5 px-3 py-1.5 bg-rose-600/30 hover:bg-rose-600/60 text-rose-200 hover:text-white rounded-xl transition-all text-[11px] font-semibold border border-rose-500/40 cursor-pointer disabled:opacity-50"
+              title="Padam dan kosongkan semua pesanan dalam sistem"
+            >
+              <Trash2 className="w-3.5 h-3.5 text-rose-400" />
+              <span>Kosongkan Semua</span>
+            </button>
+          )}
+
           <button
             type="button"
             onClick={handleManualSync}

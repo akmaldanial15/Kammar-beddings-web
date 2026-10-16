@@ -2,6 +2,8 @@ import { NextRequest, NextResponse } from 'next/server'
 import { getAdminSession } from '@/lib/admin/auth'
 import { updateOrderStatus, processRefund, getOrderById, deleteOrder } from '@/lib/db'
 
+export const dynamic = 'force-dynamic'
+
 export async function GET(
   req: NextRequest,
   { params }: { params: { orderId: string } }

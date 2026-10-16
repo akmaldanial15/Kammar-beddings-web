@@ -13,6 +13,9 @@ import {
 import { getOrders, getProducts, getWarrantyRegistrations } from '@/lib/db'
 import { formatMYR, formatDateTimeMY } from '@/lib/utils/format'
 
+export const dynamic = 'force-dynamic'
+export const revalidate = 0
+
 export default async function AdminDashboardOverview() {
   const [orders, products, warranties] = await Promise.all([
     getOrders(),

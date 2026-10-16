@@ -93,12 +93,30 @@ function ensureDb(forceRefresh = false): DatabaseSchema {
     console.warn('Could not ensure DATA_DIR exists:', dirErr)
   }
 
-  // In serverless, if /tmp file does not exist yet, seed it from bundled baseline data file
-  if (IS_SERVERLESS && !fs.existsSync(DB_FILE)) {
+  // In serverless, if /tmp file does not exist or if deployment version changed, seed from bundled baseline data file
+  const deploymentId = process.env.VERCEL_DEPLOYMENT_ID || process.env.VERCEL_GIT_COMMIT_SHA || 'dev'
+  const versionMarkerFile = path.join(DATA_DIR, '.deployment_version')
+
+  let shouldReseed = !fs.existsSync(DB_FILE)
+  if (IS_SERVERLESS && fs.existsSync(DB_FILE)) {
+    try {
+      const recordedVersion = fs.existsSync(versionMarkerFile)
+        ? fs.readFileSync(versionMarkerFile, 'utf-8').trim()
+        : ''
+      if (deploymentId !== 'dev' && recordedVersion !== deploymentId) {
+        shouldReseed = true
+      }
+    } catch (_) {
+      shouldReseed = true
+    }
+  }
+
+  if (IS_SERVERLESS && shouldReseed) {
     try {
       if (fs.existsSync(BASE_DB_FILE)) {
         const seedDataStr = fs.readFileSync(BASE_DB_FILE, 'utf-8')
         fs.writeFileSync(DB_FILE, seedDataStr, 'utf-8')
+        fs.writeFileSync(versionMarkerFile, deploymentId, 'utf-8')
       }
     } catch (seedCopyErr) {
       console.warn('Could not copy BASE_DB_FILE to /tmp:', seedCopyErr)
@@ -997,6 +1015,30 @@ export async function deleteAffiliateOrders(
   }
   const orderIds = ordersToDelete.map((o) => o.id)
   return deleteOrders(orderIds, actorEmail)
+}
+
+export async function clearAllOrders(
+  actorEmail: string = 'system'
+): Promise<{ success: boolean; count: number; message: string }> {
+  const db = ensureDb(true)
+  const count = db.orders.length
+  db.orders = []
+
+  if (Array.isArray(db.affiliates)) {
+    db.affiliates.forEach((a) => {
+      a.totalSalesCount = 0
+      a.totalSalesRevenueSen = 0
+      a.totalCommissionSen = 0
+    })
+  }
+
+  saveDb(db)
+
+  logAdminAction(actorEmail, 'orders_cleared_all', 'order', undefined, {
+    deletedCount: count,
+  })
+
+  return { success: true, count, message: `Semua ${count} pesanan telah berjaya dikosongkan.` }
 }
 
 // ==========================================

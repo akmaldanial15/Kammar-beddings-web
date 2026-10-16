@@ -1,6 +1,8 @@
 import { NextRequest, NextResponse } from 'next/server'
 import { getAdminSession } from '@/lib/admin/auth'
-import { getOrders, deleteOrder, deleteOrders } from '@/lib/db'
+import { getOrders, deleteOrder, deleteOrders, clearAllOrders } from '@/lib/db'
+
+export const dynamic = 'force-dynamic'
 
 export async function GET() {
   const session = await getAdminSession()
@@ -8,7 +10,7 @@ export async function GET() {
     return NextResponse.json({ error: 'Unauthorized staff access' }, { status: 401 })
   }
 
-  const orders = await getOrders()
+  const orders = await getOrders(true)
   return NextResponse.json({ orders })
 }
 
@@ -21,6 +23,12 @@ export async function DELETE(req: NextRequest) {
   try {
     const url = new URL(req.url)
     const singleId = url.searchParams.get('id')
+    const isAllParam = url.searchParams.get('all') === 'true'
+
+    if (isAllParam) {
+      const res = await clearAllOrders(session.email)
+      return NextResponse.json(res)
+    }
 
     if (singleId) {
       const res = await deleteOrder(singleId, session.email)
@@ -31,6 +39,11 @@ export async function DELETE(req: NextRequest) {
     }
 
     const body = await req.json().catch(() => null)
+    if (body?.clearAll || body?.ids === 'all') {
+      const res = await clearAllOrders(session.email)
+      return NextResponse.json(res)
+    }
+
     if (body && Array.isArray(body.ids) && body.ids.length > 0) {
       const res = await deleteOrders(body.ids, session.email)
       return NextResponse.json(res)
