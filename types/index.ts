@@ -403,6 +403,7 @@ export interface SiteSettings {
   whiteGloveModalCloseText?: string
   // Checkout Voucher & Auto-Apply Configurations
   checkoutAutoApplyVoucherEnabled?: boolean
+  checkoutAutoApplyMode?: 'algorithm_best' | 'manual_specific'
   checkoutAutoApplyVoucherCode?: string // 'auto_best' or specific code like 'KAMAAR3'
   checkoutSuggestedVouchersEnabled?: boolean
   checkoutSuggestedVoucherCodes?: string[]

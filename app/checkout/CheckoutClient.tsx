@@ -48,6 +48,7 @@ import {
   validateMalaysianPostcode,
   validateMalaysianPhone,
 } from '@/lib/utils/format'
+import { findBestVoucherForCart } from '@/lib/utils/pricing'
 import { PaymentSettings, PaymentMethodConfig, SiteSettings, Product, ProductVariant, Coupon } from '@/types'
 
 interface CheckoutClientProps {
@@ -56,6 +57,14 @@ interface CheckoutClientProps {
   availableProducts?: Product[]
   initialCoupons?: Coupon[]
 }
+
+const DEFAULT_FALLBACK_COUPONS: Coupon[] = [
+  { id: 'c-15', code: 'KAMAAR15', description: 'Diskaun RM15 (Min RM140)', discountType: 'fixed_amount', discountValue: 1500, minSpendSen: 14000, isActive: true, usageCount: 0, startsAt: '', endsAt: '' },
+  { id: 'c-10', code: 'KAMAAR10', description: 'Diskaun RM10 (Min RM90)', discountType: 'fixed_amount', discountValue: 1000, minSpendSen: 9000, isActive: true, usageCount: 0, startsAt: '', endsAt: '' },
+  { id: 'c-5', code: 'KAMAAR5', description: 'Diskaun RM5 (Min RM45)', discountType: 'fixed_amount', discountValue: 500, minSpendSen: 4500, isActive: true, usageCount: 0, startsAt: '', endsAt: '' },
+  { id: 'c-3', code: 'KAMAAR3', description: 'Diskaun RM3 (Min RM20)', discountType: 'fixed_amount', discountValue: 300, minSpendSen: 2000, isActive: true, usageCount: 0, startsAt: '', endsAt: '' },
+  { id: 'c-ship', code: 'FREESHIP', description: 'Penghantaran Percuma (Min RM80)', discountType: 'free_shipping', discountValue: 0, minSpendSen: 8000, isActive: true, usageCount: 0, startsAt: '', endsAt: '' },
+]
 
 const MALAYSIAN_BANKS = [
   { id: 'mb2u', name: 'Maybank2u', popular: true },
@@ -235,6 +244,7 @@ export function CheckoutClient({ initialPaymentSettings, initialSiteSettings, av
   const [couponsList, setCouponsList] = useState<Coupon[]>(initialCoupons || [])
   const [hasUserDismissedAutoCoupon, setHasUserDismissedAutoCoupon] = useState(false)
   const [isAutoApplied, setIsAutoApplied] = useState(false)
+  const [autoApplySource, setAutoApplySource] = useState<'algorithm' | 'manual' | null>(null)
 
   // Interactive tooltips & detailed modal state with smooth appear & disappear animations
   const [isShippingMiniMounted, setIsShippingMiniMounted] = useState(false)
@@ -411,76 +421,6 @@ export function CheckoutClient({ initialPaymentSettings, initialSiteSettings, av
     }
   }, [initialCoupons])
 
-  // Auto-apply voucher according to Admin Settings (default: ON)
-  useEffect(() => {
-    if (!isLoaded || items.length === 0 || subtotalSen <= 0) return
-    if (hasUserDismissedAutoCoupon) return
-    if (couponCode) return // A coupon is already active
-
-    const autoApplyEnabled = siteSettings?.checkoutAutoApplyVoucherEnabled !== false
-    if (!autoApplyEnabled) return
-
-    const preferredCode = siteSettings?.checkoutAutoApplyVoucherCode || 'auto_best'
-
-    if (preferredCode !== 'auto_best') {
-      // Admin chose a specific coupon
-      const specific = couponsList.find((c) => c.code.toUpperCase() === preferredCode.toUpperCase())
-      const minSpend = specific ? (specific.minSpendSen || 0) : 0
-      if (subtotalSen >= minSpend) {
-        applyCoupon(preferredCode.toUpperCase())
-        setIsAutoApplied(true)
-        setCouponSuccess(`Baucar "${preferredCode.toUpperCase()}" telah diguna secara automatik!`)
-      }
-    } else {
-      // Auto best discount: determine the highest savings among eligible coupons
-      const candidates = (couponsList.length > 0 ? couponsList : [
-        { code: 'KAMAAR15', discountType: 'fixed_amount', discountValue: 1500, minSpendSen: 14000 },
-        { code: 'KAMAAR10', discountType: 'fixed_amount', discountValue: 1000, minSpendSen: 9000 },
-        { code: 'KAMAAR5', discountType: 'fixed_amount', discountValue: 500, minSpendSen: 4500 },
-        { code: 'KAMAAR3', discountType: 'fixed_amount', discountValue: 300, minSpendSen: 2000 },
-      ] as Coupon[]).filter((c) => subtotalSen >= (c.minSpendSen || 0))
-
-      if (candidates.length > 0) {
-        let bestCoupon: Coupon | null = null
-        let maxSavingsSen = 0
-
-        for (const c of candidates) {
-          let savings = 0
-          if (c.discountType === 'percentage') {
-            savings = Math.round((subtotalSen * c.discountValue) / 100)
-            if (c.maxDiscountSen && savings > c.maxDiscountSen) {
-              savings = c.maxDiscountSen
-            }
-          } else if (c.discountType === 'fixed_amount') {
-            savings = Math.min(c.discountValue, subtotalSen)
-          } else if (c.discountType === 'free_shipping') {
-            savings = 1500 // Peninsular standard shipping value
-          }
-
-          if (savings > maxSavingsSen) {
-            maxSavingsSen = savings
-            bestCoupon = c
-          }
-        }
-
-        if (bestCoupon && maxSavingsSen > 0) {
-          applyCoupon(bestCoupon.code)
-          setIsAutoApplied(true)
-          setCouponSuccess(`Baucar "${bestCoupon.code}" telah diguna secara automatik (Jimat ${formatMYR(maxSavingsSen)})!`)
-        }
-      }
-    }
-  }, [
-    isLoaded,
-    items.length,
-    subtotalSen,
-    couponCode,
-    hasUserDismissedAutoCoupon,
-    siteSettings?.checkoutAutoApplyVoucherEnabled,
-    siteSettings?.checkoutAutoApplyVoucherCode,
-    couponsList,
-    applyCoupon,
-  ])
 
   const [isSubmitting, setIsSubmitting] = useState(false)
   const [errorMessage, setErrorMessage] = useState('')
@@ -718,6 +658,81 @@ export function CheckoutClient({ initialPaymentSettings, initialSiteSettings, av
     freeShippingPromo: couponCode === 'FREESHIP',
   })
 
+  // Auto-apply voucher according to Admin Settings (Smart Algorithm or Manual Specific)
+  useEffect(() => {
+    if (!isLoaded || items.length === 0 || subtotalSen <= 0) return
+    if (hasUserDismissedAutoCoupon) return
+
+    const autoApplyEnabled = siteSettings?.checkoutAutoApplyVoucherEnabled !== false
+    if (!autoApplyEnabled) return
+
+    const mode = siteSettings?.checkoutAutoApplyMode || (siteSettings?.checkoutAutoApplyVoucherCode && siteSettings.checkoutAutoApplyVoucherCode !== 'auto_best' ? 'manual_specific' : 'algorithm_best')
+    const preferredCode = siteSettings?.checkoutAutoApplyVoucherCode || 'auto_best'
+
+    if (mode === 'manual_specific' && preferredCode !== 'auto_best') {
+      // Mod Manual: Admin selected a specific voucher code
+      if (couponCode && !isAutoApplied) return
+
+      const specific = couponsList.find((c) => c.code.toUpperCase() === preferredCode.toUpperCase())
+      const minSpend = specific ? (specific.minSpendSen || 0) : 0
+      if (subtotalSen >= minSpend) {
+        if (couponCode !== preferredCode.toUpperCase()) {
+          applyCoupon(preferredCode.toUpperCase())
+          setIsAutoApplied(true)
+          setAutoApplySource('manual')
+          setCouponSuccess(`Baucar "${preferredCode.toUpperCase()}" telah diguna secara automatik mengikut tetapan manual admin!`)
+        }
+      } else if (couponCode === preferredCode.toUpperCase() && isAutoApplied) {
+        removeCoupon()
+        setIsAutoApplied(false)
+        setAutoApplySource(null)
+        setCouponSuccess('')
+      }
+    } else {
+      // Mod Algoritma Pintar (Default & Recommended):
+      // Smart algorithm evaluates highest net savings for current cart & shipping
+      if (couponCode && !isAutoApplied) return
+
+      const pool = couponsList.length > 0 ? couponsList : DEFAULT_FALLBACK_COUPONS
+
+      const bestResult = findBestVoucherForCart({
+        subtotalSen,
+        shippingSen: shippingInfo.shippingSen,
+        isPickup,
+        coupons: pool,
+      })
+
+      if (bestResult.bestCoupon && bestResult.savingsSen > 0) {
+        if (couponCode !== bestResult.bestCoupon.code) {
+          applyCoupon(bestResult.bestCoupon.code)
+          setIsAutoApplied(true)
+          setAutoApplySource('algorithm')
+          setCouponSuccess(`Baucar terbaik "${bestResult.bestCoupon.code}" dipilih secara automatik oleh algoritma pintar KAMAAR (Jimat ${formatMYR(bestResult.savingsSen)})!`)
+        }
+      } else if (isAutoApplied && couponCode) {
+        removeCoupon()
+        setIsAutoApplied(false)
+        setAutoApplySource(null)
+        setCouponSuccess('')
+      }
+    }
+  }, [
+    isLoaded,
+    items.length,
+    subtotalSen,
+    couponCode,
+    isAutoApplied,
+    hasUserDismissedAutoCoupon,
+    siteSettings?.checkoutAutoApplyVoucherEnabled,
+    siteSettings?.checkoutAutoApplyMode,
+    siteSettings?.checkoutAutoApplyVoucherCode,
+    couponsList,
+    applyCoupon,
+    removeCoupon,
+    shippingInfo.shippingSen,
+    isPickup,
+  ])
+
   // Discount calculation with server precedence and local fallback
   let localDiscountSen = 0
   const activeCoupon = couponsList.find((c) => c.code.toUpperCase() === (couponCode || '').toUpperCase())
@@ -768,6 +783,8 @@ export function CheckoutClient({ initialPaymentSettings, initialSiteSettings, av
       const data = await res.json()
       if (data.isValid) {
         applyCoupon(code)
+        setIsAutoApplied(false)
+        setAutoApplySource(null)
         setServerDiscountSen(data.discountSen || 0)
         setCouponSuccess(data.message || `Baucar "${code}" berjaya ditebus!`)
         setInputCoupon('')
@@ -778,6 +795,8 @@ export function CheckoutClient({ initialPaymentSettings, initialSiteSettings, av
       const validCodes = ['KAMAAR3', 'KAMAAR5', 'KAMAAR10', 'KAMAAR15', 'BORONG20', 'BORONGVIP', 'FREESHIP', 'WELCOME10', 'KAMAARWELCOME', 'LENAWELCOME']
       if (validCodes.includes(code)) {
         applyCoupon(code)
+        setIsAutoApplied(false)
+        setAutoApplySource(null)
         setCouponSuccess(`Baucar "${code}" berjaya ditebus!`)
         setInputCoupon('')
       } else {
@@ -799,6 +818,7 @@ export function CheckoutClient({ initialPaymentSettings, initialSiteSettings, av
       if (data.isValid) {
         applyCoupon(code)
         setIsAutoApplied(false)
+        setAutoApplySource(null)
         setHasUserDismissedAutoCoupon(false)
         setServerDiscountSen(data.discountSen || 0)
         setCouponSuccess(data.message || `Baucar "${code}" berjaya ditebus!`)
@@ -808,6 +828,7 @@ export function CheckoutClient({ initialPaymentSettings, initialSiteSettings, av
     } catch {
       applyCoupon(code)
       setIsAutoApplied(false)
+      setAutoApplySource(null)
       setHasUserDismissedAutoCoupon(false)
       setCouponSuccess(`Baucar "${code}" berjaya ditebus!`)
     }
@@ -2728,9 +2749,20 @@ export function CheckoutClient({ initialPaymentSettings, initialSiteSettings, av
                       <Tag className="w-3.5 h-3.5 text-gold shrink-0" />
                       <span className="font-mono text-xs">{couponCode}</span>
                       {isAutoApplied && (
-                        <span className="px-1.5 py-0.5 rounded-full bg-emerald-100 text-emerald-800 text-[9px] font-bold tracking-wider uppercase flex items-center gap-0.5">
-                          <Sparkles className="w-2.5 h-2.5 text-emerald-600" />
-                          Auto-Guna
+                        <span
+                          className={`px-1.5 py-0.5 rounded-full text-[9px] font-bold tracking-wider uppercase flex items-center gap-0.5 ${
+                            autoApplySource === 'manual'
+                              ? 'bg-blue-100 text-blue-800'
+                              : 'bg-emerald-100 text-emerald-800'
+                          }`}
+                          title={
+                            autoApplySource === 'manual'
+                              ? 'Baucar rasmi ditetapkan secara manual oleh admin'
+                              : 'Baucar penjimatan tertinggi dipilih secara automatik oleh algoritma pintar KAMAAR'
+                          }
+                        >
+                          <Sparkles className="w-2.5 h-2.5" />
+                          {autoApplySource === 'manual' ? 'Auto-Guna (Admin)' : '✨ Auto-Pilih Algoritma'}
                         </span>
                       )}
                       <span className="text-emerald-700 font-medium">
@@ -2747,6 +2779,7 @@ export function CheckoutClient({ initialPaymentSettings, initialSiteSettings, av
                         removeCoupon()
                         setHasUserDismissedAutoCoupon(true)
                         setIsAutoApplied(false)
+                        setAutoApplySource(null)
                         setServerDiscountSen(0)
                         setCouponSuccess('')
                         setCouponError('')
@@ -2768,18 +2801,31 @@ export function CheckoutClient({ initialPaymentSettings, initialSiteSettings, av
                         <button
                           type="button"
                           onClick={() => {
-                            const targetCode = subtotalSen >= 14000 ? 'KAMAAR15' : subtotalSen >= 9000 ? 'KAMAAR10' : subtotalSen >= 4500 ? 'KAMAAR5' : 'KAMAAR3'
+                            const pool = couponsList.length > 0 ? couponsList : DEFAULT_FALLBACK_COUPONS
+                            const best = findBestVoucherForCart({
+                              subtotalSen,
+                              shippingSen: shippingInfo.shippingSen,
+                              isPickup,
+                              coupons: pool,
+                            })
+                            const targetCode = best.bestCoupon?.code || 'KAMAAR3'
                             handleSelectSuggestedCoupon(targetCode, 'Min RM20', 2000)
                           }}
                           className="text-forest hover:text-gold font-bold underline cursor-pointer"
                         >
-                          {subtotalSen >= 14000
-                            ? 'Cuba KAMAAR15 (-RM15)'
-                            : subtotalSen >= 9000
-                            ? 'Cuba KAMAAR10 (-RM10)'
-                            : subtotalSen >= 4500
-                            ? 'Cuba KAMAAR5 (-RM5)'
-                            : 'Cuba KAMAAR3 (-RM3)'}
+                          {(() => {
+                            const pool = couponsList.length > 0 ? couponsList : DEFAULT_FALLBACK_COUPONS
+                            const best = findBestVoucherForCart({
+                              subtotalSen,
+                              shippingSen: shippingInfo.shippingSen,
+                              isPickup,
+                              coupons: pool,
+                            })
+                            if (best.bestCoupon && best.savingsSen > 0) {
+                              return `Cuba ${best.bestCoupon.code} (-${formatMYR(best.savingsSen)})`
+                            }
+                            return 'Cuba KAMAAR3 (-RM3)'
+                          })()}
                         </button>
                       )}
                     </div>

@@ -1172,9 +1172,13 @@ export async function getSiteSettings(): Promise<SiteSettings> {
   }
   if (db.siteSettings.checkoutAutoApplyVoucherEnabled === undefined) {
     db.siteSettings.checkoutAutoApplyVoucherEnabled = true
+    db.siteSettings.checkoutAutoApplyMode = db.siteSettings.checkoutAutoApplyMode || 'algorithm_best'
     db.siteSettings.checkoutAutoApplyVoucherCode = db.siteSettings.checkoutAutoApplyVoucherCode || 'auto_best'
     db.siteSettings.checkoutSuggestedVouchersEnabled = db.siteSettings.checkoutSuggestedVouchersEnabled !== undefined ? db.siteSettings.checkoutSuggestedVouchersEnabled : true
     db.siteSettings.checkoutSuggestedVoucherCodes = db.siteSettings.checkoutSuggestedVoucherCodes || ['KAMAAR3', 'KAMAAR5', 'KAMAAR10', 'FREESHIP']
+    needsSave = true
+  } else if (!db.siteSettings.checkoutAutoApplyMode) {
+    db.siteSettings.checkoutAutoApplyMode = db.siteSettings.checkoutAutoApplyVoucherCode === 'auto_best' ? 'algorithm_best' : 'manual_specific'
     needsSave = true
   }
   if (needsSave) {

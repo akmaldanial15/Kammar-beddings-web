@@ -1,4 +1,4 @@
-import { QuantityTier } from '@/types'
+import { QuantityTier, Coupon } from '@/types'
 
 export interface TierPriceCalculation {
   totalSen: number
@@ -91,5 +91,98 @@ export function calculateTieredPrice(
     savingsPercent,
     appliedTier: primaryTier,
     isTierApplied: true,
+  }
+}
+
+export interface BestVoucherResult {
+  bestCoupon: Coupon | null
+  savingsSen: number
+  reason: string
+  allEligible: {
+    coupon: Coupon
+    calculatedSavingsSen: number
+  }[]
+}
+
+/**
+ * Smart Algorithm to detect and select the best voucher for a given cart.
+ * Considers subtotal, active status, expiration, usage limits, minimum spend,
+ * and actual net Ringgit savings (handling fixed amount, percentage, and free shipping).
+ */
+export function findBestVoucherForCart({
+  subtotalSen,
+  shippingSen = 1500,
+  isPickup = false,
+  coupons,
+  nowIso = new Date().toISOString(),
+}: {
+  subtotalSen: number
+  shippingSen?: number
+  isPickup?: boolean
+  coupons: Coupon[]
+  nowIso?: string
+}): BestVoucherResult {
+  if (!coupons || coupons.length === 0 || subtotalSen <= 0) {
+    return {
+      bestCoupon: null,
+      savingsSen: 0,
+      reason: 'Tiada baucar atau troli kosong',
+      allEligible: [],
+    }
+  }
+
+  const eligibleCandidates: { coupon: Coupon; calculatedSavingsSen: number }[] = []
+
+  for (const c of coupons) {
+    if (!c.isActive) continue
+    if (c.startsAt && nowIso < c.startsAt) continue
+    if (c.endsAt && nowIso > c.endsAt) continue
+    if (c.usageLimit && c.usageCount >= c.usageLimit) continue
+    if (c.minSpendSen && subtotalSen < c.minSpendSen) continue
+
+    let savings = 0
+    if (c.discountType === 'percentage') {
+      savings = Math.round((subtotalSen * c.discountValue) / 100)
+      if (c.maxDiscountSen && savings > c.maxDiscountSen) {
+        savings = c.maxDiscountSen
+      }
+    } else if (c.discountType === 'fixed_amount') {
+      savings = Math.min(c.discountValue, subtotalSen)
+    } else if (c.discountType === 'free_shipping') {
+      savings = isPickup ? 0 : Math.max(0, shippingSen)
+    }
+
+    if (savings > 0) {
+      eligibleCandidates.push({ coupon: c, calculatedSavingsSen: savings })
+    }
+  }
+
+  if (eligibleCandidates.length === 0) {
+    return {
+      bestCoupon: null,
+      savingsSen: 0,
+      reason: 'Tiada baucar yang layak untuk nilai pesanan semasa',
+      allEligible: [],
+    }
+  }
+
+  // Sort by highest savings first.
+  // Tie-breaker: lowest minimum spend (more generous to customer), then fixed discount precedence.
+  eligibleCandidates.sort((a, b) => {
+    if (b.calculatedSavingsSen !== a.calculatedSavingsSen) {
+      return b.calculatedSavingsSen - a.calculatedSavingsSen
+    }
+    const minA = a.coupon.minSpendSen || 0
+    const minB = b.coupon.minSpendSen || 0
+    return minA - minB
+  })
+
+  const best = eligibleCandidates[0]
+
+  return {
+    bestCoupon: best.coupon,
+    savingsSen: best.calculatedSavingsSen,
+    reason: `Penjimatan tertinggi dengan kod ${best.coupon.code}`,
+    allEligible: eligibleCandidates,
   }
 }

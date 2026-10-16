@@ -1865,6 +1865,7 @@ export const initialSiteSettings: SiteSettings = {
   "whiteGloveMiniButtonText": "Maklumat Lanjut",
   "whiteGloveModalCloseText": "Faham & Tutup",
   "checkoutAutoApplyVoucherEnabled": true,
+  "checkoutAutoApplyMode": "algorithm_best",
   "checkoutAutoApplyVoucherCode": "auto_best",
   "checkoutSuggestedVouchersEnabled": true,
   "checkoutSuggestedVoucherCodes": ["KAMAAR3", "KAMAAR5", "KAMAAR10", "FREESHIP"]

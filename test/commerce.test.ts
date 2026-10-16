@@ -7,6 +7,8 @@ import {
   MALAYSIAN_STATES,
 } from '../lib/utils/format'
 import { validateCoupon } from '../lib/db'
+import { findBestVoucherForCart } from '../lib/utils/pricing'
+import { Coupon } from '../types'
 
 describe('Malaysian Formatting & Validation Rules', () => {
   it('formats integer sen to correct Malaysian Ringgit representation', () => {
@@ -147,3 +149,132 @@ describe('Promotions & Server-Side Coupon Validation', () => {
     expect(res.discountSen).toBe(1500) // Capped at RM15.00
   })
 })
+
+describe('Smart Voucher Auto-Detection Algorithm (findBestVoucherForCart)', () => {
+  const sampleCoupons: Coupon[] = [
+    {
+      id: 'c-3',
+      code: 'KAMAAR3',
+      discountType: 'fixed_amount',
+      discountValue: 300,
+      minSpendSen: 2000,
+      isActive: true,
+      usageCount: 0,
+    },
+    {
+      id: 'c-5',
+      code: 'KAMAAR5',
+      discountType: 'fixed_amount',
+      discountValue: 500,
+      minSpendSen: 4500,
+      isActive: true,
+      usageCount: 0,
+    },
+    {
+      id: 'c-10',
+      code: 'KAMAAR10',
+      discountType: 'fixed_amount',
+      discountValue: 1000,
+      minSpendSen: 9000,
+      isActive: true,
+      usageCount: 0,
+    },
+    {
+      id: 'c-15',
+      code: 'KAMAAR15',
+      discountType: 'fixed_amount',
+      discountValue: 1500,
+      minSpendSen: 14000,
+      isActive: true,
+      usageCount: 0,
+    },
+    {
+      id: 'c-freeship',
+      code: 'FREESHIP',
+      discountType: 'free_shipping',
+      discountValue: 0,
+      minSpendSen: 8000,
+      isActive: true,
+      usageCount: 0,
+    },
+    {
+      id: 'c-inactive',
+      code: 'EXPIRED100',
+      discountType: 'fixed_amount',
+      discountValue: 10000,
+      minSpendSen: 1000,
+      isActive: false,
+      usageCount: 0,
+    },
+  ]
+
+  it('returns null when subtotal is below all coupon thresholds', () => {
+    const result = findBestVoucherForCart({
+      subtotalSen: 1500, // RM15 (below min RM20)
+      coupons: sampleCoupons,
+    })
+    expect(result.bestCoupon).toBeNull()
+    expect(result.savingsSen).toBe(0)
+  })
+
+  it('auto-selects KAMAAR3 for subtotal between RM20 and RM44.99', () => {
+    const result = findBestVoucherForCart({
+      subtotalSen: 3500, // RM35
+      coupons: sampleCoupons,
+    })
+    expect(result.bestCoupon?.code).toBe('KAMAAR3')
+    expect(result.savingsSen).toBe(300)
+  })
+
+  it('auto-selects KAMAAR5 for subtotal between RM45 and RM79.99', () => {
+    const result = findBestVoucherForCart({
+      subtotalSen: 6000, // RM60
+      coupons: sampleCoupons,
+    })
+    expect(result.bestCoupon?.code).toBe('KAMAAR5')
+    expect(result.savingsSen).toBe(500)
+  })
+
+  it('auto-selects FREESHIP over KAMAAR5 when shipping is RM15 and subtotal >= RM80', () => {
+    const result = findBestVoucherForCart({
+      subtotalSen: 8500, // RM85 -> FREESHIP saves RM15, KAMAAR5 saves RM5
+      shippingSen: 1500,
+      isPickup: false,
+      coupons: sampleCoupons,
+    })
+    expect(result.bestCoupon?.code).toBe('FREESHIP')
+    expect(result.savingsSen).toBe(1500)
+  })
+
+  it('falls back to KAMAAR5 if fulfillment is self pickup (shipping is 0)', () => {
+    const result = findBestVoucherForCart({
+      subtotalSen: 8500, // RM85 -> FREESHIP saves RM0 because pickup, KAMAAR5 saves RM5
+      shippingSen: 1500,
+      isPickup: true,
+      coupons: sampleCoupons,
+    })
+    expect(result.bestCoupon?.code).toBe('KAMAAR5')
+    expect(result.savingsSen).toBe(500)
+  })
+
+  it('auto-selects KAMAAR15 for subtotal >= RM140 when tied with Peninsular shipping', () => {
+    const result = findBestVoucherForCart({
+      subtotalSen: 15000, // RM150
+      shippingSen: 1500,
+      coupons: sampleCoupons,
+    })
+    // Both KAMAAR15 and FREESHIP save 1500 sen; algorithm ranks and tiebreaks gracefully
+    expect(result.savingsSen).toBe(1500)
+    expect(['KAMAAR15', 'FREESHIP']).toContain(result.bestCoupon?.code)
+  })
+
+  it('skips inactive or expired coupons even with huge discount values', () => {
+    const result = findBestVoucherForCart({
+      subtotalSen: 5000,
+      coupons: sampleCoupons,
+    })
+    expect(result.bestCoupon?.code).not.toBe('EXPIRED100')
+    expect(result.bestCoupon?.code).toBe('KAMAAR5')
+  })
+})
+

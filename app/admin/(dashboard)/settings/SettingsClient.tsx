@@ -1278,36 +1278,166 @@ export function SettingsClient({
                     </label>
                   </div>
 
-                  {/* Pilihan Baucar Auto-Guna */}
+                  {/* Pilihan Mod Auto-Guna Baucar */}
                   {settings.checkoutAutoApplyVoucherEnabled !== false && (
-                    <div className="pt-3 border-t border-slate-200/60 space-y-2">
-                      <label className="block text-xs font-bold text-slate-700">
-                        Pilihan Baucar Yang Akan Digunakan Secara Automatik:
-                      </label>
-                      <select
-                        value={settings.checkoutAutoApplyVoucherCode || 'auto_best'}
-                        onChange={(e) =>
-                          setSettings({
-                            ...settings,
-                            checkoutAutoApplyVoucherCode: e.target.value,
-                          })
-                        }
-                        className="w-full sm:w-auto min-w-[280px] px-3.5 py-2.5 rounded-xl border border-slate-200 text-xs text-slate-800 bg-white font-medium outline-none focus:border-forest focus:ring-2 focus:ring-forest/10 cursor-pointer"
-                      >
-                        <option value="auto_best">
-                          🌟 Auto-Pilih Baucar Terbaik yang Layak (Diskaun Tertinggi) [Disyorkan]
-                        </option>
-                        {allCouponOptions.map((c) => (
-                          <option key={c.code} value={c.code}>
-                            Kod {c.code} — {c.label} ({c.minText})
-                          </option>
-                        ))}
-                      </select>
-                      <p className="text-[11px] text-slate-500">
-                        {settings.checkoutAutoApplyVoucherCode === 'auto_best' || !settings.checkoutAutoApplyVoucherCode
-                          ? 'Sistem akan mengira jumlah troli dan memilih baucar diskaun tertinggi yang layak untuk pelanggan secara automatik.'
-                          : `Sistem akan cuba menggunakan kod "${settings.checkoutAutoApplyVoucherCode}" terlebih dahulu jika troli pelanggan memenuhi syarat perbelanjaan minimumnya.`}
-                      </p>
+                    <div className="pt-4 border-t border-slate-200/60 space-y-4">
+                      <div className="space-y-1">
+                        <label className="block text-xs font-bold text-slate-800">
+                          Kaedah Pemilihan Baucar Auto-Guna:
+                        </label>
+                        <p className="text-[11px] text-slate-500">
+                          Pilih sama ada sistem harus menggunakan algoritma pintar untuk memilih baucar terbaik secara automatik, atau anda ingin menetapkan satu baucar khusus secara manual.
+                        </p>
+                      </div>
+
+                      {/* 2 Interactive Cards: Algoritma vs Manual */}
+                      <div className="grid grid-cols-1 md:grid-cols-2 gap-3">
+                        {/* Option 1: Mod Algoritma Pintar */}
+                        <div
+                          onClick={() =>
+                            setSettings({
+                              ...settings,
+                              checkoutAutoApplyMode: 'algorithm_best',
+                              checkoutAutoApplyVoucherCode: 'auto_best',
+                            })
+                          }
+                          className={`p-4 rounded-xl border-2 transition-all cursor-pointer relative ${
+                            (settings.checkoutAutoApplyMode || 'algorithm_best') === 'algorithm_best'
+                              ? 'bg-emerald-50/70 border-emerald-600 shadow-xs ring-2 ring-emerald-600/10'
+                              : 'bg-white border-slate-200 hover:border-slate-300'
+                          }`}
+                        >
+                          <div className="flex items-start justify-between gap-2">
+                            <div className="flex items-center gap-2">
+                              <div
+                                className={`w-8 h-8 rounded-lg flex items-center justify-center shrink-0 ${
+                                  (settings.checkoutAutoApplyMode || 'algorithm_best') === 'algorithm_best'
+                                    ? 'bg-emerald-600 text-white'
+                                    : 'bg-slate-100 text-slate-600'
+                                }`}
+                              >
+                                <Sparkles className="w-4 h-4" />
+                              </div>
+                              <div>
+                                <h5 className="text-xs font-bold text-slate-900 flex items-center gap-1.5 flex-wrap">
+                                  <span>Mod Algoritma Pintar</span>
+                                  <span className="px-1.5 py-0.5 rounded-full bg-emerald-200/70 text-emerald-800 text-[9px] font-extrabold uppercase tracking-wider">
+                                    Lalai (Disyorkan)
+                                  </span>
+                                </h5>
+                                <p className="text-[10px] text-emerald-800 font-medium">Auto-Kesan &amp; Pilih Baucar Terbaik</p>
+                              </div>
+                            </div>
+                            <input
+                              type="radio"
+                              name="checkoutAutoApplyMode"
+                              checked={(settings.checkoutAutoApplyMode || 'algorithm_best') === 'algorithm_best'}
+                              onChange={() =>
+                                setSettings({
+                                  ...settings,
+                                  checkoutAutoApplyMode: 'algorithm_best',
+                                  checkoutAutoApplyVoucherCode: 'auto_best',
+                                })
+                              }
+                              className="mt-1 accent-emerald-600 cursor-pointer"
+                            />
+                          </div>
+                          <p className="mt-2.5 text-[11px] text-slate-600 leading-relaxed">
+                            Algoritma KAMAAR mengira nilai troli secara dinamik dan memilih baucar yang memberi <strong>penjimatan tunai tertinggi (maksimum Ringgit)</strong> untuk pelanggan mengikut syarat semasa.
+                          </p>
+                        </div>
+
+                        {/* Option 2: Mod Manual (Admin Tetapkan Baucar Khusus) */}
+                        <div
+                          onClick={() => {
+                            const firstCode = allCouponOptions[0]?.code || 'KAMAAR3'
+                            setSettings({
+                              ...settings,
+                              checkoutAutoApplyMode: 'manual_specific',
+                              checkoutAutoApplyVoucherCode:
+                                settings.checkoutAutoApplyVoucherCode && settings.checkoutAutoApplyVoucherCode !== 'auto_best'
+                                  ? settings.checkoutAutoApplyVoucherCode
+                                  : firstCode,
+                            })
+                          }}
+                          className={`p-4 rounded-xl border-2 transition-all cursor-pointer relative ${
+                            settings.checkoutAutoApplyMode === 'manual_specific'
+                              ? 'bg-blue-50/70 border-blue-600 shadow-xs ring-2 ring-blue-600/10'
+                              : 'bg-white border-slate-200 hover:border-slate-300'
+                          }`}
+                        >
+                          <div className="flex items-start justify-between gap-2">
+                            <div className="flex items-center gap-2">
+                              <div
+                                className={`w-8 h-8 rounded-lg flex items-center justify-center shrink-0 ${
+                                  settings.checkoutAutoApplyMode === 'manual_specific'
+                                    ? 'bg-blue-600 text-white'
+                                    : 'bg-slate-100 text-slate-600'
+                                }`}
+                              >
+                                <Tag className="w-4 h-4" />
+                              </div>
+                              <div>
+                                <h5 className="text-xs font-bold text-slate-900">Mod Manual (Tetapan Admin)</h5>
+                                <p className="text-[10px] text-blue-800 font-medium">Khas 1 Kod Baucar Pilihan Anda</p>
+                              </div>
+                            </div>
+                            <input
+                              type="radio"
+                              name="checkoutAutoApplyMode"
+                              checked={settings.checkoutAutoApplyMode === 'manual_specific'}
+                              onChange={() => {
+                                const firstCode = allCouponOptions[0]?.code || 'KAMAAR3'
+                                setSettings({
+                                  ...settings,
+                                  checkoutAutoApplyMode: 'manual_specific',
+                                  checkoutAutoApplyVoucherCode:
+                                    settings.checkoutAutoApplyVoucherCode && settings.checkoutAutoApplyVoucherCode !== 'auto_best'
+                                      ? settings.checkoutAutoApplyVoucherCode
+                                      : firstCode,
+                                })
+                              }}
+                              className="mt-1 accent-blue-600 cursor-pointer"
+                            />
+                          </div>
+                          <p className="mt-2.5 text-[11px] text-slate-600 leading-relaxed">
+                            Admin memilih <strong>satu kod baucar khusus</strong> untuk sentiasa diguna secara automatik selagi troli pelanggan layak.
+                          </p>
+                        </div>
+                      </div>
+
+                      {/* Dropdown if Mod Manual is selected */}
+                      {settings.checkoutAutoApplyMode === 'manual_specific' && (
+                        <div className="p-3.5 rounded-xl bg-blue-50/60 border border-blue-200 space-y-2 animate-in fade-in duration-200">
+                          <label className="block text-xs font-bold text-slate-800">
+                            Pilih Kod Baucar Manual Yang Hendak Diguna Secara Automatik:
+                          </label>
+                          <select
+                            value={
+                              settings.checkoutAutoApplyVoucherCode && settings.checkoutAutoApplyVoucherCode !== 'auto_best'
+                                ? settings.checkoutAutoApplyVoucherCode
+                                : allCouponOptions[0]?.code || 'KAMAAR3'
+                            }
+                            onChange={(e) =>
+                              setSettings({
+                                ...settings,
+                                checkoutAutoApplyMode: 'manual_specific',
+                                checkoutAutoApplyVoucherCode: e.target.value,
+                              })
+                            }
+                            className="w-full sm:w-auto min-w-[300px] px-3.5 py-2.5 rounded-xl border border-blue-300 text-xs text-slate-900 bg-white font-semibold outline-none focus:border-blue-600 focus:ring-2 focus:ring-blue-600/10 cursor-pointer shadow-2xs"
+                          >
+                            {allCouponOptions.map((c) => (
+                              <option key={c.code} value={c.code}>
+                                Kod {c.code} — {c.label} ({c.minText})
+                              </option>
+                            ))}
+                          </select>
+                          <p className="text-[11px] text-slate-600">
+                            Sistem akan sentiasa mengguna kod <strong>{settings.checkoutAutoApplyVoucherCode && settings.checkoutAutoApplyVoucherCode !== 'auto_best' ? settings.checkoutAutoApplyVoucherCode : (allCouponOptions[0]?.code || 'KAMAAR3')}</strong> secara automatik kepada semua pelanggan jika troli mereka layak.
+                          </p>
+                        </div>
+                      )}
                     </div>
                   )}
                 </div>
@@ -1464,13 +1594,21 @@ export function SettingsClient({
                         <div className="flex items-center space-x-2 text-forest font-bold">
                           <Tag className="w-3.5 h-3.5 text-gold shrink-0" />
                           <span className="font-mono text-xs">
-                            {settings.checkoutAutoApplyVoucherCode === 'auto_best' || !settings.checkoutAutoApplyVoucherCode
-                              ? 'KAMAAR3'
-                              : settings.checkoutAutoApplyVoucherCode}
+                            {settings.checkoutAutoApplyMode === 'manual_specific' && settings.checkoutAutoApplyVoucherCode && settings.checkoutAutoApplyVoucherCode !== 'auto_best'
+                              ? settings.checkoutAutoApplyVoucherCode
+                              : 'KAMAAR3'}
                           </span>
-                          <span className="px-1.5 py-0.5 rounded-full bg-emerald-100 text-emerald-800 text-[9px] font-bold tracking-wider uppercase flex items-center gap-0.5">
-                            <Sparkles className="w-2.5 h-2.5 text-emerald-600" />
-                            Auto-Guna
+                          <span
+                            className={`px-1.5 py-0.5 rounded-full text-[9px] font-bold tracking-wider uppercase flex items-center gap-0.5 ${
+                              settings.checkoutAutoApplyMode === 'manual_specific'
+                                ? 'bg-blue-100 text-blue-800'
+                                : 'bg-emerald-100 text-emerald-800'
+                            }`}
+                          >
+                            <Sparkles className="w-2.5 h-2.5" />
+                            {settings.checkoutAutoApplyMode === 'manual_specific'
+                              ? 'Auto-Guna (Admin)'
+                              : '✨ Auto-Pilih Algoritma'}
                           </span>
                           <span className="text-emerald-700 font-medium">(-RM3.00)</span>
                         </div>
