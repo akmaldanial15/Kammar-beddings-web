@@ -41,7 +41,7 @@ export function OrdersClient({ initialOrders }: OrdersClientProps) {
   const [isDeleting, setIsDeleting] = useState<boolean>(false)
   const [toast, setToast] = useState<{ type: 'success' | 'error'; message: string } | null>(null)
   const [isManualSyncing, setIsManualSyncing] = useState<boolean>(false)
-  const [syncCountdown, setSyncCountdown] = useState<number>(8)
+  const [syncCountdown, setSyncCountdown] = useState<number>(25)
   const [lastSyncedAt, setLastSyncedAt] = useState<string>('Baru sahaja')
 
   // Helper to persist orders to browser storage
@@ -81,17 +81,19 @@ export function OrdersClient({ initialOrders }: OrdersClientProps) {
     } catch (_) {}
   }, [initialOrders])
 
-  // 2. Live Auto-Polling Loop (Every 8 seconds) for Vercel Cloud Sync
+  // 2. Smart Auto-Polling Loop (Every 25 seconds & paused when tab/phone is locked to save Vercel quota)
   React.useEffect(() => {
     let isMounted = true
 
-    // Countdown timer tick every second
+    // Countdown timer tick every second - pauses automatically when tab is hidden / phone locked
     const countTimer = setInterval(() => {
-      setSyncCountdown((prev) => (prev <= 1 ? 8 : prev - 1))
+      if (typeof document !== 'undefined' && document.hidden) return
+      setSyncCountdown((prev) => (prev <= 1 ? 25 : prev - 1))
     }, 1000)
 
-    // Poll endpoint every 8 seconds
+    // Poll endpoint every 25 seconds - paused when tab is inactive
     const pollTimer = setInterval(async () => {
+      if (typeof document !== 'undefined' && document.hidden) return
       try {
         const res = await fetch('/api/admin/orders', { cache: 'no-store' })
         if (!res.ok) return
@@ -143,7 +145,7 @@ export function OrdersClient({ initialOrders }: OrdersClientProps) {
           setLastSyncedAt(new Date().toLocaleTimeString('ms-MY', { hour: '2-digit', minute: '2-digit', second: '2-digit' }))
         }
       } catch (_) {}
-    }, 8000)
+    }, 25000)
 
     return () => {
       isMounted = false
