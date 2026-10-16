@@ -1,4 +1,4 @@
-import { describe, it, expect } from 'vitest'
+import { describe, it, expect, afterAll } from 'vitest'
 import {
   createOrder,
   getOrderById,
@@ -6,10 +6,31 @@ import {
   updateOrderStatus,
   getAffiliateByCode,
   recordAffiliateSale,
+  deleteOrder,
+  updateAffiliate,
 } from '../lib/db'
 import { Order } from '../types'
 
 describe('Order Upsert & Vercel Recovery Fail-safe', () => {
+  const createdOrderIds: string[] = []
+
+  afterAll(async () => {
+    for (const id of createdOrderIds) {
+      await deleteOrder(id, 'system_test')
+    }
+    const aff = await getAffiliateByCode('AFF-DANIAL')
+    if (aff) {
+      await updateAffiliate(
+        aff.id,
+        {
+          totalSalesCount: 0,
+          totalSalesRevenueSen: 0,
+          totalCommissionSen: 0,
+        },
+        'system_test'
+      )
+    }
+  })
   it('creates an order and allows upserting updates seamlessly', async () => {
     const dummyOrder: Order = {
       id: `ord-test-recover-${Date.now()}`,
@@ -63,6 +84,7 @@ describe('Order Upsert & Vercel Recovery Fail-safe', () => {
       updatedAt: new Date().toISOString(),
     }
 
+    createdOrderIds.push(dummyOrder.id)
     const saved = await upsertOrder(dummyOrder)
     expect(saved.id).toBe(dummyOrder.id)
     expect(saved.paymentStatus).toBe('unpaid')
@@ -118,6 +140,7 @@ describe('Order Upsert & Vercel Recovery Fail-safe', () => {
       updatedAt: new Date().toISOString(),
     }
 
+    createdOrderIds.push(orderId)
     await upsertOrder(order)
 
     // First transition to paid -> affiliate credited
@@ -180,6 +203,7 @@ describe('Order Upsert & Vercel Recovery Fail-safe', () => {
       updatedAt: new Date().toISOString(),
     }
 
+    createdOrderIds.push(orderId)
     // Upserting with paid status
     const saved = await upsertOrder(paidSnapshot)
     expect(saved.affiliateCredited).toBe(true)
