@@ -235,6 +235,7 @@ export function CheckoutClient({ initialPaymentSettings, initialSiteSettings, av
   // Interactive tooltips & detailed modal state with smooth appear & disappear animations
   const [isShippingMiniMounted, setIsShippingMiniMounted] = useState(false)
   const [isShippingMiniVisible, setIsShippingMiniVisible] = useState(false)
+  const [isShippingMiniPinned, setIsShippingMiniPinned] = useState(false)
   const [isShippingDetailedOpen, setIsShippingDetailedOpen] = useState(false)
   const [showContactTooltip, setShowContactTooltip] = useState(false)
   const [showPhoneTooltip, setShowPhoneTooltip] = useState(false)
@@ -242,6 +243,7 @@ export function CheckoutClient({ initialPaymentSettings, initialSiteSettings, av
   const shippingCloseTimerRef = React.useRef<NodeJS.Timeout | null>(null)
   const contactTooltipRef = React.useRef<HTMLDivElement>(null)
   const phoneTooltipRef = React.useRef<HTMLDivElement>(null)
+  const touchStartPosRef = React.useRef<{ x: number; y: number } | null>(null)
 
   const openShippingMini = useCallback(() => {
     if (shippingCloseTimerRef.current) {
@@ -257,6 +259,7 @@ export function CheckoutClient({ initialPaymentSettings, initialSiteSettings, av
   }, [])
 
   const closeShippingMini = useCallback(() => {
+    setIsShippingMiniPinned(false)
     setIsShippingMiniVisible(false)
     if (shippingCloseTimerRef.current) {
       clearTimeout(shippingCloseTimerRef.current)
@@ -269,28 +272,34 @@ export function CheckoutClient({ initialPaymentSettings, initialSiteSettings, av
 
   const toggleShippingMini = useCallback(() => {
     if (isShippingMiniVisible) {
+      setIsShippingMiniPinned(false)
       closeShippingMini()
     } else {
+      setIsShippingMiniPinned(true)
       openShippingMini()
     }
   }, [isShippingMiniVisible, closeShippingMini, openShippingMini])
 
-  // Hover handlers for White-Glove info (PC / mouse only; phone uses click only)
+  // Hover handlers for White-Glove info (PC / mouse only; phone uses tap only)
   const handleShippingMouseEnter = () => {
+    // If pinned by click/tap, don't interfere
+    if (isShippingMiniPinned) return
     if (typeof window !== 'undefined' && window.matchMedia('(hover: hover) and (pointer: fine)').matches) {
       openShippingMini()
     }
   }
 
   const handleShippingMouseLeave = () => {
+    // If pinned by a tap/click (e.g. phone tap or user clicked (?)), NEVER close on mouse leave!
+    if (isShippingMiniPinned) return
     if (typeof window !== 'undefined' && window.matchMedia('(hover: hover) and (pointer: fine)').matches) {
       closeShippingMini()
     }
   }
 
   useEffect(() => {
-    function handleClickOutside(event: MouseEvent | TouchEvent) {
-      const target = event.target as Node
+    function handlePointerDown(e: MouseEvent) {
+      const target = e.target as Node
       if (shippingTooltipRef.current && !shippingTooltipRef.current.contains(target)) {
         closeShippingMini()
       }
@@ -301,18 +310,60 @@ export function CheckoutClient({ initialPaymentSettings, initialSiteSettings, av
         setShowPhoneTooltip(false)
       }
     }
+
+    function handleTouchStart(e: TouchEvent) {
+      if (e.touches && e.touches.length > 0) {
+        touchStartPosRef.current = {
+          x: e.touches[0].clientX,
+          y: e.touches[0].clientY,
+        }
+      }
+    }
+
+    function handleTouchEnd(e: TouchEvent) {
+      if (!touchStartPosRef.current) return
+      const touch = e.changedTouches ? e.changedTouches[0] : null
+      if (!touch) return
+
+      const dx = Math.abs(touch.clientX - touchStartPosRef.current.x)
+      const dy = Math.abs(touch.clientY - touchStartPosRef.current.y)
+      touchStartPosRef.current = null
+
+      // If user moved > 10px, they were scrolling or swiping, NOT tapping!
+      // Keep the pop-up open while scrolling on phone!
+      if (dx > 10 || dy > 10) {
+        return
+      }
+
+      // If it was a genuine tap outside, dismiss the pop-up
+      const target = e.target as Node
+      if (shippingTooltipRef.current && !shippingTooltipRef.current.contains(target)) {
+        closeShippingMini()
+      }
+      if (contactTooltipRef.current && !contactTooltipRef.current.contains(target)) {
+        setShowContactTooltip(false)
+      }
+      if (phoneTooltipRef.current && !phoneTooltipRef.current.contains(target)) {
+        setShowPhoneTooltip(false)
+      }
+    }
+
     function handleKeyDown(e: KeyboardEvent) {
       if (e.key === 'Escape') {
         closeShippingMini()
         setIsShippingDetailedOpen(false)
       }
     }
-    document.addEventListener('mousedown', handleClickOutside)
-    document.addEventListener('touchstart', handleClickOutside)
+
+    document.addEventListener('mousedown', handlePointerDown)
+    document.addEventListener('touchstart', handleTouchStart, { passive: true })
+    document.addEventListener('touchend', handleTouchEnd)
     document.addEventListener('keydown', handleKeyDown)
+
     return () => {
-      document.removeEventListener('mousedown', handleClickOutside)
-      document.removeEventListener('touchstart', handleClickOutside)
+      document.removeEventListener('mousedown', handlePointerDown)
+      document.removeEventListener('touchstart', handleTouchStart)
+      document.removeEventListener('touchend', handleTouchEnd)
       document.removeEventListener('keydown', handleKeyDown)
       if (shippingCloseTimerRef.current) {
         clearTimeout(shippingCloseTimerRef.current)
